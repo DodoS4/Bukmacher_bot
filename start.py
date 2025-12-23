@@ -89,8 +89,17 @@ def run_pro_radar():
                 # --- LOGIKA WYBORU FAWORYTA ---
                 if avg_h < avg_a:
                     faworyt_txt = f"✅ STAWIAJ NA: *{home.upper()}*\n\n🟢 *{home}*: `{avg_h:.2f}`\n⚪ {away}: `{avg_a:.2f}`"
-                    faworyt_team = home
                     min_avg = avg_h
                 else:
                     faworyt_txt = f"✅ STAWIAJ NA: *{away.upper()}*\n\n⚪ {home}: `{avg_h:.2f}`\n🟢 *{away}*: `{avg_a:.2f}`"
-                    faw
+                    min_avg = avg_a
+
+                # --- 1. STRATEGIA: BUKMACHER ZASPAŁ! (VALUE BET) ---
+                if (max_h > avg_h * 1.12 or max_a > avg_a * 1.12) and not is_already_sent(m_id, "value"):
+                    target = home if max_h > avg_h * 1.12 else away
+                    val_kurs = max_h if max_h > avg_h * 1.12 else max_a
+                    avg_kurs = avg_h if max_h > avg_h * 1.12 else avg_a
+                    
+                    msg = (f"💎 *BUKMACHER ZASPAŁ!* 💎\n"
+                           f"🏆 {sport_label}\n"
+                           f"
