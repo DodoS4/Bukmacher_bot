@@ -44,10 +44,12 @@ def mark_as_sent(match_id, category=""):
 def run_pro_radar():
     if not ODDS_KEY: return
     now = datetime.now(timezone.utc)
+    # LIMIT 3 DNI (72 godziny)
+    limit_date = now + timedelta(days=3)
     
     # STATUS SYSTEMU
     if now.hour == 0 or os.getenv('GITHUB_EVENT_NAME') == 'workflow_dispatch':
-        status_msg = "🟢 *STATUS SYSTEMU: AKTYWNY*\n✅ Data: `" + now.strftime('%d.%m.%Y') + "`\n🤖 Skanowanie w toku..."
+        status_msg = "🟢 *STATUS SYSTEMU: AKTYWNY*\n✅ Data: `" + now.strftime('%d.%m.%Y') + "`\n🤖 Skanowanie ofert (max 3 dni naprzód)..."
         send_msg(status_msg)
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
@@ -62,6 +64,10 @@ def run_pro_radar():
                 home = match['home_team']
                 away = match['away_team']
                 m_dt = datetime.strptime(match['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+
+                # --- FILTR 3 DNI ---
+                if m_dt > limit_date:
+                    continue
 
                 all_h, all_a = [], []
                 for bm in match['bookmakers']:
