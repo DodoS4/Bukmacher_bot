@@ -8,12 +8,13 @@ T_TOKEN = os.getenv('T_TOKEN')
 T_CHAT = os.getenv('T_CHAT')
 ODDS_KEY = os.getenv('ODDS_KEY')
 
+# Wybrane ligi do skanowania
 SPORTS_CONFIG = {
     'soccer_epl': '⚽ PREMIER LEAGUE',
     'soccer_spain_la_liga': '⚽ LA LIGA',
     'soccer_germany_bundesliga': '⚽ BUNDESLIGA',
     'soccer_italy_serie_a': '⚽ SERIE A',
-    'soccer_poland_ekstraklasa': '⚽ EKSTRAKLASA', # Dodana Polska
+    'soccer_poland_ekstraklasa': '⚽ EKSTRAKLASA',
     'basketball_nba': '🏀 NBA',
     'icehockey_nhl': '🏒 NHL',
     'mma_mixed_martial_arts': '🥊 MMA/UFC'
@@ -40,83 +41,56 @@ def mark_as_sent(match_id, category=""):
         f.write(f"{match_id}_{category}\n")
 
 def run_pro_radar():
-    if not ODDS_KEY: return
+    if not ODDS_KEY: 
+        print("Brak klucza API!")
+        return
+        
     now = datetime.now(timezone.utc)
     
-    # --- KOMUNIKAT STATUSU (ZIELONY) ---
-    # Wysyła info o poprawnej pracy tylko przy uruchomieniu o północy (00:xx) lub ręcznym
+    # --- 🟢 STATUS SYSTEMU (ZIELONY KOMUNIKAT) ---
     if now.hour == 0 or os.getenv('GITHUB_EVENT_NAME') == 'workflow_dispatch':
         status_msg = (f"🟢 *STATUS SYSTEMU: AKTYWNY*\n"
-                      f"✅ Data: `{now.strftime('%d.%m.%Y')}`\n"
+                      f"📅 Data: `{now.strftime('%d.%m.%Y')}`\n"
                       f"🤖 Wszystkie moduły pracują poprawnie.\n"
-                      f"📡 Skanowanie: {len(SPORTS_CONFIG)} lig.")
+                      f"📡 Skanowanie: {len(SPORTS_CONFIG)} lig w toku...")
         send_msg(status_msg)
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
         try:
             url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/?apiKey={ODDS_KEY}&regions=eu&markets=h2h"
             response = requests.get(url, timeout=10)
-            
-            # Pobranie info o kredytach z nagłówków API
-            remaining_api = response.headers.get('x-requests-remaining', 'Nieznano')
-            
+            if response.status_code != 200: continue
             res = response.json()
 
             for match in res:
                 m_id = match['id']
                 home = match['home_team']
                 away = match['away_team']
-                
-                all_home_odds = []
-                all_away_odds = []
-                
+                m_dt = datetime.strptime(match['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+
+                all_h_odds, all_a_odds = [], []
                 for bm in match['bookmakers']:
                     for market in bm['markets']:
                         if market['key'] == 'h2h':
-                            h_odd = next(o['price'] for o in market['outcomes'] if o['name'] == home)
-                            a_odd = next(o['price'] for o in market['outcomes'] if o['name'] == away)
-                            all_home_odds.append(h_odd)
-                            all_away_odds.append(a_odd)
+                            try:
+                                h_o = next(o['price'] for o in market['outcomes'] if o['name'] == home)
+                                a_o = next(o['price'] for o in market['outcomes'] if o['name'] == away)
+                                all_h_odds.append(h_o)
+                                all_a_odds.append(a_o)
+                            except: continue
 
-                if not all_home_odds: continue
+                if not all_h_odds: continue
 
-                avg_h = sum(all_home_odds) / len(all_home_odds)
-                max_h = max(all_home_odds)
-                m_dt = datetime.strptime(match['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+                avg_h = sum(all_h_odds) / len(all_h_odds)
+                avg_a = sum(all_a_odds) / len(all_a_odds)
+                max_h = max(all_h_odds)
+                max_a = max(all_a_odds)
 
-                # --- STRATEGIA 1: VALUE BET ---
-                if max_h > (avg_h * 1.12) and not is_already_sent(m_id, "value"):
-                    msg = (f"💎 *PRO-VALUE BET* 💎\n"
-                           f"🏆 {sport_label}\n"
-                           f"⚔️ *{home}* vs *{away}*\n"
-                           f"📈 Najlepszy kurs: `{max_h}` (Średnia: {avg_h:.2f})\n"
-                           f"📢 *Wartość znaleziona! Graj na {home}.*")
-                    send_msg(msg)
-                    mark_as_sent(m_id, "value")
-
-                # --- STRATEGIA 2: PEWNIAKI + PODPÓRKI ---
-                avg_a = sum(all_away_odds)/len(all_away_odds)
-                min_avg = min(avg_h, avg_a)
-                
-                if min_avg <= 1.75 and not is_already_sent(m_id, "daily"):
-                    tag = "🔥 *PEWNIAK* 🔥" if min_avg <= 1.35 else "⭐ *WARTE UWAGI* ⭐"
-                    
-                    sugestia = ""
-                    if "⚽" in sport_label and min_avg > 1.40:
-                        sugestia = "\n🛡️ *Bezpieczniej:* Zagraj z podpórką (1X/X2)"
-
-                    msg = (f"{tag}\n"
-                           f"🏆 {sport_label}\n"
-                           f"⚔️ *{home}* vs *{away}*\n"
-                           f"📊 Średni kurs: `{min_avg:.2f}`\n"
-                           f"⏰ Start: `{m_dt.strftime('%d.%m %H:%M')}`{sugestia}")
-                    
-                    send_msg(msg)
-                    mark_as_sent(m_id, "daily")
-
-            time.sleep(1)
-        except Exception as e:
-            print(f"Błąd {sport_key}: {e}")
-
-if __name__ == "__main__":
-    run_pro_radar()
+                # --- LOGIKA WYBORU FAWORYTA ---
+                if avg_h < avg_a:
+                    faworyt_txt = f"✅ STAWIAJ NA: *{home.upper()}*\n\n🟢 *{home}*: `{avg_h:.2f}`\n⚪ {away}: `{avg_a:.2f}`"
+                    faworyt_team = home
+                    min_avg = avg_h
+                else:
+                    faworyt_txt = f"✅ STAWIAJ NA: *{away.upper()}*\n\n⚪ {home}: `{avg_h:.2f}`\n🟢 *{away}*: `{avg_a:.2f}`"
+                    faw
