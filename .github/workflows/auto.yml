@@ -1,39 +1,45 @@
-name: RadarSportowy
+name: Bukmacher Bot Pro
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '0 0,6,12,18 * * *' # 4 razy na dobę
+    # Uruchamia bota co godzinę (o pełnej godzinie)
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    # Pozwala uruchomić bota ręcznie przyciskiem w zakładce Actions
 
 jobs:
-  uruchom-bota:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
       - name: Pobierz kod z repozytorium
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Ustawienie srodowiska Python
+      - name: Konfiguracja Pythona
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Instalacja biblioteki requests
-        run: pip install requests
+      - name: Instalacja bibliotek
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
-      - name: Wykonaj skrypt start.py
+      - name: Uruchomienie bota
         env:
+          # Przekazanie Twoich sekretów do kodu Pythona
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
-          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
+          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: python start.py
-        
-      - name: Zapisz wyslane mecze (Pamiec)
+
+      - name: Zapisz wysłane mecze (Baza danych)
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          git add sent_matches.txt || true
-          git commit -m "Aktualizacja bazy" || true
-          git push || true
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add sent_matches.txt
+          git commit -m "Aktualizacja wysłanych meczów [skip ci]" || echo "Brak zmian do zapisu"
+          git push
