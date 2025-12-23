@@ -2,10 +2,10 @@ name: Bukmacher Bot Pro
 
 on:
   schedule:
-    # Uruchomienie co godzinę
+    # Uruchomienie co godzinę (0 minut po każdej godzinie)
     - cron: '0 * * * *'
   workflow_dispatch:
-    # Możliwość ręcznego odpalenia w dowolnym momencie
+    # Możliwość ręcznego odpalenia przyciskiem "Run workflow"
 
 permissions:
   contents: write
@@ -18,7 +18,6 @@ jobs:
       - name: Pobierz kod z repozytorium
         uses: actions/checkout@v3
         with:
-          # Pobiera całą historię, co jest ważne przy operacji pull/push
           fetch-depth: 0
 
       - name: Konfiguracja Pythona
@@ -38,23 +37,27 @@ jobs:
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: python start.py
 
-      - name: Synchronizacja i zapis plików (Database & History)
+      - name: Bezpieczny zapis bazy danych
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Sprawdzenie czy pliki istnieją, aby uniknąć błędu
-          touch sent_matches.txt history.txt
+          # Upewnienie się, że plik bazy istnieje
+          touch sent_matches.txt
           
-          git add sent_matches.txt history.txt
+          # 1. Dodaj zmiany do poczekalni
+          git add sent_matches.txt
           
-          # Pobranie ewentualnych zmian z serwera (np. Twoich edycji start.py)
-          # --rebase zapobiega tworzeniu zbędnych "merge commits"
+          # 2. Zrób lokalny zapis (commit)
+          git commit -m "Aktualizacja bazy wysłanych meczy [skip ci]" || echo "Brak nowych meczy do zapisania"
+          
+          # 3. Pobierz najnowsze zmiany z serwera (np. Twoje edycje start.py)
+          # Rebase teraz zadziała, bo lokalne zmiany są już w commitcie
           git pull --rebase origin main
           
-          # Wysłanie zmian tylko jeśli pliki tekstowe się zmieniły
-          git commit -m "Aktualizacja bazy meczów i historii [skip ci]" || echo "Brak nowych danych do zapisu"
+          # 4. Wyślij wszystko na serwer
           git push origin main
