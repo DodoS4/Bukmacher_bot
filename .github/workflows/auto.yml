@@ -16,4 +16,4 @@ jobs:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
-        run: python nazwa_twojego_pliku.py
+        run: python start.py
