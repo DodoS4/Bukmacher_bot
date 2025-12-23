@@ -1,18 +1,19 @@
-name: Football-Bot-2h-Update
+name: Football-Bot-Smart-Radar
 
 on:
   schedule:
-    # Uruchamia skrypt co 2 godziny (00:00, 02:00, 04:00 itd. czasu UTC)
     - cron: '0 */2 * * *'
   workflow_dispatch:
-    # Pozwala na ręczne uruchomienie przyciskiem na GitHubie
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Dodajemy uprawnienia do zapisu w repozytorium
+    permissions:
+      contents: write
 
     steps:
-      - name: Pobieranie kodu z repozytorium
+      - name: Pobieranie kodu
         uses: actions/checkout@v3
 
       - name: Konfiguracja Pythona
@@ -21,15 +22,21 @@ jobs:
           python-version: '3.9'
 
       - name: Instalacja bibliotek
-        run: |
-          pip install requests
+        run: pip install requests
 
       - name: Uruchomienie bota
         env:
-          # GitHub pobierze te dane z Twoich "Secrets"
           F_KEY: ${{ secrets.F_KEY }}
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
-        # Upewnij się, że poniższa nazwa pliku zgadza się z Twoją na GitHubie!
+          ODDS_KEY: ${{ secrets.ODDS_KEY }}
         run: python nazwa_twojego_pliku.py
+
+      - name: Zapisz wysłane mecze (Pamięć bota)
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "actions@github.com"
+          git add sent_matches.txt || true
+          git commit -m "Aktualizacja bazy wysłanych meczów" || true
+          git push || true
