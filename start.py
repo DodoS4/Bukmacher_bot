@@ -152,8 +152,8 @@ def run_pro_radar():
                     target = home if max_h > avg_h * 1.12 else away
                     target_odd = max_h if max_h > avg_h * 1.12 else max_a
 
-                    # Pomijamy kursy < 1.45
-                    if target_odd < 1.45:
+                    # Pomijamy kursy < 1.55
+                    if target_odd < 1.55:
                         continue
 
                     v_msg = format_message(
@@ -173,8 +173,8 @@ def run_pro_radar():
                 # 2. PEWNIAKI
                 min_avg = min(avg_h, avg_a)
                 
-                # Pomijamy mecze z kursem < 1.45
-                if min_avg < 1.45:
+                # Pomijamy mecze z kursem < 1.55
+                if min_avg < 1.55:
                     continue
 
                 if min_avg <= 1.75 and not is_already_sent(m_id, "daily"):
