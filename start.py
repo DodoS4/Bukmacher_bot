@@ -152,6 +152,10 @@ def run_pro_radar():
                     target = home if max_h > avg_h * 1.12 else away
                     target_odd = max_h if max_h > avg_h * 1.12 else max_a
 
+                    # Pomijamy kursy < 1.45
+                    if target_odd < 1.45:
+                        continue
+
                     v_msg = format_message(
                         sport_label=sport_label,
                         home=home,
@@ -168,6 +172,11 @@ def run_pro_radar():
 
                 # 2. PEWNIAKI
                 min_avg = min(avg_h, avg_a)
+                
+                # Pomijamy mecze z kursem < 1.45
+                if min_avg < 1.45:
+                    continue
+
                 if min_avg <= 1.75 and not is_already_sent(m_id, "daily"):
                     tag = "🔥 PEWNIAK" if min_avg <= 1.35 else "⭐ WARTE UWAGI"
                     pick_team = home if avg_h < avg_a else away
@@ -180,7 +189,7 @@ def run_pro_radar():
                         pick_team=pick_team,
                         avg_h=avg_h,
                         avg_a=avg_a,
-                        target_odd=min(avg_h, avg_a),
+                        target_odd=min_avg,
                         m_dt=m_dt,
                         tag=tag,
                         support=support
