@@ -40,3 +40,4 @@ jobs:
           git add sent_matches.txt || true
           git commit -m "Aktualizacja bazy wysłanych meczów" || true
           git push || true
+          
