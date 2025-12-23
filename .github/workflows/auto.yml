@@ -2,10 +2,13 @@ name: Bukmacher Bot Pro
 
 on:
   schedule:
-    # Uruchamia bota co godzinę (o pełnej godzinie)
+    # Uruchomienie co godzinę
     - cron: '0 * * * *'
   workflow_dispatch:
-    # Pozwala uruchomić bota ręcznie przyciskiem w zakładce Actions
+    # Możliwość ręcznego odpalenia w dowolnym momencie
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -14,6 +17,9 @@ jobs:
     steps:
       - name: Pobierz kod z repozytorium
         uses: actions/checkout@v3
+        with:
+          # Pobiera całą historię, co jest ważne przy operacji pull/push
+          fetch-depth: 0
 
       - name: Konfiguracja Pythona
         uses: actions/setup-python@v4
@@ -27,19 +33,28 @@ jobs:
 
       - name: Uruchomienie bota
         env:
-          # Przekazanie Twoich sekretów do kodu Pythona
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
         run: python start.py
 
-      - name: Zapisz wysłane mecze (Baza danych)
+      - name: Synchronizacja i zapis plików (Database & History)
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add sent_matches.txt
-          git commit -m "Aktualizacja wysłanych meczów [skip ci]" || echo "Brak zmian do zapisu"
-          git push
+          
+          # Sprawdzenie czy pliki istnieją, aby uniknąć błędu
+          touch sent_matches.txt history.txt
+          
+          git add sent_matches.txt history.txt
+          
+          # Pobranie ewentualnych zmian z serwera (np. Twoich edycji start.py)
+          # --rebase zapobiega tworzeniu zbędnych "merge commits"
+          git pull --rebase origin main
+          
+          # Wysłanie zmian tylko jeśli pliki tekstowe się zmieniły
+          git commit -m "Aktualizacja bazy meczów i historii [skip ci]" || echo "Brak nowych danych do zapisu"
+          git push origin main
