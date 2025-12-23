@@ -1,19 +1,20 @@
-name: Football-Bot-Smart-Radar
+name: Multi-Sport-Radar-Full-Usage
 
 on:
   schedule:
-    - cron: '0 */2 * * *'
+    # Uruchomienie 4 razy na dobę (co 6 godzin)
+    # Wykorzystuje ok. 496/500 kredytów miesięcznie
+    - cron: '0 0,6,12,18 * * *'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Dodajemy uprawnienia do zapisu w repozytorium
     permissions:
       contents: write
 
     steps:
-      - name: Pobieranie kodu
+      - name: Pobieranie repozytorium
         uses: actions/checkout@v3
 
       - name: Konfiguracja Pythona
@@ -26,18 +27,16 @@ jobs:
 
       - name: Uruchomienie bota
         env:
-          F_KEY: ${{ secrets.F_KEY }}
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
-        run: python nazwa_twojego_pliku.py
+        run: python start.py
 
-      - name: Zapisz wysłane mecze (Pamięć bota)
+      - name: Zapisz pamięć bota
         run: |
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "actions@github.com"
           git add sent_matches.txt || true
-          git commit -m "Aktualizacja bazy wysłanych meczów" || true
+          git commit -m "Update DB [Skip CI]" || true
           git push || true
-          
