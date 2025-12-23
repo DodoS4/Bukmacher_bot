@@ -1,0 +1,19 @@
+name: Bot-Codzienny
+on:
+  schedule:
+    - cron: '0 8 * * *' # Odpali się codziennie o 9:00 rano czasu PL
+  workflow_dispatch:   # Pozwala odpalić przyciskiem kiedy chcesz
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Instalacja
+        run: pip install requests
+      - name: Start
+        env:
+          F_KEY: ${{ secrets.F_KEY }}
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT: ${{ secrets.T_CHAT }}
+          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
+        run: python nazwa_twojego_pliku.py
