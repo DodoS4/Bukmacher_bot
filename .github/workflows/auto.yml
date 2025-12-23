@@ -1,19 +1,35 @@
-name: Bot-Codzienny
+name: Football-Bot-2h-Update
+
 on:
   schedule:
-    - cron: '0 8 * * *' # Odpali się codziennie o 9:00 rano czasu PL
-  workflow_dispatch:   # Pozwala odpalić przyciskiem kiedy chcesz
+    # Uruchamia skrypt co 2 godziny (00:00, 02:00, 04:00 itd. czasu UTC)
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+    # Pozwala na ręczne uruchomienie przyciskiem na GitHubie
+
 jobs:
-  run:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Instalacja
-        run: pip install requests
-      - name: Start
+      - name: Pobieranie kodu z repozytorium
+        uses: actions/checkout@v3
+
+      - name: Konfiguracja Pythona
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalacja bibliotek
+        run: |
+          pip install requests
+
+      - name: Uruchomienie bota
         env:
+          # GitHub pobierze te dane z Twoich "Secrets"
           F_KEY: ${{ secrets.F_KEY }}
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
-        run: python start.py
+        # Upewnij się, że poniższa nazwa pliku zgadza się z Twoją na GitHubie!
+        run: python nazwa_twojego_pliku.py
