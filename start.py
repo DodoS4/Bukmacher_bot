@@ -1,179 +1,133 @@
 import requests
 import os
 import time
-import sqlite3
 from datetime import datetime, timedelta, timezone
 
-# --- CONFIG ---
-T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT = os.getenv("T_CHAT")
+# --- KONFIGURACJA ---
+T_TOKEN = os.getenv('T_TOKEN')
+T_CHAT = os.getenv('T_CHAT')
 
-API_KEYS = [k for k in [
-    os.getenv("ODDS_KEY"),
-    os.getenv("ODDS_KEY_2"),
-    os.getenv("ODDS_KEY_3"),
-    os.getenv("ODDS_KEY_4")
-] if k]
+# LISTA KLUCZY API (pobiera wszystkie dostępne z GitHub Secrets)
+KEYS_POOL = [
+    os.getenv('ODDS_KEY'),
+    os.getenv('ODDS_KEY_2'),
+    os.getenv('ODDS_KEY_3'),
+    os.getenv('ODDS_KEY_4')
+]
+# Usuwamy puste wartości, jeśli nie dodałeś wszystkiach kluczy
+API_KEYS = [k for k in KEYS_POOL if k]
 
-SPORTS = {
-    "soccer_epl": "⚽ PREMIER LEAGUE",
-    "soccer_spain_la_liga": "⚽ LA LIGA",
-    "soccer_germany_bundesliga": "⚽ BUNDESLIGA",
-    "soccer_italy_serie_a": "⚽ SERIE A",
-    "soccer_poland_ekstraklasa": "⚽ EKSTRAKLASA",
-    "basketball_nba": "🏀 NBA",
-    "icehockey_nhl": "🏒 NHL"
+SPORTS_CONFIG = {
+    'soccer_epl': '⚽ PREMIER LEAGUE',
+    'soccer_spain_la_liga': '⚽ LA LIGA',
+    'soccer_germany_bundesliga': '⚽ BUNDESLIGA',
+    'soccer_italy_serie_a': '⚽ SERIE A',
+    'soccer_poland_ekstraklasa': '⚽ EKSTRAKLASA',
+    'basketball_nba': '🏀 NBA',
+    'icehockey_nhl': '🏒 NHL',
+    'mma_mixed_martial_arts': '🥊 MMA/UFC'
 }
 
-DB = "sent.db"
+DB_FILE = "sent_matches.txt"
 
-# --- HELPERS ---
-def esc(t: str) -> str:
-    return t.replace("_", "\\_").replace("*", "\\*").replace("(", "\\(").replace(")", "\\)")
+def send_msg(txt):
+    url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
+    payload = {'chat_id': T_CHAT, 'text': txt, 'parse_mode': 'Markdown'}
+    try:
+        requests.post(url, json=payload, timeout=10)
+    except:
+        pass
 
-# --- RADAR ---
-class Radar:
-    def __init__(self):
-        self.session = requests.Session()
-        self.db = sqlite3.connect(DB)
-        self.db.execute("""
-            CREATE TABLE IF NOT EXISTS sent (
-                match_id TEXT,
-                category TEXT,
-                date TEXT,
-                PRIMARY KEY (match_id, category)
-            )
-        """)
-        self.db.commit()
+def is_already_sent(match_id, category=""):
+    unique_key = f"{match_id}_{category}"
+    if not os.path.exists(DB_FILE):
+        open(DB_FILE, 'w').close()
+        return False
+    with open(DB_FILE, "r") as f:
+        return unique_key in f.read().splitlines()
 
-    def sent(self, mid, cat):
-        q = self.db.execute(
-            "SELECT 1 FROM sent WHERE match_id=? AND category=?",
-            (mid, cat)
-        ).fetchone()
-        return q is not None
+def mark_as_sent(match_id, category=""):
+    with open(DB_FILE, "a") as f:
+        f.write(f"{match_id}_{category}\n")
 
-    def mark(self, mid, cat):
-        self.db.execute(
-            "INSERT OR IGNORE INTO sent VALUES (?, ?, ?)",
-            (mid, cat, datetime.utcnow().date().isoformat())
-        )
-        self.db.commit()
+def fetch_odds(sport_key):
+    """Próbuje pobrać dane używając dostępnych kluczy po kolei."""
+    for i, key in enumerate(API_KEYS):
+        url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/?apiKey={key}&regions=eu&markets=h2h"
+        try:
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                return response.json()
+            elif response.status_code == 429:
+                print(f"⚠️ Klucz nr {i+1} wyczerpany, przełączam na kolejny...")
+                continue
+        except:
+            continue
+    return None
 
-    def send(self, txt):
-        url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
-        self.session.post(url, json={
-            "chat_id": T_CHAT,
-            "text": txt,
-            "parse_mode": "Markdown"
-        }, timeout=10)
+def run_pro_radar():
+    if not API_KEYS: 
+        print("❌ Brak skonfigurowanych kluczy API!")
+        return
+        
+    now = datetime.now(timezone.utc)
+    limit_date = now + timedelta(days=3)
+    
+    # STATUS SYSTEMU
+    if now.hour == 0 or os.getenv('GITHUB_EVENT_NAME') == 'workflow_dispatch':
+        status_msg = "🟢 *STATUS: AKTYWNY*\n✅ Liczba kluczy API: `" + str(len(API_KEYS)) + "`\n🤖 Skanowanie ofert (max 3 dni)..."
+        send_msg(status_msg)
 
-    def fetch(self, sport):
-        for k in API_KEYS:
-            try:
-                r = self.session.get(
-                    f"https://api.the-odds-api.com/v4/sports/{sport}/odds",
-                    params={"apiKey": k, "regions": "eu", "markets": "h2h"},
-                    timeout=10
-                )
-                if r.status_code == 200:
-                    return r.json()
-            except:
-                pass
-        return []
+    for sport_key, sport_label in SPORTS_CONFIG.items():
+        res = fetch_odds(sport_key)
+        if not res: continue
 
-    def avg_without_max(self, odds):
-        m = max(odds)
-        f = [o for o in odds if o != m]
-        return sum(f)/len(f) if f else sum(odds)/len(odds)
+        for match in res:
+            m_id = match['id']
+            home = match['home_team']
+            away = match['away_team']
+            m_dt = datetime.strptime(match['commence_time'], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
 
-    def run(self):
-        now = datetime.now(timezone.utc)
-        limit = now + timedelta(days=3)
+            if m_dt > limit_date: continue
 
-        for sport, label in SPORTS.items():
-            for m in self.fetch(sport):
-                mid = m["id"]
-                dt = datetime.strptime(
-                    m["commence_time"], "%Y-%m-%dT%H:%M:%SZ"
-                ).replace(tzinfo=timezone.utc)
-                if dt > limit:
-                    continue
-
-                home = esc(m["home_team"])
-                away = esc(m["away_team"])
-
-                h, a, d = [], [], []
-
-                for bm in m["bookmakers"]:
-                    for mk in bm["markets"]:
-                        if mk["key"] != "h2h":
-                            continue
+            all_h, all_a = [], []
+            for bm in match['bookmakers']:
+                for market in bm['markets']:
+                    if market['key'] == 'h2h':
                         try:
-                            h.append(next(o["price"] for o in mk["outcomes"] if o["name"] == m["home_team"]))
-                            a.append(next(o["price"] for o in mk["outcomes"] if o["name"] == m["away_team"]))
-                            draw = next((o["price"] for o in mk["outcomes"] if o["name"].lower() == "draw"), None)
-                            if draw:
-                                d.append(draw)
-                        except:
-                            pass
+                            h_o = next(o['price'] for o in market['outcomes'] if o['name'] == home)
+                            a_o = next(o['price'] for o in market['outcomes'] if o['name'] == away)
+                            all_h.append(h_o)
+                            all_a.append(a_o)
+                        except: continue
 
-                if not h or not a:
-                    continue
+            if not all_h: continue
+            avg_h, avg_a = sum(all_h)/len(all_h), sum(all_a)/len(all_a)
+            max_h, max_a = max(all_h), max(all_a)
 
-                max_h, max_a = max(h), max(a)
-                avg_h = self.avg_without_max(h)
-                avg_a = self.avg_without_max(a)
+            # 1. BUKMACHER ZASPAŁ (VALUE BET)
+            if (max_h > avg_h * 1.12 or max_a > avg_a * 1.12) and not is_already_sent(m_id, "value"):
+                target = home if max_h > avg_h * 1.12 else away
+                v_k = max_h if max_h > avg_h * 1.12 else max_a
+                avg_k = avg_h if max_h > avg_h * 1.12 else avg_a
+                v_msg = f"💎 *BUKMACHER ZASPAŁ!* 💎\n🏆 {sport_label}\n━━━━━━━━━━━━━━━\n✅ STAWIAJ NA: *{target.upper()}*\n\n📈 Kurs OKAZJA: `{v_k:.2f}`\n📊 Średnia: `{avg_k:.2f}`\n━━━━━━━━━━━━━━━"
+                send_msg(v_msg)
+                mark_as_sent(m_id, "value")
 
-                # --- SUREBET ---
-                if d:
-                    margin = (1/max_h) + (1/max_a) + (1/max(d))
+            # 2. PEWNIAKI
+            min_avg = min(avg_h, avg_a)
+            if min_avg <= 1.75 and not is_already_sent(m_id, "daily"):
+                tag = "🔥 *PEWNIAK*" if min_avg <= 1.35 else "⭐ *WARTE UWAGI*"
+                if avg_h < avg_a:
+                    pick = f"✅ STAWIAJ NA: *{home.upper()}*\n\n🟢 {home}: `{avg_h:.2f}`\n⚪ {away}: `{avg_a:.2f}`"
                 else:
-                    margin = (1/max_h) + (1/max_a)
-
-                if margin < 1.0 and not self.sent(mid, "surebet"):
-                    profit = (1 - margin) * 100
-                    msg = (
-                        f"🚀 *SUREBET*\n🏆 {label}\n"
-                        f"💰 +{profit:.2f}%\n\n"
-                        f"🏠 `{max_h:.2f}`\n✈️ `{max_a:.2f}`"
-                    )
-                    self.send(msg)
-                    self.mark(mid, "surebet")
-                    continue
-
-                # --- VALUE (bez draw) ---
-                if not d:
-                    if max_h > avg_h * 1.25 and not self.sent(mid, "mega"):
-                        self.send(f"🔥 *MEGA VALUE*\n🏆 {label}\n✅ *{home}* `{max_h:.2f}`")
-                        self.mark(mid, "mega")
-                        continue
-
-                    if max_a > avg_a * 1.25 and not self.sent(mid, "mega"):
-                        self.send(f"🔥 *MEGA VALUE*\n🏆 {label}\n✅ *{away}* `{max_a:.2f}`")
-                        self.mark(mid, "mega")
-                        continue
-
-                    if max_h > avg_h * 1.12 and not self.sent(mid, "value"):
-                        self.send(f"💎 *VALUE*\n🏆 {label}\n✅ *{home}* `{max_h:.2f}`")
-                        self.mark(mid, "value")
-                        continue
-
-                    if max_a > avg_a * 1.12 and not self.sent(mid, "value"):
-                        self.send(f"💎 *VALUE*\n🏆 {label}\n✅ *{away}* `{max_a:.2f}`")
-                        self.mark(mid, "value")
-                        continue
-
-                # --- PEWNIAK ---
-                fav = min(avg_h, avg_a)
-                if fav <= 1.70 and not self.sent(mid, "daily"):
-                    pick = home if avg_h < avg_a else away
-                    tag = "🔥 *PEWNIAK*" if fav <= 1.30 else "⭐ *WARTE UWAGI*"
-                    self.send(f"{tag}\n🏆 {label}\n✅ *{pick}* `{fav:.2f}`")
-                    self.mark(mid, "daily")
-
-            time.sleep(1)
-
+                    pick = f"✅ STAWIAJ NA: *{away.upper()}*\n\n⚪ {home}: `{avg_h:.2f}`\n🟢 {away}: `{avg_a:.2f}`"
+                
+                sugestia = "\n🛡️ _Sugerowana podpórka (1X/X2)_" if "⚽" in sport_label and min_avg > 1.40 else ""
+                msg = f"{tag}\n🏆 {sport_label}\n━━━━━━━━━━━━━━━\n{pick}\n━━━━━━━━━━━━━━━\n⏰ `{m_dt.strftime('%d.%m %H:%M')}` UTC{sugestia}"
+                send_msg(msg)
+                mark_as_sent(m_id, "daily")
+        time.sleep(1)
 
 if __name__ == "__main__":
-    Radar().run()
+    run_pro_radar()
