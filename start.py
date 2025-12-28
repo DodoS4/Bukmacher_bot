@@ -9,14 +9,15 @@ from datetime import datetime, timedelta, timezone
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
+# Twoje 3 klucze API
 KEYS_POOL = [
     os.getenv("ODDS_KEY"),
     os.getenv("ODDS_KEY_2"),
     os.getenv("ODDS_KEY_3"),
-    os.getenv("ODDS_KEY_4"),
 ]
 API_KEYS = [k for k in KEYS_POOL if k]
 
+# Ligi, które bot ma filtrować z listy wszystkich meczów
 SPORTS_CONFIG = {
     "soccer_epl": "⚽ PREMIER LEAGUE",
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -38,7 +39,7 @@ BANKROLL = 1000
 KELLY_FRACTION = 0.2    
 TAX_RATE = 0.88         
 
-# ================= SYSTEM ZAPISU I ROZLICZANIA =================
+# ================= SYSTEM ZAPISU I MATEMATYKA =================
 
 def load_state():
     if not os.path.exists(STATE_FILE): return {}
@@ -86,7 +87,7 @@ def format_value_message(sport_label, home, away, pick, odd, fair, ev_netto, m_d
     )
     return msg
 
-# ================= MODUŁ STATYSTYK (NOWOŚĆ) =================
+# ================= MODUŁ STATYSTYK =================
 
 def check_results_and_report():
     state = load_state()
@@ -96,6 +97,7 @@ def check_results_and_report():
     for sport_key in SPORTS_CONFIG.keys():
         for key in API_KEYS:
             try:
+                # Sprawdzanie wyników zużywa zapytania, dlatego robimy to rzadko
                 r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/scores/",
                                  params={"apiKey": key, "daysFrom": 1}, timeout=10)
                 if r.status_code != 200: continue
@@ -106,16 +108,13 @@ def check_results_and_report():
                     s_key = f"{m_id}_v"
                     if s_key in state and isinstance(state[s_key], dict) and not state[s_key].get("settled"):
                         if not res.get("completed"): continue
-                        
                         s_data = res.get("scores", [])
                         if len(s_data) < 2: continue
                         
                         h_score = int(s_data[0]["score"])
                         a_score = int(s_data[1]["score"])
                         
-                        if h_score > a_score: winner = res["home_team"]
-                        elif a_score > h_score: winner = res["away_team"]
-                        else: winner = "Draw"
+                        winner = res["home_team"] if h_score > a_score else (res["away_team"] if a_score > h_score else "Draw")
 
                         bet = state[s_key]
                         if bet["pick"] == winner:
@@ -127,85 +126,94 @@ def check_results_and_report():
                         
                         state[s_key]["settled"] = True
                         changed = True
-                break
+                break # Jeśli klucz zadziałał, przejdź do następnej ligi
             except: continue
 
     if changed:
         save_state(state)
-        if (summary["wins"] + summary["losses"]) > 0:
+        total = summary["wins"] + summary["losses"]
+        if total > 0:
             msg = (
-                f"📊 **RAPORT SKUTECZNOŚCI**\n"
+                f"📊 **DOBOWY RAPORT SKUTECZNOŚCI**\n"
                 f"━━━━━━━━━━━━━━━\n"
                 f"✅ Trafione: `{summary['wins']}`\n"
                 f"❌ Przegrane: `{summary['losses']}`\n"
-                f"💰 Zysk/Strata: `{summary['profit']:.2f} zł`\n"
+                f"💰 Zysk/Strata netto: `{summary['profit']:.2f} zł`\n"
                 f"━━━━━━━━━━━━━━━"
             )
             send_msg(msg)
 
-# ================= GŁÓWNA LOGIKA =================
+# ================= GŁÓWNA LOGIKA (OPCJA 2 - UPCOMING) =================
 
 def run_scanner():
     state = load_state()
     now = datetime.now(timezone.utc)
+    matches = None
 
-    for sport_key, sport_label in SPORTS_CONFIG.items():
-        matches = None
-        for key in API_KEYS:
-            try:
-                r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/",
-                                 params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=10)
-                if r.status_code == 200:
-                    matches = r.json()
-                    break
-            except: continue
+    # OPCJA 2: Jedno zapytanie o wszystkie nadchodzące mecze
+    for key in API_KEYS:
+        try:
+            r = requests.get("https://api.the-odds-api.com/v4/sports/upcoming/odds/",
+                             params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=10)
+            if r.status_code == 200:
+                matches = r.json()
+                break
+        except: continue
+    
+    if not matches: return
+
+    for match in matches:
+        sport_key = match["sport_key"]
+        if sport_key not in SPORTS_CONFIG: continue # Ignoruj ligi, których nie ustawiliśmy
         
-        if not matches: continue
+        try:
+            m_id, home, away = match["id"], match["home_team"], match["away_team"]
+            m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
+            
+            if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)): continue
 
-        for match in matches:
-            try:
-                m_id, home, away = match["id"], match["home_team"], match["away_team"]
-                m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
-                if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)): continue
-
-                odds_h, odds_a = [], []
-                for bm in match.get("bookmakers", []):
-                    for mkt in bm.get("markets", []):
-                        if mkt["key"] == "h2h":
+            odds_h, odds_a = [], []
+            for bm in match.get("bookmakers", []):
+                for mkt in bm.get("markets", []):
+                    if mkt["key"] == "h2h":
+                        try:
                             h_p = next(o["price"] for o in mkt["outcomes"] if o["name"] == home)
                             a_p = next(o["price"] for o in mkt["outcomes"] if o["name"] == away)
                             odds_h.append(h_p); odds_a.append(a_p)
+                        except: continue
 
-                if len(odds_h) < 3: continue
-                fair_h, fair_a = fair_odds(sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a))
-                max_h, max_a = max(odds_h), max(odds_a)
-                
-                ev_h = (max_h * TAX_RATE / fair_h - 1) * 100
-                ev_a = (max_a * TAX_RATE / fair_a - 1) * 100
+            if len(odds_h) < 3: continue
+            
+            f_h, f_a = fair_odds(sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a))
+            max_h, max_a = max(odds_h), max(odds_a)
+            
+            ev_h = (max_h * TAX_RATE / f_h - 1) * 100
+            ev_a = (max_a * TAX_RATE / f_a - 1) * 100
 
-                if ev_h > ev_a: pick, odd, fair, ev_n = home, max_h, fair_h, ev_h
-                else: pick, odd, fair, ev_n = away, max_a, fair_a, ev_a
+            if ev_h > ev_a: pick, odd, fair, ev_n = home, max_h, f_h, ev_h
+            else: pick, odd, fair, ev_n = away, max_a, f_a, ev_a
 
-                if ev_n >= EV_THRESHOLD and odd >= MIN_ODD and f"{m_id}_v" not in state:
-                    stake = calculate_kelly_stake(odd, fair)
-                    if stake > 0:
-                        send_msg(format_value_message(sport_label, home, away, pick, odd, fair, ev_n, m_dt, stake))
-                        state[f"{m_id}_v"] = {"pick": pick, "odd": odd, "stake": stake, "settled": False}
-                        save_state(state)
-                        time.sleep(1)
-            except: continue
+            if ev_n >= EV_THRESHOLD and odd >= MIN_ODD and f"{m_id}_v" not in state:
+                stake = calculate_kelly_stake(odd, fair)
+                if stake > 0:
+                    send_msg(format_value_message(SPORTS_CONFIG[sport_key], home, away, pick, odd, fair, ev_n, m_dt, stake))
+                    state[f"{m_id}_v"] = {"pick": pick, "odd": odd, "stake": stake, "settled": False, "time": m_dt.isoformat()}
+                    save_state(state)
+                    time.sleep(1)
+        except: continue
 
 if __name__ == "__main__":
-    print("Bot uruchomiony...")
-    last_report_time = 0
+    print("Bot uruchomiony w trybie oszczędzania API (Opcja 2)...")
+    last_report_day = datetime.now().day
+    
     while True:
         run_scanner()
         
-        # Raportowanie wyników raz na 6 godzin
-        if time.time() - last_report_time > 21600: 
-            print("Sprawdzam wyniki i generuję raport...")
+        # Raport raz na dobę
+        if datetime.now().day != last_report_day:
+            print("Generowanie raportu dobowego...")
             check_results_and_report()
-            last_report_time = time.time()
+            last_report_day = datetime.now().day
             
-        print("Skanowanie zakończone. Odpoczynek 15 min...")
-        time.sleep(900)
+        print(f"Skanowanie zakończone o {datetime.now().strftime('%H:%M')}. Czekam 1 godzinę...")
+        time.sleep(3600) # Skanowanie co 1h (łącznie 24 zapytania na dobę)
