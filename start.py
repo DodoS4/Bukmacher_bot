@@ -5,18 +5,16 @@ import json
 from datetime import datetime, timedelta, timezone
 
 # ======================== KONFIGURACJA ========================
-# Wpisz swoje dane między cudzysłowy:
-T_TOKEN = "TWÓJ_TOKEN_TELEGRAM"
-T_CHAT = "TWÓJ_ID_CZATU"
+T_TOKEN = "WPISZ_TU_TOKEN"
+T_CHAT = "WPISZ_TU_ID"
 
-# Możesz wpisać od 1 do 3 kluczy
+# Wpisz klucze w cudzysłowie
 API_KEYS = [
-    "KLUCZ_API_1",
-    "KLUCZ_API_2",
-    "KLUCZ_API_3"
+    "KLUCZ_1",
+    "KLUCZ_2",
+    "KLUCZ_3"
 ]
 
-# Konfiguracja lig (Bot będzie filtrował tylko te z listy upcoming)
 SPORTS_CONFIG = {
     "soccer_epl": "⚽ PREMIER LEAGUE",
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -38,46 +36,64 @@ BANKROLL = 1000
 KELLY_FRACTION = 0.2    
 TAX_RATE = 0.88         
 
-# ======================== LOGIKA POMOCNICZA ========================
+# ======================== FUNKCJE POMOCNICZE ========================
 
 def load_state():
-    if not os.path.exists(STATE_FILE): return {}
+    if not os.path.exists(STATE_FILE):
+        return {}
     try:
-        with open(STATE_FILE, "r") as f: 
-            data = json.load(f)
-            # Jeśli plik jest w starym formacie (nie jest słownikiem słowników), zresetuj go
-            first_val = next(iter(data.values())) if data else None
-            if first_val and not isinstance(first_val, dict):
-                return {}
+        with open(STATE_FILE, "r") as f:
+            content = f.read()
+            if not content: return {}
+            data = json.loads(content)
+            # Sprawdzenie czy format jest poprawny (słownik słowników)
+            if data and isinstance(data, dict):
+                first_key = next(iter(data))
+                if not isinstance(data[first_key], dict):
+                    return {} # Stary format - ignoruj
             return data
-    except: return {}
+    except Exception as e:
+        print(f"Błąd ładowania bazy: {e}")
+        return {}
 
 def save_state(state):
-    with open(STATE_FILE, "w") as f: json.dump(state, f)
+    try:
+        with open(STATE_FILE, "w") as f:
+            json.dump(state, f, indent=4)
+    except Exception as e:
+        print(f"Błąd zapisu bazy: {e}")
 
 def calculate_kelly_stake(odd, fair_odd):
-    real_odd_netto = odd * TAX_RATE
-    if real_odd_netto <= 1.0: return 0
-    p = 1 / fair_odd
-    b = real_odd_netto - 1
-    kelly_pc = (b * p - (1 - p)) / b
-    return max(0, round(BANKROLL * kelly_pc * KELLY_FRACTION, 2))
+    try:
+        real_odd_netto = float(odd) * TAX_RATE
+        if real_odd_netto <= 1.0: return 0
+        p = 1.0 / float(fair_odd)
+        b = real_odd_netto - 1.0
+        kelly_pc = (b * p - (1.0 - p)) / b
+        return max(0, round(BANKROLL * kelly_pc * KELLY_FRACTION, 2))
+    except: return 0
 
 def fair_odds(avg_h, avg_a):
-    p_h, p_a = 1 / avg_h, 1 / avg_a
-    total = p_h + p_a
-    return 1 / (p_h / total), 1 / (p_a / total)
+    try:
+        p_h, p_a = 1.0 / float(avg_h), 1.0 / float(avg_a)
+        total = p_h + p_a
+        return 1.0 / (p_h / total), 1.0 / (p_a / total)
+    except: return 2.0, 2.0
 
 def send_msg(text):
+    if not T_TOKEN or not T_CHAT: return
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
     try:
-        requests.post(url, json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=10)
-    except: print("Błąd wysyłania do Telegrama")
+        res = requests.post(url, json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=15)
+        return res.status_code == 200
+    except Exception as e:
+        print(f"Błąd Telegram: {e}")
+        return False
 
 # ======================== MODUŁY GŁÓWNE ========================
 
 def check_results_and_report():
-    print("Sprawdzam wyniki...")
+    print(">>> Rozpoczynam rozliczanie meczów...")
     state = load_state()
     summary = {"wins": 0, "losses": 0, "profit": 0.0}
     changed = False
@@ -86,7 +102,7 @@ def check_results_and_report():
         for key in API_KEYS:
             try:
                 r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/scores/",
-                                 params={"apiKey": key, "daysFrom": 1}, timeout=10)
+                                 params={"apiKey": key, "daysFrom": 1}, timeout=15)
                 if r.status_code != 200: continue
                 scores = r.json()
                 
@@ -96,19 +112,23 @@ def check_results_and_report():
                     if s_key in state and isinstance(state[s_key], dict) and not state[s_key].get("settled"):
                         if not res.get("completed"): continue
                         s_data = res.get("scores", [])
-                        if len(s_data) < 2: continue
+                        if not s_data or len(s_data) < 2: continue
                         
+                        # Pobieranie wyników
                         h_score = int(s_data[0]["score"])
                         a_score = int(s_data[1]["score"])
-                        winner = res["home_team"] if h_score > a_score else (res["away_team"] if a_score > h_score else "Draw")
+                        
+                        if h_score > a_score: winner = res["home_team"]
+                        elif a_score > h_score: winner = res["away_team"]
+                        else: winner = "Draw"
 
                         bet = state[s_key]
                         if bet["pick"] == winner:
                             summary["wins"] += 1
-                            summary["profit"] += (bet["stake"] * bet["odd"] * TAX_RATE) - bet["stake"]
+                            summary["profit"] += (float(bet["stake"]) * float(bet["odd"]) * TAX_RATE) - float(bet["stake"])
                         else:
                             summary["losses"] += 1
-                            summary["profit"] -= bet["stake"]
+                            summary["profit"] -= float(bet["stake"])
                         
                         state[s_key]["settled"] = True
                         changed = True
@@ -117,7 +137,8 @@ def check_results_and_report():
 
     if changed:
         save_state(state)
-        if (summary["wins"] + summary["losses"]) > 0:
+        total = summary["wins"] + summary["losses"]
+        if total > 0:
             msg = (f"📊 **DOBOWY RAPORT SKUTECZNOŚCI**\n"
                    f"━━━━━━━━━━━━━━━\n"
                    f"✅ Trafione: `{summary['wins']}`\n"
@@ -125,8 +146,10 @@ def check_results_and_report():
                    f"💰 Zysk/Strata netto: `{summary['profit']:.2f} zł`\n"
                    f"━━━━━━━━━━━━━━━")
             send_msg(msg)
+    print(">>> Rozliczanie zakończone.")
 
 def run_scanner():
+    print(">>> Skanowanie kursów (upcoming)...")
     state = load_state()
     now = datetime.now(timezone.utc)
     matches = None
@@ -134,14 +157,16 @@ def run_scanner():
     for key in API_KEYS:
         try:
             r = requests.get("https://api.the-odds-api.com/v4/sports/upcoming/odds/",
-                             params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=10)
+                             params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=15)
             if r.status_code == 200:
                 matches = r.json()
                 break
+            else:
+                print(f"Klucz API błąd: {r.status_code}")
         except: continue
     
-    if not matches: 
-        print("Nie udało się pobrać kursów. Sprawdź klucze API.")
+    if not matches:
+        print("Błąd: Nie otrzymano danych z API. Sprawdź klucze i połączenie.")
         return
 
     for match in matches:
@@ -151,6 +176,7 @@ def run_scanner():
         try:
             m_id, home, away = match["id"], match["home_team"], match["away_team"]
             m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
+            
             if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)): continue
 
             odds_h, odds_a = [], []
@@ -158,13 +184,15 @@ def run_scanner():
                 for mkt in bm.get("markets", []):
                     if mkt["key"] == "h2h":
                         try:
-                            h_p = next(o["price"] for o in mkt["outcomes"] if o["name"] == home)
-                            a_p = next(o["price"] for o in mkt["outcomes"] if o["name"] == away)
+                            h_p = next(float(o["price"]) for o in mkt["outcomes"] if o["name"] == home)
+                            a_p = next(float(o["price"]) for o in mkt["outcomes"] if o["name"] == away)
                             odds_h.append(h_p); odds_a.append(a_p)
                         except: continue
 
             if len(odds_h) < 3: continue
-            f_h, f_a = fair_odds(sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a))
+            
+            avg_h, avg_a = sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a)
+            f_h, f_a = fair_odds(avg_h, avg_a)
             max_h, max_a = max(odds_h), max(odds_a)
             
             ev_h = (max_h * TAX_RATE / f_h - 1) * 100
@@ -175,7 +203,7 @@ def run_scanner():
 
             if ev_n >= EV_THRESHOLD and odd >= MIN_ODD and f"{m_id}_v" not in state:
                 stake = calculate_kelly_stake(odd, fair)
-                if stake > 0:
+                if stake > 1.0: # Minimalna stawka 1 PLN
                     is_pewniak = ev_n >= PEWNIAK_EV_THRESHOLD and odd <= PEWNIAK_MAX_ODD
                     header = "🔥 💎 **PEWNIAK (+EV)** 🔥" if is_pewniak else "💎 *VALUE (+EV)*"
                     msg = (f"{header}\n🏆 {SPORTS_CONFIG[sport_key]}\n⚔️ **{home} vs {away}**\n"
@@ -186,29 +214,32 @@ def run_scanner():
                            f"💰 Sugerowana stawka: *{stake} zł*\n"
                            f"⏰ {m_dt.strftime('%d.%m %H:%M')} UTC\n"
                            f"━━━━━━━━━━━━━━━")
-                    send_msg(msg)
-                    state[f"{m_id}_v"] = {"pick": pick, "odd": odd, "stake": stake, "settled": False}
-                    save_state(state)
+                    if send_msg(msg):
+                        state[f"{m_id}_v"] = {"pick": pick, "odd": odd, "stake": stake, "settled": False}
+                        save_state(state)
+                        time.sleep(1)
         except: continue
 
-# ======================== PĘTLA GŁÓWNA ========================
+# ======================== URUCHOMIENIE ========================
 
 if __name__ == "__main__":
-    print(f"Bot wystartował o {datetime.now().strftime('%H:%M:%S')}")
+    print(f"--- BOT START: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
     last_report_day = datetime.now().day
     
+    # Przed startem usuń stary plik jeśli chcesz zacząć od zera: 
+    # if os.path.exists(STATE_FILE): os.remove(STATE_FILE)
+
     while True:
         try:
             run_scanner()
             
-            # Sprawdzanie wyników raz na dobę
+            # Raport raz na dobę
             if datetime.now().day != last_report_day:
                 check_results_and_report()
                 last_report_day = datetime.now().day
                 
-            print(f"Skanowanie OK. Następne za 1h...")
+            print(f"[{datetime.now().strftime('%H:%M')}] Skanowanie zakończone. Czekam 1h...")
             time.sleep(3600) 
         except Exception as e:
-            print(f"Błąd pętli: {e}")
+            print(f"KRYTYCZNY BŁĄD PĘTLI: {e}")
             time.sleep(60)
-
