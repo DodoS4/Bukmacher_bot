@@ -26,15 +26,15 @@ SPORTS_CONFIG = {
     "icehockey_nhl": "🏒 NHL",
 }
 
-# --- PARAMETRY TESTOWE (OBNIŻONE) ---
+# --- PARAMETRY ZAROBKOWE ---
 STATE_FILE = "sent.json"
-MAX_DAYS = 1            
-EV_THRESHOLD = -20.0    # Bardzo niskie wymagania (pokaże prawie wszystko)
-MIN_ODD = 1.01          # Każdy kurs zostanie zaakceptowany
-MAX_HOURS_AHEAD = 72    # Szukaj meczów do 3 dni do przodu
-BANKROLL = 1000         
-KELLY_FRACTION = 0.2    
-TAX_RATE = 0.88         
+MAX_DAYS = 3            
+EV_THRESHOLD = 3.0      # Szukamy tylko realnego zysku powyżej 3%
+MIN_ODD = 1.55          # Kursy poniżej 1.55 są mało opłacalne przy podatku 12%
+MAX_HOURS_AHEAD = 48    
+BANKROLL = 1000         # Twój budżet (zmień tę kwotę według uznania)
+KELLY_FRACTION = 0.2    # Agresywność stawkowania (0.2 jest bezpieczne)
+TAX_RATE = 0.88         # Polski podatek (12%)
 
 # ================= POMOCNICZE =================
 
@@ -47,7 +47,7 @@ def load_state():
 def save_state(state):
     try:
         with open(STATE_FILE, "w", encoding="utf-8") as f: json.dump(state, f, indent=4)
-    except Exception as e: print(f"Blad zapisu pliku: {e}")
+    except: pass
 
 def get_fair_odds(odds_list):
     probs = [1/o for o in odds_list]
@@ -61,13 +61,13 @@ def send_msg(text):
         requests.post(url, json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=10)
     except: pass
 
-# ================= LOGIKA =================
+# ================= LOGIKA ZAROBKOWA =================
 
 def run():
     state = load_state()
     now = datetime.now(timezone.utc)
     
-    # Czyszczenie stanu
+    # Czyszczenie starych meczów z bazy (starsze niż 3 dni)
     state = {k: v for k, v in state.items() if (now - datetime.fromisoformat(v['time'] if isinstance(v, dict) else v)).days < MAX_DAYS}
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
@@ -79,21 +79,19 @@ def run():
                     params={"apiKey": key, "regions": "eu", "markets": "h2h"},
                     timeout=15
                 )
-                print(f"[{sport_label}] Status: {r.status_code}, Klucz: {key[:5]}...")
                 if r.status_code == 200:
                     matches = r.json()
                     break
+                elif r.status_code == 429: continue
             except: continue
         
-        if not matches:
-            print(f"Brak danych dla {sport_label}")
-            continue
+        if not matches: continue
 
         for match in matches:
             try:
                 m_id = match["id"]
-                # W trybie TESTOWYM nie sprawdzamy czy już wysłano, by wymusić spam testowy
-                # if f"{m_id}_v" in state: continue 
+                # BLOKADA DUPLIKATÓW - wysyłaj tylko nowe mecze
+                if f"{m_id}_v" in state: continue 
 
                 home, away = match["home_team"], match["away_team"]
                 m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
@@ -110,12 +108,12 @@ def run():
                                 all_odds["a"].append(outcomes[away])
                                 if "Draw" in outcomes: all_odds["d"].append(outcomes["Draw"])
 
-                if len(all_odds["h"]) < 2: continue # Minimum 2 bukmacherów do testu
+                if len(all_odds["h"]) < 3: continue 
 
                 avg_h = sum(all_odds["h"]) / len(all_odds["h"])
                 avg_a = sum(all_odds["a"]) / len(all_odds["a"])
                 
-                if all_odds["d"] and len(all_odds["d"]) > 0:
+                if all_odds["d"]:
                     avg_d = sum(all_odds["d"]) / len(all_odds["d"])
                     fair_h, fair_d, fair_a = get_fair_odds([avg_h, avg_d, avg_a])
                 else:
@@ -125,32 +123,40 @@ def run():
                 ev_h = (max_h * TAX_RATE / fair_h - 1) * 100
                 ev_a = (max_a * TAX_RATE / fair_a - 1) * 100
 
-                # Wybór czegokolwiek (nawet z ujemnym EV)
-                pick, odd, fair, ev = (home, max_h, fair_h, ev_h) if ev_h > ev_a else (away, max_a, fair_a, ev_a)
+                if ev_h > ev_a:
+                    pick, odd, fair, ev = home, max_h, fair_h, ev_h
+                else:
+                    pick, odd, fair, ev = away, max_a, fair_a, ev_a
 
-                if ev >= EV_THRESHOLD:
-                    msg = (
-                        f"🧪 **TEST DZIAŁANIA**\n"
-                        f"🏆 {sport_label}\n"
-                        f"⚔️ **{home} vs {away}**\n"
-                        f"━━━━━━━━━━━━━━━\n"
-                        f"✅ TYP: *{pick}*\n"
-                        f"📈 Kurs: `{odd:.2f}`\n"
-                        f"🔥 EV netto: `{ev:.1f}%` (Testowe)\n"
-                        f"━━━━━━━━━━━━━━━"
-                    )
-                    send_msg(msg)
-                    state[f"{m_id}_v"] = {"time": now.isoformat(), "pick": pick}
-                    save_state(state)
-                    time.sleep(0.5)
-            except Exception as e:
-                print(f"Blad przy meczu: {e}")
+                # FILTR ZYSKU
+                if ev >= EV_THRESHOLD and odd >= MIN_ODD:
+                    # Obliczanie stawki Kelly'ego
+                    p = 1 / fair
+                    b = (odd * TAX_RATE) - 1
+                    kelly_pc = (b * p - (1 - p)) / b
+                    stake = max(0, round(BANKROLL * kelly_pc * KELLY_FRACTION, 2))
+
+                    if stake > 2: # Wysyłaj tylko jeśli stawka ma sens ekonomiczny
+                        msg = (
+                            f"🔥 **OKAZJA VALUE (+EV)**\n"
+                            f"🏆 {sport_label}\n"
+                            f"⚔️ **{home} vs {away}**\n"
+                            f"━━━━━━━━━━━━━━━\n"
+                            f"✅ TYP: *{pick}*\n"
+                            f"📈 Kurs: `{odd:.2f}` (Fair: {fair:.2f})\n"
+                            f"🔥 EV netto: `+{ev:.1f}%`\n"
+                            f"💰 Sugerowana stawka: *{stake} zł*\n"
+                            f"⏰ Start: {m_dt.strftime('%d.%m %H:%M')} UTC\n"
+                            f"━━━━━━━━━━━━━━━"
+                        )
+                        send_msg(msg)
+                        state[f"{m_id}_v"] = {"time": now.isoformat(), "pick": pick}
+                        save_state(state)
+                        time.sleep(1)
+            except: continue
 
 if __name__ == "__main__":
-    print("URUCHOMIENIE TESTOWE...")
-    send_msg("🚀 **Start Testu:** Bot pobiera wszystko jak leci!")
     try:
         run()
-        print("Koniec skanowania testowego.")
     except Exception as e:
-        send_msg(f"❌ Błąd: {e}")
+        print(f"Błąd: {e}")
