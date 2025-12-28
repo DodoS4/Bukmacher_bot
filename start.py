@@ -4,50 +4,45 @@ import time
 import json
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA =================
+# ================= KONFIGURACJA ZAROBKOWA =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
-# Klucze API z GitHub Secrets
 KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3")]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-# Konfiguracja lig
+# Rozszerzona lista lig dla większej liczby okazji
 SPORTS_CONFIG = {
     "soccer_epl": "⚽ PREMIER LEAGUE",
     "soccer_spain_la_liga": "⚽ LA LIGA",
     "soccer_germany_bundesliga": "⚽ BUNDESLIGA",
     "soccer_italy_serie_a": "⚽ SERIE A",
+    "soccer_france_ligue_1": "⚽ LIGUE 1",
     "soccer_poland_ekstraklasa": "⚽ EKSTRAKLASA",
+    "soccer_netherlands_ere_divisie": "⚽ EREDIVISIE",
+    "soccer_portugal_primeira_liga": "⚽ LIGA PORTUGAL",
     "basketball_nba": "🏀 NBA",
     "icehockey_nhl": "🏒 NHL",
 }
 
 STATE_FILE = "sent.json"
-TAX_RATE = 0.88         # Podatek 12%
-EV_THRESHOLD = 3.0      # Szukamy zysku min. 3% (zmień na -5.0 jeśli chcesz wymusić test)
-BANKROLL = 1000         
-KELLY_FRACTION = 0.2    
+TAX_RATE = 0.88         # Uwzględnia 12% podatku (zarabiasz tylko gdy EV > 0 po opodatkowaniu)
+EV_THRESHOLD = 3.5      # Szukamy solidnej przewagi 3.5% (filtr jakości)
+MIN_ODD = 1.60          # Unikamy niskich kursów, gdzie podatek "zjada" cały zysk
+BANKROLL = 1000         # Podaj swój realny budżet na grę
+KELLY_FRACTION = 0.2    # Bezpieczne zarządzanie stawką (1/5 kryterium Kelly'ego)
 
 # ================= KOMUNIKACJA =================
 
 def send_msg(text):
-    """Wysyła wiadomość do Twojego Telegrama"""
-    if not T_TOKEN or not T_CHAT:
-        print("BŁĄD: Brak T_TOKEN lub T_CHAT w Secrets!")
-        return
+    if not T_TOKEN or not T_CHAT: return
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
     payload = {"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}
     try:
-        r = requests.post(url, json=payload, timeout=10)
-        if r.status_code == 200:
-            print("Wysłano do Telegrama.")
-        else:
-            print(f"Błąd Telegrama (Status {r.status_code}): {r.text}")
-    except Exception as e:
-        print(f"Wyjątek Telegram: {e}")
+        requests.post(url, json=payload, timeout=10)
+    except: pass
 
-# ================= ANALIZA DANYCH =================
+# ================= ANALIZA I MATEMATYKA =================
 
 def load_state():
     if not os.path.exists(STATE_FILE): return {}
@@ -61,7 +56,7 @@ def save_state(state):
     except: pass
 
 def get_fair_odds(odds_list):
-    """Usuwa marżę bukmacherską"""
+    """Oblicza 'true odds' usuwając marżę bukmachera"""
     probs = [1/o for o in odds_list]
     total_prob = sum(probs)
     return [1 / (p / total_prob) for p in probs]
@@ -70,7 +65,7 @@ def run():
     state = load_state()
     now = datetime.now(timezone.utc)
     
-    # Usuwanie meczów sprzed 3 dni
+    # Czyścimy bazę wysłanych meczów co 3 dni
     state = {k: v for k, v in state.items() if (now - datetime.fromisoformat(v['time'] if isinstance(v, dict) else v)).days < 3}
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
@@ -84,7 +79,6 @@ def run():
                 )
                 if r.status_code == 200:
                     matches = r.json()
-                    print(f"[{sport_label}] Pobrano pomyślnie. Pozostało limitu: {r.headers.get('x-requests-remaining')}")
                     break
             except: continue
         
@@ -93,12 +87,12 @@ def run():
         for match in matches:
             try:
                 m_id = match["id"]
-                if f"{m_id}_v" in state: continue # Pomiń już wysłane
+                if f"{m_id}_v" in state: continue 
 
                 home, away = match["home_team"], match["away_team"]
                 m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
 
-                # Tylko mecze przyszłe (max 48h)
+                # Analizujemy mecze startujące w ciągu najbliższych 48h
                 if m_dt < now or m_dt > (now + timedelta(hours=48)): continue
 
                 all_odds = {"h": [], "d": [], "a": []}
@@ -111,7 +105,7 @@ def run():
                                 all_odds["a"].append(outcomes[away])
                                 if "Draw" in outcomes: all_odds["d"].append(outcomes["Draw"])
 
-                if len(all_odds["h"]) < 3: continue 
+                if len(all_odds["h"]) < 4: continue # Wymagamy min 4 bukmacherów dla precyzji średniej
 
                 avg_h = sum(all_odds["h"]) / len(all_odds["h"])
                 avg_a = sum(all_odds["a"]) / len(all_odds["a"])
@@ -126,48 +120,36 @@ def run():
                 ev_h = (max_h * TAX_RATE / fair_h - 1) * 100
                 ev_a = (max_a * TAX_RATE / fair_a - 1) * 100
 
-                if ev_h > ev_a:
-                    pick, odd, fair, ev = home, max_h, fair_h, ev_h
-                else:
-                    pick, odd, fair, ev = away, max_a, fair_a, ev_a
+                # Wybór lepszego kierunku
+                pick, odd, fair, ev = (home, max_h, fair_h, ev_h) if ev_h > ev_a else (away, max_a, fair_a, ev_a)
 
-                if ev >= EV_THRESHOLD:
+                if ev >= EV_THRESHOLD and odd >= MIN_ODD:
                     p = 1 / fair
                     b = (odd * TAX_RATE) - 1
                     if b > 0:
                         kelly = ((b * p - (1 - p)) / b) * KELLY_FRACTION
                         stake = max(0, round(BANKROLL * kelly, 2))
                         
-                        if stake > 5:
+                        if stake >= 10: # Tylko konkretne wejścia
                             msg = (
-                                f"🔥 **OKAZJA VALUE (+EV)**\n"
+                                f"💰 **SZANSA ZAROBKOWA (+EV)**\n"
                                 f"🏆 {sport_label}\n"
                                 f"⚔️ **{home} vs {away}**\n"
                                 f"━━━━━━━━━━━━━━━\n"
                                 f"✅ TYP: *{pick}*\n"
                                 f"📈 Kurs: `{odd:.2f}` (Fair: {fair:.2f})\n"
-                                f"🔥 EV netto: `+{ev:.1f}%`\n"
-                                f"💰 Stawka: *{stake} zł*"
+                                f"🔥 Zysk netto (EV): `+{ev:.1f}%`\n"
+                                f"📏 Stawka: *{stake} zł*\n"
+                                f"━━━━━━━━━━━━━━━"
                             )
                             send_msg(msg)
                             state[f"{m_id}_v"] = {"time": now.isoformat(), "pick": pick}
                             save_state(state)
             except: continue
 
-# ================= START =================
-
 if __name__ == "__main__":
-    current_time = datetime.now().strftime("%H:%M:%S")
-    print(f"Inicjalizacja bota: {current_time}")
-    
-    # POWIADOMIENIE TESTOWE - sprawdzamy połączenie
-    test_info = f"🤖 **Bot Bukmacherski**\nStatus: `Uruchomiony pomyślnie`\nGodzina: `{current_time}`\n\n_Szukam okazji matematycznych..._"
-    send_msg(test_info)
-    
+    # Bot pracuje po cichu, wysyła tylko konkretne okazje
     try:
         run()
-        print("Skanowanie zakończone.")
     except Exception as e:
-        err = f"❌ **Błąd krytyczny:**\n`{str(e)}`"
-        print(err)
-        send_msg(err)
+        send_msg(f"⚠️ Błąd pracy bota: `{e}`")
