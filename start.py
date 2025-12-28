@@ -27,13 +27,11 @@ SPORTS_CONFIG = {
 
 STATE_FILE = "sent.json"
 
-# Strategia
 EV_THRESHOLD = 3.0
 MIN_ODD = 1.55
 MIN_BOOKS = 4
 TAX_RATE = 0.88
 
-# Bankroll & staking
 BANKROLL = 1000
 KELLY_FRACTION = 0.2
 MAX_STAKE_PCT = 0.03
@@ -60,8 +58,13 @@ def trimmed_mean(data, trim=0.2):
     return sum(data[k:-k]) / len(data[k:-k])
 
 def get_fair_odds(odds):
-    probs = [1 / o for o in odds]
+    clean_odds = [o for o in odds if o and o > 1e-6]
+    if len(clean_odds) != len(odds):
+        raise ValueError("Invalid odds data")
+    probs = [1 / o for o in clean_odds]
     total = sum(probs)
+    if total <= 0:
+        raise ValueError("Zero probability sum")
     return [1 / (p / total) for p in probs]
 
 def load_state():
@@ -84,10 +87,7 @@ def run():
     now = datetime.now(timezone.utc)
 
     # Czyść stare wpisy (2 dni)
-    state = {
-        k: v for k, v in state.items()
-        if (now - datetime.fromisoformat(v["time"])).days < 2
-    }
+    state = {k: v for k, v in state.items() if (now - datetime.fromisoformat(v["time"])).days < 2}
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
         matches = None
@@ -116,9 +116,7 @@ def run():
 
                 home = match["home_team"]
                 away = match["away_team"]
-                start = datetime.fromisoformat(
-                    match["commence_time"].replace("Z", "+00:00")
-                )
+                start = datetime.fromisoformat(match["commence_time"].replace("Z", "+00:00"))
 
                 if start < now or start > now + timedelta(hours=48):
                     continue
@@ -151,7 +149,7 @@ def run():
                 max_h = max(odds["h"])
                 max_a = max(odds["a"])
 
-                # Ghost odds filter
+                # Filtr „ghost odds”
                 if max_h > avg_h * 1.25 or max_a > avg_a * 1.25:
                     continue
 
@@ -159,9 +157,7 @@ def run():
                 ev_a = (max_a * TAX_RATE / fair_a - 1) * 100
 
                 pick, odd, fair, ev = (
-                    (home, max_h, fair_h, ev_h)
-                    if ev_h > ev_a
-                    else (away, max_a, fair_a, ev_a)
+                    (home, max_h, fair_h, ev_h) if ev_h > ev_a else (away, max_a, fair_a, ev_a)
                 )
 
                 if ev < EV_THRESHOLD or odd < MIN_ODD:
@@ -169,14 +165,12 @@ def run():
 
                 p = 1 / fair
                 b = odd * TAX_RATE - 1
-                if b <= 0:
+                if b <= 1e-6:
                     continue
 
                 kelly = ((b * p - (1 - p)) / b) * KELLY_FRACTION
-                stake = BANKROLL * kelly
-                stake = min(stake, BANKROLL * MAX_STAKE_PCT)
+                stake = min(BANKROLL * kelly, BANKROLL * MAX_STAKE_PCT)
                 stake = round(stake, 2)
-
                 if stake < 5:
                     continue
 
