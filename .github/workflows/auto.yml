@@ -2,10 +2,9 @@ name: Bukmacher Bot Pro
 
 on:
   schedule:
-    # Uruchomienie co godzinę (0 minut po każdej godzinie)
+    # Uruchomienie co godzinę
     - cron: '0 * * * *'
   workflow_dispatch:
-    # Możliwość ręcznego odpalenia przyciskiem "Run workflow"
 
 permissions:
   contents: write
@@ -37,28 +36,19 @@ jobs:
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
-          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: python start.py
 
-      - name: Bezpieczny zapis bazy danych
+      - name: Bezpieczny zapis bazy danych (sent.json)
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Upewnienie się, że plik bazy istnieje
-          touch sent_matches.txt
-          
-          # 1. Dodaj zmiany do poczekalni
-          git add sent_matches.txt
-          
-          # 2. Zrób lokalny zapis (commit)
-          git commit -m "Aktualizacja bazy wysłanych meczy [skip ci]" || echo "Brak nowych meczy do zapisania"
-          
-          # 3. Pobierz najnowsze zmiany z serwera (np. Twoje edycje start.py)
-          # Rebase teraz zadziała, bo lokalne zmiany są już w commitcie
-          git pull --rebase origin main
-          
-          # 4. Wyślij wszystko na serwer
-          git push origin main
-
+          # Sprawdzenie czy plik istnieje, żeby uniknąć błędu
+          if [ -f sent.json ]; then
+            git add sent.json
+            git commit -m "Aktualizacja bazy wysłanych meczy [skip ci]" || echo "Brak zmian"
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "Plik sent.json nie został znaleziony. Nic do zapisu."
+          fi
