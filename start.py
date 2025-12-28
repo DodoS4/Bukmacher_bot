@@ -51,7 +51,6 @@ def clean_state(state):
     new_state = {}
     for key, ts in state.items():
         try:
-            # Poprawione dla ISO z Z na końcu
             dt = datetime.strptime(ts, "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=timezone.utc)
         except ValueError:
             try:
@@ -119,15 +118,18 @@ def ev_percent(odd, fair):
 # ================= FORMAT =================
 
 def format_value_message(sport_label, home, away, pick, odd, fair, ev, m_dt):
-    """Tworzy czytelny komunikat Value/EV dla Telegrama"""
+    """Tworzy czytelny komunikat Value/EV dla Telegrama z krótkimi kursami"""
     pick_icon = "✅"
+    home_fair = f"{fair:.2f}" if pick == home else ""
+    away_fair = f"{fair:.2f}" if pick == away else ""
+    
     msg = (
         f"💎 *VALUE (+EV)*\n"
         f"🏆 {sport_label}\n"
         f"━━━━━━━━━━━━━━━\n"
         f"{pick_icon} STAWIAJ NA: *{pick}*\n"
-        f"🔹 {home}: `{fair if pick==home else ''}`\n"
-        f"🔹 {away}: `{fair if pick==away else ''}`\n"
+        f"🔹 {home}: `{home_fair}`\n"
+        f"🔹 {away}: `{away_fair}`\n"
         f"📈 Kurs: `{odd:.2f}`\n"
         f"🔥 EV: `+{ev:.1f}%`\n"
         f"⏰ {m_dt.strftime('%d.%m %H:%M')} UTC\n"
@@ -175,7 +177,7 @@ def run():
                             continue
 
                 if len(all_h) < 2:
-                    continue  # mniejsze ligi też bierzemy
+                    continue
 
                 avg_h, avg_a = sum(all_h)/len(all_h), sum(all_a)/len(all_a)
                 max_h, max_a = max(all_h), max(all_a)
