@@ -119,17 +119,21 @@ def ev_percent(odd, fair):
 # ================= FORMAT =================
 
 def format_value_message(sport_label, home, away, pick, odd, fair, ev, m_dt):
-    return (
+    """Tworzy czytelny komunikat Value/EV dla Telegrama"""
+    pick_icon = "✅"
+    msg = (
         f"💎 *VALUE (+EV)*\n"
         f"🏆 {sport_label}\n"
         f"━━━━━━━━━━━━━━━\n"
-        f"🎯 Wariant: *{pick}*\n"
+        f"{pick_icon} STAWIAJ NA: *{pick}*\n"
+        f"🔹 {home}: `{fair if pick==home else ''}`\n"
+        f"🔹 {away}: `{fair if pick==away else ''}`\n"
         f"📈 Kurs: `{odd:.2f}`\n"
-        f"🧮 Fair: `{fair:.2f}`\n"
         f"🔥 EV: `+{ev:.1f}%`\n"
         f"⏰ {m_dt.strftime('%d.%m %H:%M')} UTC\n"
         f"━━━━━━━━━━━━━━━"
     )
+    return msg
 
 # ================= GŁÓWNA LOGIKA =================
 
