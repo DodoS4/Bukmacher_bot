@@ -4,14 +4,13 @@ import time
 import json
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA ZAROBKOWA =================
+# ================= KONFIGURACJA =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
 KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3")]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-# Rozszerzona lista lig dla większej liczby okazji
 SPORTS_CONFIG = {
     "soccer_epl": "⚽ PREMIER LEAGUE",
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -19,18 +18,20 @@ SPORTS_CONFIG = {
     "soccer_italy_serie_a": "⚽ SERIE A",
     "soccer_france_ligue_1": "⚽ LIGUE 1",
     "soccer_poland_ekstraklasa": "⚽ EKSTRAKLASA",
-    "soccer_netherlands_ere_divisie": "⚽ EREDIVISIE",
-    "soccer_portugal_primeira_liga": "⚽ LIGA PORTUGAL",
+    "soccer_uefa_champs_league": "🏆 LIGA MISTRZÓW",
+    "soccer_uefa_europa_league": "🏆 LIGA EUROPY",
+    "soccer_turkey_super_lig": "⚽ TURCJA SUPER LIG",
+    "soccer_belgium_first_div": "⚽ BELGIA JUPILER",
     "basketball_nba": "🏀 NBA",
     "icehockey_nhl": "🏒 NHL",
 }
 
 STATE_FILE = "sent.json"
-TAX_RATE = 0.88         # Uwzględnia 12% podatku (zarabiasz tylko gdy EV > 0 po opodatkowaniu)
-EV_THRESHOLD = 3.5      # Szukamy solidnej przewagi 3.5% (filtr jakości)
-MIN_ODD = 1.60          # Unikamy niskich kursów, gdzie podatek "zjada" cały zysk
-BANKROLL = 1000         # Podaj swój realny budżet na grę
-KELLY_FRACTION = 0.2    # Bezpieczne zarządzanie stawką (1/5 kryterium Kelly'ego)
+TAX_RATE = 0.88         
+EV_THRESHOLD = 2.5      # Zmieniono na Twój próg 2.5%
+MIN_ODD = 1.50          
+BANKROLL = 1000         
+KELLY_FRACTION = 0.2    
 
 # ================= KOMUNIKACJA =================
 
@@ -38,11 +39,10 @@ def send_msg(text):
     if not T_TOKEN or not T_CHAT: return
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
     payload = {"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}
-    try:
-        requests.post(url, json=payload, timeout=10)
+    try: requests.post(url, json=payload, timeout=10)
     except: pass
 
-# ================= ANALIZA I MATEMATYKA =================
+# ================= ANALIZA =================
 
 def load_state():
     if not os.path.exists(STATE_FILE): return {}
@@ -56,7 +56,6 @@ def save_state(state):
     except: pass
 
 def get_fair_odds(odds_list):
-    """Oblicza 'true odds' usuwając marżę bukmachera"""
     probs = [1/o for o in odds_list]
     total_prob = sum(probs)
     return [1 / (p / total_prob) for p in probs]
@@ -64,9 +63,7 @@ def get_fair_odds(odds_list):
 def run():
     state = load_state()
     now = datetime.now(timezone.utc)
-    
-    # Czyścimy bazę wysłanych meczów co 3 dni
-    state = {k: v for k, v in state.items() if (now - datetime.fromisoformat(v['time'] if isinstance(v, dict) else v)).days < 3}
+    state = {k: v for k, v in state.items() if (now - datetime.fromisoformat(v['time'] if isinstance(v, dict) else v)).days < 2}
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
         matches = None
@@ -92,7 +89,6 @@ def run():
                 home, away = match["home_team"], match["away_team"]
                 m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
 
-                # Analizujemy mecze startujące w ciągu najbliższych 48h
                 if m_dt < now or m_dt > (now + timedelta(hours=48)): continue
 
                 all_odds = {"h": [], "d": [], "a": []}
@@ -105,7 +101,7 @@ def run():
                                 all_odds["a"].append(outcomes[away])
                                 if "Draw" in outcomes: all_odds["d"].append(outcomes["Draw"])
 
-                if len(all_odds["h"]) < 4: continue # Wymagamy min 4 bukmacherów dla precyzji średniej
+                if len(all_odds["h"]) < 3: continue 
 
                 avg_h = sum(all_odds["h"]) / len(all_odds["h"])
                 avg_a = sum(all_odds["a"]) / len(all_odds["a"])
@@ -120,7 +116,6 @@ def run():
                 ev_h = (max_h * TAX_RATE / fair_h - 1) * 100
                 ev_a = (max_a * TAX_RATE / fair_a - 1) * 100
 
-                # Wybór lepszego kierunku
                 pick, odd, fair, ev = (home, max_h, fair_h, ev_h) if ev_h > ev_a else (away, max_a, fair_a, ev_a)
 
                 if ev >= EV_THRESHOLD and odd >= MIN_ODD:
@@ -130,16 +125,16 @@ def run():
                         kelly = ((b * p - (1 - p)) / b) * KELLY_FRACTION
                         stake = max(0, round(BANKROLL * kelly, 2))
                         
-                        if stake >= 10: # Tylko konkretne wejścia
+                        if stake >= 5:
                             msg = (
-                                f"💰 **SZANSA ZAROBKOWA (+EV)**\n"
+                                f"💰 **OKAZJA (+EV)**\n"
                                 f"🏆 {sport_label}\n"
                                 f"⚔️ **{home} vs {away}**\n"
                                 f"━━━━━━━━━━━━━━━\n"
                                 f"✅ TYP: *{pick}*\n"
                                 f"📈 Kurs: `{odd:.2f}` (Fair: {fair:.2f})\n"
-                                f"🔥 Zysk netto (EV): `+{ev:.1f}%`\n"
-                                f"📏 Stawka: *{stake} zł*\n"
+                                f"🔥 EV: `+{ev:.1f}%`\n"
+                                f"💰 Stawka: *{stake} zł*\n"
                                 f"━━━━━━━━━━━━━━━"
                             )
                             send_msg(msg)
@@ -148,8 +143,7 @@ def run():
             except: continue
 
 if __name__ == "__main__":
-    # Bot pracuje po cichu, wysyła tylko konkretne okazje
     try:
         run()
     except Exception as e:
-        send_msg(f"⚠️ Błąd pracy bota: `{e}`")
+        print(f"Błąd: {e}")
