@@ -4,14 +4,12 @@ import time
 import json
 from datetime import datetime, timedelta, timezone
 import traceback
-from dateutil.parser import isoparse  # pip install python-dateutil
 
 # ================= KONFIGURACJA =================
 
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
-# Klucze API
 KEYS_POOL = [
     os.getenv("ODDS_KEY_1"),
     os.getenv("ODDS_KEY_2"),
@@ -19,7 +17,6 @@ KEYS_POOL = [
 ]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-# Ligi do monitorowania
 SPORTS_CONFIG = {
     "soccer_epl": "⚽ PREMIER LEAGUE",
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -156,7 +153,7 @@ def scan_matches():
                 m_id = match["id"]
                 home = match["home_team"]
                 away = match["away_team"]
-                m_dt = isoparse(match["commence_time"])
+                m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
 
                 if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)):
                     continue
@@ -195,7 +192,7 @@ def scan_matches():
                         send_msg(msg)
                         state[f"{m_id}_v"] = now.isoformat()
                         save_state(state)
-                        time.sleep(1)  # uniknięcie zbyt szybkich zapytań Telegrama
+                        time.sleep(1)
             except Exception as e:
                 print(f"Błąd przetwarzania meczu {match.get('id')}: {e}")
                 traceback.print_exc()
@@ -203,70 +200,13 @@ def scan_matches():
 
     save_cache(cache)
 
-# ================= RAPORTY =================
-
-def check_results_and_report():
-    state = load_state()
-    summary = {"wins": 0, "losses": 0, "profit": 0.0}
-    changed = False
-
-    for sport_key in SPORTS_CONFIG.keys():
-        key = get_next_key()
-        try:
-            r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/scores/",
-                             params={"apiKey": key, "daysFrom": 1}, timeout=10)
-            if r.status_code != 200: continue
-            scores = r.json()
-            
-            for res in scores:
-                m_id = res["id"]
-                s_key = f"{m_id}_v"
-                if s_key in state and not state[s_key].get("settled", False):
-                    if not res.get("completed"): continue
-                    s_data = res.get("scores", [])
-                    if len(s_data) < 2: continue
-                    
-                    h_score = int(s_data[0]["score"])
-                    a_score = int(s_data[1]["score"])
-                    winner = res["home_team"] if h_score > a_score else (res["away_team"] if a_score > h_score else "Draw")
-
-                    bet = state[s_key]
-                    if bet.get("pick") == winner:
-                        summary["wins"] += 1
-                        summary["profit"] += (bet["stake"] * bet["odd"] * TAX_RATE) - bet["stake"]
-                    else:
-                        summary["losses"] += 1
-                        summary["profit"] -= bet["stake"]
-                    
-                    state[s_key]["settled"] = True
-                    changed = True
-        except: continue
-
-    if changed:
-        save_state(state)
-        if summary["wins"] + summary["losses"] > 0:
-            msg = (f"📊 **DOBOWY RAPORT SKUTECZNOŚCI**\n"
-                   f"━━━━━━━━━━━━━━━\n"
-                   f"✅ Trafione: `{summary['wins']}`\n"
-                   f"❌ Przegrane: `{summary['losses']}`\n"
-                   f"💰 Zysk/Strata netto: `{summary['profit']:.2f} zł`\n"
-                   f"━━━━━━━━━━━━━━━")
-            send_msg(msg)
-
 # ================= PĘTLA GŁÓWNA =================
 
 if __name__ == "__main__":
     print(f"Bot wystartował o {datetime.now().strftime('%H:%M:%S')}")
-    last_report_day = datetime.now().day
     while True:
         try:
             scan_matches()
-            
-            # raport dzienny
-            if datetime.now().day != last_report_day:
-                check_results_and_report()
-                last_report_day = datetime.now().day
-
             print(f"Skanowanie zakończone. Następne za 2h...")
             time.sleep(SCAN_INTERVAL)
         except Exception as e:
