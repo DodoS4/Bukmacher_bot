@@ -1,11 +1,15 @@
-name: Bukmacher Bot Pro
+name: Bukmacher Bot Pro - Maksymalny Zasieg
 
 on:
   schedule:
-    # Uruchomienie co godzinę
-    - cron: '0 * * * *'
+    # Uruchomienie co 30 minut (48 razy na dobę)
+    # Wyliczenie: 48 zapytan * 31 dni = 1488 kredytow (Limit 3 kluczy to 1500)
+    - cron: '*/30 * * * *'
+  
+  # Pozwala na ręczne uruchomienie bota z zakładki Actions
   workflow_dispatch:
 
+# Uprawnienia potrzebne do zapisu zmian (pliku sent.json) w repozytorium
 permissions:
   contents: write
 
@@ -19,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Konfiguracja Pythona
+      - name: Konfiguracja środowiska Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
@@ -31,6 +35,7 @@ jobs:
 
       - name: Uruchomienie bota
         env:
+          # Dane pobierane z Settings -> Secrets and variables -> Actions
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
@@ -38,17 +43,24 @@ jobs:
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
         run: python start.py
 
-      - name: Bezpieczny zapis bazy danych (sent.json)
+      - name: Zapisanie bazy wysłanych meczów
         run: |
+          # Konfiguracja git
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Sprawdzenie czy plik istnieje, żeby uniknąć błędu
+          # Sprawdzenie czy plik sent.json istnieje i ma zmiany
           if [ -f sent.json ]; then
             git add sent.json
-            git commit -m "Aktualizacja bazy wysłanych meczy [skip ci]" || echo "Brak zmian"
+            
+            # Commit zmian tylko jeśli plik został zmodyfikowany
+            # [skip ci] zapobiega zapętleniu się akcji po dodaniu commita
+            git commit -m "Aktualizacja bazy wysłanych meczów [skip ci]" || echo "Brak nowych meczów do zapisania"
+            
+            # Pobranie ewentualnych zmian z serwera i wysłanie nowej bazy
             git pull --rebase origin main
             git push origin main
           else
-            echo "Plik sent.json nie został znaleziony. Nic do zapisu."
+            echo "Błąd: Plik sent.json nie istnieje!"
+            exit 1
           fi
