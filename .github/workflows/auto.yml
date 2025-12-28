@@ -61,3 +61,4 @@ jobs:
           
           # 4. Wyślij wszystko na serwer
           git push origin main
+
