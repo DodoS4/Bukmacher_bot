@@ -3,20 +3,23 @@ import os
 import time
 import json
 from datetime import datetime, timedelta, timezone
+import traceback
+from dateutil.parser import isoparse  # pip install python-dateutil
 
 # ================= KONFIGURACJA =================
 
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
+# Klucze API
 KEYS_POOL = [
-    os.getenv("ODDS_KEY"),
+    os.getenv("ODDS_KEY_1"),
     os.getenv("ODDS_KEY_2"),
     os.getenv("ODDS_KEY_3"),
-    os.getenv("ODDS_KEY_4"),
 ]
 API_KEYS = [k for k in KEYS_POOL if k]
 
+# Ligi do monitorowania
 SPORTS_CONFIG = {
     "soccer_epl": "⚽ PREMIER LEAGUE",
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -28,43 +31,61 @@ SPORTS_CONFIG = {
 }
 
 STATE_FILE = "sent.json"
-MAX_DAYS = 3            
-EV_THRESHOLD = 3.0      
+CACHE_FILE = "matches.json"
+
+MAX_DAYS = 3
+EV_THRESHOLD = 3.0
 PEWNIAK_EV_THRESHOLD = 7.0
 PEWNIAK_MAX_ODD = 2.60
-MIN_ODD = 1.55          
-MAX_HOURS_AHEAD = 48    
+MIN_ODD = 1.55
+MAX_HOURS_AHEAD = 48
 
-BANKROLL = 1000         
-KELLY_FRACTION = 0.2    
-TAX_RATE = 0.88         
+BANKROLL = 1000
+KELLY_FRACTION = 0.2
+TAX_RATE = 0.88
+
+SCAN_INTERVAL = 2 * 3600  # 2 godziny w sekundach
 
 # ================= POMOCNICZE =================
 
+key_index = 0
+def get_next_key():
+    global key_index
+    key = API_KEYS[key_index]
+    key_index = (key_index + 1) % len(API_KEYS)
+    return key
+
 def load_state():
     if not os.path.exists(STATE_FILE): return {}
-    with open(STATE_FILE, "r") as f: return json.load(f)
+    try:
+        with open(STATE_FILE, "r") as f:
+            return json.load(f)
+    except:
+        return {}
 
 def save_state(state):
-    with open(STATE_FILE, "w") as f: json.dump(state, f)
+    with open(STATE_FILE, "w") as f:
+        json.dump(state, f)
 
-def clean_state(state):
-    now = datetime.now(timezone.utc)
-    new_state = {}
-    for key, ts in state.items():
-        try:
-            dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
-            if now - dt <= timedelta(days=MAX_DAYS): new_state[key] = ts
-        except: continue
-    return new_state
+def load_cache():
+    if not os.path.exists(CACHE_FILE): return {}
+    try:
+        with open(CACHE_FILE, "r") as f:
+            return json.load(f)
+    except:
+        return {}
+
+def save_cache(cache):
+    with open(CACHE_FILE, "w") as f:
+        json.dump(cache, f)
 
 def calculate_kelly_stake(odd, fair_odd):
     real_odd_netto = odd * TAX_RATE
     if real_odd_netto <= 1.0: return 0
     p = 1 / fair_odd
     b = real_odd_netto - 1
-    kelly_percent = (b * p - (1 - p)) / b
-    stake = BANKROLL * kelly_percent * KELLY_FRACTION
+    kelly_pc = (b * p - (1 - p)) / b
+    stake = BANKROLL * kelly_pc * KELLY_FRACTION
     return max(0, round(stake, 2))
 
 def fair_odds(avg_h, avg_a):
@@ -72,21 +93,26 @@ def fair_odds(avg_h, avg_a):
     total = p_h + p_a
     return 1 / (p_h / total), 1 / (p_a / total)
 
-# ================= KOMUNIKACJA =================
+# ================= TELEGRAM =================
 
 def send_msg(text):
-    if not T_TOKEN or not T_CHAT: return
-    url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
+    if not T_TOKEN or not T_CHAT: 
+        print("Telegram token/chat niezdefiniowany")
+        return
     try:
-        requests.post(url, json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=10)
-    except: pass
+        requests.post(
+            f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+            json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"},
+            timeout=10
+        )
+    except Exception as e:
+        print(f"Błąd wysyłania Telegrama: {e}")
 
 def format_value_message(sport_label, home, away, pick, odd, fair, ev_netto, m_dt, stake):
     is_pewniak = ev_netto >= PEWNIAK_EV_THRESHOLD and odd <= PEWNIAK_MAX_ODD
     header = "🔥 💎 **PEWNIAK (+EV)** 🔥" if is_pewniak else "💎 *VALUE (+EV)*"
     pick_icon = "⭐" if is_pewniak else "✅"
-    
-    msg = (
+    return (
         f"{header}\n"
         f"🏆 {sport_label}\n"
         f"⚔️ **{home} vs {away}**\n"
@@ -98,35 +124,39 @@ def format_value_message(sport_label, home, away, pick, odd, fair, ev_netto, m_d
         f"⏰ {m_dt.strftime('%d.%m %H:%M')} UTC\n"
         f"━━━━━━━━━━━━━━━"
     )
-    return msg
 
-# ================= GŁÓWNA PĘTLA =================
+# ================= SKANOWANIE =================
 
-def run():
-    if not API_KEYS: return
-    state = clean_state(load_state())
-    save_state(state)
+def scan_matches():
+    state = load_state()
+    cache = load_cache()
     now = datetime.now(timezone.utc)
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
-        matches = None
-        for key in API_KEYS:
-            try:
-                r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/",
-                                 params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=10)
-                if r.status_code == 200:
-                    matches = r.json()
-                    break
-            except: continue
-        
-        if not matches: continue
+        try:
+            key = get_next_key()
+            r = requests.get(
+                f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/",
+                params={"apiKey": key, "regions": "eu", "markets": "h2h"},
+                timeout=10
+            )
+            if r.status_code != 200:
+                print(f"API zwróciło {r.status_code} dla {sport_key}")
+                continue
+
+            matches = r.json()
+            cache[sport_key] = matches
+        except Exception as e:
+            print(f"Błąd pobierania meczów dla {sport_key}: {e}")
+            traceback.print_exc()
+            continue
 
         for match in matches:
             try:
                 m_id = match["id"]
                 home = match["home_team"]
                 away = match["away_team"]
-                m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
+                m_dt = isoparse(match["commence_time"])
 
                 if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)):
                     continue
@@ -135,17 +165,18 @@ def run():
                 for bm in match.get("bookmakers", []):
                     for market in bm.get("markets", []):
                         if market["key"] == "h2h":
-                            h_val = next(o["price"] for o in market["outcomes"] if o["name"] == home)
-                            a_val = next(o["price"] for o in market["outcomes"] if o["name"] == away)
-                            odds_h.append(h_val)
-                            odds_a.append(a_val)
+                            h_val = next((o["price"] for o in market["outcomes"] if o["name"] == home), None)
+                            a_val = next((o["price"] for o in market["outcomes"] if o["name"] == away), None)
+                            if h_val is not None and a_val is not None:
+                                odds_h.append(h_val)
+                                odds_a.append(a_val)
 
-                if len(odds_h) < 3: continue
+                if len(odds_h) < 3:  # filtruj, jeśli mniej niż 3 bukmacherów
+                    continue
 
                 avg_h = sum(odds_h) / len(odds_h)
                 avg_a = sum(odds_a) / len(odds_a)
                 fair_h, fair_a = fair_odds(avg_h, avg_a)
-
                 max_h = max(odds_h)
                 max_a = max(odds_a)
 
@@ -164,8 +195,6 @@ def run():
                         send_msg(msg)
                         state[f"{m_id}_v"] = now.isoformat()
                         save_state(state)
-                        time.sleep(1) 
-            except: continue
-
-if __name__ == "__main__":
-    run()
+                        time.sleep(1)  # uniknięcie zbyt szybkich zapytań Telegrama
+            except Exception as e:
+                print(f"Błąd prz
