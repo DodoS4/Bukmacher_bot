@@ -28,7 +28,6 @@ SPORTS_CONFIG = {
 }
 
 STATE_FILE = "sent.json"
-MAX_DAYS = 3            
 EV_THRESHOLD = 3.0      
 PEWNIAK_EV_THRESHOLD = 7.0
 PEWNIAK_MAX_ODD = 2.60
@@ -39,7 +38,7 @@ BANKROLL = 1000
 KELLY_FRACTION = 0.2    
 TAX_RATE = 0.88         
 
-# ================= POMOCNICZE =================
+# ================= SYSTEM ZAPISU I ROZLICZANIA =================
 
 def load_state():
     if not os.path.exists(STATE_FILE): return {}
@@ -48,24 +47,13 @@ def load_state():
 def save_state(state):
     with open(STATE_FILE, "w") as f: json.dump(state, f)
 
-def clean_state(state):
-    now = datetime.now(timezone.utc)
-    new_state = {}
-    for key, ts in state.items():
-        try:
-            dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
-            if now - dt <= timedelta(days=MAX_DAYS): new_state[key] = ts
-        except: continue
-    return new_state
-
 def calculate_kelly_stake(odd, fair_odd):
     real_odd_netto = odd * TAX_RATE
     if real_odd_netto <= 1.0: return 0
     p = 1 / fair_odd
     b = real_odd_netto - 1
-    kelly_percent = (b * p - (1 - p)) / b
-    stake = BANKROLL * kelly_percent * KELLY_FRACTION
-    return max(0, round(stake, 2))
+    kelly_pc = (b * p - (1 - p)) / b
+    return max(0, round(BANKROLL * kelly_pc * KELLY_FRACTION, 2))
 
 def fair_odds(avg_h, avg_a):
     p_h, p_a = 1 / avg_h, 1 / avg_a
@@ -84,14 +72,12 @@ def send_msg(text):
 def format_value_message(sport_label, home, away, pick, odd, fair, ev_netto, m_dt, stake):
     is_pewniak = ev_netto >= PEWNIAK_EV_THRESHOLD and odd <= PEWNIAK_MAX_ODD
     header = "🔥 💎 **PEWNIAK (+EV)** 🔥" if is_pewniak else "💎 *VALUE (+EV)*"
-    pick_icon = "⭐" if is_pewniak else "✅"
-    
     msg = (
         f"{header}\n"
         f"🏆 {sport_label}\n"
         f"⚔️ **{home} vs {away}**\n"
         f"━━━━━━━━━━━━━━━\n"
-        f"{pick_icon} STAWIAJ NA: *{pick}*\n"
+        f"{'⭐' if is_pewniak else '✅'} STAWIAJ NA: *{pick}*\n"
         f"📈 Kurs: `{odd:.2f}` (Fair: {fair:.2f})\n"
         f"🔥 EV netto: `+{ev_netto:.1f}%`\n"
         f"💰 Sugerowana stawka: *{stake} zł*\n"
@@ -100,12 +86,67 @@ def format_value_message(sport_label, home, away, pick, odd, fair, ev_netto, m_d
     )
     return msg
 
-# ================= GŁÓWNA PĘTLA =================
+# ================= MODUŁ STATYSTYK (NOWOŚĆ) =================
 
-def run():
-    if not API_KEYS: return
-    state = clean_state(load_state())
-    save_state(state)
+def check_results_and_report():
+    state = load_state()
+    summary = {"wins": 0, "losses": 0, "profit": 0.0}
+    changed = False
+
+    for sport_key in SPORTS_CONFIG.keys():
+        for key in API_KEYS:
+            try:
+                r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/scores/",
+                                 params={"apiKey": key, "daysFrom": 1}, timeout=10)
+                if r.status_code != 200: continue
+                scores = r.json()
+                
+                for res in scores:
+                    m_id = res["id"]
+                    s_key = f"{m_id}_v"
+                    if s_key in state and isinstance(state[s_key], dict) and not state[s_key].get("settled"):
+                        if not res.get("completed"): continue
+                        
+                        s_data = res.get("scores", [])
+                        if len(s_data) < 2: continue
+                        
+                        h_score = int(s_data[0]["score"])
+                        a_score = int(s_data[1]["score"])
+                        
+                        if h_score > a_score: winner = res["home_team"]
+                        elif a_score > h_score: winner = res["away_team"]
+                        else: winner = "Draw"
+
+                        bet = state[s_key]
+                        if bet["pick"] == winner:
+                            summary["wins"] += 1
+                            summary["profit"] += (bet["stake"] * bet["odd"] * TAX_RATE) - bet["stake"]
+                        else:
+                            summary["losses"] += 1
+                            summary["profit"] -= bet["stake"]
+                        
+                        state[s_key]["settled"] = True
+                        changed = True
+                break
+            except: continue
+
+    if changed:
+        save_state(state)
+        if (summary["wins"] + summary["losses"]) > 0:
+            msg = (
+                f"📊 **RAPORT SKUTECZNOŚCI**\n"
+                f"━━━━━━━━━━━━━━━\n"
+                f"✅ Trafione: `{summary['wins']}`\n"
+                f"❌ Przegrane: `{summary['losses']}`\n"
+                f"💰 Zysk/Strata: `{summary['profit']:.2f} zł`\n"
+                f"━━━━━━━━━━━━━━━"
+            )
+            send_msg(msg)
+
+# ================= GŁÓWNA LOGIKA =================
+
+def run_scanner():
+    state = load_state()
     now = datetime.now(timezone.utc)
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
@@ -123,49 +164,48 @@ def run():
 
         for match in matches:
             try:
-                m_id = match["id"]
-                home = match["home_team"]
-                away = match["away_team"]
+                m_id, home, away = match["id"], match["home_team"], match["away_team"]
                 m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
-
-                if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)):
-                    continue
+                if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)): continue
 
                 odds_h, odds_a = [], []
                 for bm in match.get("bookmakers", []):
-                    for market in bm.get("markets", []):
-                        if market["key"] == "h2h":
-                            h_val = next(o["price"] for o in market["outcomes"] if o["name"] == home)
-                            a_val = next(o["price"] for o in market["outcomes"] if o["name"] == away)
-                            odds_h.append(h_val)
-                            odds_a.append(a_val)
+                    for mkt in bm.get("markets", []):
+                        if mkt["key"] == "h2h":
+                            h_p = next(o["price"] for o in mkt["outcomes"] if o["name"] == home)
+                            a_p = next(o["price"] for o in mkt["outcomes"] if o["name"] == away)
+                            odds_h.append(h_p); odds_a.append(a_p)
 
                 if len(odds_h) < 3: continue
+                fair_h, fair_a = fair_odds(sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a))
+                max_h, max_a = max(odds_h), max(odds_a)
+                
+                ev_h = (max_h * TAX_RATE / fair_h - 1) * 100
+                ev_a = (max_a * TAX_RATE / fair_a - 1) * 100
 
-                avg_h = sum(odds_h) / len(odds_h)
-                avg_a = sum(odds_a) / len(odds_a)
-                fair_h, fair_a = fair_odds(avg_h, avg_a)
-
-                max_h = max(odds_h)
-                max_a = max(odds_a)
-
-                ev_h_net = (max_h * TAX_RATE / fair_h - 1) * 100
-                ev_a_net = (max_a * TAX_RATE / fair_a - 1) * 100
-
-                if ev_h_net > ev_a_net:
-                    pick, odd, fair, ev_n = home, max_h, fair_h, ev_h_net
-                else:
-                    pick, odd, fair, ev_n = away, max_a, fair_a, ev_a_net
+                if ev_h > ev_a: pick, odd, fair, ev_n = home, max_h, fair_h, ev_h
+                else: pick, odd, fair, ev_n = away, max_a, fair_a, ev_a
 
                 if ev_n >= EV_THRESHOLD and odd >= MIN_ODD and f"{m_id}_v" not in state:
                     stake = calculate_kelly_stake(odd, fair)
                     if stake > 0:
-                        msg = format_value_message(sport_label, home, away, pick, odd, fair, ev_n, m_dt, stake)
-                        send_msg(msg)
-                        state[f"{m_id}_v"] = now.isoformat()
+                        send_msg(format_value_message(sport_label, home, away, pick, odd, fair, ev_n, m_dt, stake))
+                        state[f"{m_id}_v"] = {"pick": pick, "odd": odd, "stake": stake, "settled": False}
                         save_state(state)
-                        time.sleep(1) 
+                        time.sleep(1)
             except: continue
 
 if __name__ == "__main__":
-    run()
+    print("Bot uruchomiony...")
+    last_report_time = 0
+    while True:
+        run_scanner()
+        
+        # Raportowanie wyników raz na 6 godzin
+        if time.time() - last_report_time > 21600: 
+            print("Sprawdzam wyniki i generuję raport...")
+            check_results_and_report()
+            last_report_time = time.time()
+            
+        print("Skanowanie zakończone. Odpoczynek 15 min...")
+        time.sleep(900)
