@@ -3,18 +3,12 @@ name: Bukmacher Bot Pro - Przetrwanie 30 Dni
 
 
 on:
-
   schedule:
-
-    # System UTC: 6, 8, 10, 12, 14, 16, 18, 20, 22 (9 uruchomień)
-
-    # Polska: 7, 9, 11, 13, 15, 17, 19, 21, 23
-
+    # System UTC: co godzinę od 6 do 22
+    # Polska (CET): 7–23
+    # Polska (CEST): 8–0
     # UWAGA: Rozliczanie wyników następuje w sesji o 6:00 UTC
-
-    - cron: '0 6,8,10,12,14,16,18,20,22 * * *'
-
-  
+    - cron: '0 6-22 * * *'
 
   workflow_dispatch:
 
