@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
-# Bot sprawdzi wszystkie klucze po kolei, jeśli jeden wygaśnie (401/429)
+# Obsługa puli 4 kluczy API (Łączny limit: 2000 kredytów/miesiąc)
 KEYS_POOL = [
     os.getenv("ODDS_KEY"),
     os.getenv("ODDS_KEY_2"),
@@ -18,11 +18,13 @@ KEYS_POOL = [
 ]
 API_KEYS = [k for k in KEYS_POOL if k]
 
+# Pełna lista lig (8 pozycji)
 SPORTS_CONFIG = {
     "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 PREMIER LEAGUE",
     "soccer_spain_la_liga": "🇪🇸 LA LIGA",
     "soccer_germany_bundesliga": "🇩🇪 BUNDESLIGA",
     "soccer_italy_serie_a": "🇮🇹 SERIE A",
+    "soccer_france_ligue_one": "🇫🇷 LIGUE 1",
     "soccer_poland_ekstraklasa": "🇵🇱 EKSTRAKLASA",
     "basketball_nba": "🏀 NBA",
     "icehockey_nhl": "🏒 NHL",
@@ -30,31 +32,27 @@ SPORTS_CONFIG = {
 
 STATE_FILE = "sent.json"
 MAX_DAYS = 3
-EV_THRESHOLD = 3.5           # Próg zysku netto po podatku (%)
+EV_THRESHOLD = 3.5           # Szukamy przewagi min. 3.5% netto
 PEWNIAK_EV_THRESHOLD = 7.0
-PEWNIAK_MAX_ODD = 3.50       # Etykieta "Pewniak" tylko dla kursów do 3.50
-MIN_ODD = 2.00               # Dolna granica Twojego przedziału
-MAX_ODD = 6.00               # Podniesiona górna granica kursu
-MAX_HOURS_AHEAD = 48
+PEWNIAK_MAX_ODD = 3.50       
+MIN_ODD = 2.00               
+MAX_ODD = 6.00               # Podniesiona granica kursu
+MAX_HOURS_AHEAD = 48         # Szukaj meczów na najbliższe 2 dni
 
-BANKROLL = 1000              # Twój kapitał początkowy
-KELLY_FRACTION = 0.1         # Stawkujemy 10% wartości sugerowanej przez Kelly'ego
-TAX_RATE = 0.88              # Polski podatek (1 - 0.12)
+BANKROLL = 1000              
+KELLY_FRACTION = 0.1         # Bezpieczne stawkowanie (10% Kelly)
+TAX_RATE = 0.88              # Polski podatek (12%)
 
 # ================= POMOCNICZE =================
 
 def load_state():
-    if not os.path.exists(STATE_FILE): 
-        return {}
+    if not os.path.exists(STATE_FILE): return {}
     try:
-        with open(STATE_FILE, "r") as f: 
-            return json.load(f)
-    except:
-        return {}
+        with open(STATE_FILE, "r") as f: return json.load(f)
+    except: return {}
 
 def save_state(state):
-    with open(STATE_FILE, "w") as f: 
-        json.dump(state, f)
+    with open(STATE_FILE, "w") as f: json.dump(state, f)
 
 def clean_state(state):
     now = datetime.now(timezone.utc)
@@ -62,17 +60,14 @@ def clean_state(state):
     for key, ts in state.items():
         try:
             dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
-            if now - dt <= timedelta(days=MAX_DAYS): 
-                new_state[key] = ts
-        except: 
-            continue
+            if now - dt <= timedelta(days=MAX_DAYS): new_state[key] = ts
+        except: continue
     return new_state
 
 def calculate_kelly_stake(odd, fair_odd):
-    """Oblicza optymalną stawkę w oparciu o kryterium Kelly'ego."""
+    """Oblicza stawkę na podstawie matematycznego prawdopodobieństwa."""
     real_odd_netto = odd * TAX_RATE
-    if real_odd_netto <= 1.0: 
-        return 0
+    if real_odd_netto <= 1.0: return 0
     p = 1 / fair_odd
     b = real_odd_netto - 1
     kelly_percent = (b * p - (1 - p)) / b
@@ -80,7 +75,7 @@ def calculate_kelly_stake(odd, fair_odd):
     return max(0, round(stake, 2))
 
 def fair_odds(avg_h, avg_a):
-    """Usuwa marżę bukmacherską, obliczając realne prawdopodobieństwo."""
+    """Oblicza kurs bez marży bukmacherskiej."""
     p_h, p_a = 1 / avg_h, 1 / avg_a
     total = p_h + p_a
     return 1 / (p_h / total), 1 / (p_a / total)
@@ -88,13 +83,11 @@ def fair_odds(avg_h, avg_a):
 # ================= KOMUNIKACJA =================
 
 def send_msg(text):
-    if not T_TOKEN or not T_CHAT: 
-        return
+    if not T_TOKEN or not T_CHAT: return
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
     try:
         requests.post(url, json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=10)
-    except: 
-        pass
+    except: pass
 
 def format_value_message(sport_label, home, away, pick, odd, fair, ev_netto, m_dt, stake):
     is_pewniak = ev_netto >= PEWNIAK_EV_THRESHOLD and odd <= PEWNIAK_MAX_ODD
@@ -117,16 +110,19 @@ def format_value_message(sport_label, home, away, pick, odd, fair, ev_netto, m_d
 # ================= GŁÓWNA PĘTLA =================
 
 def run():
-    if not API_KEYS: 
-        print("Błąd: Brak kluczy API w konfiguracji.")
+    print("🚀 Start skanowania rynków...")
+    if not API_KEYS:
+        print("❌ Błąd: Brak kluczy API!")
         return
     
     state = clean_state(load_state())
     now = datetime.now(timezone.utc)
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
+        print(f"🔍 Analiza: {sport_label}...")
         matches = None
-        # Próba uzyskania danych za pomocą dostępnych kluczy (Pool)
+        
+        # Przełączanie kluczy w przypadku błędu limitu
         for key in API_KEYS:
             try:
                 r = requests.get(
@@ -138,13 +134,11 @@ def run():
                     matches = r.json()
                     break
                 elif r.status_code in [401, 429]:
-                    print(f"Klucz {key[:5]}... wyczerpany lub błędny (Status: {r.status_code})")
+                    print(f"⚠️ Klucz {key[:5]}... wyczerpany. Próba kolejnego.")
                     continue
-            except: 
-                continue
+            except: continue
 
-        if not matches: 
-            continue
+        if not matches: continue
 
         for match in matches:
             try:
@@ -153,7 +147,6 @@ def run():
                 away = match["away_team"]
                 m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
 
-                # Filtr czasu (mecze w ciągu najbliższych 48h)
                 if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)):
                     continue
 
@@ -166,42 +159,35 @@ def run():
                                 a_val = next(o["price"] for o in market["outcomes"] if o["name"] == away)
                                 odds_h.append(h_val)
                                 odds_a.append(a_val)
-                            except StopIteration:
-                                continue
+                            except: continue
 
-                # Wymagamy minimum 4 bukmacherów dla stabilnej średniej
-                if len(odds_h) < 4: 
-                    continue
+                # Wymagamy minimum 4 bukmacherów dla stabilności danych
+                if len(odds_h) < 4: continue
 
-                avg_h = sum(odds_h) / len(odds_h)
-                avg_a = sum(odds_a) / len(odds_a)
+                avg_h, avg_a = sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a)
                 fair_h, fair_a = fair_odds(avg_h, avg_a)
+                max_h, max_a = max(odds_h), max(odds_a)
 
-                max_h = max(odds_h)
-                max_a = max(odds_a)
+                ev_h = (max_h * TAX_RATE / fair_h - 1) * 100
+                ev_a = (max_a * TAX_RATE / fair_a - 1) * 100
 
-                # Obliczanie Expected Value (EV) uwzględniając podatek 12%
-                ev_h_net = (max_h * TAX_RATE / fair_h - 1) * 100
-                ev_a_net = (max_a * TAX_RATE / fair_a - 1) * 100
-
-                # Wybór bardziej opłacalnej strony
-                if ev_h_net > ev_a_net:
-                    pick, odd, fair, ev_n = home, max_h, fair_h, ev_h_net
+                if ev_h > ev_a:
+                    pick, odd, fair, ev_n = home, max_h, fair_h, ev_h
                 else:
-                    pick, odd, fair, ev_n = away, max_a, fair_a, ev_a_net
+                    pick, odd, fair, ev_n = away, max_a, fair_a, ev_a
 
-                # Sprawdzenie filtrów kursu i wartości
+                # Filtr progu EV oraz zakresu kursów
                 if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and f"{m_id}_v" not in state:
                     stake = calculate_kelly_stake(odd, fair)
-                    if stake > 1.0: 
+                    if stake > 1.0:
                         msg = format_value_message(sport_label, home, away, pick, odd, fair, ev_n, m_dt, stake)
                         send_msg(msg)
                         state[f"{m_id}_v"] = now.isoformat()
                         save_state(state)
-                        time.sleep(1) # Zabezpieczenie przed limitem Telegrama
-            except Exception as e:
-                print(f"Błąd przy analizie meczu {m_id}: {e}")
-                continue
+                        time.sleep(1)
+            except: continue
+
+    print("✅ Koniec skanowania.")
 
 if __name__ == "__main__":
     run()
