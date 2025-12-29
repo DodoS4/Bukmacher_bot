@@ -33,19 +33,32 @@ MAX_ODD = 6.00
 TAX_RATE = 0.88              
 KELLY_FRACTION = 0.1         
 
-# ================= SYSTEM ROZLICZEŃ =================
+# ================= SYSTEM DANYCH =================
 
 def load_data(file):
-    if not os.path.exists(file): return {} if "sent" in file else []
+    """Bezpieczne ładowanie danych z obsługą błędów formatu."""
+    if not os.path.exists(file): 
+        return {} if "sent" in file else []
     try:
-        with open(file, "r") as f: return json.load(f)
-    except: return {} if "sent" in file else []
+        with open(file, "r") as f:
+            data = json.load(f)
+            # Naprawa błędu AttributeError: 'dict' object has no attribute 'append'
+            if "history" in file and not isinstance(data, list):
+                return []
+            if "sent" in file and not isinstance(data, dict):
+                return {}
+            return data
+    except:
+        return {} if "sent" in file else []
 
 def save_data(file, data):
-    with open(file, "w") as f: json.dump(data, f)
+    with open(file, "w") as f:
+        json.dump(data, f)
+
+# ================= ROZLICZENIA =================
 
 def fetch_score(sport_key, event_id):
-    """Pobiera wynik zakończonego meczu (zużywa 1 kredyt na ligę)."""
+    """Pobiera wynik zakończonego meczu."""
     for key in API_KEYS:
         try:
             r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/scores/", 
@@ -53,7 +66,6 @@ def fetch_score(sport_key, event_id):
             if r.status_code == 200:
                 for s in r.json():
                     if s["id"] == event_id and s["completed"]:
-                        # Pobieranie wyników dla drużyn
                         h_score = int(next(item["score"] for item in s["scores"] if item["name"] == s["home_team"]))
                         a_score = int(next(item["score"] for item in s["scores"] if item["name"] == s["away_team"]))
                         return h_score, a_score
@@ -61,37 +73,32 @@ def fetch_score(sport_key, event_id):
     return None
 
 def check_results():
-    """Analizuje historię i wysyła raporty o trafionych typach."""
+    """Analizuje historię i wysyła raporty o wynikach."""
     history = load_data(HISTORY_FILE)
     if not history: return
     
     now = datetime.now(timezone.utc)
     updated_history = []
-    results_summary = {"won": 0, "lost": 0, "profit": 0.0}
     
     for bet in history:
         m_dt = datetime.fromisoformat(bet["date"])
-        # Rozliczamy tylko mecze ze statusem 'pending', które zaczęły się min. 4h temu
         if bet.get("status") == "pending" and now > (m_dt + timedelta(hours=4)):
             result = fetch_score(bet["sport"], bet["id"])
             if result:
                 h_s, a_s = result
-                is_win = False
-                # Logika rozliczenia (kto wygrał)
-                if bet["pick"] == bet["home"] and h_s > a_s: is_win = True
-                elif bet["pick"] == bet["away"] and a_s > h_s: is_win = True
-                
+                is_win = (bet["pick"] == bet["home"] and h_s > a_s) or (bet["pick"] == bet["away"] and a_s > h_s)
                 profit = round((bet["stake"] * bet["odd"] * TAX_RATE) - bet["stake"], 2) if is_win else -bet["stake"]
-                icon = "✅" if is_win else "❌"
                 
-                send_msg(f"{icon} **WYNIK MECZU**\n{bet['home']} {h_s}:{a_s} {bet['away']}\n"
-                         f"Typ: {bet['pick']} | Kurs: {bet['odd']}\nZysk/Strata: `{profit} zł`")
-                
+                status_icon = "✅ WYGRANA" if is_win else "❌ PRZEGRANA"
+                msg = (
+                    f"{status_icon}\n\n"
+                    f"🏟 {bet['home']} {h_s}:{a_s} {bet['away']}\n"
+                    f"🎯 Typ: **{bet['pick'].upper()}**\n\n"
+                    f"💰 Profit: `{profit} zł`"
+                )
+                send_msg(msg)
                 bet["status"] = "settled"
-                bet["final_score"] = f"{h_s}:{a_s}"
-                bet["profit"] = profit
         
-        # Zachowaj w pliku tylko mecze z ostatnich 7 dni
         if m_dt > (now - timedelta(days=7)):
             updated_history.append(bet)
             
@@ -124,14 +131,12 @@ def send_msg(text):
 def run():
     now = datetime.now(timezone.utc)
     
-    # KROK 1: Rozliczanie wyników raz na dobę (godzina 6:00 UTC)
+    # 1. Rozliczanie raz dziennie o 6:00 UTC (7:00 PL)
     if now.hour == 6:
-        print("📊 Poranny raport wyników...")
         check_results()
 
-    # KROK 2: Skanowanie kursów
+    # 2. Ładowanie baz
     state = load_data(STATE_FILE)
-    if isinstance(state, list): state = {} # Naprawa błędnego formatu
     history = load_data(HISTORY_FILE)
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
@@ -163,19 +168,35 @@ def run():
                         except: continue
 
             if len(odds_h) < 4: continue
-            avg_h, avg_a = sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a)
-            f_h, f_a = fair_odds(avg_h, avg_a)
+            f_h, f_a = fair_odds(sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a))
             max_h, max_a = max(odds_h), max(odds_a)
-
             ev_h, ev_a = (max_h * TAX_RATE / f_h - 1) * 100, (max_a * TAX_RATE / f_a - 1) * 100
+
             pick, odd, fair, ev_n = (home, max_h, f_h, ev_h) if ev_h > ev_a else (away, max_a, f_a, ev_a)
 
             if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and m_id not in state:
                 stake = calculate_kelly_stake(odd, fair)
                 if stake >= 2.0:
-                    msg = (f"💰 *VALUE (+EV)*\n🏆 {sport_label}\n⚔️ **{home} vs {away}**\n"
-                           f"━━━━━━━━━━━━━━━\n✅ TYP: *{pick.upper()}*\n📈 Kurs: `{odd:.2f}`\n"
-                           f"📊 EV: `+{ev_n:.1f}%` | 💵 Stawka: *{stake} zł*")
+                    # Inteligentny nagłówek
+                    if ev_n >= 7.0 and odd <= 3.50:
+                        header = "👑 **PREMIUM VALUE**"
+                    elif odd > 4.50:
+                        header = "🎰 **HIGH RISK VALUE**"
+                    else:
+                        header = "🟢 **STANDARD VALUE**"
+
+                    msg = (
+                        f"{header}\n\n"
+                        f"🏆 {sport_label}\n"
+                        f"⚔️ **{home}**\n"
+                        f"      vs\n"
+                        f"⚔️ **{away}**\n\n"
+                        f"📍 TYP: **{pick.upper()}**\n"
+                        f"📈 KURS: `{odd:.2f}`\n"
+                        f"📊 EV: `+{ev_n:.1f}%` netto\n"
+                        f"💵 STAWKA: **{stake} zł**\n\n"
+                        f"⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}"
+                    )
                     send_msg(msg)
                     state[m_id] = now.isoformat()
                     history.append({
