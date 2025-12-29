@@ -9,7 +9,6 @@ from datetime import datetime, timedelta, timezone
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
-# Obsługa puli 5 kluczy API
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
@@ -26,27 +25,25 @@ SPORTS_CONFIG = {
 
 STATE_FILE = "sent.json"
 HISTORY_FILE = "history.json"
+
+# --- TWOJE PARAMETRY ---
 BANKROLL = 1000              
 EV_THRESHOLD = 3.5           
-MIN_ODD = 2.00               
-MAX_ODD = 6.00               
+MIN_ODD = 1.40               
+MAX_ODD = 4.50               # BLOKADA: Kursy powyżej 4.50 są ignorowane
 TAX_RATE = 0.88              
 KELLY_FRACTION = 0.1         
 
 # ================= SYSTEM DANYCH =================
 
 def load_data(file):
-    """Bezpieczne ładowanie danych z obsługą błędów formatu."""
     if not os.path.exists(file): 
         return {} if "sent" in file else []
     try:
         with open(file, "r") as f:
             data = json.load(f)
-            # Naprawa błędu AttributeError: 'dict' object has no attribute 'append'
-            if "history" in file and not isinstance(data, list):
-                return []
-            if "sent" in file and not isinstance(data, dict):
-                return {}
+            if "history" in file and not isinstance(data, list): return []
+            if "sent" in file and not isinstance(data, dict): return {}
             return data
     except:
         return {} if "sent" in file else []
@@ -58,7 +55,6 @@ def save_data(file, data):
 # ================= ROZLICZENIA =================
 
 def fetch_score(sport_key, event_id):
-    """Pobiera wynik zakończonego meczu."""
     for key in API_KEYS:
         try:
             r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/scores/", 
@@ -73,13 +69,10 @@ def fetch_score(sport_key, event_id):
     return None
 
 def check_results():
-    """Analizuje historię i wysyła raporty o wynikach."""
     history = load_data(HISTORY_FILE)
     if not history: return
-    
     now = datetime.now(timezone.utc)
     updated_history = []
-    
     for bet in history:
         m_dt = datetime.fromisoformat(bet["date"])
         if bet.get("status") == "pending" and now > (m_dt + timedelta(hours=4)):
@@ -88,20 +81,11 @@ def check_results():
                 h_s, a_s = result
                 is_win = (bet["pick"] == bet["home"] and h_s > a_s) or (bet["pick"] == bet["away"] and a_s > h_s)
                 profit = round((bet["stake"] * bet["odd"] * TAX_RATE) - bet["stake"], 2) if is_win else -bet["stake"]
-                
                 status_icon = "✅ WYGRANA" if is_win else "❌ PRZEGRANA"
-                msg = (
-                    f"{status_icon}\n\n"
-                    f"🏟 {bet['home']} {h_s}:{a_s} {bet['away']}\n"
-                    f"🎯 Typ: **{bet['pick'].upper()}**\n\n"
-                    f"💰 Profit: `{profit} zł`"
-                )
-                send_msg(msg)
+                send_msg(f"{status_icon}\n\n🏟 {bet['home']} {h_s}:{a_s} {bet['away']}\n🎯 Typ: **{bet['pick'].upper()}**\n💰 Profit: `{profit} zł`")
                 bet["status"] = "settled"
-        
         if m_dt > (now - timedelta(days=7)):
             updated_history.append(bet)
-            
     save_data(HISTORY_FILE, updated_history)
 
 # ================= POMOCNICZE =================
@@ -130,12 +114,9 @@ def send_msg(text):
 
 def run():
     now = datetime.now(timezone.utc)
-    
-    # 1. Rozliczanie raz dziennie o 6:00 UTC (7:00 PL)
     if now.hour == 6:
         check_results()
 
-    # 2. Ładowanie baz
     state = load_data(STATE_FILE)
     history = load_data(HISTORY_FILE)
 
@@ -154,7 +135,6 @@ def run():
         for m in matches:
             m_id, home, away = m["id"], m["home_team"], m["away_team"]
             m_dt = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
-            
             if m_dt < now or m_dt > (now + timedelta(hours=48)): continue
 
             odds_h, odds_a = [], []
@@ -171,17 +151,17 @@ def run():
             f_h, f_a = fair_odds(sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a))
             max_h, max_a = max(odds_h), max(odds_a)
             ev_h, ev_a = (max_h * TAX_RATE / f_h - 1) * 100, (max_a * TAX_RATE / f_a - 1) * 100
-
             pick, odd, fair, ev_n = (home, max_h, f_h, ev_h) if ev_h > ev_a else (away, max_a, f_a, ev_a)
 
+            # Filtrowanie i kategoryzacja
             if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and m_id not in state:
                 stake = calculate_kelly_stake(odd, fair)
                 if stake >= 2.0:
-                    # Inteligentny nagłówek
-                    if ev_n >= 7.0 and odd <= 3.50:
+                    # --- TWOJE 3 KATEGORIE ---
+                    if ev_n >= 10.0:
+                        header = "🥇 **GOLD VALUE**"
+                    elif ev_n >= 7.0:
                         header = "👑 **PREMIUM VALUE**"
-                    elif odd > 4.50:
-                        header = "🎰 **HIGH RISK VALUE**"
                     else:
                         header = "🟢 **STANDARD VALUE**"
 
@@ -197,13 +177,10 @@ def run():
                         f"💵 STAWKA: **{stake} zł**\n\n"
                         f"⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}"
                     )
+                    
                     send_msg(msg)
                     state[m_id] = now.isoformat()
-                    history.append({
-                        "id": m_id, "home": home, "away": away, "pick": pick, 
-                        "odd": odd, "stake": stake, "date": m_dt.isoformat(), 
-                        "status": "pending", "sport": sport_key
-                    })
+                    history.append({"id": m_id, "home": home, "away": away, "pick": pick, "odd": odd, "stake": stake, "date": m_dt.isoformat(), "status": "pending", "sport": sport_key})
 
     save_data(STATE_FILE, state)
     save_data(HISTORY_FILE, history)
