@@ -9,7 +9,7 @@ from datetime import datetime, timedelta, timezone
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
-# Obsługa puli 5 kluczy API
+# Pobieranie 5 kluczy z sekretów GitHub
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
@@ -27,13 +27,26 @@ SPORTS_CONFIG = {
 STATE_FILE = "sent.json"
 HISTORY_FILE = "history.json"
 
-# --- PARAMETRY INWESTYCYJNE ---
 BANKROLL = 1000              
-EV_THRESHOLD = 3.5           # Start kategorii STANDARD
+EV_THRESHOLD = 3.5           
 MIN_ODD = 1.40               
-MAX_ODD = 4.50               # Blokada HIGH RISK
+MAX_ODD = 4.50               
 TAX_RATE = 0.88              
 KELLY_FRACTION = 0.1         
+
+# ================= LOGIKA CZASU (POLSKA) =================
+
+def is_poland_dst():
+    now = datetime.now(timezone.utc)
+    dst_start = datetime(now.year, 3, 31, 1, tzinfo=timezone.utc)
+    dst_start = dst_start - timedelta(days=(dst_start.weekday() + 1) % 7)
+    dst_end = datetime(now.year, 10, 31, 1, tzinfo=timezone.utc)
+    dst_end = dst_end - timedelta(days=(dst_end.weekday() + 1) % 7)
+    return dst_start <= now < dst_end
+
+def get_poland_hour():
+    offset = 2 if is_poland_dst() else 1
+    return (datetime.now(timezone.utc) + timedelta(hours=offset)).hour
 
 # ================= SYSTEM DANYCH =================
 
@@ -42,8 +55,7 @@ def load_data(file):
     try:
         with open(file, "r") as f:
             data = json.load(f)
-            if "history" in file and not isinstance(data, list): return []
-            return data
+            return data if data else ([] if "history" in file else {})
     except: return {} if "sent" in file else []
 
 def save_data(file, data):
@@ -62,6 +74,7 @@ def fetch_score(sport_key, event_id):
                         h_score = int(next(item["score"] for item in s["scores"] if item["name"] == s["home_team"]))
                         a_score = int(next(item["score"] for item in s["scores"] if item["name"] == s["away_team"]))
                         return h_score, a_score
+            elif r.status_code == 429: continue # Limit klucza, sprawdzamy następny
         except: continue
     return None
 
@@ -83,12 +96,18 @@ def check_results():
         if m_dt > (now - timedelta(days=7)): updated_history.append(bet)
     save_data(HISTORY_FILE, updated_history)
 
-# ================= POMOCNICZE =================
+# ================= MATEMATYKA =================
 
-def fair_odds(avg_h, avg_a):
-    p_h, p_a = 1 / avg_h, 1 / avg_a
-    total = p_h + p_a
-    return 1 / (p_h / total), 1 / (p_a / total)
+def calculate_fair_odds(odds_h, odds_a, odds_d=None):
+    avg_h = sum(odds_h)/len(odds_h)
+    avg_a = sum(odds_a)/len(odds_a)
+    if odds_d and len(odds_d) > 0:
+        avg_d = sum(odds_d)/len(odds_d)
+        p_total = (1/avg_h) + (1/avg_a) + (1/avg_d)
+        return 1/((1/avg_h)/p_total), 1/((1/avg_a)/p_total)
+    else:
+        p_total = (1/avg_h) + (1/avg_a)
+        return 1/((1/avg_h)/p_total), 1/((1/avg_a)/p_total)
 
 def calculate_kelly_stake(odd, fair_odd):
     real_odd_netto = odd * TAX_RATE
@@ -107,11 +126,13 @@ def send_msg(text):
 # ================= GŁÓWNA PĘTLA =================
 
 def run():
-    now = datetime.now(timezone.utc)
-    if now.hour == 6: check_results()
+    # Rozliczanie o 7:00 rano PL
+    if get_poland_hour() == 7: 
+        check_results()
 
     state = load_data(STATE_FILE)
     history = load_data(HISTORY_FILE)
+    now = datetime.now(timezone.utc)
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
         matches = None
@@ -120,7 +141,10 @@ def run():
                 r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/",
                                  params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=10)
                 if r.status_code == 200:
-                    matches = r.json(); break
+                    matches = r.json()
+                    break # Sukces, przerywamy pętlę kluczy
+                elif r.status_code == 429:
+                    continue # Ten klucz wygasł, próbujemy następny
             except: continue
 
         if not matches: continue
@@ -128,56 +152,44 @@ def run():
         for m in matches:
             m_id, home, away = m["id"], m["home_team"], m["away_team"]
             m_dt = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
-            if m_dt < now or m_dt > (now + timedelta(hours=48)): continue
+            if m_dt < now or m_dt > (now + timedelta(hours=48)) or m_id in state: continue
 
-            odds_h, odds_a = [], []
+            o_h, o_a, o_d = [], [], []
             for bm in m.get("bookmakers", []):
                 for market in bm.get("markets", []):
                     if market["key"] == "h2h":
                         try:
-                            h_o = next(o["price"] for o in market["outcomes"] if o["name"] == home)
-                            a_o = next(o["price"] for o in market["outcomes"] if o["name"] == away)
-                            odds_h.append(h_o); odds_a.append(a_o)
+                            h = next(o["price"] for o in market["outcomes"] if o["name"] == home)
+                            a = next(o["price"] for o in market["outcomes"] if o["name"] == away)
+                            d = next((o["price"] for o in market["outcomes"] if o["name"] == "Draw"), None)
+                            o_h.append(h); o_a.append(a)
+                            if d: o_d.append(d)
                         except: continue
 
-            if len(odds_h) < 4: continue
+            if len(o_h) < 4: continue
             
-            avg_h, avg_a = sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a)
-            f_h, f_a = fair_odds(avg_h, avg_a)
-            max_h, max_a = max(odds_h), max(odds_a)
+            f_h, f_a = calculate_fair_odds(o_h, o_a, o_d)
+            max_h, max_a = max(o_h), max(o_a)
             ev_h, ev_a = (max_h * TAX_RATE / f_h - 1) * 100, (max_a * TAX_RATE / f_a - 1) * 100
             
-            pick, odd, fair, ev_n, avg_market = (home, max_h, f_h, ev_h, avg_h) if ev_h > ev_a else (away, max_a, f_a, ev_a, avg_a)
+            pick, odd, fair, ev_n, avg_m = (home, max_h, f_h, ev_h, sum(o_h)/len(o_h)) if ev_h > ev_a else (away, max_a, f_a, ev_a, sum(o_a)/len(o_a))
 
-            if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and m_id not in state:
-                buffer = ((odd / avg_market) - 1) * 100
+            if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD:
+                buffer = ((odd / avg_m) - 1) * 100
                 base_stake = calculate_kelly_stake(odd, fair)
                 
                 if base_stake >= 2.0:
-                    # --- TWOJE PRECYZYJNE PROGI ---
-                    if ev_n >= 10.0:
-                        header, mult = "🥇 **GOLD VALUE**", 1.0   # Powyżej 10%
-                    elif ev_n >= 7.0:
-                        header, mult = "👑 **PREMIUM VALUE**", 0.7  # 7.0% - 9.9%
-                    else:
-                        header, mult = "🟢 **STANDARD VALUE**", 0.4 # 3.5% - 6.9%
+                    if ev_n >= 10.0: header, mult = "🥇 **GOLD VALUE**", 1.0
+                    elif ev_n >= 7.0: header, mult = "👑 **PREMIUM VALUE**", 0.7
+                    else: header, mult = "🟢 **STANDARD VALUE**", 0.4
                     
                     final_stake = round(base_stake * mult, 2)
                     if final_stake < 2.0: continue
 
-                    buf_icon = "🛡️" if buffer > 8 else "⚠️"
-
-                    msg = (
-                        f"{header}\n\n"
-                        f"🏆 {sport_label}\n"
-                        f"⚔️ **{home}** vs **{away}**\n\n"
-                        f"📍 TYP: **{pick.upper()}**\n"
-                        f"📈 KURS: `{odd:.2f}`\n"
-                        f"📊 EV: `+{ev_n:.1f}%` netto\n"
-                        f"{buf_icon} BUFOR: `{buffer:.1f}%` wobec rynku\n"
-                        f"💵 STAWKA: **{final_stake} zł**\n\n"
-                        f"⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}"
-                    )
+                    msg = (f"{header}\n\n🏆 {sport_label}\n⚔️ **{home}** vs **{away}**\n\n"
+                           f"📍 TYP: **{pick.upper()}**\n📈 KURS: `{odd:.2f}`\n📊 EV: `+{ev_n:.1f}%` netto\n"
+                           f"{'🛡️' if buffer > 8 else '⚠️'} BUFOR: `{buffer:.1f}%` rynkowy\n"
+                           f"💵 STAWKA: **{final_stake} zł**\n\n⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}")
                     
                     send_msg(msg)
                     state[m_id] = now.isoformat()
