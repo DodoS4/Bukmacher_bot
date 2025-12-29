@@ -28,12 +28,12 @@ SPORTS_CONFIG = {
 }
 
 STATE_FILE = "sent.json"
-MAX_DAYS = 7                 # Zwiększone do tygodnia
-EV_THRESHOLD = 0.0           # PRZYJMIJ WSZYSTKO (Dla testu)
-MIN_BOOKS = 1                # WYSTARCZY 1 BUKMACHER (Dla testu)
-MIN_ODD = 1.10               # KAŻDY KURS (Dla testu)
+MAX_DAYS = 7                 
+EV_THRESHOLD = 0.0           
+MIN_BOOKS = 1                
+MIN_ODD = 1.10               
 MAX_ODD = 10.0
-MAX_HOURS_AHEAD = 168        # SZUKAJ W CAŁYM TYGODNIU (Dla testu)
+MAX_HOURS_AHEAD = 168        
 
 BANKROLL = 1000
 KELLY_FRACTION = 0.1
@@ -68,7 +68,7 @@ def clean_state(state):
 
 def calculate_kelly_stake(odd, fair_odd):
     real_odd_netto = odd * TAX_RATE
-    if real_odd_netto <= 1.0: return 2.0 # Minimalna stawka dla testu
+    if real_odd_netto <= 1.0: return 2.0 
     p = 1 / fair_odd
     b = real_odd_netto - 1
     kelly_percent = (b * p - (1 - p)) / b
@@ -99,7 +99,7 @@ def send_msg(text):
 
 def run():
     print("🚀 Start bota testowego...")
-    send_msg("🤖 *BOT TESTOWY URUCHOMIONY*\nFiltry wyłączone - szukam czegokolwiek...")
+    send_msg("🤖 *BOT TESTOWY URUCHOMIONY*\nFiltry wyłączone.")
     
     if not API_KEYS: 
         print("❌ Brak kluczy API (ODDS_KEY)!")
@@ -121,7 +121,6 @@ def run():
             except: continue
 
         if not matches: 
-            print(f"Brak meczów dla {sport_key}")
             continue
 
         for match in matches:
@@ -131,7 +130,6 @@ def run():
                 away = match["away_team"]
                 m_dt = datetime.fromisoformat(match["commence_time"].replace('Z', '+00:00'))
 
-                # Poluzowany filtr czasu
                 if m_dt < now or m_dt > (now + timedelta(hours=MAX_HOURS_AHEAD)):
                     continue
 
@@ -139,10 +137,13 @@ def run():
                 for bm in match.get("bookmakers", []):
                     for market in bm.get("markets", []):
                         if market["key"] == "h2h":
-                            h_val = next(o["price"] for o in market["outcomes"] if o["name"] == home)
-                            a_val = next(o["price"] for o in market["outcomes"] if o["name"] == away)
-                            odds_h.append(h_val)
-                            odds_a.append(a_val)
+                            try:
+                                h_val = next(o["price"] for o in market["outcomes"] if o["name"] == home)
+                                a_val = next(o["price"] for o in market["outcomes"] if o["name"] == away)
+                                odds_h.append(h_val)
+                                odds_a.append(a_val)
+                            except:
+                                continue
 
                 if len(odds_h) < MIN_BOOKS: continue
 
@@ -159,7 +160,22 @@ def run():
                 else:
                     pick, odd, fair, ev_n = away, max_a, fair_a, ev_a_net
 
-                # TEST: Ignorujemy ev_n >= EV_THRESHOLD, żeby wysłać cokolwiek
-                if odd >= MIN_ODD and f"{m_id}_test" not in state:
+                if odd >= MIN_ODD and f"{m_id}_t" not in state:
                     msg = (
-                        f"🧪 *TESTOWY MECZ*\n"
+                        f"🧪 *TEST*\n"
+                        f"🏆 {sport_label}\n"
+                        f"⚔️ {home} vs {away}\n"
+                        f"✅ TYP: {pick}\n"
+                        f"📈 Kurs: `{odd:.2f}`"
+                    )
+                    send_msg(msg)
+                    state[f"{m_id}_t"] = now.isoformat()
+                    save_state(state)
+                    time.sleep(1)
+            except: 
+                continue
+
+    print("✅ Koniec skanowania.")
+
+if __name__ == "__main__":
+    run()
