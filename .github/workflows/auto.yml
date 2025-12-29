@@ -2,10 +2,9 @@ name: Bukmacher Bot Pro - Przetrwanie 30 Dni
 
 on:
   schedule:
-    # System UTC: 6, 8, 10, 12, 14, 16, 18 (7 uruchomień)
-    # Polska: 7, 9, 11, 13, 15, 17, 19
-    # Zużycie: 7 uruchomień * 7 lig = 49/dobę. 49 * 31 = 1519 (idealnie pod limit)
-    - cron: '0 6,8,10,12,14,16,18 * * *'
+    # System UTC: 6, 8, 10, 12, 14, 16, 18, 20 (8 uruchomień)
+    # Polska: 7, 9, 11, 13, 15, 17, 19, 21
+    - cron: '0 6,8,10,12,14,16,18,20 * * *'
   
   workflow_dispatch:
 
@@ -37,6 +36,7 @@ jobs:
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}  # <--- DODANO CZWARTY KLUCZ
         run: python start.py
 
       - name: Zapisanie bazy
@@ -44,7 +44,6 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Tworzy plik jeśli nie istnieje (ważne przy pierwszym uruchomieniu)
           touch sent.json
           
           git add sent.json
@@ -52,4 +51,3 @@ jobs:
           git pull --rebase origin main
           git push origin main
         continue-on-error: true
-
