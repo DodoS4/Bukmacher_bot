@@ -60,7 +60,7 @@ HISTORY_FILE = "history.json"
 
 BANKROLL = 1000              
 
-EV_THRESHOLD = 3.5           # Start kategorii STANDARD
+EV_THRESHOLD = 3.0           # Start kategorii STANDARD
 
 MIN_ODD = 1.40               
 
