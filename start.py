@@ -23,7 +23,7 @@ SPORTS_CONFIG = {
 STATE_FILE = "sent.json"
 HISTORY_FILE = "history.json"
 BANKROLL = 1000              
-EV_THRESHOLD = 2.0           # PRÓG 2.0%
+EV_THRESHOLD = 0.0           # PRÓG OBNIŻONY DO 0.0 (Wysyła wszystko co opłacalne)
 MIN_ODD = 1.40               
 MAX_ODD = 4.50               
 TAX_RATE = 0.88              
@@ -131,6 +131,7 @@ def run():
     history = load_data(HISTORY_FILE)
     now = datetime.now(timezone.utc)
     total_scanned, opportunities_found, active_leagues = 0, 0, 0
+    max_ev_found = -99.0
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
         matches = None
@@ -169,25 +170,28 @@ def run():
             f_h, f_a = calculate_fair_odds(o_h, o_a, o_d)
             max_h, max_a = max(o_h), max(o_a)
             ev_h, ev_a = (max_h * TAX_RATE / f_h - 1) * 100, (max_a * TAX_RATE / f_a - 1) * 100
+            
+            current_max = max(ev_h, ev_a)
+            if current_max > max_ev_found: max_ev_found = current_max
+
             pick, odd, fair, ev_n = (home, max_h, f_h, ev_h) if ev_h > ev_a else (away, max_a, f_a, ev_a)
 
             if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD:
                 final_stake = calculate_kelly_stake(odd, fair)
                 if final_stake >= 2.0:
                     opportunities_found += 1
-                    header = "🥇 GOLD" if ev_n >= 10 else "👑 PREMIUM" if ev_n >= 7 else "🟢 STANDARD"
+                    header = "🥇 GOLD" if ev_n >= 10 else "👑 PREMIUM" if ev_n >= 5 else "🟢 STANDARD"
                     msg = f"{header}\n\n🏆 {sport_label}\n⚔️ **{home}** vs **{away}**\n📍 TYP: **{pick.upper()}**\n📈 KURS: `{odd:.2f}`\n📊 EV: `+{ev_n:.1f}%` netto\n💵 STAWKA: **{final_stake} zł**"
                     send_msg(msg)
                     state[m_id] = now.isoformat()
                     history.append({"id": m_id, "home": home, "away": away, "pick": pick, "odd": odd, "stake": final_stake, "date": m_dt.isoformat(), "status": "pending", "sport": sport_key})
 
     if opportunities_found == 0:
-        send_msg(f"ℹ️ **Status bota ({pol_hour}:00)**\nPrzeanalizowano: `{total_scanned}` meczów\nAktywne ligi: `{active_leagues}/{len(SPORTS_CONFIG)}`\nWynik: Brak okazji > {EV_THRESHOLD}%")
+        send_msg(f"ℹ️ **Status bota ({pol_hour}:00)**\nPrzeanalizowano: `{total_scanned}` meczów\nAktywne ligi: `{active_leagues}/{len(SPORTS_CONFIG)}`\nNajlepsze znalezione EV: `{max_ev_found:.2f}%` netto")
 
     save_data(STATE_FILE, state)
     save_data(HISTORY_FILE, history)
     print("--- KONIEC SESJI ---")
 
-# TO SĄ DWIE NAJWAŻNIEJSZE LINIE NA KOŃCU PLIKU:
 if __name__ == "__main__":
     run()
