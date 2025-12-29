@@ -27,10 +27,10 @@ SPORTS_CONFIG = {
 STATE_FILE = "sent.json"
 HISTORY_FILE = "history.json"
 
-# --- TWOJE PARAMETRY ---
+# Parametry algorytmu
 BANKROLL = 1000              
 EV_THRESHOLD = 3.5           
-MIN_ODD = 1.40               
+MIN_ODD = 1.40               # Obniżony próg, aby łapać pewniejsze Gold/Premium
 MAX_ODD = 4.50               # BLOKADA HIGH RISK
 TAX_RATE = 0.88              
 KELLY_FRACTION = 0.1         
@@ -38,13 +38,17 @@ KELLY_FRACTION = 0.1
 # ================= SYSTEM DANYCH =================
 
 def load_data(file):
+    """Bezpieczne ładowanie danych z naprawą formatu."""
     if not os.path.exists(file): 
         return {} if "sent" in file else []
     try:
         with open(file, "r") as f:
             data = json.load(f)
-            if "history" in file and not isinstance(data, list): return []
-            if "sent" in file and not isinstance(data, dict): return {}
+            # Naprawa błędu AttributeError: 'dict' object has no attribute 'append'
+            if "history" in file and not isinstance(data, list):
+                return []
+            if "sent" in file and not isinstance(data, dict):
+                return {}
             return data
     except:
         return {} if "sent" in file else []
@@ -56,6 +60,7 @@ def save_data(file, data):
 # ================= ROZLICZENIA =================
 
 def fetch_score(sport_key, event_id):
+    """Pobiera wynik zakończonego meczu."""
     for key in API_KEYS:
         try:
             r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/scores/", 
@@ -70,23 +75,37 @@ def fetch_score(sport_key, event_id):
     return None
 
 def check_results():
+    """Analizuje historię i wysyła raporty o wynikach."""
     history = load_data(HISTORY_FILE)
     if not history: return
+    
     now = datetime.now(timezone.utc)
     updated_history = []
+    
     for bet in history:
         m_dt = datetime.fromisoformat(bet["date"])
+        # Rozliczenie po 4h od rozpoczęcia
         if bet.get("status") == "pending" and now > (m_dt + timedelta(hours=4)):
             result = fetch_score(bet["sport"], bet["id"])
             if result:
                 h_s, a_s = result
                 is_win = (bet["pick"] == bet["home"] and h_s > a_s) or (bet["pick"] == bet["away"] and a_s > h_s)
                 profit = round((bet["stake"] * bet["odd"] * TAX_RATE) - bet["stake"], 2) if is_win else -bet["stake"]
+                
                 status_icon = "✅ WYGRANA" if is_win else "❌ PRZEGRANA"
-                send_msg(f"{status_icon}\n\n🏟 {bet['home']} {h_s}:{a_s} {bet['away']}\n🎯 Typ: **{bet['pick'].upper()}**\n💰 Profit: `{profit} zł`")
+                msg = (
+                    f"{status_icon}\n\n"
+                    f"🏟 {bet['home']} {h_s}:{a_s} {bet['away']}\n"
+                    f"🎯 Typ: **{bet['pick'].upper()}**\n\n"
+                    f"💰 Profit: `{profit} zł`"
+                )
+                send_msg(msg)
                 bet["status"] = "settled"
+        
+        # Przechowuj historię z ostatnich 7 dni
         if m_dt > (now - timedelta(days=7)):
             updated_history.append(bet)
+            
     save_data(HISTORY_FILE, updated_history)
 
 # ================= POMOCNICZE =================
@@ -115,9 +134,12 @@ def send_msg(text):
 
 def run():
     now = datetime.now(timezone.utc)
-    if now.hour == 6: # Rozliczanie o 7:00 czasu polskiego
+    
+    # 1. Automatyczne rozliczanie o 6:00 UTC
+    if now.hour == 6:
         check_results()
 
+    # 2. Ładowanie baz danych
     state = load_data(STATE_FILE)
     history = load_data(HISTORY_FILE)
 
@@ -136,6 +158,8 @@ def run():
         for m in matches:
             m_id, home, away = m["id"], m["home_team"], m["away_team"]
             m_dt = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
+            
+            # Tylko nadchodzące mecze (do 48h)
             if m_dt < now or m_dt > (now + timedelta(hours=48)): continue
 
             odds_h, odds_a = [], []
@@ -152,19 +176,24 @@ def run():
             f_h, f_a = fair_odds(sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a))
             max_h, max_a = max(odds_h), max(odds_a)
             ev_h, ev_a = (max_h * TAX_RATE / f_h - 1) * 100, (max_a * TAX_RATE / f_a - 1) * 100
+
             pick, odd, fair, ev_n = (home, max_h, f_h, ev_h) if ev_h > ev_a else (away, max_a, f_a, ev_a)
 
-            # Filtrowanie ofert
+            # Warunki wysyłki (EV > 3.5%, kurs < 4.50)
             if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and m_id not in state:
                 stake = calculate_kelly_stake(odd, fair)
                 if stake >= 2.0:
-                    # --- TWOJE 3 POZYCJE ---
+                    
+                    # SYSTEM KATEGORYZACJI
                     if ev_n >= 10.0:
                         header = "🥇 **GOLD VALUE**"
+                        tag = "\n🔥 *TOP PRIORITY - GRAJ SZYBKO!*"
                     elif ev_n >= 7.0:
                         header = "👑 **PREMIUM VALUE**"
+                        tag = ""
                     else:
                         header = "🟢 **STANDARD VALUE**"
+                        tag = ""
 
                     msg = (
                         f"{header}\n\n"
@@ -177,11 +206,16 @@ def run():
                         f"📊 EV: `+{ev_n:.1f}%` netto\n"
                         f"💵 STAWKA: **{stake} zł**\n\n"
                         f"⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}"
+                        f"{tag}"
                     )
                     
                     send_msg(msg)
                     state[m_id] = now.isoformat()
-                    history.append({"id": m_id, "home": home, "away": away, "pick": pick, "odd": odd, "stake": stake, "date": m_dt.isoformat(), "status": "pending", "sport": sport_key})
+                    history.append({
+                        "id": m_id, "home": home, "away": away, "pick": pick, 
+                        "odd": odd, "stake": stake, "date": m_dt.isoformat(), 
+                        "status": "pending", "sport": sport_key
+                    })
 
     save_data(STATE_FILE, state)
     save_data(HISTORY_FILE, history)
