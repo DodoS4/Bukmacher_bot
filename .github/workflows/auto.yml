@@ -4,7 +4,7 @@ on:
   schedule:
     # System UTC: 6, 8, 10, 12, 14, 16, 18, 20, 22 (9 uruchomień)
     # Polska: 7, 9, 11, 13, 15, 17, 19, 21, 23
-    # Zużycie: 9 skanów * 8 lig * 31 dni = 2232 kredyty (Limit: 2500)
+    # UWAGA: Rozliczanie wyników następuje w sesji o 6:00 UTC
     - cron: '0 6,8,10,12,14,16,18,20,22 * * *'
   
   workflow_dispatch:
@@ -22,12 +22,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Python
+      - name: Konfiguracja Pythona
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Instalacja
+      - name: Instalacja bibliotek
         run: pip install requests
 
       - name: Uruchomienie bota
@@ -38,18 +38,19 @@ jobs:
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
-          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}  # <--- PIĄTY KLUCZ DODANY
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python start.py
 
-      - name: Zapisanie bazy
+      - name: Zapisanie bazy i historii
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          touch sent.json
+          # Tworzy pliki, jeśli nie istnieją
+          touch sent.json history.json
           
-          git add sent.json
-          git commit -m "Aktualizacja bazy [skip ci]" || echo "Brak zmian"
+          git add sent.json history.json
+          git commit -m "Aktualizacja bazy i wyników [skip ci]" || echo "Brak zmian do zapisu"
           git pull --rebase origin main
           git push origin main
         continue-on-error: true
