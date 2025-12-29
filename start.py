@@ -26,17 +26,19 @@ SPORTS_CONFIG = {
 
 STATE_FILE = "sent.json"
 HISTORY_FILE = "history.json"
+
+# Parametry algorytmu
 BANKROLL = 1000              
 EV_THRESHOLD = 3.5           
-MIN_ODD = 2.00               
-MAX_ODD = 6.00               
+MIN_ODD = 1.40               # Obniżony próg, aby łapać pewniejsze Gold/Premium
+MAX_ODD = 4.50               # BLOKADA HIGH RISK
 TAX_RATE = 0.88              
 KELLY_FRACTION = 0.1         
 
 # ================= SYSTEM DANYCH =================
 
 def load_data(file):
-    """Bezpieczne ładowanie danych z obsługą błędów formatu."""
+    """Bezpieczne ładowanie danych z naprawą formatu."""
     if not os.path.exists(file): 
         return {} if "sent" in file else []
     try:
@@ -82,6 +84,7 @@ def check_results():
     
     for bet in history:
         m_dt = datetime.fromisoformat(bet["date"])
+        # Rozliczenie po 4h od rozpoczęcia
         if bet.get("status") == "pending" and now > (m_dt + timedelta(hours=4)):
             result = fetch_score(bet["sport"], bet["id"])
             if result:
@@ -99,6 +102,7 @@ def check_results():
                 send_msg(msg)
                 bet["status"] = "settled"
         
+        # Przechowuj historię z ostatnich 7 dni
         if m_dt > (now - timedelta(days=7)):
             updated_history.append(bet)
             
@@ -131,11 +135,11 @@ def send_msg(text):
 def run():
     now = datetime.now(timezone.utc)
     
-    # 1. Rozliczanie raz dziennie o 6:00 UTC (7:00 PL)
+    # 1. Automatyczne rozliczanie o 6:00 UTC
     if now.hour == 6:
         check_results()
 
-    # 2. Ładowanie baz
+    # 2. Ładowanie baz danych
     state = load_data(STATE_FILE)
     history = load_data(HISTORY_FILE)
 
@@ -155,6 +159,7 @@ def run():
             m_id, home, away = m["id"], m["home_team"], m["away_team"]
             m_dt = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
             
+            # Tylko nadchodzące mecze (do 48h)
             if m_dt < now or m_dt > (now + timedelta(hours=48)): continue
 
             odds_h, odds_a = [], []
@@ -174,16 +179,21 @@ def run():
 
             pick, odd, fair, ev_n = (home, max_h, f_h, ev_h) if ev_h > ev_a else (away, max_a, f_a, ev_a)
 
+            # Warunki wysyłki (EV > 3.5%, kurs < 4.50)
             if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and m_id not in state:
                 stake = calculate_kelly_stake(odd, fair)
                 if stake >= 2.0:
-                    # Inteligentny nagłówek
-                    if ev_n >= 7.0 and odd <= 3.50:
+                    
+                    # SYSTEM KATEGORYZACJI
+                    if ev_n >= 10.0:
+                        header = "🥇 **GOLD VALUE**"
+                        tag = "\n🔥 *TOP PRIORITY - GRAJ SZYBKO!*"
+                    elif ev_n >= 7.0:
                         header = "👑 **PREMIUM VALUE**"
-                    elif odd > 4.50:
-                        header = "🎰 **HIGH RISK VALUE**"
+                        tag = ""
                     else:
                         header = "🟢 **STANDARD VALUE**"
+                        tag = ""
 
                     msg = (
                         f"{header}\n\n"
@@ -196,7 +206,9 @@ def run():
                         f"📊 EV: `+{ev_n:.1f}%` netto\n"
                         f"💵 STAWKA: **{stake} zł**\n\n"
                         f"⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}"
+                        f"{tag}"
                     )
+                    
                     send_msg(msg)
                     state[m_id] = now.isoformat()
                     history.append({
