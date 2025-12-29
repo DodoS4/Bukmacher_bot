@@ -2,38 +2,41 @@ name: Bukmacher Bot Pro - Przetrwanie 30 Dni
 
 on:
   schedule:
-    # System UTC: 6, 8, 10, 12, 14, 16, 18, 20, 22 (9 uruchomień)
-    # Polska: 7, 9, 11, 13, 15, 17, 19, 21, 23
-    # UWAGA: Rozliczanie wyników następuje w sesji o 6:00 UTC
-    - cron: '0 6,8,10,12,14,16,18,20,22 * * *'
+    # Uruchomienie co godzinę od 06:00 UTC do 20:00 UTC
+    # W Polsce (czas zimowy) to 07:00 - 21:00
+    - cron: '0 6-20 * * *'
   
-  workflow_dispatch:
+  workflow_dispatch: # Pozwala na ręczne uruchomienie bota przyciskiem na GitHubie
 
 permissions:
-  contents: write
+  contents: write # Kluczowe: pozwala botowi zapisywać pliki sent.json i history.json
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Pobierz kod
+      - name: Pobierz kod z repozytorium
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Konfiguracja Pythona
+      - name: Konfiguracja środowiska Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Instalacja bibliotek
-        run: pip install requests
+      - name: Instalacja wymaganych bibliotek
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
       - name: Uruchomienie bota
         env:
+          # Dane do Telegrama
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
+          # Pula 5 kluczy API
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
@@ -41,16 +44,21 @@ jobs:
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python start.py
 
-      - name: Zapisanie bazy i historii
+      - name: Zapisanie bazy danych i historii do repozytorium
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Tworzy pliki, jeśli nie istnieją
+          # Stworzenie pustych plików, jeśli nie istnieją (pierwsze uruchomienie)
           touch sent.json history.json
           
+          # Dodanie plików do repozytorium
           git add sent.json history.json
+          
+          # Commit zmian (tylko jeśli zaszły jakieś zmiany)
           git commit -m "Aktualizacja bazy i wyników [skip ci]" || echo "Brak zmian do zapisu"
+          
+          # Wysłanie zmian na serwer GitHub
           git pull --rebase origin main
           git push origin main
-        continue-on-error: true
+        continue-on-error: true # Zapobiega oznaczeniu workflow jako "błąd", jeśli git nie ma nic do wysłania
