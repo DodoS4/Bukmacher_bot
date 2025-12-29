@@ -26,7 +26,6 @@ SPORTS_CONFIG = {
 STATE_FILE = "sent.json"
 HISTORY_FILE = "history.json"
 
-# --- PARAMETRY INWESTYCYJNE ---
 BANKROLL = 1000              
 EV_THRESHOLD = 3.5           
 MIN_ODD = 1.40               
@@ -149,9 +148,40 @@ def run():
             pick, odd, fair, ev_n, avg_market = (home, max_h, f_h, ev_h, avg_h) if ev_h > ev_a else (away, max_a, f_a, ev_a, avg_a)
 
             if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and m_id not in state:
-                # Obliczanie Bufora Bezpieczeństwa (różnica między max a średnią rynkową)
                 buffer = ((odd / avg_market) - 1) * 100
                 base_stake = calculate_kelly_stake(odd, fair)
                 
                 if base_stake >= 2.0:
-                    if ev_
+                    if ev_n >= 10.0:
+                        header, mult = "🥇 **GOLD VALUE**", 1.0
+                    elif ev_n >= 7.0:
+                        header, mult = "👑 **PREMIUM VALUE**", 0.7
+                    else:
+                        header, mult = "🟢 **STANDARD VALUE**", 0.4
+                    
+                    final_stake = round(base_stake * mult, 2)
+                    if final_stake < 2.0: continue
+
+                    buf_icon = "🛡️" if buffer > 8 else "⚠️"
+
+                    msg = (
+                        f"{header}\n\n"
+                        f"🏆 {sport_label}\n"
+                        f"⚔️ **{home}** vs **{away}**\n\n"
+                        f"📍 TYP: **{pick.upper()}**\n"
+                        f"📈 KURS: `{odd:.2f}`\n"
+                        f"📊 EV: `+{ev_n:.1f}%` netto\n"
+                        f"{buf_icon} BUFOR: `{buffer:.1f}%` wobec rynku\n"
+                        f"💵 STAWKA: **{final_stake} zł**\n\n"
+                        f"⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}"
+                    )
+                    
+                    send_msg(msg)
+                    state[m_id] = now.isoformat()
+                    history.append({"id": m_id, "home": home, "away": away, "pick": pick, "odd": odd, "stake": final_stake, "date": m_dt.isoformat(), "status": "pending", "sport": sport_key})
+
+    save_data(STATE_FILE, state)
+    save_data(HISTORY_FILE, history)
+
+if __name__ == "__main__":
+    run()
