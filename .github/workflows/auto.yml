@@ -2,9 +2,10 @@ name: Bukmacher Bot Pro - Przetrwanie 30 Dni
 
 on:
   schedule:
-    # System UTC: 6, 8, 10, 12, 14, 16, 18, 20 (8 uruchomień)
-    # Polska: 7, 9, 11, 13, 15, 17, 19, 21
-    - cron: '0 6,8,10,12,14,16,18,20 * * *'
+    # System UTC: 6, 8, 10, 12, 14, 16, 18, 20, 22 (9 uruchomień)
+    # Polska: 7, 9, 11, 13, 15, 17, 19, 21, 23
+    # Zużycie: 9 skanów * 8 lig * 31 dni = 2232 kredyty (Limit: 2500)
+    - cron: '0 6,8,10,12,14,16,18,20,22 * * *'
   
   workflow_dispatch:
 
@@ -36,7 +37,8 @@ jobs:
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}  # <--- DODANO CZWARTY KLUCZ
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}  # <--- PIĄTY KLUCZ DODANY
         run: python start.py
 
       - name: Zapisanie bazy
