@@ -9,7 +9,6 @@ from datetime import datetime, timedelta, timezone
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
-# Obsługa puli 5 kluczy API
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
@@ -31,27 +30,23 @@ HISTORY_FILE = "history.json"
 BANKROLL = 1000              
 EV_THRESHOLD = 3.5           
 MIN_ODD = 1.40               
-MAX_ODD = 4.50               # BLOKADA HIGH RISK
+MAX_ODD = 4.50               
 TAX_RATE = 0.88              
-KELLY_FRACTION = 0.1         # Agresywność bazowa (1/10 Kelly)
+KELLY_FRACTION = 0.1         
 
 # ================= SYSTEM DANYCH =================
 
 def load_data(file):
-    if not os.path.exists(file): 
-        return {} if "sent" in file else []
+    if not os.path.exists(file): return {} if "sent" in file else []
     try:
         with open(file, "r") as f:
             data = json.load(f)
             if "history" in file and not isinstance(data, list): return []
-            if "sent" in file and not isinstance(data, dict): return {}
             return data
-    except:
-        return {} if "sent" in file else []
+    except: return {} if "sent" in file else []
 
 def save_data(file, data):
-    with open(file, "w") as f:
-        json.dump(data, f)
+    with open(file, "w") as f: json.dump(data, f)
 
 # ================= ROZLICZENIA =================
 
@@ -82,11 +77,9 @@ def check_results():
                 h_s, a_s = result
                 is_win = (bet["pick"] == bet["home"] and h_s > a_s) or (bet["pick"] == bet["away"] and a_s > h_s)
                 profit = round((bet["stake"] * bet["odd"] * TAX_RATE) - bet["stake"], 2) if is_win else -bet["stake"]
-                status_icon = "✅ WYGRANA" if is_win else "❌ PRZEGRANA"
-                send_msg(f"{status_icon}\n\n🏟 {bet['home']} {h_s}:{a_s} {bet['away']}\n🎯 Typ: **{bet['pick'].upper()}**\n💰 Profit: `{profit} zł`")
+                send_msg(f"{'✅ WYGRANA' if is_win else '❌ PRZEGRANA'}\n\n🏟 {bet['home']} {h_s}:{a_s} {bet['away']}\n🎯 Typ: **{bet['pick'].upper()}**\n💰 Profit: `{profit} zł`")
                 bet["status"] = "settled"
-        if m_dt > (now - timedelta(days=7)):
-            updated_history.append(bet)
+        if m_dt > (now - timedelta(days=7)): updated_history.append(bet)
     save_data(HISTORY_FILE, updated_history)
 
 # ================= POMOCNICZE =================
@@ -106,8 +99,7 @@ def calculate_kelly_stake(odd, fair_odd):
 
 def send_msg(text):
     if not T_TOKEN or not T_CHAT: return
-    try:
-        requests.post(f"https://api.telegram.org/bot{T_TOKEN}/sendMessage", 
+    try: requests.post(f"https://api.telegram.org/bot{T_TOKEN}/sendMessage", 
                       json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=10)
     except: pass
 
@@ -115,8 +107,7 @@ def send_msg(text):
 
 def run():
     now = datetime.now(timezone.utc)
-    if now.hour == 6:
-        check_results()
+    if now.hour == 6: check_results()
 
     state = load_data(STATE_FILE)
     history = load_data(HISTORY_FILE)
@@ -149,49 +140,18 @@ def run():
                         except: continue
 
             if len(odds_h) < 4: continue
-            f_h, f_a = fair_odds(sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a))
+            
+            avg_h, avg_a = sum(odds_h)/len(odds_h), sum(odds_a)/len(odds_a)
+            f_h, f_a = fair_odds(avg_h, avg_a)
             max_h, max_a = max(odds_h), max(odds_a)
             ev_h, ev_a = (max_h * TAX_RATE / f_h - 1) * 100, (max_a * TAX_RATE / f_a - 1) * 100
-            pick, odd, fair, ev_n = (home, max_h, f_h, ev_h) if ev_h > ev_a else (away, max_a, f_a, ev_a)
+            
+            pick, odd, fair, ev_n, avg_market = (home, max_h, f_h, ev_h, avg_h) if ev_h > ev_a else (away, max_a, f_a, ev_a, avg_a)
 
             if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and m_id not in state:
+                # Obliczanie Bufora Bezpieczeństwa (różnica między max a średnią rynkową)
+                buffer = ((odd / avg_market) - 1) * 100
                 base_stake = calculate_kelly_stake(odd, fair)
                 
                 if base_stake >= 2.0:
-                    # --- SYSTEM WAG I KATEGORII ---
-                    if ev_n >= 10.0:
-                        header = "🥇 **GOLD VALUE**"
-                        multiplier = 1.0  # 100% stawki Kelly'ego
-                    elif ev_n >= 7.0:
-                        header = "👑 **PREMIUM VALUE**"
-                        multiplier = 0.7  # 70% stawki
-                    else:
-                        header = "🟢 **STANDARD VALUE**"
-                        multiplier = 0.4  # 40% stawki
-                    
-                    final_stake = round(base_stake * multiplier, 2)
-                    
-                    if final_stake < 2.0: continue # Odrzuć jeśli po obniżeniu stawka jest za mała
-
-                    msg = (
-                        f"{header}\n\n"
-                        f"🏆 {sport_label}\n"
-                        f"⚔️ **{home}**\n"
-                        f"      vs\n"
-                        f"⚔️ **{away}**\n\n"
-                        f"📍 TYP: **{pick.upper()}**\n"
-                        f"📈 KURS: `{odd:.2f}`\n"
-                        f"📊 EV: `+{ev_n:.1f}%` netto\n"
-                        f"💵 STAWKA: **{final_stake} zł**\n\n"
-                        f"⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}"
-                    )
-                    
-                    send_msg(msg)
-                    state[m_id] = now.isoformat()
-                    history.append({"id": m_id, "home": home, "away": away, "pick": pick, "odd": odd, "stake": final_stake, "date": m_dt.isoformat(), "status": "pending", "sport": sport_key})
-
-    save_data(STATE_FILE, state)
-    save_data(HISTORY_FILE, history)
-
-if __name__ == "__main__":
-    run()
+                    if ev_
