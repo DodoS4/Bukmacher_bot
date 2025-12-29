@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
+# Obsługa puli 5 kluczy API
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
@@ -26,10 +27,11 @@ SPORTS_CONFIG = {
 STATE_FILE = "sent.json"
 HISTORY_FILE = "history.json"
 
+# --- PARAMETRY INWESTYCYJNE ---
 BANKROLL = 1000              
-EV_THRESHOLD = 3.5           
+EV_THRESHOLD = 3.5           # Start kategorii STANDARD
 MIN_ODD = 1.40               
-MAX_ODD = 4.50               
+MAX_ODD = 4.50               # Blokada HIGH RISK
 TAX_RATE = 0.88              
 KELLY_FRACTION = 0.1         
 
@@ -152,12 +154,13 @@ def run():
                 base_stake = calculate_kelly_stake(odd, fair)
                 
                 if base_stake >= 2.0:
+                    # --- TWOJE PRECYZYJNE PROGI ---
                     if ev_n >= 10.0:
-                        header, mult = "🥇 **GOLD VALUE**", 1.0
+                        header, mult = "🥇 **GOLD VALUE**", 1.0   # Powyżej 10%
                     elif ev_n >= 7.0:
-                        header, mult = "👑 **PREMIUM VALUE**", 0.7
+                        header, mult = "👑 **PREMIUM VALUE**", 0.7  # 7.0% - 9.9%
                     else:
-                        header, mult = "🟢 **STANDARD VALUE**", 0.4
+                        header, mult = "🟢 **STANDARD VALUE**", 0.4 # 3.5% - 6.9%
                     
                     final_stake = round(base_stake * mult, 2)
                     if final_stake < 2.0: continue
