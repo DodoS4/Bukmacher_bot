@@ -9,6 +9,7 @@ from datetime import datetime, timedelta, timezone
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 
+# Obsługa puli 5 kluczy API
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
@@ -26,13 +27,13 @@ SPORTS_CONFIG = {
 STATE_FILE = "sent.json"
 HISTORY_FILE = "history.json"
 
-# --- TWOJE PARAMETRY ---
+# --- PARAMETRY INWESTYCYJNE ---
 BANKROLL = 1000              
 EV_THRESHOLD = 3.5           
 MIN_ODD = 1.40               
-MAX_ODD = 4.50               # BLOKADA: Kursy powyżej 4.50 są ignorowane
+MAX_ODD = 4.50               # BLOKADA HIGH RISK
 TAX_RATE = 0.88              
-KELLY_FRACTION = 0.1         
+KELLY_FRACTION = 0.1         # Agresywność bazowa (1/10 Kelly)
 
 # ================= SYSTEM DANYCH =================
 
@@ -153,17 +154,24 @@ def run():
             ev_h, ev_a = (max_h * TAX_RATE / f_h - 1) * 100, (max_a * TAX_RATE / f_a - 1) * 100
             pick, odd, fair, ev_n = (home, max_h, f_h, ev_h) if ev_h > ev_a else (away, max_a, f_a, ev_a)
 
-            # Filtrowanie i kategoryzacja
             if ev_n >= EV_THRESHOLD and MIN_ODD <= odd <= MAX_ODD and m_id not in state:
-                stake = calculate_kelly_stake(odd, fair)
-                if stake >= 2.0:
-                    # --- TWOJE 3 KATEGORIE ---
+                base_stake = calculate_kelly_stake(odd, fair)
+                
+                if base_stake >= 2.0:
+                    # --- SYSTEM WAG I KATEGORII ---
                     if ev_n >= 10.0:
                         header = "🥇 **GOLD VALUE**"
+                        multiplier = 1.0  # 100% stawki Kelly'ego
                     elif ev_n >= 7.0:
                         header = "👑 **PREMIUM VALUE**"
+                        multiplier = 0.7  # 70% stawki
                     else:
                         header = "🟢 **STANDARD VALUE**"
+                        multiplier = 0.4  # 40% stawki
+                    
+                    final_stake = round(base_stake * multiplier, 2)
+                    
+                    if final_stake < 2.0: continue # Odrzuć jeśli po obniżeniu stawka jest za mała
 
                     msg = (
                         f"{header}\n\n"
@@ -174,13 +182,13 @@ def run():
                         f"📍 TYP: **{pick.upper()}**\n"
                         f"📈 KURS: `{odd:.2f}`\n"
                         f"📊 EV: `+{ev_n:.1f}%` netto\n"
-                        f"💵 STAWKA: **{stake} zł**\n\n"
+                        f"💵 STAWKA: **{final_stake} zł**\n\n"
                         f"⏰ {m_dt.strftime('%H:%M')} | 📅 {m_dt.strftime('%d.%m')}"
                     )
                     
                     send_msg(msg)
                     state[m_id] = now.isoformat()
-                    history.append({"id": m_id, "home": home, "away": away, "pick": pick, "odd": odd, "stake": stake, "date": m_dt.isoformat(), "status": "pending", "sport": sport_key})
+                    history.append({"id": m_id, "home": home, "away": away, "pick": pick, "odd": odd, "stake": final_stake, "date": m_dt.isoformat(), "status": "pending", "sport": sport_key})
 
     save_data(STATE_FILE, state)
     save_data(HISTORY_FILE, history)
