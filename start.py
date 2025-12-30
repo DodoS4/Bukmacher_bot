@@ -18,14 +18,36 @@ MAX_SINGLE_ODD = 1.60
 GOLDEN_MAX_ODD = 1.35
 MAX_VARIANCE = 0.08 
 
+# --- ROZSZERZONA LISTA LIG (Wykorzystujemy zapas API) ---
 SPORTS_CONFIG = {
+    # Top 5 & Ekstraklasa
     "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League",
     "soccer_spain_la_liga": "🇪🇸 La Liga",
     "soccer_germany_bundesliga": "🇩🇪 Bundesliga",
     "soccer_italy_serie_a": "🇮🇹 Serie A",
     "soccer_france_ligue_one": "🇫🇷 Ligue 1",
     "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
+    
+    # Mocne ligi Europejskie
+    "soccer_netherlands_ere_divisie": "🇳🇱 Eredivisie",
+    "soccer_portugal_primeira_liga": "🇵🇹 Primeira Liga",
+    "soccer_turkey_super_lig": "🇹🇷 Super Lig",
+    "soccer_belgium_first_div": "🇧🇪 Jupiler Pro League",
+    "soccer_austria_bundesliga": "🇦🇹 Bundesliga (AT)",
+    "soccer_denmark_superliga": "🇩🇰 Superliga",
+    
+    # Zaplecza (Druga liga)
+    "soccer_league_one": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 League One",
+    "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Championship",
+    "soccer_italy_serie_b": "🇮🇹 Serie B",
+    
+    # Puchary i Międzynarodowe
     "soccer_uefa_champions_league": "🇪🇺 Liga Mistrzów",
+    "soccer_uefa_europa_league": "🇪🇺 Liga Europy",
+    "soccer_uefa_europa_conference_league": "🇪🇺 Liga Konferencji",
+    "soccer_uefa_nations_league": "🇪🇺 Liga Narodów",
+    
+    # Inne
     "basketball_nba": "🏀 NBA",
 }
 
@@ -75,10 +97,9 @@ def run():
             m_id = m["id"]
             if m_id in sent_ids: continue
             
-            # Przeliczenie na czas polski (UTC + 1 lub +2 zależnie od pory roku)
-            # Dla uproszczenia dodajemy 1h (zima) lub 2h (lato) lub korzystamy z timedelta
             m_dt_utc = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
-            m_dt_pl = m_dt_utc + timedelta(hours=1) # Czas zimowy (dla lata zmień na 2)
+            # Czas polski (zimowy UTC+1)
+            m_dt_pl = m_dt_utc + timedelta(hours=1)
             
             if m_dt_utc < now or m_dt_utc > (now + timedelta(hours=48)): continue
 
@@ -100,9 +121,9 @@ def run():
             var_h = (max_h - min_h) / avg_h
             var_a = (max_a - min_a) / avg_a
 
-            pick = None
             date_str = m_dt_pl.strftime("%d.%m %H:%M")
 
+            pick = None
             if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
                 is_dropping = (avg_h - min_h) > 0.05
                 pick = {"id": m_id, "team": home, "odd": avg_h, "league": sport_label, "vs": away, "golden": avg_h <= GOLDEN_MAX_ODD, "dropping": is_dropping, "date": date_str}
@@ -113,6 +134,7 @@ def run():
             if pick: all_favorites.append(pick)
 
     if len(all_favorites) >= 2:
+        # Sortowanie: Złote mecze i spadki na górę
         all_favorites.sort(key=lambda x: (x['golden'], x['dropping']), reverse=True)
         
         for i in range(0, len(all_favorites) - 1, 2):
