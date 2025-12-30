@@ -1,13 +1,9 @@
-name: Bukmacher Bot Pro - Przetrwanie 30 Dni
+name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    # 1. 08:00 UTC (09:00 PL) - Skan poranny
-    # 2. 12:00 UTC (13:00 PL) - Przed meczami popołudniowymi
-    # 3. 17:00 UTC (18:00 PL) - Przed meczami wieczornymi (najważniejszy)
-    # 4. 21:00 UTC (22:00 PL) - NBA i mecze nocne
     - cron: '0 8,12,17,21 * * *'
-  workflow_dispatch: # Przycisk do ręcznego uruchomienia
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -19,7 +15,7 @@ jobs:
       - name: Pobierz kod
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Pobiera całą historię, co jest ważne przy operacji pull/rebase
+          fetch-depth: 0
 
       - name: Konfiguracja Pythona
         uses: actions/setup-python@v4
@@ -45,14 +41,16 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Dodajemy plik przed próbą pobrania zmian
-          git add sent.json
+          # 1. Tymczasowo schowaj zmiany wprowadzone przez Pythona
+          git stash
           
-          # Pobieramy zmiany, jeśli wystąpiły (rebase zapobiega zbędnym merge commitom)
+          # 2. Pobierz aktualną wersję z serwera
           git pull --rebase origin main
           
-          # Commitujemy zmiany bota
-          git commit -m "Aktualizacja bazy [skip ci]" || echo "Brak zmian do zatwierdzenia"
+          # 3. Przywróć zmiany z "schowka"
+          git stash pop || echo "Brak zmian do przywrócenia"
           
-          # Wysyłamy na serwer
+          # 4. Zatwierdź i wyślij
+          git add sent.json
+          git commit -m "Aktualizacja bazy [skip ci]" || echo "Brak zmian do zatwierdzenia"
           git push origin main
