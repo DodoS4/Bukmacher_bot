@@ -1,0 +1,25 @@
+name: 📊 Sprawdź Statystyki
+
+on:
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobierz kod
+        uses: actions/checkout@v3
+
+      - name: Konfiguracja Pythona
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalacja bibliotek
+        run: pip install requests
+
+      - name: Wygeneruj i wyślij raport
+        env:
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT: ${{ secrets.T_CHAT }}
+        run: python stats.py
