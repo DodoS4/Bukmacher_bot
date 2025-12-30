@@ -9,8 +9,8 @@ T_CHAT = os.getenv("T_CHAT")
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-STAKE_STANDARD = 50.0   # Kwota dla zwykłego kuponu
-STAKE_GOLDEN = 100.0    # Kwota dla Złotego Dubla
+STAKE_STANDARD = 50.0   
+STAKE_GOLDEN = 100.0    
 TAX_RATE = 0.88
 
 MIN_SINGLE_ODD = 1.25
@@ -118,6 +118,10 @@ def run():
         total_scanned += len(matches)
         for m in matches:
             if m["id"] in sent_ids or len(m.get("bookmakers", [])) < MIN_BOOKMAKERS: continue
+            
+            # Resetujemy zmienną pick dla każdego meczu (NAPRAWA BŁĘDU)
+            pick = None
+            
             m_dt_utc = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
             if m_dt_utc < now_utc or m_dt_utc > (now_utc + timedelta(hours=48)): continue
 
@@ -161,7 +165,6 @@ def run():
         stake = STAKE_GOLDEN if (p1['golden'] and p2['golden']) else STAKE_STANDARD
         win_val = round(stake * TAX_RATE * ako, 2)
         
-        # DODANO: Jasna informacja o kwocie obstawiania w wiadomości
         msg = (f"{'🌟 **ZŁOTY DOUBLE**' if stake == STAKE_GOLDEN else '🚀 **KUPON DOUBLE**'}\n"
                f"━━━━━━━━━━━━━━━\n"
                f"1️⃣ {p1['league']}\n🏟 **{p1['team']}**\n⏰ Start: `{p1['date_str']}`\n📈 Kurs: `{p1['odd']:.2f}`\n\n"
