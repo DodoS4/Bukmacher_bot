@@ -75,8 +75,12 @@ def run():
             m_id = m["id"]
             if m_id in sent_ids: continue
             
-            m_dt = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
-            if m_dt < now or m_dt > (now + timedelta(hours=48)): continue
+            # Przeliczenie na czas polski (UTC + 1 lub +2 zależnie od pory roku)
+            # Dla uproszczenia dodajemy 1h (zima) lub 2h (lato) lub korzystamy z timedelta
+            m_dt_utc = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
+            m_dt_pl = m_dt_utc + timedelta(hours=1) # Czas zimowy (dla lata zmień na 2)
+            
+            if m_dt_utc < now or m_dt_utc > (now + timedelta(hours=48)): continue
 
             home, away = m["home_team"], m["away_team"]
             h_odds, a_odds = [], []
@@ -97,12 +101,14 @@ def run():
             var_a = (max_a - min_a) / avg_a
 
             pick = None
+            date_str = m_dt_pl.strftime("%d.%m %H:%M")
+
             if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
                 is_dropping = (avg_h - min_h) > 0.05
-                pick = {"id": m_id, "team": home, "odd": avg_h, "league": sport_label, "vs": away, "golden": avg_h <= GOLDEN_MAX_ODD, "dropping": is_dropping}
+                pick = {"id": m_id, "team": home, "odd": avg_h, "league": sport_label, "vs": away, "golden": avg_h <= GOLDEN_MAX_ODD, "dropping": is_dropping, "date": date_str}
             elif MIN_SINGLE_ODD <= avg_a <= MAX_SINGLE_ODD and var_a <= MAX_VARIANCE:
                 is_dropping = (avg_a - min_a) > 0.05
-                pick = {"id": m_id, "team": away, "odd": avg_a, "league": sport_label, "vs": home, "golden": avg_a <= GOLDEN_MAX_ODD, "dropping": is_dropping}
+                pick = {"id": m_id, "team": away, "odd": avg_a, "league": sport_label, "vs": home, "golden": avg_a <= GOLDEN_MAX_ODD, "dropping": is_dropping, "date": date_str}
 
             if pick: all_favorites.append(pick)
 
@@ -126,9 +132,11 @@ def run():
                 f"━━━━━━━━━━━━━━━\n"
                 f"1️⃣ {p1['league']} {'⭐' if p1['golden'] else ''}\n"
                 f"🏟 **{p1['team']}** vs {p1['vs']}\n"
+                f"📅 Start: `{p1['date']}`\n"
                 f"📈 Kurs: `{p1['odd']:.2f}`\n\n"
                 f"2️⃣ {p2['league']} {'⭐' if p2['golden'] else ''}\n"
                 f"🏟 **{p2['team']}** vs {p2['vs']}\n"
+                f"📅 Start: `{p2['date']}`\n"
                 f"📈 Kurs: `{p2['odd']:.2f}`\n"
                 f"━━━━━━━━━━━━━━━\n"
                 f"📊 AKO: `{ako:.2f}` | 💵 Stawka: `{current_stake} PLN`\n"
