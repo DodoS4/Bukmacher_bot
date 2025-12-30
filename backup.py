@@ -1,27 +1,33 @@
 import os
 import requests
+import zipfile
 from datetime import datetime
 
-def send_backup():
+def send_full_backup():
     token = os.getenv("T_TOKEN")
     chat = os.getenv("T_CHAT")
-    file_path = "coupons.json"
+    zip_name = "full_bot_backup.zip"
 
-    if not os.path.exists(file_path):
-        print("Brak pliku do backupu.")
-        return
+    # Tworzenie archiwum ZIP ze wszystkimi ważnymi plikami
+    with zipfile.ZipFile(zip_name, 'w') as zipf:
+        for root, dirs, files in os.walk('.'):
+            for file in files:
+                # Pakujemy tylko skrypty, bazę i konfigurację (omijamy ukryte foldery gita)
+                if file.endswith(('.py', '.json', '.yml')) and '.git' not in root:
+                    zipf.write(os.path.join(root, file))
 
     date_str = datetime.now().strftime("%d.%m.%Y")
     url = f"https://api.telegram.org/bot{token}/sendDocument"
     
     try:
-        with open(file_path, "rb") as f:
+        with open(zip_name, "rb") as f:
             requests.post(url, 
-                         data={"chat_id": chat, "caption": f"📦 BACKUP BAZY: {date_str}"},
+                         data={"chat_id": chat, "caption": f"🗄 PEŁNY BACKUP PROJEKTU: {date_str}"},
                          files={"document": f})
-        print("Backup wysłany pomyślnie.")
+        os.remove(zip_name) # Usuń plik po wysłaniu
+        print("Pełny backup wysłany.")
     except Exception as e:
-        print(f"Błąd backupu: {e}")
+        print(f"Błąd: {e}")
 
 if __name__ == "__main__":
-    send_backup()
+    send_full_backup()
