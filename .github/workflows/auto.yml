@@ -1,56 +1,14 @@
-name: Bukmacher Bot Pro AKO
-
-on:
-  schedule:
-    - cron: '0 8,12,17,21 * * *'
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pobierz kod
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Konfiguracja Pythona
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Instalacja bibliotek
-        run: pip install requests
-
-      - name: Uruchomienie bota
-        env:
-          T_TOKEN: ${{ secrets.T_TOKEN }}
-          T_CHAT: ${{ secrets.T_CHAT }}
-          ODDS_KEY: ${{ secrets.ODDS_KEY }}
-          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
-          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
-          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
-        run: python start.py
-
-      - name: Zapisanie zmian w sent.json
+      - name: Zapisanie zmian w bazie danych
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # 1. Tymczasowo schowaj zmiany wprowadzone przez Pythona
-          git stash
-          
-          # 2. Pobierz aktualną wersję z serwera
+          # Pobierz aktualną wersję, aby uniknąć konfliktów
           git pull --rebase origin main
           
-          # 3. Przywróć zmiany z "schowka"
-          git stash pop || echo "Brak zmian do przywrócenia"
+          # Dodaj oba pliki bazodanowe
+          git add sent.json coupons.json
           
-          # 4. Zatwierdź i wyślij
-          git add sent.json
-          git commit -m "Aktualizacja bazy [skip ci]" || echo "Brak zmian do zatwierdzenia"
+          # Zatwierdź zmiany (jeśli są) i wyślij na serwer
+          git commit -m "Aktualizacja bazy typów i wyników [skip ci]" || echo "Brak zmian do zatwierdzenia"
           git push origin main
