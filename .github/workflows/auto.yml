@@ -1,108 +1,45 @@
-name: Bukmacher Bot Pro - Przetrwanie 30 Dni
+import requests
+import os
+import json
+from datetime import datetime, timedelta, timezone
 
+# ================= KONFIGURACJA =================
+T_TOKEN = os.getenv("T_TOKEN")
+T_CHAT = os.getenv("T_CHAT")
 
+# Obsługa puli 5 kluczy API (Zgodnie z Twoim .yml)
+KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
+API_KEYS = [k for k in KEYS_POOL if k]
 
-on:
-  schedule:
+# --- PARAMETRY STAWEK (PLN) ---
+STAKE_STANDARD = 50.0   # Kwota na zwykły Double
+STAKE_GOLDEN = 100.0    # Kwota na Złoty Double (oba mecze ⭐)
+TAX_RATE = 0.88         # Podatek 12% w Polsce
 
-    # System UTC: 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 (17 uruchomień)
+# --- FILTRY KURSÓW ---
+MIN_SINGLE_ODD = 1.25   # Ochrona przed podatkiem
+MAX_SINGLE_ODD = 1.60   # Maksymalny kurs dla faworyta
+GOLDEN_MAX_ODD = 1.35   # Kurs powyżej którego mecz nie jest "Złoty"
 
-    # Polska: 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
+# --- WYBRANE LIGI (NAJWYŻSZA PRZEWIDYWALNOŚĆ) ---
+SPORTS_CONFIG = {
+    "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League",
+    "soccer_spain_la_liga": "🇪🇸 La Liga",
+    "soccer_germany_bundesliga": "🇩🇪 Bundesliga",
+    "soccer_italy_serie_a": "🇮🇹 Serie A",
+    "soccer_france_ligue_one": "🇫🇷 Ligue 1",
+    "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
+    "soccer_uefa_champions_league": "🇪🇺 Liga Mistrzów",
+    "basketball_nba": "🏀 NBA",
+}
 
-    # UWAGA: Rozliczanie wyników następuje w sesji o 6:00 UTC
+STATE_FILE = "sent.json"
 
-    - cron: '0 6-22 * * *'
+# ================= SYSTEM DANYCH =================
 
-  workflow_dispatch:
-
-
-
-permissions:
-
-  contents: write
-
-
-
-jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-
-
-    steps:
-
-      - name: Pobierz kod
-
-        uses: actions/checkout@v3
-
-        with:
-
-          fetch-depth: 0
-
-
-
-      - name: Konfiguracja Pythona
-
-        uses: actions/setup-python@v4
-
-        with:
-
-          python-version: '3.9'
-
-
-
-      - name: Instalacja bibliotek
-
-        run: pip install requests
-
-
-
-      - name: Uruchomienie bota
-
-        env:
-
-          T_TOKEN: ${{ secrets.T_TOKEN }}
-
-          T_CHAT: ${{ secrets.T_CHAT }}
-
-          ODDS_KEY: ${{ secrets.ODDS_KEY }}
-
-          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
-
-          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-
-          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
-
-          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
-
-        run: python start.py
-
-
-
-      - name: Zapisanie bazy i historii
-
-        run: |
-
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-
-          git config --local user.name "github-actions[bot]"
-
-          
-
-          # Tworzy pliki, jeśli nie istnieją
-
-          touch sent.json history.json
-
-          
-
-          git add sent.json history.json
-
-          git commit -m "Aktualizacja bazy i wyników [skip ci]" || echo "Brak zmian do zapisu"
-
-          git pull --rebase origin main
-
-          git push origin main
-
-        continue-on-error: true
+def load_data():
+    """Wczytuje wysłane mecze i naprawia błąd słownika jeśli wystąpi."""
+    if not os.path.exists(STATE_FILE):
+        return []
+    try:
+        with open(STATE_FILE, "r") as
