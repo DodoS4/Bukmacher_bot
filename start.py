@@ -20,11 +20,25 @@ MAX_VARIANCE = 0.08
 MIN_BOOKMAKERS = 7
 
 SPORTS_CONFIG = {
-    "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", "soccer_spain_la_liga": "🇪🇸 La Liga",
-    "soccer_germany_bundesliga": "🇩🇪 Bundesliga", "soccer_italy_serie_a": "🇮🇹 Serie A",
-    "soccer_france_ligue_one": "🇫🇷 Ligue 1", "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
-    "soccer_netherlands_ere_divisie": "🇳🇱 Eredivisie", "soccer_portugal_primeira_liga": "🇵🇹 Primeira Liga",
-    "soccer_uefa_champions_league": "🇪🇺 Liga Mistrzów", "soccer_uefa_europa_league": "🇪🇺 Liga Europy",
+    # Główne ligi
+    "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", 
+    "soccer_spain_la_liga": "🇪🇸 La Liga",
+    "soccer_germany_bundesliga": "🇩🇪 Bundesliga", 
+    "soccer_italy_serie_a": "🇮🇹 Serie A",
+    "soccer_france_ligue_one": "🇫🇷 Ligue 1", 
+    "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
+    "soccer_netherlands_ere_divisie": "🇳🇱 Eredivisie",
+    
+    # NOWE LIGI (Zwiększenie częstotliwości w tygodniu)
+    "soccer_portugal_primeira_liga": "🇵🇹 Primeira Liga",
+    "soccer_turkey_super_lig": "🇹🇷 Super Lig",
+    "soccer_belgium_first_div": "🇧🇪 Jupiler Pro League",
+    "soccer_denmark_superliga": "🇩🇰 Superliga",
+    "soccer_austria_bundesliga": "🇦🇹 Bundesliga (AT)",
+    
+    # Puchary i inne
+    "soccer_uefa_champions_league": "🇪🇺 Liga Mistrzów", 
+    "soccer_uefa_europa_league": "🇪🇺 Liga Europy",
     "basketball_nba": "🏀 NBA"
 }
 
@@ -92,7 +106,7 @@ def send_weekly_report():
     send_msg(msg)
 
 def run():
-    send_msg("⚙️ **SYSTEM AKTYWNY**: Skanowanie...")
+    send_msg("⚙️ **SYSTEM AKTYWNY**: Skanowanie rynków...")
     check_results()
     now_utc = datetime.now(timezone.utc)
     now_pl = now_utc + timedelta(hours=1)
@@ -119,7 +133,7 @@ def run():
         for m in matches:
             if m["id"] in sent_ids or len(m.get("bookmakers", [])) < MIN_BOOKMAKERS: continue
             
-            # Resetujemy zmienną pick dla każdego meczu (NAPRAWA BŁĘDU)
+            # Naprawa błędu UnboundLocalError
             pick = None
             
             m_dt_utc = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
@@ -171,8 +185,7 @@ def run():
                f"2️⃣ {p2['league']}\n🏟 **{p2['team']}**\n⏰ Start: `{p2['date_str']}`\n📈 Kurs: `{p2['odd']:.2f}`\n"
                f"━━━━━━━━━━━━━━━\n"
                f"💰 **STAWKA: {stake} PLN**\n"
-               f"📊 AKO: `{ako:.2f}`\n"
-               f"💸 DO WYGRANIA: `{win_val} PLN` (netto)")
+               f"📊 AKO: `{ako:.2f}` | 💸 DO WYGRANIA: `{win_val} PLN`")
         send_msg(msg)
         
         coupons_db.append({
@@ -183,7 +196,7 @@ def run():
         })
     
     save_coupons(coupons_db)
-    send_msg(f"✅ Przeanalizowano `{total_scanned}` meczów.")
+    send_msg(f"✅ Skanowanie zakończone. Przeanalizowano `{total_scanned}` meczów.")
 
 if __name__ == "__main__":
     run()
