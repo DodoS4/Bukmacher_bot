@@ -1,10 +1,13 @@
-name: Bukmacher Bot AKO
+name: Bukmacher Bot Pro - Przetrwanie 30 Dni
 
 on:
   schedule:
-    # Uruchamia bota co 4 godziny
-    - cron: '0 */4 * * *'
-  workflow_dispatch: # Przycisk do ręcznego uruchomienia
+    # 1. 08:00 UTC (09:00 PL) - Skan poranny
+    # 2. 12:00 UTC (13:00 PL) - Przed meczami popołudniowymi
+    # 3. 17:00 UTC (18:00 PL) - Przed meczami wieczornymi (najważniejszy)
+    # 4. 21:00 UTC (22:00 PL) - NBA i mecze nocne
+    - cron: '0 8,12,17,21 * * *'
+  workflow_dispatch: # Przycisk do ręcznego uruchomienia w dowolnym momencie
 
 permissions:
   contents: write
@@ -15,6 +18,8 @@ jobs:
     steps:
       - name: Pobierz kod
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
       - name: Konfiguracja Pythona
         uses: actions/setup-python@v4
@@ -39,6 +44,7 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git pull origin main --rebase
           git add sent.json
           git commit -m "Aktualizacja bazy [skip ci]" || echo "Brak zmian"
-          git push
+          git push origin main
