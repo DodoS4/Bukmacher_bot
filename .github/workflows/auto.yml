@@ -2,7 +2,6 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    # Uruchomienia o 8:00, 12:00, 17:00 i 21:00 czasu UTC
     - cron: '0 8,12,17,21 * * *'
   workflow_dispatch:
 
@@ -26,6 +25,12 @@ jobs:
       - name: Instalacja bibliotek
         run: pip install requests
 
+      - name: Synchronizacja bazy przed uruchomieniem
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git pull origin main
+
       - name: Uruchomienie bota
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -39,15 +44,11 @@ jobs:
 
       - name: Zapisanie zmian w bazie danych
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          # Dodajemy pliki do bazy
+          git add sent.json coupons.json || echo "Brak zmian"
           
-          # 1. Dodaj zmiany do poczekalni (kluczowe, aby uniknąć błędu 128)
-          git add sent.json coupons.json || echo "Brak plików do dodania"
+          # Commitujemy zmiany
+          git commit -m "Aktualizacja bazy [skip ci]" || exit 0
           
-          # 2. Pobierz zmiany z serwera i połącz (rebase)
-          git pull --rebase origin main
-          
-          # 3. Zatwierdź i wyślij na serwer (skip ci zapobiega pętli)
-          git commit -m "Aktualizacja bazy typów i wyników [skip ci]" || echo "Brak zmian do zatwierdzenia"
+          # Wysyłamy na serwer
           git push origin main
