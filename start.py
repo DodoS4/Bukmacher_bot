@@ -17,37 +17,22 @@ MIN_SINGLE_ODD = 1.25
 MAX_SINGLE_ODD = 1.60
 GOLDEN_MAX_ODD = 1.35
 MAX_VARIANCE = 0.08 
+MIN_BOOKMAKERS = 7  # OPCJA 4: Minimum 7 bukmacherów dla wiarygodności danych
 
-# --- ROZSZERZONA LISTA LIG (Wykorzystujemy zapas API) ---
 SPORTS_CONFIG = {
-    # Top 5 & Ekstraklasa
     "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League",
     "soccer_spain_la_liga": "🇪🇸 La Liga",
     "soccer_germany_bundesliga": "🇩🇪 Bundesliga",
     "soccer_italy_serie_a": "🇮🇹 Serie A",
     "soccer_france_ligue_one": "🇫🇷 Ligue 1",
     "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
-    
-    # Mocne ligi Europejskie
     "soccer_netherlands_ere_divisie": "🇳🇱 Eredivisie",
     "soccer_portugal_primeira_liga": "🇵🇹 Primeira Liga",
     "soccer_turkey_super_lig": "🇹🇷 Super Lig",
     "soccer_belgium_first_div": "🇧🇪 Jupiler Pro League",
-    "soccer_austria_bundesliga": "🇦🇹 Bundesliga (AT)",
-    "soccer_denmark_superliga": "🇩🇰 Superliga",
-    
-    # Zaplecza (Druga liga)
-    "soccer_league_one": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 League One",
-    "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Championship",
-    "soccer_italy_serie_b": "🇮🇹 Serie B",
-    
-    # Puchary i Międzynarodowe
     "soccer_uefa_champions_league": "🇪🇺 Liga Mistrzów",
     "soccer_uefa_europa_league": "🇪🇺 Liga Europy",
     "soccer_uefa_europa_conference_league": "🇪🇺 Liga Konferencji",
-    "soccer_uefa_nations_league": "🇪🇺 Liga Narodów",
-    
-    # Inne
     "basketball_nba": "🏀 NBA",
 }
 
@@ -70,12 +55,17 @@ def send_msg(text):
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
     try:
         requests.post(url, json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=15)
-    except: pass
+    except Exception as e:
+        print(f"Błąd wysyłki Telegram: {e}")
 
 def run():
     now = datetime.now(timezone.utc)
     sent_ids = load_data()
-    all_favorites = []
+    
+    # OPCJA 3: Grupowanie meczów według lig
+    leagues_pools = {} 
+
+    print(f"Rozpoczynam skanowanie: {now.strftime('%Y-%m-%d %H:%M')}")
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
         matches = None
@@ -89,6 +79,8 @@ def run():
                 if r.status_code == 200:
                     matches = r.json()
                     break
+                elif r.status_code == 429:
+                    continue # Spróbuj kolejny klucz
             except: continue
 
         if not matches: continue
@@ -97,9 +89,12 @@ def run():
             m_id = m["id"]
             if m_id in sent_ids: continue
             
+            # OPCJA 4: Filtr liczby bukmacherów (płynność rynku)
+            if len(m.get("bookmakers", [])) < MIN_BOOKMAKERS:
+                continue
+
             m_dt_utc = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
-            # Czas polski (zimowy UTC+1)
-            m_dt_pl = m_dt_utc + timedelta(hours=1)
+            m_dt_pl = m_dt_utc + timedelta(hours=1) # Czas zimowy (dla letniego +2h)
             
             if m_dt_utc < now or m_dt_utc > (now + timedelta(hours=48)): continue
 
@@ -113,7 +108,7 @@ def run():
                             if o["name"] == home: h_odds.append(o["price"])
                             if o["name"] == away: a_odds.append(o["price"])
 
-            if len(h_odds) < 4: continue
+            if len(h_odds) < MIN_BOOKMAKERS: continue
                 
             avg_h, min_h, max_h = sum(h_odds)/len(h_odds), min(h_odds), max(h_odds)
             avg_a, min_a, max_a = sum(a_odds)/len(a_odds), min(a_odds), max(a_odds)
@@ -121,33 +116,54 @@ def run():
             var_h = (max_h - min_h) / avg_h
             var_a = (max_a - min_a) / avg_a
 
-            date_str = m_dt_pl.strftime("%d.%m %H:%M")
-
             pick = None
+            # Logika wyboru faworyta
             if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
-                is_dropping = (avg_h - min_h) > 0.05
-                pick = {"id": m_id, "team": home, "odd": avg_h, "league": sport_label, "vs": away, "golden": avg_h <= GOLDEN_MAX_ODD, "dropping": is_dropping, "date": date_str}
+                pick = {"id": m_id, "team": home, "odd": avg_h, "league": sport_label, "vs": away, 
+                        "golden": avg_h <= GOLDEN_MAX_ODD, "dropping": (avg_h - min_h) > 0.05, 
+                        "date": m_dt_pl.strftime("%d.%m %H:%M")}
             elif MIN_SINGLE_ODD <= avg_a <= MAX_SINGLE_ODD and var_a <= MAX_VARIANCE:
-                is_dropping = (avg_a - min_a) > 0.05
-                pick = {"id": m_id, "team": away, "odd": avg_a, "league": sport_label, "vs": home, "golden": avg_a <= GOLDEN_MAX_ODD, "dropping": is_dropping, "date": date_str}
+                pick = {"id": m_id, "team": away, "odd": avg_a, "league": sport_label, "vs": home, 
+                        "golden": avg_a <= GOLDEN_MAX_ODD, "dropping": (avg_a - min_a) > 0.05, 
+                        "date": m_dt_pl.strftime("%d.%m %H:%M")}
 
-            if pick: all_favorites.append(pick)
+            if pick:
+                if sport_label not in leagues_pools:
+                    leagues_pools[sport_label] = []
+                leagues_pools[sport_label].append(pick)
 
-    if len(all_favorites) >= 2:
-        # Sortowanie: Złote mecze i spadki na górę
-        all_favorites.sort(key=lambda x: (x['golden'], x['dropping']), reverse=True)
+    # --- OPCJA 3: INTELIGENTNE PAROWANIE MIĘDZY LIGAMI ---
+    all_picks = []
+    for league_name in leagues_pools:
+        # Sortujemy wewnątrz ligi (najlepsze na początek)
+        leagues_pools[league_name].sort(key=lambda x: (x['golden'], x['dropping']), reverse=True)
+        all_picks.extend(leagues_pools[league_name])
+
+    # Globalne sortowanie: najpierw "Złote" typy
+    all_picks.sort(key=lambda x: (x['golden'], x['dropping']), reverse=True)
+
+    while len(all_picks) >= 2:
+        p1 = all_picks.pop(0) # Najlepszy dostępny typ
         
-        for i in range(0, len(all_favorites) - 1, 2):
-            p1, p2 = all_favorites[i], all_favorites[i+1]
+        # Szukamy partnera z INNEJ ligi (dywersyfikacja)
+        p2_index = -1
+        for i in range(len(all_picks)):
+            if all_picks[i]['league'] != p1['league']:
+                p2_index = i
+                break
+        
+        if p2_index != -1:
+            p2 = all_picks.pop(p2_index)
+            
+            # Parametry kuponu
             is_super = p1['golden'] and p2['golden']
             current_stake = STAKE_GOLDEN if is_super else STAKE_STANDARD
-            
-            drop_tag = " 🔥 SPADEK" if (p1['dropping'] or p2['dropping']) else ""
-            header = f"🌟 **ZŁOTY DOUBLE**{drop_tag}" if is_super else f"🚀 **KUPON DOUBLE**{drop_tag}"
-            
             ako = round(p1['odd'] * p2['odd'], 2)
             total_return = round(current_stake * TAX_RATE * ako, 2)
             profit = round(total_return - current_stake, 2)
+            
+            drop_tag = " 🔥 SPADEK" if (p1['dropping'] or p2['dropping']) else ""
+            header = f"🌟 **ZŁOTY DOUBLE**{drop_tag}" if is_super else f"🚀 **KUPON DOUBLE**{drop_tag}"
 
             msg = (
                 f"{header}\n"
@@ -163,12 +179,17 @@ def run():
                 f"━━━━━━━━━━━━━━━\n"
                 f"📊 AKO: `{ako:.2f}` | 💵 Stawka: `{current_stake} PLN`\n"
                 f"💰 **ZYSK NETTO: {profit} PLN**\n"
-                f"📊 Pewność rynku: `Wysoka`"
+                f"📊 Pewność (7+ bukm.): `Wysoka`"
             )
+            
             send_msg(msg)
             sent_ids.extend([p1['id'], p2['id']])
+        else:
+            # Nie znaleziono meczu z innej ligi do pary
+            break
     
     save_data(sent_ids)
+    print("Skanowanie zakończone.")
 
 if __name__ == "__main__":
     run()
