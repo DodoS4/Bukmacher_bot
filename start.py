@@ -9,8 +9,8 @@ T_CHAT = os.getenv("T_CHAT")
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-STAKE_STANDARD = 50.0
-STAKE_GOLDEN = 100.0
+STAKE_STANDARD = 50.0   # Kwota dla zwykłego kuponu
+STAKE_GOLDEN = 100.0    # Kwota dla Złotego Dubla
 TAX_RATE = 0.88
 
 MIN_SINGLE_ODD = 1.25
@@ -92,7 +92,7 @@ def send_weekly_report():
     send_msg(msg)
 
 def run():
-    send_msg("⚙️ **SYSTEM AKTYWNY**: Rozpoczynam skanowanie...")
+    send_msg("⚙️ **SYSTEM AKTYWNY**: Skanowanie...")
     check_results()
     now_utc = datetime.now(timezone.utc)
     now_pl = now_utc + timedelta(hours=1)
@@ -134,8 +134,6 @@ def run():
             avg_h, avg_a = sum(h_o)/len(h_o), sum(a_o)/len(a_o)
             var_h, var_a = (max(h_o)-min(h_o))/avg_h, (max(a_o)-min(a_o))/avg_a
 
-            pick = None
-            # Konwersja daty na format polski do wyświetlenia
             m_pl_time = (m_dt_utc + timedelta(hours=1)).strftime("%d.%m %H:%M")
             
             if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
@@ -163,11 +161,15 @@ def run():
         stake = STAKE_GOLDEN if (p1['golden'] and p2['golden']) else STAKE_STANDARD
         win_val = round(stake * TAX_RATE * ako, 2)
         
+        # DODANO: Jasna informacja o kwocie obstawiania w wiadomości
         msg = (f"{'🌟 **ZŁOTY DOUBLE**' if stake == STAKE_GOLDEN else '🚀 **KUPON DOUBLE**'}\n"
                f"━━━━━━━━━━━━━━━\n"
-               f"1️⃣ {p1['league']}\n🏟 **{p1['team']}** vs {p1['vs']}\n⏰ Start: `{p1['date_str']}`\n📈 Kurs: `{p1['odd']:.2f}`\n\n"
-               f"2️⃣ {p2['league']}\n🏟 **{p2['team']}** vs {p2['vs']}\n⏰ Start: `{p2['date_str']}`\n📈 Kurs: `{p2['odd']:.2f}`\n"
-               f"━━━━━━━━━━━━━━━\nAKO: `{ako:.2f}` | ZYSK: `{round(win_val-stake, 2)} PLN`")
+               f"1️⃣ {p1['league']}\n🏟 **{p1['team']}**\n⏰ Start: `{p1['date_str']}`\n📈 Kurs: `{p1['odd']:.2f}`\n\n"
+               f"2️⃣ {p2['league']}\n🏟 **{p2['team']}**\n⏰ Start: `{p2['date_str']}`\n📈 Kurs: `{p2['odd']:.2f}`\n"
+               f"━━━━━━━━━━━━━━━\n"
+               f"💰 **STAWKA: {stake} PLN**\n"
+               f"📊 AKO: `{ako:.2f}`\n"
+               f"💸 DO WYGRANIA: `{win_val} PLN` (netto)")
         send_msg(msg)
         
         coupons_db.append({
@@ -178,7 +180,7 @@ def run():
         })
     
     save_coupons(coupons_db)
-    send_msg(f"✅ **KONIEC**: Przeanalizowano `{total_scanned}` meczów.")
+    send_msg(f"✅ Przeanalizowano `{total_scanned}` meczów.")
 
 if __name__ == "__main__":
     run()
