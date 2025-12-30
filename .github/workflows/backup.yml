@@ -1,0 +1,27 @@
+name: 📦 Dzienny Backup Bazy
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # Codziennie o 4:00 UTC (czyli 5:00 rano w Polsce)
+  workflow_dispatch: # Przycisk do ręcznego wywołania w każdej chwili
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobierz kod
+        uses: actions/checkout@v3
+
+      - name: Konfiguracja Pythona
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalacja bibliotek
+        run: pip install requests
+
+      - name: Wyślij backup na Telegram
+        env:
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT: ${{ secrets.T_CHAT }}
+        run: python backup.py
