@@ -16,7 +16,7 @@ TAX_RATE = 0.88
 MIN_SINGLE_ODD = 1.25
 MAX_SINGLE_ODD = 1.60
 GOLDEN_MAX_ODD = 1.35
-MAX_VARIANCE = 0.08  # Max 8% różnicy między bukmacherami (Market Confidence)
+MAX_VARIANCE = 0.08 
 
 SPORTS_CONFIG = {
     "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League",
@@ -54,10 +54,6 @@ def run():
     now = datetime.now(timezone.utc)
     sent_ids = load_data()
     all_favorites = []
-    total_used_requests = 0
-    remaining_api_info = ""
-
-    print(f"Skanowanie... Klucze: {len(API_KEYS)}")
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
         matches = None
@@ -68,10 +64,8 @@ def run():
                     params={"apiKey": key, "regions": "eu", "markets": "h2h"},
                     timeout=15
                 )
-                total_used_requests += 1
                 if r.status_code == 200:
                     matches = r.json()
-                    remaining_api_info = r.headers.get('x-requests-remaining', '?')
                     break
             except: continue
 
@@ -99,14 +93,11 @@ def run():
             avg_h, min_h, max_h = sum(h_odds)/len(h_odds), min(h_odds), max(h_odds)
             avg_a, min_a, max_a = sum(a_odds)/len(a_odds), min(a_odds), max(a_odds)
 
-            # --- MARKET CONFIDENCE CHECK ---
-            # Jeśli rozpiętość kursów jest za duża, odrzucamy mecz (podejrzany)
             var_h = (max_h - min_h) / avg_h
             var_a = (max_a - min_a) / avg_a
 
             pick = None
             if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
-                # Dropping Odds Check: Jeśli min kurs jest znacznie niższy niż średnia
                 is_dropping = (avg_h - min_h) > 0.05
                 pick = {"id": m_id, "team": home, "odd": avg_h, "league": sport_label, "vs": away, "golden": avg_h <= GOLDEN_MAX_ODD, "dropping": is_dropping}
             elif MIN_SINGLE_ODD <= avg_a <= MAX_SINGLE_ODD and var_a <= MAX_VARIANCE:
@@ -115,7 +106,6 @@ def run():
 
             if pick: all_favorites.append(pick)
 
-    # --- TWORZENIE KUPONÓW ---
     if len(all_favorites) >= 2:
         all_favorites.sort(key=lambda x: (x['golden'], x['dropping']), reverse=True)
         
@@ -124,8 +114,7 @@ def run():
             is_super = p1['golden'] and p2['golden']
             current_stake = STAKE_GOLDEN if is_super else STAKE_STANDARD
             
-            # Dropping odds label
-            drop_tag = " 🔥 SPADEK KURSU" if (p1['dropping'] or p2['dropping']) else ""
+            drop_tag = " 🔥 SPADEK" if (p1['dropping'] or p2['dropping']) else ""
             header = f"🌟 **ZŁOTY DOUBLE**{drop_tag}" if is_super else f"🚀 **KUPON DOUBLE**{drop_tag}"
             
             ako = round(p1['odd'] * p2['odd'], 2)
@@ -144,20 +133,10 @@ def run():
                 f"━━━━━━━━━━━━━━━\n"
                 f"📊 AKO: `{ako:.2f}` | 💵 Stawka: `{current_stake} PLN`\n"
                 f"💰 **ZYSK NETTO: {profit} PLN**\n"
-                f"📊 Pewność rynku: `Wysoka (Var < 8%)`"
+                f"📊 Pewność rynku: `Wysoka`"
             )
             send_msg(msg)
             sent_ids.extend([p1['id'], p2['id']])
-
-    # --- RAPORT API ---
-    api_report = (
-        f"⚙️ **RAPORT SYSTEMOWY**\n"
-        f"━━━━━━━━━━━━━━━\n"
-        f"📡 Zużyte zapytania: `{total_used_requests}`\n"
-        f"🔑 Pozostało na kluczu: `{remaining_api_info}`\n"
-        f"🏁 Status: `Operacja zakończona`"
-    )
-    send_msg(api_report)
     
     save_data(sent_ids)
 
