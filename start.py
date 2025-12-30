@@ -17,7 +17,7 @@ MIN_SINGLE_ODD = 1.25
 MAX_SINGLE_ODD = 1.60
 GOLDEN_MAX_ODD = 1.35
 MAX_VARIANCE = 0.08 
-MIN_BOOKMAKERS = 7  # OPCJA 4: Filtr płynności
+MIN_BOOKMAKERS = 7
 
 SPORTS_CONFIG = {
     "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", "soccer_spain_la_liga": "🇪🇸 La Liga",
@@ -29,8 +29,6 @@ SPORTS_CONFIG = {
 }
 
 COUPONS_FILE = "coupons.json"
-
-# ================= SYSTEM BAZY I RAPORTÓW =================
 
 def load_coupons():
     if not os.path.exists(COUPONS_FILE): return []
@@ -51,7 +49,6 @@ def check_results():
     coupons = load_coupons()
     updated = False
     now = datetime.now(timezone.utc)
-    
     for c in coupons:
         if c.get("status") != "pending": continue
         end_time = datetime.fromisoformat(c["end_time"])
@@ -70,13 +67,12 @@ def check_results():
                                     h, a = (s["scores"][0]["score"], s["scores"][1]["score"]) if s["scores"] else (0,0)
                                     winner = s["home_team"] if int(h) > int(a) else (s["away_team"] if int(a) > int(h) else "Remis")
                                     if winner == m_saved["picked"]: wins += 1
-                        
                         if matches_found == len(c["matches"]):
                             c["status"] = "win" if wins == len(c["matches"]) else "loss"
                             updated = True
                             icon = "✅" if c["status"] == "win" else "❌"
                             val = round(c['win_val'] - c['stake'], 2) if c["status"] == "win" else -c['stake']
-                            send_msg(f"{icon} **KUPON ROZLICZONY**\nWynik: `{c['status'].upper()}`\nBilans: `{val:+.2f} PLN`")
+                            send_msg(f"{icon} **KUPON ROZLICZONY**\nBilans: `{val:+.2f} PLN`")
                         break
                 except: continue
     if updated: save_coupons(coupons)
@@ -86,26 +82,20 @@ def send_weekly_report():
     now = datetime.now(timezone.utc)
     week_data = [c for c in coupons if c["status"] != "pending" and (now - datetime.fromisoformat(c["end_time"])).days <= 7]
     if not week_data: return
-    
     total_stake = sum(c["stake"] for c in week_data)
     total_win = sum(c["win_val"] for c in week_data if c["status"] == "win")
     profit = total_win - total_stake
-    
-    msg = (f"📅 **PODSUMOWANIE TYGODNIOWE**\n"
-           f"━━━━━━━━━━━━━━━\n"
+    msg = (f"📅 **PODSUMOWANIE TYGODNIOWE**\n━━━━━━━━━━━━━━━\n"
            f"Kupony: `{len(week_data)}` (✅ {len([x for x in week_data if x['status']=='win'])})\n"
            f"Zysk/Strata: `{profit:+.2f} PLN`\n"
            f"Yield: `{(profit/total_stake)*100:.2f}%`" if total_stake > 0 else "")
     send_msg(msg)
 
-# ================= GŁÓWNA LOGIKA =================
-
 def run():
-    # OPCJA 5: Raport prawidłowego działania
-    send_msg("⚙️ **SYSTEM AKTYWNY**: Rozpoczynam skanowanie rynków...")
-    
+    send_msg("⚙️ **SYSTEM AKTYWNY**: Rozpoczynam skanowanie...")
     check_results()
-    now_pl = datetime.now(timezone.utc) + timedelta(hours=1)
+    now_utc = datetime.now(timezone.utc)
+    now_pl = now_utc + timedelta(hours=1)
     if now_pl.weekday() == 6 and now_pl.hour == 21: send_weekly_report()
 
     coupons_db = load_coupons()
@@ -128,8 +118,8 @@ def run():
         total_scanned += len(matches)
         for m in matches:
             if m["id"] in sent_ids or len(m.get("bookmakers", [])) < MIN_BOOKMAKERS: continue
-            m_dt = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
-            if m_dt < datetime.now(timezone.utc) or m_dt > (datetime.now(timezone.utc) + timedelta(hours=48)): continue
+            m_dt_utc = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
+            if m_dt_utc < now_utc or m_dt_utc > (now_utc + timedelta(hours=48)): continue
 
             h, a = m["home_team"], m["away_team"]
             h_o, a_o = [], []
@@ -145,16 +135,18 @@ def run():
             var_h, var_a = (max(h_o)-min(h_o))/avg_h, (max(a_o)-min(a_o))/avg_a
 
             pick = None
+            # Konwersja daty na format polski do wyświetlenia
+            m_pl_time = (m_dt_utc + timedelta(hours=1)).strftime("%d.%m %H:%M")
+            
             if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
-                pick = {"id": m["id"], "team": h, "odd": avg_h, "league": sport_label, "key": sport_key, "vs": a, "golden": avg_h <= GOLDEN_MAX_ODD, "picked": h, "date": m_dt}
+                pick = {"id": m["id"], "team": h, "odd": avg_h, "league": sport_label, "key": sport_key, "vs": a, "golden": avg_h <= GOLDEN_MAX_ODD, "picked": h, "date": m_dt_utc, "date_str": m_pl_time}
             elif MIN_SINGLE_ODD <= avg_a <= MAX_SINGLE_ODD and var_a <= MAX_VARIANCE:
-                pick = {"id": m["id"], "team": a, "odd": avg_a, "league": sport_label, "key": sport_key, "vs": h, "golden": avg_a <= GOLDEN_MAX_ODD, "picked": a, "date": m_dt}
+                pick = {"id": m["id"], "team": a, "odd": avg_a, "league": sport_label, "key": sport_key, "vs": h, "golden": avg_a <= GOLDEN_MAX_ODD, "picked": a, "date": m_dt_utc, "date_str": m_pl_time}
             
             if pick:
                 if sport_label not in leagues_pools: leagues_pools[sport_label] = []
                 leagues_pools[sport_label].append(pick)
 
-    # OPCJA 3: Inteligentne parowanie lig
     all_picks = []
     for l in leagues_pools:
         leagues_pools[l].sort(key=lambda x: x['golden'], reverse=True)
@@ -172,8 +164,9 @@ def run():
         win_val = round(stake * TAX_RATE * ako, 2)
         
         msg = (f"{'🌟 **ZŁOTY DOUBLE**' if stake == STAKE_GOLDEN else '🚀 **KUPON DOUBLE**'}\n"
-               f"━━━━━━━━━━━━━━━\n1️⃣ {p1['league']}: **{p1['team']}** (`{p1['odd']:.2f}`)\n"
-               f"2️⃣ {p2['league']}: **{p2['team']}** (`{p2['odd']:.2f}`)\n"
+               f"━━━━━━━━━━━━━━━\n"
+               f"1️⃣ {p1['league']}\n🏟 **{p1['team']}** vs {p1['vs']}\n⏰ Start: `{p1['date_str']}`\n📈 Kurs: `{p1['odd']:.2f}`\n\n"
+               f"2️⃣ {p2['league']}\n🏟 **{p2['team']}** vs {p2['vs']}\n⏰ Start: `{p2['date_str']}`\n📈 Kurs: `{p2['odd']:.2f}`\n"
                f"━━━━━━━━━━━━━━━\nAKO: `{ako:.2f}` | ZYSK: `{round(win_val-stake, 2)} PLN`")
         send_msg(msg)
         
@@ -185,7 +178,7 @@ def run():
         })
     
     save_coupons(coupons_db)
-    send_msg(f"✅ **SKANOWANIE ZAKOŃCZONE**: Przeanalizowano `{total_scanned}` meczów.")
+    send_msg(f"✅ **KONIEC**: Przeanalizowano `{total_scanned}` meczów.")
 
 if __name__ == "__main__":
     run()
