@@ -149,3 +149,4 @@ with st.sidebar:
         st.rerun()
     st.markdown("---")
     st.markdown("BUILD: `v2.0.4-NEON`")
+
