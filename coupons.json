@@ -250,5 +250,23 @@
                 "sport_key": "basketball_nba"
             }
         ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 120.4,
+        "end_time": "2026-01-04T20:00:00+00:00",
+        "matches": [
+            {
+                "id": "8b034e2eba4bb0170b1579ffcb2f0e65",
+                "picked": "Inter Milan",
+                "sport_key": "soccer_italy_serie_a"
+            },
+            {
+                "id": "87610f91e341dcfd2487d7609208b633",
+                "picked": "Atl\u00e9tico Madrid",
+                "sport_key": "soccer_spain_la_liga"
+            }
+        ]
     }
 ]
