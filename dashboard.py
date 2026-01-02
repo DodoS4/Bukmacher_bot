@@ -1,5 +1,5 @@
 import streamlit as st
-import pd as pd
+import pandas as pd
 import json
 import plotly.express as px
 from datetime import datetime
@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Stylizacja CSS dla trybu ciemnego i kart metryk
+# Stylizacja CSS
 st.markdown("""
     <style>
     .stMetric {
@@ -20,9 +20,6 @@ st.markdown("""
         padding: 15px;
         border-radius: 10px;
         border: 1px solid #30363d;
-    }
-    [data-testid="stMetricValue"] {
-        color: #00ff41;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -66,11 +63,10 @@ else:
 
     df['net_profit'] = df.apply(calculate_profit, axis=1)
     
-    # Wyciąganie nazwy sportu z pierwszego meczu na kuponie
+    # Wyciąganie nazwy sportu
     def get_sport(matches):
         try:
             key = matches[0].get('sport_key', 'Inne')
-            # Uproszczenie nazw (np. soccer_epl -> Piłka Nożna)
             if 'soccer' in key: return "⚽ Piłka Nożna"
             if 'basketball' in key: return "🏀 Koszykówka"
             if 'icehockey' in key: return "🏒 Hokej"
@@ -98,7 +94,7 @@ else:
 
     st.divider()
 
-    # 5. NOWA SEKCJA WYKRESÓW W ZAKŁADKACH
+    # 5. WYKRESY W ZAKŁADKACH
     tab1, tab2 = st.tabs(["📈 Historia Kapitału", "🎯 Analiza Sportów"])
 
     with tab1:
@@ -127,6 +123,8 @@ else:
         with col_r2:
             st.subheader("Liczba kuponów wg dyscypliny")
             sport_count = df['sport'].value_counts().reset_index()
+            # Naprawa błędu nazw kolumn w nowym pandas
+            sport_count.columns = ['sport', 'count']
             fig_count = px.bar(sport_count, x='sport', y='count', template="plotly_dark")
             st.plotly_chart(fig_count, use_container_width=True)
 
