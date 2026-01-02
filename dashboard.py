@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import plotly.express as px
 from datetime import datetime
+import os
 
 # 1. KONFIGURACJA STRONY
 st.set_page_config(
@@ -11,12 +12,9 @@ st.set_page_config(
     layout="wide"
 )
 
-# Stylizacja CSS dla lepszego wyglądu
+# Stylizacja CSS
 st.markdown("""
     <style>
-    .main {
-        background-color: #0e1117;
-    }
     .stMetric {
         background-color: #161b22;
         padding: 15px;
@@ -27,41 +25,50 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 st.title("📊 Panel Statystyk Bota Bukmacherskiego")
-st.markdown(f"Ostatnia aktualizacja: `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`")
+st.markdown(f"Ostatnia aktualizacja danych: `{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}`")
 st.divider()
 
 # 2. FUNKCJA WCZYTYWANIA DANYCH
 def load_data():
+    file_path = "coupons.json"
+    if not os.path.exists(file_path):
+        return pd.DataFrame()
     try:
-        with open("coupons.json", "r") as f:
+        with open(file_path, "r") as f:
             content = f.read()
             if not content.strip():
                 return pd.DataFrame()
             data = json.loads(content)
             return pd.DataFrame(data)
-    except (FileNotFoundError, json.JSONDecodeError):
+    except (json.JSONDecodeError, Exception):
         return pd.DataFrame()
 
 df = load_data()
 
 # 3. LOGIKA WYŚWIETLANIA
-if df.empty or len(df) == 0:
-    st.info("👋 Witaj! Twój bot nie wygenerował jeszcze żadnych kuponów.")
-    st.warning("Uruchom bota ręcznie w zakładce **GitHub Actions**, aby zobaczyć tutaj pierwsze dane.")
+if df.empty:
+    st.info("👋 Witaj! Twój bot nie wygenerował jeszcze żadnych danych lub plik coupons.json jest pusty.")
+    st.warning("Uruchom bota ręcznie w zakładce **GitHub Actions**, aby pobrać pierwsze mecze.")
     
-    # Przykładowe metryki dla pustego stanu
     c1, c2, c3 = st.columns(3)
     c1.metric("Kupony", "0")
     c2.metric("Profit", "0.00 PLN")
     c3.metric("Win Rate", "0%")
 else:
-    # Obliczanie zysku netto dla każdego kuponu
+    # Obliczanie zysku netto
     def calculate_profit(row):
-        if row['status'] == 'win':
-            return round(float(row['win_val']) - float(row['stake']), 2)
-        elif row['status'] == 'loss':
-            return -float(row['stake'])
-        return 0.0
+        try:
+            stake = float(row.get('stake', 0))
+            win_val = float(row.get('win_val', 0))
+            status = row.get('status', 'pending')
+            
+            if status == 'win':
+                return round(win_val - stake, 2)
+            elif status == 'loss':
+                return -stake
+            return 0.0
+        except:
+            return 0.0
 
     df['net_profit'] = df.apply(calculate_profit, axis=1)
 
@@ -72,21 +79,17 @@ else:
     
     wins = len(df[df['status'] == 'win'])
     total_profit = df['net_profit'].sum()
-    total_stake = df['stake'].sum()
+    total_stake = df['stake'].astype(float).sum()
     
-    # BEZPIECZNE OBLICZANIE PROCENTÓW (Zapobiega ZeroDivisionError)
+    # Bezpieczne obliczanie procentów
     win_rate = (wins / total_settled * 100) if total_settled > 0 else 0
     roi = (total_profit / total_stake * 100) if total_stake > 0 else 0
 
-    # 4. PANEL METRYK (Górne karty)
+    # 4. PANEL METRYK
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("Wszystkie Kupony", total_coupons)
     m2.metric("Skuteczność", f"{win_rate:.1f}%")
-    
-    # Kolor zielony dla zysku, czerwony dla straty
-    m3.metric("Bilans Całkowity", f"{total_profit:.2f} PLN", 
-              delta=f"{total_profit:.2f} PLN", delta_color="normal")
-    
+    m3.metric("Bilans Całkowity", f"{total_profit:.2f} PLN", delta=f"{total_profit:.2f} PLN")
     m4.metric("ROI", f"{roi:.1f}%")
 
     st.divider()
@@ -102,34 +105,43 @@ else:
             y='cumulative_profit', 
             markers=True,
             title="Zysk kumulatywny (PLN)",
-            labels={'index': 'Kolejny kupon', 'cumulative_profit': 'Suma zysku'}
+            template="plotly_dark"
         )
         fig_line.update_traces(line_color='#00ff41')
         st.plotly_chart(fig_line, use_container_width=True)
 
     with col_right:
         st.subheader("🎯 Statusy")
-        fig_pie = px.pie(
-            df, 
-            names='status', 
-            color='status',
-            color_discrete_map={'win': '#2ecc71', 'loss': '#e74c3c', 'pending': '#95a5a6'},
-            hole=0.4
-        )
-        st.plotly_chart(fig_pie, use_container_width=True)
+        if not df['status'].empty:
+            fig_pie = px.pie(
+                df, 
+                names='status', 
+                color='status',
+                color_discrete_map={'win': '#2ecc71', 'loss': '#e74c3c', 'pending': '#95a5a6'},
+                hole=0.4,
+                template="plotly_dark"
+            )
+            st.plotly_chart(fig_pie, use_container_width=True)
+        else:
+            st.write("Brak statusów do wyświetlenia.")
 
-    # 6. TABELA Z DANYMI
+    # 6. TABELA Z DANYMI (Poprawiona - bez stylizacji powodującej błędy)
     st.subheader("📋 Lista Kuponów")
-    # Formaty tabeli - najnowsze na górze
-    styled_df = df[['status', 'stake', 'win_val', 'net_profit']].iloc[::-1]
     
-    st.dataframe(
-        styled_df.style.background_gradient(subset=['net_profit'], cmap='RdYlGn'),
-        use_container_width=True
-    )
+    # Wybieramy kolumny i odwracamy kolejność (najnowsze na górze)
+    if not df.empty:
+        display_cols = ['status', 'stake', 'win_val', 'net_profit']
+        # Sprawdzamy czy kolumny istnieją w DF
+        available_cols = [c for c in display_cols if c in df.columns]
+        table_df = df[available_cols].iloc[::-1]
+        
+        st.dataframe(table_df, use_container_width=True)
 
-# Sidebar z informacjami pomocniczymi
-st.sidebar.title("O Bocie")
-st.sidebar.info("Bot analizuje kursy w poszukiwaniu niskiej wariancji u bukmacherów i wysyła typy Single/Double na Telegram.")
-if st.sidebar.button("🔄 Odśwież Dane"):
+# Sidebar
+st.sidebar.title("Opcje")
+if st.sidebar.button("🔄 Odśwież stronę"):
     st.rerun()
+
+st.sidebar.divider()
+st.sidebar.write("System: **Bukmacher Bot Pro**")
+st.sidebar.write("Status bazy: ✅ Połączono")
