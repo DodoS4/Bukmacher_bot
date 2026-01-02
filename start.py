@@ -22,18 +22,20 @@ STAKE_SINGLE = 80.0
 MAX_VARIANCE = 0.12
 MIN_BOOKMAKERS = 4
 
+# KONFIGURACJA LIG Z IKONAMI DYSCYPLIN
 SPORTS_CONFIG = {
-    "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", 
-    "soccer_spain_la_liga": "🇪🇸 La Liga",
-    "soccer_germany_bundesliga": "🇩🇪 Bundesliga", 
-    "soccer_italy_serie_a": "🇮🇹 Serie A",
-    "soccer_france_ligue_one": "🇫🇷 Ligue 1", 
-    "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
-    "soccer_netherlands_ere_divisie": "🇳🇱 Eredivisie",
-    "soccer_portugal_primeira_liga": "🇵🇹 Primeira Liga",
-    "soccer_uefa_champions_league": "🇪🇺 Liga Mistrzów", 
-    "soccer_uefa_europa_league": "🇪🇺 Liga Europy",
-    "basketball_nba": "🏀 NBA"
+    "soccer_epl": "⚽ 🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", 
+    "soccer_spain_la_liga": "⚽ 🇪🇸 La Liga",
+    "soccer_germany_bundesliga": "⚽ 🇩🇪 Bundesliga", 
+    "soccer_italy_serie_a": "⚽ 🇮🇹 Serie A",
+    "soccer_france_ligue_one": "⚽ 🇫🇷 Ligue 1", 
+    "soccer_poland_ekstraklasa": "⚽ 🇵🇱 Ekstraklasa",
+    "soccer_netherlands_ere_divisie": "⚽ 🇳🇱 Eredivisie",
+    "soccer_portugal_primeira_liga": "⚽ 🇵🇹 Primeira Liga",
+    "soccer_uefa_champions_league": "⚽ 🇪🇺 Liga Mistrzów", 
+    "soccer_uefa_europa_league": "⚽ 🇪🇺 Liga Europy",
+    "basketball_nba": "🏀 NBA",
+    "icehockey_nhl": "🏒 NHL"
 }
 
 COUPONS_FILE = "coupons.json"
@@ -70,7 +72,7 @@ def send_daily_report():
                        and datetime.fromisoformat(c["end_time"]) > yesterday]
     
     if not completed_today:
-        send_msg("📊 *RAPORT DZIENNY*\n━━━━━━━━━━━━━━━\nW ciągu ostatnich 24h nie rozliczono żadnych nowych kuponów.")
+        send_msg("📊 *RAPORT DZIENNY*\n━━━━━━━━━━━━━━━\nBrak rozliczonych kuponów.")
         return
 
     total_stake = sum(c["stake"] for c in completed_today)
@@ -79,17 +81,13 @@ def send_daily_report():
     wins = len([c for c in completed_today if c["status"] == "win"])
     total = len(completed_today)
     accuracy = (wins / total) * 100 if total > 0 else 0
-
     icon = "📈" if profit >= 0 else "📉"
     
     report = (
         f"📊 *RAPORT DZIENNY (24h)*\n"
         f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"✅ Rozliczone kupony: `{total}`\n"
-        f"🎯 Skuteczność: `{accuracy:.1f}%` ({wins}/{total})\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"💰 Zainwestowano: `{total_stake:.2f} PLN`\n"
-        f"💰 Zwrot: `{total_win:.2f} PLN`\n"
+        f"✅ Kupony: `{total}` | 🎯 `{accuracy:.1f}%`\n"
+        f"💰 Obrót: `{total_stake:.2f} PLN`\n"
         f"{icon} **Bilans:** `{profit:+.2f} PLN`"
     )
     send_msg(report)
@@ -103,7 +101,6 @@ def check_results():
     
     for c in coupons:
         if c.get("status") != "pending": continue
-        
         end_time = datetime.fromisoformat(c["end_time"])
         if now < end_time + timedelta(hours=4): continue
 
@@ -111,7 +108,6 @@ def check_results():
         for m_saved in c["matches"]:
             s_key = m_saved.get("sport_key")
             if not s_key: continue
-
             for key in API_KEYS:
                 try:
                     r = requests.get(f"https://api.the-odds-api.com/v4/sports/{s_key}/scores/", 
@@ -143,13 +139,12 @@ def check_results():
 def run():
     print("🚀 Start bota...")
     check_results()
-    
     now_utc = datetime.now(timezone.utc)
     coupons_db = load_coupons()
     sent_ids = [m["id"] for c in coupons_db for m in c["matches"]]
     all_picks = []
 
-    for sport_key, sport_label in SPORTS_CONFIG.items():
+    for sport_key, league_label in SPORTS_CONFIG.items():
         matches = None
         for key in API_KEYS:
             try:
@@ -182,7 +177,10 @@ def run():
             avg_h, avg_a = sum(h_o)/len(h_o), sum(a_o)/len(a_o)
             var_h, var_a = (max(h_o)-min(h_o))/avg_h, (max(a_o)-min(a_o))/avg_a
             
-            common_data = {"id": m["id"], "league": sport_label, "key": sport_key, "date": m_dt_utc, "home_name": h_t, "away_name": a_t}
+            common_data = {
+                "id": m["id"], "league": league_label, 
+                "key": sport_key, "date": m_dt_utc, "home_name": h_t, "away_name": a_t
+            }
             
             pick = None
             if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
@@ -196,7 +194,16 @@ def run():
     for s in singles:
         match_time = (s["date"] + timedelta(hours=1)).strftime('%d.%m %H:%M')
         win = round(STAKE_SINGLE * TAX_RATE * s['odd'], 2)
-        msg = (f"🎯 *TYP SINGLE*\n━━━━━━━━━━━━━━━━━━━━\n🏟️ **Mecz:** `{s['home_name']} vs {s['away_name']}`\n✅ **Typ:** `{s['picked']}`\n🏆 **Liga:** {s['league']}\n📅 **Start:** `{match_time}`\n📈 **Kurs:** `{s['odd']:.2f}`\n━━━━━━━━━━━━━━━━━━━━\n💰 **Stawka:** `{STAKE_SINGLE} PLN` | **Wygrana:** `{win} PLN`")
+        msg = (
+            f"🎯 *SINGLE*\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"🏟️ `{s['home_name']} vs {s['away_name']}`\n"
+            f"✅ Typ: `{s['picked']}`\n"
+            f"🏆 {s['league']}\n"
+            f"📅 `{match_time}` | 📈 `{s['odd']:.2f}`\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win} PLN`"
+        )
         send_msg(msg)
         coupons_db.append({"status": "pending", "stake": STAKE_SINGLE, "win_val": win, "end_time": s["date"].isoformat(), "matches": [{"id": s["id"], "picked": s["picked"], "sport_key": s["key"]}]})
         all_picks = [p for p in all_picks if p['id'] != s['id']]
@@ -210,15 +217,23 @@ def run():
         p2 = all_picks.pop(p2_idx)
         t1, t2 = (p1["date"] + timedelta(hours=1)).strftime('%d.%m %H:%M'), (p2["date"] + timedelta(hours=1)).strftime('%d.%m %H:%M')
         ako, win = round(p1['odd'] * p2['odd'], 2), round(STAKE_STANDARD * TAX_RATE * (p1['odd'] * p2['odd']), 2)
-        msg = (f"🚀 *KUPON DOUBLE (AKO)*\n━━━━━━━━━━━━━━━━━━━━\n1️⃣ `{p1['home_name']} vs {p1['away_name']}`\n   ✅ Typ: `{p1['picked']}` | `{p1['odd']:.2f}`\n   📅 Start: `{t1}`\n\n2️⃣ `{p2['home_name']} vs {p2['away_name']}`\n   ✅ Typ: `{p2['picked']}` | `{p2['odd']:.2f}`\n   📅 Start: `{t2}`\n━━━━━━━━━━━━━━━━━━━━\n📊 **AKO:** `{ako:.2f}` | 💰 **Wygrana:** `{win} PLN`")
+        msg = (
+            f"🚀 *DOUBLE (AKO)*\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"1️⃣ `{p1['home_name']} vs {p1['away_name']}`\n"
+            f"   ✅ `{p1['picked']}` | `{p1['odd']:.2f}`\n"
+            f"   🏆 {p1['league']} | 📅 `{t1}`\n\n"
+            f"2️⃣ `{p2['home_name']} vs {p2['away_name']}`\n"
+            f"   ✅ `{p2['picked']}` | `{p2['odd']:.2f}`\n"
+            f"   🏆 {p2['league']} | 📅 `{t2}`\n"
+            f"━━━━━━━━━━━━━━━━━━━━\n"
+            f"📊 AKO: `{ako:.2f}` | 💰 Wygrana: `{win} PLN`"
+        )
         send_msg(msg)
         coupons_db.append({"status": "pending", "stake": STAKE_STANDARD, "win_val": win, "end_time": max(p1["date"], p2["date"]).isoformat(), "matches": [{"id": p1["id"], "picked": p1["picked"], "sport_key": p1["key"]}, {"id": p2["id"], "picked": p2["picked"], "sport_key": p2["key"]}]})
     
     save_coupons(coupons_db)
-    
-    if now_utc.hour == 8:
-        send_daily_report()
-        
+    if now_utc.hour == 8: send_daily_report()
     print("✅ Gotowe.")
 
 if __name__ == "__main__":
