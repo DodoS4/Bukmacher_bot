@@ -6,143 +6,151 @@ import plotly.graph_objects as go
 from datetime import datetime
 import os
 
-# --- 1. KONFIGURACJA STRONY ---
+# --- 1. KONFIGURACJA TERMINALA ---
 st.set_page_config(
-    page_title="BetBot Analytics",
-    page_icon="📈",
-    layout="wide",
-    initial_sidebar_state="collapsed"
+    page_title="Terminal Analityczny // BetBot Pro",
+    page_icon="📉",
+    layout="wide"
 )
 
-# --- 2. CLEAN WHITE UI (CSS) ---
+# --- 2. FINANCIAL DARK UI (CSS) ---
 st.markdown("""
     <style>
-    /* Tło strony i ogólna typografia */
+    /* Głęboki granatowy motyw profesjonalny */
     .stApp {
-        background-color: #f8f9fa;
-        color: #1e1e1e;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #0b0e14;
+        color: #d1d4dc;
+        font-family: 'Inter', -apple-system, sans-serif;
     }
 
-    /* Karty statystyk w stylu Apple */
+    /* Karty Metryk (Kompaktowe) */
     [data-testid="stMetric"] {
-        background-color: #ffffff !important;
-        border: 1px solid #e1e4e8 !important;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02) !important;
-        border-radius: 12px !important;
-        padding: 20px !important;
+        background-color: #131722 !important;
+        border: 1px solid #363a45 !important;
+        border-radius: 4px !important;
+        padding: 15px !important;
     }
 
     [data-testid="stMetricValue"] {
-        color: #000000 !important;
-        font-weight: 700 !important;
+        color: #ffffff !important;
+        font-size: 1.6rem !important;
+        font-weight: 600 !important;
     }
 
     [data-testid="stMetricLabel"] {
-        color: #6a737d !important;
-        font-size: 0.9rem !important;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        color: #787b86 !important;
+        font-size: 0.8rem !important;
     }
 
-    /* Przyciski i interakcje */
-    .stButton>button {
-        background-color: #ffffff !important;
-        color: #1e1e1e !important;
-        border: 1px solid #d1d5da !important;
-        border-radius: 8px !important;
-        font-weight: 500 !important;
-        transition: all 0.2s ease;
+    /* Stylizacja tabeli TradingView */
+    .stDataFrame {
+        border: 1px solid #363a45;
     }
 
-    .stButton>button:hover {
-        border-color: #0366d6 !important;
-        color: #0366d6 !important;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;
-    }
-
-    /* Nagłówki */
+    /* Nagłówki sekcji */
     h1, h2, h3 {
-        color: #1b1f23 !important;
-        font-weight: 700 !important;
+        color: #ffffff !important;
+        font-weight: 500 !important;
+        letter-spacing: -0.5px;
     }
-    
-    /* Ukrycie dekoracji Streamlit */
+
+    /* Pasek boczny */
+    [data-testid="stSidebar"] {
+        background-color: #131722 !important;
+        border-right: 1px solid #363a45;
+    }
+
+    /* Ukrycie elementów Streamlit */
     header {visibility: hidden;}
     footer {visibility: hidden;}
     </style>
     """, unsafe_allow_html=True)
 
-# --- 3. DANE ---
+# --- 3. SILNIK DANYCH ---
 def load_data():
     file_path = "coupons.json"
-    if not os.path.exists(file_path): return pd.DataFrame()
+    if not os.path.exists(file_path):
+        return pd.DataFrame()
     try:
         with open(file_path, "r") as f:
             return pd.DataFrame(json.load(f))
-    except: return pd.DataFrame()
+    except:
+        return pd.DataFrame()
 
 df = load_data()
 
-# --- 4. UKŁAD STRONY ---
-col_header, col_refresh = st.columns([8, 1])
-
-with col_header:
-    st.title("BetBot Analytics")
-    st.markdown(f"<p style='color: #6a737d;'>Raport wygenerowany: {datetime.now().strftime('%d.%m.%Y, %H:%M')}</p>", unsafe_allow_html=True)
-
-with col_refresh:
-    if st.button("Odśwież"):
-        st.rerun()
-
-st.divider()
+# --- 4. LAYOUT GŁÓWNY ---
+st.markdown("### TERMINAL ANALITYCZNY V2.0")
+st.caption(f"Status: Połączono // Ostatnia aktualizacja: {datetime.now().strftime('%H:%M:%S')}")
 
 if df.empty:
-    st.info("Brak aktywnych danych. System oczekuje na plik coupons.json.")
+    st.warning("OCZEKIWANIE NA DANE WEJŚCIOWE (coupons.json)...")
 else:
-    # Kalkulacje
-    df['net_profit'] = df.apply(lambda r: round(float(r['win_val']) - float(r['stake']), 2) if r['status'] == 'win' else -float(r['stake']), axis=1)
+    # Obliczenia finansowe
+    df['stake'] = pd.to_numeric(df['stake'])
+    df['win_val'] = pd.to_numeric(df['win_val'])
+    df['net_profit'] = df.apply(lambda r: round(r['win_val'] - r['stake'], 2) if r['status'] == 'win' else -r['stake'], axis=1)
     df['cum_profit'] = df['net_profit'].cumsum()
     
-    # Główne metryki
+    # Panel KPI
     m1, m2, m3, m4 = st.columns(4)
     total_profit = df['net_profit'].sum()
-    win_rate = (len(df[df['status']=='win']) / len(df) * 100)
+    total_staked = df['stake'].sum()
+    roi = (total_profit / total_staked * 100) if total_staked > 0 else 0
     
-    m1.metric("Liczba kuponów", len(df))
-    m2.metric("Skuteczność", f"{win_rate:.1f}%")
-    m3.metric("Zysk netto", f"{total_profit:,.2f} PLN", delta=f"{total_profit:,.2f} PLN")
-    m4.metric("ROI", f"{(total_profit / df['stake'].astype(float).sum() * 100):.1f}%")
+    m1.metric("BILANS CAŁKOWITY", f"{total_profit:,.2f} PLN")
+    m2.metric("SKUTECZNOŚĆ", f"{(len(df[df['status']=='win'])/len(df)*100):.1f}%")
+    m3.metric("ROI (%)", f"{roi:.2f}%", delta=f"{roi:.2f}%")
+    m4.metric("OBRÓT (VOL)", f"{total_staked:,.2f} PLN")
 
-    # Wykresy
-    st.subheader("Historia portfela")
+    st.markdown("---")
+
+    # Wykres Progresji (Style: TradingView)
+    st.subheader("Krzywa Kapitału (Equity)")
     
     fig = go.Figure()
     fig.add_trace(go.Scatter(
         x=list(range(len(df))), 
         y=df['cum_profit'],
         mode='lines',
-        line=dict(color='#0366d6', width=3),
+        line=dict(color='#2962ff', width=3), # Klasyczny błękit finansowy
         fill='tozeroy',
-        fillcolor='rgba(3, 102, 214, 0.05)',
+        fillcolor='rgba(41, 98, 255, 0.1)',
+        hovertemplate='Zysk: %{y:.2f} PLN<extra></extra>'
     ))
     
     fig.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        font_color='#1b1f23',
-        margin=dict(l=0, r=0, t=20, b=0),
-        xaxis=dict(showgrid=True, gridcolor='#f1f1f1', title="ID Transakcji"),
-        yaxis=dict(showgrid=True, gridcolor='#f1f1f1', title="Bilans (PLN)")
+        font_color='#787b86',
+        margin=dict(l=0, r=0, t=10, b=0),
+        height=400,
+        xaxis=dict(showgrid=True, gridcolor='#1e222d', title="Kolejne Zakłady"),
+        yaxis=dict(showgrid=True, gridcolor='#1e222d', title="Kapitał (PLN)")
     )
     st.plotly_chart(fig, use_container_width=True)
 
-    # Tabela
-    st.subheader("Ostatnie zakłady")
+    # Tabela Operacji
+    st.subheader("Log Transakcyjny")
     
-    def color_status(val):
-        color = '#28a745' if val == 'win' else '#d73a49' if val == 'loss' else '#6a737d'
-        return f'background-color: transparent; color: {color}; font-weight: bold;'
+    def style_status(val):
+        color = '#089981' if val == 'win' else '#f23645' if val == 'loss' else '#787b86'
+        return f'color: {color}; font-weight: bold;'
 
-    display_df = df[['status', 'stake', 'win_val', 'net_profit']].iloc[::-1]
-    st.table(display_df.style.applymap(color_status, subset=['status']))
+    # Wyświetlamy tylko kluczowe dane finansowe
+    log_df = df[['status', 'stake', 'win_val', 'net_profit']].iloc[::-1]
+    st.dataframe(
+        log_df.style.applymap(style_status, subset=['status']),
+        use_container_width=True,
+        height=300
+    )
+
+# Sidebar z narzędziami
+with st.sidebar:
+    st.markdown("### PANEL KONTROLNY")
+    if st.button("ODŚWIEŻ TERMINAL"):
+        st.rerun()
+    
+    st.markdown("---")
+    st.markdown("Automatyzacja: **Aktywna**")
+    st.markdown("Źródło danych: `JSON_FEED`")
