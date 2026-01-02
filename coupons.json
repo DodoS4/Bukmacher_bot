@@ -1,1 +1,146 @@
-[]
+[
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 163.21,
+        "end_time": "2026-01-03T14:00:00+00:00",
+        "matches": [
+            {
+                "id": "5df215c154156e2a4bd2cc8d916bc4cc",
+                "picked": "New Orleans Pelicans",
+                "sport_key": "basketball_nba"
+            },
+            {
+                "id": "204633cbc6f1aad036913e7380f74702",
+                "picked": "Sassuolo",
+                "sport_key": "soccer_italy_serie_a"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 154.92,
+        "end_time": "2026-01-03T20:05:00+00:00",
+        "matches": [
+            {
+                "id": "616bf5829bd49ea9c3150596515369ad",
+                "picked": "Genoa",
+                "sport_key": "soccer_italy_serie_a"
+            },
+            {
+                "id": "002dd130b61480a22861fa67dcbec408",
+                "picked": "Lille",
+                "sport_key": "soccer_france_ligue_one"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 145.17,
+        "end_time": "2026-01-03T12:30:00+00:00",
+        "matches": [
+            {
+                "id": "c9320b0d64a9666de272ffa2fddb2c1a",
+                "picked": "Vit\u00f3ria SC",
+                "sport_key": "soccer_portugal_primeira_liga"
+            },
+            {
+                "id": "a40e631c634842e80f05ef44c374c45d",
+                "picked": "Aston Villa",
+                "sport_key": "soccer_epl"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 119.05,
+        "end_time": "2026-01-03T11:30:00+00:00",
+        "matches": [
+            {
+                "id": "1910284c44dd8157621a1fdb5f9ddb38",
+                "picked": "Como",
+                "sport_key": "soccer_italy_serie_a"
+            },
+            {
+                "id": "b9704c30e60eabed676cce7dcc882497",
+                "picked": "Los Angeles Lakers",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 93.18,
+        "end_time": "2026-01-03T15:00:00+00:00",
+        "matches": [
+            {
+                "id": "77e2a1a9c947b7a77dcd8bfd70e3c4af",
+                "picked": "Brighton and Hove Albion",
+                "sport_key": "soccer_epl"
+            },
+            {
+                "id": "8471751b12ee2bd1516db17adb92e246",
+                "picked": "Milwaukee Bucks",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 125.63,
+        "end_time": "2026-01-03T00:10:00+00:00",
+        "matches": [
+            {
+                "id": "14bc31e6584046b79f90aa3d42877f07",
+                "picked": "Brooklyn Nets",
+                "sport_key": "basketball_nba"
+            },
+            {
+                "id": "c4a6fcc303c95fbd25352b5df36a283a",
+                "picked": "AC Milan",
+                "sport_key": "soccer_italy_serie_a"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 101.03,
+        "end_time": "2026-01-03T20:00:00+00:00",
+        "matches": [
+            {
+                "id": "e47132a3b5a35235ab8fea1dd64e2189",
+                "picked": "Barcelona",
+                "sport_key": "soccer_spain_la_liga"
+            },
+            {
+                "id": "c8a2140f30daa18b21cf7285846c782b",
+                "picked": "Orlando Magic",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 93.53,
+        "end_time": "2026-01-03T17:30:00+00:00",
+        "matches": [
+            {
+                "id": "fafed94acfa689bc28911f792f4f2969",
+                "picked": "Arsenal",
+                "sport_key": "soccer_epl"
+            },
+            {
+                "id": "706e1daf75bab9157bbec5f8da74c12d",
+                "picked": "Sporting Lisbon",
+                "sport_key": "soccer_portugal_primeira_liga"
+            }
+        ]
+    }
+]
