@@ -142,5 +142,23 @@
                 "sport_key": "soccer_portugal_primeira_liga"
             }
         ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 120.34,
+        "end_time": "2026-01-03T13:00:00+00:00",
+        "matches": [
+            {
+                "id": "691cd767b631199392b972a4870d77fe",
+                "picked": "Celta Vigo",
+                "sport_key": "soccer_spain_la_liga"
+            },
+            {
+                "id": "260d8a4037ed37bae3a5ad3725c11906",
+                "picked": "San Antonio Spurs",
+                "sport_key": "basketball_nba"
+            }
+        ]
     }
 ]
