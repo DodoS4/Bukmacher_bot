@@ -2,38 +2,91 @@ import streamlit as st
 import pandas as pd
 import json
 import plotly.express as px
+from datetime import datetime
 
-st.set_page_config(page_title="BetBot Stats", layout="wide")
+# Konfiguracja strony
+st.set_page_config(page_title="BetBot Dashboard", layout="wide", page_icon="📊")
 
+# Stylizacja nagłówka
 st.title("📊 Statystyki Mojego Bota Bukmacherskiego")
+st.markdown("---")
 
-# Wczytywanie danych
-try:
-    with open("coupons.json", "r") as f:
-        data = json.load(f)
-    df = pd.DataFrame(data)
-except:
-    st.error("Nie znaleziono pliku coupons.json lub jest pusty.")
-    st.stop()
+# Funkcja do wczytywania danych
+def load_data():
+    try:
+        with open("coupons.json", "r") as f:
+            data = json.load(f)
+            if not data:
+                return pd.DataFrame()
+            return pd.DataFrame(data)
+    except (FileNotFoundError, json.JSONDecodeError):
+        return pd.DataFrame()
 
-# Podstawowe metryki
-total_stake = df['stake'].sum()
-# Obliczamy zysk: win_val - stake dla wygranych, oraz -stake dla przegranych
-df['net_profit'] = df.apply(lambda x: x['win_val'] - x['stake'] if x['status'] == 'win' else (-x['stake'] if x['status'] == 'loss' else 0), axis=1)
-total_profit = df['net_profit'].sum()
-win_rate = (len(df[df['status'] == 'win']) / len(df[df['status'].isin(['win', 'loss'])])) * 100
+df = load_data()
 
-col1, col2, col3 = st.columns(3)
-col1.metric("Łączny Obrót", f"{total_stake:.2f} PLN")
-col2.metric("Bilans (Profit)", f"{total_profit:.2f} PLN", delta=f"{total_profit:.2f} PLN")
-col3.metric("Win Rate", f"{win_rate:.1f}%")
+if df.empty:
+    st.warning("⚠️ Baza danych jest pusta. Uruchom bota na GitHubie, aby wygenerować pierwsze kupony.")
+else:
+    # 1. PRZYGOTOWANIE DANYCH
+    # Obliczamy zysk netto dla każdego kuponu
+    def calculate_net(row):
+        if row['status'] == 'win':
+            return round(row['win_val'] - row['stake'], 2)
+        elif row['status'] == 'loss':
+            return -row['stake']
+        return 0  # Dla statusu 'pending'
 
-# Wykres progresji kapitału
-st.subheader("📈 Progresja zysku w czasie")
-df['cumulative_profit'] = df['net_profit'].cumsum()
-fig = px.line(df, x=df.index, y='cumulative_profit', labels={'index': 'Kupony', 'cumulative_profit': 'Zysk (PLN)'})
-st.plotly_chart(fig, use_container_width=True)
+    df['net_profit'] = df.apply(calculate_net, axis=1)
+    
+    # Podstawowe statystyki
+    total_coupons = len(df)
+    settled_df = df[df['status'].isin(['win', 'loss'])]
+    total_settled = len(settled_df)
+    
+    wins = len(df[df['status'] == 'win'])
+    total_stake = df['stake'].sum()
+    total_profit = df['net_profit'].sum()
+    
+    # Uniknięcie błędu dzielenia przez zero
+    win_rate = (wins / total_settled * 100) if total_settled > 0 else 0
+    roi = (total_profit / total_stake * 100) if total_stake > 0 else 0
 
-# Tabela z ostatnimi kuponami
-st.subheader("📑 Ostatnie kupony")
-st.dataframe(df.tail(10)[['status', 'stake', 'win_val', 'net_profit']].sort_index(ascending=False))
+    # 2. PANEL METRYK
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Wszystkie kupony", total_coupons)
+    col2.metric("Skuteczność (Win Rate)", f"{win_rate:.1f}%")
+    col3.metric("Łączny profit", f"{total_profit:+.2f} PLN", delta=f"{total_profit:.2f} PLN")
+    col4.metric("ROI", f"{roi:.1f}%")
+
+    st.markdown("---")
+
+    # 3. WYKRESY
+    col_chart1, col_chart2 = st.columns(2)
+
+    with col_chart1:
+        st.subheader("📈 Progresja kapitału")
+        df['cumulative_profit'] = df['net_profit'].cumsum()
+        fig_line = px.line(df, y='cumulative_profit', title="Zysk w czasie (PLN)",
+                          labels={'index': 'Numer kuponu', 'cumulative_profit': 'Suma zysku'})
+        st.plotly_chart(fig_line, use_container_width=True)
+
+    with col_chart2:
+        st.subheader("🎯 Rozkład statusów")
+        fig_pie = px.pie(df, names='status', title="Udział statusów",
+                        color='status', color_discrete_map={'win':'#2ca02c', 'loss':'#d62728', 'pending':'#7f7f7f'})
+        st.plotly_chart(fig_pie, use_container_width=True)
+
+    # 4. TABELA SZCZEGÓŁOWA
+    st.subheader("📑 Ostatnie kupony")
+    # Odwracamy kolejność, żeby najnowsze były na górze
+    display_df = df[['status', 'stake', 'win_val', 'net_profit']].copy()
+    display_df = display_df.iloc[::-1] 
+    st.dataframe(display_df.style.applymap(
+        lambda x: 'color: green' if x == 'win' else ('color: red' if x == 'loss' else 'color: gray'),
+        subset=['status']
+    ), use_container_width=True)
+
+# Stopka
+st.sidebar.info(f"Ostatnia aktualizacja strony: {datetime.now().strftime('%H:%M:%S')}")
+if st.sidebar.button("Odśwież dane"):
+    st.rerun()
