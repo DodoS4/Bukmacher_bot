@@ -18,7 +18,7 @@ TAX_RATE = 0.88
 STAKE_STANDARD = 50.0    
 STAKE_SINGLE = 80.0      
 
-# FILTRY (Poluzowane, aby bot znalazł oferty)
+# FILTRY (Ustawienia startowe dla dobrej widoczności ofert)
 MAX_VARIANCE = 0.12
 MIN_BOOKMAKERS = 4
 
@@ -36,7 +36,7 @@ SPORTS_CONFIG = {
     "basketball_nba": "🏀 NBA"
 }
 
-# Zmienione na nazwę, którą masz w repozytorium
+# Nazwa pliku bazy danych w Twoim repozytorium
 COUPONS_FILE = "coupons.json"
 
 # ================= FUNKCJE POMOCNICZE =================
@@ -53,158 +53,4 @@ def save_coupons(coupons):
 
 def send_msg(text):
     if not T_TOKEN or not T_CHAT: return
-    url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
-    try: requests.post(url, json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=15)
-    except: pass
-
-# ================= LOGIKA ROZLICZANIA =================
-
-def check_results():
-    coupons = load_coupons()
-    updated = False
-    now = datetime.now(timezone.utc)
-    print(f"--- Sprawdzanie wyników: {len(coupons)} kuponów w bazie ---")
-    
-    for c in coupons:
-        if c.get("status") != "pending": continue
-        
-        end_time = datetime.fromisoformat(c["end_time"])
-        if now < end_time + timedelta(hours=4): continue
-
-        matches_results = []
-        for m_saved in c["matches"]:
-            s_key = m_saved.get("sport_key")
-            if not s_key: continue
-
-            for key in API_KEYS:
-                try:
-                    r = requests.get(f"https://api.the-odds-api.com/v4/sports/{s_key}/scores/", 
-                                   params={"apiKey": key, "daysFrom": 3}, timeout=15)
-                    if r.status_code == 200:
-                        scores = r.json()
-                        s_data = next((s for s in scores if s["id"] == m_saved["id"] and s.get("completed")), None)
-                        if s_data:
-                            sl = s_data.get("scores", [])
-                            if len(sl) >= 2:
-                                h_score = int(next(x['score'] for x in sl if x['name'] == s_data['home_team']))
-                                a_score = int(next(x['score'] for x in sl if x['name'] == s_data['away_team']))
-                                winner = s_data["home_team"] if h_score > a_score else (s_data["away_team"] if a_score > h_score else "Remis")
-                                matches_results.append(winner == m_saved["picked"])
-                        break
-                except: continue
-        
-        if len(matches_results) == len(c["matches"]):
-            c["status"] = "win" if all(matches_results) else "loss"
-            updated = True
-            icon = "✅" if c["status"] == "win" else "❌"
-            val = round(c['win_val'] - c['stake'], 2) if c["status"] == "win" else -c['stake']
-            send_msg(f"{icon} **KUPON ROZLICZONY**\nBilans: `{val:+.2f} PLN`")
-            
-    if updated: save_coupons(coupons)
-
-# ================= ANALIZA I GENEROWANIE KUPONÓW =================
-
-def run():
-    print("🚀 Start bota hybrydowego...")
-    check_results()
-    
-    now_utc = datetime.now(timezone.utc)
-    coupons_db = load_coupons()
-    sent_ids = [m["id"] for c in coupons_db for m in c["matches"]]
-    all_picks = []
-
-    for sport_key, sport_label in SPORTS_CONFIG.items():
-        print(f"Skanowanie: {sport_label}...")
-        matches = None
-        for key in API_KEYS:
-            try:
-                r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/",
-                               params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=15)
-                if r.status_code == 200:
-                    matches = r.json()
-                    break
-            except: continue
-            
-        if not matches: continue
-
-        for m in matches:
-            if m["id"] in sent_ids: continue
-            
-            # Filtr liczby bukmacherów
-            if len(m.get("bookmakers", [])) < MIN_BOOKMAKERS:
-                continue
-            
-            m_dt_utc = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
-            if m_dt_utc < now_utc or m_dt_utc > (now_utc + timedelta(hours=48)): continue
-
-            h_t, a_t = m["home_team"], m["away_team"]
-            h_o, a_o = [], []
-            
-            for bm in m.get("bookmakers", []):
-                for market in bm.get("markets", []):
-                    if market["key"] == "h2h":
-                        for o in market["outcomes"]:
-                            if o["name"] == h_t: h_o.append(o["price"])
-                            if o["name"] == a_t: a_o.append(o["price"])
-            
-            if not h_o or not a_o: continue
-            
-            avg_h, avg_a = sum(h_o)/len(h_o), sum(a_o)/len(a_o)
-            var_h = (max(h_o)-min(h_o))/avg_h
-            var_a = (max(a_o)-min(a_o))/avg_a
-            
-            # DEBUG: print(f"Analiza {h_t}-{a_t}: Kurs {avg_h:.2f}/{avg_a:.2f}, Bukm: {len(h_o)}")
-            
-            pick = None
-            if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
-                pick = {"id": m["id"], "team": h_t, "odd": avg_h, "league": sport_label, "key": sport_key, "picked": h_t, "date": m_dt_utc, "home": True}
-            elif MIN_SINGLE_ODD <= avg_a <= MAX_SINGLE_ODD and var_a <= MAX_VARIANCE:
-                pick = {"id": m["id"], "team": a_t, "odd": avg_a, "league": sport_label, "key": sport_key, "picked": a_t, "date": m_dt_utc, "home": False}
-            
-            if pick: all_picks.append(pick)
-
-    print(f"Znaleziono {len(all_picks)} meczów spełniających kryteria.")
-
-    # --- SELEKCJA ---
-    singles = [p for p in all_picks if p['odd'] >= SINGLE_THRESHOLD]
-    for s in singles:
-        win = round(STAKE_SINGLE * TAX_RATE * s['odd'], 2)
-        msg = (f"🎯 **TYP SINGLE**\n━━━━━━━━━━━━━━━\n"
-               f"🏟 **{s['team']}** {'🏠' if s['home'] else '🚌'}\n🏆 {s['league']}\n"
-               f"📈 Kurs: `{s['odd']:.2f}`\n━━━━━━━━━━━━━━━\n"
-               f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win} PLN`")
-        send_msg(msg)
-        coupons_db.append({
-            "status": "pending", "stake": STAKE_SINGLE, "win_val": win,
-            "end_time": s["date"].isoformat(),
-            "matches": [{"id": s["id"], "picked": s["picked"], "sport_key": s["key"]}]
-        })
-        all_picks.remove(s)
-
-    all_picks.sort(key=lambda x: (x['home'], x['odd']), reverse=True)
-    while len(all_picks) >= 2:
-        p1 = all_picks.pop(0)
-        p2_idx = next((i for i, x in enumerate(all_picks) if x['league'] != p1['league']), -1)
-        if p2_idx == -1: break
-        p2 = all_picks.pop(p2_idx)
-        
-        ako = round(p1['odd'] * p2['odd'], 2)
-        win = round(STAKE_STANDARD * TAX_RATE * ako, 2)
-        msg = (f"🚀 **KUPON DOUBLE**\n━━━━━━━━━━━━━━━\n"
-               f"1️⃣ {p1['team']} (`{p1['odd']:.2f}`)\n2️⃣ {p2['team']} (`{p2['odd']:.2f}`)\n"
-               f"━━━━━━━━━━━━━━━\n📊 AKO: `{ako:.2f}` | Wygrana: `{win} PLN`")
-        send_msg(msg)
-        coupons_db.append({
-            "status": "pending", "stake": STAKE_STANDARD, "win_val": win,
-            "end_time": max(p1["date"], p2["date"]).isoformat(),
-            "matches": [
-                {"id": p1["id"], "picked": p1["picked"], "sport_key": p1["key"]},
-                {"id": p2["id"], "picked": p2["picked"], "sport_key": p2["key"]}
-            ]
-        })
-    
-    save_coupons(coupons_db)
-    print("Finisz.")
-
-if __name__ == "__main__":
-    run()
+    url = f"https://
