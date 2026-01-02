@@ -9,17 +9,18 @@ T_CHAT = os.getenv("T_CHAT")
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-# PROGI KURSOWE (Zgodnie z ustaleniami: 1.45 - 1.75)
-MIN_SINGLE_ODD = 1.45
-MAX_SINGLE_ODD = 1.85
-SINGLE_THRESHOLD = 1.90  # Powyżej tego kursu bot wysyła jako SINGLE
+# PROGI KURSOWE (Zoptymalizowane pod polski rynek i podatek)
+MIN_SINGLE_ODD = 1.35
+MAX_SINGLE_ODD = 1.95
+SINGLE_THRESHOLD = 2.05  
 TAX_RATE = 0.88
 
-STAKE_STANDARD = 50.0    # Dla kuponów Double
-STAKE_SINGLE = 80.0      # Dla kuponów Single
+STAKE_STANDARD = 50.0    
+STAKE_SINGLE = 80.0      
 
-MAX_VARIANCE = 0.06
-MIN_BOOKMAKERS = 8
+# FILTRY (Poluzowane, aby bot znalazł oferty)
+MAX_VARIANCE = 0.12
+MIN_BOOKMAKERS = 4
 
 SPORTS_CONFIG = {
     "soccer_epl": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League", 
@@ -35,7 +36,8 @@ SPORTS_CONFIG = {
     "basketball_nba": "🏀 NBA"
 }
 
-COUPONS_FILE = "coupons_hybrid.json"
+# Zmienione na nazwę, którą masz w repozytorium
+COUPONS_FILE = "coupons.json"
 
 # ================= FUNKCJE POMOCNICZE =================
 
@@ -55,12 +57,13 @@ def send_msg(text):
     try: requests.post(url, json={"chat_id": T_CHAT, "text": text, "parse_mode": "Markdown"}, timeout=15)
     except: pass
 
-# ================= LOGIKA ROZLICZANIA (NAPRAWIONA) =================
+# ================= LOGIKA ROZLICZANIA =================
 
 def check_results():
     coupons = load_coupons()
     updated = False
     now = datetime.now(timezone.utc)
+    print(f"--- Sprawdzanie wyników: {len(coupons)} kuponów w bazie ---")
     
     for c in coupons:
         if c.get("status") != "pending": continue
@@ -69,12 +72,10 @@ def check_results():
         if now < end_time + timedelta(hours=4): continue
 
         matches_results = []
-
         for m_saved in c["matches"]:
             s_key = m_saved.get("sport_key")
             if not s_key: continue
 
-            found_this_match = False
             for key in API_KEYS:
                 try:
                     r = requests.get(f"https://api.the-odds-api.com/v4/sports/{s_key}/scores/", 
@@ -82,17 +83,13 @@ def check_results():
                     if r.status_code == 200:
                         scores = r.json()
                         s_data = next((s for s in scores if s["id"] == m_saved["id"] and s.get("completed")), None)
-                        
                         if s_data:
                             sl = s_data.get("scores", [])
                             if len(sl) >= 2:
-                                # Pobieranie punktów dla odpowiednich drużyn
                                 h_score = int(next(x['score'] for x in sl if x['name'] == s_data['home_team']))
                                 a_score = int(next(x['score'] for x in sl if x['name'] == s_data['away_team']))
-                                
                                 winner = s_data["home_team"] if h_score > a_score else (s_data["away_team"] if a_score > h_score else "Remis")
                                 matches_results.append(winner == m_saved["picked"])
-                                found_this_match = True
                         break
                 except: continue
         
@@ -108,7 +105,7 @@ def check_results():
 # ================= ANALIZA I GENEROWANIE KUPONÓW =================
 
 def run():
-    send_msg("🤖 **BOT HYBRYDOWY**: Skanowanie rynków...")
+    print("🚀 Start bota hybrydowego...")
     check_results()
     
     now_utc = datetime.now(timezone.utc)
@@ -117,6 +114,7 @@ def run():
     all_picks = []
 
     for sport_key, sport_label in SPORTS_CONFIG.items():
+        print(f"Skanowanie: {sport_label}...")
         matches = None
         for key in API_KEYS:
             try:
@@ -130,7 +128,11 @@ def run():
         if not matches: continue
 
         for m in matches:
-            if m["id"] in sent_ids or len(m.get("bookmakers", [])) < MIN_BOOKMAKERS: continue
+            if m["id"] in sent_ids: continue
+            
+            # Filtr liczby bukmacherów
+            if len(m.get("bookmakers", [])) < MIN_BOOKMAKERS:
+                continue
             
             m_dt_utc = datetime.fromisoformat(m["commence_time"].replace('Z', '+00:00'))
             if m_dt_utc < now_utc or m_dt_utc > (now_utc + timedelta(hours=48)): continue
@@ -145,20 +147,25 @@ def run():
                             if o["name"] == h_t: h_o.append(o["price"])
                             if o["name"] == a_t: a_o.append(o["price"])
             
-            if len(h_o) < MIN_BOOKMAKERS: continue
+            if not h_o or not a_o: continue
+            
             avg_h, avg_a = sum(h_o)/len(h_o), sum(a_o)/len(a_o)
+            var_h = (max(h_o)-min(h_o))/avg_h
+            var_a = (max(a_o)-min(a_o))/avg_a
+            
+            # DEBUG: print(f"Analiza {h_t}-{a_t}: Kurs {avg_h:.2f}/{avg_a:.2f}, Bukm: {len(h_o)}")
             
             pick = None
-            if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and (max(h_o)-min(h_o))/avg_h <= MAX_VARIANCE:
+            if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
                 pick = {"id": m["id"], "team": h_t, "odd": avg_h, "league": sport_label, "key": sport_key, "picked": h_t, "date": m_dt_utc, "home": True}
-            elif MIN_SINGLE_ODD <= avg_a <= MAX_SINGLE_ODD and (max(a_o)-min(a_o))/avg_a <= MAX_VARIANCE:
+            elif MIN_SINGLE_ODD <= avg_a <= MAX_SINGLE_ODD and var_a <= MAX_VARIANCE:
                 pick = {"id": m["id"], "team": a_t, "odd": avg_a, "league": sport_label, "key": sport_key, "picked": a_t, "date": m_dt_utc, "home": False}
             
             if pick: all_picks.append(pick)
 
-    # --- SELEKCJA HYBRYDOWA ---
-    
-    # 1. Wysyłamy SINGLE (kursy >= 1.90)
+    print(f"Znaleziono {len(all_picks)} meczów spełniających kryteria.")
+
+    # --- SELEKCJA ---
     singles = [p for p in all_picks if p['odd'] >= SINGLE_THRESHOLD]
     for s in singles:
         win = round(STAKE_SINGLE * TAX_RATE * s['odd'], 2)
@@ -174,7 +181,6 @@ def run():
         })
         all_picks.remove(s)
 
-    # 2. Wysyłamy DOUBLE (pozostałe mecze parujemy)
     all_picks.sort(key=lambda x: (x['home'], x['odd']), reverse=True)
     while len(all_picks) >= 2:
         p1 = all_picks.pop(0)
@@ -198,7 +204,7 @@ def run():
         })
     
     save_coupons(coupons_db)
-    send_msg("✅ Skanowanie i analiza zakończona.")
+    print("Finisz.")
 
 if __name__ == "__main__":
     run()
