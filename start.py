@@ -15,7 +15,6 @@ STAKE_SINGLE = 80.0
 TAX_RATE = 0.88
 COUPONS_FILE = "coupons.json"
 
-# Nowa, czysto piłkarska i stabilna lista lig
 SPORTS = {
     "soccer_epl": "⚽ EPL", 
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -24,7 +23,7 @@ SPORTS = {
     "soccer_france_ligue_one": "⚽ LIGUE 1",
     "soccer_uefa_champs_league": "⚽ LIGA MISTRZÓW",
     "soccer_netherlands_eredivisie": "⚽ EREDIVISIE",
-    "soccer_portugal_primeira_liga": "⚽ LIGA PORTUGAL" # Dodana stabilna liga portugalska
+    "soccer_portugal_primeira_liga": "⚽ LIGA PORTUGAL"
 }
 
 # ================= FUNKCJE POMOCNICZE =================
@@ -47,11 +46,12 @@ def send_msg(text, target="types"):
     try: requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}, timeout=15)
     except: pass
 
-# ================= RAPORT DZIENNY =================
+# ================= STATYSTYKI (DZIENNE I TYGODNIOWE) =================
 
-def send_daily_summary():
+def send_summary(days=1):
     coupons = load_data(COUPONS_FILE)
-    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    now = datetime.now(timezone.utc)
+    start_period = now - timedelta(days=days)
     
     total_staked = 0
     total_won = 0
@@ -59,7 +59,8 @@ def send_daily_summary():
     losses = 0
     
     for c in coupons:
-        if today_str in c.get("end_time", "") and c.get("status") != "pending":
+        c_time = datetime.fromisoformat(c.get("end_time", "").replace("Z", "+00:00"))
+        if c_time > start_period and c.get("status") != "pending":
             total_staked += c["stake"]
             if c["status"] == "win":
                 total_won += c["win_val"]
@@ -70,21 +71,26 @@ def send_daily_summary():
     if total_staked > 0:
         profit = round(total_won - total_staked, 2)
         total_bets = wins + losses
-        accuracy = round((wins / total_bets) * 100, 1) if total_bets > 0 else 0
+        accuracy = round((wins / total_bets) * 100, 1)
+        yield_val = round((profit / total_staked) * 100, 2)
+        
+        title = "📊 PODSUMOWANIE DNIA" if days == 1 else "🔥 RAPORT TYGODNIOWY"
         icon = "📈" if profit >= 0 else "📉"
         
-        summary = (
-            f"📊 *PODSUMOWANIE DNIA*\n"
+        msg = (
+            f"*{title}*\n"
             f"━━━━━━━━━━━━━━━\n"
-            f"📅 Data: `{today_str}`\n"
+            f"📅 Okres: `Ostatnie {days} dni`\n"
             f"💰 Postawiono: `{total_staked:.2f} PLN`\n"
             f"💵 Wygrano: `{total_won:.2f} PLN`\n"
+            f"━━━━━━━━━━━━━━━\n"
             f"🎯 Skuteczność: `{accuracy}%`\n"
+            f"💎 *Yield: {yield_val:+.2f}%*\n"
             f"{icon} Zysk/Strata: *{profit:+.2f} PLN*\n"
             f"━━━━━━━━━━━━━━━\n"
             f"✅ Trafione: `{wins}` | ❌ Przegrane: `{losses}`"
         )
-        send_msg(summary, target="results")
+        send_msg(msg, target="results")
 
 # ================= SELEKCJA I ROZLICZANIE =================
 
@@ -155,8 +161,14 @@ def check_results():
 def run():
     check_results()
     find_new_bets()
-    if datetime.now(timezone.utc).hour >= 20:
-        send_daily_summary()
+    
+    now = datetime.now(timezone.utc)
+    # Codzienny raport wieczorem
+    if now.hour >= 20:
+        send_summary(days=1)
+        # Dodatkowy raport tygodniowy w każdą niedzielę (weekday 6)
+        if now.weekday() == 6:
+            send_summary(days=7)
 
 if __name__ == "__main__":
     run()
