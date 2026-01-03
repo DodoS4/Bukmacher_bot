@@ -35,6 +35,7 @@ jobs:
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
+          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}  # <--- TA LINIA BYŁA BRAKUJĄCA
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
@@ -44,11 +45,6 @@ jobs:
 
       - name: Zapisanie zmian w bazie danych
         run: |
-          # Dodajemy pliki do bazy
           git add sent.json coupons.json || echo "Brak zmian"
-          
-          # Commitujemy zmiany
           git commit -m "Aktualizacja bazy [skip ci]" || exit 0
-          
-          # Wysyłamy na serwer
           git push origin main
