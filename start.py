@@ -5,8 +5,8 @@ from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA =================
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT_TYPES = os.getenv("T_CHAT")           # Główny kanał na typy
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") # Grupa na wyniki
+T_CHAT_TYPES = os.getenv("T_CHAT")           
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") 
 
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
@@ -15,7 +15,6 @@ STAKE_SINGLE = 80.0
 TAX_RATE = 0.88
 COUPONS_FILE = "coupons.json"
 
-# Konfiguracja lig - Priorytet dla stabilnych rynków
 SPORTS = {
     "soccer_epl": "⚽ EPL", 
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -47,16 +46,17 @@ def send_msg(text, target="types"):
         requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}, timeout=15)
     except: pass
 
-# ================= SELEKCJA NAJLEPSZYCH OKAZJI =================
+# ================= SELEKCJA UNIKALNYCH OKAZJI =================
 
 def find_new_bets():
-    print("--- SZUKAM NAJLEPSZYCH OKAZJI (TOP 5) ---")
+    print("--- SZUKAM UNIKALNYCH OKAZJI (TOP 5) ---")
     coupons = load_data(COUPONS_FILE)
     sent_ids = [m["id"] for c in coupons for m in c["matches"]]
     now = datetime.now(timezone.utc)
-    max_future = now + timedelta(hours=48) # Filtr 48h
+    max_future = now + timedelta(hours=48)
     
-    potential_bets = []
+    # Słownik zapobiegający dublowaniu tego samego meczu
+    unique_matches = {}
 
     for sport_key, league_label in SPORTS.items():
         for key in API_KEYS:
@@ -67,7 +67,9 @@ def find_new_bets():
                 events = r.json()
                 
                 for ev in events:
-                    if ev["id"] in sent_ids: continue
+                    event_id = ev["id"]
+                    if event_id in sent_ids: continue
+                    
                     commence_time = datetime.fromisoformat(ev['commence_time'].replace('Z', '+00:00'))
                     if commence_time > max_future: continue
                     
@@ -77,23 +79,24 @@ def find_new_bets():
                         for outcome in market.get("outcomes", []):
                             price = outcome['price']
                             
-                            # FILTR NAJLEPSZYCH OKAZJI: 1.60 - 2.10
+                            # Filtr jakościowy kursu
                             if 1.60 <= price <= 2.10:
-                                potential_bets.append({
-                                    "ev": ev,
-                                    "outcome": outcome,
-                                    "price": price,
-                                    "league": league_label,
-                                    "sport_key": sport_key,
-                                    "commence_time": commence_time
-                                })
+                                # Wybór najlepszego kursu dla tego samego meczu
+                                if event_id not in unique_matches or price > unique_matches[event_id]['price']:
+                                    unique_matches[event_id] = {
+                                        "ev": ev,
+                                        "outcome": outcome,
+                                        "price": price,
+                                        "league": league_label,
+                                        "sport_key": sport_key,
+                                        "commence_time": commence_time
+                                    }
                 break
             except: continue
 
-    # SORTOWANIE: Najpierw mecze, które zaczną się najszybciej
+    # Sortowanie po czasie i wybór TOP 5
+    potential_bets = list(unique_matches.values())
     potential_bets.sort(key=lambda x: x['commence_time'])
-    
-    # WYBÓR MAKSYMALNIE 5 NAJLEPSZYCH TYPÓW
     top_bets = potential_bets[:5] 
 
     for bet in top_bets:
@@ -101,9 +104,9 @@ def find_new_bets():
         win_val = round(STAKE_SINGLE * price * TAX_RATE, 2)
         date_str = bet['commence_time'].strftime("%d.%m %H:%M")
 
-        # FORMATOWANIE IDENTYCZNE ZE ZDJĘCIEM
+        # Wygląd zgodny ze zdjęciem
         msg = (
-            f"⭐️ *TOP OKAZJA DNIA*\n"
+            f"⭐ *TOP OKAZJA DNIA*\n"
             f"━━━━━━━━━━━━━━━\n"
             f"🏟️ `{ev['home_team']} vs {ev['away_team']}`\n"
             f"✅ Typ: *{outcome['name']}*\n"
@@ -116,17 +119,14 @@ def find_new_bets():
         send_msg(msg, target="types")
         
         coupons.append({
-            "id": ev["id"],
-            "status": "pending",
-            "stake": STAKE_SINGLE,
-            "win_val": win_val,
+            "id": ev["id"], "status": "pending", "stake": STAKE_SINGLE, "win_val": win_val,
             "end_time": ev["commence_time"],
             "matches": [{"id": ev["id"], "sport_key": bet['sport_key'], "picked": outcome['name']}]
         })
         sent_ids.append(ev["id"])
 
     save_data(COUPONS_FILE, coupons)
-    print(f"Zakończono. Wysłano {len(top_bets)} okazji.")
+    print(f"Zakończono. Wysłano {len(top_bets)} unikalnych typów.")
 
 # ================= ROZLICZANIE WYNIKÓW =================
 
@@ -139,8 +139,6 @@ def check_results():
     for c in coupons:
         if c.get("status") != "pending": continue
         end_time = datetime.fromisoformat(c["end_time"].replace("Z", "+00:00"))
-        
-        # Rozliczenie 4h po meczu
         if now < end_time + timedelta(hours=4): continue
 
         for m in c["matches"]:
@@ -164,7 +162,7 @@ def check_results():
                         icon = "✅" if c["status"] == "win" else "❌"
                         profit = round(c['win_val'] - c['stake'], 2) if c["status"] == "win" else -c['stake']
                         
-                        # Wiadomość do grupy Wyniki
+                        # Raport do grupy Wyniki
                         res_msg = (f"{icon} *WYNIK MECZU*\n"
                                    f"━━━━━━━━━━━━━━━\n"
                                    f"🏟️ `{h_t} {h_s}:{a_s} {a_t}`\n"
@@ -175,11 +173,9 @@ def check_results():
                 except: continue
     if updated: save_data(COUPONS_FILE, coupons)
 
-# ================= START =================
-
 def run():
-    check_results()   # Najpierw sprząta i rozlicza wyniki
-    find_new_bets()   # Potem szuka świeżych okazji
+    check_results()   
+    find_new_bets()   
 
 if __name__ == "__main__":
     run()
