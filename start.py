@@ -15,7 +15,7 @@ STAKE_SINGLE = 80.0
 TAX_RATE = 0.88
 COUPONS_FILE = "coupons.json"
 
-# Zaktualizowana lista lig: +Eredivisie, -Ekstraklasa
+# Nowa, czysto piłkarska i stabilna lista lig
 SPORTS = {
     "soccer_epl": "⚽ EPL", 
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -24,7 +24,7 @@ SPORTS = {
     "soccer_france_ligue_one": "⚽ LIGUE 1",
     "soccer_uefa_champs_league": "⚽ LIGA MISTRZÓW",
     "soccer_netherlands_eredivisie": "⚽ EREDIVISIE",
-    "basketball_nba": "🏀 NBA"
+    "soccer_portugal_primeira_liga": "⚽ LIGA PORTUGAL" # Dodana stabilna liga portugalska
 }
 
 # ================= FUNKCJE POMOCNICZE =================
