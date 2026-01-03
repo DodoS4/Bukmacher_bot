@@ -90,7 +90,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 125.63,
         "end_time": "2026-01-03T00:10:00+00:00",
@@ -266,6 +266,42 @@
                 "id": "87610f91e341dcfd2487d7609208b633",
                 "picked": "Atl\u00e9tico Madrid",
                 "sport_key": "soccer_spain_la_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 122.67,
+        "end_time": "2026-01-04T03:40:00+00:00",
+        "matches": [
+            {
+                "id": "951987d285edeebef57679583da56cba",
+                "picked": "Los Angeles Clippers",
+                "sport_key": "basketball_nba"
+            },
+            {
+                "id": "10c947b26a6a07bc5257cb52c7a9dcfc",
+                "picked": "Braga",
+                "sport_key": "soccer_portugal_primeira_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 111.44,
+        "end_time": "2026-01-04T18:00:00+00:00",
+        "matches": [
+            {
+                "id": "fd9969a95c7308e171377cdc5445be4c",
+                "picked": "Chicago Bulls",
+                "sport_key": "basketball_nba"
+            },
+            {
+                "id": "86ec8347c98e1aa12b04b470581bf580",
+                "picked": "FC Porto",
+                "sport_key": "soccer_portugal_primeira_liga"
             }
         ]
     }
