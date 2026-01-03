@@ -208,5 +208,19 @@
                 "picked": "Alav\u00e9s"
             }
         ]
+    },
+    {
+        "id": "87610f91e341dcfd2487d7609208b633",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 140.8,
+        "end_time": "2026-01-04T20:00:00Z",
+        "matches": [
+            {
+                "id": "87610f91e341dcfd2487d7609208b633",
+                "sport_key": "soccer_spain_la_liga",
+                "picked": "Atl\u00e9tico Madrid"
+            }
+        ]
     }
 ]
