@@ -9,14 +9,11 @@ T_CHAT = os.getenv("T_CHAT")
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-# NOWE PROGI STRATEGII HYBRYDOWEJ
-MIN_ODD_TO_ANALYZE = 1.35   # Minimalny kurs meczu w ogóle
-MAX_ODD_TO_ANALYZE = 2.40   # Maksymalny kurs meczu w ogóle
-SINGLE_THRESHOLD = 1.70     # Kursy >= 1.70 idą jako SINGLE, mniejsze idą do DOUBLE
+# KONFIGURACJA DLA 100% SINGLE (AKTUALIZACJA KURSU MINIMALNEGO)
+MIN_SINGLE_ODD = 1.55      # ZMIENIONO: Minimalny kurs zwiększony do 1.55
+MAX_SINGLE_ODD = 2.50      # Maksymalny kurs
 TAX_RATE = 0.88
-
-STAKE_STANDARD = 50.0       # Stawka na Double
-STAKE_SINGLE = 80.0         # Stawka na Single
+STAKE_SINGLE = 80.0        # Twoja standardowa stawka na Single
 
 # FILTRY
 MAX_VARIANCE = 0.12
@@ -71,7 +68,7 @@ def send_daily_report():
     total_win = sum(c["win_val"] if c["status"] == "win" else 0 for c in completed_today)
     profit = total_win - total_stake
     wins = len([c for c in completed_today if c["status"] == "win"])
-    accuracy = (wins / len(completed_today)) * 100
+    accuracy = (wins / len(completed_today)) * 100 if len(completed_today) > 0 else 0
     
     icon_overall = "📈" if profit >= 0 else "📉"
     report = (f"📊 *RAPORT DZIENNY*\n━━━━━━━━━━━━━━━━━━━━\n✅ Kupony: `{len(completed_today)}` | 🎯 `{accuracy:.1f}%`\n"
@@ -123,8 +120,7 @@ def run():
     now_utc = datetime.now(timezone.utc)
     coupons_db = load_coupons()
     sent_ids = [m["id"] for c in coupons_db for m in c["matches"]]
-    all_picks = []
-
+    
     for sport_key, league_label in SPORTS_CONFIG.items():
         matches = None
         for key in API_KEYS:
@@ -156,34 +152,34 @@ def run():
             avg_h, avg_a = sum(h_o)/len(h_o), sum(a_o)/len(a_o)
             var_h, var_a = (max(h_o)-min(h_o))/avg_h, (max(a_o)-min(a_o))/avg_a
             
-            common = {"id": m["id"], "league": league_label, "key": sport_key, "date": m_dt_utc, "home_name": h_t, "away_name": a_t}
-            if MIN_ODD_TO_ANALYZE <= avg_h <= MAX_ODD_TO_ANALYZE and var_h <= MAX_VARIANCE:
-                all_picks.append({**common, "team": h_t, "odd": avg_h, "picked": h_t})
-            elif MIN_ODD_TO_ANALYZE <= avg_a <= MAX_ODD_TO_ANALYZE and var_a <= MAX_VARIANCE:
-                all_picks.append({**common, "team": a_t, "odd": avg_a, "picked": a_t})
+            pick = None
+            if MIN_SINGLE_ODD <= avg_h <= MAX_SINGLE_ODD and var_h <= MAX_VARIANCE:
+                pick = {"team": h_t, "odd": avg_h, "picked": h_t}
+            elif MIN_SINGLE_ODD <= avg_a <= MAX_SINGLE_ODD and var_a <= MAX_VARIANCE:
+                pick = {"team": a_t, "odd": avg_a, "picked": a_t}
 
-    # --- PODZIAŁ HYBRYDOWY ---
-    # 1. Wyślij Single (kurs >= 1.70)
-    singles = [p for p in all_picks if p['odd'] >= SINGLE_THRESHOLD]
-    for s in singles:
-        match_time = (s["date"] + timedelta(hours=1)).strftime('%d.%m %H:%M')
-        win = round(STAKE_SINGLE * TAX_RATE * s['odd'], 2)
-        msg = (f"🎯 *SINGLE*\n━━━━━━━━━━━━━━━━━━━━\n🏟️ `{s['home_name']} vs {s['away_name']}`\n✅ Typ: `{s['picked']}`\n🏆 {s['league']}\n📅 `{match_time}` | 📈 `{s['odd']:.2f}`\n━━━━━━━━━━━━━━━━━━━━\n💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win} PLN`")
-        send_msg(msg)
-        coupons_db.append({"status": "pending", "stake": STAKE_SINGLE, "win_val": win, "end_time": s["date"].isoformat(), "matches": [{"id": s["id"], "picked": s["picked"], "sport_key": s["key"]}]})
-        all_picks = [p for p in all_picks if p['id'] != s['id']]
-
-    # 2. Wyślij Double z reszty (kursy 1.35 - 1.69)
-    all_picks.sort(key=lambda x: x['date'])
-    while len(all_picks) >= 2:
-        p1 = all_picks.pop(0)
-        p2_idx = next((i for i, x in enumerate(all_picks) if x['league'] != p1['league']), -1)
-        if p2_idx == -1: break
-        p2 = all_picks.pop(p2_idx)
-        ako, win = round(p1['odd'] * p2['odd'], 2), round(STAKE_STANDARD * TAX_RATE * (p1['odd'] * p2['odd']), 2)
-        msg = (f"🚀 *DOUBLE (AKO)*\n━━━━━━━━━━━━━━━━━━━━\n1️⃣ `{p1['home_name']} vs {p1['away_name']}`\n   ✅ `{p1['picked']}` | `{p1['odd']:.2f}`\n   🏆 {p1['league']}\n\n2️⃣ `{p2['home_name']} vs {p2['away_name']}`\n   ✅ `{p2['picked']}` | `{p2['odd']:.2f}`\n   🏆 {p2['league']}\n━━━━━━━━━━━━━━━━━━━━\n📊 AKO: `{ako:.2f}` | 💰 Wygrana: `{win} PLN`")
-        send_msg(msg)
-        coupons_db.append({"status": "pending", "stake": STAKE_STANDARD, "win_val": win, "end_time": max(p1["date"], p2["date"]).isoformat(), "matches": [{"id": p1["id"], "picked": p1["picked"], "sport_key": p1["key"]}, {"id": p2["id"], "picked": p2["picked"], "sport_key": p2["key"]}]})
+            if pick:
+                match_time = (m_dt_utc + timedelta(hours=1)).strftime('%d.%m %H:%M')
+                win = round(STAKE_SINGLE * TAX_RATE * pick['odd'], 2)
+                
+                msg = (f"🎯 *SINGLE*\n"
+                       f"━━━━━━━━━━━━━━━━━━━━\n"
+                       f"🏟️ `{h_t} vs {a_t}`\n"
+                       f"✅ Typ: `{pick['picked']}`\n"
+                       f"🏆 {league_label}\n"
+                       f"📅 `{match_time}` | 📈 `{pick['odd']:.2f}`\n"
+                       f"━━━━━━━━━━━━━━━━━━━━\n"
+                       f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win} PLN`")
+                
+                send_msg(msg)
+                coupons_db.append({
+                    "status": "pending", 
+                    "stake": STAKE_SINGLE, 
+                    "win_val": win, 
+                    "end_time": m_dt_utc.isoformat(), 
+                    "matches": [{"id": m["id"], "picked": pick["picked"], "sport_key": sport_key}]
+                })
+                sent_ids.append(m["id"])
     
     save_coupons(coupons_db)
     if now_utc.hour == 8: send_daily_report()
