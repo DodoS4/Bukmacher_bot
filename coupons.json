@@ -36,7 +36,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 50.0,
         "win_val": 145.17,
         "end_time": "2026-01-03T12:30:00+00:00",
@@ -54,7 +54,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 50.0,
         "win_val": 119.05,
         "end_time": "2026-01-03T11:30:00+00:00",
@@ -144,7 +144,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 50.0,
         "win_val": 120.34,
         "end_time": "2026-01-03T13:00:00+00:00",
