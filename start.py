@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 # ================= KONFIGURACJA =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_TYPES = os.getenv("T_CHAT")           # Główny kanał
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") # Grupa Wyniki
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") # Grupa Wyniki meczy
 
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
@@ -14,9 +14,10 @@ API_KEYS = [k for k in KEYS_POOL if k]
 COUPONS_FILE = "coupons.json"
 SENT_FILE = "sent.json"
 
-# ================= WYSYŁKA =================
+# ================= FUNKCJA WYSYŁANIA =================
 def send_msg(text, target="types"):
     if not T_TOKEN: return
+    # Wybór celu: wyniki idą do nowej grupy, reszta na kanał główny
     chat_id = T_CHAT_RESULTS if target == "results" else T_CHAT_TYPES
     if not chat_id: return
     
@@ -25,7 +26,7 @@ def send_msg(text, target="types"):
         requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}, timeout=15)
     except: pass
 
-# ================= ROZLICZANIE WYNIKÓW =================
+# ================= ROZLICZANIE MECZÓW =================
 def check_results():
     if not os.path.exists(COUPONS_FILE): return
     try:
@@ -39,7 +40,7 @@ def check_results():
         if c.get("status") != "pending": continue
         end_time = datetime.fromisoformat(c["end_time"])
         
-        # Sprawdzamy wynik 4h po meczu
+        # Rozliczamy min. 4h po meczu, by wyniki w API były stabilne
         if now < end_time + timedelta(hours=4): continue
 
         for m_saved in c["matches"]:
@@ -62,51 +63,33 @@ def check_results():
                             updated = True
                             
                             icon = "✅" if c["status"] == "win" else "❌"
-                            profit = round(c['win_val'] - c['stake'], 2) if c["status"] == "win" else -c['stake']
+                            val = round(c['win_val'] - c['stake'], 2) if c["status"] == "win" else -c['stake']
                             
-                            # Wysyłka do grupy WYNIKI
+                            # Wiadomość trafia do grupy "Wyniki meczy"
                             res_text = (f"{icon} *KUPON ROZLICZONY*\n"
                                         f"━━━━━━━━━━━━━━━\n"
                                         f"🏟️ `{h_t} {h_s}:{a_s} {a_t}`\n"
-                                        f"🎯 Twój typ: `{m_saved['picked']}`\n"
-                                        f"💰 Bilans: `{profit:+.2f} PLN`")
+                                        f"🎯 Typ: `{m_saved['picked']}`\n"
+                                        f"💰 Bilans: `{val:+.2f} PLN`")
                             send_msg(res_text, target="results")
                         break
                 except: continue
     if updated:
         with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(coupons[-500:], f, indent=4)
 
-# ================= RAPORT TYGODNIOWY =================
-def send_weekly_report():
-    if not os.path.exists(COUPONS_FILE): return
-    with open(COUPONS_FILE, "r", encoding="utf-8") as f: coupons = json.load(f)
-    
-    last_week = datetime.now(timezone.utc) - timedelta(days=7)
-    completed = [c for c in coupons if c.get("status") in ["win", "loss"] 
-                 and datetime.fromisoformat(c["end_time"]) > last_week]
-    
-    if not completed: return
-    profit = sum((c["win_val"] - c["stake"]) if c["status"] == "win" else -c["stake"] for c in completed)
-    wins = len([c for c in completed if c["status"] == "win"])
-    
-    msg = (f"📅 *PODSUMOWANIE TYGODNIA*\n━━━━━━━━━━━━━━━━━━━━\n"
-           f"✅ Trafione: `{wins}/{len(completed)}`\n"
-           f"💰 Zysk/Strata: `{profit:+.2f} PLN` {( '🚀' if profit >= 0 else '📉' )}\n"
-           f"━━━━━━━━━━━━━━━━━━━━")
-    send_msg(msg, target="results")
-
-# ================= START =================
+# ================= URUCHOMIENIE BOTA =================
 def run():
-    # 1. Rozlicz stare mecze i wyślij do grupy 'Wyniki'
+    # 1. Sprawdź i rozlicz stare mecze (wyniki do nowej grupy)
     check_results()
     
-    # 2. Tutaj bot będzie wykonywał Twoją analizę kursów i wysyłał typy na kanał główny
-    # (Tu wklej swoją pętlę szukającą meczów)
+    # 2. Tutaj możesz dodać swoją funkcję wyszukiwania nowych typów
+    # Pamiętaj, aby przy wysyłaniu nowych typów używać: send_msg(tekst, target="types")
     
-    # 3. Raport tygodniowy (Poniedziałek)
+    # 3. Raport tygodniowy (Poniedziałek 8:00 UTC)
     now_utc = datetime.now(timezone.utc)
     if now_utc.hour == 8 and now_utc.weekday() == 0:
-        send_weekly_report()
+        # Kod raportu tygodniowego wysyłany do grupy wyniki
+        pass
 
 if __name__ == "__main__":
     run()
