@@ -473,5 +473,31 @@
                 "sport_key": "basketball_nba"
             }
         ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 114.55,
+        "end_time": "2026-01-04T00:40:00+00:00",
+        "matches": [
+            {
+                "id": "37cc8f43c363f1d128d628902c096c2e",
+                "picked": "Toronto Raptors",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 113.75,
+        "end_time": "2026-01-04T00:40:00+00:00",
+        "matches": [
+            {
+                "id": "a2d14bdf31312a6dc0ff70ca56894e69",
+                "picked": "New York Knicks",
+                "sport_key": "basketball_nba"
+            }
+        ]
     }
 ]
