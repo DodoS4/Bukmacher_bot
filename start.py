@@ -5,8 +5,8 @@ from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA =================
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT_TYPES = os.getenv("T_CHAT")           
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") 
+T_CHAT_TYPES = os.getenv("T_CHAT")           # Główny kanał na typy
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") # Grupa na wyniki
 
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
@@ -15,7 +15,7 @@ STAKE_SINGLE = 80.0
 TAX_RATE = 0.88
 COUPONS_FILE = "coupons.json"
 
-# Konfiguracja lig
+# Konfiguracja lig - Priorytet dla stabilnych rynków
 SPORTS = {
     "soccer_epl": "⚽ EPL", 
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -47,14 +47,17 @@ def send_msg(text, target="types"):
         requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}, timeout=15)
     except: pass
 
-# ================= SZUKANIE TYPÓW (MAX 48H DO PRZODU) =================
+# ================= SELEKCJA NAJLEPSZYCH OKAZJI =================
 
 def find_new_bets():
+    print("--- SZUKAM NAJLEPSZYCH OKAZJI (TOP 5) ---")
     coupons = load_data(COUPONS_FILE)
     sent_ids = [m["id"] for c in coupons for m in c["matches"]]
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48) # Filtr 48h
     
+    potential_bets = []
+
     for sport_key, league_label in SPORTS.items():
         for key in API_KEYS:
             try:
@@ -65,55 +68,70 @@ def find_new_bets():
                 
                 for ev in events:
                     if ev["id"] in sent_ids: continue
-                    
-                    # Sprawdzenie czy mecz jest w ciągu najbliższych 48h
                     commence_time = datetime.fromisoformat(ev['commence_time'].replace('Z', '+00:00'))
-                    if commence_time > max_future:
-                        continue # Pomiń mecze zaplanowane na później niż 48h
+                    if commence_time > max_future: continue
                     
                     for bookie in ev.get("bookmakers", []):
                         if bookie['key'] in ['pinnacle', 'betfair_ex']: continue
-                        
                         market = bookie.get("markets", [{}])[0]
                         for outcome in market.get("outcomes", []):
                             price = outcome['price']
                             
-                            if 1.55 <= price <= 2.50:
-                                win_val = round(STAKE_SINGLE * price * TAX_RATE, 2)
-                                date_str = commence_time.strftime("%d.%m %H:%M")
-
-                                # WYGLĄD IDENTYCZNY ZE ZDJĘCIEM
-                                msg = (
-                                    f"🎯 *SINGLE*\n"
-                                    f"━━━━━━━━━━━━━━━\n"
-                                    f"🏟️ `{ev['home_team']} vs {ev['away_team']}`\n"
-                                    f"✅ Typ: *{outcome['name']}*\n"
-                                    f"🏆 {league_label}\n"
-                                    f"📅 {date_str} | 📈 {price:.2f}\n"
-                                    f"━━━━━━━━━━━━━━━\n"
-                                    f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win_val} PLN`"
-                                )
-                                
-                                send_msg(msg, target="types")
-                                
-                                coupons.append({
-                                    "id": ev["id"],
-                                    "status": "pending",
-                                    "stake": STAKE_SINGLE,
-                                    "win_val": win_val,
-                                    "end_time": ev["commence_time"],
-                                    "matches": [{"id": ev["id"], "sport_key": sport_key, "picked": outcome['name']}]
+                            # FILTR NAJLEPSZYCH OKAZJI: 1.60 - 2.10
+                            if 1.60 <= price <= 2.10:
+                                potential_bets.append({
+                                    "ev": ev,
+                                    "outcome": outcome,
+                                    "price": price,
+                                    "league": league_label,
+                                    "sport_key": sport_key,
+                                    "commence_time": commence_time
                                 })
-                                sent_ids.append(ev["id"])
-                                break
-                        if ev["id"] in sent_ids: break
                 break
             except: continue
+
+    # SORTOWANIE: Najpierw mecze, które zaczną się najszybciej
+    potential_bets.sort(key=lambda x: x['commence_time'])
+    
+    # WYBÓR MAKSYMALNIE 5 NAJLEPSZYCH TYPÓW
+    top_bets = potential_bets[:5] 
+
+    for bet in top_bets:
+        ev, outcome, price = bet['ev'], bet['outcome'], bet['price']
+        win_val = round(STAKE_SINGLE * price * TAX_RATE, 2)
+        date_str = bet['commence_time'].strftime("%d.%m %H:%M")
+
+        # FORMATOWANIE IDENTYCZNE ZE ZDJĘCIEM
+        msg = (
+            f"⭐️ *TOP OKAZJA DNIA*\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"🏟️ `{ev['home_team']} vs {ev['away_team']}`\n"
+            f"✅ Typ: *{outcome['name']}*\n"
+            f"🏆 {bet['league']}\n"
+            f"📅 {date_str} | 📈 {price:.2f}\n"
+            f"━━━━━━━━━━━━━━━\n"
+            f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win_val} PLN`"
+        )
+        
+        send_msg(msg, target="types")
+        
+        coupons.append({
+            "id": ev["id"],
+            "status": "pending",
+            "stake": STAKE_SINGLE,
+            "win_val": win_val,
+            "end_time": ev["commence_time"],
+            "matches": [{"id": ev["id"], "sport_key": bet['sport_key'], "picked": outcome['name']}]
+        })
+        sent_ids.append(ev["id"])
+
     save_data(COUPONS_FILE, coupons)
+    print(f"Zakończono. Wysłano {len(top_bets)} okazji.")
 
 # ================= ROZLICZANIE WYNIKÓW =================
 
 def check_results():
+    print("--- ROZLICZAM MECZE ---")
     coupons = load_data(COUPONS_FILE)
     updated = False
     now = datetime.now(timezone.utc)
@@ -121,6 +139,8 @@ def check_results():
     for c in coupons:
         if c.get("status") != "pending": continue
         end_time = datetime.fromisoformat(c["end_time"].replace("Z", "+00:00"))
+        
+        # Rozliczenie 4h po meczu
         if now < end_time + timedelta(hours=4): continue
 
         for m in c["matches"]:
@@ -144,7 +164,9 @@ def check_results():
                         icon = "✅" if c["status"] == "win" else "❌"
                         profit = round(c['win_val'] - c['stake'], 2) if c["status"] == "win" else -c['stake']
                         
-                        res_msg = (f"{icon} *ROZLICZENIE*\n"
+                        # Wiadomość do grupy Wyniki
+                        res_msg = (f"{icon} *WYNIK MECZU*\n"
+                                   f"━━━━━━━━━━━━━━━\n"
                                    f"🏟️ `{h_t} {h_s}:{a_s} {a_t}`\n"
                                    f"🎯 Typ: `{m['picked']}`\n"
                                    f"💰 Bilans: `{profit:+.2f} PLN`")
@@ -153,11 +175,11 @@ def check_results():
                 except: continue
     if updated: save_data(COUPONS_FILE, coupons)
 
-# ================= URUCHOMIENIE =================
+# ================= START =================
 
 def run():
-    check_results()
-    find_new_bets()
+    check_results()   # Najpierw sprząta i rozlicza wyniki
+    find_new_bets()   # Potem szuka świeżych okazji
 
 if __name__ == "__main__":
     run()
