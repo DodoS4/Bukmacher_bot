@@ -423,7 +423,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 80.0,
         "win_val": 154.27,
         "end_time": "2026-01-03T15:30:00+00:00",
