@@ -1,6 +1,6 @@
 [
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 163.21,
         "end_time": "2026-01-03T14:00:00+00:00",
