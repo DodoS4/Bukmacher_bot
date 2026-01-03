@@ -72,10 +72,10 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 50.0,
         "win_val": 93.18,
-        "end_time": "2026-01-03T15:00:00+00:00",
+        "end_time": "2026-01-03T19:22:58.688130+00:00",
         "matches": [
             {
                 "id": "77e2a1a9c947b7a77dcd8bfd70e3c4af",
