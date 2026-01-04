@@ -8,20 +8,22 @@ T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_TYPES = os.getenv("T_CHAT")           
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") 
 
+# Pobieranie 5 kluczy API
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-STAKE_SINGLE = 80.0
-TAX_RATE = 0.88
+STAKE_SINGLE = 40.0  # Bezpieczniejsza stawka przy dużej ilości typów
+TAX_RATE = 0.88      # Uwzględnienie polskiego podatku 12%
 COUPONS_FILE = "coupons.json"
 
+# Zaktualizowana lista lig (NBA zamiast LM)
 SPORTS = {
     "soccer_epl": "⚽ EPL", 
     "soccer_spain_la_liga": "⚽ LA LIGA",
     "soccer_germany_bundesliga": "⚽ BUNDESLIGA", 
     "soccer_italy_serie_a": "⚽ SERIE A",
     "soccer_france_ligue_one": "⚽ LIGUE 1",
-    "soccer_uefa_champs_league": "⚽ LIGA MISTRZÓW",
+    "basketball_nba": "🏀 NBA",
     "soccer_netherlands_eredivisie": "⚽ EREDIVISIE",
     "soccer_portugal_primeira_liga": "⚽ LIGA PORTUGAL"
 }
@@ -46,7 +48,7 @@ def send_msg(text, target="types"):
     try: requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}, timeout=15)
     except: pass
 
-# ================= STATYSTYKI (DZIENNE I TYGODNIOWE) =================
+# ================= STATYSTYKI =================
 
 def send_summary(days=1):
     coupons = load_data(COUPONS_FILE)
@@ -92,43 +94,80 @@ def send_summary(days=1):
         )
         send_msg(msg, target="results")
 
-# ================= SELEKCJA I ROZLICZANIE =================
+# ================= SELEKCJA Z LOGIKĄ VALUE =================
 
 def find_new_bets():
     coupons = load_data(COUPONS_FILE)
     sent_ids = [m["id"] for c in coupons for m in c["matches"]]
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
-    unique_matches = {}
+    
+    potential_bets = []
 
     for sport_key, league_label in SPORTS.items():
+        success = False
+        # Rotacja 5 kluczy API
         for key in API_KEYS:
+            if success: break
             try:
                 r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/", 
                                params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=15)
+                
+                if r.status_code == 429: continue # Klucz wyczerpany, bierzemy następny
                 if r.status_code != 200: continue
-                for ev in r.json():
+                
+                events = r.json()
+                success = True # Pomyślnie pobrano dane dla tej ligi
+
+                for ev in events:
                     if ev["id"] in sent_ids: continue
-                    commence_time = datetime.fromisoformat(ev['commence_time'].replace('Z', '+00:00'))
-                    if commence_time > max_future: continue
+                    
+                    # Znajdź kurs odniesienia na Betfair Exchange
+                    betfair_odds = {}
+                    for b in ev.get("bookmakers", []):
+                        if b['key'] == 'betfair_ex':
+                            for outcome in b['markets'][0]['outcomes']:
+                                betfair_odds[outcome['name']] = outcome['price']
+
+                    # Szukanie Value u polskich bukmacherów
                     for bookie in ev.get("bookmakers", []):
-                        if bookie['key'] in ['pinnacle', 'betfair_ex']: continue
-                        for outcome in bookie.get("markets", [{}])[0].get("outcomes", []):
-                            price = outcome['price']
-                            if 1.60 <= price <= 2.10:
-                                if ev["id"] not in unique_matches or price > unique_matches[ev["id"]]['price']:
-                                    unique_matches[ev["id"]] = {"ev": ev, "outcome": outcome, "price": price, "league": league_label, "sport_key": sport_key, "commence_time": commence_time}
-                break
+                        if bookie['key'] in ['pinnacle', 'betfair_ex', 'matchbook']: continue
+                        
+                        for outcome in bookie['markets'][0]['outcomes']:
+                            local_price = outcome['price']
+                            o_name = outcome['name']
+                            fair_price = betfair_odds.get(o_name)
+                            
+                            # Filtrujemy kursy (2.10 - 2.80) i sprawdzamy Value
+                            if fair_price and 2.10 <= local_price <= 2.80:
+                                # Czy po podatku wciąż zarabiamy więcej niż na giełdzie (+3% marginesu)
+                                if (local_price * TAX_RATE) > (fair_price * 1.03):
+                                    val_pct = round(((local_price * TAX_RATE) / fair_price - 1) * 100, 2)
+                                    
+                                    potential_bets.append({
+                                        "ev": ev, "outcome": outcome, "price": local_price, 
+                                        "value": val_pct, "league": league_label, "sport_key": sport_key, 
+                                        "commence_time": datetime.fromisoformat(ev['commence_time'].replace('Z', '+00:00'))
+                                    })
             except: continue
 
-    potential_bets = sorted(unique_matches.values(), key=lambda x: x['commence_time'])
-    for bet in potential_bets[:5]:
+    # Sortowanie po największym Value i wysyłka wszystkich okazji
+    potential_bets = sorted(potential_bets, key=lambda x: x['value'], reverse=True)
+    
+    for bet in potential_bets:
         win_val = round(STAKE_SINGLE * bet['price'] * TAX_RATE, 2)
-        msg = (f"⭐ *TOP OKAZJA DNIA*\n━━━━━━━━━━━━━━━\n🏟️ `{bet['ev']['home_team']} vs {bet['ev']['away_team']}`\n"
-               f"✅ Typ: *{bet['outcome']['name']}*\n🏆 {bet['league']}\n📅 {bet['commence_time'].strftime('%d.%m %H:%M')} | 📈 {bet['price']:.2f}\n"
-               f"━━━━━━━━━━━━━━━\n💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win_val} PLN`")
+        msg = (f"💎 *VALUE DETECTED (+{bet['value']}% )*\n"
+               f"━━━━━━━━━━━━━━━\n"
+               f"🏟️ `{bet['ev']['home_team']} vs {bet['ev']['away_team']}`\n"
+               f"✅ Typ: *{bet['outcome']['name']}*\n"
+               f"🏆 {bet['league']}\n"
+               f"📅 {bet['commence_time'].strftime('%d.%m %H:%M')} | 📈 Kurs: {bet['price']:.2f}\n"
+               f"━━━━━━━━━━━━━━━\n"
+               f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win_val} PLN`")
+        
         send_msg(msg, target="types")
         coupons.append({"id": bet['ev']["id"], "status": "pending", "stake": STAKE_SINGLE, "win_val": win_val, "end_time": bet['ev']["commence_time"], "matches": [{"id": bet['ev']["id"], "sport_key": bet['sport_key'], "picked": bet['outcome']['name']}]})
+    
     save_data(COUPONS_FILE, coupons)
 
 def check_results():
@@ -137,6 +176,7 @@ def check_results():
     now = datetime.now(timezone.utc)
     for c in coupons:
         if c.get("status") != "pending": continue
+        # Rozliczamy 4h po rozpoczęciu
         if now < datetime.fromisoformat(c["end_time"].replace("Z", "+00:00")) + timedelta(hours=4): continue
         for m in c["matches"]:
             for key in API_KEYS:
@@ -161,14 +201,10 @@ def check_results():
 def run():
     check_results()
     find_new_bets()
-    
     now = datetime.now(timezone.utc)
-    # Codzienny raport wieczorem
     if now.hour >= 20:
         send_summary(days=1)
-        # Dodatkowy raport tygodniowy w każdą niedzielę (weekday 6)
-        if now.weekday() == 6:
-            send_summary(days=7)
+        if now.weekday() == 6: send_summary(days=7)
 
 if __name__ == "__main__":
     run()
