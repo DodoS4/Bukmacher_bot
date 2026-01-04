@@ -100,36 +100,32 @@ def find_new_bets():
     coupons = load_data(COUPONS_FILE)
     sent_ids = [m["id"] for c in coupons for m in c["matches"]]
     now = datetime.now(timezone.utc)
-    max_future = now + timedelta(hours=48)
     
     potential_bets = []
 
     for sport_key, league_label in SPORTS.items():
         success = False
-        # Rotacja 5 kluczy API
         for key in API_KEYS:
             if success: break
             try:
                 r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/", 
                                params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=15)
                 
-                if r.status_code == 429: continue # Klucz wyczerpany, bierzemy następny
+                if r.status_code == 429: continue 
                 if r.status_code != 200: continue
                 
                 events = r.json()
-                success = True # Pomyślnie pobrano dane dla tej ligi
+                success = True 
 
                 for ev in events:
                     if ev["id"] in sent_ids: continue
                     
-                    # Znajdź kurs odniesienia na Betfair Exchange
                     betfair_odds = {}
                     for b in ev.get("bookmakers", []):
                         if b['key'] == 'betfair_ex':
                             for outcome in b['markets'][0]['outcomes']:
                                 betfair_odds[outcome['name']] = outcome['price']
 
-                    # Szukanie Value u polskich bukmacherów
                     for bookie in ev.get("bookmakers", []):
                         if bookie['key'] in ['pinnacle', 'betfair_ex', 'matchbook']: continue
                         
@@ -138,9 +134,7 @@ def find_new_bets():
                             o_name = outcome['name']
                             fair_price = betfair_odds.get(o_name)
                             
-                            # Filtrujemy kursy (2.10 - 2.80) i sprawdzamy Value
                             if fair_price and 2.10 <= local_price <= 2.80:
-                                # Czy po podatku wciąż zarabiamy więcej niż na giełdzie (+3% marginesu)
                                 if (local_price * TAX_RATE) > (fair_price * 1.03):
                                     val_pct = round(((local_price * TAX_RATE) / fair_price - 1) * 100, 2)
                                     
@@ -151,7 +145,6 @@ def find_new_bets():
                                     })
             except: continue
 
-    # Sortowanie po największym Value i wysyłka wszystkich okazji
     potential_bets = sorted(potential_bets, key=lambda x: x['value'], reverse=True)
     
     for bet in potential_bets:
@@ -166,7 +159,14 @@ def find_new_bets():
                f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win_val} PLN`")
         
         send_msg(msg, target="types")
-        coupons.append({"id": bet['ev']["id"], "status": "pending", "stake": STAKE_SINGLE, "win_val": win_val, "end_time": bet['ev']["commence_time"], "matches": [{"id": bet['ev']["id"], "sport_key": bet['sport_key'], "picked": bet['outcome']['name']}]})
+        coupons.append({
+            "id": bet['ev']["id"], 
+            "status": "pending", 
+            "stake": STAKE_SINGLE, 
+            "win_val": win_val, 
+            "end_time": bet['ev']["commence_time"], 
+            "matches": [{"id": bet['ev']["id"], "sport_key": bet['sport_key'], "picked": bet['outcome']['name']}]
+        })
     
     save_data(COUPONS_FILE, coupons)
 
@@ -176,7 +176,6 @@ def check_results():
     now = datetime.now(timezone.utc)
     for c in coupons:
         if c.get("status") != "pending": continue
-        # Rozliczamy 4h po rozpoczęciu
         if now < datetime.fromisoformat(c["end_time"].replace("Z", "+00:00")) + timedelta(hours=4): continue
         for m in c["matches"]:
             for key in API_KEYS:
