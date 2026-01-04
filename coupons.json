@@ -1,7 +1,7 @@
 [
     {
         "id": "2458cbd77b28efe6311a4819377e7ebe",
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 130.94,
         "end_time": "2026-01-04T13:00:00Z",
@@ -141,7 +141,7 @@
     },
     {
         "id": "765de6e3204e70fb923dec0163cf513a",
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 144.32,
         "end_time": "2026-01-04T12:30:00Z",
@@ -192,6 +192,48 @@
                 "id": "75131dbbad37561a657f719917a2bb73",
                 "sport_key": "soccer_portugal_primeira_liga",
                 "picked": "Famalic\u00e3o"
+            }
+        ]
+    },
+    {
+        "id": "fa7fe17e03f49aa86cbf75ac720f7ded",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 147.84,
+        "end_time": "2026-01-04T17:30:00Z",
+        "matches": [
+            {
+                "id": "fa7fe17e03f49aa86cbf75ac720f7ded",
+                "sport_key": "soccer_spain_la_liga",
+                "picked": "Mallorca"
+            }
+        ]
+    },
+    {
+        "id": "3ef452727d1dbb6295a27d1b76eab880",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 127.42,
+        "end_time": "2026-01-06T14:00:00Z",
+        "matches": [
+            {
+                "id": "3ef452727d1dbb6295a27d1b76eab880",
+                "sport_key": "soccer_italy_serie_a",
+                "picked": "Como"
+            }
+        ]
+    },
+    {
+        "id": "9314be4eb0a4f1a1094d4d19ce6f3658",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 129.54,
+        "end_time": "2026-01-06T17:00:00Z",
+        "matches": [
+            {
+                "id": "9314be4eb0a4f1a1094d4d19ce6f3658",
+                "sport_key": "soccer_italy_serie_a",
+                "picked": "AS Roma"
             }
         ]
     }
