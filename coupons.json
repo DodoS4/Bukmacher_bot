@@ -68,5 +68,75 @@
                 "picked": "Tottenham Hotspur"
             }
         ]
+    },
+    {
+        "id": "3441ba0b969c26e0d582fbac3c3c6c46",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 147.84,
+        "end_time": "2026-01-04T15:30:00Z",
+        "matches": [
+            {
+                "id": "3441ba0b969c26e0d582fbac3c3c6c46",
+                "sport_key": "soccer_portugal_primeira_liga",
+                "picked": "Rio Ave FC"
+            }
+        ]
+    },
+    {
+        "id": "32000299c7428556982002f99e48c66a",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 147.84,
+        "end_time": "2026-01-04T16:15:00Z",
+        "matches": [
+            {
+                "id": "32000299c7428556982002f99e48c66a",
+                "sport_key": "soccer_france_ligue_one",
+                "picked": "Le Havre"
+            }
+        ]
+    },
+    {
+        "id": "aca3bd59cfaba5ec17559d10df8d9917",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 137.98,
+        "end_time": "2026-01-04T16:15:00Z",
+        "matches": [
+            {
+                "id": "aca3bd59cfaba5ec17559d10df8d9917",
+                "sport_key": "soccer_france_ligue_one",
+                "picked": "Brest"
+            }
+        ]
+    },
+    {
+        "id": "55a5faa0107c5e1f842a7aaf57fd10b6",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 131.65,
+        "end_time": "2026-01-04T16:15:00Z",
+        "matches": [
+            {
+                "id": "55a5faa0107c5e1f842a7aaf57fd10b6",
+                "sport_key": "soccer_france_ligue_one",
+                "picked": "Lorient"
+            }
+        ]
+    },
+    {
+        "id": "3df0c39ee041a9f6aa78fa66ed05b38f",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 118.27,
+        "end_time": "2026-01-04T17:30:00Z",
+        "matches": [
+            {
+                "id": "3df0c39ee041a9f6aa78fa66ed05b38f",
+                "sport_key": "soccer_epl",
+                "picked": "Manchester City"
+            }
+        ]
     }
 ]
