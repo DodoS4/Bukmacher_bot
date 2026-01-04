@@ -138,5 +138,61 @@
                 "picked": "Manchester City"
             }
         ]
+    },
+    {
+        "id": "765de6e3204e70fb923dec0163cf513a",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 144.32,
+        "end_time": "2026-01-04T12:30:00Z",
+        "matches": [
+            {
+                "id": "765de6e3204e70fb923dec0163cf513a",
+                "sport_key": "soccer_epl",
+                "picked": "Draw"
+            }
+        ]
+    },
+    {
+        "id": "101e3ed874173cf19146ddc5b569500b",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 138.69,
+        "end_time": "2026-01-04T17:30:00Z",
+        "matches": [
+            {
+                "id": "101e3ed874173cf19146ddc5b569500b",
+                "sport_key": "soccer_spain_la_liga",
+                "picked": "Alav\u00e9s"
+            }
+        ]
+    },
+    {
+        "id": "87610f91e341dcfd2487d7609208b633",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 140.8,
+        "end_time": "2026-01-04T20:00:00Z",
+        "matches": [
+            {
+                "id": "87610f91e341dcfd2487d7609208b633",
+                "sport_key": "soccer_spain_la_liga",
+                "picked": "Atl\u00e9tico Madrid"
+            }
+        ]
+    },
+    {
+        "id": "75131dbbad37561a657f719917a2bb73",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 147.84,
+        "end_time": "2026-01-04T20:30:00Z",
+        "matches": [
+            {
+                "id": "75131dbbad37561a657f719917a2bb73",
+                "sport_key": "soccer_portugal_primeira_liga",
+                "picked": "Famalic\u00e3o"
+            }
+        ]
     }
 ]
