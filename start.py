@@ -19,13 +19,13 @@ KEYS_POOL = [
 API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
-DAILY_LIMIT = 30
+DAILY_LIMIT = 35
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
 # Filtry kursów
 MIN_ODDS = 2.00
-MAX_ODDS = 10.0
+MAX_ODDS = 7.0
 VALUE_THRESHOLD = 0.02 
 
 LEAGUES = [
