@@ -1,1 +1,503 @@
-[]
+[
+    {
+        "status": "loss",
+        "stake": 50.0,
+        "win_val": 163.21,
+        "end_time": "2026-01-03T14:00:00+00:00",
+        "matches": [
+            {
+                "id": "5df215c154156e2a4bd2cc8d916bc4cc",
+                "picked": "New Orleans Pelicans",
+                "sport_key": "basketball_nba"
+            },
+            {
+                "id": "204633cbc6f1aad036913e7380f74702",
+                "picked": "Sassuolo",
+                "sport_key": "soccer_italy_serie_a"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 154.92,
+        "end_time": "2026-01-03T20:05:00+00:00",
+        "matches": [
+            {
+                "id": "616bf5829bd49ea9c3150596515369ad",
+                "picked": "Genoa",
+                "sport_key": "soccer_italy_serie_a"
+            },
+            {
+                "id": "002dd130b61480a22861fa67dcbec408",
+                "picked": "Lille",
+                "sport_key": "soccer_france_ligue_one"
+            }
+        ]
+    },
+    {
+        "status": "win",
+        "stake": 50.0,
+        "win_val": 145.17,
+        "end_time": "2026-01-03T12:30:00+00:00",
+        "matches": [
+            {
+                "id": "c9320b0d64a9666de272ffa2fddb2c1a",
+                "picked": "Vit\u00f3ria SC",
+                "sport_key": "soccer_portugal_primeira_liga"
+            },
+            {
+                "id": "a40e631c634842e80f05ef44c374c45d",
+                "picked": "Aston Villa",
+                "sport_key": "soccer_epl"
+            }
+        ]
+    },
+    {
+        "status": "win",
+        "stake": 50.0,
+        "win_val": 119.05,
+        "end_time": "2026-01-03T11:30:00+00:00",
+        "matches": [
+            {
+                "id": "1910284c44dd8157621a1fdb5f9ddb38",
+                "picked": "Como",
+                "sport_key": "soccer_italy_serie_a"
+            },
+            {
+                "id": "b9704c30e60eabed676cce7dcc882497",
+                "picked": "Los Angeles Lakers",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "win",
+        "stake": 50.0,
+        "win_val": 93.18,
+        "end_time": "2026-01-03T19:22:58.688130+00:00",
+        "matches": [
+            {
+                "id": "77e2a1a9c947b7a77dcd8bfd70e3c4af",
+                "picked": "Brighton and Hove Albion",
+                "sport_key": "soccer_epl"
+            },
+            {
+                "id": "8471751b12ee2bd1516db17adb92e246",
+                "picked": "Milwaukee Bucks",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "loss",
+        "stake": 50.0,
+        "win_val": 125.63,
+        "end_time": "2026-01-03T00:10:00+00:00",
+        "matches": [
+            {
+                "id": "14bc31e6584046b79f90aa3d42877f07",
+                "picked": "Brooklyn Nets",
+                "sport_key": "basketball_nba"
+            },
+            {
+                "id": "c4a6fcc303c95fbd25352b5df36a283a",
+                "picked": "AC Milan",
+                "sport_key": "soccer_italy_serie_a"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 101.03,
+        "end_time": "2026-01-03T20:00:00+00:00",
+        "matches": [
+            {
+                "id": "e47132a3b5a35235ab8fea1dd64e2189",
+                "picked": "Barcelona",
+                "sport_key": "soccer_spain_la_liga"
+            },
+            {
+                "id": "c8a2140f30daa18b21cf7285846c782b",
+                "picked": "Orlando Magic",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 93.53,
+        "end_time": "2026-01-03T17:30:00+00:00",
+        "matches": [
+            {
+                "id": "fafed94acfa689bc28911f792f4f2969",
+                "picked": "Arsenal",
+                "sport_key": "soccer_epl"
+            },
+            {
+                "id": "706e1daf75bab9157bbec5f8da74c12d",
+                "picked": "Sporting Lisbon",
+                "sport_key": "soccer_portugal_primeira_liga"
+            }
+        ]
+    },
+    {
+        "status": "win",
+        "stake": 50.0,
+        "win_val": 120.34,
+        "end_time": "2026-01-03T13:00:00+00:00",
+        "matches": [
+            {
+                "id": "691cd767b631199392b972a4870d77fe",
+                "picked": "Celta Vigo",
+                "sport_key": "soccer_spain_la_liga"
+            },
+            {
+                "id": "260d8a4037ed37bae3a5ad3725c11906",
+                "picked": "San Antonio Spurs",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 158.42,
+        "end_time": "2026-01-04T17:30:00+00:00",
+        "matches": [
+            {
+                "id": "aca3bd59cfaba5ec17559d10df8d9917",
+                "picked": "Brest",
+                "sport_key": "soccer_france_ligue_one"
+            },
+            {
+                "id": "101e3ed874173cf19146ddc5b569500b",
+                "picked": "Alav\u00e9s",
+                "sport_key": "soccer_spain_la_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 143.25,
+        "end_time": "2026-01-04T15:00:00+00:00",
+        "matches": [
+            {
+                "id": "88e36c01b6995b8ce39bde84a2f90fff",
+                "picked": "Tottenham Hotspur",
+                "sport_key": "soccer_epl"
+            },
+            {
+                "id": "2458cbd77b28efe6311a4819377e7ebe",
+                "picked": "Sevilla",
+                "sport_key": "soccer_spain_la_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 137.0,
+        "end_time": "2026-01-04T16:15:00+00:00",
+        "matches": [
+            {
+                "id": "55a5faa0107c5e1f842a7aaf57fd10b6",
+                "picked": "Lorient",
+                "sport_key": "soccer_france_ligue_one"
+            },
+            {
+                "id": "fbcdf6d351b7db4c595b9f58def36613",
+                "picked": "Fiorentina",
+                "sport_key": "soccer_italy_serie_a"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 106.84,
+        "end_time": "2026-01-04T15:15:00+00:00",
+        "matches": [
+            {
+                "id": "33e174d56928e320b3fdbac2510a1003",
+                "picked": "Newcastle United",
+                "sport_key": "soccer_epl"
+            },
+            {
+                "id": "4cc9478826dabe3b58fd4d51d5efc3f6",
+                "picked": "Real Madrid",
+                "sport_key": "soccer_spain_la_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 97.83,
+        "end_time": "2026-01-04T17:30:00+00:00",
+        "matches": [
+            {
+                "id": "3df0c39ee041a9f6aa78fa66ed05b38f",
+                "picked": "Manchester City",
+                "sport_key": "soccer_epl"
+            },
+            {
+                "id": "8169427a266bd81487b2136378509cac",
+                "picked": "New York Knicks",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 120.4,
+        "end_time": "2026-01-04T20:00:00+00:00",
+        "matches": [
+            {
+                "id": "8b034e2eba4bb0170b1579ffcb2f0e65",
+                "picked": "Inter Milan",
+                "sport_key": "soccer_italy_serie_a"
+            },
+            {
+                "id": "87610f91e341dcfd2487d7609208b633",
+                "picked": "Atl\u00e9tico Madrid",
+                "sport_key": "soccer_spain_la_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 122.67,
+        "end_time": "2026-01-04T03:40:00+00:00",
+        "matches": [
+            {
+                "id": "951987d285edeebef57679583da56cba",
+                "picked": "Los Angeles Clippers",
+                "sport_key": "basketball_nba"
+            },
+            {
+                "id": "10c947b26a6a07bc5257cb52c7a9dcfc",
+                "picked": "Braga",
+                "sport_key": "soccer_portugal_primeira_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 50.0,
+        "win_val": 111.44,
+        "end_time": "2026-01-04T18:00:00+00:00",
+        "matches": [
+            {
+                "id": "fd9969a95c7308e171377cdc5445be4c",
+                "picked": "Chicago Bulls",
+                "sport_key": "basketball_nba"
+            },
+            {
+                "id": "86ec8347c98e1aa12b04b470581bf580",
+                "picked": "FC Porto",
+                "sport_key": "soccer_portugal_primeira_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 164.34,
+        "end_time": "2026-01-04T15:00:00+00:00",
+        "matches": [
+            {
+                "id": "b82564b1b4c38fbfa3d5a23213c33a0b",
+                "picked": "Everton",
+                "sport_key": "soccer_epl"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 139.96,
+        "end_time": "2026-01-04T15:00:00+00:00",
+        "matches": [
+            {
+                "id": "2cc637ccc2afe9fe4d335a36e9f3b284",
+                "picked": "Liverpool",
+                "sport_key": "soccer_epl"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 154.94,
+        "end_time": "2026-01-03T17:30:00+00:00",
+        "matches": [
+            {
+                "id": "5e1c0d22fcfa9000c6cee06383a7e6d6",
+                "picked": "Villarreal",
+                "sport_key": "soccer_spain_la_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 156.77,
+        "end_time": "2026-01-04T17:30:00+00:00",
+        "matches": [
+            {
+                "id": "fa7fe17e03f49aa86cbf75ac720f7ded",
+                "picked": "Mallorca",
+                "sport_key": "soccer_spain_la_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 162.96,
+        "end_time": "2026-01-03T19:45:00+00:00",
+        "matches": [
+            {
+                "id": "880d8a227739e3348f6fffe775054852",
+                "picked": "Atalanta BC",
+                "sport_key": "soccer_italy_serie_a"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 162.82,
+        "end_time": "2026-01-04T11:30:00+00:00",
+        "matches": [
+            {
+                "id": "e9eff9b9406b79de7d2fc06a6eb1bf4f",
+                "picked": "Napoli",
+                "sport_key": "soccer_italy_serie_a"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 146.35,
+        "end_time": "2026-01-03T16:00:00+00:00",
+        "matches": [
+            {
+                "id": "c70cf5875117320a2dc853b2f4c53f53",
+                "picked": "AS Monaco",
+                "sport_key": "soccer_france_ligue_one"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 157.78,
+        "end_time": "2026-01-03T18:00:00+00:00",
+        "matches": [
+            {
+                "id": "d1d3191d030fe0f7ff91ec1765b66b31",
+                "picked": "Strasbourg",
+                "sport_key": "soccer_france_ligue_one"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 146.66,
+        "end_time": "2026-01-04T16:15:00+00:00",
+        "matches": [
+            {
+                "id": "32000299c7428556982002f99e48c66a",
+                "picked": "Le Havre",
+                "sport_key": "soccer_france_ligue_one"
+            }
+        ]
+    },
+    {
+        "status": "win",
+        "stake": 80.0,
+        "win_val": 154.27,
+        "end_time": "2026-01-03T15:30:00+00:00",
+        "matches": [
+            {
+                "id": "53cefcd3661cb8cffe518716e60159f9",
+                "picked": "Tondela",
+                "sport_key": "soccer_portugal_primeira_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 150.82,
+        "end_time": "2026-01-03T20:30:00+00:00",
+        "matches": [
+            {
+                "id": "744f1dbe57459cd95d632919de187524",
+                "picked": "Moreirense FC",
+                "sport_key": "soccer_portugal_primeira_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 164.83,
+        "end_time": "2026-01-04T15:30:00+00:00",
+        "matches": [
+            {
+                "id": "3441ba0b969c26e0d582fbac3c3c6c46",
+                "picked": "Rio Ave FC",
+                "sport_key": "soccer_portugal_primeira_liga"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 149.75,
+        "end_time": "2026-01-03T22:10:00+00:00",
+        "matches": [
+            {
+                "id": "bf731d1bdca3b4b13794fb2cf636054d",
+                "picked": "Miami Heat",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 114.55,
+        "end_time": "2026-01-04T00:40:00+00:00",
+        "matches": [
+            {
+                "id": "37cc8f43c363f1d128d628902c096c2e",
+                "picked": "Toronto Raptors",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    },
+    {
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 113.75,
+        "end_time": "2026-01-04T00:40:00+00:00",
+        "matches": [
+            {
+                "id": "a2d14bdf31312a6dc0ff70ca56894e69",
+                "picked": "New York Knicks",
+                "sport_key": "basketball_nba"
+            }
+        ]
+    }
+]
