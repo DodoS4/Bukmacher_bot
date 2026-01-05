@@ -18,7 +18,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 154.92,
         "end_time": "2026-01-03T20:05:00+00:00",
@@ -108,7 +108,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 101.03,
         "end_time": "2026-01-03T20:00:00+00:00",
@@ -126,7 +126,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 93.53,
         "end_time": "2026-01-03T17:30:00+00:00",
@@ -162,7 +162,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 158.42,
         "end_time": "2026-01-04T17:30:00+00:00",
@@ -180,7 +180,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 143.25,
         "end_time": "2026-01-04T15:00:00+00:00",
@@ -198,7 +198,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 50.0,
         "win_val": 137.0,
         "end_time": "2026-01-04T16:15:00+00:00",
@@ -216,7 +216,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 50.0,
         "win_val": 106.84,
         "end_time": "2026-01-04T15:15:00+00:00",
@@ -234,7 +234,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 97.83,
         "end_time": "2026-01-04T17:30:00+00:00",
@@ -252,7 +252,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 120.4,
         "end_time": "2026-01-04T20:00:00+00:00",
@@ -270,7 +270,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 50.0,
         "win_val": 122.67,
         "end_time": "2026-01-04T03:40:00+00:00",
@@ -288,7 +288,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 50.0,
         "win_val": 111.44,
         "end_time": "2026-01-04T18:00:00+00:00",
@@ -306,7 +306,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 164.34,
         "end_time": "2026-01-04T15:00:00+00:00",
@@ -319,7 +319,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 139.96,
         "end_time": "2026-01-04T15:00:00+00:00",
@@ -332,7 +332,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 80.0,
         "win_val": 154.94,
         "end_time": "2026-01-03T17:30:00+00:00",
@@ -345,7 +345,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 156.77,
         "end_time": "2026-01-04T17:30:00+00:00",
@@ -358,7 +358,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 80.0,
         "win_val": 162.96,
         "end_time": "2026-01-03T19:45:00+00:00",
@@ -371,7 +371,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 80.0,
         "win_val": 162.82,
         "end_time": "2026-01-04T11:30:00+00:00",
@@ -384,7 +384,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 146.35,
         "end_time": "2026-01-03T16:00:00+00:00",
@@ -397,7 +397,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 157.78,
         "end_time": "2026-01-03T18:00:00+00:00",
@@ -410,7 +410,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 80.0,
         "win_val": 146.66,
         "end_time": "2026-01-04T16:15:00+00:00",
@@ -436,7 +436,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 80.0,
         "win_val": 150.82,
         "end_time": "2026-01-03T20:30:00+00:00",
@@ -449,7 +449,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 80.0,
         "win_val": 164.83,
         "end_time": "2026-01-04T15:30:00+00:00",
@@ -462,7 +462,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 149.75,
         "end_time": "2026-01-03T22:10:00+00:00",
@@ -475,7 +475,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "win",
         "stake": 80.0,
         "win_val": 114.55,
         "end_time": "2026-01-04T00:40:00+00:00",
@@ -488,7 +488,7 @@
         ]
     },
     {
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 113.75,
         "end_time": "2026-01-04T00:40:00+00:00",
