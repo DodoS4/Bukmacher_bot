@@ -26,7 +26,7 @@ MAX_HOURS_AHEAD = 48
 # Filtry kursów
 MIN_ODDS = 2.00
 MAX_ODDS = 10.0
-VALUE_THRESHOLD = 0.02 # 2% przewagi nad rynkiem
+VALUE_THRESHOLD = 0.02 
 
 LEAGUES = [
     "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a",
@@ -71,7 +71,6 @@ def fetch_real_team_forms():
         for api_key in API_KEYS:
             try:
                 url = f"https://api.the-odds-api.com/v4/sports/{league}/scores"
-                # Zwiększono do 14 dni dla lepszej statystyki
                 params = {"apiKey": api_key, "daysFrom": 14}
                 r = requests.get(url, params=params, timeout=15)
                 if r.status_code != 200: continue
@@ -146,27 +145,22 @@ def generate_pick(match):
     d_o = match["odds"].get("draw")
     if not h_o or not a_o: return None
 
-    # Fair probability
     raw_sum = (1/h_o + 1/a_o + (1/d_o if d_o else 0))
     p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
     p_d = ((1/d_o)/raw_sum) if d_o else 0
 
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
     
-    # Model wag: 85% rynek, 15% forma
     final_h = (0.15 * f_h) + (0.85 * p_h)
     final_a = (0.15 * f_a) + (0.85 * p_a)
     final_d = (0.15 * 0.5) + (0.85 * p_d) if d_o else -1
 
-    # Analiza Value dla opcji spełniających kurs min 2.0
     options = []
     if h_o >= MIN_ODDS: options.append({"sel": match["home"], "odds": h_o, "val": final_h - (1/h_o)})
     if a_o >= MIN_ODDS: options.append({"sel": match["away"], "odds": a_o, "val": final_a - (1/a_o)})
     if d_o and d_o >= MIN_ODDS: options.append({"sel": "Draw", "odds": d_o, "val": final_d - (1/d_o)})
 
     if not options: return None
-    
-    # Wybierz opcję z największym value
     best = max(options, key=lambda x: x['val'])
     
     if best['val'] < VALUE_THRESHOLD or best['odds'] > MAX_ODDS:
@@ -178,7 +172,7 @@ def simulate_offers():
     coupons = load_coupons()
     now = datetime.now(timezone.utc)
     for league in LEAGUES:
-        print(f"LIGA: {league}")
+        print(f"Sprawdzanie: {league}")
         matches = get_upcoming_matches(league)
         for m in matches:
             m_dt = parser.isoparse(m["commence_time"])
@@ -187,20 +181,24 @@ def simulate_offers():
 
             pick = generate_pick(m)
             if pick:
+                win_val = round(pick['odds'] * STAKE, 2)
                 new_c = {
                     "home": m["home"], "away": m["away"], "picked": pick["selection"],
                     "odds": pick["odds"], "stake": STAKE, "status": "pending",
-                    "date": m["commence_time"], "win_val": round(pick["odds"]*STAKE, 2), "league": league
+                    "date": m["commence_time"], "win_val": win_val, "league": league
                 }
                 coupons.append(new_c)
                 info = LEAGUE_INFO.get(league, {"name": league, "flag": "⚽"})
+                
+                # Dodano informację o możliwej wygranej (win_val)
                 text = (
                     f"{info['flag']} <b>NOWA OFERTA</b> ({info['name']})\n"
                     f"🏟️ {m['home']} vs {m['away']}\n"
-                    f"🕓 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n"
+                    f"🕓 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n"
                     f"✅ Typ: <b>{pick['selection']}</b>\n"
                     f"🎯 Kurs: <b>{pick['odds']}</b>\n"
-                    f"💰 Stawka: {STAKE} PLN"
+                    f"💵 Stawka: {STAKE} PLN\n"
+                    f"💰 <b>Możliwa wygrana: {win_val} PLN</b>"
                 )
                 send_msg(text)
     save_coupons(coupons)
@@ -241,11 +239,11 @@ def check_results():
 
 def run():
     global DYNAMIC_FORMS
-    print("Start...")
+    print("Start procesu...")
     DYNAMIC_FORMS = fetch_real_team_forms()
     simulate_offers()
     check_results()
-    print("Koniec.")
+    print("Zakończono.")
 
 if __name__ == "__main__":
     run()
