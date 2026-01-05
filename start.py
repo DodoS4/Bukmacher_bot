@@ -44,14 +44,14 @@ def send_msg(text, target="offers"):
 # ================= LOGIKA LIMITÓW =================
 def daily_limit_reached(coupons):
     today = datetime.now(timezone.utc).date().isoformat()
-    today_sent = [c for c in coupons if c["date"] == today]
+    today_sent = [c for c in coupons if c.get("date") == today]  # bezpieczne .get()
     return len(today_sent) >= MAX_DAILY_OFFERS
 
 def match_already_sent(coupons, match_id):
-    return any(c["match"]["id"] == match_id for c in coupons)
+    return any(c.get("match", {}).get("id") == match_id for c in coupons)
 
 # ================= TWORZENIE NOWEGO KUPONU =================
-def create_coupon(match, pick, stake=100):
+def create_coupon(match, pick, stake=5):   # domyślna stawka 5 PLN
     coupons = load_coupons()
 
     if daily_limit_reached(coupons):
@@ -91,11 +91,16 @@ def create_coupon(match, pick, stake=100):
     coupons.append(coupon)
     save_coupons(coupons)
 
-    # wysyłka do kanału ofert
+    # Format daty meczu
+    match_time = datetime.fromisoformat(match["start_time"])
+    match_str = match_time.strftime("%d-%m-%Y %H:%M UTC")
+
+    # Wiadomość do Telegrama z „zielonym typem”
     msg = (
-        f"🎯 *NOWA OFERTA*\n"
+        f"💚 *NOWA OFERTA*\n"
         f"🏟️ `{match['home']} vs {match['away']}`\n"
-        f"💡 Typ: `{pick['selection']}`\n"
+        f"📅 Data i godzina: `{match_str}`\n"
+        f"🎯 Typ: `{pick['selection']}`\n"
         f"📈 Kurs: `{pick['odds']}`\n"
         f"🔥 Value: `{value:.2f}`\n"
         f"💰 Potencjalna wygrana: `{coupon['win_val']} PLN`"
@@ -177,8 +182,8 @@ def send_weekly_report():
     send_msg(msg, target="results")
 
 # ================= SYMULACJA OFERT =================
-# Tu podajesz swoje mecze / typy / model probability
 def simulate_offers():
+    # Przykładowe mecze i typy
     matches = [
         {"id":"m1","sport_key":"soccer_epl","home":"Arsenal","away":"Chelsea","start_time":"2026-01-05T18:00:00+00:00"},
         {"id":"m2","sport_key":"soccer_epl","home":"Liverpool","away":"Man City","start_time":"2026-01-05T20:00:00+00:00"},
@@ -189,7 +194,7 @@ def simulate_offers():
     ]
 
     for m, p in zip(matches, picks):
-        create_coupon(m, p, stake=100)
+        create_coupon(m, p, stake=5)
 
 # ================= START =================
 def run():
