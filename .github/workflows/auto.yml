@@ -2,7 +2,8 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    - cron: '0 8,12,17,21 * * *'
+    # uruchamiaj co 4 godziny UTC
+    - cron: '0 0,4,8,12,16,20 * * *'
   workflow_dispatch:
 
 permissions:
