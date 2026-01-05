@@ -1,1 +1,68 @@
-[]
+[
+    {
+        "home": "Pisa",
+        "away": "Como",
+        "picked": "Pisa",
+        "odds": 4.9,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-06T14:00:00Z",
+        "win_val": 24.5,
+        "league": "soccer_italy_serie_a"
+    },
+    {
+        "home": "Lecce",
+        "away": "AS Roma",
+        "picked": "Lecce",
+        "odds": 5.4,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-06T17:00:00Z",
+        "win_val": 27.0,
+        "league": "soccer_italy_serie_a"
+    },
+    {
+        "home": "Sassuolo",
+        "away": "Juventus",
+        "picked": "Sassuolo",
+        "odds": 4.7,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-06T19:45:00Z",
+        "win_val": 23.5,
+        "league": "soccer_italy_serie_a"
+    },
+    {
+        "home": "Boston Celtics",
+        "away": "Chicago Bulls",
+        "picked": "Chicago Bulls",
+        "odds": 4.65,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-06T00:40:00Z",
+        "win_val": 23.25,
+        "league": "basketball_nba"
+    },
+    {
+        "home": "Oklahoma City Thunder",
+        "away": "Charlotte Hornets",
+        "picked": "Charlotte Hornets",
+        "odds": 8.54,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-06T01:10:00Z",
+        "win_val": 42.7,
+        "league": "basketball_nba"
+    },
+    {
+        "home": "Philadelphia 76ers",
+        "away": "Denver Nuggets",
+        "picked": "Denver Nuggets",
+        "odds": 5.2,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-06T01:40:00Z",
+        "win_val": 26.0,
+        "league": "basketball_nba"
+    }
+]
