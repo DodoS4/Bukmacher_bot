@@ -21,7 +21,7 @@ API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
 STAKE = 5.0
-MAX_HOURS_AHEAD = 48
+MAX_HOURS_AHEAD = 168  # 7 dni dla testów
 
 LEAGUES = [
     "soccer_epl",
@@ -92,71 +92,4 @@ def get_upcoming_matches(league):
     if not API_KEYS:
         print("❌ Brak kluczy ODDS_KEY w sekretach")
         return matches
-    for api_key in API_KEYS:
-        try:
-            url = f"https://api.the-odds-api.com/v4/sports/{league}/odds"
-            params = {"apiKey": api_key, "regions":"eu","markets":"h2h","oddsFormat":"decimal"}
-            r = requests.get(url, params=params, timeout=15)
-            if r.status_code != 200:
-                print(f"⚠️ Błąd API ({league}): {r.status_code}")
-                continue
-            data = r.json()
-            for event in data:
-                home = event["home_team"]
-                away = event["away_team"]
-                commence = event["commence_time"]
-                if event.get("bookmakers"):
-                    b = event["bookmakers"][0]
-                    h_odds = b["markets"][0]["outcomes"][0]["price"]
-                    a_odds = b["markets"][0]["outcomes"][1]["price"]
-                    matches.append({
-                        "home": home,
-                        "away": away,
-                        "odds": {"home": h_odds,"away": a_odds},
-                        "commence_time": commence
-                    })
-            if matches:
-                break
-        except Exception as e:
-            print(f"❌ Wyjątek przy pobieraniu meczów ({league}): {e}")
-            continue
-    print(f"ℹ️ Znaleziono {len(matches)} mecze w {league}")
-    return matches
-
-# ================= GENEROWANIE TYPU =================
-def generate_pick(match):
-    home = match["home"]
-    away = match["away"]
-    h_odds = match["odds"]["home"]
-    a_odds = match["odds"]["away"]
-
-    prob_home = random.uniform(0.4,0.6)
-    prob_away = 1 - prob_home
-
-    val_home = prob_home - 1/h_odds
-    val_away = prob_away - 1/a_odds
-
-    if val_home > 0 and val_home >= val_away:
-        return {"selection": home, "odds": h_odds, "date": match["commence_time"], "home": home, "away": away}
-    elif val_away > 0:
-        return {"selection": away, "odds": a_odds, "date": match["commence_time"], "home": home, "away": away}
-    return None
-
-# ================= GENERUJ OFERTY (TESTOWA WERSJA) =================
-def simulate_offers_test():
-    coupons = load_coupons()
-    now = datetime.now(timezone.utc)
-
-    for league in LEAGUES:
-        matches = get_upcoming_matches(league)
-        if not matches:
-            print(f"⚠️ Brak meczów do przetworzenia w {league}")
-            continue
-
-        for match in matches:
-            match_dt = parser.isoparse(match["commence_time"])
-            if match_dt < now or match_dt > now + timedelta(hours=MAX_HOURS_AHEAD):
-                print(f"⚠️ Mecz poza limitem czasu: {match['home']} vs {match['away']}")
-                continue
-
-            # Ignorujemy, czy me
+    for a
