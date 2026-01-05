@@ -1,1 +1,29 @@
-[]
+[
+    {
+        "event_id": "5e38fbb5e0a6277859816fe58cf76a1e",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 387.2,
+        "end_time": "2026-01-06T01:10:00Z",
+        "picked": "Charlotte Hornets",
+        "sport_key": "basketball_nba"
+    },
+    {
+        "event_id": "8e0209fcea74087227f0a490e9277381",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 225.28,
+        "end_time": "2026-01-06T01:40:00Z",
+        "picked": "Denver Nuggets",
+        "sport_key": "basketball_nba"
+    },
+    {
+        "event_id": "9314be4eb0a4f1a1094d4d19ce6f3658",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 218.24,
+        "end_time": "2026-01-06T17:00:00Z",
+        "picked": "Lecce",
+        "sport_key": "soccer_italy_serie_a"
+    }
+]
