@@ -64,5 +64,71 @@
         "date": "2026-01-06T01:40:00Z",
         "win_val": 26.0,
         "league": "basketball_nba"
+    },
+    {
+        "home": "Manchester City",
+        "away": "Brighton and Hove Albion",
+        "picked": "Brighton and Hove Albion",
+        "odds": 6.5,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T19:30:00Z",
+        "win_val": 32.5,
+        "league": "soccer_epl"
+    },
+    {
+        "home": "Everton",
+        "away": "Wolverhampton Wanderers",
+        "picked": "Wolverhampton Wanderers",
+        "odds": 4.5,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T19:30:00Z",
+        "win_val": 22.5,
+        "league": "soccer_epl"
+    },
+    {
+        "home": "Burnley",
+        "away": "Manchester United",
+        "picked": "Burnley",
+        "odds": 4.3,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T20:15:00Z",
+        "win_val": 21.5,
+        "league": "soccer_epl"
+    },
+    {
+        "home": "Newcastle United",
+        "away": "Leeds United",
+        "picked": "Leeds United",
+        "odds": 4.7,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T20:15:00Z",
+        "win_val": 23.5,
+        "league": "soccer_epl"
+    },
+    {
+        "home": "Napoli",
+        "away": "Hellas Verona",
+        "picked": "Hellas Verona",
+        "odds": 9.5,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T17:30:00Z",
+        "win_val": 47.5,
+        "league": "soccer_italy_serie_a"
+    },
+    {
+        "home": "Parma",
+        "away": "Inter Milan",
+        "picked": "Parma",
+        "odds": 7.0,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T19:45:00Z",
+        "win_val": 35.0,
+        "league": "soccer_italy_serie_a"
     }
 ]
