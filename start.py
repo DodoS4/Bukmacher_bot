@@ -19,19 +19,15 @@ KEYS_POOL = [
 API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
+FORMS_FILE = "forms_cache.json"
 DAILY_LIMIT = 20
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
 LEAGUES = [
-    "soccer_epl",
-    "soccer_spain_la_liga",
-    "soccer_italy_serie_a",
-    "soccer_germany_bundesliga",
-    "soccer_france_ligue_one",
-    "basketball_nba",
-    "soccer_netherlands_eredivisie",
-    "soccer_portugal_primeira_liga"
+    "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a",
+    "soccer_germany_bundesliga", "soccer_france_ligue_one",
+    "basketball_nba", "soccer_netherlands_eredivisie", "soccer_portugal_primeira_liga"
 ]
 
 LEAGUE_INFO = {
@@ -45,55 +41,74 @@ LEAGUE_INFO = {
     "soccer_portugal_primeira_liga": {"name": "Primeira Liga", "flag": "🇵🇹"},
 }
 
-# ================= PRZYKŁADOWA FORMA DRUŻYN =================
-TEAM_FORMS = {
-    "Manchester United": [1, 0.5, 1, 0, 1],
-    "Liverpool": [1, 1, 0, 1, 0.5],
-    "Real Madrid": [1, 1, 1, 0.5, 1],
-    "Barcelona": [1, 0.5, 0.5, 1, 1],
-}
+DYNAMIC_FORMS = {}
+
+# ================= DYNAMICZNA FORMA =================
+def fetch_real_team_forms():
+    new_forms = {}
+    for league in LEAGUES:
+        for api_key in API_KEYS:
+            try:
+                url = f"https://api.the-odds-api.com/v4/sports/{league}/scores"
+                params = {"apiKey": api_key, "daysFrom": 3}
+                r = requests.get(url, params=params, timeout=15)
+                if r.status_code != 200: continue
+                
+                data = r.json()
+                for match in data:
+                    if not match.get("completed") or not match.get("scores"): continue
+                    
+                    h_team, a_team = match["home_team"], match["away_team"]
+                    # Mapowanie wyników dla różnych formatów API
+                    scores = {s["name"]: int(s["score"]) for s in match["scores"]}
+                    h_score, a_score = scores.get(h_team, 0), scores.get(a_team, 0)
+
+                    if h_team not in new_forms: new_forms[h_team] = []
+                    if a_team not in new_forms: new_forms[a_team] = []
+
+                    if h_score > a_score:
+                        new_forms[h_team].append(1); new_forms[a_team].append(0)
+                    elif a_score > h_score:
+                        new_forms[h_team].append(0); new_forms[a_team].append(1)
+                    else:
+                        new_forms[h_team].append(0.5); new_forms[a_team].append(0.5)
+                break 
+            except: continue
+    return new_forms
 
 def get_team_form(team_name):
-    results = TEAM_FORMS.get(team_name, [0.5]*5)
-    return sum(results)/len(results)
+    results = DYNAMIC_FORMS.get(team_name, [])
+    return sum(results)/len(results) if results else 0.5
 
-# ================= NARZĘDZIE ESCAPE =================
+# ================= NARZĘDZIA I TELEGRAM =================
 def escape_md(text):
-    if not isinstance(text, str):
-        return text
-    return text.replace("_","\\_").replace("*","\\*").replace("[","\\[").replace("]","\\]").replace("`","\\`")
+    if not isinstance(text, str): return text
+    chars = ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!']
+    for char in chars:
+        text = text.replace(char, f"\\{char}")
+    return text
 
-# ================= WYSYŁKA =================
 def send_msg(text, target="types"):
     chat_id = T_CHAT_RESULTS if target=="results" else T_CHAT
-    if not T_TOKEN or not chat_id:
-        return
+    if not T_TOKEN or not chat_id: return
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
     try:
-        requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode":"Markdown"}, timeout=15)
-    except:
-        pass
+        requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode":"MarkdownV2"}, timeout=15)
+    except: pass
 
-# ================= COUPONS =================
+# ================= PLIKI =================
 def load_coupons():
     if os.path.exists(COUPONS_FILE):
         try:
-            with open(COUPONS_FILE,"r",encoding="utf-8") as f:
-                return json.load(f)
-        except:
-            return []
+            with open(COUPONS_FILE,"r",encoding="utf-8") as f: return json.load(f)
+        except: return []
     return []
 
 def save_coupons(coupons):
     with open(COUPONS_FILE,"w",encoding="utf-8") as f:
         json.dump(coupons[-500:], f, indent=4)
 
-def daily_limit_reached(coupons):
-    today = datetime.now(timezone.utc).date().isoformat()
-    today_sent = [c for c in coupons if c.get("date","")[:10]==today]
-    return len(today_sent) >= DAILY_LIMIT
-
-# ================= POBIERANIE MECZÓW =================
+# ================= LOGIKA MECZÓW =================
 def get_upcoming_matches(league):
     matches = []
     for api_key in API_KEYS:
@@ -101,201 +116,143 @@ def get_upcoming_matches(league):
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds"
             params = {"apiKey": api_key, "regions":"eu","markets":"h2h","oddsFormat":"decimal"}
             r = requests.get(url, params=params, timeout=15)
-            if r.status_code != 200:
-                continue
+            if r.status_code != 200: continue
+            
             data = r.json()
             for event in data:
-                home = event["home_team"]
-                away = event["away_team"]
-                commence = event["commence_time"]
-                if event.get("bookmakers"):
-                    b = event["bookmakers"][0]
-                    outcomes = b["markets"][0]["outcomes"]
-                    draw_odds = None
-                    for o in outcomes:
-                        if o["name"].lower() in ["draw","remis","rem"]:
-                            draw_odds = o["price"]
-                    h_odds = outcomes[0]["price"]
-                    a_odds = outcomes[1]["price"]
-                    matches.append({
-                        "home": home,
-                        "away": away,
-                        "odds": {"home": h_odds,"away": a_odds,"draw": draw_odds},
-                        "commence_time": commence
-                    })
-            if matches:
-                break
-        except:
-            continue
+                if not event.get("bookmakers"): continue
+                home, away = event["home_team"], event["away_team"]
+                outcomes = event["bookmakers"][0]["markets"][0]["outcomes"]
+                
+                h_odds = a_odds = d_odds = None
+                for o in outcomes:
+                    if o["name"] == home: h_odds = o["price"]
+                    elif o["name"] == away: a_odds = o["price"]
+                    else: d_odds = o["price"]
+
+                matches.append({
+                    "home": home, "away": away, "league": league,
+                    "odds": {"home": h_odds, "away": a_odds, "draw": d_odds},
+                    "commence_time": event["commence_time"]
+                })
+            if matches: break
+        except: continue
     return matches
 
-# ================= GENEROWANIE TYPU =================
 def generate_pick(match):
-    home = match["home"]
-    away = match["away"]
-    h_odds = match["odds"]["home"]
-    a_odds = match["odds"]["away"]
-    d_odds = match["odds"].get("draw", None)
+    h_odds, a_odds = match["odds"]["home"], match["odds"]["away"]
+    d_odds = match["odds"].get("draw")
 
-    home_form = get_team_form(home)
-    away_form = get_team_form(away)
+    # Obliczanie prawdopodobieństwa z kursów (implied probability)
+    raw_probs = [1/h_odds, 1/a_odds]
+    if d_odds: raw_probs.append(1/d_odds)
+    
+    total = sum(raw_probs)
+    p_h, p_a = (1/h_odds)/total, (1/a_odds)/total
+    p_d = ((1/d_odds)/total) if d_odds else 0
 
-    prob_home = 1 / h_odds
-    prob_away = 1 / a_odds
-    prob_draw = 1 / d_odds if d_odds else 0
+    # Korekta o formę (60% waga formy, 40% waga kursu)
+    f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
+    
+    final_h = (0.6 * f_h) + (0.4 * p_h)
+    final_a = (0.6 * f_a) + (0.4 * p_a)
+    final_d = (0.6 * 0.5) + (0.4 * p_d) if d_odds else -1
 
-    total = prob_home + prob_away + prob_draw
-    prob_home /= total
-    prob_away /= total
-    prob_draw /= total
+    # Szukanie Value
+    val_h, val_a = final_h - (1/h_odds), final_a - (1/a_odds)
+    val_d = (final_d - (1/d_odds)) if d_odds else -1
 
-    prob_home = 0.6*home_form + 0.4*prob_home
-    prob_away = 0.6*away_form + 0.4*prob_away
-    if d_odds:
-        prob_draw = 0.6*0.5 + 0.4*prob_draw
-    else:
-        prob_draw = -1
+    max_val = max(val_h, val_a, val_d)
+    if max_val <= 0.05: return None # Szukamy przewagi min. 5%
 
-    val_home = prob_home - 1/h_odds
-    val_away = prob_away - 1/a_odds
-    val_draw = prob_draw - 1/d_odds if d_odds else -1
+    if max_val == val_h: sel, odds = match["home"], h_odds
+    elif max_val == val_a: sel, odds = match["away"], a_odds
+    else: sel, odds = "Draw", d_odds
 
-    max_val = max(val_home, val_away, val_draw)
-    if max_val <= 0:
-        return None
+    return {"selection": sel, "odds": odds}
 
-    if max_val == val_home: selection = home
-    elif max_val == val_away: selection = away
-    else: selection = "draw"
-
-    return {
-        "selection": selection,
-        "odds": h_odds if selection==home else a_odds if selection==away else d_odds,
-        "date": match["commence_time"],
-        "home": home,
-        "away": away
-    }
-
-# ================= GENERUJ OFERTY =================
 def simulate_offers():
     coupons = load_coupons()
-    if daily_limit_reached(coupons):
+    if len([c for c in coupons if c.get("date","")[:10] == datetime.now(timezone.utc).date().isoformat()]) >= DAILY_LIMIT:
         return
 
     now = datetime.now(timezone.utc)
-
     for league in LEAGUES:
         matches = get_upcoming_matches(league)
-        if not matches:
-            continue
+        for m in matches:
+            m_dt = parser.isoparse(m["commence_time"])
+            if m_dt < now or m_dt > now + timedelta(hours=MAX_HOURS_AHEAD): continue
+            if any(c["home"] == m["home"] and c["away"] == m["away"] for c in coupons): continue
 
-        for match in matches:
-            match_dt = parser.isoparse(match["commence_time"])
-            if match_dt < now or match_dt > now + timedelta(hours=MAX_HOURS_AHEAD):
-                continue
-            if any(c["home"]==match["home"] and c["away"]==match["away"] for c in coupons):
-                continue
-
-            pick = generate_pick(match)
+            pick = generate_pick(m)
             if pick:
-                coupon = {
-                    "home": pick["home"],
-                    "away": pick["away"],
-                    "picked": pick["selection"],
-                    "odds": pick["odds"],
-                    "stake": STAKE,
-                    "status": "pending",
-                    "date": pick["date"],
-                    "win_val": round(pick["odds"]*STAKE,2),
-                    "league": league
+                new_c = {
+                    "home": m["home"], "away": m["away"], "picked": pick["selection"],
+                    "odds": pick["odds"], "stake": STAKE, "status": "pending",
+                    "date": m["commence_time"], "win_val": round(pick["odds"]*STAKE, 2), "league": league
                 }
-                coupons.append(coupon)
-
-                match_dt_str = match_dt.strftime("%d-%m-%Y %H:%M UTC")
-                league_info = LEAGUE_INFO.get(league, {"name": league, "flag": ""})
+                coupons.append(new_c)
+                info = LEAGUE_INFO.get(league, {"name": league, "flag": "⚽"})
                 text = (
-                    f"{league_info['flag']} *NOWA OFERTA* ({league_info['name']})\n"
-                    f"🏟️ {escape_md(pick['home'])} vs {escape_md(pick['away'])}\n"
-                    f"🕓 {match_dt_str}\n"
-                    f"✅ Twój typ: *{escape_md(pick['selection'])}*\n"
+                    f"{info['flag']} *NOWA OFERTA* \\({escape_md(info['name'])}\\)\n"
+                    f"🏟️ {escape_md(m['home'])} vs {escape_md(m['away'])}\n"
+                    f"🕓 {m_dt.strftime('%d\\-%m\\-%Y %H:%M')} UTC\n"
+                    f"✅ Typ: *{escape_md(pick['selection'])}*\n"
                     f"💰 Stawka: {STAKE} PLN\n"
                     f"🎯 Kurs: {pick['odds']}"
                 )
-                send_msg(text,target="types")
-
+                send_msg(text)
     save_coupons(coupons)
 
-# ================= POBIERANIE WYNIKU MECZU =================
-def get_match_result(match):
-    for api_key in API_KEYS:
-        try:
-            url = f"https://api.the-odds-api.com/v4/sports/soccer/scores"
-            params = {
-                "apiKey": api_key,
-                "date": match["date"][:10],
-                "teams": f"{match['home']},{match['away']}"
-            }
-            r = requests.get(url, params=params, timeout=15)
-            if r.status_code != 200:
-                continue
-            data = r.json()
-            for e in data:
-                if e["home_team"]==match["home"] and e["away_team"]==match["away"]:
-                    home_score = e.get("home_score")
-                    away_score = e.get("away_score")
-                    if home_score is None or away_score is None:
-                        return None
-                    if home_score > away_score:
-                        return "home"
-                    elif away_score > home_score:
-                        return "away"
-                    else:
-                        return "draw"
-        except:
-            continue
-    return None
-
-# ================= ROZLICZANIE =================
 def check_results():
     coupons = load_coupons()
     updated = False
     now = datetime.now(timezone.utc)
 
     for c in coupons:
-        if c.get("status") != "pending":
-            continue
+        if c.get("status") != "pending": continue
+        m_dt = parser.isoparse(c["date"])
+        if now < m_dt + timedelta(hours=4): continue
 
-        match_dt = parser.isoparse(c["date"])
-        if now < match_dt + timedelta(hours=4):
-            continue
+        for api_key in API_KEYS:
+            try:
+                url = f"https://api.the-odds-api.com/v4/sports/{c['league']}/scores"
+                params = {"apiKey": api_key, "daysFrom": 3}
+                r = requests.get(url, params=params, timeout=15)
+                if r.status_code != 200: continue
+                
+                match_data = next((e for e in r.json() if e["home_team"]==c["home"] and e["away_team"]==c["away"]), None)
+                if not match_data or not match_data.get("completed"): continue
 
-        result = get_match_result(c)
-        if result is None:
-            continue
+                scores = {s["name"]: int(s["score"]) for s in match_data["scores"]}
+                h_s, a_s = scores.get(c["home"], 0), scores.get(c["away"], 0)
+                
+                winner = c["home"] if h_s > a_s else c["away"] if a_s > h_s else "Draw"
+                c["status"] = "win" if winner == c["picked"] else "loss"
+                profit = round(c["win_val"] - c["stake"], 2) if c["status"] == "win" else -c["stake"]
+                
+                icon = "✅" if c["status"] == "win" else "❌"
+                text = (
+                    f"{icon} *KUPON ROZLICZONY*\n"
+                    f"🏟️ {escape_md(c['home'])} vs {escape_md(c['away'])}\n"
+                    f"🎯 Typ: {escape_md(c['picked'])}\n"
+                    f"💰 Bilans: {profit:+.2f} PLN"
+                )
+                send_msg(text, target="results")
+                updated = True
+                break
+            except: continue
 
-        c["status"] = "win" if result == c["picked"] else "loss"
-        profit = round(c["win_val"] - c["stake"],2) if c["status"]=="win" else -c["stake"]
-        match_dt_str = match_dt.strftime("%d-%m-%Y %H:%M UTC")
-        icon = "✅" if c["status"]=="win" else "❌"
-        league_info = LEAGUE_INFO.get(c["league"], {"name": c["league"], "flag": ""})
-        text = (
-            f"{icon} *KUPON ROZLICZONY* ({league_info['name']})\n"
-            f"🏟️ {escape_md(c['home'])} vs {escape_md(c['away'])}\n"
-            f"🕓 {match_dt_str}\n"
-            f"🎯 Twój typ: {escape_md(c['picked'])}\n"
-            f"💰 Bilans: {profit:+.2f} PLN\n"
-            f"🎯 Kurs: {c['odds']}"
-        )
-        send_msg(text, target="results")
-        updated = True
+    if updated: save_coupons(coupons)
 
-    if updated:
-        save_coupons(coupons)
-
-# ================= START =================
 def run():
+    global DYNAMIC_FORMS
+    print("Aktualizacja formy...")
+    DYNAMIC_FORMS = fetch_real_team_forms()
+    print("Szukanie typów...")
     simulate_offers()
+    print("Rozliczanie...")
     check_results()
 
-if __name__=="__main__":
+if __name__ == "__main__":
     run()
