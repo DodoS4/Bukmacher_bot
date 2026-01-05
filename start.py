@@ -9,6 +9,7 @@ import random
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")           
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") 
+FOOTBALL_DATA_KEY = os.getenv("FOOTBALL_DATA_KEY")
 
 COUPONS_FILE = "coupons.json"
 DAILY_LIMIT = 20
@@ -37,24 +38,42 @@ def get_standings(league_slug):
         return {}
 
 # ================= FORMA DRUŻYN =================
-def get_real_form(teams, league_slug):
+def get_team_form(team_name, limit=5):
+    """
+    Pobiera ostatnie mecze drużyny i liczy formę (0-1)
+    """
+    headers = {"X-Auth-Token": FOOTBALL_DATA_KEY}
+    try:
+        url = f"https://api.football-data.org/v4/teams?name={team_name}"
+        r = requests.get(url, headers=headers, timeout=10)
+        data = r.json()
+        if "teams" not in data or len(data["teams"]) == 0:
+            return 0.5
+        team_id = data["teams"][0]["id"]
+
+        matches_url = f"https://api.football-data.org/v4/teams/{team_id}/matches?limit={limit}&status=FINISHED"
+        r2 = requests.get(matches_url, headers=headers, timeout=10)
+        matches_data = r2.json()
+        matches = matches_data.get("matches", [])
+
+        if not matches:
+            return 0.5
+
+        wins = 0
+        for m in matches:
+            winner = m.get("score", {}).get("winner")
+            if winner == "HOME_TEAM" and m["homeTeam"]["name"] == team_name:
+                wins += 1
+            elif winner == "AWAY_TEAM" and m["awayTeam"]["name"] == team_name:
+                wins += 1
+        return wins / max(1,len(matches))
+    except:
+        return 0.5
+
+def get_real_form(teams):
     form_data = {}
     for team in teams:
-        try:
-            url = f"https://api.football-data.org/v4/teams/{team}/matches?limit=5"
-            headers = {"X-Auth-Token": os.getenv("FOOTBALL_DATA_KEY","")}
-            r = requests.get(url, headers=headers, timeout=15)
-            data = r.json()
-            last_matches = data.get("matches", [])
-            wins = 0
-            for m in last_matches:
-                if m["score"]["winner"] == "HOME_TEAM" and m["homeTeam"]["name"] == team:
-                    wins += 1
-                elif m["score"]["winner"] == "AWAY_TEAM" and m["awayTeam"]["name"] == team:
-                    wins += 1
-            form_data[team] = wins / max(1,len(last_matches))
-        except:
-            form_data[team] = 0.5
+        form_data[team] = get_team_form(team)
     return form_data
 
 # ================= GENEROWANIE TYPU =================
@@ -108,7 +127,7 @@ def daily_limit_reached(coupons):
 
 # ================= POBIERANIE MECZÓW =================
 def get_upcoming_matches(league):
-    # symulacja meczów – docelowo podpiąć API z kursami i datą meczu
+    # Symulacja meczów – podmień na prawdziwe API z kursami
     if league == "epl":
         return [
             {"home":"Arsenal","away":"Chelsea","odds":{"home":1.8,"away":2.0},"commence_time":"2026-01-06T20:00:00Z"},
@@ -133,7 +152,7 @@ def simulate_offers():
 
         teams = set([m["home"] for m in matches] + [m["away"] for m in matches])
         league_table = get_standings(league)
-        form_data = get_real_form(teams, league_slug=league)
+        form_data = get_real_form(teams)
 
         for match in matches:
             if any(c["home"]==match["home"] and c["away"]==match["away"] for c in coupons):
