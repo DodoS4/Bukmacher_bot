@@ -12,11 +12,11 @@ T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
-STAKE_SINGLE = 40.0  # Bezpieczniejsza stawka przy dużej ilości typów
-TAX_RATE = 0.88      # Uwzględnienie polskiego podatku 12%
+STAKE_SINGLE = 40.0  
+TAX_RATE = 0.88      # Podatek 12%
+VALUE_THRESHOLD = 1.02 # Próg 2% przewagi (1.02)
 COUPONS_FILE = "coupons.json"
 
-# Zaktualizowana lista lig (NBA zamiast LM)
 SPORTS = {
     "soccer_epl": "⚽ EPL", 
     "soccer_spain_la_liga": "⚽ LA LIGA",
@@ -61,14 +61,16 @@ def send_summary(days=1):
     losses = 0
     
     for c in coupons:
-        c_time = datetime.fromisoformat(c.get("end_time", "").replace("Z", "+00:00"))
-        if c_time > start_period and c.get("status") != "pending":
-            total_staked += c["stake"]
-            if c["status"] == "win":
-                total_won += c["win_val"]
-                wins += 1
-            else:
-                losses += 1
+        try:
+            c_time = datetime.fromisoformat(c.get("end_time", "").replace("Z", "+00:00"))
+            if c_time > start_period and c.get("status") != "pending":
+                total_staked += c["stake"]
+                if c["status"] == "win":
+                    total_won += c["win_val"]
+                    wins += 1
+                else:
+                    losses += 1
+        except: continue
     
     if total_staked > 0:
         profit = round(total_won - total_staked, 2)
@@ -99,7 +101,6 @@ def send_summary(days=1):
 def find_new_bets():
     coupons = load_data(COUPONS_FILE)
     sent_ids = [m["id"] for c in coupons for m in c["matches"]]
-    now = datetime.now(timezone.utc)
     
     potential_bets = []
 
@@ -120,50 +121,56 @@ def find_new_bets():
                 for ev in events:
                     if ev["id"] in sent_ids: continue
                     
-                    betfair_odds = {}
+                    # Szukamy kursu odniesienia (Pinnacle lub Betfair Exchange)
+                    fair_odds = {}
                     for b in ev.get("bookmakers", []):
-                        if b['key'] == 'betfair_ex':
+                        if b['key'] in ['pinnacle', 'betfair_ex']:
                             for outcome in b['markets'][0]['outcomes']:
-                                betfair_odds[outcome['name']] = outcome['price']
+                                fair_odds[outcome['name']] = outcome['price']
+
+                    if not fair_odds: continue
 
                     for bookie in ev.get("bookmakers", []):
+                        # Pomijamy giełdy i Pinnacle przy szukaniu okazji u buków lokalnych
                         if bookie['key'] in ['pinnacle', 'betfair_ex', 'matchbook']: continue
                         
                         for outcome in bookie['markets'][0]['outcomes']:
                             local_price = outcome['price']
                             o_name = outcome['name']
-                            fair_price = betfair_odds.get(o_name)
+                            reference_price = fair_odds.get(o_name)
                             
-                            if fair_price and 2.10 <= local_price <= 2.80:
-                                if (local_price * TAX_RATE) > (fair_price * 1.03):
-                                    val_pct = round(((local_price * TAX_RATE) / fair_price - 1) * 100, 2)
+                            # Filtrujemy kursy (2.10 - 2.80) i sprawdzamy Value 2%
+                            if reference_price and 2.10 <= local_price <= 2.80:
+                                # (Kurs * 0.88) musi być większy niż (Kurs Odniesienia * 1.02)
+                                if (local_price * TAX_RATE) > (reference_price * VALUE_THRESHOLD):
+                                    val_pct = round(((local_price * TAX_RATE) / reference_price - 1) * 100, 2)
                                     
                                     potential_bets.append({
                                         "ev": ev, "outcome": outcome, "price": local_price, 
                                         "value": val_pct, "league": league_label, "sport_key": sport_key, 
-                                        "commence_time": datetime.fromisoformat(ev['commence_time'].replace('Z', '+00:00'))
+                                        "commence_time": ev['commence_time']
                                     })
             except: continue
 
+    # Sortowanie i wysyłka
     potential_bets = sorted(potential_bets, key=lambda x: x['value'], reverse=True)
     
     for bet in potential_bets:
         win_val = round(STAKE_SINGLE * bet['price'] * TAX_RATE, 2)
+        commence_dt = datetime.fromisoformat(bet['commence_time'].replace('Z', '+00:00'))
+        
         msg = (f"💎 *VALUE DETECTED (+{bet['value']}% )*\n"
                f"━━━━━━━━━━━━━━━\n"
                f"🏟️ `{bet['ev']['home_team']} vs {bet['ev']['away_team']}`\n"
                f"✅ Typ: *{bet['outcome']['name']}*\n"
                f"🏆 {bet['league']}\n"
-               f"📅 {bet['commence_time'].strftime('%d.%m %H:%M')} | 📈 Kurs: {bet['price']:.2f}\n"
+               f"📅 {commence_dt.strftime('%d.%m %H:%M')} | 📈 Kurs: {bet['price']:.2f}\n"
                f"━━━━━━━━━━━━━━━\n"
                f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win_val} PLN`")
         
         send_msg(msg, target="types")
         coupons.append({
-            "id": bet['ev']["id"], 
-            "status": "pending", 
-            "stake": STAKE_SINGLE, 
-            "win_val": win_val, 
+            "id": bet['ev']["id"], "status": "pending", "stake": STAKE_SINGLE, "win_val": win_val, 
             "end_time": bet['ev']["commence_time"], 
             "matches": [{"id": bet['ev']["id"], "sport_key": bet['sport_key'], "picked": bet['outcome']['name']}]
         })
@@ -176,25 +183,29 @@ def check_results():
     now = datetime.now(timezone.utc)
     for c in coupons:
         if c.get("status") != "pending": continue
-        if now < datetime.fromisoformat(c["end_time"].replace("Z", "+00:00")) + timedelta(hours=4): continue
-        for m in c["matches"]:
+        try:
+            start_time = datetime.fromisoformat(c["end_time"].replace("Z", "+00:00"))
+            if now < start_time + timedelta(hours=4): continue
+            
             for key in API_KEYS:
                 try:
-                    r = requests.get(f"https://api.the-odds-api.com/v4/sports/{m['sport_key']}/scores/", params={"apiKey": key, "daysFrom": 3}, timeout=15)
-                    score_data = next((s for s in r.json() if s["id"] == m["id"] and s.get("completed")), None)
+                    r = requests.get(f"https://api.the-odds-api.com/v4/sports/{c['matches'][0]['sport_key']}/scores/", 
+                                   params={"apiKey": key, "daysFrom": 3}, timeout=15)
+                    score_data = next((s for s in r.json() if s["id"] == c["id"] and s.get("completed")), None)
                     if score_data:
                         h_t, a_t = score_data['home_team'], score_data['away_team']
                         sl = score_data.get("scores", [])
                         h_s = int(next(x['score'] for x in sl if x['name'] == h_t))
                         a_s = int(next(x['score'] for x in sl if x['name'] == a_t))
                         winner = h_t if h_s > a_s else (a_t if a_s > h_s else "Remis")
-                        c["status"] = "win" if winner == m['picked'] else "loss"
+                        c["status"] = "win" if winner == c['matches'][0]['picked'] else "loss"
                         updated = True
                         profit = round(c['win_val'] - c['stake'], 2) if c["status"] == "win" else -c['stake']
-                        res_msg = (f"{'✅' if c['status'] == 'win' else '❌'} *WYNIK MECZU*\n━━━━━━━━━━━━━━━\n🏟️ `{h_t} {h_s}:{a_s} {a_t}`\n🎯 Typ: `{m['picked']}`\n💰 Bilans: `{profit:+.2f} PLN`")
+                        res_msg = (f"{'✅' if c['status'] == 'win' else '❌'} *WYNIK MECZU*\n━━━━━━━━━━━━━━━\n🏟️ `{h_t} {h_s}:{a_s} {a_t}`\n🎯 Typ: `{c['matches'][0]['picked']}`\n💰 Bilans: `{profit:+.2f} PLN`")
                         send_msg(res_msg, target="results")
                     break
                 except: continue
+        except: continue
     if updated: save_data(COUPONS_FILE, coupons)
 
 def run():
