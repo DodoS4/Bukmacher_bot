@@ -130,5 +130,16 @@
         "date": "2026-01-07T19:45:00Z",
         "win_val": 35.0,
         "league": "soccer_italy_serie_a"
+    },
+    {
+        "home": "Brentford",
+        "away": "Sunderland",
+        "picked": "Sunderland",
+        "odds": 4.1,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T19:30:00Z",
+        "win_val": 20.5,
+        "league": "soccer_epl"
     }
 ]
