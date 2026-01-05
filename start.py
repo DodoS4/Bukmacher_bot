@@ -102,11 +102,12 @@ def send_summary(days=1):
     
     if t_stake > 0:
         profit = round(t_won - t_stake, 2)
+        total_bets = wins + losses
         yield_val = round((profit / t_stake) * 100, 2)
         title = "📊 PODSUMOWANIE DNIA" if days == 1 else "🔥 RAPORT TYGODNIOWY"
         msg = (f"*{title}*\n━━━━━━━━━━━━━━━\n"
                f"💰 Postawiono: `{t_stake:.2f} PLN` | Zysk: *{profit:+.2f} PLN*\n"
-               f"💎 Yield: `{yield_val:+.2f}%` | Skuteczność: `{round(wins/(wins+losses)*100,1)}%`\n"
+               f"💎 Yield: `{yield_val:+.2f}%` | Skuteczność: `{round(wins/total_bets*100,1)}%`\n"
                f"✅ `{wins}` | ❌ `{losses}`")
         send_msg(msg, target="results")
 
@@ -116,6 +117,8 @@ def find_new_bets():
     coupons = load_data(COUPONS_FILE)
     sent_today = [c.get("event_id") for c in coupons]
     potential_bets = []
+    now = datetime.now(timezone.utc)
+    horizon = now + timedelta(hours=48) # Limit 48 godzin
 
     for sport_key, league_label in SPORTS.items():
         for key in API_KEYS:
@@ -126,6 +129,11 @@ def find_new_bets():
                 events = r.json()
                 for ev in events:
                     if ev['id'] in sent_today: continue
+                    
+                    # FILTR 48H
+                    commence_time = datetime.fromisoformat(ev['commence_time'].replace('Z', '+00:00'))
+                    if commence_time > horizon: continue # Pomiń jeśli mecz dalej niż 48h
+                    
                     outcomes_prices = {}
                     for b in ev.get("bookmakers", []):
                         for m in b['markets']:
