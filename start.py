@@ -20,8 +20,9 @@ KEYS_POOL = [
 API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
+DAILY_LIMIT = 20
 STAKE = 5.0
-MAX_HOURS_AHEAD = 168  # 7 dni dla testów
+MAX_HOURS_AHEAD = 48  # maksymalnie 48h do rozpoczęcia meczu
 
 LEAGUES = [
     "soccer_epl",
@@ -54,22 +55,13 @@ def escape_md(text):
 # ================= WYSYŁKA =================
 def send_msg(text, target="types"):
     chat_id = T_CHAT_RESULTS if target=="results" else T_CHAT
-    if not T_TOKEN:
-        print("❌ Brak T_TOKEN w sekretach")
-        return
-    if not chat_id:
-        print("❌ Brak chat_id w sekretach")
+    if not T_TOKEN or not chat_id:
         return
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
-    payload = {"chat_id": chat_id, "text": text, "parse_mode":"Markdown"}
     try:
-        r = requests.post(url, json=payload, timeout=15)
-        if r.status_code != 200:
-            print(f"❌ Błąd Telegram API: {r.status_code} | {r.text}")
-        else:
-            print("✅ Wysłano wiadomość:", text[:50]+"...")
-    except Exception as e:
-        print("❌ Wyjątek przy wysyłaniu:", e)
+        requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode":"Markdown"}, timeout=15)
+    except:
+        pass
 
 # ================= COUPONS =================
 def load_coupons():
@@ -77,8 +69,7 @@ def load_coupons():
         try:
             with open(COUPONS_FILE,"r",encoding="utf-8") as f:
                 return json.load(f)
-        except Exception as e:
-            print("❌ Błąd wczytywania coupons.json:", e)
+        except:
             return []
     return []
 
@@ -86,23 +77,23 @@ def save_coupons(coupons):
     with open(COUPONS_FILE,"w",encoding="utf-8") as f:
         json.dump(coupons[-500:], f, indent=4)
 
-# ================= POBIERANIE MECZÓW =================
+def daily_limit_reached(coupons):
+    today = datetime.now(timezone.utc).date().isoformat()
+    today_sent = [c for c in coupons if c.get("date","")[:10]==today]
+    return len(today_sent) >= DAILY_LIMIT
+
+# ================= POBIERANIE MECZÓW Z ODDS API =================
 def get_upcoming_matches(league):
     matches = []
-    if not API_KEYS:
-        print("❌ Brak kluczy ODDS_KEY w sekretach")
-        return matches
     for api_key in API_KEYS:
         try:
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds"
             params = {"apiKey": api_key, "regions":"eu","markets":"h2h","oddsFormat":"decimal"}
             r = requests.get(url, params=params, timeout=15)
             if r.status_code != 200:
-                print(f"⚠️ Błąd API ({league}): {r.status_code} | {r.text}")
                 continue
             data = r.json()
             for event in data:
-                print("ℹ️ Pobranie meczu z API:", event.get("home_team"), "vs", event.get("away_team"), "czas:", event.get("commence_time"))
                 home = event["home_team"]
                 away = event["away_team"]
                 commence = event["commence_time"]
@@ -118,13 +109,11 @@ def get_upcoming_matches(league):
                     })
             if matches:
                 break
-        except Exception as e:
-            print(f"❌ Wyjątek przy pobieraniu meczów ({league}): {e}")
+        except:
             continue
-    print(f"ℹ️ Znaleziono {len(matches)} mecze w {league}")
     return matches
 
-# ================= GENEROWANIE TYPU =================
+# ================= GENEROWANIE TYPU (value bet) =================
 def generate_pick(match):
     home = match["home"]
     away = match["away"]
@@ -143,22 +132,26 @@ def generate_pick(match):
         return {"selection": away, "odds": a_odds, "date": match["commence_time"], "home": home, "away": away}
     return None
 
-# ================= GENERUJ OFERTY (DEBUG) =================
-def simulate_offers_debug():
+# ================= GENERUJ OFERTY =================
+def simulate_offers():
     coupons = load_coupons()
+    if daily_limit_reached(coupons):
+        return
+
     now = datetime.now(timezone.utc)
 
     for league in LEAGUES:
         matches = get_upcoming_matches(league)
         if not matches:
-            print(f"⚠️ Brak meczów do przetworzenia w {league}")
             continue
 
         for match in matches:
             match_dt = parser.isoparse(match["commence_time"])
-            print(f"ℹ️ Przetwarzanie meczu: {match['home']} vs {match['away']} | {match_dt} UTC")
-            
-            # Ignorujemy limity czasu i sprawdzanie kuponów
+            if match_dt < now or match_dt > now + timedelta(hours=MAX_HOURS_AHEAD):
+                continue
+            if any(c["home"]==match["home"] and c["away"]==match["away"] for c in coupons):
+                continue
+
             pick = generate_pick(match)
             if pick:
                 coupon = {
@@ -177,10 +170,10 @@ def simulate_offers_debug():
                 match_dt_str = match_dt.strftime("%d-%m-%Y %H:%M UTC")
                 league_info = LEAGUE_INFO.get(league, {"name": league, "flag": ""})
                 text = (
-                    f"{league_info['flag']} *OFERTA TESTOWA* ({escape_md(league_info['name'])})\n"
+                    f"{league_info['flag']} *NOWA OFERTA* ({league_info['name']})\n"
                     f"🏟️ {escape_md(pick['home'])} vs {escape_md(pick['away'])}\n"
                     f"🕓 {match_dt_str}\n"
-                    f"✅ Typ: *{escape_md(pick['selection'])}*\n"
+                    f"✅ Twój typ: *{escape_md(pick['selection'])}*\n"
                     f"💰 Stawka: {STAKE} PLN\n"
                     f"🎯 Kurs: {pick['odds']}"
                 )
@@ -188,11 +181,9 @@ def simulate_offers_debug():
 
     save_coupons(coupons)
 
-# ================= TEST TELEGRAM =================
-def test_telegram():
-    send_msg("🔔 Test powiadomienia z Bukmacher Bot Pro AKO", target="types")
-
 # ================= START =================
+def run():
+    simulate_offers()
+
 if __name__=="__main__":
-    test_telegram()
-    simulate_offers_debug()
+    run()
