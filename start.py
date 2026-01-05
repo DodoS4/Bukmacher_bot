@@ -20,7 +20,6 @@ KEYS_POOL = [
 API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
-DAILY_LIMIT = 20
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
@@ -87,14 +86,6 @@ def save_coupons(coupons):
     with open(COUPONS_FILE,"w",encoding="utf-8") as f:
         json.dump(coupons[-500:], f, indent=4)
 
-def daily_limit_reached(coupons):
-    today = datetime.now(timezone.utc).date().isoformat()
-    today_sent = [c for c in coupons if c.get("date","")[:10]==today]
-    if len(today_sent) >= DAILY_LIMIT:
-        print(f"⚠️ Dzienny limit {DAILY_LIMIT} osiągnięty ({len(today_sent)} kuponów)")
-        return True
-    return False
-
 # ================= POBIERANIE MECZÓW =================
 def get_upcoming_matches(league):
     matches = []
@@ -151,12 +142,9 @@ def generate_pick(match):
         return {"selection": away, "odds": a_odds, "date": match["commence_time"], "home": home, "away": away}
     return None
 
-# ================= GENERUJ OFERTY =================
-def simulate_offers():
+# ================= GENERUJ OFERTY (TESTOWA WERSJA) =================
+def simulate_offers_test():
     coupons = load_coupons()
-    if daily_limit_reached(coupons):
-        return
-
     now = datetime.now(timezone.utc)
 
     for league in LEAGUES:
@@ -170,51 +158,5 @@ def simulate_offers():
             if match_dt < now or match_dt > now + timedelta(hours=MAX_HOURS_AHEAD):
                 print(f"⚠️ Mecz poza limitem czasu: {match['home']} vs {match['away']}")
                 continue
-            if any(c["home"]==match["home"] and c["away"]==match["away"] for c in coupons):
-                print(f"⚠️ Mecz już dodany: {match['home']} vs {match['away']}")
-                continue
 
-            pick = generate_pick(match)
-            if pick:
-                coupon = {
-                    "home": pick["home"],
-                    "away": pick["away"],
-                    "picked": pick["selection"],
-                    "odds": pick["odds"],
-                    "stake": STAKE,
-                    "status": "pending",
-                    "date": pick["date"],
-                    "win_val": round(pick["odds"]*STAKE,2),
-                    "league": league
-                }
-                coupons.append(coupon)
-
-                match_dt_str = match_dt.strftime("%d-%m-%Y %H:%M UTC")
-                league_info = LEAGUE_INFO.get(league, {"name": league, "flag": ""})
-                text = (
-                    f"{league_info['flag']} *NOWA OFERTA* ({escape_md(league_info['name'])})\n"
-                    f"🏟️ {escape_md(pick['home'])} vs {escape_md(pick['away'])}\n"
-                    f"🕓 {match_dt_str}\n"
-                    f"✅ Twój typ: *{escape_md(pick['selection'])}*\n"
-                    f"💰 Stawka: {STAKE} PLN\n"
-                    f"🎯 Kurs: {pick['odds']}"
-                )
-                send_msg(text,target="types")
-
-    save_coupons(coupons)
-
-# ================= START =================
-def run():
-    simulate_offers()
-    # Rozliczenia i raport tygodniowy
-    # check_results()
-    # send_weekly_report()
-
-# ================= TEST TELEGRAM =================
-def test_telegram():
-    send_msg("🔔 Test powiadomienia z Bukmacher Bot Pro AKO", target="types")
-
-if __name__=="__main__":
-    # 🔹 Odkomentuj przy pierwszym uruchomieniu, aby przetestować Telegram
-    test_telegram()
-    # run()
+            # Ignorujemy, czy me
