@@ -169,7 +169,7 @@
     },
     {
         "id": "87610f91e341dcfd2487d7609208b633",
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 140.8,
         "end_time": "2026-01-04T20:00:00Z",
@@ -183,7 +183,7 @@
     },
     {
         "id": "75131dbbad37561a657f719917a2bb73",
-        "status": "pending",
+        "status": "loss",
         "stake": 80.0,
         "win_val": 147.84,
         "end_time": "2026-01-04T20:30:00Z",
