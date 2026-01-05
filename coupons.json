@@ -1,1 +1,317 @@
-[]
+[
+    {
+        "event_id": "3fd1e970c718bfc0f99a7e4575e46f49",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 168.96,
+        "end_time": "2026-01-17T12:30:00Z",
+        "picked": "Draw",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "876bd00ab1c4cff1c6635a8ac7f93d75",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 218.24,
+        "end_time": "2026-01-17T15:00:00Z",
+        "picked": "Brentford",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "80cf233ec08173f3d8cf4645b687589d",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 580.8,
+        "end_time": "2026-01-17T15:00:00Z",
+        "picked": "Burnley",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "86609aa022312a15ec01d5bc0c172dbc",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 135.52,
+        "end_time": "2026-01-17T15:00:00Z",
+        "picked": "Fulham",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "47e36aed7df3160f584a73fbd1fd0830",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 200.64,
+        "end_time": "2026-01-17T15:00:00Z",
+        "picked": "West Ham United",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "b145d15344a4fca80d42b39faa58a050",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 253.44,
+        "end_time": "2026-01-17T17:30:00Z",
+        "picked": "Nottingham Forest",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "e15eb2362921b16a6b6a0397ce607a11",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 158.4,
+        "end_time": "2026-01-18T14:00:00Z",
+        "picked": "Draw",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "80b312e80c4c6e8f267a99606665ac8c",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 200.64,
+        "end_time": "2026-01-18T16:30:00Z",
+        "picked": "Everton",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "342788786c22e570ed2da53a9608113f",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 154.88,
+        "end_time": "2026-01-19T20:00:00Z",
+        "picked": "Draw",
+        "sport_key": "soccer_epl"
+    },
+    {
+        "event_id": "33adb7f62df9e1843f4c64c960d9c895",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 267.52,
+        "end_time": "2026-01-10T15:15:00Z",
+        "picked": "Alav\u00e9s",
+        "sport_key": "soccer_spain_la_liga"
+    },
+    {
+        "event_id": "794960888cc173eb96cc55dad0dd8d2a",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 580.8,
+        "end_time": "2026-01-17T13:00:00Z",
+        "picked": "Levante",
+        "sport_key": "soccer_spain_la_liga"
+    },
+    {
+        "event_id": "5e38fbb5e0a6277859816fe58cf76a1e",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 369.6,
+        "end_time": "2026-01-06T01:10:00Z",
+        "picked": "Charlotte Hornets",
+        "sport_key": "basketball_nba"
+    },
+    {
+        "event_id": "8e0209fcea74087227f0a490e9277381",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 225.28,
+        "end_time": "2026-01-06T01:40:00Z",
+        "picked": "Denver Nuggets",
+        "sport_key": "basketball_nba"
+    },
+    {
+        "event_id": "9314be4eb0a4f1a1094d4d19ce6f3658",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 218.24,
+        "end_time": "2026-01-06T17:00:00Z",
+        "picked": "Lecce",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "3d7c371529e9be91f6d5cc1d2bc73d0a",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 404.8,
+        "end_time": "2026-01-07T17:30:00Z",
+        "picked": "Hellas Verona",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "494261cb09d86dfd909684a93847faf3",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 330.88,
+        "end_time": "2026-01-07T19:45:00Z",
+        "picked": "Parma",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "52353b6172b3b45e014a449098fea935",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 369.6,
+        "end_time": "2026-01-08T19:45:00Z",
+        "picked": "Genoa",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "0b55d463b885859c77825781292237d2",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 34496.0,
+        "end_time": "2026-01-10T14:00:00Z",
+        "picked": "Como",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "697869ca5876855cf7a185f7dad738ef",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 204.16,
+        "end_time": "2026-01-10T14:00:00Z",
+        "picked": "Pisa",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "8a8c6213efddb8a91e079cfbbe47813c",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 309.76,
+        "end_time": "2026-01-10T17:00:00Z",
+        "picked": "Sassuolo",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "c886a9c8d2c702269e9f17b6d7469977",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 225.28,
+        "end_time": "2026-01-10T19:45:00Z",
+        "picked": "Torino",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "32a86b2b69ba8c8749861199a8fdc52a",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 179.52,
+        "end_time": "2026-01-11T14:00:00Z",
+        "picked": "Fiorentina",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "5be8dbb3ee9d2c2d09a813a73fe73a34",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 168.96,
+        "end_time": "2026-01-11T17:00:00Z",
+        "picked": "Hellas Verona",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "36412b11274ae69ce0b6b60075df28b3",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 246.4,
+        "end_time": "2026-01-11T19:45:00Z",
+        "picked": "Napoli",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "d66ea58ddb00d545b4d31988f2632b84",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 186.56,
+        "end_time": "2026-01-12T17:30:00Z",
+        "picked": "Cagliari",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "daa2bb9fe4c0697c33a13df8bdf388d2",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 774.4,
+        "end_time": "2026-01-12T19:45:00Z",
+        "picked": "Cremonese",
+        "sport_key": "soccer_italy_serie_a"
+    },
+    {
+        "event_id": "cdfb82b9061320bd6a62a98be790b34a",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 168.96,
+        "end_time": "2026-01-11T14:30:00Z",
+        "picked": "Draw",
+        "sport_key": "soccer_germany_bundesliga"
+    },
+    {
+        "event_id": "3c7382bf19aacbed0fa1ea5c53769be4",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 915.2,
+        "end_time": "2026-01-11T16:30:00Z",
+        "picked": "VfL Wolfsburg",
+        "sport_key": "soccer_germany_bundesliga"
+    },
+    {
+        "event_id": "3937edff29d08a26dccdd8abb5030d89",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 161.92,
+        "end_time": "2026-01-13T17:30:00Z",
+        "picked": "Eintracht Frankfurt",
+        "sport_key": "soccer_germany_bundesliga"
+    },
+    {
+        "event_id": "c5bb74a25b74b505afda307b2c243469",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 218.24,
+        "end_time": "2026-01-13T19:30:00Z",
+        "picked": "1. FC Heidenheim",
+        "sport_key": "soccer_germany_bundesliga"
+    },
+    {
+        "event_id": "3a298098241a4bfbf4eda0929537f063",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 176.0,
+        "end_time": "2026-01-13T19:30:00Z",
+        "picked": "Draw",
+        "sport_key": "soccer_germany_bundesliga"
+    },
+    {
+        "event_id": "a97c467e9ff379af06f972ec25ddc407",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 352.0,
+        "end_time": "2026-01-13T19:30:00Z",
+        "picked": "Werder Bremen",
+        "sport_key": "soccer_germany_bundesliga"
+    },
+    {
+        "event_id": "147176b65eecb7ca66d162dd93c39e12",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 165.44,
+        "end_time": "2026-01-14T17:30:00Z",
+        "picked": "FC St. Pauli",
+        "sport_key": "soccer_germany_bundesliga"
+    },
+    {
+        "event_id": "4881e0d69bec69bababecaa1e98b5dad",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 274.56,
+        "end_time": "2026-01-14T19:30:00Z",
+        "picked": "Draw",
+        "sport_key": "soccer_germany_bundesliga"
+    },
+    {
+        "event_id": "61e314c2c7412ea1f19409f119f1e29d",
+        "status": "pending",
+        "stake": 40.0,
+        "win_val": 158.4,
+        "end_time": "2026-01-14T19:30:00Z",
+        "picked": "Draw",
+        "sport_key": "soccer_germany_bundesliga"
+    }
+]
