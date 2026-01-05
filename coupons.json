@@ -1,29 +1,72 @@
 [
     {
-        "event_id": "5e38fbb5e0a6277859816fe58cf76a1e",
+        "id": "2458cbd77b28efe6311a4819377e7ebe",
         "status": "pending",
-        "stake": 40.0,
-        "win_val": 387.2,
-        "end_time": "2026-01-06T01:10:00Z",
-        "picked": "Charlotte Hornets",
-        "sport_key": "basketball_nba"
+        "stake": 80.0,
+        "win_val": 130.94,
+        "end_time": "2026-01-04T13:00:00Z",
+        "matches": [
+            {
+                "id": "2458cbd77b28efe6311a4819377e7ebe",
+                "sport_key": "soccer_spain_la_liga",
+                "picked": "Sevilla"
+            }
+        ]
     },
     {
-        "event_id": "8e0209fcea74087227f0a490e9277381",
+        "id": "fbcdf6d351b7db4c595b9f58def36613",
         "status": "pending",
-        "stake": 40.0,
-        "win_val": 225.28,
-        "end_time": "2026-01-06T01:40:00Z",
-        "picked": "Denver Nuggets",
-        "sport_key": "basketball_nba"
+        "stake": 80.0,
+        "win_val": 127.42,
+        "end_time": "2026-01-04T14:00:00Z",
+        "matches": [
+            {
+                "id": "fbcdf6d351b7db4c595b9f58def36613",
+                "sport_key": "soccer_italy_serie_a",
+                "picked": "Fiorentina"
+            }
+        ]
     },
     {
-        "event_id": "9314be4eb0a4f1a1094d4d19ce6f3658",
+        "id": "33e174d56928e320b3fdbac2510a1003",
         "status": "pending",
-        "stake": 40.0,
-        "win_val": 218.24,
-        "end_time": "2026-01-06T17:00:00Z",
-        "picked": "Lecce",
-        "sport_key": "soccer_italy_serie_a"
+        "stake": 80.0,
+        "win_val": 121.79,
+        "end_time": "2026-01-04T15:00:00Z",
+        "matches": [
+            {
+                "id": "33e174d56928e320b3fdbac2510a1003",
+                "sport_key": "soccer_epl",
+                "picked": "Newcastle United"
+            }
+        ]
+    },
+    {
+        "id": "2cc637ccc2afe9fe4d335a36e9f3b284",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 140.8,
+        "end_time": "2026-01-04T15:00:00Z",
+        "matches": [
+            {
+                "id": "2cc637ccc2afe9fe4d335a36e9f3b284",
+                "sport_key": "soccer_epl",
+                "picked": "Liverpool"
+            }
+        ]
+    },
+    {
+        "id": "88e36c01b6995b8ce39bde84a2f90fff",
+        "status": "pending",
+        "stake": 80.0,
+        "win_val": 134.46,
+        "end_time": "2026-01-04T15:00:00Z",
+        "matches": [
+            {
+                "id": "88e36c01b6995b8ce39bde84a2f90fff",
+                "sport_key": "soccer_epl",
+                "picked": "Tottenham Hotspur"
+            }
+        ]
     }
 ]
