@@ -39,9 +39,6 @@ def get_standings(league_slug):
 
 # ================= FORMA DRUŻYN =================
 def get_team_form(team_name, limit=5):
-    """
-    Pobiera ostatnie mecze drużyny i liczy formę (0-1)
-    """
     headers = {"X-Auth-Token": FOOTBALL_DATA_KEY}
     try:
         url = f"https://api.football-data.org/v4/teams?name={team_name}"
@@ -172,8 +169,17 @@ def simulate_offers():
                     "league": league
                 }
                 coupons.append(coupon)
-                
-                text = f"📊 *NOWA OFERTA* ({league.upper()})\n🏟️ {pick['home']} vs {pick['away']}\n🕓 {pick['date']}\n✅ Twój typ: *{pick['selection']}*\n💰 Stawka: {STAKE} PLN"
+
+                # 🟢 Nowa czytelna data i kurs
+                match_dt = parser.isoparse(pick["date"]).strftime("%d-%m-%Y %H:%M UTC")
+                text = (
+                    f"📊 *NOWA OFERTA* ({league.upper()})\n"
+                    f"🏟️ {pick['home']} vs {pick['away']}\n"
+                    f"🕓 {match_dt}\n"
+                    f"✅ Twój typ: *{pick['selection']}*\n"
+                    f"💰 Stawka: {STAKE} PLN\n"
+                    f"🎯 Kurs: {pick['odds']}"
+                )
                 send_msg(text,target="types")
 
     save_coupons(coupons)
@@ -192,7 +198,8 @@ def check_results():
         c["status"]="win" if winner==c["picked"] else "loss"
         profit = round(c["win_val"]-c["stake"],2) if c["status"]=="win" else -c["stake"]
         icon="✅" if c["status"]=="win" else "❌"
-        text=f"{icon} *KUPON ROZLICZONY* ({c['league'].upper()})\n🏟️ {c['home']} vs {c['away']}\n🎯 Twój typ: {c['picked']}\n💰 Bilans: {profit:+.2f} PLN"
+        match_dt = parser.isoparse(c["date"]).strftime("%d-%m-%Y %H:%M UTC")
+        text=f"{icon} *KUPON ROZLICZONY* ({c['league'].upper()})\n🏟️ {c['home']} vs {c['away']}\n🕓 {match_dt}\n🎯 Twój typ: {c['picked']}\n💰 Bilans: {profit:+.2f} PLN\n🎯 Kurs: {c['odds']}"
         send_msg(text,target="results")
         updated=True
     if updated:
