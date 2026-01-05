@@ -33,19 +33,33 @@ LEAGUES = [
     "soccer_germany_bundesliga",
     "soccer_france_ligue_one",
     "basketball_nba",
-    "soccer_netherlands_eredivisie",    # Holandia
-    "soccer_portugal_primeira_liga"     # Portugalia
+    "soccer_netherlands_eredivisie",
+    "soccer_portugal_primeira_liga"
 ]
+
+# ================= NARZĘDZIE ESCAPE =================
+def escape_md(text):
+    """Escape znaków Markdown w Telegramie."""
+    if not isinstance(text, str):
+        return text
+    return text.replace("_","\\_").replace("*","\\*").replace("[","\\[").replace("]","\\]").replace("`","\\`")
 
 # ================= WYSYŁKA =================
 def send_msg(text, target="types"):
     chat_id = T_CHAT_RESULTS if target=="results" else T_CHAT
-    if not T_TOKEN or not chat_id: return
+    if not T_TOKEN or not chat_id:
+        print("Brak tokena lub chat_id")
+        return
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
+    payload = {"chat_id": chat_id, "text": text, "parse_mode":"Markdown"}
     try:
-        requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode":"Markdown"}, timeout=15)
-    except:
-        pass
+        r = requests.post(url, json=payload, timeout=15)
+        if r.status_code != 200:
+            print("Błąd Telegram API:", r.status_code, r.text)
+        else:
+            print("Wysłano wiadomość:", text[:50]+"...")
+    except Exception as e:
+        print("Wyjątek przy wysyłaniu:", e)
 
 # ================= COUPONS =================
 def load_coupons():
@@ -66,7 +80,7 @@ def daily_limit_reached(coupons):
     today_sent = [c for c in coupons if c.get("date","")[:10]==today]
     return len(today_sent) >= DAILY_LIMIT
 
-# ================= POBIERANIE MECZÓW Z ODDS API =================
+# ================= POBIERANIE MECZÓW =================
 def get_upcoming_matches(league):
     matches = []
     for api_key in API_KEYS:
@@ -93,11 +107,12 @@ def get_upcoming_matches(league):
                     })
             if matches:
                 break
-        except:
+        except Exception as e:
+            print(f"Błąd pobierania meczów ({league}): {e}")
             continue
     return matches
 
-# ================= GENEROWANIE TYPU (value bet) =================
+# ================= GENEROWANIE TYPU =================
 def generate_pick(match):
     home = match["home"]
     away = match["away"]
@@ -120,6 +135,7 @@ def generate_pick(match):
 def simulate_offers():
     coupons = load_coupons()
     if daily_limit_reached(coupons):
+        print("Dzienny limit osiągnięty")
         return
 
     now = datetime.now(timezone.utc)
@@ -153,10 +169,10 @@ def simulate_offers():
 
                 match_dt_str = match_dt.strftime("%d-%m-%Y %H:%M UTC")
                 text = (
-                    f"📊 *NOWA OFERTA* ({league.upper()})\n"
-                    f"🏟️ {pick['home']} vs {pick['away']}\n"
+                    f"📊 *NOWA OFERTA* ({escape_md(league.upper())})\n"
+                    f"🏟️ {escape_md(pick['home'])} vs {escape_md(pick['away'])}\n"
                     f"🕓 {match_dt_str}\n"
-                    f"✅ Twój typ: *{pick['selection']}*\n"
+                    f"✅ Twój typ: *{escape_md(pick['selection'])}*\n"
                     f"💰 Stawka: {STAKE} PLN\n"
                     f"🎯 Kurs: {pick['odds']}"
                 )
@@ -179,7 +195,7 @@ def check_results():
         profit = round(c["win_val"]-c["stake"],2) if c["status"]=="win" else -c["stake"]
         match_dt_str = end_time.strftime("%d-%m-%Y %H:%M UTC")
         icon="✅" if c["status"]=="win" else "❌"
-        text=f"{icon} *KUPON ROZLICZONY* ({c['league'].upper()})\n🏟️ {c['home']} vs {c['away']}\n🕓 {match_dt_str}\n🎯 Twój typ: {c['picked']}\n💰 Bilans: {profit:+.2f} PLN\n🎯 Kurs: {c['odds']}"
+        text=f"{icon} *KUPON ROZLICZONY* ({escape_md(c['league'].upper())})\n🏟️ {escape_md(c['home'])} vs {escape_md(c['away'])}\n🕓 {match_dt_str}\n🎯 Twój typ: {escape_md(c['picked'])}\n💰 Bilans: {profit:+.2f} PLN\n🎯 Kurs: {c['odds']}"
         send_msg(text,target="results")
         updated=True
     if updated:
@@ -216,5 +232,12 @@ def run():
     if now.weekday()==0 and now.hour==8:
         send_weekly_report()
 
+# ================= TEST TELEGRAM =================
+def test_telegram():
+    """Prosty test wysyłki, użyj w GitHub Actions."""
+    send_msg("Test powiadomienia z Bukmacher Bot Pro AKO", target="types")
+
 if __name__=="__main__":
+    # odkomentuj, jeśli chcesz testować Telegram
+    # test_telegram()
     run()
