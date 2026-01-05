@@ -201,34 +201,3 @@ def check_results():
     for c in coupons:
         if c.get("status")!="pending": continue
         end_time = parser.isoparse(c["date"])
-        if now < end_time + timedelta(hours=4): continue
-
-        winner = random.choice([c["home"],c["away"]])
-        c["status"]="win" if winner==c["picked"] else "loss"
-        profit = round(c["win_val"]-c["stake"],2) if c["status"]=="win" else -c["stake"]
-        match_dt_str = end_time.strftime("%d-%m-%Y %H:%M UTC")
-        icon="✅" if c["status"]=="win" else "❌"
-        league_info = LEAGUE_INFO.get(c['league'], {"name": c['league'], "flag": ""})
-        text=f"{icon} *KUPON ROZLICZONY* ({escape_md(league_info['name'])})\n" \
-             f"🏟️ {escape_md(c['home'])} vs {escape_md(c['away'])}\n" \
-             f"🕓 {match_dt_str}\n" \
-             f"🎯 Twój typ: {escape_md(c['picked'])}\n" \
-             f"💰 Bilans: {profit:+.2f} PLN\n" \
-             f"🎯 Kurs: {c['odds']}"
-        send_msg(text,target="results")
-        updated=True
-    if updated:
-        save_coupons(coupons)
-
-# ================= RAPORT TYGODNIOWY =================
-def send_weekly_report():
-    coupons = load_coupons()
-    now = datetime.now(timezone.utc)
-    last_week = now - timedelta(days=7)
-
-    completed = [c for c in coupons if c.get("status") in ["win","loss"] and parser.isoparse(c["date"]) > last_week]
-    if not completed: return
-
-    wins = len([c for c in completed if c["status"]=="win"])
-    total = len(completed)
-    profit = sum((c["win_val"]-c["stake"]) if c["status"]=="win" else -c["stake"] for c in c_]()
