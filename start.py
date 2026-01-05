@@ -64,6 +64,32 @@ def send_msg(text, target="types"):
         if r.status_code != 200: print(f"Błąd TG: {r.text}")
     except Exception as e: print(f"Błąd sieci TG: {e}")
 
+# ================= RAPORT SKUTECZNOŚCI =================
+def send_daily_report():
+    coupons = load_coupons()
+    settled = [c for c in coupons if c.get("status") in ["win", "loss"]]
+    
+    if not settled:
+        return
+
+    total_stake = sum(c["stake"] for c in settled)
+    total_win = sum(c["win_val"] for c in settled if c["status"] == "win")
+    profit = total_win - total_stake
+    win_rate = (len([c for c in settled if c["status"] == "win"]) / len(settled)) * 100
+    yield_val = (profit / total_stake) * 100 if total_stake > 0 else 0
+
+    icon = "📈" if profit >= 0 else "📉"
+    
+    text = (
+        f"📊 <b>PODSUMOWANIE SKUTECZNOŚCI</b>\n\n"
+        f"✅ Rozliczone kupony: <b>{len(settled)}</b>\n"
+        f"🎯 Skuteczność: <b>{win_rate:.1f}%</b>\n"
+        f"💰 Łączny profit: <b>{profit:+.2f} PLN</b> {icon}\n"
+        f"💎 Yield: <b>{yield_val:+.2f}%</b>\n\n"
+        f"<i>Wskaźniki obliczone na podstawie całej historii.</i>"
+    )
+    send_msg(text, target="results")
+
 # ================= DYNAMICZNA FORMA =================
 def fetch_real_team_forms():
     new_forms = {}
@@ -109,7 +135,7 @@ def load_coupons():
 
 def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(coupons[-500:], f, indent=4)
+        json.dump(coupons[-1000:], f, indent=4) # Zwiększono historię do 1000
 
 # ================= LOGIKA MECZÓW =================
 def get_upcoming_matches(league):
@@ -172,7 +198,6 @@ def simulate_offers():
     coupons = load_coupons()
     now = datetime.now(timezone.utc)
     for league in LEAGUES:
-        print(f"Sprawdzanie: {league}")
         matches = get_upcoming_matches(league)
         for m in matches:
             m_dt = parser.isoparse(m["commence_time"])
@@ -189,8 +214,6 @@ def simulate_offers():
                 }
                 coupons.append(new_c)
                 info = LEAGUE_INFO.get(league, {"name": league, "flag": "⚽"})
-                
-                # Dodano informację o możliwej wygranej (win_val)
                 text = (
                     f"{info['flag']} <b>NOWA OFERTA</b> ({info['name']})\n"
                     f"🏟️ {m['home']} vs {m['away']}\n"
@@ -239,11 +262,12 @@ def check_results():
 
 def run():
     global DYNAMIC_FORMS
-    print("Start procesu...")
+    print("Aktualizacja danych...")
     DYNAMIC_FORMS = fetch_real_team_forms()
     simulate_offers()
     check_results()
-    print("Zakończono.")
+    send_daily_report() # Wywołanie raportu po każdym cyklu
+    print("Cykl zakończony.")
 
 if __name__ == "__main__":
     run()
