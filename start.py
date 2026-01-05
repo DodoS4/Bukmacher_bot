@@ -23,6 +23,7 @@ API_KEYS = [k for k in KEYS_POOL if k]
 COUPONS_FILE = "coupons.json"
 DAILY_LIMIT = 20
 STAKE = 5.0
+MAX_HOURS_AHEAD = 48  # maksymalnie 48h do rozpoczęcia meczu
 
 # Ligii do monitorowania (slug The Odds API)
 LEAGUES = [
@@ -30,7 +31,10 @@ LEAGUES = [
     "soccer_spain_la_liga",
     "soccer_italy_serie_a",
     "soccer_germany_bundesliga",
-    "soccer_france_ligue_one"
+    "soccer_france_ligue_one",
+    "basketball_nba",
+    "soccer_netherlands_eredivisie",    # Holandia
+    "soccer_portugal_primeira_liga"     # Portugalia
 ]
 
 # ================= WYSYŁKA =================
@@ -119,12 +123,21 @@ def simulate_offers():
     if daily_limit_reached(coupons):
         return
 
+    now = datetime.now(timezone.utc)
+
     for league in LEAGUES:
         matches = get_upcoming_matches(league)
         if not matches:
             continue
 
         for match in matches:
+            match_dt = parser.isoparse(match["commence_time"])
+            
+            # filtr: tylko mecze w ciągu najbliższych 48h
+            if match_dt < now or match_dt > now + timedelta(hours=MAX_HOURS_AHEAD):
+                continue
+
+            # unikamy duplikatów
             if any(c["home"]==match["home"] and c["away"]==match["away"] for c in coupons):
                 continue
 
@@ -144,11 +157,11 @@ def simulate_offers():
                 coupons.append(coupon)
 
                 # 🟢 Telegram
-                match_dt = parser.isoparse(pick["date"]).strftime("%d-%m-%Y %H:%M UTC")
+                match_dt_str = match_dt.strftime("%d-%m-%Y %H:%M UTC")
                 text = (
                     f"📊 *NOWA OFERTA* ({league.upper()})\n"
                     f"🏟️ {pick['home']} vs {pick['away']}\n"
-                    f"🕓 {match_dt}\n"
+                    f"🕓 {match_dt_str}\n"
                     f"✅ Twój typ: *{pick['selection']}*\n"
                     f"💰 Stawka: {STAKE} PLN\n"
                     f"🎯 Kurs: {pick['odds']}"
