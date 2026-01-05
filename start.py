@@ -205,10 +205,41 @@ def check_results():
     if updated:
         save_coupons(coupons)
 
+# ================= RAPORT TYGODNIOWY =================
+def send_weekly_report():
+    coupons = load_coupons()
+    now = datetime.now(timezone.utc)
+    last_week = now - timedelta(days=7)
+
+    completed = [c for c in coupons if c.get("status") in ["win", "loss"]
+                 and parser.isoparse(c["date"]) > last_week]
+
+    if not completed:
+        return
+
+    wins = len([c for c in completed if c["status"]=="win"])
+    total = len(completed)
+    profit = sum((c["win_val"]-c["stake"]) if c["status"]=="win" else -c["stake"] for c in completed)
+
+    icon = "🚀" if profit >= 0 else "📉"
+    text = (
+        f"📅 *PODSUMOWANIE TYGODNIA*\n"
+        f"━━━━━━━━━━━━━━━━━━━━\n"
+        f"✅ Trafione: {wins}/{total}\n"
+        f"💰 Zysk/Strata: {profit:+.2f} PLN {icon}\n"
+        f"━━━━━━━━━━━━━━━━━━━━"
+    )
+    send_msg(text,target="results")
+
 # ================= START =================
 def run():
     simulate_offers()
     check_results()
+
+    # Raport tygodniowy - poniedziałek 8:00 UTC
+    now = datetime.now(timezone.utc)
+    if now.weekday() == 0 and now.hour == 8:
+        send_weekly_report()
 
 if __name__=="__main__":
     run()
