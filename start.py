@@ -37,6 +37,18 @@ LEAGUES = [
     "soccer_portugal_primeira_liga"
 ]
 
+# ================= INFO O LIGACH I FLAGACH =================
+LEAGUE_INFO = {
+    "soccer_epl": {"name": "Premier League", "flag": "🏴"},
+    "soccer_spain_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
+    "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"},
+    "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
+    "soccer_france_ligue_one": {"name": "Ligue 1", "flag": "🇫🇷"},
+    "basketball_nba": {"name": "NBA", "flag": "🏀"},
+    "soccer_netherlands_eredivisie": {"name": "Eredivisie", "flag": "🇳🇱"},
+    "soccer_portugal_primeira_liga": {"name": "Primeira Liga", "flag": "🇵🇹"},
+}
+
 # ================= NARZĘDZIE ESCAPE =================
 def escape_md(text):
     """Escape znaków Markdown w Telegramie."""
@@ -168,8 +180,9 @@ def simulate_offers():
                 coupons.append(coupon)
 
                 match_dt_str = match_dt.strftime("%d-%m-%Y %H:%M UTC")
+                league_info = LEAGUE_INFO.get(league, {"name": league, "flag": ""})
                 text = (
-                    f"📊 *NOWA OFERTA* ({escape_md(league.upper())})\n"
+                    f"{league_info['flag']} *NOWA OFERTA* ({escape_md(league_info['name'])})\n"
                     f"🏟️ {escape_md(pick['home'])} vs {escape_md(pick['away'])}\n"
                     f"🕓 {match_dt_str}\n"
                     f"✅ Twój typ: *{escape_md(pick['selection'])}*\n"
@@ -195,7 +208,13 @@ def check_results():
         profit = round(c["win_val"]-c["stake"],2) if c["status"]=="win" else -c["stake"]
         match_dt_str = end_time.strftime("%d-%m-%Y %H:%M UTC")
         icon="✅" if c["status"]=="win" else "❌"
-        text=f"{icon} *KUPON ROZLICZONY* ({escape_md(c['league'].upper())})\n🏟️ {escape_md(c['home'])} vs {escape_md(c['away'])}\n🕓 {match_dt_str}\n🎯 Twój typ: {escape_md(c['picked'])}\n💰 Bilans: {profit:+.2f} PLN\n🎯 Kurs: {c['odds']}"
+        league_info = LEAGUE_INFO.get(c['league'], {"name": c['league'], "flag": ""})
+        text=f"{icon} *KUPON ROZLICZONY* ({escape_md(league_info['name'])})\n" \
+             f"🏟️ {escape_md(c['home'])} vs {escape_md(c['away'])}\n" \
+             f"🕓 {match_dt_str}\n" \
+             f"🎯 Twój typ: {escape_md(c['picked'])}\n" \
+             f"💰 Bilans: {profit:+.2f} PLN\n" \
+             f"🎯 Kurs: {c['odds']}"
         send_msg(text,target="results")
         updated=True
     if updated:
@@ -212,32 +231,4 @@ def send_weekly_report():
 
     wins = len([c for c in completed if c["status"]=="win"])
     total = len(completed)
-    profit = sum((c["win_val"]-c["stake"]) if c["status"]=="win" else -c["stake"] for c in completed)
-    icon = "🚀" if profit >= 0 else "📉"
-
-    text = (
-        f"📅 *PODSUMOWANIE TYGODNIA*\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"✅ Trafione: {wins}/{total}\n"
-        f"💰 Zysk/Strata: {profit:+.2f} PLN {icon}\n"
-        f"━━━━━━━━━━━━━━━━━━━━"
-    )
-    send_msg(text,target="results")
-
-# ================= START =================
-def run():
-    simulate_offers()
-    check_results()
-    now = datetime.now(timezone.utc)
-    if now.weekday()==0 and now.hour==8:
-        send_weekly_report()
-
-# ================= TEST TELEGRAM =================
-def test_telegram():
-    """Prosty test wysyłki, użyj w GitHub Actions."""
-    send_msg("Test powiadomienia z Bukmacher Bot Pro AKO", target="types")
-
-if __name__=="__main__":
-    # odkomentuj, jeśli chcesz testować Telegram
-    # test_telegram()
-    run()
+    profit = sum((c["win_val"]-c["stake"]) if c["status"]=="win" else -c["stake"] for c in c_]()
