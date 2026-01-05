@@ -2,7 +2,7 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    - cron: '0 8,12,17,21 * * *'
+    - cron: '0 8,12,17,21 * * *' # codziennie 8:00,12:00,17:00,21:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -11,6 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Pobierz kod
         uses: actions/checkout@v3
@@ -23,19 +24,21 @@ jobs:
           python-version: '3.9'
 
       - name: Instalacja bibliotek
-        run: pip install requests
+        run: |
+          pip install --upgrade pip
+          pip install requests python-dateutil
 
       - name: Synchronizacja bazy przed uruchomieniem
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git pull origin main
+          git pull origin main || echo "Brak zmian do pobrania"
 
       - name: Uruchomienie bota
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
-          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}  # <--- TA LINIA BYŁA BRAKUJĄCA
+          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
@@ -45,6 +48,6 @@ jobs:
 
       - name: Zapisanie zmian w bazie danych
         run: |
-          git add sent.json coupons.json || echo "Brak zmian"
+          git add coupons.json || echo "Brak zmian"
           git commit -m "Aktualizacja bazy [skip ci]" || exit 0
           git push origin main
