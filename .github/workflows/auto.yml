@@ -39,11 +39,7 @@ jobs:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
-          ODDS_KEY: ${{ secrets.ODDS_KEY }}
-          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
-          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
-          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
         run: python start.py
 
       - name: Zapisanie zmian w bazie danych
