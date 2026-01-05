@@ -2,7 +2,7 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    - cron: '0 8,12,17,21 * * *' # codziennie 8:00,12:00,17:00,21:00 UTC
+    - cron: '0 8,12,17,21 * * *'
   workflow_dispatch:
 
 permissions:
@@ -28,7 +28,7 @@ jobs:
           pip install --upgrade pip
           pip install requests python-dateutil
 
-      - name: Synchronizacja bazy przed uruchomieniem
+      - name: Synchronizacja bazy
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -39,7 +39,11 @@ jobs:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
-          FOOTBALL_DATA_KEY: ${{ secrets.FOOTBALL_DATA_KEY }}
+          ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
+          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python start.py
 
       - name: Zapisanie zmian w bazie danych
