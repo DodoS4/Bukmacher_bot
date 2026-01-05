@@ -8,13 +8,12 @@ T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_TYPES = os.getenv("T_CHAT")           
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS") 
 
-# Pobieranie 5 kluczy API
 KEYS_POOL = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_POOL if k]
 
 STAKE_SINGLE = 40.0  
-TAX_RATE = 0.88      # Podatek 12%
-VALUE_THRESHOLD = 1.02 # Próg 2% przewagi (1.02)
+TAX_RATE = 0.88      
+VALUE_THRESHOLD = 1.02 # 2% przewagi
 COUPONS_FILE = "coupons.json"
 
 SPORTS = {
@@ -28,193 +27,113 @@ SPORTS = {
     "soccer_portugal_primeira_liga": "⚽ LIGA PORTUGAL"
 }
 
-# ================= FUNKCJE POMOCNICZE =================
-
-def load_data(file):
-    if not os.path.exists(file): return []
-    try:
-        with open(file, "r", encoding="utf-8") as f: return json.load(f)
-    except: return []
-
-def save_data(file, data):
-    with open(file, "w", encoding="utf-8") as f:
-        json.dump(data[-500:], f, indent=4)
+# ================= DIAGNOSTYKA =================
+stats = {
+    "leagues_checked": 0,
+    "matches_found": 0,
+    "keys_working": 0,
+    "errors": []
+}
 
 def send_msg(text, target="types"):
     if not T_TOKEN: return
     chat_id = T_CHAT_RESULTS if target == "results" else T_CHAT_TYPES
-    if not chat_id: return
     url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
     try: requests.post(url, json={"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}, timeout=15)
-    except: pass
+    except Exception as e: print(f"Błąd wysyłki TG: {e}")
 
-# ================= STATYSTYKI =================
-
-def send_summary(days=1):
-    coupons = load_data(COUPONS_FILE)
-    now = datetime.now(timezone.utc)
-    start_period = now - timedelta(days=days)
-    
-    total_staked = 0
-    total_won = 0
-    wins = 0
-    losses = 0
-    
-    for c in coupons:
-        try:
-            c_time = datetime.fromisoformat(c.get("end_time", "").replace("Z", "+00:00"))
-            if c_time > start_period and c.get("status") != "pending":
-                total_staked += c["stake"]
-                if c["status"] == "win":
-                    total_won += c["win_val"]
-                    wins += 1
-                else:
-                    losses += 1
-        except: continue
-    
-    if total_staked > 0:
-        profit = round(total_won - total_staked, 2)
-        total_bets = wins + losses
-        accuracy = round((wins / total_bets) * 100, 1)
-        yield_val = round((profit / total_staked) * 100, 2)
-        
-        title = "📊 PODSUMOWANIE DNIA" if days == 1 else "🔥 RAPORT TYGODNIOWY"
-        icon = "📈" if profit >= 0 else "📉"
-        
-        msg = (
-            f"*{title}*\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"📅 Okres: `Ostatnie {days} dni`\n"
-            f"💰 Postawiono: `{total_staked:.2f} PLN`\n"
-            f"💵 Wygrano: `{total_won:.2f} PLN`\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"🎯 Skuteczność: `{accuracy}%`\n"
-            f"💎 *Yield: {yield_val:+.2f}%*\n"
-            f"{icon} Zysk/Strata: *{profit:+.2f} PLN*\n"
-            f"━━━━━━━━━━━━━━━\n"
-            f"✅ Trafione: `{wins}` | ❌ Przegrane: `{losses}`"
-        )
-        send_msg(msg, target="results")
-
-# ================= SELEKCJA Z LOGIKĄ VALUE =================
+# ================= LOGIKA TESTOWA =================
 
 def find_new_bets():
-    coupons = load_data(COUPONS_FILE)
-    sent_ids = [m["id"] for c in coupons for m in c["matches"]]
-    
-    potential_bets = []
+    coupons = []
+    if os.path.exists(COUPONS_FILE):
+        try:
+            with open(COUPONS_FILE, "r") as f: coupons = json.load(f)
+        except: pass
+        
+    sent_ids = [m["id"] for c in coupons for m in c.get("matches", [])]
+    found_any_value = False
 
     for sport_key, league_label in SPORTS.items():
+        stats["leagues_checked"] += 1
         success = False
+        
         for key in API_KEYS:
             if success: break
             try:
                 r = requests.get(f"https://api.the-odds-api.com/v4/sports/{sport_key}/odds/", 
                                params={"apiKey": key, "regions": "eu", "markets": "h2h"}, timeout=15)
                 
-                if r.status_code == 429: continue 
-                if r.status_code != 200: continue
-                
-                events = r.json()
-                success = True 
+                if r.status_code == 200:
+                    stats["keys_working"] = max(stats["keys_working"], API_KEYS.index(key) + 1)
+                    events = r.json()
+                    stats["matches_found"] += len(events)
+                    success = True 
 
-                for ev in events:
-                    if ev["id"] in sent_ids: continue
-                    
-                    # Szukamy kursu odniesienia (Pinnacle lub Betfair Exchange)
-                    fair_odds = {}
-                    for b in ev.get("bookmakers", []):
-                        if b['key'] in ['pinnacle', 'betfair_ex']:
-                            for outcome in b['markets'][0]['outcomes']:
-                                fair_odds[outcome['name']] = outcome['price']
-
-                    if not fair_odds: continue
-
-                    for bookie in ev.get("bookmakers", []):
-                        # Pomijamy giełdy i Pinnacle przy szukaniu okazji u buków lokalnych
-                        if bookie['key'] in ['pinnacle', 'betfair_ex', 'matchbook']: continue
+                    for ev in events:
+                        if ev["id"] in sent_ids: continue
                         
-                        for outcome in bookie['markets'][0]['outcomes']:
-                            local_price = outcome['price']
-                            o_name = outcome['name']
-                            reference_price = fair_odds.get(o_name)
+                        fair_odds = {}
+                        for b in ev.get("bookmakers", []):
+                            if b['key'] in ['pinnacle', 'betfair_ex']:
+                                for outcome in b['markets'][0]['outcomes']:
+                                    fair_odds[outcome['name']] = outcome['price']
+
+                        if not fair_odds: continue
+
+                        for bookie in ev.get("bookmakers", []):
+                            if bookie['key'] in ['pinnacle', 'betfair_ex']: continue
                             
-                            # Filtrujemy kursy (2.10 - 2.80) i sprawdzamy Value 2%
-                            if reference_price and 2.10 <= local_price <= 2.80:
-                                # (Kurs * 0.88) musi być większy niż (Kurs Odniesienia * 1.02)
-                                if (local_price * TAX_RATE) > (reference_price * VALUE_THRESHOLD):
-                                    val_pct = round(((local_price * TAX_RATE) / reference_price - 1) * 100, 2)
-                                    
-                                    potential_bets.append({
-                                        "ev": ev, "outcome": outcome, "price": local_price, 
-                                        "value": val_pct, "league": league_label, "sport_key": sport_key, 
-                                        "commence_time": ev['commence_time']
-                                    })
-            except: continue
+                            for outcome in bookie['markets'][0]['outcomes']:
+                                local_price = outcome['price']
+                                reference_price = fair_odds.get(outcome['name'])
+                                
+                                if reference_price and 2.10 <= local_price <= 2.80:
+                                    if (local_price * TAX_RATE) > (reference_price * VALUE_THRESHOLD):
+                                        val_pct = round(((local_price * TAX_RATE) / reference_price - 1) * 100, 2)
+                                        found_any_value = True
+                                        
+                                        msg = (f"💎 *VALUE DETECTED (+{val_pct}% )*\n"
+                                               f"🏟️ `{ev['home_team']} vs {ev['away_team']}`\n"
+                                               f"✅ Typ: *{outcome['name']}* | Kurs: {local_price:.2f}")
+                                        send_msg(msg)
+                                        
+                                        coupons.append({
+                                            "id": ev["id"], "status": "pending", "stake": STAKE_SINGLE, 
+                                            "win_val": round(STAKE_SINGLE * local_price * TAX_RATE, 2),
+                                            "end_time": ev['commence_time'],
+                                            "matches": [{"id": ev["id"], "sport_key": sport_key, "picked": outcome['name']}]
+                                        })
+                elif r.status_code == 401:
+                    stats["errors"].append(f"Klucz {key[:5]}... nieprawidłowy")
+            except Exception as e:
+                stats["errors"].append(str(e))
 
-    # Sortowanie i wysyłka
-    potential_bets = sorted(potential_bets, key=lambda x: x['value'], reverse=True)
-    
-    for bet in potential_bets:
-        win_val = round(STAKE_SINGLE * bet['price'] * TAX_RATE, 2)
-        commence_dt = datetime.fromisoformat(bet['commence_time'].replace('Z', '+00:00'))
-        
-        msg = (f"💎 *VALUE DETECTED (+{bet['value']}% )*\n"
-               f"━━━━━━━━━━━━━━━\n"
-               f"🏟️ `{bet['ev']['home_team']} vs {bet['ev']['away_team']}`\n"
-               f"✅ Typ: *{bet['outcome']['name']}*\n"
-               f"🏆 {bet['league']}\n"
-               f"📅 {commence_dt.strftime('%d.%m %H:%M')} | 📈 Kurs: {bet['price']:.2f}\n"
-               f"━━━━━━━━━━━━━━━\n"
-               f"💰 Stawka: `{STAKE_SINGLE} PLN` | Wygrana: `{win_val} PLN`")
-        
-        send_msg(msg, target="types")
-        coupons.append({
-            "id": bet['ev']["id"], "status": "pending", "stake": STAKE_SINGLE, "win_val": win_val, 
-            "end_time": bet['ev']["commence_time"], 
-            "matches": [{"id": bet['ev']["id"], "sport_key": bet['sport_key'], "picked": bet['outcome']['name']}]
-        })
-    
-    save_data(COUPONS_FILE, coupons)
-
-def check_results():
-    coupons = load_data(COUPONS_FILE)
-    updated = False
-    now = datetime.now(timezone.utc)
-    for c in coupons:
-        if c.get("status") != "pending": continue
-        try:
-            start_time = datetime.fromisoformat(c["end_time"].replace("Z", "+00:00"))
-            if now < start_time + timedelta(hours=4): continue
-            
-            for key in API_KEYS:
-                try:
-                    r = requests.get(f"https://api.the-odds-api.com/v4/sports/{c['matches'][0]['sport_key']}/scores/", 
-                                   params={"apiKey": key, "daysFrom": 3}, timeout=15)
-                    score_data = next((s for s in r.json() if s["id"] == c["id"] and s.get("completed")), None)
-                    if score_data:
-                        h_t, a_t = score_data['home_team'], score_data['away_team']
-                        sl = score_data.get("scores", [])
-                        h_s = int(next(x['score'] for x in sl if x['name'] == h_t))
-                        a_s = int(next(x['score'] for x in sl if x['name'] == a_t))
-                        winner = h_t if h_s > a_s else (a_t if a_s > h_s else "Remis")
-                        c["status"] = "win" if winner == c['matches'][0]['picked'] else "loss"
-                        updated = True
-                        profit = round(c['win_val'] - c['stake'], 2) if c["status"] == "win" else -c['stake']
-                        res_msg = (f"{'✅' if c['status'] == 'win' else '❌'} *WYNIK MECZU*\n━━━━━━━━━━━━━━━\n🏟️ `{h_t} {h_s}:{a_s} {a_t}`\n🎯 Typ: `{c['matches'][0]['picked']}`\n💰 Bilans: `{profit:+.2f} PLN`")
-                        send_msg(res_msg, target="results")
-                    break
-                except: continue
-        except: continue
-    if updated: save_data(COUPONS_FILE, coupons)
+    with open(COUPONS_FILE, "w") as f: json.dump(coupons[-500:], f, indent=4)
+    return found_any_value
 
 def run():
-    check_results()
-    find_new_bets()
-    now = datetime.now(timezone.utc)
-    if now.hour >= 20:
-        send_summary(days=1)
-        if now.weekday() == 6: send_summary(days=7)
+    # Raport startowy - abyś wiedział, że bot ruszył
+    start_msg = (f"🚀 *TEST STARTU BOTA*\n"
+                 f"🔑 Liczba kluczy w .env: `{len(API_KEYS)}`\n"
+                 f"📡 Sprawdzam: `{len(SPORTS)}` lig...")
+    send_msg(start_msg)
+
+    found = find_new_bets()
+
+    # Raport końcowy - diagnostyka
+    status_icon = "✅" if stats["matches_found"] > 0 else "⚠️"
+    diag_msg = (f"{status_icon} *DIAGNOSTYKA KOŃCOWA*\n"
+                f"━━━━━━━━━━━━━━━\n"
+                f"🏟️ Znaleziono meczów: `{stats['matches_found']}`\n"
+                f"🏆 Przeszukano lig: `{stats['leagues_checked']}`\n"
+                f"🔑 Działające klucze: `{stats['keys_working']}/{len(API_KEYS)}`\n"
+                f"💰 Znaleziono Value: `{'TAK' if found else 'NIE'}`")
+    
+    if stats["errors"]:
+        diag_msg += f"\n❌ *Błędy:* `{stats['errors'][0][:50]}`"
+    
+    send_msg(diag_msg)
 
 if __name__ == "__main__":
     run()
