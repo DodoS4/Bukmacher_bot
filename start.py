@@ -4,7 +4,7 @@ import os
 from datetime import datetime, timedelta, timezone
 from dateutil import parser
 
-# ================= KONFIGURACJA =================
+# ================= KONFIGURACJA EKSPERCKA =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
@@ -13,23 +13,17 @@ KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY
 API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
-STAKE = 5.0
+INITIAL_BANKROLL = 100.0  # Twój startowy budżet
 MAX_HOURS_AHEAD = 48
 
-# KLUCZOWE PARAMETRY DLA JAKOŚCI
 VALUE_THRESHOLD = 0.07  
 MIN_ODDS_SOCCER = 2.50  
 MIN_ODDS_NHL = 2.30     
 
-# FINALNA LISTA LIG (STABILNE I DOCHODOWE)
 LEAGUES = [
-    "icehockey_nhl", 
-    "basketball_nba", 
-    "soccer_epl", 
-    "soccer_england_championship", 
-    "soccer_poland_ekstraklasa",
-    "soccer_germany_bundesliga", 
-    "soccer_uefa_champs_league"
+    "icehockey_nhl", "basketball_nba", "soccer_epl", 
+    "soccer_england_championship", "soccer_poland_ekstraklasa",
+    "soccer_germany_bundesliga", "soccer_uefa_champs_league"
 ]
 
 LEAGUE_INFO = {
@@ -54,46 +48,57 @@ def send_msg(text, target="types"):
     try: requests.post(url, json=payload, timeout=15)
     except: pass
 
+# ================= INTELIGENTNE STAWKOWANIE =================
+def calculate_smart_stake(edge, odds, current_bankroll):
+    """Implementacja Fractional Kelly Criterion (B=0.1)"""
+    # Kelly % = (Edge) / (Odds - 1)
+    kelly_pct = edge / (odds - 1)
+    # Stawiamy tylko 10% tego co sugeruje Kelly dla bezpieczeństwa (Fractional Kelly)
+    safe_kelly = kelly_pct * 0.1 
+    
+    # Ograniczenia: min 2 PLN, max 10% całego budżetu na jeden mecz
+    final_stake = current_bankroll * safe_kelly
+    if final_stake < 2.0: final_stake = 2.0
+    if final_stake > (current_bankroll * 0.10): final_stake = current_bankroll * 0.10
+    
+    return round(final_stake, 2)
+
 # ================= STATYSTYKI I RAPORTY =================
 def generate_daily_report():
     coupons = load_coupons()
     settled = [c for c in coupons if c["status"] in ["won", "lost"]]
     
-    if not settled:
-        return "📊 <b>RAPORT:</b> Brak rozliczonych typów w bazie."
-
     total_staked = sum(float(c["stake"]) for c in settled)
     total_won = sum(float(c["win_val"]) for c in settled)
-    profit = round(total_won - total_staked, 2)
-    yield_val = round((profit / total_staked * 100), 2) if total_staked > 0 else 0
+    current_profit = round(total_won - total_staked, 2)
+    current_bankroll = INITIAL_BANKROLL + current_profit
+    yield_val = round((current_profit / total_staked * 100), 2) if total_staked > 0 else 0
     
-    # Statystyki per liga
+    if not settled:
+        return "📊 <b>RAPORT:</b> Czekam na pierwsze rozliczenia meczów."
+
     league_stats = {}
     for c in settled:
-        l_id = c.get("league", "Inne")
-        l_name = LEAGUE_INFO.get(l_id, {"name": l_id})["name"]
-        if l_name not in league_stats:
-            league_stats[l_name] = 0
+        l_name = LEAGUE_INFO.get(c.get("league"), {"name": "Inne"})["name"]
+        if l_name not in league_stats: league_stats[l_name] = 0
         league_stats[l_name] += (float(c["win_val"]) - float(c["stake"]))
 
     sorted_leagues = sorted(league_stats.items(), key=lambda item: item[1], reverse=True)
-    
     league_report = ""
     for name, l_profit in sorted_leagues:
         l_icon = "🟢" if l_profit >= 0 else "🔴"
         league_report += f"{l_icon} {name}: <b>{round(l_profit, 2)} PLN</b>\n"
 
-    icon = "📈" if profit >= 0 else "📉"
+    icon = "🚀" if current_profit >= 0 else "📉"
     
-    report = (f"📊 <b>PODSUMOWANIE FINANSOWE</b>\n\n"
-              f"💰 Suma stawek: <b>{total_staked} PLN</b>\n"
-              f"💰 Suma wygranych: <b>{total_won} PLN</b>\n"
+    report = (f"📊 <b>RAPORT PORTFELA (9.5/10)</b>\n\n"
+              f"💰 Stan konta: <b>{round(current_bankroll, 2)} PLN</b>\n"
+              f"{icon} Zysk netto: <b>{current_profit} PLN</b>\n"
+              f"🎯 Yield: <b>{yield_val}%</b>\n"
               f"----------------------------\n"
-              f"{icon} CAŁKOWITY ZYSK: <b>{profit} PLN</b>\n"
-              f"🎯 Yield: <b>{yield_val}%</b>\n\n"
               f"🏆 <b>ZYSKI WG LIG:</b>\n"
               f"{league_report}\n"
-              f"<i>Raport generowany automatycznie o 8:00</i>")
+              f"<i>Algorytm Kelly'ego dba o Twoje ryzyko.</i>")
     return report
 
 # ================= ZARZĄDZANIE DANYMI =================
@@ -108,7 +113,7 @@ def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(coupons[-2000:], f, indent=4)
 
-# ================= ANALIZA FORMALNA =================
+# ================= ANALIZA I FORMALISTYKA =================
 def fetch_real_team_forms():
     new_forms, last_times = {}, {}
     for league in LEAGUES:
@@ -149,18 +154,12 @@ def generate_pick(match):
     h_o, a_o, d_o = match["odds"]["home"], match["odds"]["away"], match["odds"].get("draw")
     if not h_o or not a_o: return None
     
-    if match["league"] == "icehockey_nhl":
-        curr_min = MIN_ODDS_NHL
-        d_o = None 
-    else:
-        curr_min = MIN_ODDS_SOCCER
-
+    curr_min = MIN_ODDS_NHL if match["league"] == "icehockey_nhl" else MIN_ODDS_SOCCER
     raw_sum = (1/h_o + 1/a_o + (1/d_o if d_o else 0))
     p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
     p_d = ((1/d_o)/raw_sum) if d_o else 0
     
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
-    
     final_h = (0.20 * f_h) + (0.80 * p_h) + 0.02 
     final_a = (0.20 * f_a) + (0.80 * p_a) - 0.02
     final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else 0
@@ -202,23 +201,18 @@ def check_results():
                         scores_list = match.get("scores", [])
                         scores = {s["name"]: int(s["score"]) for s in scores_list}
                         h_s, a_s = scores.get(c["home"], 0), scores.get(c["away"], 0)
-                        
                         winner = "Remis"
                         if h_s > a_s: winner = c["home"]
                         elif a_s > h_s: winner = c["away"]
                         
                         if c["picked"] == winner:
                             c["status"], c["win_val"] = "won", round(c["odds"] * c["stake"], 2)
-                            icon, note = "✅", f"Wygrana: <b>{c['win_val']} PLN</b>"
+                            icon = "✅"
                         else:
                             c["status"], c["win_val"] = "lost", 0
-                            icon, note = "❌", "Przegrana"
+                            icon = "❌"
                         
-                        send_msg(f"{icon} <b>ROZLICZENIE</b>\n"
-                                 f"🏟️ {c['home']} - {c['away']}\n"
-                                 f"✅ Typ: <b>{c['picked']}</b>\n"
-                                 f"⚽ Wynik: <b>{h_s}:{a_s}</b>\n"
-                                 f"💰 {note}", target="results")
+                        send_msg(f"{icon} <b>ROZLICZENIE</b>\n{c['home']} - {c['away']}\nWynik: {h_s}:{a_s}\nZysk: {round(c['win_val'] - c['stake'], 2)} PLN", target="results")
                 break
             except: continue
     save_coupons(coupons)
@@ -228,14 +222,14 @@ def run():
     global DYNAMIC_FORMS, LAST_MATCH_TIME
     check_results()
     
-    # Wysyłka raportu o 8:00 rano
-    now_local = datetime.now()
-    if now_local.hour == 8 and now_local.minute < 15:
-        report_msg = generate_daily_report()
-        send_msg(report_msg, target="results")
+    coupons = load_coupons()
+    settled = [c for c in coupons if c["status"] in ["won", "lost"]]
+    current_bankroll = INITIAL_BANKROLL + sum(float(c["win_val"]) - float(c["stake"]) for c in settled)
+
+    if datetime.now().hour == 8 and datetime.now().minute < 15:
+        send_msg(generate_daily_report(), target="results")
 
     DYNAMIC_FORMS, LAST_MATCH_TIME = fetch_real_team_forms()
-    coupons = load_coupons()
     now_utc = datetime.now(timezone.utc)
     all_picks = []
 
@@ -264,27 +258,21 @@ def run():
                 break
             except: continue
 
-    all_picks = sorted(all_picks, key=lambda x: x["val"], reverse=True)
-    top_5 = all_picks[:5]
+    top_5 = sorted(all_picks, key=lambda x: x["val"], reverse=True)[:5]
     
     for p in top_5:
-        m = p["m"]
-        m_dt = p["m_dt"]
         edge_pct = round(p["val"] * 100, 2)
+        dynamic_stake = calculate_smart_stake(p["val"], p["odds"], current_bankroll)
         info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
         
-        label = "💎 BEST VALUE" if edge_pct > 12 else "🔥 HIGH CONFIDENCE"
-
-        msg = (f"{info['flag']} <b>{label}</b> ({info['name']})\n"
-               f"🏟️ {m['home_team']} vs {m['away_team']}\n"
-               f"🕒 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n"
-               f"✅ Typ: <b>{p['sel']}</b>\n"
-               f"🎯 Kurs: <b>{p['odds']}</b>\n"
-               f"📊 Przewaga (Edge): <b>+{edge_pct}%</b>\n"
-               f"💰 Stawka: <b>{STAKE} PLN</b>")
+        msg = (f"{info['flag']} <b>{info['name']}</b>\n"
+               f"🏟️ {p['m']['home_team']} - {p['m']['away_team']}\n"
+               f"✅ Typ: <b>{p['sel']}</b> | Kurs: <b>{p['odds']}</b>\n"
+               f"📊 Przewaga: <b>+{edge_pct}%</b>\n"
+               f"💰 Stawka: <b>{dynamic_stake} PLN</b>")
         
         send_msg(msg)
-        coupons.append({"home": m["home_team"], "away": m["away_team"], "picked": p["sel"], "odds": p["odds"], "stake": STAKE, "status": "pending", "date": m["commence_time"], "league": p["league"], "win_val": 0})
+        coupons.append({"home": p['m']["home_team"], "away": p['m']["away_team"], "picked": p["sel"], "odds": p["odds"], "stake": dynamic_stake, "status": "pending", "date": p['m']["commence_time"], "league": p["league"], "win_val": 0})
     
     save_coupons(coupons)
 
