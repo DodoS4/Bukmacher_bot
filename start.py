@@ -16,8 +16,8 @@ COUPONS_FILE = "coupons.json"
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
-# Filtry kursów - BEZ LIMITU GÓRNEGO
-MIN_ODDS = 2.45
+# Filtry kursów - BRAK LIMITU GÓRNEGO
+MIN_ODDS = 2.00
 MAX_ODDS = 999.0 
 VALUE_THRESHOLD = 0.02 
 
@@ -41,6 +41,7 @@ LEAGUE_INFO = {
 }
 
 DYNAMIC_FORMS = {}
+LAST_MATCH_TIME = {}
 
 # ================= POMOCNICZE =================
 def send_msg(text, target="types"):
@@ -62,9 +63,10 @@ def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(coupons[-1000:], f, indent=4) 
 
-# ================= LOGIKA FORM I KURSÓW =================
+# ================= LOGIKA FORM, KURSÓW I B2B =================
 def fetch_real_team_forms():
     new_forms = {}
+    last_times = {}
     for league in LEAGUES:
         for api_key in API_KEYS:
             try:
@@ -73,8 +75,12 @@ def fetch_real_team_forms():
                 if r.status_code != 200: continue
                 data = r.json()
                 for match in data:
-                    if not match.get("completed"): continue
                     h_t, a_t = match["home_team"], match["away_team"]
+                    m_time = parser.isoparse(match["commence_time"])
+                    for team in [h_t, a_t]:
+                        if team not in last_times or m_time > last_times[team]:
+                            last_times[team] = m_time
+                    if not match.get("completed"): continue
                     scores = {s["name"]: int(s["score"]) for s in match["scores"]}
                     h_s, a_s = scores.get(h_t, 0), scores.get(a_t, 0)
                     if h_t not in new_forms: new_forms[h_t] = []
@@ -84,7 +90,7 @@ def fetch_real_team_forms():
                     else: new_forms[h_t].append(0.5); new_forms[a_t].append(0.5)
                 break 
             except: continue
-    return new_forms
+    return new_forms, last_times
 
 def get_team_form(team_name):
     res = DYNAMIC_FORMS.get(team_name, [])
@@ -107,9 +113,7 @@ def get_upcoming_matches(league):
                     if o["name"] == h: h_o = o["price"]
                     elif o["name"] == a: a_o = o["price"]
                     else: d_o = o["price"]
-                
                 if league == "icehockey_nhl": d_o = None
-
                 matches.append({"home": h, "away": a, "league": league, "odds": {"home": h_o, "away": a_o, "draw": d_o}, "commence_time": event["commence_time"]})
             if matches: break
         except: continue
@@ -122,19 +126,36 @@ def generate_pick(match):
     p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
     p_d = ((1/d_o)/raw_sum) if d_o else 0
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
+    
     final_h = (0.20 * f_h) + (0.80 * p_h)
     final_a = (0.20 * f_a) + (0.80 * p_a)
     final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else -1
+
+    match_start = parser.isoparse(match["commence_time"])
+    # Silniejszy efekt B2B dla koszykówki
+    b2b_penalty = 0.05 if match["league"] == "basketball_nba" else 0.03
+    
+    for team in [match["home"], match["away"]]:
+        last_m = LAST_MATCH_TIME.get(team)
+        if last_m and (match_start - last_m).total_seconds() < 108000:
+            if team == match["home"]:
+                final_h -= b2b_penalty
+                final_a += b2b_penalty
+            else:
+                final_a -= b2b_penalty
+                final_h += b2b_penalty
+
     options = []
     if h_o >= MIN_ODDS: options.append({"sel": match["home"], "odds": h_o, "val": final_h - (1/h_o)})
     if a_o >= MIN_ODDS: options.append({"sel": match["away"], "odds": a_o, "val": final_a - (1/a_o)})
     if d_o and d_o >= MIN_ODDS: options.append({"sel": "Draw", "odds": d_o, "val": final_d - (1/d_o)})
+    
     if not options: return None
     best = max(options, key=lambda x: x['val'])
     if best['val'] < VALUE_THRESHOLD or best['odds'] > MAX_ODDS: return None
     return {"selection": best['sel'], "odds": best['odds'], "val": best['val']}
 
-# ================= SYMULACJA Z DATAMI DLA WSZYSTKICH LIG =================
+# ================= SYMULACJA =================
 def simulate_offers():
     coupons = load_coupons()
     now = datetime.now(timezone.utc)
@@ -146,45 +167,35 @@ def simulate_offers():
             m_dt = parser.isoparse(m["commence_time"])
             if m_dt < now or m_dt > now + timedelta(hours=MAX_HOURS_AHEAD): continue
             if any(c["home"] == m["home"] and c["away"] == m["away"] for c in coupons): continue
-            
             pick = generate_pick(m)
             if pick:
-                # Każdy pick teraz zawiera m_dt i dane meczu m
                 pick.update({"m": m, "league": league, "m_dt": m_dt})
                 all_picks.append(pick)
 
-    # Logika Top 5 dla NHL
     nhl_picks = [p for p in all_picks if p['league'] == "icehockey_nhl"]
     other_picks = [p for p in all_picks if p['league'] != "icehockey_nhl"]
-    
     nhl_picks.sort(key=lambda x: x['val'], reverse=True)
-    final_nhl = nhl_picks[:5]
-    
-    # Połączone oferty (wszystkie mają teraz przypisane m_dt)
-    final_selection = final_nhl + other_picks
+    final_selection = nhl_picks[:5] + other_picks
 
     for p in final_selection:
         m = p['m']
         m_dt = p['m_dt']
         win_val = round(p['odds'] * STAKE, 2)
+        b2b_alert = ""
+        h_last = LAST_MATCH_TIME.get(m["home"])
+        a_last = LAST_MATCH_TIME.get(m["away"])
+        if h_last and (m_dt - h_last).total_seconds() < 108000: b2b_alert = "\n⚠️ <i>Dom gra B2B!</i>"
+        if a_last and (m_dt - a_last).total_seconds() < 108000: b2b_alert = "\n⚠️ <i>Wyjazd gra B2B!</i>"
+
         coupons.append({"home": m["home"], "away": m["away"], "picked": p["selection"], "odds": p["odds"], "stake": STAKE, "status": "pending", "date": m["commence_time"], "win_val": win_val, "league": p['league']})
-        
         info = LEAGUE_INFO.get(p['league'], {"name": p['league'], "flag": "⚽"})
         prefix = "⭐️ TOP NHL" if p['league'] == "icehockey_nhl" else "✅ NOWA OFERTA"
-        
-        # Data i godzina dla każdej ligi (Piłka, NBA, NHL)
-        send_msg(f"{info['flag']} <b>{prefix}</b> ({info['name']})\n"
-                 f"🏟️ {m['home']} vs {m['away']}\n"
-                 f"🕓 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n"
-                 f"✅ Typ: <b>{p['selection']}</b>\n"
-                 f"🎯 Kurs: <b>{p['odds']}</b>\n"
-                 f"💰 Możliwa wygrana: <b>{win_val} PLN</b>")
-    
+        send_msg(f"{info['flag']} <b>{prefix}</b> ({info['name']})\n🏟️ {m['home']} vs {m['away']}{b2b_alert}\n🕓 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n✅ Typ: <b>{p['selection']}</b>\n🎯 Kurs: <b>{p['odds']}</b>\n💰 Wygrana: <b>{win_val} PLN</b>")
     save_coupons(coupons)
 
 def run():
-    global DYNAMIC_FORMS
-    DYNAMIC_FORMS = fetch_real_team_forms()
+    global DYNAMIC_FORMS, LAST_MATCH_TIME
+    DYNAMIC_FORMS, LAST_MATCH_TIME = fetch_real_team_forms()
     simulate_offers()
 
 if __name__ == "__main__":
