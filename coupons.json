@@ -218,5 +218,55 @@
         "status": "pending",
         "date": "2026-01-07T04:10:00Z",
         "league": "basketball_nba"
+    },
+    {
+        "home": "Winnipeg Jets",
+        "away": "Vegas Golden Knights",
+        "picked": "Vegas Golden Knights",
+        "odds": 2.55,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T01:00:00Z",
+        "league": "icehockey_nhl"
+    },
+    {
+        "home": "Carolina Hurricanes",
+        "away": "Dallas Stars",
+        "picked": "Dallas Stars",
+        "odds": 2.8,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T00:00:00Z",
+        "league": "icehockey_nhl"
+    },
+    {
+        "home": "Philadelphia Flyers",
+        "away": "Anaheim Ducks",
+        "picked": "Anaheim Ducks",
+        "odds": 3.05,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T00:00:00Z",
+        "league": "icehockey_nhl"
+    },
+    {
+        "home": "Edmonton Oilers",
+        "away": "Nashville Predators",
+        "picked": "Nashville Predators",
+        "odds": 3.35,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T02:00:00Z",
+        "league": "icehockey_nhl"
+    },
+    {
+        "home": "Buffalo Sabres",
+        "away": "Vancouver Canucks",
+        "picked": "Vancouver Canucks",
+        "odds": 3.4,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T00:00:00Z",
+        "league": "icehockey_nhl"
     }
 ]
