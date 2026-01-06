@@ -16,7 +16,7 @@ COUPONS_FILE = "coupons.json"
 INITIAL_BANKROLL = 100.0  
 MAX_HOURS_AHEAD = 48
 
-# FILTRY - Złoty środek (5% Edge)
+# FILTRY - Złoty środek (Edge 5%)
 VALUE_THRESHOLD = 0.05  
 MIN_ODDS_SOCCER = 2.50  
 MIN_ODDS_NHL = 2.30     
@@ -60,7 +60,7 @@ def calculate_smart_stake(edge, odds, current_bankroll):
     
     return round(final_stake, 2)
 
-# ================= RAPORTY FINANSOWE =================
+# ================= RAPORTY FINANSOWE Z ALERTEM SUKCESU =================
 def generate_daily_report():
     coupons = load_coupons()
     settled = [c for c in coupons if c["status"] in ["won", "lost"]]
@@ -68,9 +68,15 @@ def generate_daily_report():
     total_staked = sum(float(c["stake"]) for c in settled)
     total_won = sum(float(c["win_val"]) for c in settled)
     current_profit = round(total_won - total_staked, 2)
-    current_bankroll = INITIAL_BANKROLL + current_profit
+    current_bankroll = round(INITIAL_BANKROLL + current_profit, 2)
     yield_val = round((current_profit / total_staked * 100), 2) if total_staked > 0 else 0
     
+    # Alert wzrostu bankrollu
+    success_msg = ""
+    if current_bankroll > INITIAL_BANKROLL:
+        growth = round(((current_bankroll - INITIAL_BANKROLL) / INITIAL_BANKROLL) * 100, 1)
+        success_msg = f"\n📈 <b>Wzrost kapitału: +{growth}%</b>\n⭐ System zarabia! Stawki Kelly'ego zostały automatycznie zwiększone."
+
     league_stats = {}
     for c in settled:
         l_id = c.get("league", "Inne")
@@ -83,12 +89,13 @@ def generate_daily_report():
 
     icon = "🚀" if current_profit >= 0 else "📉"
     return (f"📊 <b>RAPORT PORTFELA (9.5/10)</b>\n\n"
-            f"💰 Stan konta: <b>{round(current_bankroll, 2)} PLN</b>\n"
+            f"💰 Stan konta: <b>{current_bankroll} PLN</b>\n"
             f"{icon} Zysk netto: <b>{current_profit} PLN</b>\n"
             f"🎯 Yield: <b>{yield_val}%</b>\n"
+            f"{success_msg}\n"
             f"----------------------------\n"
             f"🏆 <b>ZYSKI WG LIG:</b>\n{league_report if league_report else 'Brak danych'}\n"
-            f"<i>Algorytm Kelly'ego dba o Twoje 100 PLN.</i>")
+            f"<i>Algorytm Kelly'ego dynamicznie skaluje stawki.</i>")
 
 # ================= LOGIKA ANALIZY I ROZLICZEŃ =================
 def load_coupons():
@@ -242,7 +249,6 @@ def run():
         dynamic_stake = calculate_smart_stake(p["val"], p["odds"], current_bankroll)
         info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
         
-        # POWRÓT DO TWOJEGO ULUBIONEGO FORMATU WIZUALNEGO:
         label = "💎 BEST VALUE" if edge_pct > 12 else "🔥 HIGH CONFIDENCE"
 
         msg = (f"{info['flag']} <b>{label}</b> ({info['name']})\n"
