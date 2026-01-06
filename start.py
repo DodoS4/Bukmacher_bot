@@ -17,9 +17,9 @@ STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
 # Filtry kursów - BRAK LIMITU GÓRNEGO
-MIN_ODDS = 2.00
+MIN_ODDS = 2.5
 MAX_ODDS = 999.0 
-VALUE_THRESHOLD = 0.02 
+VALUE_THRESHOLD = 0.03
 
 LEAGUES = [
     "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a",
