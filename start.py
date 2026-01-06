@@ -108,7 +108,6 @@ def get_upcoming_matches(league):
                     elif o["name"] == a: a_o = o["price"]
                     else: d_o = o["price"]
                 
-                # NHL: Brak remisów (Moneyline logic)
                 if league == "icehockey_nhl": d_o = None
 
                 matches.append({"home": h, "away": a, "league": league, "odds": {"home": h_o, "away": a_o, "draw": d_o}, "commence_time": event["commence_time"]})
@@ -135,11 +134,10 @@ def generate_pick(match):
     if best['val'] < VALUE_THRESHOLD or best['odds'] > MAX_ODDS: return None
     return {"selection": best['sel'], "odds": best['odds'], "val": best['val']}
 
-# ================= SYMULACJA Z LIMITEM NHL =================
+# ================= SYMULACJA Z DATAMI DLA WSZYSTKICH LIG =================
 def simulate_offers():
     coupons = load_coupons()
     now = datetime.now(timezone.utc)
-    
     all_picks = []
     
     for league in LEAGUES:
@@ -151,33 +149,36 @@ def simulate_offers():
             
             pick = generate_pick(m)
             if pick:
+                # Każdy pick teraz zawiera m_dt i dane meczu m
                 pick.update({"m": m, "league": league, "m_dt": m_dt})
                 all_picks.append(pick)
 
-    # Separacja i wybór Top 5 dla NHL
+    # Logika Top 5 dla NHL
     nhl_picks = [p for p in all_picks if p['league'] == "icehockey_nhl"]
     other_picks = [p for p in all_picks if p['league'] != "icehockey_nhl"]
     
-    # Sortujemy NHL po najwyższej wartości (val) i bierzemy 5 najlepszych
     nhl_picks.sort(key=lambda x: x['val'], reverse=True)
     final_nhl = nhl_picks[:5]
     
-    # Łączymy: Top 5 NHL + cała reszta (bez limitu)
+    # Połączone oferty (wszystkie mają teraz przypisane m_dt)
     final_selection = final_nhl + other_picks
 
     for p in final_selection:
         m = p['m']
+        m_dt = p['m_dt']
         win_val = round(p['odds'] * STAKE, 2)
         coupons.append({"home": m["home"], "away": m["away"], "picked": p["selection"], "odds": p["odds"], "stake": STAKE, "status": "pending", "date": m["commence_time"], "win_val": win_val, "league": p['league']})
         
         info = LEAGUE_INFO.get(p['league'], {"name": p['league'], "flag": "⚽"})
-        prefix = "⭐️ TOP NHL" if p['league'] == "icehockey_nhl" else "✅ OFERTA"
+        prefix = "⭐️ TOP NHL" if p['league'] == "icehockey_nhl" else "✅ NOWA OFERTA"
         
+        # Data i godzina dla każdej ligi (Piłka, NBA, NHL)
         send_msg(f"{info['flag']} <b>{prefix}</b> ({info['name']})\n"
                  f"🏟️ {m['home']} vs {m['away']}\n"
-                 f"🎯 Typ: <b>{p['selection']}</b>\n"
+                 f"🕓 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n"
+                 f"✅ Typ: <b>{p['selection']}</b>\n"
                  f"🎯 Kurs: <b>{p['odds']}</b>\n"
-                 f"💰 Wygrana: <b>{win_val} PLN</b>")
+                 f"💰 Możliwa wygrana: <b>{win_val} PLN</b>")
     
     save_coupons(coupons)
 
@@ -185,7 +186,6 @@ def run():
     global DYNAMIC_FORMS
     DYNAMIC_FORMS = fetch_real_team_forms()
     simulate_offers()
-    # check_results() i inne funkcje pozostają bez zmian w logice...
 
 if __name__ == "__main__":
     run()
