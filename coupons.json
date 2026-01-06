@@ -229,5 +229,60 @@
         "date": "2026-01-07T04:10:00Z",
         "league": "basketball_nba",
         "win_val": 0
+    },
+    {
+        "home": "New York Islanders",
+        "away": "New Jersey Devils",
+        "picked": "Remis",
+        "odds": 4.25,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T00:30:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
+    },
+    {
+        "home": "Toronto Maple Leafs",
+        "away": "Florida Panthers",
+        "picked": "Remis",
+        "odds": 4.3,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T00:30:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
+    },
+    {
+        "home": "Seattle Kraken",
+        "away": "Boston Bruins",
+        "picked": "Seattle Kraken",
+        "odds": 2.75,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T03:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
+    },
+    {
+        "home": "Tampa Bay Lightning",
+        "away": "Colorado Avalanche",
+        "picked": "Remis",
+        "odds": 4.3,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T00:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
+    },
+    {
+        "home": "Winnipeg Jets",
+        "away": "Vegas Golden Knights",
+        "picked": "Remis",
+        "odds": 4.25,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T01:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
     }
 ]
