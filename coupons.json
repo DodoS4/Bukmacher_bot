@@ -53,5 +53,60 @@
         "date": "2026-01-07T03:00:00Z",
         "league": "icehockey_nhl",
         "win_val": 0
+    },
+    {
+        "home": "San Jose Sharks",
+        "away": "Columbus Blue Jackets",
+        "picked": "San Jose Sharks",
+        "odds": 2.75,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T03:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
+    },
+    {
+        "home": "Chicago Blackhawks",
+        "away": "St Louis Blues",
+        "picked": "Chicago Blackhawks",
+        "odds": 2.7,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-08T02:30:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
+    },
+    {
+        "home": "Parma",
+        "away": "Inter Milan",
+        "picked": "Parma",
+        "odds": 7.0,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T19:45:00Z",
+        "league": "soccer_italy_serie_a",
+        "win_val": 0
+    },
+    {
+        "home": "Carolina Hurricanes",
+        "away": "Dallas Stars",
+        "picked": "Dallas Stars",
+        "odds": 2.95,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-07T00:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
+    },
+    {
+        "home": "Washington Capitals",
+        "away": "Dallas Stars",
+        "picked": "Dallas Stars",
+        "odds": 3.0,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-08T00:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
     }
 ]
