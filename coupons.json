@@ -163,5 +163,16 @@
         "date": "2026-01-08T00:30:00Z",
         "league": "icehockey_nhl",
         "win_val": 0
+    },
+    {
+        "home": "Los Angeles Kings",
+        "away": "San Jose Sharks",
+        "picked": "San Jose Sharks",
+        "odds": 4.7,
+        "stake": 5.0,
+        "status": "pending",
+        "date": "2026-01-08T03:30:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
     }
 ]
