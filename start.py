@@ -11,7 +11,7 @@ API_KEYS = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2")]
 
 COUPONS_FILE = "coupons.json"
 INITIAL_BANKROLL = 100.0
-VALUE_THRESHOLD = 0.05  # Szukamy przewagi min. 5%
+VALUE_THRESHOLD = 0.06  # Szukamy przewagi min. 5%
 AUTO_STOP_LIMIT = -20.0 # Jeśli liga straci 20 PLN, zostaje zamrożona
 
 # Lista lig do monitorowania
