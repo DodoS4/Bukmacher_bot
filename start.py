@@ -15,8 +15,11 @@ API_KEYS = [k for k in KEYS_POOL if k]
 COUPONS_FILE = "coupons.json"
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
-VALUE_THRESHOLD = 0.03
-MIN_ODDS_SOCCER = 2.5  # Próg dla piłki nożnej
+
+# KLUCZOWE PARAMETRY DLA TWOICH TESTÓW (TOP 5 / EDGE 7%)
+VALUE_THRESHOLD = 0.07  # Szukamy tylko "perełek" (przewaga min. 7%)
+MIN_ODDS_SOCCER = 2.50  # Piłka nożna (wysokie kursy i remisy)
+MIN_ODDS_NHL = 2.30     # NHL (Underdogi)
 
 LEAGUES = [
     "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a",
@@ -46,7 +49,7 @@ def send_msg(text, target="types"):
     try: requests.post(url, json=payload, timeout=15)
     except: pass
 
-# ================= DATA MANAGEMENT =================
+# ================= ZARZĄDZANIE DANYMI =================
 def load_coupons():
     if os.path.exists(COUPONS_FILE):
         try:
@@ -58,7 +61,7 @@ def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(coupons[-2000:], f, indent=4)
 
-# ================= LOGIKA ANALITYCZNA =================
+# ================= ANALIZA I FORMALISTYKA =================
 def fetch_real_team_forms():
     new_forms, last_times = {}, {}
     for league in LEAGUES:
@@ -75,8 +78,11 @@ def fetch_real_team_forms():
                         if team not in last_times or m_time > last_times[team]:
                             last_times[team] = m_time
                     if not match.get("completed"): continue
-                    scores = {s["name"]: int(s["score"]) for s in match["scores"]}
+                    scores_list = match.get("scores", [])
+                    if not scores_list: continue
+                    scores = {s["name"]: int(s["score"]) for s in scores_list}
                     h_s, a_s = scores.get(h_t, 0), scores.get(a_t, 0)
+                    
                     if h_t not in new_forms: new_forms[h_t] = []
                     if a_t not in new_forms: new_forms[a_t] = []
                     if h_s > a_s: new_forms[h_t].append(1); new_forms[a_t].append(0)
@@ -96,13 +102,12 @@ def generate_pick(match):
     h_o, a_o, d_o = match["odds"]["home"], match["odds"]["away"], match["odds"].get("draw")
     if not h_o or not a_o: return None
     
-    # --- STRATEGIA UNDERDOG NHL (Kursy od 2.30, Brak Remisów) ---
+    # --- PRÓGI DLA UNDERDOGÓW ---
     if match["league"] == "icehockey_nhl":
-        curr_min = 2.30
-        d_o = None  # Wymuszamy typowanie drużyny, nie remisu
+        curr_min = MIN_ODDS_NHL
+        d_o = None # Ignorujemy remisy w hokeju
     else:
         curr_min = MIN_ODDS_SOCCER
-    # -----------------------------------------------------------
 
     raw_sum = (1/h_o + 1/a_o + (1/d_o if d_o else 0))
     p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
@@ -110,15 +115,17 @@ def generate_pick(match):
     
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
     
-    final_h = (0.20 * f_h) + (0.80 * p_h) + 0.03 
-    final_a = (0.20 * f_a) + (0.80 * p_a) - 0.03
+    # Matematyczny model szans
+    final_h = (0.20 * f_h) + (0.80 * p_h) + 0.02 
+    final_a = (0.20 * f_a) + (0.80 * p_a) - 0.02
     final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else 0
 
+    # Kara za brak odpoczynku (B2B)
     m_start = parser.isoparse(match["commence_time"])
     for team in [match["home"], match["away"]]:
         last_m = LAST_MATCH_TIME.get(team)
         if last_m and (m_start - last_m).total_seconds() < 108000:
-            penalty = 0.04
+            penalty = 0.03 
             if team == match["home"]: final_h -= penalty; final_a += penalty
             else: final_a -= penalty; final_h += penalty
 
@@ -129,9 +136,11 @@ def generate_pick(match):
     
     if not opts: return None
     best = max(opts, key=lambda x: x['val'])
+    
+    # Rygorystyczny filtr jakościowy
     return best if best['val'] >= VALUE_THRESHOLD else None
 
-# ================= ROZLICZENIA I RAPORTY =================
+# ================= ROZLICZENIA =================
 def check_results():
     coupons = load_coupons()
     pending = [c for c in coupons if c["status"] == "pending"]
@@ -148,7 +157,8 @@ def check_results():
                     if c["league"] != league: continue
                     match = next((m for m in results if m["home_team"] == c["home"] and m["away_team"] == c["away"] and m.get("completed")), None)
                     if match:
-                        scores = {s["name"]: int(s["score"]) for s in match["scores"]}
+                        scores_list = match.get("scores", [])
+                        scores = {s["name"]: int(s["score"]) for s in scores_list}
                         h_s, a_s = scores.get(c["home"], 0), scores.get(c["away"], 0)
                         
                         winner = "Remis"
@@ -171,33 +181,10 @@ def check_results():
             except: continue
     save_coupons(coupons)
 
-def send_weekly_report():
-    now = datetime.now()
-    if now.weekday() != 0 or now.hour != 9: return
-    
-    coupons = load_coupons()
-    last_week = datetime.now(timezone.utc) - timedelta(days=7)
-    week_data = [c for c in coupons if c["status"] != "pending" and parser.isoparse(c["date"]) > last_week]
-    
-    if not week_data: return
-    
-    total_staked = sum(c["stake"] for c in week_data)
-    total_won = sum(c["win_val"] for c in week_data)
-    profit = round(total_won - total_staked, 2)
-    yield_val = round((profit / total_staked * 100), 2) if total_staked > 0 else 0
-    
-    msg = (f"📈 <b>RAPORT TYGODNIOWY</b>\n\n"
-           f"💰 Postawiono: <b>{total_staked:.2f} PLN</b>\n"
-           f"💵 Wygrano: <b>{total_won:.2f} PLN</b>\n"
-           f"📊 Wynik: <b>{'+' if profit > 0 else ''}{profit} PLN</b>\n"
-           f"🎯 Yield: <b>{yield_val}%</b>")
-    send_msg(msg, target="results")
-
-# ================= PROCES GŁÓWNY =================
+# ================= RUN =================
 def run():
     global DYNAMIC_FORMS, LAST_MATCH_TIME
     check_results()
-    send_weekly_report()
     
     DYNAMIC_FORMS, LAST_MATCH_TIME = fetch_real_team_forms()
     coupons = load_coupons()
@@ -229,17 +216,20 @@ def run():
                 break
             except: continue
 
-    nhl = sorted([p for p in all_picks if p["league"] == "icehockey_nhl"], key=lambda x: x["val"], reverse=True)[:5]
-    others = [p for p in all_picks if p["league"] != "icehockey_nhl"]
+    # SELEKCJA TOP 5 NAJLEPSZYCH OKAZJI (Ranking Edge)
+    all_picks = sorted(all_picks, key=lambda x: x["val"], reverse=True)
+    top_5 = all_picks[:5]
     
-    for p in (nhl + others):
+    for p in top_5:
         m = p["m"]
         m_dt = p["m_dt"]
         edge_pct = round(p["val"] * 100, 2)
         info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
-        prefix = "⭐️ TOP NHL" if p["league"] == "icehockey_nhl" else "✅ NOWA OFERTA"
+        
+        # Etykiety jakościowe
+        label = "💎 BEST VALUE" if edge_pct > 12 else "🔥 HIGH CONFIDENCE"
 
-        msg = (f"{info['flag']} <b>{prefix}</b> ({info['name']})\n"
+        msg = (f"{info['flag']} <b>{label}</b> ({info['name']})\n"
                f"🏟️ {m['home_team']} vs {m['away_team']}\n"
                f"🕒 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n"
                f"✅ Typ: <b>{p['sel']}</b>\n"
