@@ -6,8 +6,8 @@ from dateutil import parser
 
 # ================= KONFIGURACJA =================
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT = os.getenv("T_CHAT")  # Kanał na TYPY
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")  # Kanał na WYNIKI i RAPORTY
+T_CHAT = os.getenv("T_CHAT")
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
 KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3")]
 API_KEYS = [k for k in KEYS_POOL if k]
@@ -26,10 +26,10 @@ LEAGUES = [
 ]
 
 LEAGUE_INFO = {
-    "soccer_epl": {"name": "Premier League", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
-    "soccer_spain_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
-    "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"},
-    "soccer_italy_serie_b": {"name": "Serie B", "flag": "🇮🇹"},
+    "soccer_epl": {"name": "Premier League", "flag": "⚽"},
+    "soccer_spain_la_liga": {"name": "La Liga", "flag": "⚽"},
+    "soccer_italy_serie_a": {"name": "Serie A", "flag": "⚽"},
+    "soccer_italy_serie_b": {"name": "Serie B", "flag": "⚽"},
     "basketball_nba": {"name": "NBA", "flag": "🏀"},
     "icehockey_nhl": {"name": "NHL", "flag": "🏒"}
 }
@@ -106,7 +106,6 @@ def generate_pick(match):
     final_a = (0.20 * f_a) + (0.80 * p_a) - 0.03
     final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else 0
 
-    # Kara B2B
     m_start = parser.isoparse(match["commence_time"])
     for team in [match["home"], match["away"]]:
         last_m = LAST_MATCH_TIME.get(team)
@@ -150,19 +149,23 @@ def check_results():
                         
                         if c["picked"] == winner:
                             c["status"], c["win_val"] = "won", round(c["odds"] * c["stake"], 2)
-                            icon, note = "✅", f"Wygrana: {c['win_val']} PLN"
+                            icon, note = "✅", f"Wygrana: <b>{c['win_val']} PLN</b>"
                         else:
                             c["status"], c["win_val"] = "lost", 0
                             icon, note = "❌", "Przegrana"
                         
-                        send_msg(f"{icon} <b>ROZLICZENIE</b>\n{c['home']} - {c['away']}\nTyp: {c['picked']}\nWynik: {h_s}:{a_s}\n{note}", target="results")
+                        send_msg(f"{icon} <b>ROZLICZENIE</b>\n"
+                                 f"🏟️ {c['home']} - {c['away']}\n"
+                                 f"✅ Typ: <b>{c['picked']}</b>\n"
+                                 f"⚽ Wynik: <b>{h_s}:{a_s}</b>\n"
+                                 f"💰 {note}", target="results")
                 break
             except: continue
     save_coupons(coupons)
 
 def send_weekly_report():
     now = datetime.now()
-    if now.weekday() != 0 or now.hour != 9: return # Tylko poniedziałki o 9:00
+    if now.weekday() != 0 or now.hour != 9: return
     
     coupons = load_coupons()
     last_week = datetime.now(timezone.utc) - timedelta(days=7)
@@ -185,8 +188,8 @@ def send_weekly_report():
 # ================= PROCES GŁÓWNY =================
 def run():
     global DYNAMIC_FORMS, LAST_MATCH_TIME
-    check_results() # Najpierw rozliczamy stare
-    send_weekly_report() # Sprawdzamy czy czas na raport
+    check_results()
+    send_weekly_report()
     
     DYNAMIC_FORMS, LAST_MATCH_TIME = fetch_real_team_forms()
     coupons = load_coupons()
@@ -204,7 +207,6 @@ def run():
                     if m_dt < now or m_dt > now + timedelta(hours=MAX_HOURS_AHEAD): continue
                     if any(c["home"] == event["home_team"] and c["away"] == event["away_team"] for c in coupons): continue
                     
-                    # Pobieranie kursów
                     bm = event.get("bookmakers")
                     if not bm: continue
                     odds_list = bm[0]["markets"][0]["outcomes"]
@@ -219,25 +221,32 @@ def run():
                 break
             except: continue
 
-    # Selekcja NHL Top 5 + Reszta
     nhl = sorted([p for p in all_picks if p["league"] == "icehockey_nhl"], key=lambda x: x["val"], reverse=True)[:5]
     others = [p for p in all_picks if p["league"] != "icehockey_nhl"]
     
     for p in (nhl + others):
         m = p["m"]
+        m_dt = p["m_dt"]
         edge_pct = round(p["val"] * 100, 2)
+        info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
+        prefix = "⭐️ TOP NHL" if p["league"] == "icehockey_nhl" else "✅ NOWA OFERTA"
+
+        # FORMATOWANIE WIADOMOŚCI JAK NA SCREENACH
+        msg = (f"{info['flag']} <b>{prefix}</b> ({info['name']})\n"
+               f"🏟️ {m['home_team']} vs {m['away_team']}\n"
+               f"🕒 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n"
+               f"✅ Typ: <b>{p['sel']}</b>\n"
+               f"🎯 Kurs: <b>{p['odds']}</b>\n"
+               f"📊 Przewaga (Edge): <b>+{edge_pct}%</b>\n"
+               f"💰 Stawka: <b>{STAKE} PLN</b>")
+        
+        send_msg(msg)
         
         coupons.append({
             "home": m["home_team"], "away": m["away_team"], "picked": p["sel"],
             "odds": p["odds"], "stake": STAKE, "status": "pending",
             "date": m["commence_time"], "league": p["league"], "win_val": 0
         })
-        
-        info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
-        send_msg(f"{info['flag']} <b>NOWA OFERTA</b> ({info['name']})\n"
-                 f"🏟️ {m['home_team']} - {m['away_team']}\n"
-                 f"🎯 Typ: <b>{p['sel']}</b> | Kurs: <b>{p['odds']}</b>\n"
-                 f"📊 Edge: <b>+{edge_pct}%</b>")
     
     save_coupons(coupons)
 
