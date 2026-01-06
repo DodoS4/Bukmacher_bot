@@ -49,7 +49,7 @@
         "picked": "Charlotte Hornets",
         "odds": 8.54,
         "stake": 5.0,
-        "status": "pending",
+        "status": "win",
         "date": "2026-01-06T01:10:00Z",
         "win_val": 42.7,
         "league": "basketball_nba"
