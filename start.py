@@ -17,7 +17,7 @@ INITIAL_BANKROLL = 100.0  # Twój budżet startowy
 MAX_HOURS_AHEAD = 48
 
 # FILTRY (Możesz zmienić VALUE_THRESHOLD na 0.05 dla większej liczby typów)
-VALUE_THRESHOLD = 0.07  
+VALUE_THRESHOLD = 0.06  
 MIN_ODDS_SOCCER = 2.50  
 MIN_ODDS_NHL = 2.30     
 
