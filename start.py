@@ -16,7 +16,7 @@ COUPONS_FILE = "coupons.json"
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 VALUE_THRESHOLD = 0.03
-MIN_ODDS = 2.5
+MIN_ODDS_SOCCER = 2.5  # Próg dla piłki nożnej
 
 LEAGUES = [
     "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a",
@@ -96,13 +96,21 @@ def generate_pick(match):
     h_o, a_o, d_o = match["odds"]["home"], match["odds"]["away"], match["odds"].get("draw")
     if not h_o or not a_o: return None
     
+    # --- STRATEGIA UNDERDOG NHL (Kursy od 2.30, Brak Remisów) ---
+    if match["league"] == "icehockey_nhl":
+        curr_min = 2.30
+        d_o = None  # Wymuszamy typowanie drużyny, nie remisu
+    else:
+        curr_min = MIN_ODDS_SOCCER
+    # -----------------------------------------------------------
+
     raw_sum = (1/h_o + 1/a_o + (1/d_o if d_o else 0))
     p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
     p_d = ((1/d_o)/raw_sum) if d_o else 0
     
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
     
-    final_h = (0.20 * f_h) + (0.80 * p_h) + 0.03 # Home Bonus
+    final_h = (0.20 * f_h) + (0.80 * p_h) + 0.03 
     final_a = (0.20 * f_a) + (0.80 * p_a) - 0.03
     final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else 0
 
@@ -115,9 +123,9 @@ def generate_pick(match):
             else: final_a -= penalty; final_h += penalty
 
     opts = []
-    if h_o >= MIN_ODDS: opts.append({"sel": match["home"], "odds": h_o, "val": final_h - (1/h_o)})
-    if a_o >= MIN_ODDS: opts.append({"sel": match["away"], "odds": a_o, "val": final_a - (1/a_o)})
-    if d_o and d_o >= MIN_ODDS: opts.append({"sel": "Remis", "odds": d_o, "val": final_d - (1/d_o)})
+    if h_o >= curr_min: opts.append({"sel": match["home"], "odds": h_o, "val": final_h - (1/h_o)})
+    if a_o >= curr_min: opts.append({"sel": match["away"], "odds": a_o, "val": final_a - (1/a_o)})
+    if d_o and d_o >= MIN_ODDS_SOCCER: opts.append({"sel": "Remis", "odds": d_o, "val": final_d - (1/d_o)})
     
     if not opts: return None
     best = max(opts, key=lambda x: x['val'])
@@ -231,7 +239,6 @@ def run():
         info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
         prefix = "⭐️ TOP NHL" if p["league"] == "icehockey_nhl" else "✅ NOWA OFERTA"
 
-        # FORMATOWANIE WIADOMOŚCI JAK NA SCREENACH
         msg = (f"{info['flag']} <b>{prefix}</b> ({info['name']})\n"
                f"🏟️ {m['home_team']} vs {m['away_team']}\n"
                f"🕒 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n"
@@ -241,12 +248,7 @@ def run():
                f"💰 Stawka: <b>{STAKE} PLN</b>")
         
         send_msg(msg)
-        
-        coupons.append({
-            "home": m["home_team"], "away": m["away_team"], "picked": p["sel"],
-            "odds": p["odds"], "stake": STAKE, "status": "pending",
-            "date": m["commence_time"], "league": p["league"], "win_val": 0
-        })
+        coupons.append({"home": m["home_team"], "away": m["away_team"], "picked": p["sel"], "odds": p["odds"], "stake": STAKE, "status": "pending", "date": m["commence_time"], "league": p["league"], "win_val": 0})
     
     save_coupons(coupons)
 
