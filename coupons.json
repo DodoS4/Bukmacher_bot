@@ -60,7 +60,7 @@
         "picked": "Denver Nuggets",
         "odds": 5.2,
         "stake": 5.0,
-        "status": "pending",
+        "status": "win",
         "date": "2026-01-06T01:40:00Z",
         "win_val": 26.0,
         "league": "basketball_nba"
