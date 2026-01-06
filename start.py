@@ -23,15 +23,16 @@ DAILY_LIMIT = 35
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
-# Filtry kursów
+# Filtry kursów - ZGODNIE Z PROŚBĄ: BEZ LIMITU GÓRNEGO
 MIN_ODDS = 2.00
-MAX_ODDS = 55.0
-VALUE_THRESHOLD = 0.03
+MAX_ODDS = 999.0  # Usunięto limit maksymalny
+VALUE_THRESHOLD = 0.02
 
 LEAGUES = [
     "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a",
     "soccer_germany_bundesliga", "soccer_france_ligue_one",
-    "basketball_nba", "soccer_netherlands_eredivisie", "soccer_portugal_primeira_liga"
+    "basketball_nba", "soccer_netherlands_eredivisie", 
+    "soccer_portugal_primeira_liga", "icehockey_nhl"
 ]
 
 LEAGUE_INFO = {
@@ -43,6 +44,7 @@ LEAGUE_INFO = {
     "basketball_nba": {"name": "NBA", "flag": "🏀"},
     "soccer_netherlands_eredivisie": {"name": "Eredivisie", "flag": "🇳🇱"},
     "soccer_portugal_primeira_liga": {"name": "Primeira Liga", "flag": "🇵🇹"},
+    "icehockey_nhl": {"name": "NHL", "flag": "🏒"}
 }
 
 DYNAMIC_FORMS = {}
@@ -135,7 +137,7 @@ def load_coupons():
 
 def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(coupons[-1000:], f, indent=4) # Zwiększono historię do 1000
+        json.dump(coupons[-1000:], f, indent=4) 
 
 # ================= LOGIKA MECZÓW =================
 def get_upcoming_matches(league):
@@ -171,12 +173,15 @@ def generate_pick(match):
     d_o = match["odds"].get("draw")
     if not h_o or not a_o: return None
 
+    # Obliczanie prawdopodobieństwa rynkowego (bez marży)
     raw_sum = (1/h_o + 1/a_o + (1/d_o if d_o else 0))
     p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
     p_d = ((1/d_o)/raw_sum) if d_o else 0
 
+    # Pobieranie formy drużyn
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
     
+    # Model hybrydowy (85% rynek, 15% forma)
     final_h = (0.15 * f_h) + (0.85 * p_h)
     final_a = (0.15 * f_a) + (0.85 * p_a)
     final_d = (0.15 * 0.5) + (0.85 * p_d) if d_o else -1
@@ -189,6 +194,7 @@ def generate_pick(match):
     if not options: return None
     best = max(options, key=lambda x: x['val'])
     
+    # Filtr wartości i kursu maksymalnego (brak limitu)
     if best['val'] < VALUE_THRESHOLD or best['odds'] > MAX_ODDS:
         return None
 
@@ -213,7 +219,10 @@ def simulate_offers():
                     "date": m["commence_time"], "win_val": win_val, "league": league
                 }
                 coupons.append(new_c)
+                
+                # Ikona sportu
                 info = LEAGUE_INFO.get(league, {"name": league, "flag": "⚽"})
+                
                 text = (
                     f"{info['flag']} <b>NOWA OFERTA</b> ({info['name']})\n"
                     f"🏟️ {m['home']} vs {m['away']}\n"
@@ -233,6 +242,7 @@ def check_results():
     for c in coupons:
         if c.get("status") != "pending": continue
         m_dt = parser.isoparse(c["date"])
+        # Rozliczanie po 4h od startu
         if now < m_dt + timedelta(hours=4): continue
         for api_key in API_KEYS:
             try:
@@ -245,8 +255,10 @@ def check_results():
                 scores = {s["name"]: int(s["score"]) for s in m_data["scores"]}
                 h_s, a_s = scores.get(c["home"], 0), scores.get(c["away"], 0)
                 winner = c["home"] if h_s > a_s else c["away"] if a_s > h_s else "Draw"
+                
                 c["status"] = "win" if winner == c["picked"] else "loss"
                 profit = round(c["win_val"] - c["stake"], 2) if c["status"] == "win" else -c["stake"]
+                
                 icon = "✅" if c["status"] == "win" else "❌"
                 text = (
                     f"{icon} <b>KUPON ROZLICZONY</b>\n"
@@ -266,7 +278,7 @@ def run():
     DYNAMIC_FORMS = fetch_real_team_forms()
     simulate_offers()
     check_results()
-    send_daily_report() # Wywołanie raportu po każdym cyklu
+    send_daily_report()
     print("Cykl zakończony.")
 
 if __name__ == "__main__":
