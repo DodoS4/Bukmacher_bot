@@ -38,7 +38,7 @@
         "picked": "Chicago Bulls",
         "odds": 4.65,
         "stake": 5.0,
-        "status": "pending",
+        "status": "loss",
         "date": "2026-01-06T00:40:00Z",
         "win_val": 23.25,
         "league": "basketball_nba"
