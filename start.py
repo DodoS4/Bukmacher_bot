@@ -13,10 +13,10 @@ KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY
 API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
-INITIAL_BANKROLL = 100.0  # Twój budżet startowy
+INITIAL_BANKROLL = 100.0  
 MAX_HOURS_AHEAD = 48
 
-# FILTRY (Możesz zmienić VALUE_THRESHOLD na 0.05 dla większej liczby typów)
+# FILTRY - Złoty środek (5% Edge)
 VALUE_THRESHOLD = 0.05  
 MIN_ODDS_SOCCER = 2.50  
 MIN_ODDS_NHL = 2.30     
@@ -51,19 +51,16 @@ def send_msg(text, target="types"):
 
 # ================= INTELIGENTNE STAWKOWANIE (KELLY) =================
 def calculate_smart_stake(edge, odds, current_bankroll):
-    """Fractional Kelly Criterion - optymalizacja zysku i ochrona kapitału"""
     kelly_pct = edge / (odds - 1)
-    safe_kelly = kelly_pct * 0.1 # Stawiamy 10% sugerowanej kwoty Kelly'ego
-    
+    safe_kelly = kelly_pct * 0.1 
     final_stake = current_bankroll * safe_kelly
     
-    # Bezpieczniki
     if final_stake < 2.0: final_stake = 2.0
     if final_stake > (current_bankroll * 0.10): final_stake = current_bankroll * 0.10
     
     return round(final_stake, 2)
 
-# ================= STATYSTYKI I RAPORTY =================
+# ================= RAPORTY FINANSOWE =================
 def generate_daily_report():
     coupons = load_coupons()
     settled = [c for c in coupons if c["status"] in ["won", "lost"]]
@@ -91,9 +88,9 @@ def generate_daily_report():
             f"🎯 Yield: <b>{yield_val}%</b>\n"
             f"----------------------------\n"
             f"🏆 <b>ZYSKI WG LIG:</b>\n{league_report if league_report else 'Brak danych'}\n"
-            f"<i>Algorytm Kelly'ego dba o ryzyko.</i>")
+            f"<i>Algorytm Kelly'ego dba o Twoje 100 PLN.</i>")
 
-# ================= LOGIKA ANALIZY =================
+# ================= LOGIKA ANALIZY I ROZLICZEŃ =================
 def load_coupons():
     if os.path.exists(COUPONS_FILE):
         try:
@@ -146,28 +143,23 @@ def generate_pick(match):
     curr_min = MIN_ODDS_NHL if match["league"] == "icehockey_nhl" else MIN_ODDS_SOCCER
     raw_sum = (1/h_o + 1/a_o + (1/d_o if d_o else 0))
     p_h, p_a, p_d = (1/h_o)/raw_sum, (1/a_o)/raw_sum, ((1/d_o)/raw_sum if d_o else 0)
-    
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
     final_h, final_a = (0.2 * f_h + 0.8 * p_h + 0.02), (0.2 * f_a + 0.8 * p_a - 0.02)
     final_d = (0.2 * 0.5 + 0.8 * p_d) if d_o else 0
-
     m_start = parser.isoparse(match["commence_time"])
     for team in [match["home"], match["away"]]:
         last_m = LAST_MATCH_TIME.get(team)
         if last_m and (m_start - last_m).total_seconds() < 108000:
             if team == match["home"]: final_h -= 0.03; final_a += 0.03
             else: final_a -= 0.03; final_h += 0.03
-
     opts = []
     if h_o >= curr_min: opts.append({"sel": match["home"], "odds": h_o, "val": final_h - (1/h_o)})
     if a_o >= curr_min: opts.append({"sel": match["away"], "odds": a_o, "val": final_a - (1/a_o)})
     if d_o and d_o >= MIN_ODDS_SOCCER: opts.append({"sel": "Remis", "odds": d_o, "val": final_d - (1/d_o)})
-    
     if not opts: return None
     best = max(opts, key=lambda x: x['val'])
     return best if best['val'] >= VALUE_THRESHOLD else None
 
-# ================= ROZLICZENIA =================
 def check_results():
     coupons = load_coupons()
     pending = [c for c in coupons if c["status"] == "pending"]
@@ -186,7 +178,6 @@ def check_results():
                         scores = {s["name"]: int(s["score"]) for s in match.get("scores", [])}
                         h_s, a_s = scores.get(c["home"], 0), scores.get(c["away"], 0)
                         winner = c["home"] if h_s > a_s else (c["away"] if a_s > h_s else "Remis")
-                        
                         if c["picked"] == winner:
                             c["status"], c["win_val"] = "won", round(c["odds"] * c["stake"], 2)
                             icon = "✅"
@@ -240,27 +231,32 @@ def run():
                 break
             except: continue
 
-    # --- HEALTH CHECK (Dostaniesz to na kanał wynikowy) ---
-    health_msg = f"⚙️ <b>Health Check:</b> Przeskanowano {len(LEAGUES)} lig. Znaleziono {len(all_picks)} typów spełniających Edge {int(VALUE_THRESHOLD*100)}%."
+    health_msg = f"⚙️ <b>Health Check:</b> Przeskanowano {len(LEAGUES)} lig. Znaleziono {len(all_picks)} okazji powyżej Edge {int(VALUE_THRESHOLD*100)}%."
     send_msg(health_msg, target="results")
 
     top_5 = sorted(all_picks, key=lambda x: x["val"], reverse=True)[:5]
     for p in top_5:
+        m = p["m"]
+        m_dt = p["m_dt"]
         edge_pct = round(p["val"] * 100, 2)
         dynamic_stake = calculate_smart_stake(p["val"], p["odds"], current_bankroll)
         info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
         
-        msg = (f"{info['flag']} <b>{info['name']}</b>\n"
-               f"🏟️ {p['m']['home_team']} - {p['m']['away_team']}\n"
-               f"✅ Typ: <b>{p['sel']}</b> | Kurs: <b>{p['odds']}</b>\n"
-               f"📊 Przewaga: <b>+{edge_pct}%</b>\n"
+        # POWRÓT DO TWOJEGO ULUBIONEGO FORMATU WIZUALNEGO:
+        label = "💎 BEST VALUE" if edge_pct > 12 else "🔥 HIGH CONFIDENCE"
+
+        msg = (f"{info['flag']} <b>{label}</b> ({info['name']})\n"
+               f"🏟️ {m['home_team']} vs {m['away_team']}\n"
+               f"🕒 {m_dt.strftime('%d-%m-%Y %H:%M')} UTC\n\n"
+               f"✅ Typ: <b>{p['sel']}</b>\n"
+               f"🎯 Kurs: <b>{p['odds']}</b>\n"
+               f"📊 Przewaga (Edge): <b>+{edge_pct}%</b>\n"
                f"💰 Stawka: <b>{dynamic_stake} PLN</b>")
         
         send_msg(msg)
-        coupons.append({"home": p['m']["home_team"], "away": p['m']["away_team"], "picked": p["sel"], "odds": p["odds"], "stake": dynamic_stake, "status": "pending", "date": p['m']["commence_time"], "league": p["league"], "win_val": 0})
+        coupons.append({"home": m["home_team"], "away": m["away_team"], "picked": p["sel"], "odds": p["odds"], "stake": dynamic_stake, "status": "pending", "date": m["commence_time"], "league": p["league"], "win_val": 0})
     
     save_coupons(coupons)
 
 if __name__ == "__main__":
     run()
-
