@@ -9,5 +9,27 @@
         "date": "2026-01-07T20:15:00Z",
         "league": "soccer_epl",
         "win_val": 0
+    },
+    {
+        "home": "Washington Wizards",
+        "away": "Orlando Magic",
+        "picked": "Washington Wizards",
+        "odds": 3.49,
+        "stake": 2.0,
+        "status": "pending",
+        "date": "2026-01-07T00:10:00Z",
+        "league": "basketball_nba",
+        "win_val": 0
+    },
+    {
+        "home": "Buffalo Sabres",
+        "away": "Vancouver Canucks",
+        "picked": "Remis",
+        "odds": 4.5,
+        "stake": 2.0,
+        "status": "pending",
+        "date": "2026-01-07T00:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0
     }
 ]
