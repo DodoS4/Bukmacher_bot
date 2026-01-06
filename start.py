@@ -26,7 +26,7 @@ MAX_HOURS_AHEAD = 48
 # Filtry kursów
 MIN_ODDS = 2.00
 MAX_ODDS = 55.0
-VALUE_THRESHOLD = 0.04
+VALUE_THRESHOLD = 0.03
 
 LEAGUES = [
     "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a",
