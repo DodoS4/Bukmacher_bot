@@ -122,9 +122,9 @@ def generate_pick(match):
     p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
     p_d = ((1/d_o)/raw_sum) if d_o else 0
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
-    final_h = (0.15 * f_h) + (0.85 * p_h)
-    final_a = (0.15 * f_a) + (0.85 * p_a)
-    final_d = (0.15 * 0.5) + (0.85 * p_d) if d_o else -1
+    final_h = (0.20 * f_h) + (0.80 * p_h)
+    final_a = (0.20 * f_a) + (0.80 * p_a)
+    final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else -1
     options = []
     if h_o >= MIN_ODDS: options.append({"sel": match["home"], "odds": h_o, "val": final_h - (1/h_o)})
     if a_o >= MIN_ODDS: options.append({"sel": match["away"], "odds": a_o, "val": final_a - (1/a_o)})
