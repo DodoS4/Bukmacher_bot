@@ -1,1 +1,13 @@
-[]
+[
+    {
+        "home": "Burnley",
+        "away": "Manchester United",
+        "picked": "Burnley",
+        "odds": 4.6,
+        "stake": 2.0,
+        "status": "pending",
+        "date": "2026-01-07T20:15:00Z",
+        "league": "soccer_epl",
+        "win_val": 0
+    }
+]
