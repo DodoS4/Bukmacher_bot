@@ -9,7 +9,6 @@ T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
-# Pula kluczy API dla stabilności
 KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3")]
 API_KEYS = [k for k in KEYS_POOL if k]
 
@@ -17,20 +16,20 @@ COUPONS_FILE = "coupons.json"
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
-# KLUCZOWE PARAMETRY DLA JAKOŚCI (TOP 5 / EDGE 7%)
-VALUE_THRESHOLD = 0.07  # Próg przewagi 7%
-MIN_ODDS_SOCCER = 2.50  # Wysokie kursy w piłce
-MIN_ODDS_NHL = 2.30     # Underdogi w hokeju
+# KLUCZOWE PARAMETRY DLA JAKOŚCI
+VALUE_THRESHOLD = 0.07  
+MIN_ODDS_SOCCER = 2.50  
+MIN_ODDS_NHL = 2.30     
 
-# ZAKTUALIZOWANA LISTA LIG (Bez Włoch, nacisk na Anglię i NHL)
+# FINALNA LISTA LIG (STABILNE I DOCHODOWE)
 LEAGUES = [
-    "icehockey_nhl",
-    "basketball_nba",
-    "soccer_epl",                  # Premier League
-    "soccer_england_championship", # Angielska 2. liga (wysokie kursy)
-    "soccer_poland_ekstraklasa",   # Polska Ekstraklasa
-    "soccer_germany_bundesliga",   # Niemiecka Bundesliga
-    "soccer_uefa_champs_league"    # Champions League
+    "icehockey_nhl", 
+    "basketball_nba", 
+    "soccer_epl", 
+    "soccer_england_championship", 
+    "soccer_poland_ekstraklasa",
+    "soccer_germany_bundesliga", 
+    "soccer_uefa_champs_league"
 ]
 
 LEAGUE_INFO = {
@@ -54,6 +53,48 @@ def send_msg(text, target="types"):
     payload = {"chat_id": chat_id, "text": text, "parse_mode": "HTML", "disable_web_page_preview": True}
     try: requests.post(url, json=payload, timeout=15)
     except: pass
+
+# ================= STATYSTYKI I RAPORTY =================
+def generate_daily_report():
+    coupons = load_coupons()
+    settled = [c for c in coupons if c["status"] in ["won", "lost"]]
+    
+    if not settled:
+        return "📊 <b>RAPORT:</b> Brak rozliczonych typów w bazie."
+
+    total_staked = sum(float(c["stake"]) for c in settled)
+    total_won = sum(float(c["win_val"]) for c in settled)
+    profit = round(total_won - total_staked, 2)
+    yield_val = round((profit / total_staked * 100), 2) if total_staked > 0 else 0
+    
+    # Statystyki per liga
+    league_stats = {}
+    for c in settled:
+        l_id = c.get("league", "Inne")
+        l_name = LEAGUE_INFO.get(l_id, {"name": l_id})["name"]
+        if l_name not in league_stats:
+            league_stats[l_name] = 0
+        league_stats[l_name] += (float(c["win_val"]) - float(c["stake"]))
+
+    sorted_leagues = sorted(league_stats.items(), key=lambda item: item[1], reverse=True)
+    
+    league_report = ""
+    for name, l_profit in sorted_leagues:
+        l_icon = "🟢" if l_profit >= 0 else "🔴"
+        league_report += f"{l_icon} {name}: <b>{round(l_profit, 2)} PLN</b>\n"
+
+    icon = "📈" if profit >= 0 else "📉"
+    
+    report = (f"📊 <b>PODSUMOWANIE FINANSOWE</b>\n\n"
+              f"💰 Suma stawek: <b>{total_staked} PLN</b>\n"
+              f"💰 Suma wygranych: <b>{total_won} PLN</b>\n"
+              f"----------------------------\n"
+              f"{icon} CAŁKOWITY ZYSK: <b>{profit} PLN</b>\n"
+              f"🎯 Yield: <b>{yield_val}%</b>\n\n"
+              f"🏆 <b>ZYSKI WG LIG:</b>\n"
+              f"{league_report}\n"
+              f"<i>Raport generowany automatycznie o 8:00</i>")
+    return report
 
 # ================= ZARZĄDZANIE DANYMI =================
 def load_coupons():
@@ -120,12 +161,10 @@ def generate_pick(match):
     
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
     
-    # Model wagowy (20% forma, 80% rynek)
     final_h = (0.20 * f_h) + (0.80 * p_h) + 0.02 
     final_a = (0.20 * f_a) + (0.80 * p_a) - 0.02
     final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else 0
 
-    # Korekta o zmęczenie B2B
     m_start = parser.isoparse(match["commence_time"])
     for team in [match["home"], match["away"]]:
         last_m = LAST_MATCH_TIME.get(team)
@@ -189,9 +228,15 @@ def run():
     global DYNAMIC_FORMS, LAST_MATCH_TIME
     check_results()
     
+    # Wysyłka raportu o 8:00 rano
+    now_local = datetime.now()
+    if now_local.hour == 8 and now_local.minute < 15:
+        report_msg = generate_daily_report()
+        send_msg(report_msg, target="results")
+
     DYNAMIC_FORMS, LAST_MATCH_TIME = fetch_real_team_forms()
     coupons = load_coupons()
-    now = datetime.now(timezone.utc)
+    now_utc = datetime.now(timezone.utc)
     all_picks = []
 
     for league in LEAGUES:
@@ -202,7 +247,7 @@ def run():
                 if r.status_code != 200: continue
                 for event in r.json():
                     m_dt = parser.isoparse(event["commence_time"])
-                    if m_dt < now or m_dt > now + timedelta(hours=MAX_HOURS_AHEAD): continue
+                    if m_dt < now_utc or m_dt > now_utc + timedelta(hours=MAX_HOURS_AHEAD): continue
                     if any(c["home"] == event["home_team"] and c["away"] == event["away_team"] for c in coupons): continue
                     
                     bm = event.get("bookmakers")
@@ -219,7 +264,6 @@ def run():
                 break
             except: continue
 
-    # Ranking Edge - Wybór tylko 5 najlepszych
     all_picks = sorted(all_picks, key=lambda x: x["val"], reverse=True)
     top_5 = all_picks[:5]
     
