@@ -168,3 +168,4 @@ if __name__ == "__main__":
     # Potwierdzenie na kanale WYNIKI, że bot właśnie zaczął skanować
     send_msg("🚀 <b>System Skalowania Kapitału Aktywny</b>\nSkanuję rynki w poszukiwaniu przewagi...", "results")
     run()
+
