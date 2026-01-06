@@ -4,7 +4,7 @@ import os
 from datetime import datetime, timedelta, timezone
 from dateutil import parser
 
-# ================= KONFIGURACJA EKSPERCKA =================
+# ================= KONFIGURACJA EKSPERCKA (9.5/10) =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
@@ -13,10 +13,11 @@ KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY
 API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
-INITIAL_BANKROLL = 100.0  # Twój startowy budżet
+INITIAL_BANKROLL = 100.0  # Twój budżet startowy
 MAX_HOURS_AHEAD = 48
 
-VALUE_THRESHOLD = 0.01  
+# FILTRY (Możesz zmienić VALUE_THRESHOLD na 0.05 dla większej liczby typów)
+VALUE_THRESHOLD = 0.07  
 MIN_ODDS_SOCCER = 2.50  
 MIN_ODDS_NHL = 2.30     
 
@@ -48,16 +49,15 @@ def send_msg(text, target="types"):
     try: requests.post(url, json=payload, timeout=15)
     except: pass
 
-# ================= INTELIGENTNE STAWKOWANIE =================
+# ================= INTELIGENTNE STAWKOWANIE (KELLY) =================
 def calculate_smart_stake(edge, odds, current_bankroll):
-    """Implementacja Fractional Kelly Criterion (B=0.1)"""
-    # Kelly % = (Edge) / (Odds - 1)
+    """Fractional Kelly Criterion - optymalizacja zysku i ochrona kapitału"""
     kelly_pct = edge / (odds - 1)
-    # Stawiamy tylko 10% tego co sugeruje Kelly dla bezpieczeństwa (Fractional Kelly)
-    safe_kelly = kelly_pct * 0.1 
+    safe_kelly = kelly_pct * 0.1 # Stawiamy 10% sugerowanej kwoty Kelly'ego
     
-    # Ograniczenia: min 2 PLN, max 10% całego budżetu na jeden mecz
     final_stake = current_bankroll * safe_kelly
+    
+    # Bezpieczniki
     if final_stake < 2.0: final_stake = 2.0
     if final_stake > (current_bankroll * 0.10): final_stake = current_bankroll * 0.10
     
@@ -74,34 +74,26 @@ def generate_daily_report():
     current_bankroll = INITIAL_BANKROLL + current_profit
     yield_val = round((current_profit / total_staked * 100), 2) if total_staked > 0 else 0
     
-    if not settled:
-        return "📊 <b>RAPORT:</b> Czekam na pierwsze rozliczenia meczów."
-
     league_stats = {}
     for c in settled:
-        l_name = LEAGUE_INFO.get(c.get("league"), {"name": "Inne"})["name"]
+        l_id = c.get("league", "Inne")
+        l_name = LEAGUE_INFO.get(l_id, {"name": l_id})["name"]
         if l_name not in league_stats: league_stats[l_name] = 0
         league_stats[l_name] += (float(c["win_val"]) - float(c["stake"]))
 
     sorted_leagues = sorted(league_stats.items(), key=lambda item: item[1], reverse=True)
-    league_report = ""
-    for name, l_profit in sorted_leagues:
-        l_icon = "🟢" if l_profit >= 0 else "🔴"
-        league_report += f"{l_icon} {name}: <b>{round(l_profit, 2)} PLN</b>\n"
+    league_report = "".join([f"{'🟢' if lp >= 0 else '🔴'} {n}: <b>{round(lp, 2)} PLN</b>\n" for n, lp in sorted_leagues])
 
     icon = "🚀" if current_profit >= 0 else "📉"
-    
-    report = (f"📊 <b>RAPORT PORTFELA (9.5/10)</b>\n\n"
-              f"💰 Stan konta: <b>{round(current_bankroll, 2)} PLN</b>\n"
-              f"{icon} Zysk netto: <b>{current_profit} PLN</b>\n"
-              f"🎯 Yield: <b>{yield_val}%</b>\n"
-              f"----------------------------\n"
-              f"🏆 <b>ZYSKI WG LIG:</b>\n"
-              f"{league_report}\n"
-              f"<i>Algorytm Kelly'ego dba o Twoje ryzyko.</i>")
-    return report
+    return (f"📊 <b>RAPORT PORTFELA (9.5/10)</b>\n\n"
+            f"💰 Stan konta: <b>{round(current_bankroll, 2)} PLN</b>\n"
+            f"{icon} Zysk netto: <b>{current_profit} PLN</b>\n"
+            f"🎯 Yield: <b>{yield_val}%</b>\n"
+            f"----------------------------\n"
+            f"🏆 <b>ZYSKI WG LIG:</b>\n{league_report if league_report else 'Brak danych'}\n"
+            f"<i>Algorytm Kelly'ego dba o ryzyko.</i>")
 
-# ================= ZARZĄDZANIE DANYMI =================
+# ================= LOGIKA ANALIZY =================
 def load_coupons():
     if os.path.exists(COUPONS_FILE):
         try:
@@ -113,7 +105,6 @@ def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(coupons[-2000:], f, indent=4)
 
-# ================= ANALIZA I FORMALISTYKA =================
 def fetch_real_team_forms():
     new_forms, last_times = {}, {}
     for league in LEAGUES:
@@ -130,11 +121,10 @@ def fetch_real_team_forms():
                         if team not in last_times or m_time > last_times[team]:
                             last_times[team] = m_time
                     if not match.get("completed"): continue
-                    scores_list = match.get("scores", [])
-                    if not scores_list: continue
-                    scores = {s["name"]: int(s["score"]) for s in scores_list}
+                    sc = match.get("scores", [])
+                    if not sc: continue
+                    scores = {s["name"]: int(s["score"]) for s in sc}
                     h_s, a_s = scores.get(h_t, 0), scores.get(a_t, 0)
-                    
                     if h_t not in new_forms: new_forms[h_t] = []
                     if a_t not in new_forms: new_forms[a_t] = []
                     if h_s > a_s: new_forms[h_t].append(1); new_forms[a_t].append(0)
@@ -153,24 +143,20 @@ def get_team_form(team_name):
 def generate_pick(match):
     h_o, a_o, d_o = match["odds"]["home"], match["odds"]["away"], match["odds"].get("draw")
     if not h_o or not a_o: return None
-    
     curr_min = MIN_ODDS_NHL if match["league"] == "icehockey_nhl" else MIN_ODDS_SOCCER
     raw_sum = (1/h_o + 1/a_o + (1/d_o if d_o else 0))
-    p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
-    p_d = ((1/d_o)/raw_sum) if d_o else 0
+    p_h, p_a, p_d = (1/h_o)/raw_sum, (1/a_o)/raw_sum, ((1/d_o)/raw_sum if d_o else 0)
     
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
-    final_h = (0.20 * f_h) + (0.80 * p_h) + 0.02 
-    final_a = (0.20 * f_a) + (0.80 * p_a) - 0.02
-    final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else 0
+    final_h, final_a = (0.2 * f_h + 0.8 * p_h + 0.02), (0.2 * f_a + 0.8 * p_a - 0.02)
+    final_d = (0.2 * 0.5 + 0.8 * p_d) if d_o else 0
 
     m_start = parser.isoparse(match["commence_time"])
     for team in [match["home"], match["away"]]:
         last_m = LAST_MATCH_TIME.get(team)
         if last_m and (m_start - last_m).total_seconds() < 108000:
-            penalty = 0.03 
-            if team == match["home"]: final_h -= penalty; final_a += penalty
-            else: final_a -= penalty; final_h += penalty
+            if team == match["home"]: final_h -= 0.03; final_a += 0.03
+            else: final_a -= 0.03; final_h += 0.03
 
     opts = []
     if h_o >= curr_min: opts.append({"sel": match["home"], "odds": h_o, "val": final_h - (1/h_o)})
@@ -186,7 +172,6 @@ def check_results():
     coupons = load_coupons()
     pending = [c for c in coupons if c["status"] == "pending"]
     if not pending: return
-    
     for league in LEAGUES:
         for api_key in API_KEYS:
             try:
@@ -198,12 +183,9 @@ def check_results():
                     if c["league"] != league: continue
                     match = next((m for m in results if m["home_team"] == c["home"] and m["away_team"] == c["away"] and m.get("completed")), None)
                     if match:
-                        scores_list = match.get("scores", [])
-                        scores = {s["name"]: int(s["score"]) for s in scores_list}
+                        scores = {s["name"]: int(s["score"]) for s in match.get("scores", [])}
                         h_s, a_s = scores.get(c["home"], 0), scores.get(c["away"], 0)
-                        winner = "Remis"
-                        if h_s > a_s: winner = c["home"]
-                        elif a_s > h_s: winner = c["away"]
+                        winner = c["home"] if h_s > a_s else (c["away"] if a_s > h_s else "Remis")
                         
                         if c["picked"] == winner:
                             c["status"], c["win_val"] = "won", round(c["odds"] * c["stake"], 2)
@@ -211,7 +193,6 @@ def check_results():
                         else:
                             c["status"], c["win_val"] = "lost", 0
                             icon = "❌"
-                        
                         send_msg(f"{icon} <b>ROZLICZENIE</b>\n{c['home']} - {c['away']}\nWynik: {h_s}:{a_s}\nZysk: {round(c['win_val'] - c['stake'], 2)} PLN", target="results")
                 break
             except: continue
@@ -224,7 +205,8 @@ def run():
     
     coupons = load_coupons()
     settled = [c for c in coupons if c["status"] in ["won", "lost"]]
-    current_bankroll = INITIAL_BANKROLL + sum(float(c["win_val"]) - float(c["stake"]) for c in settled)
+    current_profit = sum(float(c["win_val"]) - float(c["stake"]) for c in settled)
+    current_bankroll = INITIAL_BANKROLL + current_profit
 
     if datetime.now().hour == 8 and datetime.now().minute < 15:
         send_msg(generate_daily_report(), target="results")
@@ -251,15 +233,18 @@ def run():
                     a_o = next((o["price"] for o in odds_list if o["name"] == event["away_team"]), None)
                     d_o = next((o["price"] for o in odds_list if o["name"] == "Draw"), None)
                     
-                    pick = generate_pick({"home": event["home_team"], "away": event["away_team"], "league": league, "odds": {"home": h_o, "away": a_o, "draw": d_o}, "commence_time": event["commence_time"]})
-                    if pick:
-                        pick.update({"m": event, "league": league, "m_dt": m_dt})
-                        all_picks.append(pick)
+                    p = generate_pick({"home": event["home_team"], "away": event["away_team"], "league": league, "odds": {"home": h_o, "away": a_o, "draw": d_o}, "commence_time": event["commence_time"]})
+                    if p:
+                        p.update({"m": event, "league": league, "m_dt": m_dt})
+                        all_picks.append(p)
                 break
             except: continue
 
+    # --- HEALTH CHECK (Dostaniesz to na kanał wynikowy) ---
+    health_msg = f"⚙️ <b>Health Check:</b> Przeskanowano {len(LEAGUES)} lig. Znaleziono {len(all_picks)} typów spełniających Edge {int(VALUE_THRESHOLD*100)}%."
+    send_msg(health_msg, target="results")
+
     top_5 = sorted(all_picks, key=lambda x: x["val"], reverse=True)[:5]
-    
     for p in top_5:
         edge_pct = round(p["val"] * 100, 2)
         dynamic_stake = calculate_smart_stake(p["val"], p["odds"], current_bankroll)
