@@ -17,24 +17,35 @@ STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
 # KLUCZOWE PARAMETRY DLA TWOICH TESTÓW (TOP 5 / EDGE 7%)
-VALUE_THRESHOLD = 0.07  # Szukamy tylko "perełek" (przewaga min. 7%)
-MIN_ODDS_SOCCER = 2.50  # Piłka nożna (wysokie kursy i remisy)
-MIN_ODDS_NHL = 2.30     # NHL (Underdogi)
+VALUE_THRESHOLD = 0.07  
+MIN_ODDS_SOCCER = 2.50  
+MIN_ODDS_NHL = 2.30     
 
+# ZAKTUALIZOWANA LISTA LIG (Dodana Championship i Ekstraklasa, usunięte słabe ligi)
 LEAGUES = [
-    "soccer_epl", "soccer_spain_la_liga", "soccer_italy_serie_a",
-    "soccer_germany_bundesliga", "soccer_france_ligue_one",
-    "basketball_nba", "soccer_netherlands_eredivisie", 
-    "soccer_portugal_primeira_liga", "icehockey_nhl", "soccer_italy_serie_b"
+    "icehockey_nhl",
+    "basketball_nba",
+    "soccer_england_championship", # Nowość: Stabilna alternatywa dla wysokich kursów
+    "soccer_poland_ekstraklasa",   # Nowość: Twoja lokalna przewaga
+    "soccer_epl", 
+    "soccer_spain_la_liga", 
+    "soccer_italy_serie_a",
+    "soccer_germany_bundesliga", 
+    "soccer_france_ligue_one",
+    "soccer_uefa_champs_league"
 ]
 
 LEAGUE_INFO = {
+    "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
+    "basketball_nba": {"name": "NBA", "flag": "🏀"},
+    "soccer_england_championship": {"name": "Championship", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
+    "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "🇵🇱"},
     "soccer_epl": {"name": "Premier League", "flag": "⚽"},
     "soccer_spain_la_liga": {"name": "La Liga", "flag": "⚽"},
     "soccer_italy_serie_a": {"name": "Serie A", "flag": "⚽"},
-    "soccer_italy_serie_b": {"name": "Serie B", "flag": "⚽"},
-    "basketball_nba": {"name": "NBA", "flag": "🏀"},
-    "icehockey_nhl": {"name": "NHL", "flag": "🏒"}
+    "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "⚽"},
+    "soccer_france_ligue_one": {"name": "Ligue 1", "flag": "⚽"},
+    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"}
 }
 
 DYNAMIC_FORMS = {}
@@ -102,10 +113,9 @@ def generate_pick(match):
     h_o, a_o, d_o = match["odds"]["home"], match["odds"]["away"], match["odds"].get("draw")
     if not h_o or not a_o: return None
     
-    # --- PRÓGI DLA UNDERDOGÓW ---
     if match["league"] == "icehockey_nhl":
         curr_min = MIN_ODDS_NHL
-        d_o = None # Ignorujemy remisy w hokeju
+        d_o = None 
     else:
         curr_min = MIN_ODDS_SOCCER
 
@@ -115,12 +125,10 @@ def generate_pick(match):
     
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
     
-    # Matematyczny model szans
     final_h = (0.20 * f_h) + (0.80 * p_h) + 0.02 
     final_a = (0.20 * f_a) + (0.80 * p_a) - 0.02
     final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else 0
 
-    # Kara za brak odpoczynku (B2B)
     m_start = parser.isoparse(match["commence_time"])
     for team in [match["home"], match["away"]]:
         last_m = LAST_MATCH_TIME.get(team)
@@ -136,8 +144,6 @@ def generate_pick(match):
     
     if not opts: return None
     best = max(opts, key=lambda x: x['val'])
-    
-    # Rygorystyczny filtr jakościowy
     return best if best['val'] >= VALUE_THRESHOLD else None
 
 # ================= ROZLICZENIA =================
@@ -216,7 +222,7 @@ def run():
                 break
             except: continue
 
-    # SELEKCJA TOP 5 NAJLEPSZYCH OKAZJI (Ranking Edge)
+    # SELEKCJA TOP 5 NAJLEPSZYCH OKAZJI
     all_picks = sorted(all_picks, key=lambda x: x["val"], reverse=True)
     top_5 = all_picks[:5]
     
@@ -226,7 +232,6 @@ def run():
         edge_pct = round(p["val"] * 100, 2)
         info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
         
-        # Etykiety jakościowe
         label = "💎 BEST VALUE" if edge_pct > 12 else "🔥 HIGH CONFIDENCE"
 
         msg = (f"{info['flag']} <b>{label}</b> ({info['name']})\n"
