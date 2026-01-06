@@ -9,6 +9,7 @@ T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
+# Pula kluczy API dla stabilności
 KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3")]
 API_KEYS = [k for k in KEYS_POOL if k]
 
@@ -16,35 +17,29 @@ COUPONS_FILE = "coupons.json"
 STAKE = 5.0
 MAX_HOURS_AHEAD = 48
 
-# KLUCZOWE PARAMETRY DLA TWOICH TESTÓW (TOP 5 / EDGE 7%)
-VALUE_THRESHOLD = 0.07  
-MIN_ODDS_SOCCER = 2.50  
-MIN_ODDS_NHL = 2.30     
+# KLUCZOWE PARAMETRY DLA JAKOŚCI (TOP 5 / EDGE 7%)
+VALUE_THRESHOLD = 0.07  # Próg przewagi 7%
+MIN_ODDS_SOCCER = 2.50  # Wysokie kursy w piłce
+MIN_ODDS_NHL = 2.30     # Underdogi w hokeju
 
-# ZAKTUALIZOWANA LISTA LIG (Dodana Championship i Ekstraklasa, usunięte słabe ligi)
+# ZAKTUALIZOWANA LISTA LIG (Bez Włoch, nacisk na Anglię i NHL)
 LEAGUES = [
     "icehockey_nhl",
     "basketball_nba",
-    "soccer_england_championship", # Nowość: Stabilna alternatywa dla wysokich kursów
-    "soccer_poland_ekstraklasa",   # Nowość: Twoja lokalna przewaga
-    "soccer_epl", 
-    "soccer_spain_la_liga", 
-    "soccer_italy_serie_a",
-    "soccer_germany_bundesliga", 
-    "soccer_france_ligue_one",
-    "soccer_uefa_champs_league"
+    "soccer_epl",                  # Premier League
+    "soccer_england_championship", # Angielska 2. liga (wysokie kursy)
+    "soccer_poland_ekstraklasa",   # Polska Ekstraklasa
+    "soccer_germany_bundesliga",   # Niemiecka Bundesliga
+    "soccer_uefa_champs_league"    # Champions League
 ]
 
 LEAGUE_INFO = {
     "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
     "basketball_nba": {"name": "NBA", "flag": "🏀"},
+    "soccer_epl": {"name": "Premier League", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
     "soccer_england_championship": {"name": "Championship", "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
     "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "🇵🇱"},
-    "soccer_epl": {"name": "Premier League", "flag": "⚽"},
-    "soccer_spain_la_liga": {"name": "La Liga", "flag": "⚽"},
-    "soccer_italy_serie_a": {"name": "Serie A", "flag": "⚽"},
-    "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "⚽"},
-    "soccer_france_ligue_one": {"name": "Ligue 1", "flag": "⚽"},
+    "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
     "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"}
 }
 
@@ -72,7 +67,7 @@ def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(coupons[-2000:], f, indent=4)
 
-# ================= ANALIZA I FORMALISTYKA =================
+# ================= ANALIZA FORMALNA =================
 def fetch_real_team_forms():
     new_forms, last_times = {}, {}
     for league in LEAGUES:
@@ -125,10 +120,12 @@ def generate_pick(match):
     
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
     
+    # Model wagowy (20% forma, 80% rynek)
     final_h = (0.20 * f_h) + (0.80 * p_h) + 0.02 
     final_a = (0.20 * f_a) + (0.80 * p_a) - 0.02
     final_d = (0.20 * 0.5) + (0.80 * p_d) if d_o else 0
 
+    # Korekta o zmęczenie B2B
     m_start = parser.isoparse(match["commence_time"])
     for team in [match["home"], match["away"]]:
         last_m = LAST_MATCH_TIME.get(team)
@@ -187,7 +184,7 @@ def check_results():
             except: continue
     save_coupons(coupons)
 
-# ================= RUN =================
+# ================= URUCHOMIENIE =================
 def run():
     global DYNAMIC_FORMS, LAST_MATCH_TIME
     check_results()
@@ -222,7 +219,7 @@ def run():
                 break
             except: continue
 
-    # SELEKCJA TOP 5 NAJLEPSZYCH OKAZJI
+    # Ranking Edge - Wybór tylko 5 najlepszych
     all_picks = sorted(all_picks, key=lambda x: x["val"], reverse=True)
     top_5 = all_picks[:5]
     
