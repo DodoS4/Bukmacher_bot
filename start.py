@@ -20,7 +20,7 @@ MAX_STAKE_PCT = 0.15      # Maksymalnie 15% portfela na jeden zakład
 MAX_HOURS_AHEAD = 48
 
 # PARAMETRY JAKOŚCIOWE
-VALUE_THRESHOLD = 0.07  
+VALUE_THRESHOLD = 0.05  
 MIN_ODDS_SOCCER = 2.50  
 MIN_ODDS_NHL = 2.30     
 
