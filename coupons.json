@@ -82,5 +82,17 @@
         "league": "icehockey_nhl",
         "win_val": 0,
         "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Oklahoma City Thunder",
+        "away": "Utah Jazz",
+        "picked": "Utah Jazz",
+        "odds": 10.1,
+        "stake": 3.0,
+        "status": "pending",
+        "date": "2026-01-08T01:10:00Z",
+        "league": "basketball_nba",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
     }
 ]
