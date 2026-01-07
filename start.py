@@ -67,11 +67,9 @@ def load_bankroll():
             return START_BANKROLL
     return START_BANKROLL
 
-
 def save_bankroll(val):
     with open(BANKROLL_FILE, "w") as f:
         json.dump({"bankroll": round(val, 2)}, f)
-
 
 def calc_kelly_stake(bankroll, odds, edge, kelly_frac=0.25):
     if edge <= 0 or odds <= 1:
@@ -107,7 +105,6 @@ def load_coupons():
         except:
             return []
     return []
-
 
 def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
@@ -156,7 +153,6 @@ def fetch_real_team_forms():
                 continue
     return new_forms, last_times
 
-
 def get_team_form(team):
     res = DYNAMIC_FORMS.get(team, [])
     if not res:
@@ -180,7 +176,6 @@ def get_best_odds_safe(event):
     except:
         best = {}
 
-    # fallback – stare zachowanie v1
     if len(best) < 2:
         try:
             odds = event["bookmakers"][0]["markets"][0]["outcomes"]
@@ -306,7 +301,7 @@ def run():
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-                    params={"apiKey": api_key, "regions": "eu", "markets": "h2h"},
+                    params={"apiKey": api_key, "regions": "eu,uk,us", "markets": "h2h"},
                     timeout=15
                 )
                 if r.status_code != 200:
@@ -385,6 +380,8 @@ def run():
         })
 
         sent_today.append(True)
+        # ⚡ zapisz bankroll przy każdym dodaniu typów
+        save_bankroll(bankroll)
 
     save_coupons(coupons)
 
@@ -392,9 +389,9 @@ def run():
         f"💼 <b>STATUS BANKROLLA</b>\n"
         f"━━━━━━━━━━━━━━\n"
         f"Bankroll: <b>{round(load_bankroll(),2)} PLN</b>\n"
-        f"Typy dziś: <b>{len(sent_today)}</b> / {MAX_PICKS_PER_DAY}"
+        f"Typy dziś: <b>{len(sent_today)}</b> / {MAX_PICKS_PER_DAY}",
+        target="results"
     )
-
 
 if __name__ == "__main__":
     run()
