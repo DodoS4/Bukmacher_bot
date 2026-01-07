@@ -9,7 +9,11 @@ T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
-KEYS_POOL = [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3")]
+KEYS_POOL = [
+    os.getenv("ODDS_KEY"),
+    os.getenv("ODDS_KEY_2"),
+    os.getenv("ODDS_KEY_3")
+]
 API_KEYS = [k for k in KEYS_POOL if k]
 
 COUPONS_FILE = "coupons.json"
@@ -17,8 +21,12 @@ BANKROLL_FILE = "bankroll.json"
 START_BANKROLL = 100.0
 
 MAX_HOURS_AHEAD = 48
+MAX_PICKS_PER_DAY = 5
 
 VALUE_THRESHOLD = 0.07
+CORE_EDGE = 0.09
+SUPPORT_EDGE = 0.05
+
 MIN_ODDS_SOCCER = 2.50
 MIN_ODDS_NHL = 2.30
 
@@ -156,6 +164,32 @@ def get_team_form(team):
     weights = [1, 1.1, 1.2, 1.3, 1.4][-len(res):]
     return sum(r * w for r, w in zip(res, weights)) / sum(weights)
 
+# ================= BEST ODDS SAFE =================
+def get_best_odds_safe(event):
+    best = {}
+    try:
+        for bm in event.get("bookmakers", []):
+            for m in bm.get("markets", []):
+                if m["key"] != "h2h":
+                    continue
+                for o in m["outcomes"]:
+                    name = o["name"]
+                    price = o["price"]
+                    if name not in best or price > best[name]:
+                        best[name] = price
+    except:
+        best = {}
+
+    # fallback – stare zachowanie v1
+    if len(best) < 2:
+        try:
+            odds = event["bookmakers"][0]["markets"][0]["outcomes"]
+            best = {o["name"]: o["price"] for o in odds}
+        except:
+            return None
+
+    return best
+
 # ================= VALUE =================
 def generate_pick(match):
     h_o, a_o, d_o = match["odds"]["home"], match["odds"]["away"], match["odds"].get("draw")
@@ -172,8 +206,8 @@ def generate_pick(match):
 
     f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
 
-    final_h = 0.2 * f_h + 0.8 * p_h + 0.015
-    final_a = 0.2 * f_a + 0.8 * p_a - 0.015
+    final_h = 0.2 * f_h + 0.8 * p_h
+    final_a = 0.2 * f_a + 0.8 * p_a
     final_d = p_d * 0.92 if d_o else 0
 
     opts = []
@@ -235,17 +269,12 @@ def check_results():
                         bankroll -= c["stake"]
                         icon = "❌"
 
-                    match_time = format_match_time(parser.isoparse(c["date"]))
-
                     send_msg(
                         f"{icon} <b>ROZLICZENIE MECZU</b>\n"
-                        f"━━━━━━━━━━━━━━━━━━\n"
-                        f"🏟️ <b>{c['home']} vs {c['away']}</b>\n"
-                        f"🕒 {match_time}\n\n"
-                        f"🎯 Typ: <b>{c['picked']}</b>\n"
-                        f"⚽ Wynik: <b>{hs}:{as_}</b>\n"
-                        f"💰 Stawka: <b>{c['stake']} PLN</b>",
-                        target="results"
+                        f"{c['home']} vs {c['away']}\n"
+                        f"Typ: {c['picked']}\n"
+                        f"Stawka: {c['stake']} PLN",
+                        "results"
                     )
                 break
             except:
@@ -264,6 +293,12 @@ def run():
     coupons = load_coupons()
     bankroll = load_bankroll()
     now_utc = datetime.now(timezone.utc)
+    today = now_utc.date()
+
+    sent_today = [c for c in coupons if c.get("sent_date") == str(today)]
+    if len(sent_today) >= MAX_PICKS_PER_DAY:
+        return
+
     all_picks = []
 
     for league in LEAGUES:
@@ -285,10 +320,13 @@ def run():
                     if any(c["home"] == event["home_team"] and c["away"] == event["away_team"] for c in coupons):
                         continue
 
-                    odds = event["bookmakers"][0]["markets"][0]["outcomes"]
-                    h_o = next(o["price"] for o in odds if o["name"] == event["home_team"])
-                    a_o = next(o["price"] for o in odds if o["name"] == event["away_team"])
-                    d_o = next((o["price"] for o in odds if o["name"] == "Draw"), None)
+                    best_odds = get_best_odds_safe(event)
+                    if not best_odds:
+                        continue
+
+                    h_o = best_odds.get(event["home_team"])
+                    a_o = best_odds.get(event["away_team"])
+                    d_o = best_odds.get("Draw")
 
                     pick = generate_pick({
                         "home": event["home_team"],
@@ -305,20 +343,27 @@ def run():
             except:
                 continue
 
-    for p in sorted(all_picks, key=lambda x: x["val"], reverse=True)[:5]:
-        stake = calc_kelly_stake(bankroll, p["odds"], p["val"])
+    for p in sorted(all_picks, key=lambda x: x["val"], reverse=True):
+        if len(sent_today) >= MAX_PICKS_PER_DAY:
+            break
+
+        if p["val"] >= CORE_EDGE:
+            stake = calc_kelly_stake(bankroll, p["odds"], p["val"], kelly_frac=0.25)
+        else:
+            stake = calc_kelly_stake(bankroll, p["odds"], p["val"], kelly_frac=0.12)
+
         if stake <= 0:
             continue
 
         m = p["m"]
         info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
-        edge_pct = round(p["val"] * 100, 2)
         match_time = format_match_time(p["m_dt"])
+        edge_pct = round(p["val"] * 100, 2)
 
         send_msg(
             f"{info['flag']} <b>VALUE BET</b> • {info['name']}\n"
             f"━━━━━━━━━━━━━━━━━━\n"
-            f"🏟️ <b>{m['home_team']} vs {m['away_team']}</b>\n"
+            f"{m['home_team']} vs {m['away_team']}\n"
             f"🕒 {match_time}\n\n"
             f"🎯 Typ: <b>{p['sel']}</b>\n"
             f"📈 Kurs: <b>{p['odds']}</b>\n"
@@ -335,10 +380,20 @@ def run():
             "status": "pending",
             "date": m["commence_time"],
             "league": p["league"],
-            "win_val": 0
+            "win_val": 0,
+            "sent_date": str(today)
         })
 
+        sent_today.append(True)
+
     save_coupons(coupons)
+
+    send_msg(
+        f"💼 <b>STATUS BANKROLLA</b>\n"
+        f"━━━━━━━━━━━━━━\n"
+        f"Bankroll: <b>{round(load_bankroll(),2)} PLN</b>\n"
+        f"Typy dziś: <b>{len(sent_today)}</b> / {MAX_PICKS_PER_DAY}"
+    )
 
 
 if __name__ == "__main__":
