@@ -58,5 +58,29 @@
         "league": "icehockey_nhl",
         "win_val": 0,
         "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Philadelphia Flyers",
+        "away": "Toronto Maple Leafs",
+        "picked": "Philadelphia Flyers",
+        "odds": 2.4,
+        "stake": 3.0,
+        "status": "pending",
+        "date": "2026-01-09T00:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Nashville Predators",
+        "away": "New York Islanders",
+        "picked": "Nashville Predators",
+        "odds": 2.42,
+        "stake": 3.0,
+        "status": "pending",
+        "date": "2026-01-09T01:00:00Z",
+        "league": "icehockey_nhl",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
     }
 ]
