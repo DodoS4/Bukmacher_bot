@@ -1,20 +1,20 @@
 import requests
 import json
 import os
+import random
 from datetime import datetime, timedelta, timezone
 from dateutil import parser
 
-# ================= KONFIGURACJA =================
+# ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
-KEYS_POOL = [
+API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"),
     os.getenv("ODDS_KEY_2"),
     os.getenv("ODDS_KEY_3")
-]
-API_KEYS = [k for k in KEYS_POOL if k]
+] if k]
 
 COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
@@ -23,9 +23,8 @@ START_BANKROLL = 100.0
 MAX_HOURS_AHEAD = 24
 MAX_PICKS_PER_DAY = 9
 
-VALUE_THRESHOLD = 0.06
-CORE_EDGE = 0.09
-SUPPORT_EDGE = 0.05
+VALUE_THRESHOLD = 0.035
+CORE_EDGE = 0.06
 
 MIN_ODDS_SOCCER = 2.50
 MIN_ODDS_NHL = 2.30
@@ -51,372 +50,288 @@ LEAGUE_INFO = {
 }
 
 DYNAMIC_FORMS = {}
-LAST_MATCH_TIME = {}
 
-# ================= CZAS =================
-def format_match_time(dt_utc):
-    return dt_utc.strftime("%d.%m.%Y • %H:%M UTC")
-
-# ================= BANKROLL =================
-def load_bankroll():
-    if os.path.exists(BANKROLL_FILE):
-        try:
-            with open(BANKROLL_FILE, "r") as f:
-                return float(json.load(f).get("bankroll", START_BANKROLL))
-        except:
-            return START_BANKROLL
-    return START_BANKROLL
-
-def save_bankroll(val):
-    with open(BANKROLL_FILE, "w") as f:
-        json.dump({"bankroll": round(val, 2)}, f)
-
-def calc_kelly_stake(bankroll, odds, edge, kelly_frac=0.25):
-    if edge <= 0 or odds <= 1:
-        return 0.0
-    stake = bankroll * kelly_frac * (edge / odds)
-    stake = max(3.0, stake)
-    stake = min(stake, bankroll * 0.05)
-    return round(stake, 2)
-
-# ================= TELEGRAM =================
+# ================= UTILS =================
 def send_msg(text, target="types"):
     chat_id = T_CHAT_RESULTS if target == "results" else T_CHAT
     if not T_TOKEN or not chat_id:
         return
-    url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": chat_id,
-        "text": text,
-        "parse_mode": "HTML",
-        "disable_web_page_preview": True
-    }
     try:
-        requests.post(url, json=payload, timeout=15)
+        requests.post(
+            f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+            json={
+                "chat_id": chat_id,
+                "text": text,
+                "parse_mode": "HTML",
+                "disable_web_page_preview": True
+            },
+            timeout=10
+        )
     except:
         pass
 
-# ================= DANE =================
-def load_coupons():
-    if os.path.exists(COUPONS_FILE):
+def load_json(path, default):
+    if os.path.exists(path):
         try:
-            with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+            with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
         except:
-            return []
-    return []
+            pass
+    return default
 
-def save_coupons(coupons):
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(coupons[-2000:], f, indent=4)
+def save_json(path, data):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
-# ================= FORMY =================
-def fetch_real_team_forms():
-    new_forms, last_times = {}, {}
+# ================= BANKROLL =================
+def load_bankroll():
+    return load_json(BANKROLL_FILE, {}).get("bankroll", START_BANKROLL)
+
+def save_bankroll(val):
+    save_json(BANKROLL_FILE, {"bankroll": round(val, 2)})
+
+def calc_kelly_stake(bankroll, odds, edge, kelly_frac):
+    if edge <= 0 or odds <= 1:
+        return 0.0
+    b = odds - 1
+    kelly = edge / b
+    stake = bankroll * kelly * kelly_frac
+    stake = max(3.0, stake)
+    stake = min(stake, bankroll * 0.05)
+    return round(stake, 2)
+
+# ================= FORMS =================
+def fetch_forms():
+    forms = {}
     for league in LEAGUES:
-        for api_key in API_KEYS:
+        for key in API_KEYS:
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/scores",
-                    params={"apiKey": api_key, "daysFrom": 14},
-                    timeout=15
+                    params={"apiKey": key, "daysFrom": 14},
+                    timeout=10
                 )
                 if r.status_code != 200:
                     continue
-
-                for match in r.json():
-                    h, a = match["home_team"], match["away_team"]
-                    m_time = parser.isoparse(match["commence_time"])
-                    last_times[h] = max(last_times.get(h, m_time), m_time)
-                    last_times[a] = max(last_times.get(a, m_time), m_time)
-
-                    if not match.get("completed"):
+                for m in r.json():
+                    if not m.get("completed"):
                         continue
-
-                    scores = {s["name"]: int(s["score"]) for s in match.get("scores", [])}
+                    h, a = m["home_team"], m["away_team"]
+                    scores = {s["name"]: int(s["score"]) for s in m.get("scores", [])}
                     hs, as_ = scores.get(h, 0), scores.get(a, 0)
-
-                    new_forms.setdefault(h, [])
-                    new_forms.setdefault(a, [])
-
-                    if hs > as_:
-                        new_forms[h].append(1)
-                        new_forms[a].append(0)
-                    elif as_ > hs:
-                        new_forms[h].append(0)
-                        new_forms[a].append(1)
-                    else:
-                        new_forms[h].append(0.5)
-                        new_forms[a].append(0.5)
+                    forms.setdefault(h, []).append(1 if hs > as_ else 0.5 if hs == as_ else 0)
+                    forms.setdefault(a, []).append(1 if as_ > hs else 0.5 if hs == as_ else 0)
                 break
             except:
                 continue
-    return new_forms, last_times
+    return forms
 
-def get_team_form(team):
+def team_form(team):
     res = DYNAMIC_FORMS.get(team, [])
     if not res:
         return 0.5
     weights = [1, 1.1, 1.2, 1.3, 1.4][-len(res):]
-    return sum(r * w for r, w in zip(res, weights)) / sum(weights)
+    return sum(r*w for r, w in zip(res, weights)) / sum(weights)
 
-# ================= BEST ODDS SAFE =================
-def get_best_odds_safe(event):
-    best = {}
-    try:
-        for bm in event.get("bookmakers", []):
-            for m in bm.get("markets", []):
-                if m["key"] != "h2h":
-                    continue
-                for o in m["outcomes"]:
-                    name = o["name"]
-                    price = o["price"]
-                    if name not in best or price > best[name]:
-                        best[name] = price
-    except:
-        best = {}
+# ================= PROBABILITIES =================
+def no_vig_probs(odds):
+    inv = {k: 1/v for k, v in odds.items() if v}
+    s = sum(inv.values())
+    return {k: v/s for k, v in inv.items()}
 
-    if len(best) < 2:
-        try:
-            odds = event["bookmakers"][0]["markets"][0]["outcomes"]
-            best = {o["name"]: o["price"] for o in odds}
-        except:
-            return None
-
-    return best
-
-# ================= VALUE =================
 def generate_pick(match):
     h_o, a_o, d_o = match["odds"]["home"], match["odds"]["away"], match["odds"].get("draw")
-    if not h_o or not a_o:
-        return None
 
-    curr_min = MIN_ODDS_NHL if match["league"] == "icehockey_nhl" else MIN_ODDS_SOCCER
     if match["league"] == "icehockey_nhl":
-        d_o = None
+        probs = no_vig_probs({"home": h_o, "away": a_o})
+        p_h, p_a, p_d = probs["home"], probs["away"], 0
+        min_odds = MIN_ODDS_NHL
+    else:
+        probs = no_vig_probs({"home": h_o, "away": a_o, "draw": d_o})
+        p_h, p_a, p_d = probs["home"], probs["away"], probs.get("draw", 0)
+        min_odds = MIN_ODDS_SOCCER
 
-    raw_sum = (1/h_o + 1/a_o + (1/d_o if d_o else 0))
-    p_h, p_a = (1/h_o)/raw_sum, (1/a_o)/raw_sum
-    p_d = ((1/d_o)/raw_sum) if d_o else 0
+    f_h, f_a = team_form(match["home"]), team_form(match["away"])
 
-    f_h, f_a = get_team_form(match["home"]), get_team_form(match["away"])
-
-    final_h = 0.2 * f_h + 0.8 * p_h
-    final_a = 0.2 * f_a + 0.8 * p_a
-    final_d = p_d * 0.92 if d_o else 0
+    final = {
+        match["home"]: 0.15*f_h + 0.85*p_h,
+        match["away"]: 0.15*f_a + 0.85*p_a
+    }
+    if d_o:
+        final["Remis"] = p_d * 0.9
 
     opts = []
-    if h_o >= curr_min:
-        opts.append({"sel": match["home"], "odds": h_o, "val": final_h - (1/h_o)})
-    if a_o >= curr_min:
-        opts.append({"sel": match["away"], "odds": a_o, "val": final_a - (1/a_o)})
-    if d_o and d_o >= MIN_ODDS_SOCCER:
-        opts.append({"sel": "Remis", "odds": d_o, "val": final_d - (1/d_o)})
+    for sel, prob in final.items():
+        odds = h_o if sel == match["home"] else a_o if sel == match["away"] else d_o
+        if odds and odds >= min_odds:
+            val = prob - (1/odds)
+            if val >= VALUE_THRESHOLD:
+                opts.append({"sel": sel, "odds": odds, "val": val})
 
-    if not opts:
-        return None
+    return max(opts, key=lambda x: x["val"]) if opts else None
 
-    best = max(opts, key=lambda x: x["val"])
-    return best if best["val"] >= VALUE_THRESHOLD else None
+# ================= PERFORMANCE =================
+def rolling_perf(coupons, n=50):
+    recent = [c for c in coupons if c["status"] in ("won", "lost")][-n:]
+    if len(recent) < 20:
+        return 0
+    profit = sum(c["win_val"] if c["status"]=="won" else -c["stake"] for c in recent)
+    staked = sum(c["stake"] for c in recent)
+    return profit / staked if staked else 0
 
-# ================= ROZLICZENIA =================
+def league_roi(coupons):
+    stats = {}
+    for c in coupons:
+        if c["status"] not in ("won","lost"):
+            continue
+        s = stats.setdefault(c["league"], {"p":0,"s":0,"n":0})
+        s["n"] += 1
+        s["s"] += c["stake"]
+        s["p"] += c["win_val"] if c["status"]=="won" else -c["stake"]
+    return {k:v["p"]/v["s"] for k,v in stats.items() if v["n"]>=25}
+
+# ================= RESULTS =================
 def check_results():
-    coupons = load_coupons()
+    coupons = load_json(COUPONS_FILE, [])
     bankroll = load_bankroll()
 
     for league in LEAGUES:
-        for api_key in API_KEYS:
+        for key in API_KEYS:
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/scores",
-                    params={"apiKey": api_key, "daysFrom": 3},
-                    timeout=15
+                    params={"apiKey": key, "daysFrom": 3},
+                    timeout=10
                 )
                 if r.status_code != 200:
                     continue
 
                 for c in coupons:
-                    if c["status"] != "pending" or c["league"] != league:
+                    if c["status"]!="pending" or c["league"]!=league:
+                        continue
+                    m = next((x for x in r.json()
+                        if x["home_team"]==c["home"]
+                        and x["away_team"]==c["away"]
+                        and x.get("completed")), None)
+                    if not m:
                         continue
 
-                    match = next(
-                        (m for m in r.json()
-                         if m["home_team"] == c["home"]
-                         and m["away_team"] == c["away"]
-                         and m.get("completed")),
-                        None
-                    )
-                    if not match:
-                        continue
+                    scores = {s["name"]: int(s["score"]) for s in m.get("scores", [])}
+                    hs, as_ = scores.get(c["home"],0), scores.get(c["away"],0)
+                    winner = c["home"] if hs>as_ else c["away"] if as_>hs else "Remis"
 
-                    scores = {s["name"]: int(s["score"]) for s in match.get("scores", [])}
-                    hs, as_ = scores.get(c["home"], 0), scores.get(c["away"], 0)
-                    winner = c["home"] if hs > as_ else c["away"] if as_ > hs else "Remis"
-
-                    if c["picked"] == winner:
-                        c["status"] = "won"
-                        c["win_val"] = round(c["odds"] * c["stake"], 2)
-                        bankroll += c["win_val"] - c["stake"]
-                        icon = "✅"
+                    if winner == c["picked"]:
+                        profit = round(c["stake"]*(c["odds"]-1),2)
+                        bankroll += profit
+                        c["status"]="won"
+                        c["win_val"]=profit
                     else:
-                        c["status"] = "lost"
-                        c["win_val"] = 0
-                        bankroll -= c["stake"]
-                        icon = "❌"
-
-                    send_msg(
-                        f"{icon} <b>ROZLICZENIE MECZU</b>\n"
-                        f"{c['home']} vs {c['away']}\n"
-                        f"Typ: {c['picked']}\n"
-                        f"Stawka: {c['stake']} PLN",
-                        "results"
-                    )
+                        c["status"]="lost"
+                        c["win_val"]=0
                 break
             except:
                 continue
 
     save_bankroll(bankroll)
-    save_coupons(coupons)
-
-# ================= RAPORT LIG =================
-def league_report():
-    coupons = load_coupons()
-    report = {}
-    for c in coupons:
-        league = c["league"]
-        report.setdefault(league, {"won": 0, "lost": 0, "profit": 0})
-        if c["status"] == "won":
-            report[league]["won"] += 1
-            report[league]["profit"] += c["win_val"] - c["stake"]
-        elif c["status"] == "lost":
-            report[league]["lost"] += 1
-            report[league]["profit"] -= c["stake"]
-
-    msg = "📊 <b>STATYSTYKI LIG</b>\n━━━━━━━━━━\n"
-    for league, data in report.items():
-        profit = round(data["profit"], 2)
-        name = LEAGUE_INFO.get(league, {"name": league})["name"]
-        msg += f"{name}: 💰 {profit} PLN | ✅ {data['won']} / ❌ {data['lost']}\n"
-    send_msg(msg, target="results")
+    save_json(COUPONS_FILE, coupons)
 
 # ================= RUN =================
 def run():
-    global DYNAMIC_FORMS, LAST_MATCH_TIME
-
+    global DYNAMIC_FORMS
     check_results()
-    DYNAMIC_FORMS, LAST_MATCH_TIME = fetch_real_team_forms()
+    DYNAMIC_FORMS = fetch_forms()
 
-    coupons = load_coupons()
+    coupons = load_json(COUPONS_FILE, [])
     bankroll = load_bankroll()
-    now_utc = datetime.now(timezone.utc)
-    today = now_utc.date()
+    today = str(datetime.now(timezone.utc).date())
 
-    sent_today = [c for c in coupons if c.get("sent_date") == str(today)]
+    sent_today = [c for c in coupons if c.get("sent_date")==today]
     if len(sent_today) >= MAX_PICKS_PER_DAY:
         return
+
+    perf = rolling_perf(coupons)
+    KELLY = 0.25 if perf>0 else 0.18 if perf>-0.05 else 0.12
+    bad_leagues = [l for l,r in league_roi(coupons).items() if r<-0.04]
 
     all_picks = []
 
     for league in LEAGUES:
-        for api_key in API_KEYS:
+        if league in bad_leagues:
+            continue
+        for key in API_KEYS:
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-                    params={"apiKey": api_key, "regions": "eu,uk,us", "markets": "h2h"},
-                    timeout=15
+                    params={"apiKey": key, "markets":"h2h", "regions":"eu"},
+                    timeout=10
                 )
-                if r.status_code != 200:
+                if r.status_code!=200:
                     continue
 
-                for event in r.json():
-                    m_dt = parser.isoparse(event["commence_time"])
-                    if not (now_utc <= m_dt <= now_utc + timedelta(hours=MAX_HOURS_AHEAD)):
+                for e in r.json():
+                    m_dt = parser.isoparse(e["commence_time"])
+                    if m_dt > datetime.now(timezone.utc)+timedelta(hours=MAX_HOURS_AHEAD):
                         continue
 
-                    if any(c["home"] == event["home_team"] and c["away"] == event["away_team"] for c in coupons):
-                        continue
-
-                    best_odds = get_best_odds_safe(event)
-                    if not best_odds:
-                        continue
-
-                    h_o = best_odds.get(event["home_team"])
-                    a_o = best_odds.get(event["away_team"])
-                    d_o = best_odds.get("Draw")
+                    odds = {}
+                    for bm in e["bookmakers"]:
+                        for m in bm["markets"]:
+                            if m["key"]=="h2h":
+                                for o in m["outcomes"]:
+                                    odds[o["name"]] = max(odds.get(o["name"],0), o["price"])
 
                     pick = generate_pick({
-                        "home": event["home_team"],
-                        "away": event["away_team"],
+                        "home": e["home_team"],
+                        "away": e["away_team"],
                         "league": league,
-                        "odds": {"home": h_o, "away": a_o, "draw": d_o},
-                        "commence_time": event["commence_time"]
+                        "odds": {
+                            "home": odds.get(e["home_team"]),
+                            "away": odds.get(e["away_team"]),
+                            "draw": odds.get("Draw")
+                        }
                     })
-
                     if pick:
-                        pick.update({"m": event, "league": league, "m_dt": m_dt})
+                        pick["event"]=e
                         all_picks.append(pick)
                 break
             except:
                 continue
 
-    for p in sorted(all_picks, key=lambda x: x["val"], reverse=True):
-        if len(sent_today) >= MAX_PICKS_PER_DAY:
+    for p in sorted(all_picks, key=lambda x:x["val"], reverse=True):
+        if len(sent_today)>=MAX_PICKS_PER_DAY:
             break
-
-        if p["val"] >= CORE_EDGE:
-            stake = calc_kelly_stake(bankroll, p["odds"], p["val"], kelly_frac=0.25)
-        else:
-            stake = calc_kelly_stake(bankroll, p["odds"], p["val"], kelly_frac=0.12)
-
-        if stake <= 0:
+        stake = calc_kelly_stake(bankroll, p["odds"], p["val"], KELLY)
+        if stake<=0:
             continue
 
-        m = p["m"]
-        info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
-        match_time = format_match_time(p["m_dt"])
-        edge_pct = round(p["val"] * 100, 2)
+        bankroll -= stake
+        save_bankroll(bankroll)
 
-        send_msg(
-            f"{info['flag']} <b>VALUE BET</b> • {info['name']}\n"
-            f"━━━━━━━━━━━━━━━━━━\n"
-            f"{m['home_team']} vs {m['away_team']}\n"
-            f"🕒 {match_time}\n\n"
-            f"🎯 Typ: <b>{p['sel']}</b>\n"
-            f"📈 Kurs: <b>{p['odds']}</b>\n"
-            f"💎 Edge: <b>+{edge_pct}%</b>\n"
-            f"💰 Stawka: <b>{stake} PLN</b>"
-        )
-
+        e = p["event"]
         coupons.append({
-            "home": m["home_team"],
-            "away": m["away_team"],
+            "home": e["home_team"],
+            "away": e["away_team"],
             "picked": p["sel"],
             "odds": p["odds"],
             "stake": stake,
+            "league": p["event"]["sport_key"],
             "status": "pending",
-            "date": m["commence_time"],
-            "league": p["league"],
             "win_val": 0,
-            "sent_date": str(today)
+            "sent_date": today
         })
 
         sent_today.append(True)
-        # ⚡ zapisz bankroll przy każdym dodaniu typów
-        save_bankroll(bankroll)
 
-    save_coupons(coupons)
+        send_msg(
+            f"🎯 <b>VALUE BET</b>\n"
+            f"{e['home_team']} vs {e['away_team']}\n"
+            f"Typ: <b>{p['sel']}</b>\n"
+            f"Kurs: <b>{p['odds']}</b>\n"
+            f"Edge: <b>{round(p['val']*100,2)}%</b>\n"
+            f"Stawka: <b>{stake} PLN</b>"
+        )
 
-    # Raport bankrolla
-    send_msg(
-        f"💼 <b>STATUS BANKROLLA</b>\n"
-        f"━━━━━━━━━━━━━━\n"
-        f"Bankroll: <b>{round(load_bankroll(),2)} PLN</b>\n"
-        f"Typy dziś: <b>{len(sent_today)}</b> / {MAX_PICKS_PER_DAY}",
-        target="results"
-    )
-
-    # Raport per liga
-    league_report()
+    save_json(COUPONS_FILE, coupons)
 
 if __name__ == "__main__":
     run()
