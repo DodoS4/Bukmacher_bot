@@ -118,5 +118,60 @@
         "league": "soccer_epl",
         "win_val": 0,
         "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Utah Mammoth",
+        "away": "Ottawa Senators",
+        "picked": "Utah Mammoth",
+        "odds": 2.33,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Chicago Blackhawks",
+        "away": "St Louis Blues",
+        "picked": "St Louis Blues",
+        "odds": 2.42,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Washington Capitals",
+        "away": "Dallas Stars",
+        "picked": "Washington Capitals",
+        "odds": 2.43,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Calgary Flames",
+        "picked": "Calgary Flames",
+        "odds": 3.15,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Los Angeles Kings",
+        "away": "San Jose Sharks",
+        "picked": "San Jose Sharks",
+        "odds": 4.3,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
     }
 ]
