@@ -45,6 +45,10 @@ LEAGUE_INFO = {
 DYNAMIC_FORMS = {}
 LAST_MATCH_TIME = {}
 
+# ================= CZAS =================
+def format_match_time(dt_utc):
+    return dt_utc.strftime("%d.%m.%Y • %H:%M UTC")
+
 # ================= BANKROLL =================
 def load_bankroll():
     if os.path.exists(BANKROLL_FILE):
@@ -107,21 +111,29 @@ def fetch_real_team_forms():
     for league in LEAGUES:
         for api_key in API_KEYS:
             try:
-                url = f"https://api.the-odds-api.com/v4/sports/{league}/scores"
-                r = requests.get(url, params={"apiKey": api_key, "daysFrom": 14}, timeout=15)
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/scores",
+                    params={"apiKey": api_key, "daysFrom": 14},
+                    timeout=15
+                )
                 if r.status_code != 200:
                     continue
+
                 for match in r.json():
                     h, a = match["home_team"], match["away_team"]
                     m_time = parser.isoparse(match["commence_time"])
                     last_times[h] = max(last_times.get(h, m_time), m_time)
                     last_times[a] = max(last_times.get(a, m_time), m_time)
+
                     if not match.get("completed"):
                         continue
+
                     scores = {s["name"]: int(s["score"]) for s in match.get("scores", [])}
                     hs, as_ = scores.get(h, 0), scores.get(a, 0)
+
                     new_forms.setdefault(h, [])
                     new_forms.setdefault(a, [])
+
                     if hs > as_:
                         new_forms[h].append(1)
                         new_forms[a].append(0)
@@ -186,19 +198,28 @@ def check_results():
     for league in LEAGUES:
         for api_key in API_KEYS:
             try:
-                url = f"https://api.the-odds-api.com/v4/sports/{league}/scores"
-                r = requests.get(url, params={"apiKey": api_key, "daysFrom": 3}, timeout=15)
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/scores",
+                    params={"apiKey": api_key, "daysFrom": 3},
+                    timeout=15
+                )
                 if r.status_code != 200:
                     continue
+
                 for c in coupons:
                     if c["status"] != "pending" or c["league"] != league:
                         continue
-                    match = next((m for m in r.json()
-                                  if m["home_team"] == c["home"]
-                                  and m["away_team"] == c["away"]
-                                  and m.get("completed")), None)
+
+                    match = next(
+                        (m for m in r.json()
+                         if m["home_team"] == c["home"]
+                         and m["away_team"] == c["away"]
+                         and m.get("completed")),
+                        None
+                    )
                     if not match:
                         continue
+
                     scores = {s["name"]: int(s["score"]) for s in match.get("scores", [])}
                     hs, as_ = scores.get(c["home"], 0), scores.get(c["away"], 0)
                     winner = c["home"] if hs > as_ else c["away"] if as_ > hs else "Remis"
@@ -214,11 +235,16 @@ def check_results():
                         bankroll -= c["stake"]
                         icon = "❌"
 
+                    match_time = format_match_time(parser.isoparse(c["date"]))
+
                     send_msg(
-                        f"{icon} <b>ROZLICZENIE</b>\n"
-                        f"{c['home']} - {c['away']}\n"
-                        f"Typ: <b>{c['picked']}</b>\n"
-                        f"Wynik: <b>{hs}:{as_}</b>",
+                        f"{icon} <b>ROZLICZENIE MECZU</b>\n"
+                        f"━━━━━━━━━━━━━━━━━━\n"
+                        f"🏟️ <b>{c['home']} vs {c['away']}</b>\n"
+                        f"🕒 {match_time}\n\n"
+                        f"🎯 Typ: <b>{c['picked']}</b>\n"
+                        f"⚽ Wynik: <b>{hs}:{as_}</b>\n"
+                        f"💰 Stawka: <b>{c['stake']} PLN</b>",
                         target="results"
                     )
                 break
@@ -243,14 +269,19 @@ def run():
     for league in LEAGUES:
         for api_key in API_KEYS:
             try:
-                url = f"https://api.the-odds-api.com/v4/sports/{league}/odds"
-                r = requests.get(url, params={"apiKey": api_key, "regions": "eu", "markets": "h2h"}, timeout=15)
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/odds",
+                    params={"apiKey": api_key, "regions": "eu", "markets": "h2h"},
+                    timeout=15
+                )
                 if r.status_code != 200:
                     continue
+
                 for event in r.json():
                     m_dt = parser.isoparse(event["commence_time"])
                     if not (now_utc <= m_dt <= now_utc + timedelta(hours=MAX_HOURS_AHEAD)):
                         continue
+
                     if any(c["home"] == event["home_team"] and c["away"] == event["away_team"] for c in coupons):
                         continue
 
@@ -282,14 +313,17 @@ def run():
         m = p["m"]
         info = LEAGUE_INFO.get(p["league"], {"name": p["league"], "flag": "⚽"})
         edge_pct = round(p["val"] * 100, 2)
+        match_time = format_match_time(p["m_dt"])
 
         send_msg(
-            f"{info['flag']} <b>VALUE BET</b> ({info['name']})\n"
-            f"{m['home_team']} vs {m['away_team']}\n"
-            f"Typ: <b>{p['sel']}</b>\n"
-            f"Kurs: <b>{p['odds']}</b>\n"
-            f"Edge: <b>+{edge_pct}%</b>\n"
-            f"Stawka: <b>{stake} PLN</b>"
+            f"{info['flag']} <b>VALUE BET</b> • {info['name']}\n"
+            f"━━━━━━━━━━━━━━━━━━\n"
+            f"🏟️ <b>{m['home_team']} vs {m['away_team']}</b>\n"
+            f"🕒 {match_time}\n\n"
+            f"🎯 Typ: <b>{p['sel']}</b>\n"
+            f"📈 Kurs: <b>{p['odds']}</b>\n"
+            f"💎 Edge: <b>+{edge_pct}%</b>\n"
+            f"💰 Stawka: <b>{stake} PLN</b>"
         )
 
         coupons.append({
