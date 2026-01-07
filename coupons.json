@@ -94,5 +94,29 @@
         "league": "basketball_nba",
         "win_val": 0,
         "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Philadelphia 76ers",
+        "away": "Washington Wizards",
+        "picked": "Washington Wizards",
+        "odds": 8.3,
+        "stake": 3.0,
+        "status": "pending",
+        "date": "2026-01-08T00:10:00Z",
+        "league": "basketball_nba",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Arsenal",
+        "away": "Liverpool",
+        "picked": "Liverpool",
+        "odds": 6.4,
+        "stake": 3.0,
+        "status": "pending",
+        "date": "2026-01-08T20:00:00Z",
+        "league": "soccer_epl",
+        "win_val": 0,
+        "sent_date": "2026-01-07"
     }
 ]
