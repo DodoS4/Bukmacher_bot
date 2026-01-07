@@ -278,6 +278,27 @@ def check_results():
     save_bankroll(bankroll)
     save_coupons(coupons)
 
+# ================= RAPORT LIG =================
+def league_report():
+    coupons = load_coupons()
+    report = {}
+    for c in coupons:
+        league = c["league"]
+        report.setdefault(league, {"won": 0, "lost": 0, "profit": 0})
+        if c["status"] == "won":
+            report[league]["won"] += 1
+            report[league]["profit"] += c["win_val"] - c["stake"]
+        elif c["status"] == "lost":
+            report[league]["lost"] += 1
+            report[league]["profit"] -= c["stake"]
+
+    msg = "📊 <b>STATYSTYKI LIG</b>\n━━━━━━━━━━\n"
+    for league, data in report.items():
+        profit = round(data["profit"], 2)
+        name = LEAGUE_INFO.get(league, {"name": league})["name"]
+        msg += f"{name}: 💰 {profit} PLN | ✅ {data['won']} / ❌ {data['lost']}\n"
+    send_msg(msg, target="results")
+
 # ================= RUN =================
 def run():
     global DYNAMIC_FORMS, LAST_MATCH_TIME
@@ -385,6 +406,7 @@ def run():
 
     save_coupons(coupons)
 
+    # Raport bankrolla
     send_msg(
         f"💼 <b>STATUS BANKROLLA</b>\n"
         f"━━━━━━━━━━━━━━\n"
@@ -392,6 +414,9 @@ def run():
         f"Typy dziś: <b>{len(sent_today)}</b> / {MAX_PICKS_PER_DAY}",
         target="results"
     )
+
+    # Raport per liga
+    league_report()
 
 if __name__ == "__main__":
     run()
