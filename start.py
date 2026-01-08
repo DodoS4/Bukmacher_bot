@@ -30,25 +30,23 @@ MIN_ODDS_NBA = 1.9
 MAX_ODDS_NBA = 2.35
 VALUE_THRESHOLD_NBA = 0.02
 
+# ================= LEAGUES =================
 LEAGUES = [
-    "icehockey_nhl",
-    "icehockey_khl",
-    "basketball_nba",
-    "basketball_euroliga",
-    "soccer_epl",
-    "soccer_england_championship",
-    "soccer_poland_ekstraklasa",
-    "soccer_germany_bundesliga",
-    "soccer_uefa_champs_league",
-    "soccer_italy_serie_a",
-    "soccer_spain_la_liga",
-    "soccer_italy_serie_b",
-    "soccer_france_ligue_1"
+    "icehockey_nhl",                # NHL
+    "basketball_nba",               # NBA
+    "basketball_euroliga",          # Euroliga
+    "soccer_epl",                   # Premier League
+    "soccer_england_championship",  # Championship
+    "soccer_poland_ekstraklasa",    # Ekstraklasa
+    "soccer_germany_bundesliga",    # Bundesliga
+    "soccer_uefa_champs_league",    # Champions League
+    "soccer_italy_serie_a",         # Serie A
+    "soccer_spain_la_liga",         # La Liga
+    "soccer_france_ligue_1"         # Ligue 1
 ]
 
 LEAGUE_INFO = {
     "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
-    "icehockey_khl": {"name": "KHL", "flag": "🥅"},
     "basketball_nba": {"name": "NBA", "flag": "🏀"},
     "basketball_euroliga": {"name": "Euroliga", "flag": "🏀"},
     "soccer_epl": {"name": "Premier League", "flag": "🏴"},
@@ -58,7 +56,6 @@ LEAGUE_INFO = {
     "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"},
     "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"},
     "soccer_spain_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
-    "soccer_italy_serie_b": {"name": "Serie B", "flag": "🇮🇹"},
     "soccer_france_ligue_1": {"name": "Ligue 1", "flag": "🇫🇷"}
 }
 
