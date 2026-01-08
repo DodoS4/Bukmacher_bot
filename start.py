@@ -63,6 +63,10 @@ def save_json(path, data):
         json.dump(data, f, indent=4)
 
 # ================= BANKROLL =================
+def ensure_bankroll_file():
+    if not os.path.exists(BANKROLL_FILE):
+        save_json(BANKROLL_FILE, {"bankroll": START_BANKROLL})
+
 def load_bankroll():
     return load_json(BANKROLL_FILE, {}).get("bankroll", START_BANKROLL)
 
@@ -305,4 +309,5 @@ def run():
     save_json(COUPONS_FILE, coupons)
 
 if __name__ == "__main__":
+    ensure_bankroll_file()
     run()
