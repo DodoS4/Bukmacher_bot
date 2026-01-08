@@ -2,6 +2,7 @@ import requests
 import json
 import os
 from datetime import datetime, timedelta, timezone
+from dateutil import parser
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
@@ -19,38 +20,32 @@ BANKROLL_FILE = "bankroll.json"
 META_FILE = "meta.json"
 START_BANKROLL = 100.0
 
+MAX_HOURS_AHEAD = 24
+MAX_PICKS_PER_DAY = 9
+
 VALUE_THRESHOLD = 0.035
+
 MIN_ODDS_SOCCER = 2.50
 MIN_ODDS_NHL = 2.30
 
 LEAGUES = [
     "icehockey_nhl",
     "basketball_nba",
-    "basketball_euroleague",
     "soccer_epl",
     "soccer_england_championship",
     "soccer_poland_ekstraklasa",
     "soccer_germany_bundesliga",
-    "soccer_italy_serie_a",
-    "soccer_spain_la_liga",
-    "soccer_france_ligue_one",
-    "soccer_uefa_champs_league",
-    "soccer_uefa_europa_league"
+    "soccer_uefa_champs_league"
 ]
 
 LEAGUE_INFO = {
     "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
     "basketball_nba": {"name": "NBA", "flag": "🏀"},
-    "basketball_euroleague": {"name": "Euroleague", "flag": "🏀"},
     "soccer_epl": {"name": "Premier League", "flag": "🏴"},
     "soccer_england_championship": {"name": "Championship", "flag": "🏴"},
     "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "🇵🇱"},
     "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
-    "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"},
-    "soccer_spain_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
-    "soccer_france_ligue_one": {"name": "Ligue 1", "flag": "🇫🇷"},
-    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"},
-    "soccer_uefa_europa_league": {"name": "Europa League", "flag": "🌍"}
+    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"}
 }
 
 # ================= FILE UTILS =================
@@ -78,6 +73,12 @@ def load_bankroll():
 def save_bankroll(val):
     save_json(BANKROLL_FILE, {"bankroll": round(val, 2)})
 
+def calc_kelly_stake(bankroll, odds, edge, kelly_frac=0.25):
+    if edge <= 0 or odds <= 1:
+        return 0.0
+    stake = bankroll * (edge / (odds - 1)) * kelly_frac
+    return round(min(max(stake, 3.0), bankroll * 0.05), 2)
+
 # ================= TELEGRAM =================
 def send_msg(text, target="types"):
     chat_id = T_CHAT_RESULTS if target == "results" else T_CHAT
@@ -97,97 +98,31 @@ def send_msg(text, target="types"):
     except:
         pass
 
-# ================= VALUE BETS =================
-def fetch_odds(league, key):
-    try:
-        r = requests.get(
-            f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-            params={
-                "apiKey": key,
-                "regions": "eu",
-                "markets": "h2h",
-                "oddsFormat": "decimal",
-                "dateFormat": "iso"
-            },
-            timeout=10
-        )
-        if r.status_code == 200:
-            return r.json()
-    except:
-        pass
-    return []
+# ================= STATS =================
+def league_stats(coupons, start, end):
+    stats = {}
+    for c in coupons:
+        if c["status"] not in ("won", "lost"):
+            continue
+        if not (start <= c.get("sent_date", "") <= end):
+            continue
 
-def calc_edge(book_odds, true_odds):
-    return (book_odds / true_odds) - 1
+        lg = c["league"]
+        s = stats.setdefault(lg, {"stake": 0, "profit": 0, "cnt": 0})
+        s["stake"] += c["stake"]
+        s["profit"] += c["win_val"] if c["status"] == "won" else -c["stake"]
+        s["cnt"] += 1
+    return stats
 
-def find_value_bets():
-    coupons = load_json(COUPONS_FILE, [])
-    new_coupons = []
-
-    for league in LEAGUES:
-        for key in API_KEYS:
-            events = fetch_odds(league, key)
-            if not events:
-                continue
-
-            for e in events:
-                home, away = e["home_team"], e["away_team"]
-                for b in e.get("bookmakers", []):
-                    if b["key"] != "pinnacle":
-                        continue
-                    odds_h2h = b.get("markets", [{}])[0].get("outcomes", [])
-                    if len(odds_h2h) != 2:
-                        continue
-                    o_home = odds_h2h[0]["price"]
-                    o_away = odds_h2h[1]["price"]
-
-                    # Proste szacowanie "true odds" (można zmienić na własny model)
-                    implied_home = 1 / o_home
-                    implied_away = 1 / o_away
-                    total = implied_home + implied_away
-                    true_home = implied_home / total
-                    true_away = implied_away / total
-
-                    edge_home = calc_edge(o_home, 1/true_home)
-                    edge_away = calc_edge(o_away, 1/true_away)
-
-                    stake = 10  # przykładowa stawka, można wprowadzić Kelly
-
-                    # Sprawdzenie progów
-                    if o_home >= (MIN_ODDS_NHL if "nhl" in league else MIN_ODDS_SOCCER) and edge_home >= VALUE_THRESHOLD:
-                        if not any(c for c in coupons if c["home"]==home and c["away"]==away and c["picked"]==home):
-                            new_coupons.append({
-                                "league": league,
-                                "home": home,
-                                "away": away,
-                                "picked": home,
-                                "odds": o_home,
-                                "stake": stake,
-                                "status": "pending",
-                                "sent_date": datetime.now(timezone.utc).isoformat()
-                            })
-                    if o_away >= (MIN_ODDS_NHL if "nhl" in league else MIN_ODDS_SOCCER) and edge_away >= VALUE_THRESHOLD:
-                        if not any(c for c in coupons if c["home"]==home and c["away"]==away and c["picked"]==away):
-                            new_coupons.append({
-                                "league": league,
-                                "home": home,
-                                "away": away,
-                                "picked": away,
-                                "odds": o_away,
-                                "stake": stake,
-                                "status": "pending",
-                                "sent_date": datetime.now(timezone.utc).isoformat()
-                            })
-            break  # użyj pierwszego działającego API key
-
-    if new_coupons:
-        coupons.extend(new_coupons)
-        save_json(COUPONS_FILE, coupons)
-        # Wyślij na Telegram
-        for c in new_coupons:
-            info = LEAGUE_INFO.get(c["league"], {"name": c["league"], "flag": "🎯"})
-            msg = f"{info['flag']} {info['name']}\n{c['home']} vs {c['away']}\n🎯 Typ: {c['picked']}\n📈 Kurs: {c['odds']}\n💰 Stawka: {c['stake']} PLN"
-            send_msg(msg, "types")
+def send_summary(stats, title):
+    if not stats:
+        return
+    msg = f"{title}\n━━━━━━━━━━━━━━━━━━\n"
+    for lg, s in sorted(stats.items(), key=lambda x: x[1]["profit"], reverse=True):
+        roi = (s["profit"] / s["stake"] * 100) if s["stake"] else 0
+        info = LEAGUE_INFO.get(lg, {"name": lg, "flag": "🎯"})
+        msg += f"{info['flag']} {info['name']}: <b>{round(s['profit'],2)} PLN</b> | ROI {round(roi,2)}% ({s['cnt']})\n"
+    send_msg(msg, "results")
 
 # ================= RESULTS =================
 def check_results():
@@ -199,7 +134,7 @@ def check_results():
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/scores",
-                    params={"apiKey": key, "daysFrom": 3, "regions": "eu", "markets": "h2h"},
+                    params={"apiKey": key, "daysFrom": 3},
                     timeout=10
                 )
                 if r.status_code != 200:
@@ -236,77 +171,26 @@ def check_results():
     save_bankroll(bankroll)
     save_json(COUPONS_FILE, coupons)
 
-# ================= STATS =================
-def league_stats_visual(coupons, start, end):
-    stats = {}
-    for lg in LEAGUES:
-        stats[lg] = {"stake": 0, "profit": 0, "cnt": 0, "pending": 0}
-
-    for c in coupons:
-        sent_date = c.get("sent_date", "")
-        if start <= sent_date[:10] <= end:
-            lg = c["league"]
-            if c["status"] == "pending":
-                stats[lg]["pending"] += 1
-            else:
-                stats[lg]["stake"] += c["stake"]
-                stats[lg]["profit"] += c["win_val"] if c["status"] == "won" else -c["stake"]
-                stats[lg]["cnt"] += 1
-    return stats
-
-def send_summary_snapshot(coupons, start, end, title):
-    stats = league_stats_visual(coupons, start, end)
-    
-    total_stake = sum(s["stake"] for s in stats.values())
-    total_profit = sum(s["profit"] for s in stats.values())
-    total_roi = (total_profit / total_stake * 100) if total_stake else 0
-
-    msg = f"{title}\n━━━━━━━━━━━━━━━━━━\n"
-    msg += f"💰 <b>Całkowity zysk:</b> {round(total_profit,2)} PLN | ROI {round(total_roi,2)}%\n━━━━━━━━━━━━━━━━━━\n"
-
-    for lg in LEAGUES:
-        s = stats.get(lg, {"stake":0, "profit":0, "cnt":0, "pending":0})
-        roi = (s["profit"] / s["stake"] * 100) if s["stake"] else 0
-        info = LEAGUE_INFO.get(lg, {"name": lg, "flag": "🎯"})
-
-        if s["cnt"] == 0 and s["pending"] == 0:
-            status_emoji = "⚪"
-            status_text = "Brak zakładów"
-        elif s["cnt"] == 0 and s["pending"] > 0:
-            status_emoji = "⏳"
-            status_text = f"{s['pending']} zakładów pending"
-        elif s["profit"] >= 0:
-            status_emoji = "✅"
-            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']})"
-        else:
-            status_emoji = "❌"
-            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']})"
-
-        msg += f"{info['flag']} {info['name']}: {status_emoji} {status_text}\n"
-
-    send_msg(msg, "results")
-
 # ================= RUN =================
 def run():
     ensure_bankroll_file()
-    find_value_bets()
     check_results()
 
     coupons = load_json(COUPONS_FILE, [])
     meta = load_json(META_FILE, {})
     today = datetime.now(timezone.utc).date().isoformat()
 
-    # Dziennie
     if meta.get("last_daily") != today:
-        send_summary_snapshot(coupons, today, today, f"📊 <b>PODSUMOWANIE DZIENNE • {today}</b>")
+        stats = league_stats(coupons, today, today)
+        send_summary(stats, f"📊 <b>PODSUMOWANIE DZIENNE • {today}</b>")
         meta["last_daily"] = today
 
-    # Tygodniowo
     year, week, _ = datetime.now(timezone.utc).isocalendar()
     wk = f"{year}-W{week}"
     if meta.get("last_weekly") != wk:
         start = (datetime.now(timezone.utc) - timedelta(days=7)).date().isoformat()
-        send_summary_snapshot(coupons, start, today, f"🏆 <b>PODSUMOWANIE TYGODNIOWE • {wk}</b>")
+        stats = league_stats(coupons, start, today)
+        send_summary(stats, f"🏆 <b>PODSUMOWANIE TYGODNIOWE • {wk}</b>")
         meta["last_weekly"] = wk
 
     save_json(META_FILE, meta)
