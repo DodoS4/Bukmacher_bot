@@ -24,10 +24,10 @@ MAX_HOURS_AHEAD = 24
 MAX_PICKS_PER_DAY = 9
 
 VALUE_THRESHOLD = 0.035
-
 MIN_ODDS_SOCCER = 2.50
 MIN_ODDS_NHL = 2.30
 
+# ================= LEAGUES =================
 LEAGUES = [
     "icehockey_nhl",
     "basketball_nba",
@@ -35,7 +35,9 @@ LEAGUES = [
     "soccer_england_championship",
     "soccer_poland_ekstraklasa",
     "soccer_germany_bundesliga",
-    "soccer_uefa_champs_league"
+    "soccer_uefa_champs_league",
+    "soccer_spain_la_liga",       # dodana liga hiszpańska
+    "soccer_italy_serie_a"        # dodana liga włoska
 ]
 
 LEAGUE_INFO = {
@@ -45,7 +47,9 @@ LEAGUE_INFO = {
     "soccer_england_championship": {"name": "Championship", "flag": "🏴"},
     "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "🇵🇱"},
     "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
-    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"}
+    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"},
+    "soccer_spain_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
+    "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"}
 }
 
 # ================= FILE UTILS =================
@@ -98,7 +102,7 @@ def send_msg(text, target="types"):
     except:
         pass
 
-# ================= STATS =================
+# ================= STATS VISUAL =================
 def league_stats_visual(coupons, start, end):
     stats = {}
     for lg in LEAGUES:
@@ -124,7 +128,7 @@ def send_summary_snapshot(coupons, start, end, title):
     total_roi = (total_profit / total_stake * 100) if total_stake else 0
 
     msg = f"{title}\n━━━━━━━━━━━━━━━━━━\n"
-    msg += f"💰 <b>Całkowity zysk:</b> {round(total_profit,2)} PLN | ROI {round(total_roi,2)}%\n━━━━━━━━━━━━━━━━━━\n"
+    msg += f"💰 <b>Zysk/strata:</b> {round(total_profit,2)} PLN | ROI {round(total_roi,2)}%\n━━━━━━━━━━━━━━━━━━\n"
 
     for lg in LEAGUES:
         s = stats.get(lg, {"stake":0, "profit":0, "cnt":0, "pending":0})
@@ -136,13 +140,13 @@ def send_summary_snapshot(coupons, start, end, title):
             status_text = "Brak zakładów"
         elif s["cnt"] == 0 and s["pending"] > 0:
             status_emoji = "⏳"
-            status_text = f"{s['pending']} zakładów pending"
+            status_text = f"{s['pending']} zakładów pending | Stake: {s['stake']} PLN"
         elif s["profit"] >= 0:
             status_emoji = "✅"
-            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']})"
+            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']}) | Stake: {s['stake']} PLN"
         else:
             status_emoji = "❌"
-            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']})"
+            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']}) | Stake: {s['stake']} PLN"
 
         msg += f"{info['flag']} {info['name']}: {status_emoji} {status_text}\n"
 
