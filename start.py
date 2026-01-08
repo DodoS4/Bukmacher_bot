@@ -19,8 +19,7 @@ BANKROLL_FILE = "bankroll.json"
 META_FILE = "meta.json"
 START_BANKROLL = 100.0
 
-MAX_HOURS_AHEAD = 48
-MAX_PICKS_PER_DAY = 9
+MAX_HOURS_AHEAD = 48  # sprawdzanie ofert z 48h do przodu
 
 # ======= Progi kursów i edge =======
 VALUE_THRESHOLD = 0.035  # ogólne ligii
