@@ -1,9 +1,10 @@
-import requests
 import os
+import requests
 from datetime import datetime, timezone
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
+T_CHAT = os.getenv("T_CHAT")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"),
@@ -13,56 +14,48 @@ API_KEYS = [k for k in [
     os.getenv("ODDS_KEY_5")
 ] if k]
 
-MAX_HOURS_AHEAD = 72  # okno 72h
-
-# ================= LIGI DOSTĘPNE DLA KLUCZA =================
-LEAGUES = [
-    "basketball_nba",
-    "basketball_euroleague",
-    "icehockey_nhl",
-    "soccer_epl",
-    "soccer_efl_champ",
-    "soccer_germany_bundesliga",
-    "soccer_italy_serie_a",
-    "soccer_spain_la_liga",
-    "soccer_france_ligue_one",
-    "soccer_uefa_champs_league"
-]
-
-LEAGUE_INFO = {
-    "basketball_nba": {"name": "NBA", "flag": "🏀"},
-    "basketball_euroleague": {"name": "Euroliga", "flag": "🏀"},
-    "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
-    "soccer_epl": {"name": "Premier League", "flag": "🏴"},
-    "soccer_efl_champ": {"name": "Championship", "flag": "🏴"},
-    "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
-    "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"},
-    "soccer_spain_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
-    "soccer_france_ligue_one": {"name": "Ligue 1", "flag": "🇫🇷"},
-    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"}
-}
+MAX_HOURS_AHEAD = 72  # pobieramy mecze do 72h
 
 # ================= TELEGRAM =================
-def send_msg(text):
-    if not T_TOKEN or not T_CHAT_RESULTS:
-        print("Telegram not configured. Message:\n", text)
+def send_msg(text, target="types"):
+    chat_id = T_CHAT_RESULTS if target == "results" else T_CHAT
+    if not T_TOKEN or not chat_id:
+        print(text)
         return
     try:
         requests.post(
             f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-            json={"chat_id": T_CHAT_RESULTS, "text": text, "parse_mode": "HTML"},
+            json={
+                "chat_id": chat_id,
+                "text": text,
+                "parse_mode": "HTML",
+                "disable_web_page_preview": True
+            },
             timeout=10
         )
     except Exception as e:
-        print("Telegram send failed:", e)
+        print("Błąd wysyłki Telegram:", e)
 
-# ================= SCAN OFFERS =================
+# ================= TEST API =================
+def test_api():
+    key = API_KEYS[0]  # bierzemy pierwszy dostępny klucz
+    print("🔍 Sprawdzanie dostępnych lig dla klucza API...")
+    r = requests.get(f"https://api.the-odds-api.com/v4/sports", params={"apiKey": key}, timeout=10)
+    if r.status_code != 200:
+        print("❌ Nie udało się pobrać lig. Status:", r.status_code)
+        return []
+    leagues = r.json()
+    for l in leagues:
+        print(f"{l['key']} - {l['title']}")
+    return [l["key"] for l in leagues]
+
+# ================= SCAN MECCZY =================
 def scan_offers():
+    available_leagues = test_api()
     total_scanned = 0
-    report = "🔍 Skanowanie ofert – BEZ FILTRÓW\n━━━━━━━━━━━━━━\n"
 
-    for league in LEAGUES:
-        league_ok = False
+    for league in available_leagues:
+        league_scanned = False
         for key in API_KEYS:
             try:
                 r = requests.get(
@@ -72,39 +65,23 @@ def scan_offers():
                 )
                 if r.status_code != 200:
                     continue
-
                 data = r.json()
-                if not data:
-                    continue
-
-                league_ok = True
-                total_scanned += len(data)
-                report += f"✅ {league}: {len(data)} meczów\n"
-
+                league_scanned = True
+                print(f"\n✅ {league}: {len(data)} meczów")
                 for game in data:
-                    home = game.get("home_team", "")
-                    away = game.get("away_team", "")
-                    markets = game.get("bookmakers", [])
-                    # pokazujemy główne kursy z pierwszego bukmachera
-                    odds_text = ""
-                    if markets:
-                        odds_texts = []
-                        for m in markets[:1]:  # tylko pierwszy bookmaker
-                            for market in m.get("markets", []):
-                                for outcome in market.get("outcomes", []):
-                                    odds_texts.append(f"{outcome['name']}:{outcome['price']}")
-                        odds_text = ", ".join(odds_texts)
-                    report += f"    ➤ {home} vs {away} | {odds_text}\n"
+                    home = game.get("home_team")
+                    away = game.get("away_team")
+                    print(f"   ➤ {home} vs {away}")
+                total_scanned += len(data)
                 break
             except Exception as e:
-                print(f"Błąd przy {league}: {e}")
+                print(f"❌ Błąd ligi {league}: {e}")
                 continue
+        if not league_scanned:
+            print(f"❌ {league}: brak danych lub niedostępna")
 
-        if not league_ok:
-            report += f"❌ {league}: niedostępna\n"
-
-    report += f"\nZeskanowano: {total_scanned} meczów"
-    send_msg(report)
+    print("\n━━━━━━━━━━━━━━━━━━")
+    print(f"Zeskanowano łącznie: {total_scanned} meczów")
 
 # ================= RUN =================
 if __name__ == "__main__":
