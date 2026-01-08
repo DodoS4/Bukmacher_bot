@@ -11,48 +11,55 @@ T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"),
     os.getenv("ODDS_KEY_2"),
-    os.getenv("ODDS_KEY_3")
+    os.getenv("ODDS_KEY_3"),
+    os.getenv("ODDS_KEY_4"),
+    os.getenv("ODDS_KEY_5")
 ] if k]
 
 COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
 META_FILE = "meta.json"
 START_BANKROLL = 100.0
-
-MAX_HOURS_AHEAD = 72  # sprawdzanie ofert z 48h do przodu
+MAX_HOURS_AHEAD = 72  # okno 72h
 
 # ======= Progi kursów i edge =======
-VALUE_THRESHOLD = 0.030  # ogólne ligii
+VALUE_THRESHOLD = 0.035
 MIN_ODDS_SOCCER = 2.50
 MIN_ODDS_NHL = 2.30
-
-# NBA osobny próg
 MIN_ODDS_NBA = 1.9
 MAX_ODDS_NBA = 2.35
 VALUE_THRESHOLD_NBA = 0.02
 
 LEAGUES = [
     "icehockey_nhl",
+    "icehockey_khl",
     "basketball_nba",
+    "basketball_euroliga",
     "soccer_epl",
     "soccer_england_championship",
     "soccer_poland_ekstraklasa",
     "soccer_germany_bundesliga",
     "soccer_uefa_champs_league",
+    "soccer_italy_serie_a",
     "soccer_spain_la_liga",
-    "soccer_italy_serie_a"
+    "soccer_italy_serie_b",
+    "soccer_france_ligue_1"
 ]
 
 LEAGUE_INFO = {
     "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
+    "icehockey_khl": {"name": "KHL", "flag": "🥅"},
     "basketball_nba": {"name": "NBA", "flag": "🏀"},
+    "basketball_euroliga": {"name": "Euroliga", "flag": "🏀"},
     "soccer_epl": {"name": "Premier League", "flag": "🏴"},
     "soccer_england_championship": {"name": "Championship", "flag": "🏴"},
     "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "🇵🇱"},
     "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
     "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"},
+    "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"},
     "soccer_spain_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
-    "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"}
+    "soccer_italy_serie_b": {"name": "Serie B", "flag": "🇮🇹"},
+    "soccer_france_ligue_1": {"name": "Ligue 1", "flag": "🇫🇷"}
 }
 
 # ================= FILE UTILS =================
@@ -164,6 +171,50 @@ def send_summary(stats, title):
 
     send_msg(msg, "results")
 
+# ================= SCAN OFFERS =================
+def scan_offers():
+    total_scanned = 0
+    total_selected = 0
+
+    for league in LEAGUES:
+        for key in API_KEYS:
+            try:
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/odds",
+                    params={"apiKey": key, "daysFrom": MAX_HOURS_AHEAD},
+                    timeout=10
+                )
+                if r.status_code != 200:
+                    continue
+
+                data = r.json()
+                total_scanned += len(data)
+
+                for game in data:
+                    odds = game.get("odds", 0)
+                    edge = game.get("edge", 0)
+
+                    # Filtry dla lig
+                    if league == "basketball_nba":
+                        if odds < MIN_ODDS_NBA or odds > MAX_ODDS_NBA or edge < VALUE_THRESHOLD_NBA:
+                            continue
+                    elif league == "basketball_euroliga":
+                        if edge < VALUE_THRESHOLD:
+                            continue
+                    elif "soccer" in league:
+                        if odds < MIN_ODDS_SOCCER or edge < VALUE_THRESHOLD:
+                            continue
+                    elif "icehockey" in league:
+                        if odds < MIN_ODDS_NHL or edge < VALUE_THRESHOLD:
+                            continue
+
+                    total_selected += 1
+
+            except:
+                continue
+
+    send_msg(f"🔍 Skanowanie ofert:\nZeskanowano: {total_scanned} meczów\nWybrano: {total_selected} typów", "results")
+
 # ================= RESULTS =================
 def check_results():
     coupons = load_json(COUPONS_FILE, [])
@@ -174,7 +225,7 @@ def check_results():
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/scores",
-                    params={"apiKey": key, "daysFrom": 2},
+                    params={"apiKey": key, "daysFrom": MAX_HOURS_AHEAD},
                     timeout=10
                 )
                 if r.status_code != 200:
@@ -214,6 +265,7 @@ def check_results():
 # ================= RUN =================
 def run():
     ensure_bankroll_file()
+    scan_offers()
     check_results()
 
     coupons = load_json(COUPONS_FILE, [])
@@ -234,6 +286,14 @@ def run():
         stats = league_stats(coupons, start, today)
         send_summary(stats, f"🏆 PODSUMOWANIE TYGODNIOWE • {wk}")
         meta["last_weekly"] = wk
+
+    # Miesięczny snapshot
+    month = datetime.now(timezone.utc).strftime("%Y-%m")
+    if meta.get("last_monthly") != month:
+        start = (datetime.now(timezone.utc).replace(day=1) - timedelta(days=0)).date().isoformat()
+        stats = league_stats(coupons, start, today)
+        send_summary(stats, f"📅 PODSUMOWANIE MIESIĘCZNE • {month}")
+        meta["last_monthly"] = month
 
     save_json(META_FILE, meta)
 
