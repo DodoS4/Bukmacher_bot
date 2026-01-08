@@ -28,7 +28,7 @@
         "odds": 2.43,
         "stake": 3.0,
         "league": "icehockey_nhl",
-        "status": "pending",
+        "status": "lost",
         "win_val": 0,
         "sent_date": "2026-01-07"
     },
@@ -39,7 +39,7 @@
         "odds": 3.15,
         "stake": 3.0,
         "league": "icehockey_nhl",
-        "status": "pending",
+        "status": "lost",
         "win_val": 0,
         "sent_date": "2026-01-07"
     },
@@ -53,5 +53,104 @@
         "status": "pending",
         "win_val": 0,
         "sent_date": "2026-01-07"
+    },
+    {
+        "home": "Philadelphia Flyers",
+        "away": "Toronto Maple Leafs",
+        "picked": "Philadelphia Flyers",
+        "odds": 2.35,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
+    },
+    {
+        "home": "Winnipeg Jets",
+        "away": "Edmonton Oilers",
+        "picked": "Edmonton Oilers",
+        "odds": 2.43,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
+    },
+    {
+        "home": "Nashville Predators",
+        "away": "New York Islanders",
+        "picked": "Nashville Predators",
+        "odds": 2.4,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
+    },
+    {
+        "home": "Pittsburgh Penguins",
+        "away": "New Jersey Devils",
+        "picked": "Pittsburgh Penguins",
+        "odds": 2.45,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
+    },
+    {
+        "home": "New York Rangers",
+        "away": "Buffalo Sabres",
+        "picked": "New York Rangers",
+        "odds": 2.5,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
+    },
+    {
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Florida Panthers",
+        "picked": "Montr\u00e9al Canadiens",
+        "odds": 2.79,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
+    },
+    {
+        "home": "Boston Bruins",
+        "away": "Calgary Flames",
+        "picked": "Calgary Flames",
+        "odds": 3.05,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
+    },
+    {
+        "home": "Seattle Kraken",
+        "away": "Minnesota Wild",
+        "picked": "Seattle Kraken",
+        "odds": 3.2,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
+    },
+    {
+        "home": "Detroit Red Wings",
+        "away": "Vancouver Canucks",
+        "picked": "Vancouver Canucks",
+        "odds": 3.3,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-08"
     }
 ]
