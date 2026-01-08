@@ -20,7 +20,7 @@ BANKROLL_FILE = "bankroll.json"
 META_FILE = "meta.json"
 START_BANKROLL = 100.0
 
-MAX_HOURS_AHEAD = 24
+MAX_HOURS_AHEAD = 48  # zmienione z 24h na 48h
 MAX_PICKS_PER_DAY = 9
 
 VALUE_THRESHOLD = 0.035
@@ -36,8 +36,8 @@ LEAGUES = [
     "soccer_poland_ekstraklasa",
     "soccer_germany_bundesliga",
     "soccer_uefa_champs_league",
-    "soccer_spain_la_liga",       # dodana liga hiszpańska
-    "soccer_italy_serie_a"        # dodana liga włoska
+    "soccer_spain_la_liga",       # liga hiszpańska
+    "soccer_italy_serie_a"        # liga włoska
 ]
 
 LEAGUE_INFO = {
@@ -162,7 +162,7 @@ def check_results():
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/scores",
-                    params={"apiKey": key, "daysFrom": 3},
+                    params={"apiKey": key, "daysFrom": 2},  # 48h
                     timeout=10
                 )
                 if r.status_code != 200:
