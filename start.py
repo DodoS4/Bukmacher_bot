@@ -17,13 +17,13 @@ API_KEYS = [k for k in [
 
 COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
+META_FILE = "meta.json"
 START_BANKROLL = 100.0
 
 MAX_HOURS_AHEAD = 24
 MAX_PICKS_PER_DAY = 9
 
 VALUE_THRESHOLD = 0.035
-CORE_EDGE = 0.06
 
 MIN_ODDS_SOCCER = 2.50
 MIN_ODDS_NHL = 2.30
@@ -73,15 +73,11 @@ def load_bankroll():
 def save_bankroll(val):
     save_json(BANKROLL_FILE, {"bankroll": round(val, 2)})
 
-def calc_kelly_stake(bankroll, odds, edge, kelly_frac):
+def calc_kelly_stake(bankroll, odds, edge, kelly_frac=0.25):
     if edge <= 0 or odds <= 1:
         return 0.0
-    b = odds - 1
-    kelly = edge / b
-    stake = bankroll * kelly * kelly_frac
-    stake = max(3.0, stake)
-    stake = min(stake, bankroll * 0.05)
-    return round(stake, 2)
+    stake = bankroll * (edge / (odds - 1)) * kelly_frac
+    return round(min(max(stake, 3.0), bankroll * 0.05), 2)
 
 # ================= TELEGRAM =================
 def send_msg(text, target="types"):
@@ -102,61 +98,31 @@ def send_msg(text, target="types"):
     except:
         pass
 
-# ================= FORMAT UI =================
-def format_match_time(dt):
-    return dt.strftime("%d.%m.%Y • %H:%M UTC")
+# ================= STATS =================
+def league_stats(coupons, start, end):
+    stats = {}
+    for c in coupons:
+        if c["status"] not in ("won", "lost"):
+            continue
+        if not (start <= c.get("sent_date", "") <= end):
+            continue
 
-def format_value_card(league_key, home, away, dt, pick, odds, edge, stake):
-    info = LEAGUE_INFO.get(league_key, {"name": league_key, "flag": "🎯"})
-    tier = "A" if edge >= 0.08 else "B"
-    return (
-        f"{info['flag']} <b>VALUE BET • {info['name']}</b>\n"
-        f"━━━━━━━━━━━━━━━━━━\n\n"
-        f"<b>{home} vs {away}</b>\n"
-        f"🕒 {format_match_time(dt)}\n\n"
-        f"🎯 Typ: <b>{pick}</b>\n"
-        f"📈 Kurs: <b>{odds}</b>\n"
-        f"💎 Edge: <b>+{round(edge*100,2)}%</b>\n"
-        f"🏷 Tier: <b>{tier}</b>\n"
-        f"💰 Stawka: <b>{stake} PLN</b>"
-    )
+        lg = c["league"]
+        s = stats.setdefault(lg, {"stake": 0, "profit": 0, "cnt": 0})
+        s["stake"] += c["stake"]
+        s["profit"] += c["win_val"] if c["status"] == "won" else -c["stake"]
+        s["cnt"] += 1
+    return stats
 
-# ================= ODDS =================
-def no_vig_probs(odds):
-    inv = {k: 1/v for k, v in odds.items() if v}
-    s = sum(inv.values())
-    return {k: v/s for k, v in inv.items()}
-
-def generate_pick(match):
-    h_o = match["odds"]["home"]
-    a_o = match["odds"]["away"]
-    d_o = match["odds"].get("draw")
-
-    if match["league"] == "icehockey_nhl":
-        probs = no_vig_probs({"home": h_o, "away": a_o})
-        p = {
-            match["home"]: probs["home"],
-            match["away"]: probs["away"]
-        }
-        min_odds = MIN_ODDS_NHL
-    else:
-        probs = no_vig_probs({"home": h_o, "away": a_o, "draw": d_o})
-        p = {
-            match["home"]: probs["home"],
-            match["away"]: probs["away"],
-            "Remis": probs.get("draw", 0) * 0.9
-        }
-        min_odds = MIN_ODDS_SOCCER
-
-    best = None
-    for sel, prob in p.items():
-        odds = h_o if sel == match["home"] else a_o if sel == match["away"] else d_o
-        if odds and odds >= min_odds:
-            edge = prob - (1 / odds)
-            if edge >= VALUE_THRESHOLD:
-                if not best or edge > best["val"]:
-                    best = {"sel": sel, "odds": odds, "val": edge}
-    return best
+def send_summary(stats, title):
+    if not stats:
+        return
+    msg = f"{title}\n━━━━━━━━━━━━━━━━━━\n"
+    for lg, s in sorted(stats.items(), key=lambda x: x[1]["profit"], reverse=True):
+        roi = (s["profit"] / s["stake"] * 100) if s["stake"] else 0
+        info = LEAGUE_INFO.get(lg, {"name": lg, "flag": "🎯"})
+        msg += f"{info['flag']} {info['name']}: <b>{round(s['profit'],2)} PLN</b> | ROI {round(roi,2)}% ({s['cnt']})\n"
+    send_msg(msg, "results")
 
 # ================= RESULTS =================
 def check_results():
@@ -195,18 +161,9 @@ def check_results():
                         bankroll += profit
                         c["status"] = "won"
                         c["win_val"] = profit
-                        icon = "✅"
                     else:
                         c["status"] = "lost"
                         c["win_val"] = 0
-                        icon = "❌"
-
-                    send_msg(
-                        f"{icon} <b>ROZLICZENIE</b>\n"
-                        f"{c['home']} vs {c['away']}\n"
-                        f"Typ: {c['picked']} | Stawka: {c['stake']} PLN",
-                        target="results"
-                    )
                 break
             except:
                 continue
@@ -216,98 +173,27 @@ def check_results():
 
 # ================= RUN =================
 def run():
+    ensure_bankroll_file()
     check_results()
 
     coupons = load_json(COUPONS_FILE, [])
-    bankroll = load_bankroll()
+    meta = load_json(META_FILE, {})
+    today = datetime.now(timezone.utc).date().isoformat()
 
-    now = datetime.now(timezone.utc)
-    today = str(now.date())
-    sent_today = [c for c in coupons if c.get("sent_date") == today]
-    if len(sent_today) >= MAX_PICKS_PER_DAY:
-        return
+    if meta.get("last_daily") != today:
+        stats = league_stats(coupons, today, today)
+        send_summary(stats, f"📊 <b>PODSUMOWANIE DZIENNE • {today}</b>")
+        meta["last_daily"] = today
 
-    all_picks = []
+    year, week, _ = datetime.now(timezone.utc).isocalendar()
+    wk = f"{year}-W{week}"
+    if meta.get("last_weekly") != wk:
+        start = (datetime.now(timezone.utc) - timedelta(days=7)).date().isoformat()
+        stats = league_stats(coupons, start, today)
+        send_summary(stats, f"🏆 <b>PODSUMOWANIE TYGODNIOWE • {wk}</b>")
+        meta["last_weekly"] = wk
 
-    for league in LEAGUES:
-        for key in API_KEYS:
-            try:
-                r = requests.get(
-                    f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-                    params={"apiKey": key, "markets": "h2h", "regions": "eu"},
-                    timeout=10
-                )
-                if r.status_code != 200:
-                    continue
-
-                for e in r.json():
-                    dt = parser.isoparse(e["commence_time"])
-                    if not (now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)):
-                        continue
-
-                    odds = {}
-                    for bm in e["bookmakers"]:
-                        for m in bm["markets"]:
-                            if m["key"] == "h2h":
-                                for o in m["outcomes"]:
-                                    odds[o["name"]] = max(odds.get(o["name"], 0), o["price"])
-
-                    pick = generate_pick({
-                        "home": e["home_team"],
-                        "away": e["away_team"],
-                        "league": league,
-                        "odds": {
-                            "home": odds.get(e["home_team"]),
-                            "away": odds.get(e["away_team"]),
-                            "draw": odds.get("Draw")
-                        }
-                    })
-
-                    if pick:
-                        all_picks.append((pick, e, dt, league))
-                break
-            except:
-                continue
-
-    for pick, e, dt, league in sorted(all_picks, key=lambda x: x[0]["val"], reverse=True):
-        if len(sent_today) >= MAX_PICKS_PER_DAY:
-            break
-
-        stake = calc_kelly_stake(bankroll, pick["odds"], pick["val"], 0.25)
-        if stake <= 0:
-            continue
-
-        bankroll -= stake
-        save_bankroll(bankroll)
-
-        coupons.append({
-            "home": e["home_team"],
-            "away": e["away_team"],
-            "picked": pick["sel"],
-            "odds": pick["odds"],
-            "stake": stake,
-            "league": league,
-            "status": "pending",
-            "win_val": 0,
-            "sent_date": today
-        })
-        sent_today.append(True)
-
-        send_msg(
-            format_value_card(
-                league,
-                e["home_team"],
-                e["away_team"],
-                dt,
-                pick["sel"],
-                pick["odds"],
-                pick["val"],
-                stake
-            )
-        )
-
-    save_json(COUPONS_FILE, coupons)
+    save_json(META_FILE, meta)
 
 if __name__ == "__main__":
-    ensure_bankroll_file()
     run()
