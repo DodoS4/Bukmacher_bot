@@ -171,7 +171,7 @@ def send_summary(stats, title):
 
     send_msg(msg, "results")
 
-# ================= SCAN OFFERS =================
+# ================= SCAN OFFERS Z DEBUGIEM =================
 def scan_offers():
     total_scanned = 0
     total_selected = 0
@@ -185,9 +185,11 @@ def scan_offers():
                     timeout=10
                 )
                 if r.status_code != 200:
+                    print(f"[DEBUG] API error {r.status_code} dla ligi {league} z kluczem {key}")
                     continue
 
                 data = r.json()
+                print(f"[DEBUG] Liga {league} – pobrano {len(data)} meczów")
                 total_scanned += len(data)
 
                 for game in data:
@@ -195,22 +197,27 @@ def scan_offers():
                     edge = game.get("edge", 0)
 
                     # Filtry dla lig
+                    selected = True
                     if league == "basketball_nba":
                         if odds < MIN_ODDS_NBA or odds > MAX_ODDS_NBA or edge < VALUE_THRESHOLD_NBA:
-                            continue
+                            selected = False
                     elif league == "basketball_euroliga":
                         if edge < VALUE_THRESHOLD:
-                            continue
+                            selected = False
                     elif "soccer" in league:
                         if odds < MIN_ODDS_SOCCER or edge < VALUE_THRESHOLD:
-                            continue
+                            selected = False
                     elif "icehockey" in league:
                         if odds < MIN_ODDS_NHL or edge < VALUE_THRESHOLD:
-                            continue
+                            selected = False
 
-                    total_selected += 1
+                    if selected:
+                        total_selected += 1
+                    else:
+                        print(f"[DEBUG] Odrzucono mecz {game.get('home_team')} vs {game.get('away_team')} – kurs {odds}, edge {edge}")
 
-            except:
+            except Exception as e:
+                print(f"[DEBUG] Wyjątek dla ligi {league}: {e}")
                 continue
 
     send_msg(f"🔍 Skanowanie ofert:\nZeskanowano: {total_scanned} meczów\nWybrano: {total_selected} typów", "results")
