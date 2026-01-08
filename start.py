@@ -99,29 +99,53 @@ def send_msg(text, target="types"):
         pass
 
 # ================= STATS =================
-def league_stats(coupons, start, end):
+def league_stats_visual(coupons, start, end):
     stats = {}
-    for c in coupons:
-        if c["status"] not in ("won", "lost"):
-            continue
-        if not (start <= c.get("sent_date", "") <= end):
-            continue
+    for lg in LEAGUES:
+        stats[lg] = {"stake": 0, "profit": 0, "cnt": 0, "pending": 0}
 
-        lg = c["league"]
-        s = stats.setdefault(lg, {"stake": 0, "profit": 0, "cnt": 0})
-        s["stake"] += c["stake"]
-        s["profit"] += c["win_val"] if c["status"] == "won" else -c["stake"]
-        s["cnt"] += 1
+    for c in coupons:
+        sent_date = c.get("sent_date", "")
+        if start <= sent_date <= end:
+            lg = c["league"]
+            if c["status"] == "pending":
+                stats[lg]["pending"] += 1
+            else:
+                stats[lg]["stake"] += c["stake"]
+                stats[lg]["profit"] += c["win_val"] if c["status"] == "won" else -c["stake"]
+                stats[lg]["cnt"] += 1
     return stats
 
-def send_summary(stats, title):
-    if not stats:
-        return
+def send_summary_snapshot(coupons, start, end, title):
+    stats = league_stats_visual(coupons, start, end)
+    
+    total_stake = sum(s["stake"] for s in stats.values())
+    total_profit = sum(s["profit"] for s in stats.values())
+    total_roi = (total_profit / total_stake * 100) if total_stake else 0
+
     msg = f"{title}\n━━━━━━━━━━━━━━━━━━\n"
-    for lg, s in sorted(stats.items(), key=lambda x: x[1]["profit"], reverse=True):
+    msg += f"💰 <b>Całkowity zysk:</b> {round(total_profit,2)} PLN | ROI {round(total_roi,2)}%\n━━━━━━━━━━━━━━━━━━\n"
+
+    for lg in LEAGUES:
+        s = stats.get(lg, {"stake":0, "profit":0, "cnt":0, "pending":0})
         roi = (s["profit"] / s["stake"] * 100) if s["stake"] else 0
         info = LEAGUE_INFO.get(lg, {"name": lg, "flag": "🎯"})
-        msg += f"{info['flag']} {info['name']}: <b>{round(s['profit'],2)} PLN</b> | ROI {round(roi,2)}% ({s['cnt']})\n"
+
+        if s["cnt"] == 0 and s["pending"] == 0:
+            status_emoji = "⚪"
+            status_text = "Brak zakładów"
+        elif s["cnt"] == 0 and s["pending"] > 0:
+            status_emoji = "⏳"
+            status_text = f"{s['pending']} zakładów pending"
+        elif s["profit"] >= 0:
+            status_emoji = "✅"
+            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']})"
+        else:
+            status_emoji = "❌"
+            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']})"
+
+        msg += f"{info['flag']} {info['name']}: {status_emoji} {status_text}\n"
+
     send_msg(msg, "results")
 
 # ================= RESULTS =================
@@ -180,17 +204,17 @@ def run():
     meta = load_json(META_FILE, {})
     today = datetime.now(timezone.utc).date().isoformat()
 
+    # Dziennie
     if meta.get("last_daily") != today:
-        stats = league_stats(coupons, today, today)
-        send_summary(stats, f"📊 <b>PODSUMOWANIE DZIENNE • {today}</b>")
+        send_summary_snapshot(coupons, today, today, f"📊 <b>PODSUMOWANIE DZIENNE • {today}</b>")
         meta["last_daily"] = today
 
+    # Tygodniowo
     year, week, _ = datetime.now(timezone.utc).isocalendar()
     wk = f"{year}-W{week}"
     if meta.get("last_weekly") != wk:
         start = (datetime.now(timezone.utc) - timedelta(days=7)).date().isoformat()
-        stats = league_stats(coupons, start, today)
-        send_summary(stats, f"🏆 <b>PODSUMOWANIE TYGODNIOWE • {wk}</b>")
+        send_summary_snapshot(coupons, start, today, f"🏆 <b>PODSUMOWANIE TYGODNIOWE • {wk}</b>")
         meta["last_weekly"] = wk
 
     save_json(META_FILE, meta)
