@@ -2,7 +2,6 @@ import requests
 import json
 import os
 from datetime import datetime, timedelta, timezone
-from dateutil import parser
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
@@ -20,14 +19,19 @@ BANKROLL_FILE = "bankroll.json"
 META_FILE = "meta.json"
 START_BANKROLL = 100.0
 
-MAX_HOURS_AHEAD = 48  # zmienione z 24h na 48h
-MAX_PICKS_PER_DAY = 15
+MAX_HOURS_AHEAD = 48
+MAX_PICKS_PER_DAY = 9
 
-VALUE_THRESHOLD = 0.035
-MIN_ODDS_SOCCER = 2.30
-MIN_ODDS_NHL = 2.20
+# ======= Progi kursów i edge =======
+VALUE_THRESHOLD = 0.035  # ogólne ligii
+MIN_ODDS_SOCCER = 2.50
+MIN_ODDS_NHL = 2.30
 
-# ================= LEAGUES =================
+# NBA osobny próg
+MIN_ODDS_NBA = 1.9
+MAX_ODDS_NBA = 2.35
+VALUE_THRESHOLD_NBA = 0.02
+
 LEAGUES = [
     "icehockey_nhl",
     "basketball_nba",
@@ -36,8 +40,8 @@ LEAGUES = [
     "soccer_poland_ekstraklasa",
     "soccer_germany_bundesliga",
     "soccer_uefa_champs_league",
-    "soccer_spain_la_liga",       # liga hiszpańska
-    "soccer_italy_serie_a"        # liga włoska
+    "soccer_spain_la_liga",
+    "soccer_italy_serie_a"
 ]
 
 LEAGUE_INFO = {
@@ -102,54 +106,32 @@ def send_msg(text, target="types"):
     except:
         pass
 
-# ================= STATS VISUAL =================
-def league_stats_visual(coupons, start, end):
+# ================= STATS =================
+def league_stats(coupons, start, end):
     stats = {}
-    for lg in LEAGUES:
-        stats[lg] = {"stake": 0, "profit": 0, "cnt": 0, "pending": 0}
-
     for c in coupons:
-        sent_date = c.get("sent_date", "")
-        if start <= sent_date <= end:
-            lg = c["league"]
-            if c["status"] == "pending":
-                stats[lg]["pending"] += 1
-            else:
-                stats[lg]["stake"] += c["stake"]
-                stats[lg]["profit"] += c["win_val"] if c["status"] == "won" else -c["stake"]
-                stats[lg]["cnt"] += 1
+        if c["status"] not in ("won", "lost"):
+            continue
+        if not (start <= c.get("sent_date", "") <= end):
+            continue
+
+        lg = c["league"]
+        s = stats.setdefault(lg, {"stake": 0, "profit": 0, "cnt": 0})
+        s["stake"] += c["stake"]
+        s["profit"] += c["win_val"] if c["status"] == "won" else -c["stake"]
+        s["cnt"] += 1
     return stats
 
-def send_summary_snapshot(coupons, start, end, title):
-    stats = league_stats_visual(coupons, start, end)
-    
-    total_stake = sum(s["stake"] for s in stats.values())
-    total_profit = sum(s["profit"] for s in stats.values())
-    total_roi = (total_profit / total_stake * 100) if total_stake else 0
-
+def send_summary(stats, title):
+    if not stats:
+        return
     msg = f"{title}\n━━━━━━━━━━━━━━━━━━\n"
-    msg += f"💰 <b>Zysk/strata:</b> {round(total_profit,2)} PLN | ROI {round(total_roi,2)}%\n━━━━━━━━━━━━━━━━━━\n"
-
-    for lg in LEAGUES:
-        s = stats.get(lg, {"stake":0, "profit":0, "cnt":0, "pending":0})
+    for lg, s in sorted(stats.items(), key=lambda x: x[1]["profit"], reverse=True):
         roi = (s["profit"] / s["stake"] * 100) if s["stake"] else 0
         info = LEAGUE_INFO.get(lg, {"name": lg, "flag": "🎯"})
-
-        if s["cnt"] == 0 and s["pending"] == 0:
-            status_emoji = "⚪"
-            status_text = "Brak zakładów"
-        elif s["cnt"] == 0 and s["pending"] > 0:
-            status_emoji = "⏳"
-            status_text = f"{s['pending']} zakładów pending | Stake: {s['stake']} PLN"
-        elif s["profit"] >= 0:
-            status_emoji = "✅"
-            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']}) | Stake: {s['stake']} PLN"
-        else:
-            status_emoji = "❌"
-            status_text = f"{round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']}) | Stake: {s['stake']} PLN"
-
-        msg += f"{info['flag']} {info['name']}: {status_emoji} {status_text}\n"
-
+        # Emoji status
+        status_emoji = "✅" if s["profit"] > 0 else "❌" if s["profit"] < 0 else "⚪"
+        msg += f"{info['flag']} {info['name']}: {status_emoji} {round(s['profit'],2)} PLN | ROI {round(roi,2)}% ({s['cnt']}) | Stake: {round(s['stake'],2)} PLN\n"
     send_msg(msg, "results")
 
 # ================= RESULTS =================
@@ -162,7 +144,7 @@ def check_results():
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/scores",
-                    params={"apiKey": key, "daysFrom": 2},  # 48h
+                    params={"apiKey": key, "daysFrom": 2},
                     timeout=10
                 )
                 if r.status_code != 200:
@@ -208,17 +190,17 @@ def run():
     meta = load_json(META_FILE, {})
     today = datetime.now(timezone.utc).date().isoformat()
 
-    # Dziennie
     if meta.get("last_daily") != today:
-        send_summary_snapshot(coupons, today, today, f"📊 <b>PODSUMOWANIE DZIENNE • {today}</b>")
+        stats = league_stats(coupons, today, today)
+        send_summary(stats, f"📊 <b>DZIENNY SNAPSHOT • {today}</b>")
         meta["last_daily"] = today
 
-    # Tygodniowo
     year, week, _ = datetime.now(timezone.utc).isocalendar()
     wk = f"{year}-W{week}"
     if meta.get("last_weekly") != wk:
         start = (datetime.now(timezone.utc) - timedelta(days=7)).date().isoformat()
-        send_summary_snapshot(coupons, start, today, f"🏆 <b>PODSUMOWANIE TYGODNIOWE • {wk}</b>")
+        stats = league_stats(coupons, start, today)
+        send_summary(stats, f"🏆 <b>PODSUMOWANIE TYGODNIOWE • {wk}</b>")
         meta["last_weekly"] = wk
 
     save_json(META_FILE, meta)
