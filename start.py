@@ -2,7 +2,6 @@ import requests
 import json
 import os
 from datetime import datetime, timedelta, timezone
-from dateutil import parser
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
@@ -20,11 +19,7 @@ BANKROLL_FILE = "bankroll.json"
 META_FILE = "meta.json"
 START_BANKROLL = 100.0
 
-MAX_HOURS_AHEAD = 24
-MAX_PICKS_PER_DAY = 9
-
 VALUE_THRESHOLD = 0.035
-
 MIN_ODDS_SOCCER = 2.50
 MIN_ODDS_NHL = 2.30
 
@@ -83,12 +78,6 @@ def load_bankroll():
 def save_bankroll(val):
     save_json(BANKROLL_FILE, {"bankroll": round(val, 2)})
 
-def calc_kelly_stake(bankroll, odds, edge, kelly_frac=0.25):
-    if edge <= 0 or odds <= 1:
-        return 0.0
-    stake = bankroll * (edge / (odds - 1)) * kelly_frac
-    return round(min(max(stake, 3.0), bankroll * 0.05), 2)
-
 # ================= TELEGRAM =================
 def send_msg(text, target="types"):
     chat_id = T_CHAT_RESULTS if target == "results" else T_CHAT
@@ -108,6 +97,145 @@ def send_msg(text, target="types"):
     except:
         pass
 
+# ================= VALUE BETS =================
+def fetch_odds(league, key):
+    try:
+        r = requests.get(
+            f"https://api.the-odds-api.com/v4/sports/{league}/odds",
+            params={
+                "apiKey": key,
+                "regions": "eu",
+                "markets": "h2h",
+                "oddsFormat": "decimal",
+                "dateFormat": "iso"
+            },
+            timeout=10
+        )
+        if r.status_code == 200:
+            return r.json()
+    except:
+        pass
+    return []
+
+def calc_edge(book_odds, true_odds):
+    return (book_odds / true_odds) - 1
+
+def find_value_bets():
+    coupons = load_json(COUPONS_FILE, [])
+    new_coupons = []
+
+    for league in LEAGUES:
+        for key in API_KEYS:
+            events = fetch_odds(league, key)
+            if not events:
+                continue
+
+            for e in events:
+                home, away = e["home_team"], e["away_team"]
+                for b in e.get("bookmakers", []):
+                    if b["key"] != "pinnacle":
+                        continue
+                    odds_h2h = b.get("markets", [{}])[0].get("outcomes", [])
+                    if len(odds_h2h) != 2:
+                        continue
+                    o_home = odds_h2h[0]["price"]
+                    o_away = odds_h2h[1]["price"]
+
+                    # Proste szacowanie "true odds" (można zmienić na własny model)
+                    implied_home = 1 / o_home
+                    implied_away = 1 / o_away
+                    total = implied_home + implied_away
+                    true_home = implied_home / total
+                    true_away = implied_away / total
+
+                    edge_home = calc_edge(o_home, 1/true_home)
+                    edge_away = calc_edge(o_away, 1/true_away)
+
+                    stake = 10  # przykładowa stawka, można wprowadzić Kelly
+
+                    # Sprawdzenie progów
+                    if o_home >= (MIN_ODDS_NHL if "nhl" in league else MIN_ODDS_SOCCER) and edge_home >= VALUE_THRESHOLD:
+                        if not any(c for c in coupons if c["home"]==home and c["away"]==away and c["picked"]==home):
+                            new_coupons.append({
+                                "league": league,
+                                "home": home,
+                                "away": away,
+                                "picked": home,
+                                "odds": o_home,
+                                "stake": stake,
+                                "status": "pending",
+                                "sent_date": datetime.now(timezone.utc).isoformat()
+                            })
+                    if o_away >= (MIN_ODDS_NHL if "nhl" in league else MIN_ODDS_SOCCER) and edge_away >= VALUE_THRESHOLD:
+                        if not any(c for c in coupons if c["home"]==home and c["away"]==away and c["picked"]==away):
+                            new_coupons.append({
+                                "league": league,
+                                "home": home,
+                                "away": away,
+                                "picked": away,
+                                "odds": o_away,
+                                "stake": stake,
+                                "status": "pending",
+                                "sent_date": datetime.now(timezone.utc).isoformat()
+                            })
+            break  # użyj pierwszego działającego API key
+
+    if new_coupons:
+        coupons.extend(new_coupons)
+        save_json(COUPONS_FILE, coupons)
+        # Wyślij na Telegram
+        for c in new_coupons:
+            info = LEAGUE_INFO.get(c["league"], {"name": c["league"], "flag": "🎯"})
+            msg = f"{info['flag']} {info['name']}\n{c['home']} vs {c['away']}\n🎯 Typ: {c['picked']}\n📈 Kurs: {c['odds']}\n💰 Stawka: {c['stake']} PLN"
+            send_msg(msg, "types")
+
+# ================= RESULTS =================
+def check_results():
+    coupons = load_json(COUPONS_FILE, [])
+    bankroll = load_bankroll()
+
+    for league in LEAGUES:
+        for key in API_KEYS:
+            try:
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/scores",
+                    params={"apiKey": key, "daysFrom": 3, "regions": "eu", "markets": "h2h"},
+                    timeout=10
+                )
+                if r.status_code != 200:
+                    continue
+
+                for c in coupons:
+                    if c["status"] != "pending" or c["league"] != league:
+                        continue
+
+                    m = next((x for x in r.json()
+                        if x["home_team"] == c["home"]
+                        and x["away_team"] == c["away"]
+                        and x.get("completed")), None)
+
+                    if not m:
+                        continue
+
+                    scores = {s["name"]: int(s["score"]) for s in m.get("scores", [])}
+                    hs, as_ = scores.get(c["home"], 0), scores.get(c["away"], 0)
+                    winner = c["home"] if hs > as_ else c["away"] if as_ > hs else "Remis"
+
+                    if winner == c["picked"]:
+                        profit = round(c["stake"] * (c["odds"] - 1), 2)
+                        bankroll += profit
+                        c["status"] = "won"
+                        c["win_val"] = profit
+                    else:
+                        c["status"] = "lost"
+                        c["win_val"] = 0
+                break
+            except:
+                continue
+
+    save_bankroll(bankroll)
+    save_json(COUPONS_FILE, coupons)
+
 # ================= STATS =================
 def league_stats_visual(coupons, start, end):
     stats = {}
@@ -116,7 +244,7 @@ def league_stats_visual(coupons, start, end):
 
     for c in coupons:
         sent_date = c.get("sent_date", "")
-        if start <= sent_date <= end:
+        if start <= sent_date[:10] <= end:
             lg = c["league"]
             if c["status"] == "pending":
                 stats[lg]["pending"] += 1
@@ -158,73 +286,10 @@ def send_summary_snapshot(coupons, start, end, title):
 
     send_msg(msg, "results")
 
-# ================= RESULTS =================
-def check_results():
-    coupons = load_json(COUPONS_FILE, [])
-    bankroll = load_bankroll()
-
-    for league in LEAGUES:
-        for key in API_KEYS:
-            try:
-                r = requests.get(
-                    f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-                    params={
-                        "apiKey": key,
-                        "regions": "uk,us,eu",  # <-- dodane
-                        "markets": "h2h",       # <-- dodane
-                        "oddsFormat": "decimal"
-                    },
-                    timeout=10
-                )
-                if r.status_code != 200:
-                    continue
-
-                odds_data = r.json()
-                if not odds_data:
-                    continue
-
-                for match in odds_data:
-                    home = match["home_team"]
-                    away = match["away_team"]
-                    commence = match.get("commence_time", "")
-
-                    # Przykład dodawania do coupons jeśli spełnia warunki kursów
-                    for book in match.get("bookmakers", []):
-                        for market in book.get("markets", []):
-                            if market["key"] != "h2h":
-                                continue
-                            for outcome in market["outcomes"]:
-                                odds = outcome["price"]
-                                team = outcome["name"]
-
-                                # Progi kursów
-                                if league.startswith("soccer") and odds < MIN_ODDS_SOCCER:
-                                    continue
-                                if league.startswith("icehockey") and odds < MIN_ODDS_NHL:
-                                    continue
-
-                                # Dodanie kuponu
-                                coupon = {
-                                    "league": league,
-                                    "home": home,
-                                    "away": away,
-                                    "picked": team,
-                                    "odds": odds,
-                                    "stake": calc_kelly_stake(bankroll, odds, VALUE_THRESHOLD),
-                                    "status": "pending",
-                                    "sent_date": datetime.now(timezone.utc).date().isoformat()
-                                }
-                                coupons.append(coupon)
-                break
-            except Exception as e:
-                print("Błąd API:", e)
-                continue
-
-    save_json(COUPONS_FILE, coupons)
-
 # ================= RUN =================
 def run():
     ensure_bankroll_file()
+    find_value_bets()
     check_results()
 
     coupons = load_json(COUPONS_FILE, [])
