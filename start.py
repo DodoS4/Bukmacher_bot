@@ -22,7 +22,7 @@ START_BANKROLL = 100.0
 MAX_HOURS_AHEAD = 48  # sprawdzanie ofert z 48h do przodu
 
 # ======= Progi kursów i edge =======
-VALUE_THRESHOLD = 0.035  # ogólne ligii
+VALUE_THRESHOLD = 0.030  # ogólne ligii
 MIN_ODDS_SOCCER = 2.50
 MIN_ODDS_NHL = 2.30
 
