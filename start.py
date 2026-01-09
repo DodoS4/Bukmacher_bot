@@ -50,7 +50,7 @@ API_KEYS = [k for k in [
 COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
 API_USAGE_FILE = "api_usage.json"
-START_BANKROLL = 100.0
+START_BANKROLL = 400.0
 
 MAX_HOURS_AHEAD = 48  # 48 godzin do przodu
 VALUE_THRESHOLD = 0.035
