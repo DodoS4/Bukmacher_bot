@@ -21,9 +21,9 @@ API_KEYS = [k for k in [
 
 COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
-START_BANKROLL = 500.0  # zmienione na 500 zł
+START_BANKROLL = 500.0
 
-MAX_HOURS_AHEAD = 48  # 48 godzin do przodu
+MAX_HOURS_AHEAD = 48 
 VALUE_THRESHOLD = 0.035
 KELLY_FRACTION = 0.25
 
@@ -71,7 +71,7 @@ def load_bankroll():
     data = load_json(BANKROLL_FILE, None)
     if not data or "bankroll" not in data:
         bankroll = START_BANKROLL
-        save_bankroll(bankroll)  # automatyczny zapis przy pierwszym uruchomieniu
+        save_bankroll(bankroll)
         return bankroll
     return data.get("bankroll", START_BANKROLL)
 
@@ -137,12 +137,15 @@ def generate_pick(match):
     a_o = match["odds"]["away"]
     d_o = match["odds"].get("draw")
 
+    if not h_o or not a_o: return None
+
     if match["league"] == "icehockey_nhl":
         probs = no_vig_probs({"home": h_o, "away": a_o})
         p = {match["home"]: probs["home"], match["away"]: probs["away"]}
     else:
-        probs = no_vig_probs({"home": h_o, "away": a_o, "draw": d_o})
-        p = {match["home"]: probs["home"], match["away"]: probs["away"], "Remis": probs.get("draw",0)*0.9}
+        probs = no_vig_probs({"home": h_o, "away": a_o, "draw": d_o}) if d_o else no_vig_probs({"home": h_o, "away": a_o})
+        p = {match["home"]: probs["home"], match["away"]: probs["away"]}
+        if d_o: p["Remis"] = probs.get("draw", 0) * 0.9
 
     min_odds = MIN_ODDS.get(match["league"], 2.5)
     best = None
@@ -180,50 +183,27 @@ def check_results():
 
                     scores = {s["name"]: int(s["score"]) for s in m.get("scores",[])}
                     hs, as_ = scores.get(c["home"],0), scores.get(c["away"],0)
-                    winner = c["home"] if hs>as_ else c["away"] if as_>hs else "Remis"
+                    
+                    if hs > as_: winner = c["home"]
+                    elif as_ > hs: winner = c["away"]
+                    else: winner = "Remis"
 
-                    if winner==c["picked"]:
-                        profit = round(c["stake"]*(c["odds"]-1),2)
-                        bankroll += profit
-                        c["status"]="won"
-                        c["win_val"]=profit
-                        icon="✅"
+                    if winner == c["picked"]:
+                        profit = round(c["stake"] * (c["odds"] - 1), 2)
+                        bankroll += (c["stake"] + profit)
+                        c["status"] = "won"
+                        c["win_val"] = profit
+                        icon = "✅"
                     else:
-                        c["status"]="lost"
-                        c["win_val"]=0
-                        icon="❌"
+                        c["status"] = "lost"
+                        c["win_val"] = 0
+                        icon = "❌"
 
-                    send_msg(f"{icon} <b>ROZLICZENIE</b>\n{c['home']} vs {c['away']}\nTyp: {c['picked']} | Stawka: {c['stake']} PLN", target="results")
+                    send_msg(f"{icon} <b>ROZLICZENIE</b>\n{c['home']} vs {c['away']}\nTyp: {c['picked']} | Wynik: {hs}:{as_}\nStawka: {c['stake']} PLN", target="results")
                 break
             except: continue
     save_bankroll(bankroll)
     save_json(COUPONS_FILE, coupons)
-
-# ================= STATS =================
-def send_stats():
-    coupons = load_json(COUPONS_FILE, [])
-    bankroll = load_bankroll()
-    now = datetime.now(timezone.utc)
-
-    value_coupons = [c for c in coupons if c.get("type")=="value"]
-    if not value_coupons:
-        send_msg("📊 Statystyki dzienne - Value Bets | Brak kuponów do analizy", target="results")
-        return
-
-    stats = defaultdict(lambda: {"types":0,"won":0,"lost":0})
-    for c in value_coupons:
-        stats[c["league"]]["types"] += 1
-        stats[c["league"]]["won"] += c.get("win_val",0)
-        if c["status"]=="lost":
-            stats[c["league"]]["lost"] += c.get("stake",0)
-
-    msg=""
-    for league, data in stats.items():
-        profit = data["won"] - data["lost"]
-        info = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})
-        msg += f"{info['flag']} {info['name']}: Typów {data['types']} | 🟢 Wygrane {round(data['won'],2)} | 🔴 Przegrane {round(data['lost'],2)} | 💎 Zysk {round(profit,2)}\n"
-
-    send_msg(f"📊 Statystyki dzienne - Value Bets | {str(now.date())}\n💰 Bankroll: {round(bankroll,2)} PLN\n\n{msg}", target="results")
 
 # ================= RUN =================
 def run():
@@ -232,6 +212,9 @@ def run():
     bankroll = load_bankroll()
     now = datetime.now(timezone.utc)
     all_picks = []
+
+    # DEDUPLIKACJA: Tworzymy zbiór kluczy dla zakładów, które już są w pliku
+    existing_bets = {f"{c['home']}|{c['away']}|{c['picked']}" for c in coupons if c['status'] == 'pending'}
 
     for league in LEAGUES:
         for key in API_KEYS:
@@ -264,17 +247,21 @@ def run():
                     })
 
                     if pick:
-                        all_picks.append((pick,e,dt,league))
+                        # Sprawdzamy, czy ten zakład już istnieje
+                        bet_key = f"{e['home_team']}|{e['away_team']}|{pick['sel']}"
+                        if bet_key not in existing_bets:
+                            all_picks.append((pick, e, dt, league))
+                            existing_bets.add(bet_key) # Blokujemy duplikaty w ramach tej samej sesji
                 break
             except: continue
 
-    for pick,e,dt,league in sorted(all_picks,key=lambda x:x[0]["val"],reverse=True):
+    # Dodawanie nowych kuponów
+    for pick, e, dt, league in sorted(all_picks, key=lambda x: x[0]["val"], reverse=True):
         stake = calc_kelly_stake(bankroll, pick["odds"], pick["val"])
-        if stake <= 0: continue
+        if stake <= 0 or stake > bankroll: continue
 
         bankroll -= stake
-        save_bankroll(bankroll)
-
+        
         coupons.append({
             "home": e["home_team"],
             "away": e["away_team"],
@@ -288,11 +275,39 @@ def run():
             "type": "value"
         })
 
-        send_msg(format_value_card(league,e["home_team"],e["away_team"],dt,pick["sel"],pick["odds"],pick["val"],stake))
+        send_msg(format_value_card(league, e["home_team"], e["away_team"], dt, pick["sel"], pick["odds"], pick["val"], stake))
 
+    save_bankroll(bankroll)
     save_json(COUPONS_FILE, coupons)
 
-# ================= MAIN =================
+# ================= STATS =================
+def send_stats():
+    coupons = load_json(COUPONS_FILE, [])
+    bankroll = load_bankroll()
+    now = datetime.now(timezone.utc)
+
+    value_coupons = [c for c in coupons if c.get("type")=="value"]
+    if not value_coupons:
+        send_msg("📊 Brak danych do statystyk.", target="results")
+        return
+
+    stats = defaultdict(lambda: {"types":0,"won_val":0,"lost_val":0})
+    for c in value_coupons:
+        if c["status"] == "pending": continue
+        stats[c["league"]]["types"] += 1
+        if c["status"] == "won":
+            stats[c["league"]]["won_val"] += c.get("win_val",0)
+        else:
+            stats[c["league"]]["lost_val"] += c.get("stake",0)
+
+    msg = ""
+    for league, data in stats.items():
+        profit = data["won_val"] - data["lost_val"]
+        info = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})
+        msg += f"{info['flag']} {info['name']}: Typów {data['types']} | Zysk: {round(profit,2)} PLN\n"
+
+    send_msg(f"📊 <b>STATYSTYKI DNIA</b>\n{str(now.date())}\n💰 Bankroll: {round(bankroll,2)} PLN\n\n{msg}", target="results")
+
 if __name__=="__main__":
     if "--stats" in sys.argv:
         send_stats()
