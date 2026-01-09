@@ -1,15 +1,18 @@
-name: 📊 Sprawdź Statystyki
+name: 📊 Wyślij Statystyki
 
 on:
+  schedule:
+    # Codziennie o 7:00 UTC
+    - cron: '0 7 * * *'
+    # W każdą niedzielę o 7:00 UTC - statystyki tygodniowe
+    - cron: '0 7 * * 0'
+    # Ostatni dzień miesiąca o 7:00 UTC - statystyki miesięczne
+    - cron: '0 7 28-31 * *'
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 jobs:
   stats:
     runs-on: ubuntu-latest
-
     steps:
       - name: Pobierz kod
         uses: actions/checkout@v3
@@ -20,13 +23,10 @@ jobs:
           python-version: '3.9'
 
       - name: Instalacja bibliotek
-        run: |
-          pip install --upgrade pip
-          pip install requests python-dateutil
+        run: pip install requests python-dateutil
 
-      - name: Wygeneruj i wyślij raport
+      - name: Wyślij statystyki
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
-          T_CHAT: ${{ secrets.T_CHAT }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
-        run: python start.py --stats
+        run: python stats.py
