@@ -22,9 +22,8 @@ BANKROLL_FILE = "bankroll.json"
 START_BANKROLL = 100.0
 
 MAX_HOURS_AHEAD = 48  # 48 godzin do przodu
-VALUE_THRESHOLD = 0.055  # minimalny edge
-KELLY_FRACTION = 0.12   # część Kelly
-MAX_STAKE_FRACTION = 0.03  # max 3% bankrolla
+VALUE_THRESHOLD = 0.035
+KELLY_FRACTION = 0.25
 
 # ================= LIGI =================
 LEAGUES = [
@@ -32,7 +31,10 @@ LEAGUES = [
     "soccer_epl",                      # Premier League ⚽ PL
     "icehockey_nhl",                   # NHL 🏒
     "soccer_poland_ekstraklasa",      # Ekstraklasa ⚽ EK
-    "soccer_uefa_champs_league"       # Champions League 🏆 CL
+    "soccer_uefa_champs_league",       # Champions League 🏆 CL
+    "soccer_bundesliga",               # Bundesliga 🇩🇪
+    "soccer_la_liga",                  # La Liga 🇪🇸
+    "basketball_euroleague"            # EuroLeague 🏀
 ]
 
 LEAGUE_INFO = {
@@ -40,7 +42,10 @@ LEAGUE_INFO = {
     "soccer_epl": {"name": "Premier League", "flag": "⚽ PL"},
     "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
     "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "⚽ EK"},
-    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆 CL"}
+    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆 CL"},
+    "soccer_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
+    "soccer_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
+    "basketball_euroleague": {"name": "EuroLeague", "flag": "🏀"}
 }
 
 MIN_ODDS = {
@@ -48,7 +53,10 @@ MIN_ODDS = {
     "icehockey_nhl": 2.3,
     "soccer_epl": 2.5,
     "soccer_poland_ekstraklasa": 2.5,
-    "soccer_uefa_champs_league": 2.5
+    "soccer_uefa_champs_league": 2.5,
+    "soccer_bundesliga": 2.5,
+    "soccer_la_liga": 2.5,
+    "basketball_euroleague": 1.8
 }
 
 # ================= FILE UTILS =================
@@ -79,7 +87,7 @@ def calc_kelly_stake(bankroll, odds, edge):
     kelly = edge / b
     stake = bankroll * kelly * KELLY_FRACTION
     stake = max(3.0, stake)
-    stake = min(stake, bankroll * MAX_STAKE_FRACTION)
+    stake = min(stake, bankroll * 0.05)
     return round(stake, 2)
 
 # ================= TELEGRAM =================
@@ -264,6 +272,10 @@ def run():
                 for e in r.json():
                     dt=parser.isoparse(e["commence_time"])
                     if not(now<=dt<=now+timedelta(hours=MAX_HOURS_AHEAD)): continue
+
+                    # --- unikamy duplikatów ---
+                    if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] for c in coupons):
+                        continue
 
                     odds={}
                     for bm in e["bookmakers"]:
