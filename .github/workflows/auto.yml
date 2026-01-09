@@ -1,18 +1,20 @@
-name: Bukmacher Bot Pro AKO
+name: 📊 Automatyczne Statystyki
 
 on:
   schedule:
-    - cron: '0 0,4,8,12,16,20 * * *'  # typy co 4h UTC
-    - cron: '0 7 * * *'               # statystyki dzienne
-    - cron: '0 7 * * 0'               # statystyki tygodniowe
-    - cron: '0 7 28-31 * *'           # statystyki miesięczne
+    # Codziennie o 7:00 UTC - statystyki dzienne
+    - cron: '0 7 * * *'
+    # W każdą niedzielę o 7:00 UTC - statystyki tygodniowe
+    - cron: '0 7 * * 0'
+    # Ostatni dzień miesiąca o 7:00 UTC - statystyki miesięczne
+    - cron: '0 7 28-31 * *'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  build:
+  stats:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,31 +33,9 @@ jobs:
           pip install --upgrade pip
           pip install requests python-dateutil
 
-      - name: Synchronizacja bazy
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git pull origin main || echo "Brak zmian do pobrania"
-
-      - name: Uruchomienie bota lub statystyk
+      - name: Uruchomienie statystyk
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
-          T_CHAT: ${{ secrets.T_CHAT }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
-          ODDS_KEY: ${{ secrets.ODDS_KEY }}
-          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
-          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
         run: |
-          if [[ "$(date +%H)" == "07" ]]; then
-              echo "Wysyłanie statystyk..."
-              python start.py --stats
-          else
-              echo "Uruchamianie bota z typami..."
-              python start.py
-          fi
-
-      - name: Zapisanie zmian w bazie danych
-        run: |
-          git add coupons.json || echo "Brak zmian"
-          git commit -m "Aktualizacja bazy [skip ci]" || exit 0
-          git push origin main
+          python stats.py
