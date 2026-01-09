@@ -3,9 +3,13 @@ name: 📊 Sprawdź Statystyki
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  report:
+  stats:
     runs-on: ubuntu-latest
+
     steps:
       - name: Pobierz kod
         uses: actions/checkout@v3
@@ -16,10 +20,13 @@ jobs:
           python-version: '3.9'
 
       - name: Instalacja bibliotek
-        run: pip install requests python-dateutil
+        run: |
+          pip install --upgrade pip
+          pip install requests python-dateutil
 
       - name: Wygeneruj i wyślij raport
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
-          T_CHAT: ${{ secrets.T_CHAT_RESULTS }}
-        run: python stats.py
+          T_CHAT: ${{ secrets.T_CHAT }}
+          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
+        run: python start.py --stats
