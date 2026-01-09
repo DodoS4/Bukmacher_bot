@@ -1,25 +1,9 @@
-name: 📊 Sprawdź Statystyki
+import os
+import sys
+from datetime import datetime, timezone
+from main_bot import send_stats  # zakładam, że Twój główny bot jest w main_bot.py / start.py
 
-on:
-  workflow_dispatch:
-
-jobs:
-  report:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pobierz kod
-        uses: actions/checkout@v3
-
-      - name: Konfiguracja Pythona
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Instalacja bibliotek
-        run: pip install requests
-
-      - name: Wygeneruj i wyślij raport
-        env:
-          T_TOKEN: ${{ secrets.T_TOKEN }}
-          T_CHAT: ${{ secrets.T_CHAT }}
-        run: python stats.py
+if __name__ == "__main__":
+    print("Generowanie statystyk ręcznie...")
+    send_stats()
+    print("Raport wysłany!")
