@@ -1,16 +1,11 @@
-name: Bukmacher Bot Pro 
+name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    # Typy co 4 godziny UTC
-    - cron: '0 0,4,8,12,16,20 * * *'
-    # Codziennie o 7:00 UTC - statystyki dzienne
-    - cron: '0 7 * * *'
-    # W każdą niedzielę o 7:00 UTC - statystyki tygodniowe
-    - cron: '0 7 * * 0'
-    # Ostatni dzień miesiąca o 7:00 UTC - statystyki miesięczne
-    - cron: '0 7 28-31 * *'
-
+    - cron: '0 0,4,8,12,16,20 * * *'  # typy co 4h UTC
+    - cron: '0 7 * * *'               # statystyki dzienne
+    - cron: '0 7 * * 0'               # statystyki tygodniowe
+    - cron: '0 7 28-31 * *'           # statystyki miesięczne
   workflow_dispatch:
 
 permissions:
@@ -50,19 +45,14 @@ jobs:
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
-          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: |
-          HOUR=$(date +%H)
-          DAY=$(date +%u)
-          TOMORROW_DAY=$(date -d tomorrow +%d)
-          
-          if [[ "$HOUR" == "07" ]]; then
+          if [[ "$(date +%H)" == "07" ]]; then
               echo "Wysyłanie statystyk..."
               python start.py --stats
           else
               echo "Uruchamianie bota z typami..."
               python start.py
+          fi
 
       - name: Zapisanie zmian w bazie danych
         run: |
