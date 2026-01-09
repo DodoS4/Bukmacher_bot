@@ -31,9 +31,9 @@ LEAGUES = [
     "soccer_epl",                      # Premier League ⚽ PL
     "icehockey_nhl",                   # NHL 🏒
     "soccer_poland_ekstraklasa",      # Ekstraklasa ⚽ EK
-    "soccer_uefa_champs_league",       # Champions League 🏆 CL
-    "soccer_bundesliga",               # Bundesliga 🇩🇪
-    "soccer_la_liga",                  # La Liga 🇪🇸
+    "soccer_uefa_champs_league",      # Champions League 🏆 CL
+    "soccer_germany_bundesliga",       # Bundesliga 🇩🇪
+    "soccer_italy_serie_a",            # Serie A 🇮🇹
     "basketball_euroleague"            # EuroLeague 🏀
 ]
 
@@ -43,8 +43,8 @@ LEAGUE_INFO = {
     "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
     "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "⚽ EK"},
     "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆 CL"},
-    "soccer_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
-    "soccer_la_liga": {"name": "La Liga", "flag": "🇪🇸"},
+    "soccer_germany_bundesliga": {"name": "Bundesliga", "flag": "🇩🇪"},
+    "soccer_italy_serie_a": {"name": "Serie A", "flag": "🇮🇹"},
     "basketball_euroleague": {"name": "EuroLeague", "flag": "🏀"}
 }
 
@@ -54,8 +54,8 @@ MIN_ODDS = {
     "soccer_epl": 2.5,
     "soccer_poland_ekstraklasa": 2.5,
     "soccer_uefa_champs_league": 2.5,
-    "soccer_bundesliga": 2.5,
-    "soccer_la_liga": 2.5,
+    "soccer_germany_bundesliga": 2.5,
+    "soccer_italy_serie_a": 2.5,
     "basketball_euroleague": 1.8
 }
 
@@ -273,10 +273,6 @@ def run():
                     dt=parser.isoparse(e["commence_time"])
                     if not(now<=dt<=now+timedelta(hours=MAX_HOURS_AHEAD)): continue
 
-                    # --- unikamy duplikatów ---
-                    if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] for c in coupons):
-                        continue
-
                     odds={}
                     for bm in e["bookmakers"]:
                         for m in bm["markets"]:
@@ -294,7 +290,9 @@ def run():
                     })
 
                     if pick:
-                        all_picks.append((pick,e,dt,league))
+                        # Sprawdzenie czy mecz już istnieje w coupons
+                        if not any(c for c in coupons if c["home"]==e["home_team"] and c["away"]==e["away_team"] and c["sent_date"]==str(now.date())):
+                            all_picks.append((pick,e,dt,league))
                 break
             except: continue
 
