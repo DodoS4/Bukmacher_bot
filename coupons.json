@@ -1,1 +1,24 @@
-[]
+[
+    {
+        "home": "Team A",
+        "away": "Team B",
+        "league": "basketball_nba",
+        "picked": "Team A",
+        "odds": 2.5,
+        "val": 0.08,
+        "stake": 10,
+        "dt": "2026-01-09 11:43:39.503276+00:00",
+        "type": "value"
+    },
+    {
+        "home": "Team C",
+        "away": "Team D",
+        "league": "basketball_nba",
+        "picked": "Over 2.5",
+        "odds": 1.8,
+        "val": 0.02,
+        "stake": 5,
+        "dt": "2026-01-09 11:43:39.503276+00:00",
+        "type": "btts_over"
+    }
+]
