@@ -1,15 +1,22 @@
 import json
 import os
-from datetime import datetime, timedelta, timezone
 from collections import defaultdict
+from datetime import datetime, timezone
 from dateutil import parser
 import requests
-import sys
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 COUPONS_FILE = "coupons.json"
+
+LEAGUE_INFO = {
+    "basketball_nba": {"name": "NBA", "flag": "🏀"},
+    "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
+    "soccer_epl": {"name": "Premier League", "flag": "⚽"},
+    "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "⚽"},
+    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"}
+}
 
 # ================= FILE UTILS =================
 def load_json(path, default):
@@ -40,61 +47,51 @@ def send_msg(text):
         pass
 
 # ================= STATS =================
-def calc_league_stats(coupons):
-    stats = defaultdict(lambda: {"matches":0,"won":0,"lost":0,"profit":0})
+def send_stats():
+    coupons = load_json(COUPONS_FILE, [])
+    now = datetime.now(timezone.utc)
+
+    stats = defaultdict(lambda: {"total":0,"won":0,"lost":0,"pending":0,"profit":0})
+
     for c in coupons:
-        if c.get("type") != "value":
+        if c.get("type")!="value":
             continue
-        league = c.get("league","Unknown")
-        stats[league]["matches"] += 1
+        league = c["league"]
+        stats[league]["total"] += 1
         if c["status"]=="won":
             stats[league]["won"] += 1
             stats[league]["profit"] += c.get("win_val",0)
         elif c["status"]=="lost":
             stats[league]["lost"] += 1
             stats[league]["profit"] -= c.get("stake",0)
-    return stats
+        else:
+            stats[league]["pending"] += 1
 
-def format_stats_line(stats):
-    msg = ""
+    total_profit = 0
+    msg_lines = []
     for league, data in stats.items():
-        matches = data["matches"]
+        total = data["total"]
         won = data["won"]
         lost = data["lost"]
+        pending = data["pending"]
         profit = data["profit"]
-        win_pct = round((won/matches)*100,1) if matches>0 else 0
-        msg += f"{league}: Mecze {matches} | 🟢 Wygrane {won} | 🔴 Przegrane {lost} | 💎 Zysk {round(profit,2)} PLN | ✅ Skuteczność {win_pct}%\n"
-    return msg
+        total_profit += profit
+        try:
+            success = round((won/total)*100,1) if total>0 else 0
+        except:
+            success = 0
+        info = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})
+        line = (
+            f"{info['flag']} {info['name']}: {total} mecze{'w' if total>1 else ''} | "
+            f"🟢 {won} | 🔴 {lost} | ⏳ {pending} | "
+            f"💎 Skuteczność: {success}% | 💰 Zysk: {round(profit,2)} PLN"
+        )
+        msg_lines.append(line)
 
-def send_stats():
-    coupons = load_json(COUPONS_FILE, [])
-    now = datetime.now(timezone.utc)
+    msg = "\n".join(msg_lines)
+    msg += f"\n\n💰 Łączny zysk wszystkich lig: {round(total_profit,2)} PLN"
+    send_msg(f"📊 Statystyki dzienne - Value Bets | {str(now.date())}\n\n{msg}")
 
-    # --- Statystyki dzienne ---
-    today_coupons = [c for c in coupons if c.get("sent_date")==str(now.date())]
-    if today_coupons:
-        stats = calc_league_stats(today_coupons)
-        msg = format_stats_line(stats)
-        send_msg(f"📊 Statystyki dzienne - Value Bets | {now.date()}\n\n{msg}")
-
-    # --- Statystyki tygodniowe (w niedzielę) ---
-    if now.weekday()==6:
-        week_number = now.isocalendar()[1]
-        week_coupons = [c for c in coupons if parser.isoparse(c.get("sent_date")).isocalendar()[1]==week_number]
-        if week_coupons:
-            stats = calc_league_stats(week_coupons)
-            msg = format_stats_line(stats)
-            send_msg(f"📊 Statystyki tygodniowe - Value Bets | Tydzień {week_number}\n\n{msg}")
-
-    # --- Statystyki miesięczne (ostatni dzień miesiąca) ---
-    tomorrow = now + timedelta(days=1)
-    if tomorrow.day == 1:
-        month_coupons = [c for c in coupons if parser.isoparse(c.get("sent_date")).month==now.month]
-        if month_coupons:
-            stats = calc_league_stats(month_coupons)
-            msg = format_stats_line(stats)
-            send_msg(f"📊 Statystyki miesięczne - Value Bets | Miesiąc {now.month}\n\n{msg}")
-
-# ================= RUN =================
+# ================= MAIN =================
 if __name__=="__main__":
     send_stats()
