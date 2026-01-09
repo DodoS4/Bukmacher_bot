@@ -1,1 +1,35 @@
-[]
+[
+    {
+        "home": "Chicago Blackhawks",
+        "away": "Washington Capitals",
+        "picked": "Chicago Blackhawks",
+        "odds": 3.05,
+        "edge": 0.08332805873789478,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "dt": "2026-01-10 01:00:00+00:00",
+        "type": "value"
+    },
+    {
+        "home": "Winnipeg Jets",
+        "away": "Los Angeles Kings",
+        "picked": "Los Angeles Kings",
+        "odds": 2.34,
+        "edge": 0.11292462176548623,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "dt": "2026-01-10 01:00:00+00:00",
+        "type": "value"
+    },
+    {
+        "home": "Utah Mammoth",
+        "away": "St Louis Blues",
+        "picked": "St Louis Blues",
+        "odds": 3.3,
+        "edge": 0.08014726706315489,
+        "stake": 3.0,
+        "league": "icehockey_nhl",
+        "dt": "2026-01-10 02:00:00+00:00",
+        "type": "value"
+    }
+]
