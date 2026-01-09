@@ -2,15 +2,22 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    # uruchamiaj co 4 godziny UTC
+    # Co 4 godziny: typy i value-bety
     - cron: '0 0,4,8,12,16,20 * * *'
+    # Statystyki dzienne o 7:00 UTC
+    - cron: '0 7 * * *'
+    # Statystyki tygodniowe w niedzielę o 7:00 UTC
+    - cron: '0 7 * * 0'
+    # Statystyki miesięczne ostatniego dnia miesiąca o 7:00 UTC
+    - cron: '0 7 28-31 * *'
+
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  bukmacher-bot:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,7 +42,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git pull origin main || echo "Brak zmian do pobrania"
 
-      - name: Uruchomienie bota
+      - name: Uruchomienie bota lub wysyłka statystyk
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
@@ -45,7 +52,18 @@ jobs:
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
-        run: python start.py
+        run: |
+          # Pobierz dzień tygodnia i dzień miesiąca
+          DAY=$(date -u +%d)
+          WEEKDAY=$(date -u +%u)
+          
+          # Jeśli harmonogram to dzienne/tygodniowe/miesięczne statystyki
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            python start.py --stats
+          else
+            # Standardowe uruchomienie bota - wysyłka typów
+            python start.py
+          fi
 
       - name: Zapisanie zmian w bazie danych
         run: |
