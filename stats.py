@@ -8,7 +8,6 @@ import requests
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT_RESULTS")  # statystyki wysyłamy do wyników
-
 COUPONS_FILE = "coupons.json"
 
 # ================= FILE UTILS =================
@@ -43,12 +42,13 @@ def send_msg(text):
 def calc_stats(coupons, type_filter=None):
     stats = defaultdict(lambda: {"types":0,"won":0,"lost":0})
     for c in coupons:
-        if type_filter and c.get("type") != type_filter:
-            continue
-        stats[c["league"]]["types"] += 1
-        stats[c["league"]]["won"] += c.get("win_val",0)
-        if c["status"]=="lost":
-            stats[c["league"]]["lost"] += c.get("stake",0)
+        for p in c.get("picks", []):
+            if type_filter and p.get("type") != type_filter:
+                continue
+            stats[c["league"]]["types"] += 1
+            stats[c["league"]]["won"] += p.get("win_val", 0)
+            if p.get("status")=="lost":
+                stats[c["league"]]["lost"] += p.get("stake", 0)
     return stats
 
 def format_stats(stats_dict):
