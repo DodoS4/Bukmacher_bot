@@ -47,10 +47,10 @@ LEAGUE_INFO = {
 
 MIN_ODDS = {
     "basketball_nba": 1.8,
-    "icehockey_nhl": 2.2,
-    "soccer_epl": 2.1,
-    "soccer_poland_ekstraklasa": 2.2,
-    "soccer_uefa_champs_league": 2.2
+    "icehockey_nhl": 2.3,
+    "soccer_epl": 2.2,
+    "soccer_poland_ekstraklasa": 2.3,
+    "soccer_uefa_champs_league": 2.3
 }
 
 # ================= FILE UTILS =================
