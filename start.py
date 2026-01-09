@@ -21,10 +21,10 @@ API_KEYS = [k for k in [
 
 COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
-START_BANKROLL = 100.0
+START_BANKROLL = 500.0  # zmienione na 500 zł
 
 MAX_HOURS_AHEAD = 48  # 48 godzin do przodu
-VALUE_THRESHOLD = 0.030  # zmniejszone dla większej liczby typów
+VALUE_THRESHOLD = 0.035
 KELLY_FRACTION = 0.25
 
 # ================= LIGI =================
@@ -68,7 +68,12 @@ def save_json(path, data):
 
 # ================= BANKROLL =================
 def load_bankroll():
-    return load_json(BANKROLL_FILE, {}).get("bankroll", START_BANKROLL)
+    data = load_json(BANKROLL_FILE, None)
+    if not data or "bankroll" not in data:
+        bankroll = START_BANKROLL
+        save_bankroll(bankroll)  # automatyczny zapis przy pierwszym uruchomieniu
+        return bankroll
+    return data.get("bankroll", START_BANKROLL)
 
 def save_bankroll(val):
     save_json(BANKROLL_FILE, {"bankroll": round(val, 2)})
@@ -142,12 +147,12 @@ def generate_pick(match):
     min_odds = MIN_ODDS.get(match["league"], 2.5)
     best = None
     for sel, prob in p.items():
-        odds_val = h_o if sel==match["home"] else a_o if sel==match["away"] else d_o
-        if odds_val and odds_val >= min_odds:
-            edge = prob - (1/odds_val)
+        odds = h_o if sel==match["home"] else a_o if sel==match["away"] else d_o
+        if odds and odds >= min_odds:
+            edge = prob - (1/odds)
             if edge >= VALUE_THRESHOLD:
                 if not best or edge > best["val"]:
-                    best = {"sel": sel, "odds": odds_val, "val": edge}
+                    best = {"sel": sel, "odds": odds, "val": edge}
     return best
 
 # ================= RESULTS =================
@@ -205,15 +210,14 @@ def send_stats():
         send_msg("📊 Statystyki dzienne - Value Bets | Brak kuponów do analizy", target="results")
         return
 
-    stats = defaultdict(lambda: {"types":0, "won":0, "lost":0})
-
+    stats = defaultdict(lambda: {"types":0,"won":0,"lost":0})
     for c in value_coupons:
         stats[c["league"]]["types"] += 1
         stats[c["league"]]["won"] += c.get("win_val",0)
         if c["status"]=="lost":
             stats[c["league"]]["lost"] += c.get("stake",0)
 
-    msg = ""
+    msg=""
     for league, data in stats.items():
         profit = data["won"] - data["lost"]
         info = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})
