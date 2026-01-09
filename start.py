@@ -21,8 +21,8 @@ COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
 START_BANKROLL = 100.0
 
-MAX_HOURS_AHEAD = 72  # 48 godzin do przodu
-VALUE_THRESHOLD = 0.020
+MAX_HOURS_AHEAD = 72  # 78 godzin do przodu
+VALUE_THRESHOLD = 0.01
 KELLY_FRACTION = 0.25
 
 # ================= LIGI =================
