@@ -22,7 +22,7 @@ BANKROLL_FILE = "bankroll.json"
 START_BANKROLL = 100.0
 
 MAX_HOURS_AHEAD = 48  # 48 godzin do przodu
-VALUE_THRESHOLD = 0.015  # zmniejszone, żeby złapać więcej typów
+VALUE_THRESHOLD = 0.015
 KELLY_FRACTION = 0.25
 
 # ================= LIGI =================
@@ -126,24 +126,21 @@ def no_vig_probs(odds):
     return {k: v/s for k, v in inv.items()}
 
 def generate_pick(match):
-    h_o = match["odds"].get("home")
-    a_o = match["odds"].get("away")
+    h_o = match["odds"]["home"]
+    a_o = match["odds"]["away"]
     d_o = match["odds"].get("draw")
-
-    if not h_o or not a_o:
-        return None
-
+    
     if match["league"] == "icehockey_nhl":
         probs = no_vig_probs({"home": h_o, "away": a_o})
         p = {match["home"]: probs["home"], match["away"]: probs["away"]}
     else:
         probs = no_vig_probs({"home": h_o, "away": a_o, "draw": d_o})
         p = {
-            match["home"]: probs["home"],
-            match["away"]: probs["away"],
-            "Remis": probs.get("draw", 0)*0.9
+            match["home"]: probs.get("home",0),
+            match["away"]: probs.get("away",0),
+            "Remis": probs.get("draw",0)*0.9
         }
-
+    
     min_odds = MIN_ODDS.get(match["league"], 2.5)
     best = None
     for sel, prob in p.items():
@@ -210,7 +207,7 @@ def send_stats():
         send_msg("📊 Statystyki dzienne - Value Bets | Brak kuponów do analizy", target="results")
         return
 
-    stats = defaultdict(lambda: {"types":0,"won":0,"lost":0})
+    stats = defaultdict(lambda: {"types":0,"won":0,"lost":0"})
     for c in value_coupons:
         stats[c["league"]]["types"] += 1
         stats[c["league"]]["won"] += c.get("win_val",0)
@@ -247,22 +244,22 @@ def run():
                     dt = parser.isoparse(e["commence_time"])
                     if not(now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)): continue
 
-                    odds = {}
-                    draw_name = None
-                    for bm in e["bookmakers"]:
-                        for m in bm["markets"]:
-                            if m["key"]=="h2h":
-                                for o in m["outcomes"]:
+                    # ---------------- Collect odds ----------------
+                    odds = {"home":0,"away":0,"draw":0}
+                    home_norm = e["home_team"].strip().lower()
+                    away_norm = e["away_team"].strip().lower()
+                    for bm in e.get("bookmakers",[]):
+                        for m in bm.get("markets",[]):
+                            if m.get("key")=="h2h":
+                                for o in m.get("outcomes",[]):
                                     name = o["name"].strip().lower()
                                     price = o["price"]
                                     if "draw" in name or "remis" in name or name=="x":
-                                        draw_name = name
-                                        odds["draw"] = max(odds.get("draw",0), price)
-                                    else:
-                                        if name == e["home_team"].strip().lower():
-                                            odds["home"] = max(odds.get("home",0), price)
-                                        elif name == e["away_team"].strip().lower():
-                                            odds["away"] = max(odds.get("away",0), price)
+                                        odds["draw"] = max(odds["draw"], price)
+                                    elif name == home_norm:
+                                        odds["home"] = max(odds["home"], price)
+                                    elif name == away_norm:
+                                        odds["away"] = max(odds["away"], price)
 
                     pick = generate_pick({
                         "home": e["home_team"],
@@ -276,7 +273,9 @@ def run():
                 break
             except: continue
 
-    send_msg(f"DEBUG: Zebrano {len(all_picks)} kandydatów")  # debug
+    if not all_picks:
+        send_msg("DEBUG: Zebrano 0 kandydatów – brak ofert spełniających kryteria", target="results")
+        return
 
     for pick,e,dt,league in sorted(all_picks,key=lambda x:x[0]["val"],reverse=True):
         stake = calc_kelly_stake(bankroll, pick["odds"], pick["val"])
