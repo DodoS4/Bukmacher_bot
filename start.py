@@ -22,8 +22,9 @@ BANKROLL_FILE = "bankroll.json"
 START_BANKROLL = 100.0
 
 MAX_HOURS_AHEAD = 48  # 48 godzin do przodu
-VALUE_THRESHOLD = 0.035
-KELLY_FRACTION = 0.25
+VALUE_THRESHOLD = 0.055  # minimalny edge
+KELLY_FRACTION = 0.12   # część Kelly
+MAX_STAKE_FRACTION = 0.03  # max 3% bankrolla
 
 # ================= LIGI =================
 LEAGUES = [
@@ -78,7 +79,7 @@ def calc_kelly_stake(bankroll, odds, edge):
     kelly = edge / b
     stake = bankroll * kelly * KELLY_FRACTION
     stake = max(3.0, stake)
-    stake = min(stake, bankroll * 0.05)
+    stake = min(stake, bankroll * MAX_STAKE_FRACTION)
     return round(stake, 2)
 
 # ================= TELEGRAM =================
