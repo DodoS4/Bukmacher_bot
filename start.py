@@ -8,8 +8,8 @@ from dateutil import parser
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT = os.getenv("T_CHAT")             # Typy
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")  # Wyniki/rozliczenia
+T_CHAT = os.getenv("T_CHAT")
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
 API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"),
@@ -21,7 +21,7 @@ COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
 START_BANKROLL = 100.0
 
-MAX_HOURS_AHEAD = 48
+MAX_HOURS_AHEAD = 48  # 48 godzin do przodu
 VALUE_THRESHOLD = 0.035
 KELLY_FRACTION = 0.25
 
@@ -70,11 +70,11 @@ def load_json(path, default):
     return default
 
 def save_json(path, data):
-    # Konwertuj datetime na string, jeśli jest w strukturze
+    # Zamiana datetime na string przy zapisie
     def convert(obj):
         if isinstance(obj, datetime):
             return obj.isoformat()
-        raise TypeError
+        return obj
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, default=convert)
 
@@ -97,13 +97,11 @@ def calc_kelly_stake(bankroll, odds, edge):
 
 # ================= TELEGRAM =================
 def send_msg(text, target="types"):
-    chat_id = T_CHAT_RESULTS if target=="results" else T_CHAT
-    print(f"DEBUG: Sending message to chat_id={chat_id}")  # Debug log
+    chat_id = T_CHAT_RESULTS if target == "results" else T_CHAT
     if not T_TOKEN or not chat_id:
-        print("DEBUG: T_TOKEN lub chat_id nie ustawione!")
         return
     try:
-        r = requests.post(
+        requests.post(
             f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
             json={
                 "chat_id": chat_id,
@@ -113,111 +111,184 @@ def send_msg(text, target="types"):
             },
             timeout=10
         )
-        print(f"DEBUG: Telegram response {r.status_code} | {r.text}")
-    except Exception as e:
-        print(f"DEBUG: Exception sending message: {e}")
+    except:
+        pass
 
-# ================= FORMAT UI =================
+# ================= FORMAT =================
 def format_match_time(dt):
     return dt.strftime("%d.%m.%Y • %H:%M UTC")
 
-def format_value_card(match):
+def format_value_card(league_key, home, away, dt, pick, odds, edge, stake):
+    info = LEAGUE_INFO.get(league_key, {"name": league_key, "flag": "🎯"})
+    tier = "A" if edge >= 0.08 else "B"
     return (
-        f"{LEAGUE_INFO.get(match['league'],{'flag':'🎯','name':match['league']})['flag']} "
-        f"<b>VALUE BET • {LEAGUE_INFO.get(match['league'],{'name':match['league']})['name']}</b>\n"
+        f"{info['flag']} <b>VALUE BET • {info['name']}</b>\n"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"<b>{match['home']} vs {match['away']}</b>\n"
-        f"🕒 {format_match_time(parser.isoparse(match['dt']))}\n"
-        f"🎯 Typ: <b>{match['picked']}</b>\n"
-        f"📈 Kurs: <b>{match['odds']}</b>\n"
-        f"💎 Edge: <b>{round(match['val']*100,2)}%</b>\n"
-        f"💰 Stawka: <b>{match['stake']} PLN</b>"
+        f"<b>{home} vs {away}</b>\n"
+        f"🕒 {format_match_time(dt)}\n"
+        f"🎯 Typ: <b>{pick}</b>\n"
+        f"📈 Kurs: <b>{odds}</b>\n"
+        f"💎 Edge: <b>{round(edge*100,2)}%</b>\n"
+        f"🏷 Tier: <b>{tier}</b>\n"
+        f"💰 Stawka: <b>{stake} PLN</b>"
     )
 
-def format_btts_over_card(match):
+def format_btts_over_card(league_key, home, away, dt, pick_type, pick, odds, edge, stake):
+    info = LEAGUE_INFO.get(league_key, {"name": league_key, "flag": "🎯"})
     return (
-        f"{LEAGUE_INFO.get(match['league'],{'flag':'🎯','name':match['league']})['flag']} "
-        f"<b>{match['type'].upper()} • {LEAGUE_INFO.get(match['league'],{'name':match['league']})['name']}</b>\n"
+        f"{info['flag']} <b>{pick_type} • {info['name']}</b>\n"
         f"━━━━━━━━━━━━━━━━━━\n"
-        f"<b>{match['home']} vs {match['away']}</b>\n"
-        f"🕒 {format_match_time(parser.isoparse(match['dt']))}\n"
-        f"🎯 Typ: <b>{match['picked']}</b>\n"
-        f"📈 Kurs: <b>{match['odds']}</b>\n"
-        f"💎 Edge: <b>{round(match['val']*100,2)}%</b>\n"
-        f"💰 Stawka: <b>{match['stake']} PLN</b>"
+        f"<b>{home} vs {away}</b>\n"
+        f"🕒 {format_match_time(dt)}\n"
+        f"🎯 Typ: <b>{pick}</b>\n"
+        f"📈 Kurs: <b>{odds}</b>\n"
+        f"💎 Edge: <b>{round(edge*100,2)}%</b>\n"
+        f"💰 Stawka: <b>{stake} PLN</b>"
     )
 
-# ================= ODDS / PICK =================
+# ================= ODDS =================
 def no_vig_probs(odds):
-    inv = {k: 1/v for k,v in odds.items() if v}
+    inv = {k: 1/v for k, v in odds.items() if v}
     s = sum(inv.values())
-    return {k: v/s for k,v in inv.items()}
+    return {k: v/s for k, v in inv.items()}
 
-def generate_pick(match):
-    h_o = match["odds"]["home"]
-    a_o = match["odds"]["away"]
+def generate_pick(match, market_type="value"):
+    h_o = match["odds"].get("home")
+    a_o = match["odds"].get("away")
     d_o = match["odds"].get("draw")
-    if match.get("type")=="value":
-        if match["league"]=="icehockey_nhl":
-            probs = no_vig_probs({"home": h_o, "away": a_o})
-            p = {match["home"]: probs["home"], match["away"]: probs["away"]}
-        else:
-            probs = no_vig_probs({"home": h_o, "away": a_o, "draw": d_o})
-            p = {match["home"]: probs["home"], match["away"]: probs["away"], "Remis": probs.get("draw",0)*0.9}
+    
+    if market_type=="value":
+        # standard value
+        probs = no_vig_probs({"home": h_o, "away": a_o, "draw": d_o})
+        p = {match["home"]: probs["home"], match["away"]: probs["away"], "Remis": probs.get("draw",0)}
+        best = None
+        for sel, prob in p.items():
+            odds = h_o if sel==match["home"] else a_o if sel==match["away"] else d_o
+            if odds and odds >= MIN_ODDS.get(match["league"],2.5):
+                edge = prob - (1/odds)
+                if edge >= VALUE_THRESHOLD:
+                    if not best or edge>best["val"]:
+                        best={"sel":sel,"odds":odds,"val":edge}
+        return best
     else:
-        # BTTS/Over zakładamy edge mniejsze
-        p = {match["picked"]: 0.52}  # przykładowa symulacja
-
-    min_odds = MIN_ODDS.get(match["league"], 2.5)
-    best = None
-    for sel, prob in p.items():
-        odds = h_o if sel==match["home"] else a_o if sel==match["away"] else d_o
-        if odds and odds >= min_odds:
-            edge = prob - (1/odds)
-            if edge >= VALUE_THRESHOLD:
-                if not best or edge > best["val"]:
-                    best = {"sel": sel, "odds": odds, "val": edge}
-    return best
+        # BTTS/Over logic - prosty przykład
+        # zakładamy, że match["odds"] zawiera 'btts' i 'over_2.5'
+        picks=[]
+        for key in ["btts","over_2.5"]:
+            if match["odds"].get(key):
+                odds = match["odds"][key]
+                edge = 0.02  # minimalny edge
+                picks.append({"type":"BTTS_OVER" if key=="btts" else "OVER", "sel":match[key], "odds":odds,"val":edge})
+        return picks if picks else None
 
 # ================= RUN =================
 def run():
-    coupons = load_json(COUPONS_FILE, [])
+    coupons = load_json(COUPONS_FILE,[])
     bankroll = load_bankroll()
     now = datetime.now(timezone.utc)
 
-    value_matches = []
-    btts_over_matches = []
+    value_matches=[]
+    btts_over_matches=[]
 
-    # --- tutaj symulacja pobrania typów z API ---
-    # dla testu dodajemy 2 przykładowe typy
-    test_value = {
-        "home": "Team A", "away": "Team B", "league":"basketball_nba",
-        "picked":"Team A","odds":2.5,"val":0.08,"stake":10,"dt":str(now),"type":"value"
-    }
-    test_btts = {
-        "home": "Team C","away":"Team D","league":"basketball_nba",
-        "picked":"Over 2.5","odds":1.8,"val":0.02,"stake":5,"dt":str(now),"type":"btts_over"
-    }
+    for league in LEAGUES:
+        for key in API_KEYS:
+            try:
+                r=requests.get(f"https://api.the-odds-api.com/v4/sports/{league}/odds",
+                               params={"apiKey":key,"markets":"h2h,totals,btts","regions":"eu"},
+                               timeout=10)
+                if r.status_code!=200: continue
 
-    value_matches.append(test_value)
-    btts_over_matches.append(test_btts)
+                for e in r.json():
+                    dt=parser.isoparse(e["commence_time"])
+                    if not(now<=dt<=now+timedelta(hours=MAX_HOURS_AHEAD)):
+                        continue
 
-    # --- wysyłka VALUE ---
-    for m in value_matches:
-        send_msg(format_value_card(m), target="types")
+                    # przygotowanie kursów
+                    odds={}
+                    for bm in e.get("bookmakers",[]):
+                        for m in bm.get("markets",[]):
+                            if m["key"]=="h2h":
+                                for o in m["outcomes"]:
+                                    odds[o["name"]]=max(odds.get(o["name"],0),o["price"])
+                            elif m["key"]=="totals":
+                                for o in m["outcomes"]:
+                                    odds["over_2.5"]=o["price"]  # przykład
+                                    e["over_2.5"]=e["home_team"] if o["name"].endswith(">2.5") else e["away_team"]
+                            elif m["key"]=="btts":
+                                for o in m["outcomes"]:
+                                    odds["btts"]=o["price"]
+                                    e["btts"]=e["home_team"] if o["name"]=="Yes" else e["away_team"]
 
-    # --- wysyłka BTTS/OVER ---
-    for m in btts_over_matches:
-        send_msg(format_btts_over_card(m), target="types")
+                    # Value
+                    pick = generate_pick({
+                        "home":e["home_team"],
+                        "away":e["away_team"],
+                        "league":league,
+                        "odds":{"home":odds.get(e["home_team"]),
+                                "away":odds.get(e["away_team"]),
+                                "draw":odds.get("Draw")}
+                    },market_type="value")
 
-    # --- zapis do pliku ---
-    save_json(COUPONS_FILE, value_matches+btts_over_matches)
-    save_bankroll(bankroll)
+                    if pick:
+                        # unikamy duplikatów
+                        if not any(c for c in coupons if c["home"]==e["home_team"] and c["away"]==e["away_team"] and c.get("type")=="value" and c["sent_date"]==str(now.date())):
+                            value_matches.append({"league":league,"home":e["home_team"],"away":e["away_team"],"pick":pick,"dt":dt})
+
+                    # BTTS/Over
+                    btts_picks = generate_pick({"home":e["home_team"],"away":e["away_team"],"league":league,"odds":odds,"btts":e.get("btts"),"over_2.5":e.get("over_2.5")},market_type="btts_over")
+                    if btts_picks:
+                        for bp in btts_picks:
+                            if not any(c for c in coupons if c["home"]==e["home_team"] and c["away"]==e["away_team"] and c.get("type")=="btts_over" and c["sent_date"]==str(now.date()) and c["picked"]==bp["sel"]):
+                                btts_over_matches.append({"league":league,"home":e["home_team"],"away":e["away_team"],"pick":bp,"dt":dt})
+
+                break
+            except:
+                continue
+
+    # wysyłamy value
+    for vm in value_matches:
+        stake=calc_kelly_stake(bankroll,vm["pick"]["odds"],vm["pick"]["val"])
+        bankroll-=stake
+        save_bankroll(bankroll)
+
+        coupons.append({
+            "home":vm["home"],
+            "away":vm["away"],
+            "picked":vm["pick"]["sel"],
+            "odds":vm["pick"]["odds"],
+            "stake":stake,
+            "league":vm["league"],
+            "type":"value",
+            "status":"pending",
+            "win_val":0,
+            "sent_date":str(now.date())
+        })
+
+        send_msg(format_value_card(vm["league"],vm["home"],vm["away"],vm["dt"],vm["pick"]["sel"],vm["pick"]["odds"],vm["pick"]["val"],stake))
+
+    # wysyłamy BTTS/Over
+    for bm in btts_over_matches:
+        stake=calc_kelly_stake(bankroll,bm["pick"]["odds"],bm["pick"]["val"])
+        bankroll-=stake
+        save_bankroll(bankroll)
+
+        coupons.append({
+            "home":bm["home"],
+            "away":bm["away"],
+            "picked":bm["pick"]["sel"],
+            "odds":bm["pick"]["odds"],
+            "stake":stake,
+            "league":bm["league"],
+            "type":"btts_over",
+            "status":"pending",
+            "win_val":0,
+            "sent_date":str(now.date())
+        })
+
+        send_msg(format_btts_over_card(bm["league"],bm["home"],bm["away"],bm["dt"],bm["pick"]["type"],bm["pick"]["sel"],bm["pick"]["odds"],bm["pick"]["val"],stake))
+
+    save_json(COUPONS_FILE,coupons)
 
 # ================= MAIN =================
 if __name__=="__main__":
-    if "--stats" in sys.argv:
-        print("DEBUG: stats mode")
-        # tutaj możesz wczytać plik coupons i wysłać statystyki
-    else:
-        run()
+    run()
