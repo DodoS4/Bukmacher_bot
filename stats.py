@@ -1,8 +1,7 @@
 import json
 import os
-from datetime import datetime, timedelta, timezone
 from collections import defaultdict
-from dateutil import parser
+from datetime import datetime, timezone
 import requests
 
 # ================= CONFIG =================
@@ -10,6 +9,7 @@ T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 COUPONS_FILE = "coupons.json"
 
+# ================= LEAGUE INFO =================
 LEAGUE_INFO = {
     "basketball_nba": {"name": "NBA", "flag": "🏀"},
     "soccer_epl": {"name": "Premier League", "flag": "⚽ PL"},
@@ -48,56 +48,42 @@ def send_msg(text):
 
 # ================= STATS =================
 def calc_stats(coupons):
-    stats = defaultdict(lambda: {"matches": 0, "won": 0, "lost": 0, "profit": 0})
+    stats = defaultdict(lambda: {"total":0,"won":0,"lost":0,"pending":0})
     for c in coupons:
-        league = c["league"]
-        stats[league]["matches"] += 1
-        if c["status"] == "won":
+        if c.get("type") != "value":
+            continue
+        league = c.get("league", "unknown")
+        stats[league]["total"] += 1
+        if c.get("status") == "won":
             stats[league]["won"] += 1
-            stats[league]["profit"] += c.get("win_val", 0)
-        elif c["status"] == "lost":
+        elif c.get("status") == "lost":
             stats[league]["lost"] += 1
-            stats[league]["profit"] -= c.get("stake", 0)
+        else:
+            stats[league]["pending"] += 1
     return stats
 
-def format_stats(stats_dict):
+def format_stats(stats):
     msg = ""
-    for league, data in stats_dict.items():
-        matches = data["matches"]
-        won = data["won"]
-        lost = data["lost"]
-        profit = round(data["profit"], 2)
-        success_pct = round((won/matches)*100, 1) if matches else 0
-        info = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})
-        msg += (f"{info['flag']} {info['name']}: Mecze {matches} | 🟢 {won} | 🔴 {lost} | "
-                f"💎 {profit} PLN | ✅ {success_pct}%\n")
+    for league, data in stats.items():
+        name = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})["name"]
+        flag = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})["flag"]
+        total_played = data["won"] + data["lost"]
+        pct = round((data["won"]/total_played)*100,2) if total_played > 0 else 0.0
+        msg += f"{flag} {name}: {data['total']} meczów | 🟢 Wygrane {data['won']} | 🔴 Przegrane {data['lost']} | ⏳ Pending {data['pending']} | 💎 Skuteczność: {pct}%\n"
     return msg
 
+# ================= MAIN =================
 def main():
     coupons = load_json(COUPONS_FILE, [])
-
+    now = datetime.now(timezone.utc).date()
+    
     if not coupons:
-        send_msg("📊 Brak rozliczonych kuponów do analizy.")
+        send_msg(f"📊 Statystyki dzienne - Value Bets | {now}\nBrak kuponów do analizy.")
         return
 
-    now = datetime.now(timezone.utc)
-
-    # --- Statystyki dzienne ---
-    today_coupons = [c for c in coupons if c.get("sent_date") == str(now.date())]
-    if today_coupons:
-        send_msg(f"📊 Statystyki dzienne - Value Bets | {now.date()}\n\n{format_stats(today_coupons)}")
-
-    # --- Statystyki tygodniowe ---
-    week_number = now.isocalendar()[1]
-    week_coupons = [c for c in coupons if parser.isoparse(c.get("sent_date")).isocalendar()[1] == week_number]
-    if week_coupons:
-        send_msg(f"📊 Statystyki tygodniowe - Value Bets | tydzień {week_number}\n\n{format_stats(week_coupons)}")
-
-    # --- Statystyki miesięczne ---
-    month = now.month
-    month_coupons = [c for c in coupons if parser.isoparse(c.get("sent_date")).month == month]
-    if month_coupons:
-        send_msg(f"📊 Statystyki miesięczne - Value Bets | miesiąc {month}\n\n{format_stats(month_coupons)}")
+    stats = calc_stats(coupons)
+    msg = f"📊 Statystyki dzienne - Value Bets | {now}\n\n{format_stats(stats)}"
+    send_msg(msg)
 
 if __name__ == "__main__":
     main()
