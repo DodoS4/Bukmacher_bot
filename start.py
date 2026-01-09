@@ -27,11 +27,11 @@ KELLY_FRACTION = 0.25
 
 # ================= LIGI =================
 LEAGUES = [
-    "basketball_nba",                  # NBA 🏀
-    "soccer_epl",                      # Premier League ⚽ PL
-    "icehockey_nhl",                   # NHL 🏒
-    "soccer_poland_ekstraklasa",      # Ekstraklasa ⚽ EK
-    "soccer_uefa_champs_league"       # Champions League 🏆 CL
+    "basketball_nba",
+    "soccer_epl",
+    "icehockey_nhl",
+    "soccer_poland_ekstraklasa",
+    "soccer_uefa_champs_league"
 ]
 
 LEAGUE_INFO = {
@@ -198,86 +198,62 @@ def send_stats():
     bankroll = load_bankroll()
     now = datetime.now(timezone.utc)
 
-    def calc_league_stats(c_list):
-        stats = defaultdict(lambda: {"types":0,"won":0,"lost":0})
-        for c in c_list:
-            stats[c["league"]]["types"]+=1
-            stats[c["league"]]["won"]+=c.get("win_val",0)
-            if c["status"]=="lost":
-                stats[c["league"]]["lost"]+=c.get("stake",0)
-        return stats
+    value_coupons = [c for c in coupons if c.get("type")=="value"]
+    if not value_coupons:
+        send_msg("📊 Statystyki dzienne - Value Bets | Brak kuponów do analizy", target="results")
+        return
 
-    def format_compact_stats(stats_dict):
-        msg=""
-        best_league=None
-        best_profit=float('-inf')
-        for league, data in stats_dict.items():
-            profit = data["won"]-data["lost"]
-            if profit>best_profit:
-                best_profit=profit
-                best_league=league
-            info=LEAGUE_INFO.get(league,{"flag":"🎯"})
-            msg+=f"{info['flag']} {info['name']}: {data['types']} typów | 🟢 {round(data['won'],2)} | 🔴 {round(data['lost'],2)} | 💎 {round(profit,2)}\n"
-        return msg,best_league,best_profit
+    stats = defaultdict(lambda: {"types":0,"won":0,"lost":0})
+    for c in value_coupons:
+        stats[c["league"]]["types"] += 1
+        stats[c["league"]]["won"] += c.get("win_val",0)
+        if c["status"]=="lost":
+            stats[c["league"]]["lost"] += c.get("stake",0)
 
-    # --- DZIENNE ---
-    today_coupons=[c for c in coupons if c.get("sent_date")==str(now.date())]
-    if today_coupons:
-        stats=calc_league_stats(today_coupons)
-        stats_msg,best_league,best_profit=format_compact_stats(stats)
-        send_msg(f"📊 <b>Statystyki dzienne</b> | {str(now.date())}\n💰 Bankroll: {round(bankroll,2)} PLN\n\n{stats_msg}🏆 Najbardziej dochodowa liga: {LEAGUE_INFO.get(best_league,{'name':best_league})['name']} ({round(best_profit,2)} PLN)", target="results")
+    msg=""
+    for league, data in stats.items():
+        profit = data["won"] - data["lost"]
+        info = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})
+        msg += f"{info['flag']} {info['name']}: Typów {data['types']} | 🟢 Wygrane {round(data['won'],2)} | 🔴 Przegrane {round(data['lost'],2)} | 💎 Zysk {round(profit,2)}\n"
 
-    # --- TYGODNIOWE ---
-    if now.weekday()==6:
-        week_coupons=[c for c in coupons if parser.isoparse(c.get("sent_date")).isocalendar()[1]==now.isocalendar()[1]]
-        if week_coupons:
-            stats=calc_league_stats(week_coupons)
-            stats_msg,best_league,best_profit=format_compact_stats(stats)
-            send_msg(f"📊 <b>Statystyki tygodniowe</b> | tydzień: {now.isocalendar()[1]}\n💰 Bankroll: {round(bankroll,2)} PLN\n\n{stats_msg}🏆 Najbardziej dochodowa liga: {LEAGUE_INFO.get(best_league,{'name':best_league})['name']} ({round(best_profit,2)} PLN)", target="results")
-
-    # --- MIESIĘCZNE ---
-    tomorrow=now+timedelta(days=1)
-    if tomorrow.day==1:
-        month_coupons=[c for c in coupons if parser.isoparse(c.get("sent_date")).month==now.month]
-        if month_coupons:
-            stats=calc_league_stats(month_coupons)
-            stats_msg,best_league,best_profit=format_compact_stats(stats)
-            send_msg(f"📊 <b>Statystyki miesięczne</b> | miesiąc: {now.month}\n💰 Bankroll: {round(bankroll,2)} PLN\n\n{stats_msg}🏆 Najbardziej dochodowa liga: {LEAGUE_INFO.get(best_league,{'name':best_league})['name']} ({round(best_profit,2)} PLN)", target="results")
+    send_msg(f"📊 Statystyki dzienne - Value Bets | {str(now.date())}\n💰 Bankroll: {round(bankroll,2)} PLN\n\n{msg}", target="results")
 
 # ================= RUN =================
 def run():
     check_results()
-    coupons=load_json(COUPONS_FILE,[])
-    bankroll=load_bankroll()
-    now=datetime.now(timezone.utc)
-    all_picks=[]
+    coupons = load_json(COUPONS_FILE, [])
+    bankroll = load_bankroll()
+    now = datetime.now(timezone.utc)
+    all_picks = []
 
     for league in LEAGUES:
         for key in API_KEYS:
             try:
-                r=requests.get(f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-                               params={"apiKey":key,"markets":"h2h","regions":"eu"},
-                               timeout=10)
-                if r.status_code!=200: continue
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/odds",
+                    params={"apiKey": key, "markets":"h2h","regions":"eu"},
+                    timeout=10
+                )
+                if r.status_code != 200: continue
 
                 for e in r.json():
-                    dt=parser.isoparse(e["commence_time"])
-                    if not(now<=dt<=now+timedelta(hours=MAX_HOURS_AHEAD)): continue
+                    dt = parser.isoparse(e["commence_time"])
+                    if not(now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)): continue
 
-                    odds={}
+                    odds = {}
                     for bm in e["bookmakers"]:
                         for m in bm["markets"]:
                             if m["key"]=="h2h":
                                 for o in m["outcomes"]:
-                                    odds[o["name"]]=max(odds.get(o["name"],0),o["price"])
+                                    odds[o["name"]] = max(odds.get(o["name"],0), o["price"])
 
-                    pick=generate_pick({
-                        "home":e["home_team"],
-                        "away":e["away_team"],
-                        "league":league,
-                        "odds":{"home":odds.get(e["home_team"]),
-                                "away":odds.get(e["away_team"]),
-                                "draw":odds.get("Draw")}
+                    pick = generate_pick({
+                        "home": e["home_team"],
+                        "away": e["away_team"],
+                        "league": league,
+                        "odds": {"home": odds.get(e["home_team"]),
+                                 "away": odds.get(e["away_team"]),
+                                 "draw": odds.get("Draw")}
                     })
 
                     if pick:
@@ -286,27 +262,28 @@ def run():
             except: continue
 
     for pick,e,dt,league in sorted(all_picks,key=lambda x:x[0]["val"],reverse=True):
-        stake=calc_kelly_stake(bankroll,pick["odds"],pick["val"])
-        if stake<=0: continue
+        stake = calc_kelly_stake(bankroll, pick["odds"], pick["val"])
+        if stake <= 0: continue
 
-        bankroll-=stake
+        bankroll -= stake
         save_bankroll(bankroll)
 
         coupons.append({
-            "home":e["home_team"],
-            "away":e["away_team"],
-            "picked":pick["sel"],
-            "odds":pick["odds"],
-            "stake":stake,
-            "league":league,
-            "status":"pending",
-            "win_val":0,
-            "sent_date":str(now.date())
+            "home": e["home_team"],
+            "away": e["away_team"],
+            "picked": pick["sel"],
+            "odds": pick["odds"],
+            "stake": stake,
+            "league": league,
+            "status": "pending",
+            "win_val": 0,
+            "sent_date": str(now.date()),
+            "type": "value"  # automatyczny typ Value Bets
         })
 
         send_msg(format_value_card(league,e["home_team"],e["away_team"],dt,pick["sel"],pick["odds"],pick["val"],stake))
 
-    save_json(COUPONS_FILE,coupons)
+    save_json(COUPONS_FILE, coupons)
 
 # ================= MAIN =================
 if __name__=="__main__":
