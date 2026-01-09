@@ -2,24 +2,18 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    # Uruchamianie bota co 4 godziny UTC
-    - cron: '0 0,4,8,12,16,20 * * *'
-    # Codziennie o 7:00 UTC - statystyki dzienne
-    - cron: '0 7 * * *'
-    # W każdą niedzielę o 7:00 UTC - statystyki tygodniowe
-    - cron: '0 7 * * 0'
-    # Ostatni dzień miesiąca o 7:00 UTC - statystyki miesięczne
-    - cron: '0 7 28-31 * *'  
-
+    - cron: '0 0,4,8,12,16,20 * * *'   # Bot generuje typy co 4h
+    - cron: '0 7 * * *'                 # Statystyki dzienne
+    - cron: '0 7 * * 0'                 # Statystyki tygodniowe (niedziela)
+    - cron: '0 7 28-31 * *'             # Statystyki miesięczne (ostatnie dni miesiąca)
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  build:
+  bot:
     runs-on: ubuntu-latest
-
     steps:
       - name: Pobierz kod
         uses: actions/checkout@v3
@@ -42,7 +36,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git pull origin main || echo "Brak zmian do pobrania"
 
-      - name: Uruchomienie bota lub statystyk
+      - name: Uruchomienie bota
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
@@ -50,13 +44,22 @@ jobs:
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: |
-          if [[ "$(date +%H)" == "07" ]]; then
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            CURRENT_HOUR=$(date +%H)
+            CURRENT_WEEKDAY=$(date +%u)
+            CURRENT_DAY=$(date +%d)
+            if [[ "$CURRENT_HOUR" == "07" ]]; then
               echo "Wysyłanie statystyk..."
               python start.py --stats
-          else
+            else
               echo "Uruchamianie bota z typami..."
               python start.py
+            fi
+          else
+            python start.py
           fi
 
       - name: Zapisanie zmian w bazie danych
