@@ -59,7 +59,7 @@ KELLY_FRACTION = 0.25
 # Limity bezpieczeństwa
 DAILY_LOSS_LIMIT = 20.0  # Max strata dziennie
 MAX_BETS_PER_DAY = 10    # Max zakładów dziennie
-MIN_BANKROLL = 50.0      # Zatrzymaj się poniżej tego
+MIN_BANKROLL = 0.0      # Zatrzymaj się poniżej tego
 MAX_ODDS_LIMIT = 50.0    # Max akceptowany kurs
 MIN_ODDS_ABSOLUTE = 1.01 # Min akceptowany kurs
 MAX_MARGIN = 0.15        # Max akceptowalna marża (15%)
