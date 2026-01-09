@@ -7,9 +7,16 @@ import requests
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT = os.getenv("T_CHAT_RESULTS")  # statystyki wysyłamy do wyników
-
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 COUPONS_FILE = "coupons.json"
+
+LEAGUE_INFO = {
+    "basketball_nba": {"name": "NBA", "flag": "🏀"},
+    "soccer_epl": {"name": "Premier League", "flag": "⚽ PL"},
+    "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
+    "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "⚽ EK"},
+    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆 CL"}
+}
 
 # ================= FILE UTILS =================
 def load_json(path, default):
@@ -23,13 +30,13 @@ def load_json(path, default):
 
 # ================= TELEGRAM =================
 def send_msg(text):
-    if not T_TOKEN or not T_CHAT:
+    if not T_TOKEN or not T_CHAT_RESULTS:
         return
     try:
         requests.post(
             f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
             json={
-                "chat_id": T_CHAT,
+                "chat_id": T_CHAT_RESULTS,
                 "text": text,
                 "parse_mode": "HTML",
                 "disable_web_page_preview": True
@@ -40,22 +47,30 @@ def send_msg(text):
         pass
 
 # ================= STATS =================
-def calc_stats(coupons, type_filter="value"):
-    stats = defaultdict(lambda: {"types":0,"won":0,"lost":0})
+def calc_stats(coupons):
+    stats = defaultdict(lambda: {"matches": 0, "won": 0, "lost": 0, "profit": 0})
     for c in coupons:
-        if c.get("type") != type_filter:
-            continue
-        stats[c["league"]]["types"] += 1
-        stats[c["league"]]["won"] += c.get("win_val", 0)
-        if c["status"] == "lost":
-            stats[c["league"]]["lost"] += c.get("stake", 0)
+        league = c["league"]
+        stats[league]["matches"] += 1
+        if c["status"] == "won":
+            stats[league]["won"] += 1
+            stats[league]["profit"] += c.get("win_val", 0)
+        elif c["status"] == "lost":
+            stats[league]["lost"] += 1
+            stats[league]["profit"] -= c.get("stake", 0)
     return stats
 
 def format_stats(stats_dict):
     msg = ""
     for league, data in stats_dict.items():
-        profit = data["won"] - data["lost"]
-        msg += f"{league}: Typów {data['types']} | 🟢 Wygrane {round(data['won'],2)} | 🔴 Przegrane {round(data['lost'],2)} | 💎 Zysk {round(profit,2)}\n"
+        matches = data["matches"]
+        won = data["won"]
+        lost = data["lost"]
+        profit = round(data["profit"], 2)
+        success_pct = round((won/matches)*100, 1) if matches else 0
+        info = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})
+        msg += (f"{info['flag']} {info['name']}: Mecze {matches} | 🟢 {won} | 🔴 {lost} | "
+                f"💎 {profit} PLN | ✅ {success_pct}%\n")
     return msg
 
 def main():
@@ -70,23 +85,19 @@ def main():
     # --- Statystyki dzienne ---
     today_coupons = [c for c in coupons if c.get("sent_date") == str(now.date())]
     if today_coupons:
-        stats_msg = format_stats(calc_stats(today_coupons, "value"))
-        send_msg(f"📊 <b>Statystyki dzienne - Value Bets</b> | {str(now.date())}\n\n{stats_msg}")
+        send_msg(f"📊 Statystyki dzienne - Value Bets | {now.date()}\n\n{format_stats(today_coupons)}")
 
     # --- Statystyki tygodniowe ---
-    if now.weekday() == 6:  # niedziela
-        week_coupons = [c for c in coupons if parser.isoparse(c.get("sent_date")).isocalendar()[1] == now.isocalendar()[1]]
-        if week_coupons:
-            stats_msg = format_stats(calc_stats(week_coupons, "value"))
-            send_msg(f"📊 <b>Statystyki tygodniowe - Value Bets</b> | tydzień {now.isocalendar()[1]}\n\n{stats_msg}")
+    week_number = now.isocalendar()[1]
+    week_coupons = [c for c in coupons if parser.isoparse(c.get("sent_date")).isocalendar()[1] == week_number]
+    if week_coupons:
+        send_msg(f"📊 Statystyki tygodniowe - Value Bets | tydzień {week_number}\n\n{format_stats(week_coupons)}")
 
     # --- Statystyki miesięczne ---
-    tomorrow = now + timedelta(days=1)
-    if tomorrow.day == 1:  # ostatni dzień miesiąca
-        month_coupons = [c for c in coupons if parser.isoparse(c.get("sent_date")).month == now.month]
-        if month_coupons:
-            stats_msg = format_stats(calc_stats(month_coupons, "value"))
-            send_msg(f"📊 <b>Statystyki miesięczne - Value Bets</b> | miesiąc {now.month}\n\n{stats_msg}")
+    month = now.month
+    month_coupons = [c for c in coupons if parser.isoparse(c.get("sent_date")).month == month]
+    if month_coupons:
+        send_msg(f"📊 Statystyki miesięczne - Value Bets | miesiąc {month}\n\n{format_stats(month_coupons)}")
 
 if __name__ == "__main__":
     main()
