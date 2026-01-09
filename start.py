@@ -24,7 +24,7 @@ BANKROLL_FILE = "bankroll.json"
 START_BANKROLL = 100.0
 
 MAX_HOURS_AHEAD = 48  # 48 godzin do przodu
-VALUE_THRESHOLD = 0.015  # zmniejszone dla większej liczby typów
+VALUE_THRESHOLD = 0.030  # zmniejszone dla większej liczby typów
 KELLY_FRACTION = 0.25
 
 # ================= LIGI =================
