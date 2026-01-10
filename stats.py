@@ -1,6 +1,5 @@
 import json, os
 from datetime import datetime, timedelta, timezone
-from collections import defaultdict
 
 # ================= CONFIG =================
 COUPONS_FILE = "coupons.json"
@@ -16,114 +15,91 @@ LEAGUE_FLAGS = {
     "soccer_italy_serie_a": "⚽ Serie A"
 }
 
-# ================= FILE UTILS =================
 def load_json(path, default):
     if os.path.exists(path):
         try:
             with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except:
-            pass
+        except: pass
     return default
 
 def send_msg(txt):
     if not T_TOKEN or not T_CHAT_RESULTS:
-        print(txt)
+        print("[DEBUG] Telegram skipped")
         return
     import requests
-    try:
-        requests.post(
-            f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-            json={"chat_id": T_CHAT_RESULTS, "text": txt, "parse_mode": "HTML"},
-            timeout=10
-        )
-    except Exception as e:
-        print(f"[DEBUG] Telegram error: {e}")
+    requests.post(
+        f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+        json={"chat_id": T_CHAT_RESULTS, "text": txt, "parse_mode": "HTML"}
+    )
 
-# ================= BANKROLL =================
-def load_bankroll():
-    data = load_json(BANKROLL_FILE, {"bankroll": 10000})
-    return data.get("bankroll", 10000)
-
-# ================= REPORT =================
 def generate_report(period_days=1, title="DAILY REPORT"):
     coupons = load_json(COUPONS_FILE, [])
+    bankroll_data = load_json(BANKROLL_FILE, {"bankroll": 0.0})
+    bankroll = bankroll_data.get("bankroll", 0.0)
+    
     now = datetime.now(timezone.utc)
-    start_time = now - timedelta(days=period_days)
+    start_period = now - timedelta(days=period_days)
 
-    # Grupowanie po ligach
-    report_data = defaultdict(lambda: {"won":0,"lost":0,"profit":0.0,"total":0})
-    matches = []
-
+    # Filtrowanie i obliczenia
+    period_coupons = []
     for c in coupons:
-        c_dt_str = c.get("date_time", None)
-        c_dt = None
-        try:
-            if c_dt_str:
-                c_dt = datetime.fromisoformat(c_dt_str.replace("Z","+00:00"))
-        except:
-            pass
+        dt = datetime.fromisoformat(c["date_time"].replace("Z", "+00:00"))
+        if dt >= start_period:
+            period_coupons.append(c)
 
-        # Filtr wg okresu
-        if c_dt and c_dt < start_time:
-            continue
+    if not period_coupons:
+        send_msg(f"📊 <b>{title}</b>\nBrak aktywności.")
+        return
 
-        league = c.get("league","unknown")
-        report_data[league]["total"] += 1
-        stake = c.get("stake",0)
-        odds = c.get("odds",0)
+    league_stats = {}
+    for c in period_coupons:
+        l_key = c.get("league", "inne")
+        if l_key not in league_stats:
+            league_stats[l_key] = {"won":0, "lost":0, "total":0, "profit":0.0}
+        
+        if c["status"] != "pending":
+            league_stats[l_key]["total"] += 1
+            if c["status"] == "won":
+                league_stats[l_key]["won"] += 1
+                league_stats[l_key]["profit"] += (c["possible_win"] - c["stake"])
+            else:
+                league_stats[l_key]["lost"] += 1
+                league_stats[l_key]["profit"] -= c["stake"]
 
-        if c.get("status")=="won":
-            report_data[league]["won"] += 1
-            report_data[league]["profit"] += stake*(odds-1)
-        elif c.get("status")=="lost":
-            report_data[league]["lost"] += 1
-            report_data[league]["profit"] -= stake
+    # Budowanie wiadomości
+    msg = f"📊 <b>{title} • {now.strftime('%Y-%m-%d')}</b>\n"
+    msg += f"💰 Bankroll: <b>{bankroll:.2f} PLN</b>\n\n"
 
-        matches.append(c)
-
-    bankroll = load_bankroll()
-    msg = f"📊 {title} • {now.date()}\n💰 Bankroll: {bankroll:.2f} PLN\n\n"
-
-    # Raport per liga
-    for league, data in report_data.items():
-        won = data["won"]
-        lost = data["lost"]
+    for l_key, data in league_stats.items():
         total = data["total"]
+        if total == 0: continue
+        
+        hit_rate = int((data["won"] / total) * 100)
         profit = data["profit"]
-        hit_rate = int((won/total)*100) if total>0 else 0
-
-        # pasek hit rate
+        trend = "🔥" if profit >= 0 else "❌"
+        
+        # Generowanie paska postępu (8 znaków)
         bar_len = 8
-        filled = int(bar_len * hit_rate/100)
-        bar = "█"*filled + "░"*(bar_len-filled)
+        filled = int(bar_len * (hit_rate / 100))
+        bar = "█" * filled + "░" * (bar_len - filled)
+        
+        league_name = LEAGUE_FLAGS.get(l_key, l_key)
+        msg += f"{trend} {league_name} | Typy: {total} | W: {data['won']} | P: {data['lost']} | Hit: {hit_rate}%\n"
+        msg += f"<code>{bar}</code> | Zysk: <b>{profit:.2f} PLN</b>\n\n"
 
-        flag = LEAGUE_FLAGS.get(league, league.upper())
-        emoji = "🔥" if profit>=0 else "❌"
-
-        msg += f"{emoji} {flag} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {hit_rate}%\n"
-        msg += f"{bar} | Zysk/Strata: {profit:.2f} PLN\n\n"
-
-    # Najważniejsze mecze
-    if matches:
-        msg += "🏟️ Najważniejsze mecze:\n"
-        for m in matches[:5]:
-            stake = m.get("stake",0)
-            odds = m.get("odds",0)
-            potential_win = stake*(odds)
-            status = m.get("status","pending")
-            status_icon = "✅" if status=="won" else "❌" if status=="lost" else "⌛"
-            msg += f"\t• {m.get('home')} vs {m.get('away')} | Typ: {m.get('pick')} | Stawka: {stake:.2f} PLN | Potencjalna wygrana: {potential_win:.2f} PLN | {status_icon}\n"
+    # Najważniejsze mecze (ostatnie 5 rozliczonych)
+    msg += "🏟️ <b>Najważniejsze mecze dnia:</b>\n"
+    sorted_matches = sorted(period_coupons, key=lambda x: x["date_time"], reverse=True)[:5]
+    for m in sorted_matches:
+        status_icon = "✅" if m["status"] == "won" else "❌" if m["status"] == "lost" else "⏳"
+        dt_obj = datetime.fromisoformat(m["date_time"].replace("Z", "+00:00"))
+        msg += f"• {m['home']} vs {m['away']} | {m['pick']} | {m['stake']} PLN | {status_icon}\n"
 
     send_msg(msg)
 
-# ================= MAIN =================
 if __name__=="__main__":
     import sys
-    arg = sys.argv[1] if len(sys.argv)>1 else "daily"
-    if arg=="daily":
-        generate_report(period_days=1, title="DAILY REPORT")
-    elif arg=="weekly":
-        generate_report(period_days=7, title="WEEKLY REPORT")
-    elif arg=="monthly":
-        generate_report(period_days=30, title="MONTHLY REPORT")
+    days = 7 if "--weekly" in sys.argv else 30 if "--monthly" in sys.argv else 1
+    label = "WEEKLY REPORT" if "--weekly" in sys.argv else "MONTHLY REPORT" if "--monthly" in sys.argv else "DAILY REPORT"
+    generate_report(days, label)
