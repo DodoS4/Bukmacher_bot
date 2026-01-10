@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "league": "soccer_italy_serie_a",
+    "home": "Atalanta BC",
+    "away": "Torino",
+    "pick": "Atalanta BC",
+    "odds": 1.65,
+    "stake": 393.27,
+    "status": "pending"
+  },
+  {
+    "league": "soccer_italy_serie_a",
+    "home": "Inter Milan",
+    "away": "Napoli",
+    "pick": "Inter Milan",
+    "odds": 1.79,
+    "stake": 378.22,
+    "status": "pending"
+  },
+  {
+    "league": "soccer_italy_serie_a",
+    "home": "Genoa",
+    "away": "Cagliari",
+    "pick": "Genoa",
+    "odds": 2.18,
+    "stake": 270.57,
+    "status": "pending"
+  }
+]
