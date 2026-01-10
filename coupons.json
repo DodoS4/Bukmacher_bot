@@ -43,5 +43,15 @@
     "odds": 1.79,
     "stake": 231.73,
     "status": "pending"
+  },
+  {
+    "league": "soccer_italy_serie_a",
+    "home": "Genoa",
+    "away": "Cagliari",
+    "pick": "Genoa",
+    "odds": 2.18,
+    "stake": 336.3,
+    "status": "pending",
+    "date_time": "2026-01-12T17:30:00Z"
   }
 ]
