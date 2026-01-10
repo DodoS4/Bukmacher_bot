@@ -1,11 +1,9 @@
-name: Bukmacher Bot Pro AKO
+name: Bukmacher Bot Pro
 
 on:
   schedule:
     - cron: '0 0,4,8,12,16,20 * * *'
-    - cron: '0 7 * * 1-6'
-    - cron: '0 7 * * 0'
-    - cron: '0 7 1 * *'
+    - cron: '0 7 * * *'
   workflow_dispatch:
 
 permissions:
@@ -14,30 +12,26 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Pobierz kod
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Konfiguracja Pythona
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Instalacja bibliotek
-        run: |
-          pip install --upgrade pip
-          pip install requests python-dateutil
+      - name: Install dependencies
+        run: pip install requests python-dateutil
 
-      - name: Synchronizacja bazy
+      - name: Sync Repo
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git pull origin main || echo "Brak zmian do pobrania"
+          git config --local user.email "bot@github.com"
+          git config --local user.name "BetBot"
+          git pull origin main || echo "No changes"
 
-      - name: Uruchomienie bota / raportów
+      - name: Run Bot Logic
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
@@ -48,26 +42,28 @@ jobs:
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: |
-          DAY=$(date +%u)
           HOUR=$(date +%H)
-          DAYOFMONTH=$(date +%d)
+          DAY=$(date +%u)
+          DOM=$(date +%d)
 
-          if [[ "$HOUR" == "07" && "$DAY" -ge 1 && "$DAY" -le 6 ]]; then
-              echo "📊 Wysyłanie statystyk dziennych..."
-              python stats.py --daily
-          elif [[ "$HOUR" == "07" && "$DAY" == "0" ]]; then
-              echo "📊 Wysyłanie statystyk tygodniowych..."
-              python stats.py --weekly
-          elif [[ "$HOUR" == "07" && "$DAYOFMONTH" == "01" ]]; then
-              echo "📊 Wysyłanie statystyk miesięcznych..."
-              python stats.py --monthly
+          # 1. Zawsze najpierw rozlicz wyniki
+          python settle.py
+
+          # 2. Wyślij raporty lub szukaj typów
+          if [[ "$HOUR" == "07" ]]; then
+              if [[ "$DOM" == "01" ]]; then
+                  python stats.py --monthly
+              elif [[ "$DAY" == "7" ]]; then
+                  python stats.py --weekly
+              else
+                  python stats.py --daily
+              fi
           else
-              echo "⚔️ Uruchamianie bota z typami..."
               python start.py
-          fi   # <--- TO BYŁO BRAKUJĄCE
+          fi
 
-      - name: Zapisanie zmian w bazie danych
+      - name: Push Database
         run: |
-          git add coupons.json bankroll.json || echo "Brak zmian"
-          git commit -m "Aktualizacja bazy i bankrolla [skip ci]" --no-verify || exit 0
+          git add coupons.json bankroll.json
+          git commit -m "DB Update [skip ci]" || exit 0
           git push origin main
