@@ -2,10 +2,9 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    - cron: '0 0,4,8,12,16,20 * * *'   # Typy co 4h UTC
-    - cron: '0 7 * * 1-6'               # Raport dzienny pon-sob o 07:00 UTC
-    - cron: '0 7 * * 0'                 # Raport tygodniowy w niedzielę o 07:00 UTC
-    - cron: '0 7 1 * *'                 # Raport miesięczny pierwszy dzień miesiąca o 07:00 UTC
+    - cron: '0 0,4,8,12,16,20 * * *'  # Typy co 4h UTC
+    - cron: '0 7 * * 1-6'              # Statystyki dzienne (pon-sob) o 07:00 UTC
+    - cron: '0 7 * * 0'                # Statystyki tygodniowe w niedzielę o 07:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -50,20 +49,27 @@ jobs:
         run: |
           DAY=$(date +%u)
           HOUR=$(date +%H)
-          DATE=$(date +%d)
 
+          # Raport dzienny: pon-sob o 07:00 UTC
           if [[ "$HOUR" == "07" && "$DAY" -ge 1 && "$DAY" -le 6 ]]; then
-              echo "📊 Wysyłanie raportu dziennego..."
+              echo "📊 Wysyłanie statystyk dziennych..."
               python start.py --report daily
+          
+          # Raport tygodniowy: niedziela o 07:00 UTC
           elif [[ "$HOUR" == "07" && "$DAY" == "0" ]]; then
-              echo "📊 Wysyłanie raportu tygodniowego..."
+              echo "📊 Wysyłanie statystyk tygodniowych..."
               python start.py --report weekly
-          elif [[ "$HOUR" == "07" && "$DATE" == "01" ]]; then
-              echo "📊 Wysyłanie raportu miesięcznego..."
+          
+          # Raport miesięczny: pierwszy dzień miesiąca o 07:00 UTC
+          elif [[ "$HOUR" == "07" && "$(date +%d)" == "01" ]]; then
+              echo "📊 Wysyłanie statystyk miesięcznych..."
               python start.py --report monthly
+          
+          # Typy co 4h
           else
               echo "⚔️ Uruchamianie bota z typami..."
               python start.py
+          fi
 
       - name: Zapisanie zmian w bazie danych
         run: |
