@@ -1,6 +1,8 @@
-import json, os, requests
+import json
+import os
 from datetime import datetime, timedelta, timezone
 from collections import defaultdict
+import requests
 
 # ================= KONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
@@ -15,7 +17,6 @@ def load_coupons():
     return []
 
 def send_msg(txt):
-    """Wysyła wiadomość na Telegram lub drukuje debug"""
     if not T_TOKEN or not T_CHAT_RESULTS:
         print("[DEBUG] Telegram skipped:\n", txt)
         return
@@ -29,7 +30,6 @@ def send_msg(txt):
         print(f"[DEBUG] Telegram error: {e}")
 
 def calc_hit_bar(hit_rate):
-    """Generuje pasek trafień dla wizualizacji procentowej"""
     total_blocks = 10
     filled = int(round(hit_rate / 10))
     empty = total_blocks - filled
@@ -60,7 +60,6 @@ def generate_report(period="daily"):
         end_time = datetime.max.replace(tzinfo=timezone.utc)
         title = f"📊 RAPORT • {now.date()}"
 
-    # Filtrujemy kupony wg okresu
     filtered = []
     for c in coupons:
         dt_str = c.get("date_time", None)
@@ -73,14 +72,12 @@ def generate_report(period="daily"):
         if start_time <= dt <= end_time:
             filtered.append(c)
 
-    # Grupowanie po lidze
     report = defaultdict(lambda: {"won":0, "lost":0, "profit":0.0, "total":0})
     for c in filtered:
         league = c.get("league", "unknown")
         stake = c.get("stake", 0)
         odds = c.get("odds", 0)
         status = c.get("status", "pending")
-
         report[league]["total"] += 1
         if status == "won":
             report[league]["won"] += 1
@@ -89,7 +86,6 @@ def generate_report(period="daily"):
             report[league]["lost"] += 1
             report[league]["profit"] -= stake
 
-    # Tworzenie wiadomości
     msg = f"{title}\n\n"
     for league, data in report.items():
         total = data["total"]
