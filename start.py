@@ -149,8 +149,6 @@ def run():
                         bankroll-=stake
                         save_bankroll(bankroll)
 
-                        possible_win = round(stake * (o - 1), 2)  # <-- ewentualna wygrana
-
                         coupons.append({
                             "league":league_key,
                             "league_name":league_name,
@@ -159,7 +157,6 @@ def run():
                             "pick":sel,
                             "odds":o,
                             "stake":stake,
-                            "possible_win":possible_win,  # <-- zapisujemy
                             "status":"pending",
                             "date_time":dt.isoformat()
                         })
@@ -171,7 +168,6 @@ def run():
                             f"📈 {o}\n"
                             f"💎 Edge: {round(edge*100,2)}%\n"
                             f"💰 Stawka: {stake} PLN\n"
-                            f"💸 Możliwa wygrana: {possible_win} PLN\n"
                             f"🗓️ Data i godzina: {dt.strftime('%Y-%m-%d %H:%M UTC')}"
                         )
 
