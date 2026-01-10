@@ -1,1 +1,46 @@
-[]
+[
+  {
+    "league": "basketball_nba",
+    "home": "Orlando Magic",
+    "away": "New Orleans Pelicans",
+    "pick": "Orlando Magic",
+    "odds": 1.63,
+    "stake": 100,
+    "possible_win": 143.44,
+    "status": "PENDING",
+    "date_time": "2026-01-11T20:10:00+00:00"
+  },
+  {
+    "league": "basketball_nba",
+    "home": "Denver Nuggets",
+    "away": "Milwaukee Bucks",
+    "pick": "Denver Nuggets",
+    "odds": 11.0,
+    "stake": 100,
+    "possible_win": 968.0,
+    "status": "PENDING",
+    "date_time": "2026-01-12T01:10:00+00:00"
+  },
+  {
+    "league": "basketball_nba",
+    "home": "Phoenix Suns",
+    "away": "Washington Wizards",
+    "pick": "Phoenix Suns",
+    "odds": 1.18,
+    "stake": 100,
+    "possible_win": 103.84,
+    "status": "PENDING",
+    "date_time": "2026-01-12T01:10:00+00:00"
+  },
+  {
+    "league": "basketball_nba",
+    "home": "Sacramento Kings",
+    "away": "Houston Rockets",
+    "pick": "Houston Rockets",
+    "odds": 1.23,
+    "stake": 100,
+    "possible_win": 108.24,
+    "status": "PENDING",
+    "date_time": "2026-01-12T02:10:00+00:00"
+  }
+]
