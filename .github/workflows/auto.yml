@@ -4,7 +4,6 @@ on:
   schedule:
     - cron: '0 0,4,8,12,16,20 * * *'  # Typy co 4h UTC
     - cron: '0 7 * * 1-6'              # Statystyki dzienne (pon-sob) o 07:00 UTC
-    - cron: '0 7 1 * *'                # Statystyki miesięczne (1. dzień miesiąca) o 07:00 UTC
     - cron: '0 7 * * 0'                # Statystyki tygodniowe w niedzielę o 07:00 UTC
   workflow_dispatch:
 
@@ -50,27 +49,17 @@ jobs:
         run: |
           DAY=$(date +%u)
           HOUR=$(date +%H)
-          DATE=$(date +%d)
 
-          # Statystyki dzienne (pon-sob) o 07:00 UTC
-          if [ "$HOUR" = "07" ] && [ "$DAY" -ge 1 ] && [ "$DAY" -le 6 ]; then
+          if [[ "$HOUR" == "07" && "$DAY" -ge 1 && "$DAY" -le 6 ]]; then
               echo "📊 Wysyłanie statystyk dziennych..."
               python start.py --report daily
-
-          # Statystyki tygodniowe w niedzielę o 07:00 UTC
-          elif [ "$HOUR" = "07" ] && [ "$DAY" = "0" ]; then
+          elif [[ "$HOUR" == "07" && "$DAY" == "0" ]]; then
               echo "📊 Wysyłanie statystyk tygodniowych..."
               python start.py --report weekly
-
-          # Statystyki miesięczne 1. dnia miesiąca o 07:00 UTC
-          elif [ "$HOUR" = "07" ] && [ "$DATE" = "01" ]; then
-              echo "📊 Wysyłanie statystyk miesięcznych..."
-              python start.py --report monthly
-
-          # Typy co 4h UTC
           else
               echo "⚔️ Uruchamianie bota z typami..."
               python start.py
+          fi
 
       - name: Zapisanie zmian w bazie danych
         run: |
