@@ -8,7 +8,6 @@ T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
-# 5 KLUCZY API
 API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"),
     os.getenv("ODDS_KEY_2"),
@@ -23,12 +22,11 @@ COUPONS_FILE = "coupons.json"
 STATE_FILE = "state.json"
 
 MAX_HOURS_AHEAD = 48
-VALUE_THRESHOLD = 0.045
-ODDS_MIN = 2.20
-ODDS_MAX = 3.50
+VALUE_THRESHOLD = 0.02   # Niższy threshold w debug
+ODDS_MIN = 1.5           # Szerszy zakres w debug
+ODDS_MAX = 10.0
 MAX_BETS_PER_DAY = 5
 
-# ================= LIGI =================
 LEAGUES = [
     "basketball_nba",
     "icehockey_nhl",
@@ -81,6 +79,7 @@ def save_state(state):
 def send_msg(txt, target="types"):
     chat = T_CHAT_RESULTS if target == "results" else T_CHAT
     if not T_TOKEN or not chat:
+        print(f"[DEBUG] Telegram skipped: {txt}")
         return
     try:
         requests.post(
@@ -88,8 +87,8 @@ def send_msg(txt, target="types"):
             json={"chat_id": chat, "text": txt, "parse_mode": "HTML"},
             timeout=10
         )
-    except:
-        pass
+    except Exception as e:
+        print(f"[DEBUG] Telegram error: {e}")
 
 # ================= KELLY =================
 def calc_kelly(bankroll, odds, edge, kelly_frac, max_pct):
@@ -108,82 +107,44 @@ def no_vig_probs(odds):
     return {k: v/s for k, v in inv.items()}
 
 def consensus_odds(odds_list):
-    if len(odds_list) < 5:
+    if len(odds_list) < 2:
         return None
     mx, mn = max(odds_list), min(odds_list)
-    if (mx - mn) / mx > 0.08:
+    if (mx - mn) / mx > 0.15:  # większy tolerowany spread w debug
         return None
     return mx
 
-# ================= DAILY REPORT =================
+# ================= REPORT =================
 def daily_report():
     coupons = load_json(COUPONS_FILE, [])
     bankroll = load_bankroll()
     now = datetime.now(timezone.utc)
     
-    report = defaultdict(lambda: {"bets":0, "won":0, "lost":0, "profit":0.0, "edges":[]})
-    
-    for c in coupons:
-        if c.get("status") not in ("won","lost"):
-            continue
-        league = c["league"]
-        report[league]["bets"] += 1
-        if c["status"] == "won":
-            report[league]["won"] += 1
-            report[league]["profit"] += c["stake"]*(c["odds"]-1)
-        else:
-            report[league]["lost"] += 1
-            report[league]["profit"] -= c["stake"]
-        report[league]["edges"].append(round((c["odds"]-1)/c["stake"],3))
-    
     msg = f"📊 <b>DAILY REPORT • {now.date()}</b>\n💰 Bankroll: {round(bankroll,2)} PLN\n\n"
-
-    for league, data in report.items():
-        if data["bets"] == 0:
-            continue
-        win_rate = round(data["won"]/data["bets"]*100,1)
-        avg_edge = round(sum(data["edges"])/len(data["edges"])*100,2) if data["edges"] else 0
-        msg += (
-            f"🏆 {league} | Typów: {data['bets']} | "
-            f"🟢 Wygrane: {data['won']} | 🔴 Przegrane: {data['lost']} | "
-            f"💎 CLV: {avg_edge}% | 🤑 Zysk: {round(data['profit'],2)} PLN | "
-            f"🎯 Hit-rate: {win_rate}%\n"
-        )
+    for c in coupons:
+        msg += f"{c.get('league','')} | {c.get('home','')} vs {c.get('away','')} | {c.get('pick','')} | {c.get('status','')}\n"
+    print("[DEBUG] Daily report:\n", msg)
     send_msg(msg, target="results")
 
 # ================= RUN =================
 def run():
     now = datetime.now(timezone.utc)
-    hour = now.hour
-
-    # OFF-PEAK HOURS (02:00–08:00 CET)
-    if 2 <= hour <= 8:
-        send_msg("⏸️ OFF-PEAK HOURS – bot wstrzymany", "results")
-        return
-
     bankroll = load_bankroll()
     coupons = load_json(COUPONS_FILE, [])
     state = load_state()
 
-    # ATH update
     if bankroll > state["ath"]:
         state["ath"] = bankroll
 
-    # MODE SWITCH
     if bankroll >= START_BANKROLL * 1.5:
         state["mode"] = "ULTRA"
     if state["mode"] == "ULTRA" and bankroll < state["ath"] * 0.8:
         state["mode"] = "AGGRESSIVE"
     save_state(state)
 
-    if state["mode"] == "ULTRA":
-        KELLY = 0.75
-        MAX_PCT = 0.06
-        mode_icon = "🔥 ULTRA"
-    else:
-        KELLY = 0.5
-        MAX_PCT = 0.05
-        mode_icon = "⚔️ AGGRESSIVE"
+    KELLY = 0.5 if state["mode"]=="AGGRESSIVE" else 0.75
+    MAX_PCT = 0.05 if state["mode"]=="AGGRESSIVE" else 0.06
+    mode_icon = "⚔️ AGGRESSIVE" if state["mode"]=="AGGRESSIVE" else "🔥 ULTRA"
 
     daily_bets = 0
 
@@ -196,11 +157,13 @@ def run():
                     timeout=10
                 )
                 if r.status_code != 200:
+                    print(f"[DEBUG] API error {league} key {key}: {r.status_code}")
                     continue
 
                 for e in r.json():
                     dt = parser.isoparse(e["commence_time"])
                     if not (now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)):
+                        print(f"[DEBUG] Pominiety mecz: {e['home_team']} vs {e['away_team']} - poza MAX_HOURS_AHEAD")
                         continue
 
                     odds_map = defaultdict(list)
@@ -216,24 +179,30 @@ def run():
                         val = consensus_odds(lst)
                         if val and ODDS_MIN <= val <= ODDS_MAX:
                             odds[name] = val
+                        print(f"[DEBUG] {name} - {lst} => consensus: {val}")
 
                     if len(odds) < 2:
+                        print(f"[DEBUG] Za malo kursow: {odds}")
                         continue
 
                     probs = no_vig_probs(odds)
                     for sel, prob in probs.items():
                         o = odds[sel]
                         edge = (prob - 1/o) * EDGE_MULTIPLIER.get(league, 1)
+                        print(f"[DEBUG] Edge: {sel}={round(edge,3)} (prob={round(prob,3)}, odds={o})")
                         if edge < VALUE_THRESHOLD:
                             continue
 
-                        current_bankroll = load_bankroll()
-                        stake = calc_kelly(current_bankroll, o, edge, KELLY, MAX_PCT)
-                        if stake <= 0 or current_bankroll < stake:
+                        if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] and c["status"]=="pending" for c in coupons):
+                            print(f"[DEBUG] Typ juz istnieje, pomijamy")
                             continue
 
-                        current_bankroll -= stake
-                        save_bankroll(current_bankroll)
+                        stake = calc_kelly(bankroll, o, edge, KELLY, MAX_PCT)
+                        if stake <= 0 or bankroll < stake:
+                            continue
+
+                        bankroll -= stake
+                        save_bankroll(bankroll)
 
                         coupons.append({
                             "league": league,
@@ -260,11 +229,11 @@ def run():
                     if daily_bets >= MAX_BETS_PER_DAY:
                         break
                 break
-            except:
+            except Exception as e:
+                print(f"[DEBUG] Błąd API {league} key {key}: {e}")
                 continue
 
     save_json(COUPONS_FILE, coupons)
-    # AUTO REPORT codzienny po rundzie
     daily_report()
 
 # ================= RESULTS =================
@@ -293,10 +262,7 @@ def check_results():
                         continue
 
                     scores = {s["name"]: int(s["score"]) for s in m.get("scores", [])}
-                    winner = (
-                        c["home"] if scores[c["home"]] > scores[c["away"]]
-                        else c["away"]
-                    )
+                    winner = c["home"] if scores[c["home"]] > scores[c["away"]] else c["away"]
 
                     if winner == c["pick"]:
                         profit = c["stake"] * (c["odds"] - 1)
