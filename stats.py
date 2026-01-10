@@ -1,97 +1,77 @@
 import json
 import os
-from collections import defaultdict
-from datetime import datetime, timezone
-from dateutil import parser
 import requests
+from collections import defaultdict
 
-# ================= CONFIG =================
+# ================= KONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 COUPONS_FILE = "coupons.json"
 
-LEAGUE_INFO = {
-    "basketball_nba": {"name": "NBA", "flag": "🏀"},
-    "icehockey_nhl": {"name": "NHL", "flag": "🏒"},
-    "soccer_epl": {"name": "Premier League", "flag": "⚽"},
-    "soccer_poland_ekstraklasa": {"name": "Ekstraklasa", "flag": "⚽"},
-    "soccer_uefa_champs_league": {"name": "Champions League", "flag": "🏆"}
-}
+# ================= FUNKCJE =================
+def load_coupons():
+    """Ładuje zapisane kupony z pliku JSON"""
+    if os.path.exists(COUPONS_FILE):
+        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
 
-# ================= FILE UTILS =================
-def load_json(path, default):
-    if os.path.exists(path):
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except:
-            pass
-    return default
-
-# ================= TELEGRAM =================
-def send_msg(text):
+def send_msg(txt):
+    """Wysyła wiadomość na Telegram lub drukuje debug"""
     if not T_TOKEN or not T_CHAT_RESULTS:
+        print("[DEBUG] Telegram skipped:\n", txt)
         return
     try:
         requests.post(
             f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-            json={
-                "chat_id": T_CHAT_RESULTS,
-                "text": text,
-                "parse_mode": "HTML",
-                "disable_web_page_preview": True
-            },
+            json={"chat_id": T_CHAT_RESULTS, "text": txt, "parse_mode": "HTML"},
             timeout=10
         )
-    except:
-        pass
+    except Exception as e:
+        print(f"[DEBUG] Telegram error: {e}")
 
-# ================= STATS =================
-def send_stats():
-    coupons = load_json(COUPONS_FILE, [])
-    now = datetime.now(timezone.utc)
+def generate_report():
+    """Generuje raport per ligę z zyskami/stratami i statystyką trafień"""
+    coupons = load_coupons()
+    if not coupons:
+        print("Brak typów w pliku.")
+        return
 
-    stats = defaultdict(lambda: {"total":0,"won":0,"lost":0,"pending":0,"profit":0})
+    leagues = defaultdict(lambda: {"won":0,"lost":0,"stake":0,"profit":0,"total":0})
 
     for c in coupons:
-        if c.get("type")!="value":
-            continue
-        league = c["league"]
-        stats[league]["total"] += 1
-        if c["status"]=="won":
-            stats[league]["won"] += 1
-            stats[league]["profit"] += c.get("win_val",0)
-        elif c["status"]=="lost":
-            stats[league]["lost"] += 1
-            stats[league]["profit"] -= c.get("stake",0)
-        else:
-            stats[league]["pending"] += 1
+        league = c.get("league","unknown")
+        status = c.get("status","pending")
+        stake = c.get("stake",0)
+        odds = c.get("odds",0)
+        leagues[league]["total"] += 1
+        leagues[league]["stake"] += stake
 
-    total_profit = 0
-    msg_lines = []
-    for league, data in stats.items():
+        if status == "won":
+            leagues[league]["won"] += 1
+            leagues[league]["profit"] += stake*(odds-1)
+        elif status == "lost":
+            leagues[league]["lost"] += 1
+            leagues[league]["profit"] -= stake
+
+    report = "📊 <b>RAPORT PER LIGA</b>\n\n"
+    for league, data in leagues.items():
         total = data["total"]
         won = data["won"]
         lost = data["lost"]
-        pending = data["pending"]
         profit = data["profit"]
-        total_profit += profit
-        try:
-            success = round((won/total)*100,1) if total>0 else 0
-        except:
-            success = 0
-        info = LEAGUE_INFO.get(league, {"name": league, "flag": "🎯"})
-        line = (
-            f"{info['flag']} {info['name']}: {total} mecze{'w' if total>1 else ''} | "
-            f"🟢 {won} | 🔴 {lost} | ⏳ {pending} | "
-            f"💎 Skuteczność: {success}% | 💰 Zysk: {round(profit,2)} PLN"
-        )
-        msg_lines.append(line)
+        stake = data["stake"]
+        hit_rate = int((won/total)*100) if total>0 else 0
+        trend = "📈" if profit>0 else "📉" if profit<0 else "➖"
 
-    msg = "\n".join(msg_lines)
-    msg += f"\n\n💰 Łączny zysk wszystkich lig: {round(total_profit,2)} PLN"
-    send_msg(f"📊 Statystyki dzienne - Value Bets | {str(now.date())}\n\n{msg}")
+        report += (f"🏟️ <b>{league.upper()}</b>\n"
+                   f"🎯 Trafienia: {won}/{total} ({hit_rate}%)\n"
+                   f"💰 Wydane: {stake:.2f} PLN\n"
+                   f"💵 Zysk/Strata: {profit:.2f} PLN {trend}\n\n")
+
+    print(report)
+    send_msg(report)
 
 # ================= MAIN =================
-if __name__=="__main__":
-    send_stats()
+if __name__ == "__main__":
+    generate_report()
