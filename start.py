@@ -22,9 +22,9 @@ COUPONS_FILE = "coupons.json"
 STATE_FILE = "state.json"
 
 MAX_HOURS_AHEAD = 48
-VALUE_THRESHOLD = 0.02
-ODDS_MIN = 1.5
-ODDS_MAX = 10.0
+VALUE_THRESHOLD = 0.0   # DEBUG - pokazuje wszystkie edge
+ODDS_MIN = 1.01
+ODDS_MAX = 20.0
 MAX_BETS_PER_DAY = 5
 
 LEAGUES = [
@@ -49,8 +49,8 @@ def load_json(path, default):
         try:
             with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except:
-            pass
+        except Exception as e:
+            print(f"[DEBUG] Błąd wczytania {path}: {e}")
     return default
 
 def save_json(path, data):
@@ -66,18 +66,11 @@ def load_bankroll():
     return data["bankroll"]
 
 def save_bankroll(val):
-    save_json(BANKROLL_FILE, {"bankroll": round(val, 2)})
-
-# ================= STATE =================
-def load_state():
-    return load_json(STATE_FILE, {"ath": load_bankroll(), "mode": "AGGRESSIVE"})
-
-def save_state(state):
-    save_json(STATE_FILE, state)
+    save_json(BANKROLL_FILE, {"bankroll": round(val,2)})
 
 # ================= TELEGRAM =================
 def send_msg(txt, target="types"):
-    chat = T_CHAT_RESULTS if target == "results" else T_CHAT
+    chat = T_CHAT_RESULTS if target=="results" else T_CHAT
     if not T_TOKEN or not chat:
         print(f"[DEBUG] Telegram skipped:\n{txt}")
         return
@@ -88,7 +81,7 @@ def send_msg(txt, target="types"):
             timeout=10
         )
     except Exception as e:
-        print(f"[DEBUG] Telegram error: {e}")
+        print(f"[DEBUG] Błąd Telegram: {e}")
 
 # ================= KELLY =================
 def calc_kelly(bankroll, odds, edge, kelly_frac, max_pct):
@@ -98,19 +91,19 @@ def calc_kelly(bankroll, odds, edge, kelly_frac, max_pct):
     stake = bankroll * k
     stake = max(10.0, stake)
     stake = min(stake, bankroll * max_pct)
-    return round(stake, 2)
+    return round(stake,2)
 
 # ================= VALUE =================
 def no_vig_probs(odds):
-    inv = {k: 1/v for k, v in odds.items() if v}
+    inv = {k:1/v for k,v in odds.items() if v}
     s = sum(inv.values())
-    return {k: v/s for k, v in inv.items()}
+    return {k:v/s for k,v in inv.items()}
 
 def consensus_odds(odds_list):
     if len(odds_list) < 2:
         return None
-    mx, mn = max(odds_list), min(odds_list)
-    if (mx - mn) / mx > 0.15:
+    mx,mn = max(odds_list), min(odds_list)
+    if (mx-mn)/mx > 0.15:
         return None
     return mx
 
@@ -119,66 +112,66 @@ def run():
     now = datetime.now(timezone.utc)
     bankroll = load_bankroll()
     coupons = load_json(COUPONS_FILE, [])
-    state = load_state()
-
-    if bankroll > state["ath"]:
-        state["ath"] = bankroll
-    if bankroll >= START_BANKROLL * 1.5:
-        state["mode"] = "ULTRA"
-    if state["mode"] == "ULTRA" and bankroll < state["ath"] * 0.8:
-        state["mode"] = "AGGRESSIVE"
-    save_state(state)
-
-    KELLY = 0.5 if state["mode"]=="AGGRESSIVE" else 0.75
-    MAX_PCT = 0.05 if state["mode"]=="AGGRESSIVE" else 0.06
-    mode_icon = "⚔️ AGGRESSIVE" if state["mode"]=="AGGRESSIVE" else "🔥 ULTRA"
-
+    print(f"[DEBUG] Start bankrol: {bankroll} PLN")
+    
     daily_bets = 0
 
     for league in LEAGUES:
+        print(f"[DEBUG] Liga: {league}")
         for key in API_KEYS:
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-                    params={"apiKey": key, "markets": "h2h", "regions": "eu"},
+                    params={"apiKey": key, "markets":"h2h", "regions":"eu"},
                     timeout=10
                 )
                 if r.status_code != 200:
+                    print(f"[DEBUG] API error {r.status_code} dla {league}")
                     continue
 
-                for e in r.json():
+                events = r.json()
+                print(f"[DEBUG] Ilość meczów pobranych: {len(events)}")
+
+                for e in events:
                     dt = parser.isoparse(e["commence_time"])
-                    if not (now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)):
+                    if not (now <= dt <= now+timedelta(hours=MAX_HOURS_AHEAD)):
+                        print(f"[DEBUG] Pomijam {e['home_team']} vs {e['away_team']} - poza MAX_HOURS_AHEAD")
                         continue
 
                     odds_map = defaultdict(list)
                     for bm in e["bookmakers"]:
                         for m in bm["markets"]:
-                            if m["key"] != "h2h": continue
+                            if m["key"]!="h2h": continue
                             for o in m["outcomes"]:
                                 odds_map[o["name"]].append(o["price"])
 
                     odds = {}
-                    for name, lst in odds_map.items():
+                    for name,lst in odds_map.items():
                         val = consensus_odds(lst)
-                        if val and ODDS_MIN <= val <= ODDS_MAX:
-                            odds[name] = val
+                        if val and ODDS_MIN<=val<=ODDS_MAX:
+                            odds[name]=val
+                        print(f"[DEBUG] {name} - {lst} => consensus: {val}")
 
-                    if len(odds) < 2:
+                    if len(odds)<2:
+                        print(f"[DEBUG] Za mało kursów: {odds}")
                         continue
 
                     probs = no_vig_probs(odds)
                     for sel, prob in probs.items():
                         o = odds[sel]
-                        edge = (prob - 1/o) * EDGE_MULTIPLIER.get(league, 1)
+                        edge = (prob - 1/o)*EDGE_MULTIPLIER.get(league,1)
+                        print(f"[DEBUG] Edge: {sel}={edge:.3f} (prob={prob:.3f}, odds={o})")
                         if edge < VALUE_THRESHOLD:
+                            print(f"[DEBUG] Edge poniżej progu: {edge}")
                             continue
 
                         if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] and c["status"]=="pending" for c in coupons):
+                            print(f"[DEBUG] Typ już istnieje, pomijam")
                             continue
 
-                        stake = calc_kelly(bankroll, o, edge, KELLY, MAX_PCT)
-                        if stake <= 0 or bankroll < stake:
+                        stake = calc_kelly(bankroll,o,edge,0.5,0.05)
+                        if stake<=0 or bankroll<stake:
+                            print(f"[DEBUG] Stake za niski lub brak bankrolla")
                             continue
 
                         bankroll -= stake
@@ -191,29 +184,33 @@ def run():
                             "pick": sel,
                             "odds": o,
                             "stake": stake,
-                            "status": "pending"
+                            "status": "pending",
+                            "date_time": e["commence_time"]
                         })
 
-                        send_msg(
-                            f"{mode_icon} <b>VALUE BET</b>\n"
-                            f"{e['home_team']} vs {e['away_team']}\n"
-                            f"🎯 {sel}\n"
-                            f"📈 {o}\n"
-                            f"💎 Edge: {round(edge*100,2)}%\n"
-                            f"💰 Stawka: {stake} PLN\n"
-                            f"💵 Potencjalna wygrana: {round(stake*(o-1)+stake,2)} PLN"
-                        )
+                        msg = (f"⚔️ AGGRESSIVE VALUE BET\n"
+                               f"{e['home_team']} vs {e['away_team']}\n"
+                               f"🎯 {sel}\n"
+                               f"📈 {o}\n"
+                               f"💎 Edge: {round(edge*100,2)}%\n"
+                               f"💰 Stawka: {stake} PLN\n"
+                               f"🗓️ {dt.strftime('%Y-%m-%d %H:%M UTC')}")
+                        print("[DEBUG] Typ dodany:\n", msg)
+                        send_msg(msg)
 
                         daily_bets += 1
-                        if daily_bets >= MAX_BETS_PER_DAY:
+                        if daily_bets>=MAX_BETS_PER_DAY:
                             break
-                    if daily_bets >= MAX_BETS_PER_DAY:
+                    if daily_bets>=MAX_BETS_PER_DAY:
                         break
                 break
             except Exception as e:
+                print(f"[DEBUG] Błąd API: {e}")
                 continue
 
     save_json(COUPONS_FILE, coupons)
+    print(f"[DEBUG] Bankroll po typach: {bankroll} PLN")
 
-if __name__ == "__main__":
+# ================= MAIN =================
+if __name__=="__main__":
     run()
