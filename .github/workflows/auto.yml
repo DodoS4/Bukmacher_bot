@@ -2,7 +2,9 @@ name: Bukmacher Bot Pro
 
 on:
   schedule:
-    - cron: '0 0,4,8,12,16,20 * * *'
+    # Skanowanie co 3 godziny (00, 03, 06, 09, 12, 15, 18, 21)
+    - cron: '0 0,3,6,9,12,15,18,21 * * *'
+    # Specjalne okno o 07:00 na raporty dobowe (nie zużywa API start.py)
     - cron: '0 7 * * *'
   workflow_dispatch:
 
@@ -43,14 +45,14 @@ jobs:
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: |
           HOUR=$(date +%H)
-          DAY=$(date +%u)
-          DOM=$(date +%d)
-
-          # 1. Zawsze najpierw rozlicz wyniki
+          
+          # 1. Zawsze rozliczaj wyniki
           python settle.py
 
-          # 2. Wyślij raporty lub szukaj typów
+          # 2. Raporty o 07:00
           if [[ "$HOUR" == "07" ]]; then
+              DAY=$(date +%u)
+              DOM=$(date +%d)
               if [[ "$DOM" == "01" ]]; then
                   python stats.py --monthly
               elif [[ "$DAY" == "7" ]]; then
@@ -58,8 +60,17 @@ jobs:
               else
                   python stats.py --daily
               fi
+          
+          # 3. Skanowanie (Nocny tryb USA o 00, 03, 06, 21 vs Dzienny Pełny)
           else
-              python start.py
+              # Godziny nocne dla lig USA (wieczór i noc w Polsce)
+              if [[ "$HOUR" -ge 21 || "$HOUR" -le 06 ]]; then
+                  echo "Tryb Nocny: Skanowanie tylko lig USA..."
+                  python start.py --usa-only
+              else
+                  echo "Tryb Dzienny: Pełne skanowanie wszystkich lig..."
+                  python start.py
+              fi
           fi
 
       - name: Push Database
