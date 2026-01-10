@@ -22,10 +22,11 @@ COUPONS_FILE = "coupons.json"
 
 # Parametry strategii
 MAX_HOURS_AHEAD = 72       
-VALUE_THRESHOLD = 0.02     # Standardowy próg 2% (np. dla piłki nożnej)
+VALUE_THRESHOLD = 0.02     # 2% przewagi NETTO (po podatku)
 ODDS_MIN = 1.5
 ODDS_MAX = 10.0
 MAX_BETS_PER_DAY = 10      
+TAX_PL = 0.88              # Współczynnik po odliczeniu 12% podatku
 
 LEAGUES = {
     "basketball_nba": "🏀 NBA",
@@ -83,7 +84,9 @@ def send_msg(txt, target="types"):
 
 def calc_kelly(bankroll, odds, edge, kelly_frac, max_pct):
     if edge <= 0 or odds <= 1: return 0.0
-    k = (edge / (odds - 1)) * kelly_frac
+    # Używamy kursu po podatku do wyliczenia stawki Kelly'ego
+    effective_odds = odds * TAX_PL
+    k = (edge / (effective_odds - 1)) * kelly_frac
     stake = bankroll * k
     stake = max(10.0, stake)
     stake = min(stake, bankroll * max_pct)
@@ -107,7 +110,7 @@ def run():
     coupons = load_json(COUPONS_FILE, [])
     
     daily_bets = sum(1 for c in coupons if parser.isoparse(c["date_time"]) > now - timedelta(days=1))
-    print(f"[DEBUG] Start bota. Bankroll: {bankroll} PLN. Dzisiejsze zakłady: {daily_bets}/{MAX_BETS_PER_DAY}")
+    print(f"[DEBUG] Start bota (Wersja PL z podatkiem). Bankroll: {bankroll} PLN.")
 
     for league_key, league_name in LEAGUES.items():
         if daily_bets >= MAX_BETS_PER_DAY: break
@@ -126,12 +129,9 @@ def run():
                     continue
 
                 events = r.json()
-                print(f"[DEBUG] Pobrano {len(events)} meczów.")
-
                 for e in events:
                     dt = parser.isoparse(e["commence_time"])
-                    if not (now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)):
-                        continue
+                    if not (now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)): continue
 
                     odds_map = defaultdict(list)
                     for bm in e["bookmakers"]:
@@ -151,20 +151,17 @@ def run():
                     probs = no_vig_probs(odds)
                     for sel, prob in probs.items():
                         o = odds[sel]
-                        edge = (prob - 1/o) * EDGE_MULTIPLIER.get(league_key, 1)
                         
-                        # --- POPRAWKA: DYNAMICZNY PRÓG ---
-                        # 1% dla lig USA, 2% dla reszty
-                        is_usa_league = "basketball" in league_key or "icehockey" in league_key
-                        current_threshold = 0.01 if is_usa_league else VALUE_THRESHOLD
+                        # KLUCZOWA ZMIANA: Edge liczony względem kursu po podatku (o * 0.88)
+                        effective_odds = o * TAX_PL
+                        edge = (prob - 1/effective_odds) * EDGE_MULTIPLIER.get(league_key, 1)
                         
-                        if edge < current_threshold:
-                            if edge > 0:
-                                print(f"  [INFO] Odrzucono {e['home_team']} ({sel}): Edge {round(edge*100,2)}% < {current_threshold*100}%")
-                            continue
-
-                        if any(c["home"] == e["home_team"] and c["away"] == e["away_team"] for c in coupons):
-                            continue
+                        # Dynamiczny próg: 1% dla USA, 2% dla reszty (już po podatku!)
+                        is_usa = "basketball" in league_key or "icehockey" in league_key
+                        current_threshold = 0.01 if is_usa else VALUE_THRESHOLD
+                        
+                        if edge < current_threshold: continue
+                        if any(c["home"] == e["home_team"] and c["away"] == e["away_team"] for c in coupons): continue
 
                         stake = calc_kelly(bankroll, o, edge, 0.5, 0.05)
                         if stake <= 0 or bankroll < stake: continue
@@ -172,7 +169,9 @@ def run():
                         # REJESTRACJA
                         bankroll -= stake
                         save_bankroll(bankroll)
-                        possible_win = round(stake * o, 2)
+                        
+                        # Wygrana netto po podatku
+                        possible_win = round(stake * TAX_PL * o, 2)
 
                         new_coupon = {
                             "league": league_key,
@@ -182,31 +181,27 @@ def run():
                             "pick": sel,
                             "odds": o,
                             "stake": stake,
-                            "possible_win": possible_win,
+                            "possible_win": possible_win, # Tu zapisujemy kwotę już po podatku
                             "status": "pending",
                             "date_time": dt.isoformat()
                         }
                         coupons.append(new_coupon)
 
-                        print(f"✅ ZAKŁAD: {e['home_team']} vs {e['away_team']} | {sel} @{o}")
-                        
-                        # POWIADOMIENIE Z EWENTUALNĄ WYGRANĄ
+                        # POWIADOMIENIE
                         send_msg(
-                            f"⚔️ <b>VALUE BET • {league_name}</b>\n"
+                            f"⚔️ <b>VALUE BET PL (Podatek 12%) • {league_name}</b>\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
                             f"🎯 Typ: <b>{sel}</b>\n"
-                            f"📈 Kurs: <b>{o}</b>\n"
-                            f"💎 Edge: {round(edge*100,2)}%\n"
+                            f"📈 Kurs: <b>{o}</b> (efekt. {round(effective_odds, 2)})\n"
+                            f"💎 Edge netto: {round(edge*100,2)}%\n"
                             f"💵 Stawka: <b>{stake} PLN</b>\n"
                             f"💰 Ewentualna wygrana: <b>{possible_win} PLN</b>\n"
                             f"🗓️ {dt.strftime('%m-%d %H:%M UTC')}"
                         )
-
                         daily_bets += 1
                         if daily_bets >= MAX_BETS_PER_DAY: break
                 break 
             except Exception as ex:
-                print(f"[ERROR] Błąd przetwarzania: {ex}")
                 continue
 
     save_json(COUPONS_FILE, coupons)
