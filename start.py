@@ -79,7 +79,7 @@ def save_state(state):
 def send_msg(txt, target="types"):
     chat = T_CHAT_RESULTS if target == "results" else T_CHAT
     if not T_TOKEN or not chat:
-        print(f"[DEBUG] Telegram skipped:\n{txt}")
+        print(f"[DEBUG] Telegram skipped: {txt}")
         return
     try:
         requests.post(
@@ -114,48 +114,6 @@ def consensus_odds(odds_list):
         return None
     return mx
 
-# ================= REPORT GENERATOR =================
-def generate_report(period_days=1, title="RAPORT"):
-    coupons = load_json(COUPONS_FILE, [])
-    bankroll = load_bankroll()
-    now = datetime.now(timezone.utc)
-
-    filtered = []
-    for c in coupons:
-        dt_str = c.get("date_time")
-        if not dt_str:
-            continue
-        c_dt = datetime.fromisoformat(dt_str.replace("Z", "+00:00"))
-        if now - timedelta(days=period_days) <= c_dt <= now:
-            filtered.append(c)
-
-    report = f"📊 <b>{title}</b>\n💰 Bankroll: {bankroll:.2f} PLN\n\n"
-    leagues = defaultdict(lambda: {"won":0,"lost":0,"stake":0,"profit":0,"total":0})
-    for c in filtered:
-        league = c.get("league","unknown")
-        status = c.get("status","pending")
-        stake = c.get("stake",0)
-        odds = c.get("odds",0)
-        leagues[league]["total"] += 1
-        leagues[league]["stake"] += stake
-        if status=="won":
-            leagues[league]["won"] += 1
-            leagues[league]["profit"] += stake*(odds-1)
-        elif status=="lost":
-            leagues[league]["lost"] += 1
-            leagues[league]["profit"] -= stake
-
-    for league, data in leagues.items():
-        total, won, lost, profit, stake = data["total"], data["won"], data["lost"], data["profit"], data["stake"]
-        hit_rate = int((won/total)*100) if total>0 else 0
-        # Pasek z 10 segmentami
-        bar_filled = int(hit_rate/10)
-        bar = "█"*bar_filled + "░"*(10-bar_filled)
-        emoji = "🔥" if profit>0 else "❌"
-        report += f"{emoji} {league} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {hit_rate}%\n{bar} | Zysk/Strata: {profit:.2f} PLN\n\n"
-
-    send_msg(report, target="results")
-
 # ================= RUN =================
 def run():
     now = datetime.now(timezone.utc)
@@ -163,12 +121,13 @@ def run():
     coupons = load_json(COUPONS_FILE, [])
     state = load_state()
 
+    # Aktualizacja ATH i trybu
     if bankroll > state["ath"]:
         state["ath"] = bankroll
     if bankroll >= START_BANKROLL * 1.5:
         state["mode"] = "ULTRA"
-    if state["mode"]=="ULTRA" and bankroll < state["ath"]*0.8:
-        state["mode"]="AGGRESSIVE"
+    if state["mode"] == "ULTRA" and bankroll < state["ath"] * 0.8:
+        state["mode"] = "AGGRESSIVE"
     save_state(state)
 
     KELLY = 0.5 if state["mode"]=="AGGRESSIVE" else 0.75
@@ -206,22 +165,27 @@ def run():
                         if val and ODDS_MIN <= val <= ODDS_MAX:
                             odds[name] = val
 
-                    if len(odds)<2: continue
+                    if len(odds) < 2:
+                        continue
 
                     probs = no_vig_probs(odds)
                     for sel, prob in probs.items():
                         o = odds[sel]
-                        edge = (prob - 1/o) * EDGE_MULTIPLIER.get(league,1)
-                        if edge < VALUE_THRESHOLD: continue
+                        edge = (prob - 1/o) * EDGE_MULTIPLIER.get(league, 1)
+                        if edge < VALUE_THRESHOLD:
+                            continue
+
                         if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] and c["status"]=="pending" for c in coupons):
                             continue
 
                         stake = calc_kelly(bankroll, o, edge, KELLY, MAX_PCT)
-                        if stake<=0 or bankroll<stake: continue
+                        if stake <= 0 or bankroll < stake:
+                            continue
 
                         bankroll -= stake
                         save_bankroll(bankroll)
 
+                        # Dodanie daty i godziny meczu do kuponu
                         coupons.append({
                             "league": league,
                             "home": e["home_team"],
@@ -230,88 +194,27 @@ def run():
                             "odds": o,
                             "stake": stake,
                             "status": "pending",
-                            "date_time": e["commence_time"]
+                            "date_time": e["commence_time"]  # <--- nowy klucz
                         })
 
                         send_msg(
                             f"{mode_icon} <b>VALUE BET</b>\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
                             f"🎯 {sel}\n"
-                            f"📈 Kurs: {o}\n"
+                            f"📈 {o}\n"
                             f"💎 Edge: {round(edge*100,2)}%\n"
-                            f"💰 Stawka: {stake} PLN\n"
-                            f"🕒 Data i godzina: {e['commence_time']}"
+                            f"💰 {stake} PLN\n"
+                            f"🕒 Data i godzina: {dt.strftime('%Y-%m-%d %H:%M UTC')}"
                         )
 
                         daily_bets += 1
-                        if daily_bets>=MAX_BETS_PER_DAY:
+                        if daily_bets >= MAX_BETS_PER_DAY:
                             break
-                    if daily_bets>=MAX_BETS_PER_DAY:
+                    if daily_bets >= MAX_BETS_PER_DAY:
                         break
                 break
-            except:
+            except Exception as e:
+                print(f"[DEBUG] API error {league} key {key}: {e}")
                 continue
 
     save_json(COUPONS_FILE, coupons)
-
-# ================= RESULTS =================
-def check_results():
-    bankroll = load_bankroll()
-    coupons = load_json(COUPONS_FILE, [])
-
-    for c in coupons:
-        if c["status"] != "pending": continue
-
-        for key in API_KEYS:
-            try:
-                r = requests.get(
-                    f"https://api.the-odds-api.com/v4/sports/{c['league']}/scores",
-                    params={"apiKey": key, "daysFrom":3},
-                    timeout=10
-                )
-                if r.status_code != 200: continue
-
-                for m in r.json():
-                    if not m.get("completed"): continue
-                    if m["home_team"] != c["home"] or m["away_team"] != c["away"]: continue
-
-                    scores = {s["name"]: int(s["score"]) for s in m.get("scores",[])}
-                    winner = c["home"] if scores[c["home"]]>scores[c["away"]] else c["away"]
-
-                    if winner == c["pick"]:
-                        profit = c["stake"]*(c["odds"]-1)
-                        bankroll += profit
-                        c["status"] = "won"
-                        send_msg(f"✅ WYGRANA {c['home']} vs {c['away']} | +{round(profit,2)} PLN", "results")
-                    else:
-                        c["status"]="lost"
-                        send_msg(f"❌ PRZEGRANA {c['home']} vs {c['away']} | -{c['stake']} PLN", "results")
-
-                    save_bankroll(bankroll)
-                break
-            except:
-                continue
-
-    # Raport po wynikach
-    generate_report(period_days=30, title="RAPORT MIESIĘCZNY")  # Przykładowo 30 dni
-
-# ================= MAIN =================
-if __name__=="__main__":
-    if "--results" in sys.argv:
-        check_results()
-    elif "--report" in sys.argv:
-        # Można podać daily, weekly, monthly
-        if len(sys.argv)>2:
-            period = sys.argv[2].lower()
-            if period=="daily":
-                generate_report(period_days=1, title="RAPORT DZIENNY")
-            elif period=="weekly":
-                generate_report(period_days=7, title="RAPORT TYGODNIOWY")
-            elif period=="monthly":
-                generate_report(period_days=30, title="RAPORT MIESIĘCZNY")
-            else:
-                generate_report()
-        else:
-            generate_report()
-    else:
-        run()
