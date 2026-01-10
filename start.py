@@ -79,7 +79,7 @@ def save_state(state):
 def send_msg(txt, target="types"):
     chat = T_CHAT_RESULTS if target == "results" else T_CHAT
     if not T_TOKEN or not chat:
-        print(f"[DEBUG] Telegram skipped: {txt}")
+        print(f"[DEBUG] Telegram skipped:\n{txt}")
         return
     try:
         requests.post(
@@ -114,6 +114,67 @@ def consensus_odds(odds_list):
         return None
     return mx
 
+# ================= REPORTS =================
+def daily_report():
+    """Raport dzienny z datą, kursem, stawką i statusem"""
+    coupons = load_json(COUPONS_FILE, [])
+    bankroll = load_bankroll()
+    now = datetime.now(timezone.utc)
+
+    msg = f"📊 <b>DAILY REPORT • {now.date()}</b>\n💰 Bankroll: {round(bankroll,2)} PLN\n\n"
+    for c in coupons:
+        date_time_str = c.get("date_time")
+        if date_time_str:
+            try:
+                c_dt = datetime.fromisoformat(date_time_str.replace("Z","+00:00"))
+                date_str = c_dt.strftime("%Y-%m-%d %H:%M UTC")
+            except:
+                date_str = "Brak daty"
+        else:
+            date_str = "Brak daty"
+
+        msg += (f"{c.get('league','unknown')} | {c.get('home','')} vs {c.get('away','')} | "
+                f"{c.get('pick','')} | Kurs: {c.get('odds',0)} | Stawka: {c.get('stake',0):.2f} PLN | "
+                f"Data i godzina: {date_str} | Status: {c.get('status','pending')}\n")
+
+    print(msg)
+    send_msg(msg, target="results")
+
+def league_profit_report():
+    """Raport per liga z zyskami/stratami i wizualizacją hit rate"""
+    coupons = load_json(COUPONS_FILE, [])
+    report = {}
+
+    for c in coupons:
+        league = c.get("league", "unknown")
+        if league not in report:
+            report[league] = {"won":0,"lost":0,"profit":0.0,"total":0}
+        report[league]["total"] += 1
+
+        if c["status"] == "won":
+            profit = c["stake"] * (c["odds"] - 1)
+            report[league]["won"] += 1
+            report[league]["profit"] += profit
+        elif c["status"] == "lost":
+            report[league]["lost"] += 1
+            report[league]["profit"] -= c["stake"]
+
+    msg = "📊 <b>RAPORT PER LIGA</b>\n"
+    for league, data in report.items():
+        total = data["total"]
+        won = data["won"]
+        lost = data["lost"]
+        profit = data["profit"]
+        hit_rate = (won / total * 100) if total > 0 else 0.0
+        blocks = int(hit_rate / 10)
+        bar = "█"*blocks + "░"*(10-blocks)
+        emoji = "🔥" if profit > 0 else "❌"
+        msg += (f"\n{emoji} {league} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {hit_rate:.0f}%\n"
+                f"{bar} | Zysk/Strata: {profit:.2f} PLN\n")
+
+    print(msg)
+    send_msg(msg, target="results")
+
 # ================= RUN =================
 def run():
     now = datetime.now(timezone.utc)
@@ -121,6 +182,7 @@ def run():
     coupons = load_json(COUPONS_FILE, [])
     state = load_state()
 
+    # tryb agresywny lub ultra
     if bankroll > state["ath"]:
         state["ath"] = bankroll
     if bankroll >= START_BANKROLL * 1.5:
@@ -192,17 +254,17 @@ def run():
                             "odds": o,
                             "stake": stake,
                             "status": "pending",
-                            "date_time": e["commence_time"]
+                            "date_time": e.get("commence_time")
                         })
 
                         send_msg(
                             f"{mode_icon} <b>VALUE BET</b>\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
                             f"🎯 {sel}\n"
-                            f"📈 Kurs: {o}\n"
+                            f"📈 {o}\n"
                             f"💎 Edge: {round(edge*100,2)}%\n"
-                            f"💰 Stawka: {stake} PLN\n"
-                            f"📅 Data i godzina: {dt.strftime('%Y-%m-%d %H:%M UTC')}"
+                            f"💰 {stake} PLN\n"
+                            f"🕒 Data i godzina: {e.get('commence_time','Brak')}"
                         )
 
                         daily_bets += 1
@@ -212,12 +274,60 @@ def run():
                         break
                 break
             except Exception as e:
-                print(f"[DEBUG] Błąd API {league} key {key}: {e}")
                 continue
 
     save_json(COUPONS_FILE, coupons)
-    print(f"[DEBUG] Run zakończony. Bankroll: {bankroll:.2f} PLN")
+    daily_report()
+
+# ================= RESULTS =================
+def check_results():
+    bankroll = load_bankroll()
+    coupons = load_json(COUPONS_FILE, [])
+
+    for c in coupons:
+        if c["status"] != "pending":
+            continue
+
+        for key in API_KEYS:
+            try:
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{c['league']}/scores",
+                    params={"apiKey": key, "daysFrom": 3},
+                    timeout=10
+                )
+                if r.status_code != 200:
+                    continue
+
+                for m in r.json():
+                    if not m.get("completed"): continue
+                    if m["home_team"] != c["home"] or m["away_team"] != c["away"]: continue
+
+                    scores = {s["name"]: int(s["score"]) for s in m.get("scores", [])}
+                    winner = c["home"] if scores[c["home"]] > scores[c["away"]] else c["away"]
+
+                    if winner == c["pick"]:
+                        profit = c["stake"] * (c["odds"] - 1)
+                        bankroll += profit
+                        c["status"] = "won"
+                        send_msg(f"✅ WYGRANA {c['home']} vs {c['away']} | +{round(profit,2)} PLN", "results")
+                    else:
+                        c["status"] = "lost"
+                        send_msg(f"❌ PRZEGRANA {c['home']} vs {c['away']} | -{c['stake']} PLN", "results")
+
+                    save_bankroll(bankroll)
+                break
+            except:
+                continue
+
+    save_json(COUPONS_FILE, coupons)
+    league_profit_report()
 
 # ================= MAIN =================
 if __name__ == "__main__":
-    run()
+    if "--results" in sys.argv:
+        check_results()
+    elif "--report" in sys.argv:
+        daily_report()
+        league_profit_report()
+    else:
+        run()
