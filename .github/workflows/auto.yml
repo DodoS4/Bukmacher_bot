@@ -2,10 +2,9 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    - cron: '0 0,4,8,12,16,20 * * *'   # Typy co 4h UTC
-    - cron: '0 7 * * 1-6'              # Raport dzienny (pon-sob) o 07:00 UTC
-    - cron: '0 7 * * 0'                # Raport tygodniowy w niedzielę o 07:00 UTC
-    - cron: '0 7 1 * *'                # Raport miesięczny pierwszego dnia miesiąca o 07:00 UTC
+    - cron: '0 0,4,8,12,16,20 * * *'  # Typy co 4h UTC
+    - cron: '0 7 * * 1-6'              # Statystyki dzienne (pon-sob) o 07:00 UTC
+    - cron: '0 7 * * 0'                # Statystyki tygodniowe w niedzielę o 07:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -50,30 +49,20 @@ jobs:
         run: |
           DAY=$(date +%u)
           HOUR=$(date +%H)
-          DATE=$(date +%d)
 
-          # Raport dzienny: pon-sob 07:00 UTC
-          if [[ "$HOUR" == "07" && "$DAY" -ge 1 && "$DAY" -le 6 ]]; then
-              echo "📊 Wysyłanie raportu dziennego..."
-              python stats.py daily
-
-          # Raport tygodniowy: niedziela 07:00 UTC
-          elif [[ "$HOUR" == "07" && "$DAY" == "0" ]]; then
-              echo "📊 Wysyłanie raportu tygodniowego..."
-              python stats.py weekly
-
-          # Raport miesięczny: pierwszy dzień miesiąca 07:00 UTC
-          elif [[ "$HOUR" == "07" && "$DATE" == "01" ]]; then
-              echo "📊 Wysyłanie raportu miesięcznego..."
-              python stats.py monthly
-
-          # Typy co 4h
+          if [ "$HOUR" = "07" ] && [ "$DAY" -ge 1 ] && [ "$DAY" -le 6 ]; then
+            echo "📊 Wysyłanie statystyk dziennych..."
+            python start.py --report daily
+          elif [ "$HOUR" = "07" ] && [ "$DAY" = "0" ]; then
+            echo "📊 Wysyłanie statystyk tygodniowych..."
+            python start.py --report weekly
           else
-              echo "⚔️ Uruchamianie bota z typami..."
-              python start.py
+            echo "⚔️ Uruchamianie bota z typami..."
+            python start.py
+          fi
 
       - name: Zapisanie zmian w bazie danych
         run: |
           git add coupons.json bankroll.json || echo "Brak zmian"
-          git commit -m "Aktualizacja bazy i bankrolla [skip ci]" --no-verify || exit 0
-          git push origin main
+          git commit -m "Aktualizacja bazy i bankrolla [skip ci]" --no-verify || echo "Brak zmian do zatwierdzenia"
+          git push origin main || echo "Brak zmian do wypchnięcia"
