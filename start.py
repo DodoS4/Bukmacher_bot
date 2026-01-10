@@ -6,7 +6,7 @@ from dateutil import parser
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
+TAX_PL = 0.88
 
 API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3"),
@@ -16,7 +16,6 @@ API_KEYS = [k for k in [
 START_BANKROLL = 10000.0
 BANKROLL_FILE = "bankroll.json"
 COUPONS_FILE = "coupons.json"
-TAX_PL = 0.88
 
 LEAGUES = {
     "basketball_nba": "🏀 NBA", "icehockey_nhl": "🏒 NHL", "soccer_epl": "⚽ EPL",
@@ -53,7 +52,8 @@ def run():
     only_usa = "--usa-only" in sys.argv
     now = datetime.now(timezone.utc)
     coupons = load_json(COUPONS_FILE, [])
-    bankroll = load_json(BANKROLL_FILE, {"bankroll": START_BANKROLL})["bankroll"]
+    bank_data = load_json(BANKROLL_FILE, {"bankroll": START_BANKROLL})
+    bankroll = bank_data["bankroll"]
     
     for l_key, l_name in LEAGUES.items():
         if only_usa and l_key not in USA_LEAGUES: continue
@@ -81,26 +81,46 @@ def run():
                     probs = no_vig_probs(odds)
                     for sel, prob in probs.items():
                         o = odds[sel]
+                        # Obliczanie przewagi uwzględniając podatek
                         edge = (prob - 1/(o * TAX_PL))
                         thr = 0.005 if l_key in USA_LEAGUES else 0.02
                         
-                        # --- LUPA: To zobaczysz w logach Actions ---
+                        # Logi dla Ciebie w GitHub Actions
                         print(f"  > {e['home_team']} - {sel}: Edge {round(edge*100,2)}% (Wymagane: {round(thr*100,2)}%)")
                         
                         if edge < thr: continue
-                        if any(c["home"] == e["home_team"] for c in coupons): continue
+                        if any(c["home"] == e["home_team"] and c["pick"] == sel for c in coupons): continue
                         
-                        stake = round(min(bankroll * 0.02, 100), 2) # Prosta stawka 2% bankrollu
-                        bankroll -= stake
+                        # Parametry zakładu
+                        stake = round(min(bankroll * 0.02, 100), 2) # 2% banku lub max 100 PLN
+                        if stake < 10: stake = 10.0 # Minimalna stawka
+                        
                         win = round(stake * o * TAX_PL, 2)
+                        formatted_date = dt.strftime("%m-%d %H:%M")
                         
-                        coupons.append({"league": l_key, "home": e["home_team"], "away": e["away_team"], 
-                                      "pick": sel, "odds": o, "stake": stake, "possible_win": win, 
-                                      "status": "PENDING", "date_time": dt.isoformat()})
+                        coupons.append({
+                            "league": l_key, "home": e["home_team"], "away": e["away_team"], 
+                            "pick": sel, "odds": o, "stake": stake, "possible_win": win, 
+                            "status": "PENDING", "date_time": dt.isoformat()
+                        })
+                        bankroll -= stake
                         
-                        send_msg(f"⚔️ <b>VALUE BET ({l_name})</b>\n{e['home_team']} vs {e['away_team']}\nTyp: <b>{sel}</b> @{o}\nEdge: {round(edge*100,2)}%\nStawka: {stake} PLN")
+                        # WIADOMOŚĆ TELEGRAM (DOKŁADNIE TAKA JAKĄ CHCIAŁEŚ)
+                        msg = (
+                            f"⚔️ <b>VALUE BET • {l_name}</b>\n"
+                            f"{e['home_team']} vs {e['away_team']}\n"
+                            f"🎯 Typ: <b>{sel}</b>\n"
+                            f"📈 Kurs: <b>{o}</b>\n"
+                            f"💎 Edge: <b>{round(edge*100, 2)}%</b>\n"
+                            f"💵 Stawka: <b>{stake} PLN</b>\n"
+                            f"💰 Ewentualna wygrana: <b>{win} PLN</b>\n"
+                            f"🗓️ {formatted_date} UTC"
+                        )
+                        send_msg(msg)
                 break
-            except: continue
+            except Exception as ex: 
+                print(f"Błąd API: {ex}")
+                continue
             
     save_json(COUPONS_FILE, coupons)
     save_json(BANKROLL_FILE, {"bankroll": round(bankroll, 2)})
