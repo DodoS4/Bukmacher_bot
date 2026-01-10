@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "league": "soccer_italy_serie_a",
+    "league_name": "\u26bd Serie A",
+    "home": "Inter Milan",
+    "away": "Napoli",
+    "pick": "Inter Milan",
+    "odds": 1.79,
+    "stake": 336.28,
+    "possible_win": 265.66,
+    "status": "pending",
+    "date_time": "2026-01-11T19:45:00+00:00"
+  },
+  {
+    "league": "soccer_italy_serie_a",
+    "league_name": "\u26bd Serie A",
+    "home": "Genoa",
+    "away": "Cagliari",
+    "pick": "Genoa",
+    "odds": 2.18,
+    "stake": 240.57,
+    "possible_win": 283.87,
+    "status": "pending",
+    "date_time": "2026-01-12T17:30:00+00:00"
+  }
+]
