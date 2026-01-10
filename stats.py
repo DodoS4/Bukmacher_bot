@@ -1,4 +1,4 @@
-import json, os, sys
+import json, os, sys, requests
 from datetime import datetime, timedelta, timezone
 
 # ================= CONFIG =================
@@ -7,7 +7,7 @@ BANKROLL_FILE = "bankroll.json"
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
-# Rozszerzona lista flag, aby pasowała do start.py
+# Pełna lista lig spójna z start.py
 LEAGUE_FLAGS = {
     "basketball_nba": "🏀 NBA",
     "icehockey_nhl": "🏒 NHL",
@@ -15,7 +15,11 @@ LEAGUE_FLAGS = {
     "soccer_germany_bundesliga": "⚽ Bundesliga",
     "soccer_italy_serie_a": "⚽ Serie A",
     "soccer_spain_la_liga": "⚽ La Liga",
-    "soccer_france_ligue_one": "⚽ Ligue 1"
+    "soccer_france_ligue_one": "⚽ Ligue 1",
+    "soccer_poland_ekstraklasa": "⚽ Ekstraklasa",
+    "basketball_euroleague": "🇪🇺 Euroliga",
+    "soccer_uefa_champions_league": "🏆 Champions League",
+    "americanfootball_nfl": "🏈 NFL"
 }
 
 def load_json(path, default):
@@ -30,7 +34,6 @@ def send_msg(txt):
     if not T_TOKEN or not T_CHAT_RESULTS:
         print("[DEBUG] Telegram skipped")
         return
-    import requests
     try:
         requests.post(
             f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
@@ -49,46 +52,51 @@ def generate_report(period_days=1, title="DAILY REPORT"):
     start_period = now - timedelta(days=period_days)
 
     period_coupons = []
+    pending_count = 0
+    
     for c in coupons:
-        # Bezpieczniejsza konwersja daty
         dt_str = c["date_time"].replace("Z", "+00:00")
         dt = datetime.fromisoformat(dt_str)
         if dt >= start_period:
             period_coupons.append(c)
+            if c["status"].upper() == "PENDING":
+                pending_count += 1
 
     if not period_coupons:
         send_msg(f"📊 <b>{title}</b>\nBrak aktywności w wybranym okresie.")
         return
 
     league_stats = {}
+    total_profit = 0
+    
     for c in period_coupons:
         l_key = c.get("league", "inne")
         if l_key not in league_stats:
             league_stats[l_key] = {"won":0, "lost":0, "total":0, "profit":0.0}
         
-        # POPRAWKA: Sprawdzamy statusy wielkimi literami (zgodnie z settle.py)
         status = c["status"].upper()
         if status != "PENDING":
             league_stats[l_key]["total"] += 1
             if status == "WON":
                 league_stats[l_key]["won"] += 1
-                # Kwota possible_win ma już odliczony podatek z start.py
-                league_stats[l_key]["profit"] += (c["possible_win"] - c["stake"])
+                profit = (c["possible_win"] - c["stake"])
+                league_stats[l_key]["profit"] += profit
+                total_profit += profit
             elif status == "LOST":
                 league_stats[l_key]["lost"] += 1
                 league_stats[l_key]["profit"] -= c["stake"]
+                total_profit -= c["stake"]
 
     msg = f"📊 <b>{title} • {now.strftime('%Y-%m-%d')}</b>\n"
-    msg += f"🏦 Stan konta: <b>{bankroll:.2f} PLN</b>\n\n"
+    msg += f"🏦 Stan konta: <b>{bankroll:.2f} PLN</b>\n"
+    msg += f"🏁 Wynik okresu: <b>{total_profit:+.2f} PLN</b>\n\n"
 
-    total_profit = 0
     for l_key, data in league_stats.items():
         total = data["total"]
         if total == 0: continue
         
         hit_rate = int((data["won"] / total) * 100)
         profit = data["profit"]
-        total_profit += profit
         trend = "📈" if profit >= 0 else "📉"
         
         bar_len = 8
@@ -97,13 +105,14 @@ def generate_report(period_days=1, title="DAILY REPORT"):
         
         league_name = LEAGUE_FLAGS.get(l_key, l_key)
         msg += f"{trend} <b>{league_name}</b> (Hit: {hit_rate}%)\n"
-        msg += f"<code>{bar}</code> | Zysk: <b>{profit:+.2f} PLN</b>\n\n"
+        msg += f"<code>{bar}</code> | <b>{profit:+.2f} PLN</b>\n\n"
 
-    msg += f"🏁 Łączny wynik: <b>{total_profit:+.2f} PLN</b>\n"
+    if pending_count > 0:
+        msg += f"⏳ Oczekujące zakłady: <b>{pending_count}</b>\n"
+    
     msg += "----------------------------------\n"
     msg += "🏟️ <b>Ostatnie rozliczenia:</b>\n"
     
-    # Tylko rozliczone mecze do listy na dole
     settled_matches = [m for m in period_coupons if m["status"].upper() != "PENDING"]
     sorted_matches = sorted(settled_matches, key=lambda x: x["date_time"], reverse=True)[:5]
     
@@ -114,6 +123,7 @@ def generate_report(period_days=1, title="DAILY REPORT"):
     send_msg(msg)
 
 if __name__=="__main__":
-    days = 7 if "--weekly" in sys.argv else 30 if "--monthly" in sys.argv else 1
-    label = "WEEKLY REPORT" if "--weekly" in sys.argv else "MONTHLY REPORT" if "--monthly" in sys.argv else "DAILY REPORT"
+    mode = sys.argv[1] if len(sys.argv) > 1 else "--daily"
+    days = 7 if mode == "--weekly" else 30 if mode == "--monthly" else 1
+    label = "WEEKLY REPORT" if mode == "--weekly" else "MONTHLY REPORT" if mode == "--monthly" else "DAILY REPORT"
     generate_report(days, label)
