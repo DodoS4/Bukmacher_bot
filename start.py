@@ -69,7 +69,7 @@ def save_bankroll(val):
 def send_msg(txt,target="types"):
     chat = T_CHAT_RESULTS if target=="results" else T_CHAT
     if not T_TOKEN or not chat:
-        print("[DEBUG] Telegram skipped:\n",txt)
+        print("[DEBUG] Telegram skipped")
         return
     try:
         requests.post(
@@ -84,7 +84,7 @@ def calc_kelly(bankroll,odds,edge,kelly_frac,max_pct):
     if edge<=0 or odds<=1: return 0.0
     k=(edge/(odds-1))*kelly_frac
     stake=bankroll*k
-    stake=max(10.0,stake)
+    stake=max(10.0,stake) # Minimalna stawka 10 PLN
     stake=min(stake,bankroll*max_pct)
     return round(stake,2)
 
@@ -104,9 +104,13 @@ def run():
     now=datetime.now(timezone.utc)
     bankroll=load_bankroll()
     coupons=load_json(COUPONS_FILE,[])
-    daily_bets=0
+    
+    # Liczenie dzisiejszych zakładów (z ostatnich 24h)
+    daily_bets = sum(1 for c in coupons if parser.isoparse(c["date_time"]) > now - timedelta(days=1))
 
     for league_key, league_name in LEAGUES.items():
+        if daily_bets >= MAX_BETS_PER_DAY: break
+        
         for key in API_KEYS:
             try:
                 r=requests.get(
@@ -140,7 +144,8 @@ def run():
                         edge=(prob-1/o)*EDGE_MULTIPLIER.get(league_key,1)
                         if edge<VALUE_THRESHOLD: continue
 
-                        if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] and c["status"]=="pending" for c in coupons):
+                        # Sprawdzenie duplikatów
+                        if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] for c in coupons):
                             continue
 
                         stake=calc_kelly(bankroll,o,edge,0.5,0.05)
@@ -148,6 +153,8 @@ def run():
 
                         bankroll-=stake
                         save_bankroll(bankroll)
+                        
+                        possible_win = round(stake * o, 2)
 
                         coupons.append({
                             "league":league_key,
@@ -157,30 +164,28 @@ def run():
                             "pick":sel,
                             "odds":o,
                             "stake":stake,
+                            "possible_win": possible_win,
                             "status":"pending",
                             "date_time":dt.isoformat()
                         })
 
                         send_msg(
-                            f"⚔️ VALUE BET • {league_name}\n"
+                            f"⚔️ <b>VALUE BET • {league_name}</b>\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
-                            f"🎯 {sel}\n"
-                            f"📈 {o}\n"
+                            f"🎯 Typ: <b>{sel}</b>\n"
+                            f"📈 Kurs: <b>{o}</b>\n"
                             f"💎 Edge: {round(edge*100,2)}%\n"
                             f"💰 Stawka: {stake} PLN\n"
-                            f"🗓️ Data i godzina: {dt.strftime('%Y-%m-%d %H:%M UTC')}"
+                            f"🗓️ {dt.strftime('%m-%d %H:%M UTC')}"
                         )
 
                         daily_bets+=1
                         if daily_bets>=MAX_BETS_PER_DAY: break
-                    if daily_bets>=MAX_BETS_PER_DAY: break
-                break
+                break # Następna liga
             except Exception as e:
-                print(f"[DEBUG] API error: {e}")
                 continue
 
     save_json(COUPONS_FILE,coupons)
-    print(f"[DEBUG] Bankroll końcowy: {bankroll:.2f} PLN")
 
 if __name__=="__main__":
     run()
