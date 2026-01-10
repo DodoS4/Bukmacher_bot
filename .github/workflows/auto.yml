@@ -3,8 +3,8 @@ name: Bukmacher Bot Pro AKO
 on:
   schedule:
     - cron: '0 0,4,8,12,16,20 * * *'  # Typy co 4h UTC
-    - cron: '0 7 * * *'                # Statystyki dzienne
-    - cron: '0 7 * * 0'                # Statystyki tygodniowe
+    - cron: '0 7 * * 1-6'              # Statystyki dzienne (pon-sob) o 07:00 UTC
+    - cron: '0 7 * * 0'                # Statystyki tygodniowe w niedzielę o 07:00 UTC
   workflow_dispatch:
 
 permissions:
@@ -36,7 +36,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git pull origin main || echo "Brak zmian do pobrania"
 
-      - name: Uruchomienie bota lub statystyk
+      - name: Uruchomienie bota / raportów
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
@@ -44,19 +44,25 @@ jobs:
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }} # DODANO
-          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }} # DODANO
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: |
-          if [[ "$(date +%H)" == "07" ]]; then
-              echo "Wysyłanie statystyk..."
-              python start.py --stats
+          DAY=$(date +%u)
+          HOUR=$(date +%H)
+
+          if [[ "$HOUR" == "07" && "$DAY" -ge 1 && "$DAY" -le 6 ]]; then
+              echo "📊 Wysyłanie statystyk dziennych..."
+              python start.py --report
+          elif [[ "$HOUR" == "07" && "$DAY" == "0" ]]; then
+              echo "📊 Wysyłanie statystyk tygodniowych..."
+              python start.py --report
           else
-              echo "Uruchamianie bota z typami..."
+              echo "⚔️ Uruchamianie bota z typami..."
               python start.py
           fi
 
       - name: Zapisanie zmian w bazie danych
         run: |
           git add coupons.json bankroll.json || echo "Brak zmian"
-          git commit -m "Aktualizacja bazy i bankrolla [skip ci]" || exit 0
+          git commit -m "Aktualizacja bazy i bankrolla [skip ci]" --no-verify || exit 0
           git push origin main
