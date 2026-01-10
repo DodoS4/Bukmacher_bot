@@ -43,6 +43,14 @@ EDGE_MULTIPLIER = {
     "soccer_italy_serie_a": 0.60
 }
 
+LEAGUE_FLAGS = {
+    "basketball_nba": "🏀 NBA",
+    "icehockey_nhl": "🏒 NHL",
+    "soccer_epl": "⚽ EPL",
+    "soccer_germany_bundesliga": "⚽ BUN",
+    "soccer_italy_serie_a": "⚽ SER"
+}
+
 # ================= FILE UTILS =================
 def load_json(path, default):
     if os.path.exists(path):
@@ -68,18 +76,11 @@ def load_bankroll():
 def save_bankroll(val):
     save_json(BANKROLL_FILE, {"bankroll": round(val, 2)})
 
-# ================= STATE =================
-def load_state():
-    return load_json(STATE_FILE, {"ath": load_bankroll(), "mode": "AGGRESSIVE"})
-
-def save_state(state):
-    save_json(STATE_FILE, state)
-
 # ================= TELEGRAM =================
 def send_msg(txt, target="types"):
     chat = T_CHAT_RESULTS if target == "results" else T_CHAT
     if not T_TOKEN or not chat:
-        print(f"[DEBUG] Telegram skipped: {txt}")
+        print(f"[DEBUG] Telegram skipped:\n{txt}")
         return
     try:
         requests.post(
@@ -114,107 +115,74 @@ def consensus_odds(odds_list):
         return None
     return mx
 
-# ================= RUN =================
-def run():
+# ================= REPORT GENERATOR =================
+def generate_report(period_days=1, title="DAILY REPORT"):
     now = datetime.now(timezone.utc)
-    bankroll = load_bankroll()
+    cutoff = now - timedelta(days=period_days)
     coupons = load_json(COUPONS_FILE, [])
-    state = load_state()
+    
+    filtered = []
+    for c in coupons:
+        dt_str = c.get("date_time")
+        if not dt_str:
+            continue
+        c_dt = parser.isoparse(dt_str)
+        if c_dt >= cutoff:
+            filtered.append(c)
+    
+    bankroll = load_bankroll()
+    msg = f"📊 {title} • {now.date()}\n💰 Bankroll: {bankroll:.2f} PLN\n\n"
 
-    # Aktualizacja ATH i trybu
-    if bankroll > state["ath"]:
-        state["ath"] = bankroll
-    if bankroll >= START_BANKROLL * 1.5:
-        state["mode"] = "ULTRA"
-    if state["mode"] == "ULTRA" and bankroll < state["ath"] * 0.8:
-        state["mode"] = "AGGRESSIVE"
-    save_state(state)
+    leagues = defaultdict(lambda: {"won":0,"lost":0,"profit":0.0,"total":0})
+    for c in filtered:
+        league = c.get("league","unknown")
+        leagues[league]["total"] += 1
+        stake = c.get("stake",0)
+        odds = c.get("odds",0)
+        status = c.get("status","pending")
+        if status=="won":
+            leagues[league]["won"] += 1
+            leagues[league]["profit"] += stake*(odds-1)
+        elif status=="lost":
+            leagues[league]["lost"] += 1
+            leagues[league]["profit"] -= stake
 
-    KELLY = 0.5 if state["mode"]=="AGGRESSIVE" else 0.75
-    MAX_PCT = 0.05 if state["mode"]=="AGGRESSIVE" else 0.06
-    mode_icon = "⚔️ AGGRESSIVE" if state["mode"]=="AGGRESSIVE" else "🔥 ULTRA"
+    for league, data in leagues.items():
+        total, won, lost, profit = data["total"], data["won"], data["lost"], data["profit"]
+        hit_rate = int((won/total)*100) if total>0 else 0
+        bar_len = 7
+        filled = int(bar_len * hit_rate / 100)
+        empty = bar_len - filled
+        emoji = "🔥" if profit>0 else "❌"
+        league_name = LEAGUE_FLAGS.get(league, league.upper())
+        msg += f"{emoji} {league_name} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {hit_rate}%\n"
+        msg += f"{'█'*filled}{'░'*empty} | Zysk/Strata: {profit:.2f} PLN\n\n"
 
-    daily_bets = 0
+    # Najważniejsze mecze dnia - top 5 po stawce
+    filtered_sorted = sorted(filtered, key=lambda x: x.get("stake",0), reverse=True)
+    top5 = filtered_sorted[:5]
+    if top5:
+        msg += "🏟️ Najważniejsze mecze dnia:\n"
+        for c in top5:
+            status_icon = "✅" if c.get("status")=="won" else "❌" if c.get("status")=="lost" else "⏳"
+            msg += f"\t• {c.get('home')} vs {c.get('away')} | Typ: {c.get('pick')} | Stawka: {c.get('stake'):.2f} PLN | {status_icon}\n"
 
-    for league in LEAGUES:
-        for key in API_KEYS:
-            try:
-                r = requests.get(
-                    f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-                    params={"apiKey": key, "markets": "h2h", "regions": "eu"},
-                    timeout=10
-                )
-                if r.status_code != 200:
-                    continue
+    print("[DEBUG] Report:\n", msg)
+    send_msg(msg, target="results")
 
-                for e in r.json():
-                    dt = parser.isoparse(e["commence_time"])
-                    if not (now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)):
-                        continue
-
-                    odds_map = defaultdict(list)
-                    for bm in e["bookmakers"]:
-                        for m in bm["markets"]:
-                            if m["key"] != "h2h": continue
-                            for o in m["outcomes"]:
-                                odds_map[o["name"]].append(o["price"])
-
-                    odds = {}
-                    for name, lst in odds_map.items():
-                        val = consensus_odds(lst)
-                        if val and ODDS_MIN <= val <= ODDS_MAX:
-                            odds[name] = val
-
-                    if len(odds) < 2:
-                        continue
-
-                    probs = no_vig_probs(odds)
-                    for sel, prob in probs.items():
-                        o = odds[sel]
-                        edge = (prob - 1/o) * EDGE_MULTIPLIER.get(league, 1)
-                        if edge < VALUE_THRESHOLD:
-                            continue
-
-                        if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] and c["status"]=="pending" for c in coupons):
-                            continue
-
-                        stake = calc_kelly(bankroll, o, edge, KELLY, MAX_PCT)
-                        if stake <= 0 or bankroll < stake:
-                            continue
-
-                        bankroll -= stake
-                        save_bankroll(bankroll)
-
-                        # Dodanie daty i godziny meczu do kuponu
-                        coupons.append({
-                            "league": league,
-                            "home": e["home_team"],
-                            "away": e["away_team"],
-                            "pick": sel,
-                            "odds": o,
-                            "stake": stake,
-                            "status": "pending",
-                            "date_time": e["commence_time"]  # <--- nowy klucz
-                        })
-
-                        send_msg(
-                            f"{mode_icon} <b>VALUE BET</b>\n"
-                            f"{e['home_team']} vs {e['away_team']}\n"
-                            f"🎯 {sel}\n"
-                            f"📈 {o}\n"
-                            f"💎 Edge: {round(edge*100,2)}%\n"
-                            f"💰 {stake} PLN\n"
-                            f"🕒 Data i godzina: {dt.strftime('%Y-%m-%d %H:%M UTC')}"
-                        )
-
-                        daily_bets += 1
-                        if daily_bets >= MAX_BETS_PER_DAY:
-                            break
-                    if daily_bets >= MAX_BETS_PER_DAY:
-                        break
-                break
-            except Exception as e:
-                print(f"[DEBUG] API error {league} key {key}: {e}")
-                continue
-
-    save_json(COUPONS_FILE, coupons)
+# ================= MAIN =================
+if __name__ == "__main__":
+    if "--report" in sys.argv:
+        arg_index = sys.argv.index("--report") + 1
+        period = sys.argv[arg_index] if len(sys.argv) > arg_index else "daily"
+        if period=="daily":
+            generate_report(period_days=1, title="DAILY REPORT")
+        elif period=="weekly":
+            generate_report(period_days=7, title="WEEKLY REPORT")
+        elif period=="monthly":
+            generate_report(period_days=30, title="MONTHLY REPORT")
+        else:
+            generate_report(period_days=1, title="DAILY REPORT")
+    else:
+        # Tu zostaw normalne uruchomienie bota z typami
+        print("⚔️ Uruchamianie bota z typami... (tutaj Twój kod typów)")
