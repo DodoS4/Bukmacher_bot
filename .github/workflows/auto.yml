@@ -1,43 +1,29 @@
-name: Bukmacher Bot Pro AKO
+name: Bukmacher Bot
 
 on:
   schedule:
-    - cron: '0 0,4,8,12,16,20 * * *'  # Typy co 4h UTC
-    - cron: '0 7 * * 1-6'              # Statystyki dzienne (pon-sob) o 07:00 UTC
-    - cron: '0 7 * * 7'                # Statystyki tygodniowe w niedzielę o 07:00 UTC
-    - cron: '0 7 1 * *'                # Statystyki miesięczne w pierwszy dzień miesiąca o 07:00 UTC
-  workflow_dispatch:
-
-permissions:
-  contents: write
+    - cron: '0 18 * * *'   # codziennie o 18:00 UTC
+  workflow_dispatch:       # pozwala ręcznie uruchomić
 
 jobs:
-  build:
+  run-bot:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Pobierz kod
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@v3
 
-      - name: Konfiguracja Pythona
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.11'
 
-      - name: Instalacja bibliotek
+      - name: Install dependencies
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      - name: Synchronizacja bazy
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git pull origin main || echo "Brak zmian do pobrania"
-
-      - name: Uruchomienie bota / raportów
+      - name: Run bot
+        run: python run.py
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
@@ -47,33 +33,23 @@ jobs:
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
-        run: |
-          DAY=$(date +%u)
-          DAY_OF_MONTH=$(date +%d)
-          HOUR=$(date +%H)
 
-          # Raport dzienny pon-sob
-          if [[ "$HOUR" == "07" && "$DAY" -ge 1 && "$DAY" -le 6 ]]; then
-              echo "📊 Wysyłanie statystyk dziennych..."
-              python start.py --report --daily
+      - name: Daily report
+        run: python stats.py --daily
+        env:
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
 
-          # Raport tygodniowy w niedzielę
-          elif [[ "$HOUR" == "07" && "$DAY" == "7" ]]; then
-              echo "📊 Wysyłanie statystyk tygodniowych..."
-              python start.py --report --weekly
+      - name: Weekly report
+        if: github.event_name == 'workflow_dispatch'
+        run: python stats.py --weekly
+        env:
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
 
-          # Raport miesięczny w pierwszy dzień miesiąca
-          elif [[ "$HOUR" == "07" && "$DAY_OF_MONTH" == "01" ]]; then
-              echo "📊 Wysyłanie statystyk miesięcznych..."
-              python start.py --report --monthly
-
-          # Uruchamianie bota co 4h
-          else
-              echo "⚔️ Uruchamianie bota z typami..."
-              python start.py
-
-      - name: Zapisanie zmian w bazie danych
-        run: |
-          git add coupons.json bankroll.json || echo "Brak zmian"
-          git commit -m "Aktualizacja bazy i bankrolla [skip ci]" --no-verify || exit 0
-          git push origin main
+      - name: Monthly report
+        if: github.event_name == 'workflow_dispatch'
+        run: python stats.py --monthly
+        env:
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
