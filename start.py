@@ -27,19 +27,11 @@ ODDS_MAX = 10.0
 MAX_BETS_PER_DAY = 5
 
 LEAGUES = {
-    "basketball_nba": "NBA",
-    "icehockey_nhl": "NHL",
-    "soccer_epl": "EPL",
-    "soccer_germany_bundesliga": "Bundesliga",
-    "soccer_italy_serie_a": "Serie A"
-}
-
-LEAGUE_FLAGS = {
-    "basketball_nba": "🏀🇺🇸",
-    "icehockey_nhl": "🏒🇨🇦",
-    "soccer_epl": "⚽🇬🇧",
-    "soccer_germany_bundesliga": "⚽🇩🇪",
-    "soccer_italy_serie_a": "⚽🇮🇹"
+    "basketball_nba": "🏀 NBA",
+    "icehockey_nhl": "🏒 NHL",
+    "soccer_epl": "⚽ EPL",
+    "soccer_germany_bundesliga": "⚽ Bundesliga",
+    "soccer_italy_serie_a": "⚽ Serie A"
 }
 
 EDGE_MULTIPLIER = {
@@ -77,7 +69,7 @@ def save_bankroll(val):
 def send_msg(txt,target="types"):
     chat = T_CHAT_RESULTS if target=="results" else T_CHAT
     if not T_TOKEN or not chat:
-        print(txt)
+        print("[DEBUG] Telegram skipped:\n",txt)
         return
     try:
         requests.post(
@@ -85,8 +77,8 @@ def send_msg(txt,target="types"):
             json={"chat_id":chat,"text":txt,"parse_mode":"HTML"},
             timeout=10
         )
-    except:
-        pass
+    except Exception as e:
+        print(f"[DEBUG] Telegram error: {e}")
 
 def calc_kelly(bankroll,odds,edge,kelly_frac,max_pct):
     if edge<=0 or odds<=1: return 0.0
@@ -115,7 +107,6 @@ def run():
     daily_bets=0
 
     for league_key, league_name in LEAGUES.items():
-        flag = LEAGUE_FLAGS.get(league_key, "")
         for key in API_KEYS:
             try:
                 r=requests.get(
@@ -171,7 +162,7 @@ def run():
                         })
 
                         send_msg(
-                            f"{flag} VALUE BET • {league_name}\n"
+                            f"⚔️ VALUE BET • {league_name}\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
                             f"🎯 {sel}\n"
                             f"📈 {o}\n"
@@ -184,11 +175,12 @@ def run():
                         if daily_bets>=MAX_BETS_PER_DAY: break
                     if daily_bets>=MAX_BETS_PER_DAY: break
                 break
-            except:
+            except Exception as e:
+                print(f"[DEBUG] API error: {e}")
                 continue
 
     save_json(COUPONS_FILE,coupons)
-    print(f"Bankroll końcowy: {bankroll:.2f} PLN")
+    print(f"[DEBUG] Bankroll końcowy: {bankroll:.2f} PLN")
 
 if __name__=="__main__":
     run()
