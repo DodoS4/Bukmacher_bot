@@ -150,7 +150,7 @@
         "odds": 3.55,
         "stake": 0.02,
         "league": "icehockey_nhl",
-        "status": "pending",
+        "status": "lost",
         "win_val": 0,
         "sent_date": "2026-01-09",
         "type": "value"
