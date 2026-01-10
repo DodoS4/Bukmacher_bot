@@ -1,1 +1,50 @@
-[]
+[
+  {
+    "league": "soccer_germany_bundesliga",
+    "league_name": "\u26bd Bundesliga",
+    "home": "VfB Stuttgart",
+    "away": "Eintracht Frankfurt",
+    "pick": "VfB Stuttgart",
+    "odds": 1.89,
+    "stake": 323.36,
+    "possible_win": 611.15,
+    "status": "pending",
+    "date_time": "2026-01-13T17:30:00+00:00"
+  },
+  {
+    "league": "soccer_germany_bundesliga",
+    "league_name": "\u26bd Bundesliga",
+    "home": "FSV Mainz 05",
+    "away": "1. FC Heidenheim",
+    "pick": "FSV Mainz 05",
+    "odds": 1.71,
+    "stake": 307.19,
+    "possible_win": 525.29,
+    "status": "pending",
+    "date_time": "2026-01-13T19:30:00+00:00"
+  },
+  {
+    "league": "soccer_italy_serie_a",
+    "league_name": "\u26bd Serie A",
+    "home": "Genoa",
+    "away": "Cagliari",
+    "pick": "Genoa",
+    "odds": 2.18,
+    "stake": 245.36,
+    "possible_win": 534.88,
+    "status": "pending",
+    "date_time": "2026-01-12T17:30:00+00:00"
+  },
+  {
+    "league": "soccer_spain_la_liga",
+    "league_name": "\u26bd La Liga",
+    "home": "Levante",
+    "away": "Espanyol",
+    "pick": "Espanyol",
+    "odds": 2.45,
+    "stake": 255.34,
+    "possible_win": 625.58,
+    "status": "pending",
+    "date_time": "2026-01-11T15:15:00+00:00"
+  }
+]
