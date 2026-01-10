@@ -7,7 +7,6 @@ BANKROLL_FILE = "bankroll.json"
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
-# Pełna lista lig spójna z start.py
 LEAGUE_FLAGS = {
     "basketball_nba": "🏀 NBA",
     "icehockey_nhl": "🏒 NHL",
@@ -55,8 +54,11 @@ def generate_report(period_days=1, title="DAILY REPORT"):
     pending_count = 0
     
     for c in coupons:
-        dt_str = c["date_time"].replace("Z", "+00:00")
+        # Używamy added_at (data wysłania typu) lub date_time jako zapas
+        dt_raw = c.get("added_at", c["date_time"])
+        dt_str = dt_raw.replace("Z", "+00:00")
         dt = datetime.fromisoformat(dt_str)
+        
         if dt >= start_period:
             period_coupons.append(c)
             if c["status"].upper() == "PENDING":
