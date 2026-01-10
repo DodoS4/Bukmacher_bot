@@ -214,5 +214,65 @@
         "win_val": 0,
         "sent_date": "2026-01-10",
         "type": "value"
+    },
+    {
+        "home": "Nashville Predators",
+        "away": "Washington Capitals",
+        "picked": "Washington Capitals",
+        "odds": 2.31,
+        "stake": 10.74,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-10",
+        "type": "value"
+    },
+    {
+        "home": "Winnipeg Jets",
+        "away": "New Jersey Devils",
+        "picked": "Winnipeg Jets",
+        "odds": 2.52,
+        "stake": 8.43,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-10",
+        "type": "value"
+    },
+    {
+        "home": "Boston Bruins",
+        "away": "Pittsburgh Penguins",
+        "picked": "Boston Bruins",
+        "odds": 2.46,
+        "stake": 8.4,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-10",
+        "type": "value"
+    },
+    {
+        "home": "Utah Mammoth",
+        "away": "Columbus Blue Jackets",
+        "picked": "Columbus Blue Jackets",
+        "odds": 3.17,
+        "stake": 4.29,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-10",
+        "type": "value"
+    },
+    {
+        "home": "San Jose Sharks",
+        "away": "Vegas Golden Knights",
+        "picked": "San Jose Sharks",
+        "odds": 3.15,
+        "stake": 4.14,
+        "league": "icehockey_nhl",
+        "status": "pending",
+        "win_val": 0,
+        "sent_date": "2026-01-10",
+        "type": "value"
     }
 ]
