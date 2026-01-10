@@ -122,7 +122,10 @@ def daily_report():
     
     msg = f"📊 <b>DAILY REPORT • {now.date()}</b>\n💰 Bankroll: {round(bankroll,2)} PLN\n\n"
     for c in coupons:
-        msg += f"{c.get('league','')} | {c.get('home','')} vs {c.get('away','')} | {c.get('pick','')} | {c.get('status','')}\n"
+        match_dt = c.get("commence_time", "unknown")
+        msg += (f"{c.get('league','')} | {c.get('home','')} vs {c.get('away','')} | "
+                f"{c.get('pick','')} | Kurs: {c.get('odds',0)} | Stawka: {c.get('stake',0):.2f} PLN | "
+                f"Data i godzina: {match_dt} | Status: {c.get('status','')}\n")
     print("[DEBUG] Daily report:\n", msg)
     send_msg(msg, target="results")
 
@@ -153,7 +156,8 @@ def league_profit_report():
         profit = data["profit"]
         hit_rate = (won / total * 100) if total > 0 else 0.0
         emoji = "🔥" if profit > 0 else "❌"
-        msg += f"{emoji} {league} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {hit_rate:.1f}% | Zysk/Strata: {profit:.2f} PLN\n"
+        msg += (f"{emoji} {league} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | "
+                f"Hit rate: {hit_rate:.1f}% | Zysk/Strata: {profit:.2f} PLN\n")
     
     print("[DEBUG] League profit report:\n", msg)
     send_msg(msg, target="results")
@@ -235,16 +239,17 @@ def run():
                             "pick": sel,
                             "odds": o,
                             "stake": stake,
-                            "status": "pending"
+                            "status": "pending",
+                            "commence_time": dt.strftime("%Y-%m-%d %H:%M UTC")
                         })
 
                         send_msg(
                             f"{mode_icon} <b>VALUE BET</b>\n"
-                            f"{e['home_team']} vs {e['away_team']}\n"
+                            f"{e['home_team']} vs {e['away_team']} • {dt.strftime('%Y-%m-%d %H:%M UTC')}\n"
                             f"🎯 {sel}\n"
-                            f"📈 {o}\n"
+                            f"📈 Kurs: {o}\n"
                             f"💎 Edge: {round(edge*100,2)}%\n"
-                            f"💰 {stake} PLN"
+                            f"💰 Stawka: {stake:.2f} PLN"
                         )
 
                         daily_bets += 1
@@ -292,7 +297,7 @@ def check_results():
                         send_msg(f"✅ WYGRANA {c['home']} vs {c['away']} | +{round(profit,2)} PLN", "results")
                     else:
                         c["status"] = "lost"
-                        send_msg(f"❌ PRZEGRANA {c['home']} vs {c['away']} | -{c['stake']} PLN", "results")
+                        send_msg(f"❌ PRZEGRANA {c['home']} vs {c['away']} | -{c['stake']:.2f} PLN", "results")
 
                     save_bankroll(bankroll)
                 break
