@@ -7,7 +7,7 @@ from dateutil import parser
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 TAX_PL = 0.88
-MAX_DAILY_BETS = 15  # <--- LIMIT KUPONÓW NA 24H
+MAX_DAILY_BETS = 55  # <--- LIMIT KUPONÓW NA 24H
 
 API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3"),
