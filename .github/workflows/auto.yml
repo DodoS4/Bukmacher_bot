@@ -2,13 +2,9 @@ name: Bukmacher Bot Pro AKO
 
 on:
   schedule:
-    # Typy co 4h UTC
     - cron: '0 0,4,8,12,16,20 * * *'
-    # Raport dzienny o 07:00 UTC pon-sob
     - cron: '0 7 * * 1-6'
-    # Raport tygodniowy o 07:00 UTC w niedzielę
     - cron: '0 7 * * 0'
-    # Raport miesięczny o 07:00 UTC pierwszego dnia miesiąca
     - cron: '0 7 1 * *'
   workflow_dispatch:
 
@@ -68,6 +64,7 @@ jobs:
           else
               echo "⚔️ Uruchamianie bota z typami..."
               python start.py
+          fi   # <--- TO BYŁO BRAKUJĄCE
 
       - name: Zapisanie zmian w bazie danych
         run: |
