@@ -21,8 +21,8 @@ BANKROLL_FILE = "bankroll.json"
 COUPONS_FILE = "coupons.json"
 STATE_FILE = "state.json"
 
-MAX_HOURS_AHEAD = 72
-VALUE_THRESHOLD = 0.005
+MAX_HOURS_AHEAD = 48
+VALUE_THRESHOLD = 0.02
 ODDS_MIN = 1.5
 ODDS_MAX = 10.0
 MAX_BETS_PER_DAY = 5
@@ -41,6 +41,14 @@ EDGE_MULTIPLIER = {
     "soccer_epl": 0.70,
     "soccer_germany_bundesliga": 0.65,
     "soccer_italy_serie_a": 0.60
+}
+
+LEAGUE_FLAGS = {
+    "basketball_nba": "🏀 NBA",
+    "icehockey_nhl": "🏒 NHL",
+    "soccer_epl": "⚽ EPL",
+    "soccer_germany_bundesliga": "⚽ Bundesliga",
+    "soccer_italy_serie_a": "⚽ Serie A"
 }
 
 # ================= FILE UTILS =================
@@ -79,7 +87,7 @@ def save_state(state):
 def send_msg(txt, target="types"):
     chat = T_CHAT_RESULTS if target == "results" else T_CHAT
     if not T_TOKEN or not chat:
-        print(f"[DEBUG] Telegram skipped: {txt}")
+        print(f"[DEBUG] Telegram skipped:\n{txt}")
         return
     try:
         requests.post(
@@ -114,69 +122,70 @@ def consensus_odds(odds_list):
         return None
     return mx
 
-# ================= REPORT =================
-def daily_report():
-    """
-    Wysyła codzienny raport do Telegrama, nawet jeśli nie ma nowych typów.
-    """
+# ================= REPORT UTILS =================
+def generate_report(period_days=1, title="DAILY REPORT"):
     coupons = load_json(COUPONS_FILE, [])
     bankroll = load_bankroll()
     now = datetime.now(timezone.utc)
+    start_period = now - timedelta(days=period_days)
 
-    msg = f"📊 <b>DAILY REPORT • {now.date()}</b>\n💰 Bankroll: {round(bankroll,2)} PLN\n\n"
-
-    if not coupons:
-        msg += "Brak typów do raportu."
-        send_msg(msg, target="results")
-        print(msg)
-        return
-
-    leagues = defaultdict(lambda: {"won":0,"lost":0,"profit":0.0,"total":0, "coupons":[]})
-
-    # Grupowanie kuponów per liga
+    # filtrujemy po okresie
+    filtered = []
     for c in coupons:
-        league = c.get("league", "unknown")
-        leagues[league]["total"] += 1
-        leagues[league]["coupons"].append(c)
-        if c["status"] == "won":
-            leagues[league]["won"] += 1
-            leagues[league]["profit"] += c["stake"]*(c["odds"]-1)
-        elif c["status"] == "lost":
-            leagues[league]["lost"] += 1
-            leagues[league]["profit"] -= c["stake"]
+        dt_str = c.get("date_time")
+        if not dt_str:
+            continue
+        c_dt = parser.isoparse(dt_str)
+        if c_dt >= start_period:
+            filtered.append(c)
 
-    # Tworzenie raportu per ligę
+    leagues = defaultdict(lambda: {"won":0,"lost":0,"profit":0.0,"total":0})
+    for c in filtered:
+        league = c.get("league","unknown")
+        status = c.get("status","pending")
+        stake = c.get("stake",0)
+        odds = c.get("odds",0)
+        leagues[league]["total"] += 1
+        if status == "won":
+            leagues[league]["won"] += 1
+            leagues[league]["profit"] += stake*(odds-1)
+        elif status == "lost":
+            leagues[league]["lost"] += 1
+            leagues[league]["profit"] -= stake
+
+    msg = f"📊 {title} • {now.date()}\n💰 Bankroll: {round(bankroll,2)} PLN\n\n"
     for league, data in leagues.items():
+        flag = LEAGUE_FLAGS.get(league, league.upper())
         total = data["total"]
         won = data["won"]
         lost = data["lost"]
         profit = data["profit"]
-        hit_rate = (won/total*100) if total>0 else 0
-        blocks = int((hit_rate/100)*8)
-        trend = "🔥" if profit>0 else "❌"
-        league_name = league.upper()
-        # Emoji dla lig
-        if "nba" in league.lower():
-            league_name = "🏀 NBA"
-        elif "nhl" in league.lower():
-            league_name = "🏒 NHL"
-        elif "epl" in league.lower():
-            league_name = "⚽ EPL"
+        hit_rate = int((won/total)*100) if total>0 else 0
+        blocks = "█"*int(hit_rate/10) + "░"*(10-int(hit_rate/10))
+        emoji = "🔥" if profit>0 else "❌"
+        msg += f"{emoji} {flag} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {hit_rate}%\n{blocks} | Zysk/Strata: {profit:.2f} PLN\n\n"
 
-        msg += f"{trend} {league_name} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {int(hit_rate)}%\n"
-        msg += "█"*blocks + "░"*(8-blocks) + f" | Zysk/Strata: {profit:.2f} PLN\n\n"
+    # Najważniejsze mecze - top 5 z okresu
+    top5 = sorted(filtered, key=lambda x: x.get("stake",0), reverse=True)[:5]
+    if top5:
+        msg += "🏟️ Najważniejsze mecze:\n"
+        for c in top5:
+            status = "✅" if c.get("status")=="won" else "❌" if c.get("status")=="lost" else "⏳"
+            msg += f"\t• {c.get('home')} vs {c.get('away')} | Typ: {c.get('pick')} | Stawka: {round(c.get('stake',0))} PLN | {status}\n"
 
-    # Najważniejsze mecze dnia (ostatnie 5 kuponów)
-    msg += "🏟️ Najważniejsze mecze dnia:\n"
-    last_coupons = coupons[-5:] if len(coupons)>=5 else coupons
-    for c in last_coupons:
-        status_icon = "✅" if c["status"]=="won" else "❌" if c["status"]=="lost" else "⏳"
-        msg += f"\t• {c['home']} vs {c['away']} | Typ: {c['pick']} | Stawka: {c['stake']:.2f} PLN | {status_icon}\n"
-
-    print("[DEBUG] Daily report:\n", msg)
     send_msg(msg, target="results")
+    print("[DEBUG REPORT]\n", msg)
 
-# ================= RUN =================
+def daily_report():
+    generate_report(period_days=1, title="DAILY REPORT")
+
+def weekly_report():
+    generate_report(period_days=7, title="WEEKLY REPORT")
+
+def monthly_report():
+    generate_report(period_days=30, title="MONTHLY REPORT")
+
+# ================= RUN BOT =================
 def run():
     now = datetime.now(timezone.utc)
     bankroll = load_bankroll()
@@ -196,8 +205,6 @@ def run():
     mode_icon = "⚔️ AGGRESSIVE" if state["mode"]=="AGGRESSIVE" else "🔥 ULTRA"
 
     daily_bets = 0
-    total_events_checked = 0  # Nowy licznik meczów
-
     for league in LEAGUES:
         for key in API_KEYS:
             try:
@@ -208,9 +215,7 @@ def run():
                 )
                 if r.status_code != 200:
                     continue
-
                 for e in r.json():
-                    total_events_checked += 1
                     dt = parser.isoparse(e["commence_time"])
                     if not (now <= dt <= now + timedelta(hours=MAX_HOURS_AHEAD)):
                         continue
@@ -255,7 +260,8 @@ def run():
                             "pick": sel,
                             "odds": o,
                             "stake": stake,
-                            "status": "pending"
+                            "status": "pending",
+                            "date_time": e["commence_time"]
                         })
 
                         send_msg(
@@ -264,7 +270,7 @@ def run():
                             f"🎯 {sel}\n"
                             f"📈 {o}\n"
                             f"💎 Edge: {round(edge*100,2)}%\n"
-                            f"💰 {stake} PLN"
+                            f"💰 {round(stake,2)} PLN"
                         )
 
                         daily_bets += 1
@@ -274,14 +280,10 @@ def run():
                         break
                 break
             except Exception as e:
-                print(f"[DEBUG] Błąd API {league}: {e}")
                 continue
-
-    print(f"[DEBUG] Łącznie sprawdzonych meczów: {total_events_checked}")
     save_json(COUPONS_FILE, coupons)
-    daily_report()
 
-# ================= RESULTS =================
+# ================= CHECK RESULTS =================
 def check_results():
     bankroll = load_bankroll()
     coupons = load_json(COUPONS_FILE, [])
@@ -314,21 +316,30 @@ def check_results():
                         send_msg(f"✅ WYGRANA {c['home']} vs {c['away']} | +{round(profit,2)} PLN", "results")
                     else:
                         c["status"] = "lost"
-                        send_msg(f"❌ PRZEGRANA {c['home']} vs {c['away']} | -{c['stake']} PLN", "results")
+                        send_msg(f"❌ PRZEGRANA {c['home']} vs {c['away']} | -{round(c['stake'],2)} PLN", "results")
 
                     save_bankroll(bankroll)
                 break
             except:
                 continue
-
     save_json(COUPONS_FILE, coupons)
-    daily_report()
 
 # ================= MAIN =================
 if __name__ == "__main__":
     if "--results" in sys.argv:
         check_results()
     elif "--report" in sys.argv:
-        daily_report()
+        if len(sys.argv) > 2:
+            period = sys.argv[2]
+            if period == "daily":
+                daily_report()
+            elif period == "weekly":
+                weekly_report()
+            elif period == "monthly":
+                monthly_report()
+            else:
+                daily_report()
+        else:
+            daily_report()
     else:
         run()
