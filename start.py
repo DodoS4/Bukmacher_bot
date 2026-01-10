@@ -114,66 +114,47 @@ def consensus_odds(odds_list):
         return None
     return mx
 
-# ================= REPORTS =================
-def daily_report():
-    """Raport dzienny z datą, kursem, stawką i statusem"""
+# ================= REPORT GENERATOR =================
+def generate_report(period_days=1, title="RAPORT"):
     coupons = load_json(COUPONS_FILE, [])
     bankroll = load_bankroll()
     now = datetime.now(timezone.utc)
 
-    msg = f"📊 <b>DAILY REPORT • {now.date()}</b>\n💰 Bankroll: {round(bankroll,2)} PLN\n\n"
+    filtered = []
     for c in coupons:
-        date_time_str = c.get("date_time")
-        if date_time_str:
-            try:
-                c_dt = datetime.fromisoformat(date_time_str.replace("Z","+00:00"))
-                date_str = c_dt.strftime("%Y-%m-%d %H:%M UTC")
-            except:
-                date_str = "Brak daty"
-        else:
-            date_str = "Brak daty"
+        dt_str = c.get("date_time")
+        if not dt_str:
+            continue
+        c_dt = datetime.fromisoformat(dt_str.replace("Z", "+00:00"))
+        if now - timedelta(days=period_days) <= c_dt <= now:
+            filtered.append(c)
 
-        msg += (f"{c.get('league','unknown')} | {c.get('home','')} vs {c.get('away','')} | "
-                f"{c.get('pick','')} | Kurs: {c.get('odds',0)} | Stawka: {c.get('stake',0):.2f} PLN | "
-                f"Data i godzina: {date_str} | Status: {c.get('status','pending')}\n")
+    report = f"📊 <b>{title}</b>\n💰 Bankroll: {bankroll:.2f} PLN\n\n"
+    leagues = defaultdict(lambda: {"won":0,"lost":0,"stake":0,"profit":0,"total":0})
+    for c in filtered:
+        league = c.get("league","unknown")
+        status = c.get("status","pending")
+        stake = c.get("stake",0)
+        odds = c.get("odds",0)
+        leagues[league]["total"] += 1
+        leagues[league]["stake"] += stake
+        if status=="won":
+            leagues[league]["won"] += 1
+            leagues[league]["profit"] += stake*(odds-1)
+        elif status=="lost":
+            leagues[league]["lost"] += 1
+            leagues[league]["profit"] -= stake
 
-    print(msg)
-    send_msg(msg, target="results")
+    for league, data in leagues.items():
+        total, won, lost, profit, stake = data["total"], data["won"], data["lost"], data["profit"], data["stake"]
+        hit_rate = int((won/total)*100) if total>0 else 0
+        # Pasek z 10 segmentami
+        bar_filled = int(hit_rate/10)
+        bar = "█"*bar_filled + "░"*(10-bar_filled)
+        emoji = "🔥" if profit>0 else "❌"
+        report += f"{emoji} {league} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {hit_rate}%\n{bar} | Zysk/Strata: {profit:.2f} PLN\n\n"
 
-def league_profit_report():
-    """Raport per liga z zyskami/stratami i wizualizacją hit rate"""
-    coupons = load_json(COUPONS_FILE, [])
-    report = {}
-
-    for c in coupons:
-        league = c.get("league", "unknown")
-        if league not in report:
-            report[league] = {"won":0,"lost":0,"profit":0.0,"total":0}
-        report[league]["total"] += 1
-
-        if c["status"] == "won":
-            profit = c["stake"] * (c["odds"] - 1)
-            report[league]["won"] += 1
-            report[league]["profit"] += profit
-        elif c["status"] == "lost":
-            report[league]["lost"] += 1
-            report[league]["profit"] -= c["stake"]
-
-    msg = "📊 <b>RAPORT PER LIGA</b>\n"
-    for league, data in report.items():
-        total = data["total"]
-        won = data["won"]
-        lost = data["lost"]
-        profit = data["profit"]
-        hit_rate = (won / total * 100) if total > 0 else 0.0
-        blocks = int(hit_rate / 10)
-        bar = "█"*blocks + "░"*(10-blocks)
-        emoji = "🔥" if profit > 0 else "❌"
-        msg += (f"\n{emoji} {league} | Typy: {total} | Wygrane: {won} | Przegrane: {lost} | Hit rate: {hit_rate:.0f}%\n"
-                f"{bar} | Zysk/Strata: {profit:.2f} PLN\n")
-
-    print(msg)
-    send_msg(msg, target="results")
+    send_msg(report, target="results")
 
 # ================= RUN =================
 def run():
@@ -182,13 +163,12 @@ def run():
     coupons = load_json(COUPONS_FILE, [])
     state = load_state()
 
-    # tryb agresywny lub ultra
     if bankroll > state["ath"]:
         state["ath"] = bankroll
     if bankroll >= START_BANKROLL * 1.5:
         state["mode"] = "ULTRA"
-    if state["mode"] == "ULTRA" and bankroll < state["ath"] * 0.8:
-        state["mode"] = "AGGRESSIVE"
+    if state["mode"]=="ULTRA" and bankroll < state["ath"]*0.8:
+        state["mode"]="AGGRESSIVE"
     save_state(state)
 
     KELLY = 0.5 if state["mode"]=="AGGRESSIVE" else 0.75
@@ -226,22 +206,18 @@ def run():
                         if val and ODDS_MIN <= val <= ODDS_MAX:
                             odds[name] = val
 
-                    if len(odds) < 2:
-                        continue
+                    if len(odds)<2: continue
 
                     probs = no_vig_probs(odds)
                     for sel, prob in probs.items():
                         o = odds[sel]
-                        edge = (prob - 1/o) * EDGE_MULTIPLIER.get(league, 1)
-                        if edge < VALUE_THRESHOLD:
-                            continue
-
+                        edge = (prob - 1/o) * EDGE_MULTIPLIER.get(league,1)
+                        if edge < VALUE_THRESHOLD: continue
                         if any(c["home"]==e["home_team"] and c["away"]==e["away_team"] and c["status"]=="pending" for c in coupons):
                             continue
 
                         stake = calc_kelly(bankroll, o, edge, KELLY, MAX_PCT)
-                        if stake <= 0 or bankroll < stake:
-                            continue
+                        if stake<=0 or bankroll<stake: continue
 
                         bankroll -= stake
                         save_bankroll(bankroll)
@@ -254,30 +230,29 @@ def run():
                             "odds": o,
                             "stake": stake,
                             "status": "pending",
-                            "date_time": e.get("commence_time")
+                            "date_time": e["commence_time"]
                         })
 
                         send_msg(
                             f"{mode_icon} <b>VALUE BET</b>\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
                             f"🎯 {sel}\n"
-                            f"📈 {o}\n"
+                            f"📈 Kurs: {o}\n"
                             f"💎 Edge: {round(edge*100,2)}%\n"
-                            f"💰 {stake} PLN\n"
-                            f"🕒 Data i godzina: {e.get('commence_time','Brak')}"
+                            f"💰 Stawka: {stake} PLN\n"
+                            f"🕒 Data i godzina: {e['commence_time']}"
                         )
 
                         daily_bets += 1
-                        if daily_bets >= MAX_BETS_PER_DAY:
+                        if daily_bets>=MAX_BETS_PER_DAY:
                             break
-                    if daily_bets >= MAX_BETS_PER_DAY:
+                    if daily_bets>=MAX_BETS_PER_DAY:
                         break
                 break
-            except Exception as e:
+            except:
                 continue
 
     save_json(COUPONS_FILE, coupons)
-    daily_report()
 
 # ================= RESULTS =================
 def check_results():
@@ -285,33 +260,31 @@ def check_results():
     coupons = load_json(COUPONS_FILE, [])
 
     for c in coupons:
-        if c["status"] != "pending":
-            continue
+        if c["status"] != "pending": continue
 
         for key in API_KEYS:
             try:
                 r = requests.get(
                     f"https://api.the-odds-api.com/v4/sports/{c['league']}/scores",
-                    params={"apiKey": key, "daysFrom": 3},
+                    params={"apiKey": key, "daysFrom":3},
                     timeout=10
                 )
-                if r.status_code != 200:
-                    continue
+                if r.status_code != 200: continue
 
                 for m in r.json():
                     if not m.get("completed"): continue
                     if m["home_team"] != c["home"] or m["away_team"] != c["away"]: continue
 
-                    scores = {s["name"]: int(s["score"]) for s in m.get("scores", [])}
-                    winner = c["home"] if scores[c["home"]] > scores[c["away"]] else c["away"]
+                    scores = {s["name"]: int(s["score"]) for s in m.get("scores",[])}
+                    winner = c["home"] if scores[c["home"]]>scores[c["away"]] else c["away"]
 
                     if winner == c["pick"]:
-                        profit = c["stake"] * (c["odds"] - 1)
+                        profit = c["stake"]*(c["odds"]-1)
                         bankroll += profit
                         c["status"] = "won"
                         send_msg(f"✅ WYGRANA {c['home']} vs {c['away']} | +{round(profit,2)} PLN", "results")
                     else:
-                        c["status"] = "lost"
+                        c["status"]="lost"
                         send_msg(f"❌ PRZEGRANA {c['home']} vs {c['away']} | -{c['stake']} PLN", "results")
 
                     save_bankroll(bankroll)
@@ -319,15 +292,26 @@ def check_results():
             except:
                 continue
 
-    save_json(COUPONS_FILE, coupons)
-    league_profit_report()
+    # Raport po wynikach
+    generate_report(period_days=30, title="RAPORT MIESIĘCZNY")  # Przykładowo 30 dni
 
 # ================= MAIN =================
-if __name__ == "__main__":
+if __name__=="__main__":
     if "--results" in sys.argv:
         check_results()
     elif "--report" in sys.argv:
-        daily_report()
-        league_profit_report()
+        # Można podać daily, weekly, monthly
+        if len(sys.argv)>2:
+            period = sys.argv[2].lower()
+            if period=="daily":
+                generate_report(period_days=1, title="RAPORT DZIENNY")
+            elif period=="weekly":
+                generate_report(period_days=7, title="RAPORT TYGODNIOWY")
+            elif period=="monthly":
+                generate_report(period_days=30, title="RAPORT MIESIĘCZNY")
+            else:
+                generate_report()
+        else:
+            generate_report()
     else:
         run()
