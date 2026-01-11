@@ -3,36 +3,31 @@ from datetime import datetime, timezone, timedelta
 from collections import defaultdict
 from dateutil import parser
 
-# CONFIG
+# ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 TAX_PL = 0.88 
-MIN_EDGE = 0.015 # 1.5% przewagi po podatku
+MIN_EDGE = 0.015  # 1.5% przewagi po podatku
+STAWKA = 100      # Kwota w zł na jeden zakład
 
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in API_KEYS if k]
 
-# ROZSZERZONA LISTA LIG (Skupienie na wysokiej zmienności)
 LEAGUES = {
-    # ESPORT (Największe błędy kursowe)
+    # ESPORT
     "esports_csgo_blast_premier": "🎮 CS:GO BLAST",
     "esports_csgo_esl_pro_league": "🎮 CS:GO ESL Pro",
-    "esports_league_of_legends_lck": "🎮 LoL LCK (Korea)",
-    "esports_league_of_legends_lpl": "🎮 LoL LPL (Chiny)",
-    "esports_league_of_legends_lec": "🎮 LoL LEC (Europa)",
-    "esports_dota2_china_pro_league": "🎮 Dota 2 China",
+    "esports_league_of_legends_lck": "🎮 LoL LCK",
+    "esports_league_of_legends_lpl": "🎮 LoL LPL",
+    "esports_league_of_legends_lec": "🎮 LoL LEC",
     "esports_valorant_champions_tour": "🎮 Valorant VCT",
-    
-    # TENIS (Dynamiczne h2h)
+    # TENIS
     "tennis_atp_australian_open": "🎾 ATP Australian Open",
     "tennis_wta_australian_open": "🎾 WTA Australian Open",
     "tennis_atp_french_open": "🎾 ATP Roland Garros",
-    "tennis_wta_french_open": "🎾 WTA Roland Garros",
-    
-    # KOSZYKÓWKA (Rynki 2-way)
+    # KOSZYKÓWKA
     "basketball_nba": "🏀 NBA",
-    "basketball_euroleague": "🏀 Euroleague",
-    "basketball_ncaab": "🏀 NCAA"
+    "basketball_euroleague": "🏀 Euroleague"
 }
 
 COUPONS_FILE = "coupons.json"
@@ -59,7 +54,7 @@ def fetch_odds(league_key):
     return None
 
 def run_scanner():
-    print(f"🔍 SKAN EKSTREMALNY: {datetime.now().strftime('%H:%M:%S')}")
+    print(f"🔍 SKAN START: {datetime.now().strftime('%H:%M:%S')}")
     coupons = load_json(COUPONS_FILE, [])
     now = datetime.now(timezone.utc)
     existing_ids = {f"{c.get('home')}_{c.get('pick')}" for c in coupons}
@@ -71,14 +66,13 @@ def run_scanner():
         
         for e in events:
             home, away, dt = e['home_team'], e['away_team'], parser.isoparse(e["commence_time"])
-            if not (now <= dt <= now + timedelta(hours=96)): continue # Patrzymy 4 dni w przód
+            if not (now <= dt <= now + timedelta(hours=96)): continue
             
             odds_map = defaultdict(list)
             for bm in e["bookmakers"]:
                 for m in bm["markets"]:
                     for o in m["outcomes"]: odds_map[o["name"]].append(o["price"])
             
-            # Kluczowe dla Esportu/Tenisa: tylko 2 możliwe wyniki
             best_odds = {n: max(l) for n, l in odds_map.items() if len(l) >= 2}
             if len(best_odds) != 2: continue 
             
@@ -90,13 +84,18 @@ def run_scanner():
                 edge = (prob - 1/(o * TAX_PL))
                 
                 if edge >= MIN_EDGE and f"{home}_{sel}" not in existing_ids:
-                    msg = (f"🎮 <b>DYNAMICZNA OKAZJA ({l_name})</b>\n━━━━━━━━━━━━━━━━━━━━\n"
-                           f"⚔️ <b>{home} vs {away}</b>\n\n"
-                           f"🔸 Typ: <b>{sel}</b>\n🔹 Kurs: <b>{o}</b>\n"
-                           f"📈 Realny Edge: <b>+{edge*100:.1f}%</b>\n💰 Stawka: <b>100j</b>\n"
-                           f"━━━━━━━━━━━━━━━━━━━━\n<i>Pamiętaj o podatku 12%!</i>")
+                    # Czas PL
+                    local_dt = dt.astimezone(timezone(timedelta(hours=1)))
+                    date_str = local_dt.strftime("%d.%m o %H:%M")
+
+                    msg = (f"🎯 <b>PROPOZYCJA 2-WAY ({l_name})</b>\n━━━━━━━━━━━━━━━━━━━━\n"
+                           f"🏟 <b>{home} vs {away}</b>\n"
+                           f"⏰ Start: <b>{date_str}</b>\n\n"
+                           f"🔸 Typ: <b>{sel}</b>\n🔹 Kurs: <b>{o}</b> (netto: {round(o*0.88, 2)})\n"
+                           f"📈 Edge: <b>+{edge*100:.1f}%</b>\n💰 Stawka: <b>{STAWKA} zł</b>\n"
+                           f"━━━━━━━━━━━━━━━━━━━━")
                     send_msg(msg)
-                    coupons.append({"home": home, "away": away, "pick": sel, "odds": o, "stake": 100.0, "status": "PENDING", "league_key": l_key, "league_name": l_name, "date": dt.isoformat(), "edge": round(edge*100, 2)})
+                    coupons.append({"home": home, "away": away, "pick": sel, "odds": o, "stake": float(STAWKA), "status": "PENDING", "league_key": l_key, "league_name": l_name, "date": dt.isoformat(), "edge": round(edge*100, 2)})
     
     save_json(COUPONS_FILE, coupons)
     print("🏁 Skan zakończony.")
