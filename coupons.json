@@ -102,5 +102,44 @@
     "date_time": "2026-01-11T21:30:00+00:00",
     "added_at": "2026-01-11T09:24:16.185878+00:00",
     "edge": 1.98
+  },
+  {
+    "league": "basketball_nba",
+    "home": "Phoenix Suns",
+    "away": "Washington Wizards",
+    "pick": "Phoenix Suns",
+    "odds": 1.16,
+    "stake": 100.0,
+    "possible_win": 116.0,
+    "status": "PENDING",
+    "date_time": "2026-01-12T01:10:00+00:00",
+    "added_at": "2026-01-11T09:45:21.064038+00:00",
+    "edge": 1.4
+  },
+  {
+    "league": "soccer_italy_serie_a",
+    "home": "Juventus",
+    "away": "Cremonese",
+    "pick": "Juventus",
+    "odds": 1.29,
+    "stake": 100.0,
+    "possible_win": 129.0,
+    "status": "PENDING",
+    "date_time": "2026-01-12T19:45:00+00:00",
+    "added_at": "2026-01-11T09:45:21.064038+00:00",
+    "edge": 1.54
+  },
+  {
+    "league": "americanfootball_nfl",
+    "home": "Philadelphia Eagles",
+    "away": "San Francisco 49ers",
+    "pick": "Philadelphia Eagles",
+    "odds": 1.44,
+    "stake": 100.0,
+    "possible_win": 144.0,
+    "status": "PENDING",
+    "date_time": "2026-01-11T21:30:00+00:00",
+    "added_at": "2026-01-11T09:45:21.064038+00:00",
+    "edge": 1.98
   }
 ]
