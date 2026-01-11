@@ -6,7 +6,7 @@ from dateutil import parser
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
-TAX_PL = 0.88
+TAX_PL = 0.88  # Współczynnik po 12% podatku
 
 API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3"),
@@ -55,6 +55,9 @@ def run():
     bank_data = load_json(BANKROLL_FILE, {"bankroll": START_BANKROLL})
     bankroll = bank_data["bankroll"]
     
+    # Blokada sesji - zapobiega duplikatom w jednym uruchomieniu bota
+    processed_in_this_run = set()
+
     for l_key, l_name in LEAGUES.items():
         if only_usa and l_key not in USA_LEAGUES: continue
         print(f"\n[ANALIZA] {l_name}")
@@ -67,7 +70,10 @@ def run():
                 
                 events = r.json()
                 for e in events:
+                    match_id = f"{e['home_team']}_{e['away_team']}"
                     dt = parser.isoparse(e["commence_time"])
+                    
+                    # Skanujemy tylko mecze w oknie 72h
                     if not (now <= dt <= now + timedelta(hours=72)): continue
                     
                     odds_map = defaultdict(list)
@@ -80,34 +86,40 @@ def run():
                     
                     probs = no_vig_probs(odds)
                     for sel, prob in probs.items():
+                        # OCHRONA PRZED DUPLIKATAMI
+                        if (match_id, sel) in processed_in_this_run: continue
+                        if any(c["home"] == e["home_team"] and c["pick"] == sel for c in coupons): continue
+                        
                         o = odds[sel]
-                        # Edge obliczony z podatkiem
                         edge_val = (prob - 1/(o * TAX_PL))
                         thr = 0.005 if l_key in USA_LEAGUES else 0.02
                         
-                        print(f"  > {e['home_team']} - {sel}: Edge {round(edge_val*100,2)}% (Wymagane: {round(thr*100,2)}%)")
-                        
                         if edge_val < thr: continue
-                        if any(c["home"] == e["home_team"] and c["pick"] == sel for c in coupons): continue
                         
-                        # Parametry stawki
+                        # Obliczanie stawki
                         stake = round(min(bankroll * 0.02, 100), 2)
                         if stake < 10: stake = 10.0
                         
                         win = round(stake * o * TAX_PL, 2)
-                        formatted_date = dt.strftime("%m-%d %H:%M")
                         
-                        # DODANIE POLA EDGE DO JSONA
-                        coupons.append({
+                        # Tworzenie kuponu
+                        new_coupon = {
                             "league": l_key, "home": e["home_team"], "away": e["away_team"], 
                             "pick": sel, "odds": o, "stake": stake, "possible_win": win, 
                             "status": "PENDING", "date_time": dt.isoformat(),
                             "added_at": now.isoformat(),
-                            "edge": round(edge_val * 100, 2) # Zapisujemy jako % (np. 13.24)
-                        })
+                            "edge": round(edge_val * 100, 2)
+                        }
+                        
+                        coupons.append(new_coupon)
+                        processed_in_this_run.add((match_id, sel))
                         bankroll -= stake
                         
-                        # WIADOMOŚĆ TELEGRAM
+                        # NATYCHMIASTOWY ZAPIS (Kluczowe dla uniknięcia powtórek)
+                        save_json(COUPONS_FILE, coupons)
+                        save_json(BANKROLL_FILE, {"bankroll": round(bankroll, 2)})
+                        
+                        # WYSYŁKA TELEGRAM
                         msg = (
                             f"⚔️ <b>VALUE BET • {l_name}</b>\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
@@ -116,16 +128,14 @@ def run():
                             f"💎 Edge: <b>{round(edge_val*100, 2)}%</b>\n"
                             f"💵 Stawka: <b>{stake} PLN</b>\n"
                             f"💰 Ewentualna wygrana: <b>{win} PLN</b>\n"
-                            f"🗓️ {formatted_date} UTC"
+                            f"🗓️ {dt.strftime('%m-%d %H:%M')} UTC"
                         )
                         send_msg(msg)
+                        print(f"  [OK] Wysłano: {match_id} - {sel}")
                 break
             except Exception as ex: 
                 print(f"Błąd API: {ex}")
                 continue
             
-    save_json(COUPONS_FILE, coupons)
-    save_json(BANKROLL_FILE, {"bankroll": round(bankroll, 2)})
-
 if __name__ == "__main__":
     run()
