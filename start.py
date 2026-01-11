@@ -49,19 +49,20 @@ def no_vig_probs(odds):
     return {k: v/s for k, v in inv.items()}
 
 def run():
+    print(f">>> START ANALIZY: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} <<<")
     only_usa = "--usa-only" in sys.argv
     now = datetime.now(timezone.utc)
     coupons = load_json(COUPONS_FILE, [])
     bank_data = load_json(BANKROLL_FILE, {"bankroll": START_BANKROLL})
     bankroll = bank_data["bankroll"]
     
-    # Blokada sesji - zapobiega duplikatom w jednym uruchomieniu bota
     processed_in_this_run = set()
 
     for l_key, l_name in LEAGUES.items():
         if only_usa and l_key not in USA_LEAGUES: continue
-        print(f"\n[ANALIZA] {l_name}")
+        print(f"\n[LIGA] {l_name}")
         
+        found_data = False
         for key in API_KEYS:
             try:
                 r = requests.get(f"https://api.the-odds-api.com/v4/sports/{l_key}/odds",
@@ -69,11 +70,11 @@ def run():
                 if r.status_code != 200: continue
                 
                 events = r.json()
+                found_data = True
                 for e in events:
-                    match_id = f"{e['home_team']}_{e['away_team']}"
+                    match_id = f"{e['home_team']} vs {e['away_team']}"
                     dt = parser.isoparse(e["commence_time"])
                     
-                    # Skanujemy tylko mecze w oknie 72h
                     if not (now <= dt <= now + timedelta(hours=72)): continue
                     
                     odds_map = defaultdict(list)
@@ -85,24 +86,32 @@ def run():
                     if len(odds) < 2: continue
                     
                     probs = no_vig_probs(odds)
+                    print(f"  Checking: {match_id}")
+                    
                     for sel, prob in probs.items():
-                        # OCHRONA PRZED DUPLIKATAMI
-                        if (match_id, sel) in processed_in_this_run: continue
-                        if any(c["home"] == e["home_team"] and c["pick"] == sel for c in coupons): continue
-                        
                         o = odds[sel]
+                        # Obliczanie Edge z uwzględnieniem podatku
                         edge_val = (prob - 1/(o * TAX_PL))
                         thr = 0.005 if l_key in USA_LEAGUES else 0.02
                         
+                        # LOGOWANIE KAŻDEGO SPRAWDZENIA
+                        status_icon = "💎" if edge_val >= thr else "❌"
+                        print(f"    {status_icon} {sel[:15]:<15} | Kurs: {o:<5} | Edge: {round(edge_val*100, 2):>6}% (Próg: {round(thr*100, 1)}%)")
+
                         if edge_val < thr: continue
                         
-                        # Obliczanie stawki
+                        # Filtry duplikatów
+                        if (match_id, sel) in processed_in_this_run: continue
+                        if any(c["home"] == e["home_team"] and c["pick"] == sel and c["status"] == "PENDING" for c in coupons):
+                            print(f"    [!] Pominięto: Zakład już oczekuje w bazie.")
+                            continue
+                        
+                        # Logika stawkowania
                         stake = round(min(bankroll * 0.02, 100), 2)
                         if stake < 10: stake = 10.0
-                        
                         win = round(stake * o * TAX_PL, 2)
                         
-                        # Tworzenie kuponu
+                        # Zapis i wysyłka
                         new_coupon = {
                             "league": l_key, "home": e["home_team"], "away": e["away_team"], 
                             "pick": sel, "odds": o, "stake": stake, "possible_win": win, 
@@ -115,11 +124,9 @@ def run():
                         processed_in_this_run.add((match_id, sel))
                         bankroll -= stake
                         
-                        # NATYCHMIASTOWY ZAPIS (Kluczowe dla uniknięcia powtórek)
                         save_json(COUPONS_FILE, coupons)
                         save_json(BANKROLL_FILE, {"bankroll": round(bankroll, 2)})
                         
-                        # WYSYŁKA TELEGRAM
                         msg = (
                             f"⚔️ <b>VALUE BET • {l_name}</b>\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
@@ -131,11 +138,17 @@ def run():
                             f"🗓️ {dt.strftime('%m-%d %H:%M')} UTC"
                         )
                         send_msg(msg)
-                        print(f"  [OK] Wysłano: {match_id} - {sel}")
-                break
+                        print(f"    [>>>] WYSŁANO NA TELEGRAM!")
+
+                break # Jeśli klucz zadziałał, nie sprawdzaj kolejnych dla tej ligi
             except Exception as ex: 
-                print(f"Błąd API: {ex}")
+                print(f"  [BŁĄD API] Klucz {key[:5]}...: {ex}")
                 continue
-            
+        
+        if not found_data:
+            print(f"  [!] Brak danych dla {l_name} (sprawdź limity API)")
+
+    print(f"\n>>> KONIEC ANALIZY. Bankroll: {round(bankroll, 2)} PLN <<<")
+
 if __name__ == "__main__":
     run()
