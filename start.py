@@ -3,10 +3,10 @@ from datetime import datetime, timezone, timedelta
 from collections import defaultdict
 from dateutil import parser
 
-# ================= CONFIG =================
+# ================= CONFIG (TEST BEZ PODATKU) =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
-TAX_PL = 0.88  # Współczynnik po 12% podatku
+TAX_PL = 1.0  # USUNIĘTO PODATEK (1.0 = 100% wygranej trafia do kieszeni)
 
 API_KEYS = [k for k in [
     os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3"),
@@ -49,7 +49,7 @@ def no_vig_probs(odds):
     return {k: v/s for k, v in inv.items()}
 
 def run():
-    print(f">>> START ANALIZY: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} <<<")
+    print(f">>> TEST SKUTECZNOŚCI (TAX 0%) - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} <<<")
     only_usa = "--usa-only" in sys.argv
     now = datetime.now(timezone.utc)
     coupons = load_json(COUPONS_FILE, [])
@@ -86,36 +86,31 @@ def run():
                     if len(odds) < 2: continue
                     
                     probs = no_vig_probs(odds)
-                    print(f"  Checking: {match_id}")
                     
                     for sel, prob in probs.items():
                         o = odds[sel]
-                        edge_val = (prob - 1/(o * TAX_PL))
+                        # Obliczanie Edge bez podatku
+                        edge_val = (prob - 1/o)
                         
-                        # --- ZMIENIONO NA BARDZIEJ AGRESYWNE PROGI ---
-                        thr = 0.001 if l_key in USA_LEAGUES else 0.005
-                        # ---------------------------------------------
+                        # Progi dla testu (możesz wrócić do wyższych, np. 0.02)
+                        thr = 0.01 
                         
                         status_icon = "💎" if edge_val >= thr else "❌"
-                        print(f"    {status_icon} {sel[:15]:<15} | Kurs: {o:<5} | Edge: {round(edge_val*100, 2):>6}% (Próg: {round(thr*100, 2)}%)")
+                        if edge_val > -0.05: # Pokazuj tylko sensowne kursy w logach
+                             print(f"    {status_icon} {sel[:15]:<15} | Kurs: {o:<5} | Pure Edge: {round(edge_val*100, 2):>6}%")
 
                         if edge_val < thr: continue
                         
                         if (match_id, sel) in processed_in_this_run: continue
-                        if any(c["home"] == e["home_team"] and c["pick"] == sel and c["status"] == "PENDING" for c in coupons):
-                            print(f"    [!] Pominięto: Zakład już oczekuje w bazie.")
-                            continue
                         
-                        stake = round(min(bankroll * 0.02, 100), 2)
-                        if stake < 10: stake = 10.0
-                        win = round(stake * o * TAX_PL, 2)
+                        stake = 100.0 # Stała stawka do testów
+                        win = round(stake * o, 2)
                         
                         new_coupon = {
                             "league": l_key, "home": e["home_team"], "away": e["away_team"], 
                             "pick": sel, "odds": o, "stake": stake, "possible_win": win, 
                             "status": "PENDING", "date_time": dt.isoformat(),
-                            "added_at": now.isoformat(),
-                            "edge": round(edge_val * 100, 2)
+                            "added_at": now.isoformat(), "edge": round(edge_val * 100, 2)
                         }
                         
                         coupons.append(new_coupon)
@@ -126,27 +121,21 @@ def run():
                         save_json(BANKROLL_FILE, {"bankroll": round(bankroll, 2)})
                         
                         msg = (
-                            f"⚔️ <b>VALUE BET • {l_name}</b>\n"
+                            f"🧪 <b>TEST (NO TAX) • {l_name}</b>\n"
                             f"{e['home_team']} vs {e['away_team']}\n"
                             f"🎯 Typ: <b>{sel}</b>\n"
                             f"📈 Kurs: <b>{o}</b>\n"
-                            f"💎 Edge: <b>{round(edge_val*100, 2)}%</b>\n"
-                            f"💵 Stawka: <b>{stake} PLN</b>\n"
-                            f"💰 Ewentualna wygrana: <b>{win} PLN</b>\n"
+                            f"💎 Pure Edge: <b>{round(edge_val*100, 2)}%</b>\n"
                             f"🗓️ {dt.strftime('%m-%d %H:%M')} UTC"
                         )
                         send_msg(msg)
-                        print(f"    [>>>] WYSŁANO NA TELEGRAM!")
 
                 break 
             except Exception as ex: 
-                print(f"  [BŁĄD API] Klucz {key[:5]}...: {ex}")
+                print(f"  [BŁĄD API]: {ex}")
                 continue
         
-        if not found_data:
-            print(f"  [!] Brak danych dla {l_name}")
-
-    print(f"\n>>> KONIEC ANALIZY. Bankroll: {round(bankroll, 2)} PLN <<<")
+    print(f"\n>>> KONIEC ANALIZY. Symulowany Bankroll: {round(bankroll, 2)} PLN <<<")
 
 if __name__ == "__main__":
     run()
