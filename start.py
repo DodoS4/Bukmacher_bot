@@ -90,28 +90,26 @@ def run():
                     
                     for sel, prob in probs.items():
                         o = odds[sel]
-                        # Obliczanie Edge z uwzględnieniem podatku
                         edge_val = (prob - 1/(o * TAX_PL))
-                        thr = 0.005 if l_key in USA_LEAGUES else 0.02
                         
-                        # LOGOWANIE KAŻDEGO SPRAWDZENIA
+                        # --- ZMIENIONO NA BARDZIEJ AGRESYWNE PROGI ---
+                        thr = 0.001 if l_key in USA_LEAGUES else 0.005
+                        # ---------------------------------------------
+                        
                         status_icon = "💎" if edge_val >= thr else "❌"
-                        print(f"    {status_icon} {sel[:15]:<15} | Kurs: {o:<5} | Edge: {round(edge_val*100, 2):>6}% (Próg: {round(thr*100, 1)}%)")
+                        print(f"    {status_icon} {sel[:15]:<15} | Kurs: {o:<5} | Edge: {round(edge_val*100, 2):>6}% (Próg: {round(thr*100, 2)}%)")
 
                         if edge_val < thr: continue
                         
-                        # Filtry duplikatów
                         if (match_id, sel) in processed_in_this_run: continue
                         if any(c["home"] == e["home_team"] and c["pick"] == sel and c["status"] == "PENDING" for c in coupons):
                             print(f"    [!] Pominięto: Zakład już oczekuje w bazie.")
                             continue
                         
-                        # Logika stawkowania
                         stake = round(min(bankroll * 0.02, 100), 2)
                         if stake < 10: stake = 10.0
                         win = round(stake * o * TAX_PL, 2)
                         
-                        # Zapis i wysyłka
                         new_coupon = {
                             "league": l_key, "home": e["home_team"], "away": e["away_team"], 
                             "pick": sel, "odds": o, "stake": stake, "possible_win": win, 
@@ -140,13 +138,13 @@ def run():
                         send_msg(msg)
                         print(f"    [>>>] WYSŁANO NA TELEGRAM!")
 
-                break # Jeśli klucz zadziałał, nie sprawdzaj kolejnych dla tej ligi
+                break 
             except Exception as ex: 
                 print(f"  [BŁĄD API] Klucz {key[:5]}...: {ex}")
                 continue
         
         if not found_data:
-            print(f"  [!] Brak danych dla {l_name} (sprawdź limity API)")
+            print(f"  [!] Brak danych dla {l_name}")
 
     print(f"\n>>> KONIEC ANALIZY. Bankroll: {round(bankroll, 2)} PLN <<<")
 
