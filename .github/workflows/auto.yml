@@ -2,9 +2,11 @@ name: Bukmacher Bot Pro
 
 on:
   schedule:
+    # Uruchomienia co 3 godziny (oszczędność API)
     - cron: '0 0,3,6,9,12,15,18,21 * * *'
+    # Statystyki poranne
     - cron: '0 7 * * *'
-  workflow_dispatch:
+  workflow_dispatch: # Pozwala na ręczne uruchomienie przyciskiem
 
 permissions:
   contents: write
@@ -13,9 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Pobiera historię, co zapobiega błędom przy pushowaniu
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -36,34 +39,46 @@ jobs:
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: |
+          # Pobieramy godzinę UTC
           HOUR=$(date +%H)
+          
+          # 1. Rozliczamy stare kupony
           python settle.py
+          
+          # 2. Logika wyboru trybu
           if [[ "$HOUR" == "07" ]]; then
               python stats.py --daily
           else
+              # Tryb nocny (USA) między 23 a 06 UTC
               if [[ "$HOUR" -ge 23 || "$HOUR" -le 06 ]]; then
+                  echo "🌙 Tryb Nocny (USA)..."
                   python start.py --usa-only
               else
+                  echo "☀️ Tryb Dzienny (Pełny)..."
                   python start.py
               fi
           fi
 
       - name: Push Database
         run: |
-          # Konfiguracja użytkownika jest niezbędna do zrobienia commita
+          # Konfiguracja tożsamości bota
           git config --global user.email "bot@github.com"
           git config --global user.name "BetBot"
           
-          # Pobieramy zmiany, które mogły zajść w międzyczasie
-          git pull origin main --rebase
+          # Dodajemy pliki do poczekalni (staging)
+          git add coupons.json bankroll.json || echo "Brak plików do dodania"
           
-          # Dodajemy i zapisujemy pliki
-          git add coupons.json bankroll.json
-          
-          # Jeśli są zmiany, wysyłamy je na serwer
-          if ! git diff --cached --quiet; then
-            git commit -m "DB Update [skip ci]"
-            git push origin main
-          else
-            echo "Brak nowych zakładów do zapisania."
+          # Sprawdzamy czy faktycznie są jakieś zmiany do zapisania
+          if git diff --cached --quiet; then
+            echo "Brak nowych danych do zapisania w repozytorium."
+            exit 0
           fi
+          
+          # Jeśli są zmiany, robimy commit
+          git commit -m "DB Update: $(date +'%Y-%m-%d %H:%M') [skip ci]"
+          
+          # Pobieramy ewentualne zmiany z serwera, rozwiązując konflikty na korzyść bota
+          git pull --rebase origin main -X ours
+          
+          # Wysyłamy zaktualizowaną bazę na GitHub
+          git push origin main
