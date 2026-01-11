@@ -13,6 +13,7 @@ STAWKA = 100      # Kwota w zł
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in API_KEYS if k]
 
+# LISTA LIG DO SKANOWANIA
 LEAGUES = {
     "esports_csgo_blast_premier": "🎮 CS:GO BLAST",
     "esports_csgo_esl_pro_league": "🎮 CS:GO ESL Pro",
@@ -62,19 +63,25 @@ def run_scanner():
     now = datetime.now(timezone.utc)
     existing_ids = {f"{c.get('home')}_{c.get('pick')}" for c in coupons}
     
-    # Listy do debugowania
+    # Zmienne debugowania
     debug_low_edge = []
     debug_no_comp = []
-    counts = {"sent": 0, "dup": 0}
+    counts = {"sent": 0, "dup": 0, "checked_leagues": 0}
 
     for l_key, l_name in LEAGUES.items():
+        print(f"📡 Sprawdzam: {l_name}...")
+        counts["checked_leagues"] += 1
         events = fetch_odds(l_key)
-        if not events: continue
+        
+        if not events:
+            print(f"   ℹ️ Brak aktywnych meczów w API.")
+            continue
         
         for e in events:
             home, away = e['home_team'], e['away_team']
             dt = parser.isoparse(e["commence_time"])
             
+            # Tylko mecze zaczynające się w ciągu najbliższych 72h
             if not (now <= dt <= now + timedelta(hours=72)): continue
             
             odds_map = defaultdict(list)
@@ -82,13 +89,14 @@ def run_scanner():
                 for m in bm["markets"]:
                     for o in m["outcomes"]: odds_map[o["name"]].append(o["price"])
             
-            # Sprawdzenie czy jest min. 2 bukmacherów do porównania
+            # Szukamy kursów, które mają min. 2 bukmacherów do porównania
             best_odds = {n: max(l) for n, l in odds_map.items() if len(l) >= 2}
             
             if len(best_odds) != 2:
-                debug_no_comp.append(f"{l_name}: {home}-{away} (Tylko 1 bukmacher)")
+                debug_no_comp.append(f"{l_name}: {home}-{away} (Brak porównania)")
                 continue 
             
+            # Obliczanie prawdopodobieństwa rynkowego (bez marży)
             inv = {k: 1/v for k, v in best_odds.items()}
             s = sum(inv.values())
             probs = {k: v/s for k, v in inv.items()}
@@ -97,10 +105,12 @@ def run_scanner():
                 o = best_odds[sel]
                 edge = (prob - 1/(o * TAX_PL))
                 
+                # Czy już wysłano?
                 if f"{home}_{sel}" in existing_ids:
                     counts["dup"] += 1
                     continue
 
+                # Czy przewaga jest wystarczająca?
                 if edge >= MIN_EDGE:
                     local_dt = dt.astimezone(timezone(timedelta(hours=1)))
                     date_str = local_dt.strftime("%d.%m o %H:%M")
@@ -112,31 +122,40 @@ def run_scanner():
                            f"📈 Edge: <b>+{edge*100:.1f}%</b>\n💰 Stawka: <b>{STAWKA} zł</b>\n"
                            f"━━━━━━━━━━━━━━━━━━━━")
                     send_msg(msg)
-                    coupons.append({"home": home, "away": away, "pick": sel, "odds": o, "stake": float(STAWKA), "status": "PENDING", "league_key": l_key, "league_name": l_name, "date": dt.isoformat(), "edge": round(edge*100, 2)})
+                    coupons.append({
+                        "home": home, "away": away, "pick": sel, "odds": o, 
+                        "stake": float(STAWKA), "status": "PENDING", 
+                        "league_key": l_key, "league_name": l_name, 
+                        "date": dt.isoformat(), "edge": round(edge*100, 2)
+                    })
                     existing_ids.add(f"{home}_{sel}")
                     counts["sent"] += 1
                 else:
-                    if edge > -0.05: # Loguj tylko sensowne mecze (blisko progu)
+                    # Loguj tylko te, które są blisko progu (powyżej -5%)
+                    if edge > -0.05:
                         debug_low_edge.append(f"{l_name}: {home}-{away} ({sel}) | Edge: {round(edge*100, 2)}%")
     
     save_json(COUPONS_FILE, coupons)
     
-    # --- WYŚWIETLANIE DEBUGU W LOGACH ---
+    # --- WYŚWIETLANIE RAPORTU W LOGACH ---
     print("\n" + "="*50)
-    print("📊 RAPORT DEBUGOWANIA SKANERA")
+    print("📊 PODSUMOWANIE PRACY BOTA")
     print("="*50)
-    print(f"✅ WYSŁANO NOWYCH OKAZJI: {counts['sent']}")
-    print(f"♻️ POMINIĘTO DUPLIKATÓW: {counts['dup']}")
+    print(f"📂 Przeszukano lig: {counts['checked_leagues']}")
+    print(f"✅ Wysłano okazji: {counts['sent']}")
+    print(f"♻️ Pominięto duplikatów: {counts['dup']}")
     
-    print("\n❌ ODRZUCONO (ZBYT NISKI EDGE LUB STRATA):")
-    for item in debug_low_edge[:20]: # Pokazujemy max 20, żeby logi były czytelne
-        print(f"  - {item}")
-    if len(debug_low_edge) > 20: print(f"  ... i {len(debug_low_edge)-20} więcej.")
+    if debug_low_edge:
+        print("\n❌ ODRZUCONO (ZBYT NISKI EDGE LUB STRATA):")
+        for item in debug_low_edge[:20]:
+            print(f"  - {item}")
+        if len(debug_low_edge) > 20: print(f"  ... i {len(debug_low_edge)-20} więcej.")
 
-    print("\n⚠️ ODRZUCONO (BRAK PORÓWNANIA KURSU - 1 BUKMACHER):")
-    for item in debug_no_comp[:10]:
-        print(f"  - {item}")
-    print("="*50 + "\n")
+    if debug_no_comp:
+        print("\n⚠️ ODRZUCONO (BRAK PORÓWNANIA KURSU):")
+        for item in debug_no_comp[:10]:
+            print(f"  - {item}")
+    print("\n" + "="*50)
 
 if __name__ == "__main__":
     run_scanner()
