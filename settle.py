@@ -2,82 +2,87 @@ import requests, json, os
 from datetime import datetime, timezone
 
 # ================= CONFIG =================
-T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
-API_KEYS = [k for k in [os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3")] if k]
-BANKROLL_FILE = "bankroll.json"
 COUPONS_FILE = "coupons.json"
+BANKROLL_FILE = "bankroll.json"
+API_KEYS = [k for k in [
+    os.getenv("ODDS_KEY"), os.getenv("ODDS_KEY_2"), os.getenv("ODDS_KEY_3")
+] if k]
 
 def load_json(path, default):
     if os.path.exists(path):
         try:
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
+            with open(path, "r", encoding="utf-8") as f: return json.load(f)
         except: pass
     return default
 
 def save_json(path, data):
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+    with open(path, "w", encoding="utf-8") as f: json.dump(data, f, indent=2)
 
-def send_msg(txt):
-    if not T_TOKEN or not T_CHAT_RESULTS: return
-    try:
-        requests.post(
-            f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-            json={"chat_id": T_CHAT_RESULTS, "text": txt, "parse_mode": "HTML"},
-            timeout=10
-        )
-    except: pass
-
-def settle():
-    bankroll_data = load_json(BANKROLL_FILE, {"bankroll": 10000.0})
-    bankroll = bankroll_data["bankroll"]
+def settle_bets():
     coupons = load_json(COUPONS_FILE, [])
+    bank_data = load_json(BANKROLL_FILE, {"bankroll": 0.0})
+    bankroll = bank_data["bankroll"]
     
-    pending = [c for c in coupons if c["status"] == "PENDING"]
-    if not pending:
-        print("[DEBUG] Brak oczekujących zakładów.")
+    pending_coupons = [c for c in coupons if c["status"] == "PENDING"]
+    if not pending_coupons:
+        print("Brak kuponów do rozliczenia.")
         return
 
-    updated = False
-    for c in pending:
-        result = None
+    # Pobieramy unikalne ligi, aby nie pytać API 100 razy o to samo
+    leagues_to_check = list(set(c["league"] for c in pending_coupons))
+    
+    results_map = {} # Klucz: match_id, Wartość: zwycięzca
+
+    for league in leagues_to_check:
+        print(f"Sprawdzam wyniki dla: {league}")
         for key in API_KEYS:
             try:
-                url = f"https://api.the-odds-api.com/v4/sports/{c['league']}/scores"
-                r = requests.get(url, params={"apiKey": key, "daysFrom": 3}, timeout=15)
-                if r.status_code == 200:
-                    scores = r.json()
-                    match = next((m for m in scores if m["home_team"] == c["home"] and m["away_team"] == c["away"] and m["completed"]), None)
-                    if match:
-                        h_score = next((s["score"] for s in match["scores"] if s["name"] == c["home"]), 0)
-                        a_score = next((s["score"] for s in match["scores"] if s["name"] == c["away"]), 0)
-                        
-                        winner = "Draw"
-                        if int(h_score) > int(a_score): winner = c["home"]
-                        elif int(a_score) > int(h_score): winner = c["away"]
-                        
-                        result = "WON" if c["pick"] == winner else "LOST"
-                    break
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/scores/",
+                    params={"apiKey": key, "daysFrom": 3}, timeout=15
+                )
+                if r.status_code != 200: continue
+                
+                events = r.json()
+                for e in events:
+                    if e["completed"]:
+                        # Szukamy zwycięzcy na podstawie punktów
+                        scores = e["scores"]
+                        if scores and len(scores) == 2:
+                            s1 = int(scores[0]["score"])
+                            s2 = int(scores[1]["score"])
+                            if s1 > s2: winner = scores[0]["name"]
+                            elif s2 > s1: winner = scores[1]["name"]
+                            else: winner = "Draw"
+                            
+                            match_key = f"{e['home_team']}_{e['away_team']}"
+                            results_map[match_key] = winner
+                break 
             except: continue
 
-        if result:
-            c["status"] = result
-            updated = True
-            if result == "WON":
-                win_amt = c["possible_win"]
-                bankroll += win_amt
-                msg = f"✅ <b>WYGRANA</b>\n{c['home']} - {c['away']}\nTyp: {c['pick']} (@{c['odds']})\nZysk netto: +{round(win_amt - c['stake'], 2)} PLN"
+    # Rozliczamy kupony na podstawie zebranych wyników
+    settled_count = 0
+    for c in coupons:
+        if c["status"] != "PENDING": continue
+        
+        match_key = f"{c['home']}_{c['away']}"
+        if match_key in results_map:
+            winner = results_map[match_key]
+            if c["pick"] == winner:
+                c["status"] = "WON"
+                bankroll += c["possible_win"]
+                print(f"✅ WYGRANA: {match_key} (+{c['possible_win']} PLN)")
             else:
-                msg = f"❌ <b>PRZEGRANA</b>\n{c['home']} - {c['away']}\nTyp: {c['pick']}\nStrata: -{c['stake']} PLN"
-            
-            send_msg(f"{msg}\n🏦 Bankroll: {round(bankroll, 2)} PLN")
+                c["status"] = "LOST"
+                print(f"❌ PRZEGRANA: {match_key}")
+            settled_count += 1
 
-    if updated:
-        bankroll_data["bankroll"] = round(bankroll, 2)
-        save_json(BANKROLL_FILE, bankroll_data)
+    if settled_count > 0:
         save_json(COUPONS_FILE, coupons)
+        save_json(BANKROLL_FILE, {"bankroll": round(bankroll, 2)})
+        print(f"Rozliczono {settled_count} zakładów. Nowy stan konta: {round(bankroll, 2)} PLN")
+    else:
+        print("Nie znaleziono jeszcze wyników dla oczekujących meczów.")
 
 if __name__ == "__main__":
-    settle()
+    settle_bets()
