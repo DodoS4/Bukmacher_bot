@@ -1,57 +1,66 @@
-name: Bukmacher Bot Pro
+name: Betting Bot 24/7
 
 on:
   schedule:
-    # Skanowanie rynku co 3 godziny
-    - cron: '0 0,3,6,9,12,15,18,21 * * *'
-    # Raporty (07:00 rano to idealny czas na podsumowanie nocy i poprzedniego dnia)
-    - cron: '0 7 * * *'
-  workflow_dispatch:
-
-permissions:
-  contents: write
+    # 06:00 UTC = 07:00 PL
+    # 11:00 UTC = 12:00 PL
+    # 16:00 UTC = 17:00 PL
+    # 21:00 UTC = 22:00 PL
+    - cron: '0 6,11,16,21 * * *'
+  workflow_dispatch: # Pozwala uruchomić bota ręcznie przyciskiem
 
 jobs:
-  build:
+  run-bot:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+    permissions:
+      contents: write # Wymagane, aby bot mógł zapisywać wyniki do coupons.json
 
-      - name: Setup Python
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: pip install requests python-dateutil
+        run: |
+          pip install requests python-dateutil
 
-      - name: Run Bot Logic
+      - name: Run Scanner (start.py)
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
-          # ... reszta Twoich sekretów
-        run: |
-          HOUR=$(date +%H)
-          
-          # 1. Zawsze rozliczamy mecze, żeby statystyki były świeże
-          python settle.py
-          
-          # 2. Logika raportowania i skanowania
-          if [[ "$HOUR" == "07" ]]; then
-              echo "📊 Generowanie raportów okresowych..."
-              # Wywołujemy stats.py z nową flagą --auto
-              python stats.py --auto
-          fi
-          
-          # 3. Skanowanie rynku (niezależnie od raportów)
-          if [[ "$HOUR" -ge 23 || "$HOUR" -le 06 ]]; then
-              python start.py --usa-only
-          else
-              python start.py
-          fi
+          ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
+          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+        run: python start.py
 
-      - name: Push Database
-        # ... (Twoja sekcja git push bez zmian, jest poprawna)
+      - name: Run Settler (settle.py)
+        env:
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT: ${{ secrets.T_CHAT }}
+          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
+          ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
+          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+        run: python settle.py
+
+      - name: Run Stats (stats.py)
+        env:
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT: ${{ secrets.T_CHAT }}
+        run: python stats.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "actions@github.com"
+          git add coupons.json
+          git commit -m "Auto-update coupons and stats [skip ci]" || exit 0
+          git push
