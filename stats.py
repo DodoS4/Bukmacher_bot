@@ -5,7 +5,7 @@ from collections import defaultdict
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT_STATS = os.getenv("T_CHAT_RESULTS")
+T_CHAT_STATS = os.getenv("T_CHAT_RESULTS") # Wysyła na konto wyników
 TAX_PL = 0.88
 
 def send_msg(txt):
@@ -17,10 +17,11 @@ def send_msg(txt):
 
 def generate_report(coupons, name, days):
     start_date = datetime.now(timezone.utc) - timedelta(days=days)
+    # Filtrujemy tylko rozliczone mecze z ostatnich X dni
     settled = [c for c in coupons if c.get('status') in ['WON', 'LOST'] and parser.isoparse(c['date']) >= start_date]
     
     if not settled:
-        return f"📊 <b>Raport {name}</b>\nStatus: Monitoruję rynek. Brak rozliczonych meczów w tym okresie."
+        return f"📊 <b>Raport {name}</b>\nStatus: Monitoruję {len(coupons)} meczów. Brak nowych rozliczeń w tym okresie."
 
     stats = defaultdict(lambda: {"stake": 0, "ret": 0, "count": 0})
     for c in settled:
@@ -45,19 +46,7 @@ def generate_report(coupons, name, days):
     total_profit = total_ret - total_stake
     msg += f"\n💰 Łączny zysk netto: <b>{round(total_profit, 2)} zł</b>"
     
-    rec = "\n\n<b>💡 AI REKOMENDACJE:</b>\n"
-    found_rec = False
-    for ln, d in stats.items():
-        if d["count"] >= 3:
-            y = ((d["ret"]-d["stake"])/d["stake"]*100)
-            if y > 2: 
-                rec += f"🟢 {ln}: Zyskowna ({y:.1f}%)\n"
-                found_rec = True
-            elif y < -5: 
-                rec += f"🔴 {ln}: Strata ({y:.1f}%)\n"
-                found_rec = True
-    
-    return msg + (rec if found_rec else "")
+    return msg
 
 if __name__ == "__main__":
     if os.path.exists("coupons.json"):
@@ -66,6 +55,9 @@ if __name__ == "__main__":
             except: data = []
     else: data = []
         
+    # Raport dzienny
     send_msg(generate_report(data, "Dzienny", 1))
+    
+    # Raport tygodniowy (tylko w poniedziałki)
     if datetime.now().weekday() == 0:
         send_msg(generate_report(data, "Tygodniowy", 7))
