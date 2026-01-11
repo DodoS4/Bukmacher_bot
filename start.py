@@ -7,27 +7,38 @@ from dateutil import parser
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 TAX_PL = 0.88 
-MIN_EDGE = 0.015  # 1.5% przewagi po podatku
-STAWKA = 100      # Kwota w zł na jeden zakład
+MIN_EDGE = 0.012  # Obniżamy lekko do 1.2%, aby przy większej ilości lig wyłapać więcej okazji
+STAWKA = 100      # Kwota w zł
 
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in API_KEYS if k]
 
+# MAKSYMALNA LISTA LIG (2-way focus)
 LEAGUES = {
-    # ESPORT
+    # ESPORT (Bardzo zmienne kursy)
     "esports_csgo_blast_premier": "🎮 CS:GO BLAST",
     "esports_csgo_esl_pro_league": "🎮 CS:GO ESL Pro",
     "esports_league_of_legends_lck": "🎮 LoL LCK",
     "esports_league_of_legends_lpl": "🎮 LoL LPL",
     "esports_league_of_legends_lec": "🎮 LoL LEC",
     "esports_valorant_champions_tour": "🎮 Valorant VCT",
-    # TENIS
-    "tennis_atp_australian_open": "🎾 ATP Australian Open",
-    "tennis_wta_australian_open": "🎾 WTA Australian Open",
-    "tennis_atp_french_open": "🎾 ATP Roland Garros",
-    # KOSZYKÓWKA
+    "esports_dota2_epic_league": "🎮 Dota 2 Epic",
+    
+    # TENIS (Najwięcej okazji w Challengerach)
+    "tennis_atp_australian_open": "🎾 ATP AusOpen",
+    "tennis_wta_australian_open": "🎾 WTA AusOpen",
+    "tennis_atp_challenger_tour": "🎾 ATP Challengers",
+    "tennis_wta_1000": "🎾 WTA 1000",
+    
+    # KOSZYKÓWKA (USA + Europa)
     "basketball_nba": "🏀 NBA",
-    "basketball_euroleague": "🏀 Euroleague"
+    "basketball_euroleague": "🏀 Euroleague",
+    "basketball_spain_liga_acb": "🏀 Hiszpania ACB",
+    "basketball_germany_bbl": "🏀 Niemcy BBL",
+    
+    # SIATKÓWKA (Stabilne rynki 2-way)
+    "volleyball_italy_superlega": "🏐 Siatkówka Włochy",
+    "volleyball_poland_plusliga": "🏐 PlusLiga (PL)"
 }
 
 COUPONS_FILE = "coupons.json"
@@ -54,7 +65,7 @@ def fetch_odds(league_key):
     return None
 
 def run_scanner():
-    print(f"🔍 SKAN START: {datetime.now().strftime('%H:%M:%S')}")
+    print(f"🔍 SKAN MAKSYMALNY: {datetime.now().strftime('%H:%M:%S')}")
     coupons = load_json(COUPONS_FILE, [])
     now = datetime.now(timezone.utc)
     existing_ids = {f"{c.get('home')}_{c.get('pick')}" for c in coupons}
@@ -66,7 +77,7 @@ def run_scanner():
         
         for e in events:
             home, away, dt = e['home_team'], e['away_team'], parser.isoparse(e["commence_time"])
-            if not (now <= dt <= now + timedelta(hours=96)): continue
+            if not (now <= dt <= now + timedelta(hours=72)): continue
             
             odds_map = defaultdict(list)
             for bm in e["bookmakers"]:
@@ -84,11 +95,10 @@ def run_scanner():
                 edge = (prob - 1/(o * TAX_PL))
                 
                 if edge >= MIN_EDGE and f"{home}_{sel}" not in existing_ids:
-                    # Czas PL
                     local_dt = dt.astimezone(timezone(timedelta(hours=1)))
                     date_str = local_dt.strftime("%d.%m o %H:%M")
 
-                    msg = (f"🎯 <b>PROPOZYCJA 2-WAY ({l_name})</b>\n━━━━━━━━━━━━━━━━━━━━\n"
+                    msg = (f"🎯 <b>OKAZJA ({l_name})</b>\n━━━━━━━━━━━━━━━━━━━━\n"
                            f"🏟 <b>{home} vs {away}</b>\n"
                            f"⏰ Start: <b>{date_str}</b>\n\n"
                            f"🔸 Typ: <b>{sel}</b>\n🔹 Kurs: <b>{o}</b> (netto: {round(o*0.88, 2)})\n"
