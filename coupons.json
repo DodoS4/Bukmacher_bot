@@ -1,1 +1,86 @@
-[]
+[
+  {
+    "home": "KK Partizan NIS",
+    "away": "Olympiacos",
+    "pick": "Olympiacos",
+    "odds": 1.38,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league_key": "basketball_euroleague",
+    "league_name": "\ud83c\udfc0 Euroleague",
+    "date": "2026-01-14T18:30:00+00:00",
+    "edge": 11.49
+  },
+  {
+    "home": "Dubai Basketball",
+    "away": "Virtus Segafredo Bologna",
+    "pick": "Dubai Basketball",
+    "odds": 4.4,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league_key": "basketball_euroleague",
+    "league_name": "\ud83c\udfc0 Euroleague",
+    "date": "2026-01-15T16:00:00+00:00",
+    "edge": 56.85
+  },
+  {
+    "home": "Dubai Basketball",
+    "away": "Virtus Segafredo Bologna",
+    "pick": "Virtus Segafredo Bologna",
+    "odds": 21.0,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league_key": "basketball_euroleague",
+    "league_name": "\ud83c\udfc0 Euroleague",
+    "date": "2026-01-15T16:00:00+00:00",
+    "edge": 11.91
+  },
+  {
+    "home": "Anadolu Efes",
+    "away": "Saski Baskonia",
+    "pick": "Anadolu Efes",
+    "odds": 1.49,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league_key": "basketball_euroleague",
+    "league_name": "\ud83c\udfc0 Euroleague",
+    "date": "2026-01-15T17:30:00+00:00",
+    "edge": 17.11
+  },
+  {
+    "home": "FC Bayern M\u00fcnchen",
+    "away": "Panathinaikos",
+    "pick": "Panathinaikos",
+    "odds": 1.5,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league_key": "basketball_euroleague",
+    "league_name": "\ud83c\udfc0 Euroleague",
+    "date": "2026-01-15T18:30:00+00:00",
+    "edge": 17.58
+  },
+  {
+    "home": "Pallacanestro Olimpia Milano",
+    "away": "KK Crvena zvezda",
+    "pick": "KK Crvena zvezda",
+    "odds": 21.0,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league_key": "basketball_euroleague",
+    "league_name": "\ud83c\udfc0 Euroleague",
+    "date": "2026-01-15T19:30:00+00:00",
+    "edge": 11.91
+  },
+  {
+    "home": "Pallacanestro Olimpia Milano",
+    "away": "KK Crvena zvezda",
+    "pick": "Pallacanestro Olimpia Milano",
+    "odds": 4.4,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league_key": "basketball_euroleague",
+    "league_name": "\ud83c\udfc0 Euroleague",
+    "date": "2026-01-15T19:30:00+00:00",
+    "edge": 56.85
+  }
+]
