@@ -7,15 +7,13 @@ from dateutil import parser
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 TAX_PL = 0.88 
-MIN_EDGE = 0.012  # Obniżamy lekko do 1.2%, aby przy większej ilości lig wyłapać więcej okazji
+MIN_EDGE = 0.012  # 1.2% przewagi po podatku
 STAWKA = 100      # Kwota w zł
 
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in API_KEYS if k]
 
-# MAKSYMALNA LISTA LIG (2-way focus)
 LEAGUES = {
-    # ESPORT (Bardzo zmienne kursy)
     "esports_csgo_blast_premier": "🎮 CS:GO BLAST",
     "esports_csgo_esl_pro_league": "🎮 CS:GO ESL Pro",
     "esports_league_of_legends_lck": "🎮 LoL LCK",
@@ -23,20 +21,14 @@ LEAGUES = {
     "esports_league_of_legends_lec": "🎮 LoL LEC",
     "esports_valorant_champions_tour": "🎮 Valorant VCT",
     "esports_dota2_epic_league": "🎮 Dota 2 Epic",
-    
-    # TENIS (Najwięcej okazji w Challengerach)
     "tennis_atp_australian_open": "🎾 ATP AusOpen",
     "tennis_wta_australian_open": "🎾 WTA AusOpen",
     "tennis_atp_challenger_tour": "🎾 ATP Challengers",
     "tennis_wta_1000": "🎾 WTA 1000",
-    
-    # KOSZYKÓWKA (USA + Europa)
     "basketball_nba": "🏀 NBA",
     "basketball_euroleague": "🏀 Euroleague",
     "basketball_spain_liga_acb": "🏀 Hiszpania ACB",
     "basketball_germany_bbl": "🏀 Niemcy BBL",
-    
-    # SIATKÓWKA (Stabilne rynki 2-way)
     "volleyball_italy_superlega": "🏐 Siatkówka Włochy",
     "volleyball_poland_plusliga": "🏐 PlusLiga (PL)"
 }
@@ -65,18 +57,24 @@ def fetch_odds(league_key):
     return None
 
 def run_scanner():
-    print(f"🔍 SKAN MAKSYMALNY: {datetime.now().strftime('%H:%M:%S')}")
+    print(f"🔍 START SKANU: {datetime.now().strftime('%H:%M:%S')}")
     coupons = load_json(COUPONS_FILE, [])
     now = datetime.now(timezone.utc)
     existing_ids = {f"{c.get('home')}_{c.get('pick')}" for c in coupons}
     
+    # Listy do debugowania
+    debug_low_edge = []
+    debug_no_comp = []
+    counts = {"sent": 0, "dup": 0}
+
     for l_key, l_name in LEAGUES.items():
-        print(f"📡 Skan: {l_name}...")
         events = fetch_odds(l_key)
         if not events: continue
         
         for e in events:
-            home, away, dt = e['home_team'], e['away_team'], parser.isoparse(e["commence_time"])
+            home, away = e['home_team'], e['away_team']
+            dt = parser.isoparse(e["commence_time"])
+            
             if not (now <= dt <= now + timedelta(hours=72)): continue
             
             odds_map = defaultdict(list)
@@ -84,17 +82,26 @@ def run_scanner():
                 for m in bm["markets"]:
                     for o in m["outcomes"]: odds_map[o["name"]].append(o["price"])
             
+            # Sprawdzenie czy jest min. 2 bukmacherów do porównania
             best_odds = {n: max(l) for n, l in odds_map.items() if len(l) >= 2}
-            if len(best_odds) != 2: continue 
             
-            inv = {k: 1/v for k, v in best_odds.items()}; s = sum(inv.values())
+            if len(best_odds) != 2:
+                debug_no_comp.append(f"{l_name}: {home}-{away} (Tylko 1 bukmacher)")
+                continue 
+            
+            inv = {k: 1/v for k, v in best_odds.items()}
+            s = sum(inv.values())
             probs = {k: v/s for k, v in inv.items()}
 
             for sel, prob in probs.items():
                 o = best_odds[sel]
                 edge = (prob - 1/(o * TAX_PL))
                 
-                if edge >= MIN_EDGE and f"{home}_{sel}" not in existing_ids:
+                if f"{home}_{sel}" in existing_ids:
+                    counts["dup"] += 1
+                    continue
+
+                if edge >= MIN_EDGE:
                     local_dt = dt.astimezone(timezone(timedelta(hours=1)))
                     date_str = local_dt.strftime("%d.%m o %H:%M")
 
@@ -106,8 +113,30 @@ def run_scanner():
                            f"━━━━━━━━━━━━━━━━━━━━")
                     send_msg(msg)
                     coupons.append({"home": home, "away": away, "pick": sel, "odds": o, "stake": float(STAWKA), "status": "PENDING", "league_key": l_key, "league_name": l_name, "date": dt.isoformat(), "edge": round(edge*100, 2)})
+                    existing_ids.add(f"{home}_{sel}")
+                    counts["sent"] += 1
+                else:
+                    if edge > -0.05: # Loguj tylko sensowne mecze (blisko progu)
+                        debug_low_edge.append(f"{l_name}: {home}-{away} ({sel}) | Edge: {round(edge*100, 2)}%")
     
     save_json(COUPONS_FILE, coupons)
-    print("🏁 Skan zakończony.")
+    
+    # --- WYŚWIETLANIE DEBUGU W LOGACH ---
+    print("\n" + "="*50)
+    print("📊 RAPORT DEBUGOWANIA SKANERA")
+    print("="*50)
+    print(f"✅ WYSŁANO NOWYCH OKAZJI: {counts['sent']}")
+    print(f"♻️ POMINIĘTO DUPLIKATÓW: {counts['dup']}")
+    
+    print("\n❌ ODRZUCONO (ZBYT NISKI EDGE LUB STRATA):")
+    for item in debug_low_edge[:20]: # Pokazujemy max 20, żeby logi były czytelne
+        print(f"  - {item}")
+    if len(debug_low_edge) > 20: print(f"  ... i {len(debug_low_edge)-20} więcej.")
 
-if __name__ == "__main__": run_scanner()
+    print("\n⚠️ ODRZUCONO (BRAK PORÓWNANIA KURSU - 1 BUKMACHER):")
+    for item in debug_no_comp[:10]:
+        print(f"  - {item}")
+    print("="*50 + "\n")
+
+if __name__ == "__main__":
+    run_scanner()
