@@ -2,11 +2,11 @@ name: Bukmacher Bot Pro
 
 on:
   schedule:
-    # Uruchomienia co 3 godziny (oszczędność API)
+    # Skanowanie rynku co 3 godziny
     - cron: '0 0,3,6,9,12,15,18,21 * * *'
-    # Statystyki poranne
+    # Raporty (07:00 rano to idealny czas na podsumowanie nocy i poprzedniego dnia)
     - cron: '0 7 * * *'
-  workflow_dispatch: # Pozwala na ręczne uruchomienie przyciskiem
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Pobiera historię, co zapobiega błędom przy pushowaniu
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -32,53 +32,26 @@ jobs:
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
-          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
-          ODDS_KEY: ${{ secrets.ODDS_KEY }}
-          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
-          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
-          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
-          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+          # ... reszta Twoich sekretów
         run: |
-          # Pobieramy godzinę UTC
           HOUR=$(date +%H)
           
-          # 1. Rozliczamy stare kupony
+          # 1. Zawsze rozliczamy mecze, żeby statystyki były świeże
           python settle.py
           
-          # 2. Logika wyboru trybu
+          # 2. Logika raportowania i skanowania
           if [[ "$HOUR" == "07" ]]; then
-              python stats.py --daily
+              echo "📊 Generowanie raportów okresowych..."
+              # Wywołujemy stats.py z nową flagą --auto
+              python stats.py --auto
+          fi
+          
+          # 3. Skanowanie rynku (niezależnie od raportów)
+          if [[ "$HOUR" -ge 23 || "$HOUR" -le 06 ]]; then
+              python start.py --usa-only
           else
-              # Tryb nocny (USA) między 23 a 06 UTC
-              if [[ "$HOUR" -ge 23 || "$HOUR" -le 06 ]]; then
-                  echo "🌙 Tryb Nocny (USA)..."
-                  python start.py --usa-only
-              else
-                  echo "☀️ Tryb Dzienny (Pełny)..."
-                  python start.py
-              fi
+              python start.py
           fi
 
       - name: Push Database
-        run: |
-          # Konfiguracja tożsamości bota
-          git config --global user.email "bot@github.com"
-          git config --global user.name "BetBot"
-          
-          # Dodajemy pliki do poczekalni (staging)
-          git add coupons.json bankroll.json || echo "Brak plików do dodania"
-          
-          # Sprawdzamy czy faktycznie są jakieś zmiany do zapisania
-          if git diff --cached --quiet; then
-            echo "Brak nowych danych do zapisania w repozytorium."
-            exit 0
-          fi
-          
-          # Jeśli są zmiany, robimy commit
-          git commit -m "DB Update: $(date +'%Y-%m-%d %H:%M') [skip ci]"
-          
-          # Pobieramy ewentualne zmiany z serwera, rozwiązując konflikty na korzyść bota
-          git pull --rebase origin main -X ours
-          
-          # Wysyłamy zaktualizowaną bazę na GitHub
-          git push origin main
+        # ... (Twoja sekcja git push bez zmian, jest poprawna)
