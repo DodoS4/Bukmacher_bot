@@ -1,1 +1,42 @@
-[]
+[
+  {
+    "home": "Oklahoma City Thunder",
+    "away": "Miami Heat",
+    "pick": "Oklahoma City Thunder",
+    "odds": 1.16,
+    "stake": 100.0,
+    "status": "PENDING",
+    "date_time": "2026-01-12T00:10:00+00:00",
+    "edge": 1.13
+  },
+  {
+    "home": "Sacramento Kings",
+    "away": "Houston Rockets",
+    "pick": "Houston Rockets",
+    "odds": 1.2,
+    "stake": 100.0,
+    "status": "PENDING",
+    "date_time": "2026-01-12T02:10:00+00:00",
+    "edge": 1.28
+  },
+  {
+    "home": "Juventus",
+    "away": "Cremonese",
+    "pick": "Juventus",
+    "odds": 1.29,
+    "stake": 100.0,
+    "status": "PENDING",
+    "date_time": "2026-01-12T19:45:00+00:00",
+    "edge": 1.54
+  },
+  {
+    "home": "Philadelphia Eagles",
+    "away": "San Francisco 49ers",
+    "pick": "Philadelphia Eagles",
+    "odds": 1.43,
+    "stake": 100.0,
+    "status": "PENDING",
+    "date_time": "2026-01-11T21:30:00+00:00",
+    "edge": 1.64
+  }
+]
