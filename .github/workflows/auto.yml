@@ -25,12 +25,6 @@ jobs:
       - name: Install dependencies
         run: pip install requests python-dateutil
 
-      - name: Sync Repo
-        run: |
-          git config --local user.email "bot@github.com"
-          git config --local user.name "BetBot"
-          git pull origin main || echo "No changes"
-
       - name: Run Bot Logic
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -47,18 +41,29 @@ jobs:
           if [[ "$HOUR" == "07" ]]; then
               python stats.py --daily
           else
-              # Tryb nocny (tylko USA) od 23:00 do 06:00
               if [[ "$HOUR" -ge 23 || "$HOUR" -le 06 ]]; then
-                  echo "🌙 Tryb Nocny (USA)..."
                   python start.py --usa-only
               else
-                  echo "☀️ Tryb Dzienny (Pełny)..."
                   python start.py
               fi
           fi
 
       - name: Push Database
         run: |
+          # Konfiguracja użytkownika jest niezbędna do zrobienia commita
+          git config --global user.email "bot@github.com"
+          git config --global user.name "BetBot"
+          
+          # Pobieramy zmiany, które mogły zajść w międzyczasie
+          git pull origin main --rebase
+          
+          # Dodajemy i zapisujemy pliki
           git add coupons.json bankroll.json
-          git commit -m "DB Update [skip ci]" || exit 0
-          git push origin main
+          
+          # Jeśli są zmiany, wysyłamy je na serwer
+          if ! git diff --cached --quiet; then
+            git commit -m "DB Update [skip ci]"
+            git push origin main
+          else
+            echo "Brak nowych zakładów do zapisania."
+          fi
