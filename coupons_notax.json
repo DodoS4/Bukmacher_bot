@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "home": "Cleveland Cavaliers",
+    "away": "Utah Jazz",
+    "pick": "Cleveland Cavaliers",
+    "odds": 1.21,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 NBA",
+    "league_key": "basketball_nba",
+    "date": "2026-01-13T00:10:00+00:00",
+    "edge": 2.15
+  },
+  {
+    "home": "Sacramento Kings",
+    "away": "Los Angeles Lakers",
+    "pick": "Los Angeles Lakers",
+    "odds": 1.32,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 NBA",
+    "league_key": "basketball_nba",
+    "date": "2026-01-13T03:10:00+00:00",
+    "edge": 1.17
+  }
+]
