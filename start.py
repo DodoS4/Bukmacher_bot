@@ -73,31 +73,8 @@ def run_scanner():
         events = fetch_odds(l_key)
 
         if not events:
-            # dodaj testowy zakład
-            tb = {
-                "home": f"TeamA_{l_key}",
-                "away": f"TeamB_{l_key}",
-                "pick": f"TeamA_{l_key}",
-                "odds": 1.8,
-                "edge": 1.0
-            }
-            if f"{tb['home']}_{tb['pick']}" not in existing_ids:
-                local_dt = now + timedelta(hours=1)
-                coupons.append({
-                    "home": tb['home'],
-                    "away": tb['away'],
-                    "pick": tb['pick'],
-                    "odds": tb['odds'],
-                    "stake": float(STAWKA),
-                    "status": "PENDING",
-                    "league": l_name,
-                    "league_key": l_key,
-                    "date": local_dt.isoformat(),
-                    "edge": tb['edge']
-                })
-                existing_ids.add(f"{tb['home']}_{tb['pick']}")
-                print(f"[DEBUG] TESTOWY ZAKŁAD dodany: {tb['home']} - {tb['away']} | {tb['pick']} | EDGE {tb['edge']}%")
-            continue
+            print(f"[DEBUG] Brak wydarzeń w lidze {l_name}, pomijam...")
+            continue  # brak testowych zakładów
 
         for e in events:
             home, away = e['home_team'], e['away_team']
@@ -110,7 +87,9 @@ def run_scanner():
                     for o in m["outcomes"]:
                         odds_map[o["name"]].append(o["price"])
             best_odds = {n:max(l) for n,l in odds_map.items() if len(l)>=2}
-            if len(best_odds)!=2: continue
+            if len(best_odds)!=2:
+                print(f"[DEBUG] Brak konkurencyjnych kursów | {home}-{away}")
+                continue
 
             inv = {k:1/v for k,v in best_odds.items()}
             s = sum(inv.values())
@@ -119,7 +98,9 @@ def run_scanner():
             for sel, prob in probs.items():
                 o = best_odds[sel]
                 edge = (prob - 1/o*TAX_PL)
-                if f"{home}_{sel}" in existing_ids: continue
+                if f"{home}_{sel}" in existing_ids: 
+                    print(f"[DEBUG] Duplikat | {home}-{away} | {sel}")
+                    continue
                 if edge >= MIN_EDGE:
                     local_dt = dt.astimezone(timezone(timedelta(hours=1)))
                     date_str = local_dt.strftime("%d.%m o %H:%M")
