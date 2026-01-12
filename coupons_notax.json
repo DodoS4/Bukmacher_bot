@@ -22,5 +22,101 @@
     "league_key": "basketball_nba",
     "date": "2026-01-13T03:10:00+00:00",
     "edge": 0.75
+  },
+  {
+    "home": "Toronto Raptors",
+    "away": "Philadelphia 76ers",
+    "pick": "Philadelphia 76ers",
+    "odds": 1.73,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 NBA",
+    "league_key": "basketball_nba",
+    "date": "2026-01-13T00:40:00+00:00",
+    "edge": 0.51
+  },
+  {
+    "home": "Los Angeles Clippers",
+    "away": "Charlotte Hornets",
+    "pick": "Los Angeles Clippers",
+    "odds": 1.58,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 NBA",
+    "league_key": "basketball_nba",
+    "date": "2026-01-13T03:40:00+00:00",
+    "edge": 0.64
+  },
+  {
+    "home": "Miami Heat",
+    "away": "Phoenix Suns",
+    "pick": "Miami Heat",
+    "odds": 110.0,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 NBA",
+    "league_key": "basketball_nba",
+    "date": "2026-01-14T00:40:00+00:00",
+    "edge": 0.95
+  },
+  {
+    "home": "Miami Heat",
+    "away": "Phoenix Suns",
+    "pick": "Phoenix Suns",
+    "odds": 2.08,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 NBA",
+    "league_key": "basketball_nba",
+    "date": "2026-01-14T00:40:00+00:00",
+    "edge": 50.07
+  },
+  {
+    "home": "Oklahoma City Thunder",
+    "away": "San Antonio Spurs",
+    "pick": "Oklahoma City Thunder",
+    "odds": 110.0,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 NBA",
+    "league_key": "basketball_nba",
+    "date": "2026-01-14T01:10:00+00:00",
+    "edge": 49.09
+  },
+  {
+    "home": "Oklahoma City Thunder",
+    "away": "San Antonio Spurs",
+    "pick": "San Antonio Spurs",
+    "odds": 110.0,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 NBA",
+    "league_key": "basketball_nba",
+    "date": "2026-01-14T01:10:00+00:00",
+    "edge": 49.09
+  },
+  {
+    "home": "KK Partizan NIS",
+    "away": "Olympiacos",
+    "pick": "KK Partizan NIS",
+    "odds": 21.0,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 Euroleague",
+    "league_key": "basketball_euroleague",
+    "date": "2026-01-14T18:30:00+00:00",
+    "edge": 1.24
+  },
+  {
+    "home": "KK Partizan NIS",
+    "away": "Olympiacos",
+    "pick": "Olympiacos",
+    "odds": 1.34,
+    "stake": 100.0,
+    "status": "PENDING",
+    "league": "\ud83c\udfc0 Euroleague",
+    "league_key": "basketball_euroleague",
+    "date": "2026-01-14T18:30:00+00:00",
+    "edge": 19.37
   }
 ]
