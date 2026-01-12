@@ -5,7 +5,7 @@ from dateutil import parser
 
 # ===== CONFIG =====
 TAX = 1.0           # NO TAX
-SCAN_HOURS = 90
+SCAN_HOURS = 45
 MIN_EDGE = 0.005     # 0.5%
 STAKE = 100
 DEBUG = True
@@ -100,7 +100,7 @@ def fetch(league):
 def run():
     coupons = load()
     now = datetime.now(timezone.utc)
-    sent_ids = {f"{c['home']}_{c['away']}_{c['pick']}_{c['date']}" for c in coupons}
+    sent_ids = {f"{c['home']}_{c['away']}_{c['pick']}_{c['edge']}_{c['league']}_{c['date']}" for c in coupons}
 
     for lkey, lname in LEAGUES.items():
         events = fetch(lkey)
@@ -132,7 +132,7 @@ def run():
 
             pick, edge = max(edges.items(), key=lambda x: x[1])
 
-            uid = f"{e['home_team']}_{e['away_team']}_{pick}_{dt.isoformat()}"
+            uid = f"{e['home_team']}_{e['away_team']}_{pick}_{round(edge*100,2)}_{lname}_{dt.isoformat()}"
             if uid in sent_ids:
                 log(f"REJECT DUPLICATE | {e['home_team']}-{e['away_team']} | {pick}")
                 continue
@@ -158,9 +158,7 @@ def run():
                 "settled_at": None
             })
             sent_ids.add(uid)
-
-            with open(FILE, "w", encoding="utf-8") as f:
-                json.dump(coupons, f, indent=2)
+            save(coupons)
 
             # Telegram
             msg = (
