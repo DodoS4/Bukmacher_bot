@@ -2,12 +2,19 @@ name: Betting Bot 24/7
 
 on:
   schedule:
-    - cron: '0 6,12,18,22 * * *' # Automatyczne uruchomienie 4 razy na dobę
+    # 5 razy na dobę (godziny czasu UTC: 1:00, 7:00, 12:00, 17:00, 22:00)
+    # Odpowiada to mniej więcej: 2:00, 8:00, 13:00, 18:00, 23:00 czasu polskiego
+    - cron: '0 1,7,12,17,22 * * *'
   workflow_dispatch: # Pozwala na ręczne uruchomienie w dowolnym momencie
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    # Zapobiega błędom, jeśli dwa skany nałożą się na siebie
+    concurrency:
+      group: betting-bot-sync
+      cancel-in-progress: true
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
