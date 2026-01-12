@@ -4,22 +4,55 @@ from collections import defaultdict
 from dateutil import parser
 
 # ===== CONFIG =====
-USE_TAX = False
-TAX = 1.0
+TAX = 1.0           # NO TAX
 SCAN_HOURS = 45
-DEBUG = True
-MIN_EDGE = 0.005       # 0.5%
+MIN_EDGE = 0.005     # 0.5%
 STAKE = 100
+DEBUG = True
 
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
-API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3"] if os.getenv(f"ODDS_KEY{i}")]
+API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"] if os.getenv(f"ODDS_KEY{i}")]
 FILE = "coupons_notax.json"
 
+# ===== LIGI =====
 LEAGUES = {
+    # 🏀 Koszykówka
     "basketball_nba": "🏀 NBA",
+    "basketball_euroleague": "🏀 Euroleague",
+    "basketball_spain_liga_acb": "🏀 Hiszpania ACB",
+    "basketball_germany_bbl": "🏀 Niemcy BBL",
+
+    # ⚽ Piłka nożna
+    "soccer_england_premier_league": "⚽ Premier League",
+    "soccer_england_championship": "⚽ Anglia Championship",
+    "soccer_england_league1": "⚽ Anglia L1",
+    "soccer_italy_serie_a": "⚽ Serie A",
+    "soccer_italy_serie_b": "⚽ Serie B",
+    "soccer_spain_la_liga": "⚽ La Liga",
+    "soccer_germany_bundesliga": "⚽ Bundesliga",
+    "soccer_germany_bundesliga2": "⚽ Bundesliga 2",
+    "soccer_poland_ekstraklasa": "⚽ Ekstraklasa",
+
+    # 🎾 Tenis
+    "tennis_atp_1000": "🎾 ATP 1000",
+    "tennis_atp_challenger_tour": "🎾 ATP Challenger",
+    "tennis_wta_1000": "🎾 WTA 1000",
+
+    # 🏒 Hokej
     "icehockey_nhl": "🏒 NHL",
-    "soccer_poland_ekstraklasa": "⚽ Ekstraklasa"
+    "icehockey_sweden_allsvenskan": "🏒 Szwecja Allsvenskan",
+    "icehockey_finland_liiga": "🏒 Finlandia Liiga",
+
+    # 🎮 Esport
+    "esports_csgo_blast_premier": "🎮 CS:GO BLAST",
+    "esports_csgo_esl_pro_league": "🎮 CS:GO ESL Pro",
+    "esports_league_of_legends_lck": "🎮 LoL LCK",
+    "esports_league_of_legends_lpl": "🎮 LoL LPL",
+
+    # 🏐 Siatkówka
+    "volleyball_poland_plusliga": "🏐 PlusLiga (PL)",
+    "volleyball_italy_superlega": "🏐 Siatkówka Włochy"
 }
 
 # ===== HELPERS =====
@@ -48,10 +81,10 @@ def log(msg):
         print(f"[DEBUG] {msg}")
 
 def fetch(league):
-    for k in API_KEYS:
+    for key in API_KEYS:
         r = requests.get(
             f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-            params={"apiKey": k, "markets": "h2h", "regions": "eu"}
+            params={"apiKey": key, "markets": "h2h", "regions": "eu"}
         )
         if r.status_code == 200:
             return r.json()
