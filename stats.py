@@ -1,60 +1,51 @@
 import json, os
-from datetime import datetime, timedelta
+from datetime import datetime
 import requests
-from collections import defaultdict
 
-FILE = "coupons_notax.json"
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT = os.getenv("T_CHAT_RESULTS")
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
+FILE = "coupons_notax.json"
 
 def tg(msg):
-    requests.post(
-        f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-        json={"chat_id": T_CHAT, "text": msg, "parse_mode": "HTML"}
-    )
+    if T_TOKEN and T_CHAT_RESULTS:
+        try:
+            requests.post(
+                f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+                json={"chat_id": T_CHAT_RESULTS, "text": msg, "parse_mode": "HTML"}
+            )
+        except:
+            pass
 
-with open(FILE, "r", encoding="utf-8") as f:
-    data = json.load(f)
+def run():
+    if not os.path.exists(FILE):
+        return
 
-today = datetime.utcnow().date()
+    with open(FILE, "r", encoding="utf-8") as f:
+        try:
+            coupons = json.load(f)
+        except:
+            return
 
-daily = [c for c in data if c["settled_at"] and
-         datetime.fromisoformat(c["settled_at"]).date() == today]
+    leagues = {}
+    for c in coupons:
+        lname = c["league"]
+        if lname not in leagues:
+            leagues[lname] = {"won":0,"lost":0,"profit":0,"bets":0}
+        if c.get("status") in ["WON","LOST"]:
+            leagues[lname]["bets"] += 1
+            if c["status"]=="WON":
+                leagues[lname]["won"] += 1
+                leagues[lname]["profit"] += (c["stake"]*c["odds"]*1.0 - c["stake"])
+            else:
+                leagues[lname]["lost"] += 1
+                leagues[lname]["profit"] -= c["stake"]
 
-if not daily:
-    exit()
+    msg = f"📊 <b>Raport dzienny lig</b> - {datetime.now().strftime('%d.%m.%Y')}\n\n"
+    for lname,data in leagues.items():
+        roi = (data["profit"]/ (data["bets"]*100) *100) if data["bets"]>0 else 0
+        msg += f"{lname}: Bets {data['bets']} | Won {data['won']} | Lost {data['lost']} | ROI {roi:.2f}%\n"
 
-profit = sum(c["profit"] for c in daily)
-stake = sum(c["stake"] for c in daily)
-wins = len([c for c in daily if c["profit"] > 0])
+    tg(msg)
 
-msg = (
-    f"📊 <b>DZIENNY RAPORT • NO TAX</b>\n"
-    f"📅 {today}\n\n"
-    f"🎯 Bety: {len(daily)}\n"
-    f"✅ Wygrane: {wins}\n"
-    f"❌ Przegrane: {len(daily)-wins}\n\n"
-    f"💰 Profit: <b>{profit:.2f} zł</b>\n"
-    f"📊 ROI: <b>{(profit/stake)*100:.2f}%</b>\n"
-)
-
-# --- LIGI ---
-by_league = defaultdict(list)
-for c in daily:
-    by_league[c["league"]].append(c["profit"])
-
-msg += "\n📈 <b>LIGI</b>\n"
-for l, vals in by_league.items():
-    msg += f"{l}: {sum(vals):.2f} zł\n"
-
-# --- KELLY (symulacja 0.5x) ---
-kelly_profit = 0
-for c in daily:
-    b = c["odds"] - 1
-    p = 0.5  # uproszczone EV
-    k = max((p*b - (1-p))/b, 0) * 0.5
-    kelly_profit += c["profit"] * k
-
-msg += f"\n📐 <b>Flat vs Kelly (sym)</b>\nFlat: {profit:.2f} zł\nKelly: ~{kelly_profit:.2f} zł"
-
-tg(msg)
+if __name__=="__main__":
+    run()
