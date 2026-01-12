@@ -59,7 +59,10 @@ LEAGUES = {
 def load():
     if os.path.exists(FILE):
         with open(FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+            try:
+                return json.load(f)
+            except:
+                return []
     return []
 
 def save(data):
@@ -82,12 +85,15 @@ def log(msg):
 
 def fetch(league):
     for key in API_KEYS:
-        r = requests.get(
-            f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-            params={"apiKey": key, "markets": "h2h", "regions": "eu"}
-        )
-        if r.status_code == 200:
-            return r.json()
+        try:
+            r = requests.get(
+                f"https://api.the-odds-api.com/v4/sports/{league}/odds",
+                params={"apiKey": key, "markets": "h2h", "regions": "eu"}
+            )
+            if r.status_code == 200:
+                return r.json()
+        except:
+            continue
     return []
 
 # ===== MAIN =====
@@ -125,26 +131,17 @@ def run():
             edges = {k: probs[k] - 1/(best_odds[k]*TAX) for k in best_odds}
 
             pick, edge = max(edges.items(), key=lambda x: x[1])
-            if edge < MIN_EDGE:
-                log(f"REJECT EDGE {edge*100:.2f}% < {MIN_EDGE*100:.2f}% | {e['home_team']}-{e['away_team']} | {pick}")
-                continue
 
             uid = f"{e['home_team']}_{e['away_team']}_{pick}_{dt.isoformat()}"
             if uid in sent_ids:
                 log(f"REJECT DUPLICATE | {e['home_team']}-{e['away_team']} | {pick}")
                 continue
 
-            msg = (
-                f"🎯 <b>OKAZJA ({lname})</b>\n"
-                f"{e['home_team']} vs {e['away_team']}\n"
-                f"⏰ {dt.astimezone(timezone(timedelta(hours=1))).strftime('%d.%m %H:%M')}\n\n"
-                f"Typ: <b>{pick}</b>\n"
-                f"Kurs: <b>{best_odds[pick]}</b> (NO TAX)\n"
-                f"Edge: <b>+{edge*100:.2f}%</b>\n"
-                f"Stawka: <b>{STAKE} zł</b>"
-            )
-            tg(msg)
+            if edge < MIN_EDGE:
+                log(f"REJECT EDGE {edge*100:.2f}% < {MIN_EDGE*100:.2f}% | {e['home_team']}-{e['away_team']} | {pick}")
+                continue
 
+            # Dodanie zakładu i zapis natychmiast
             coupons.append({
                 "home": e["home_team"],
                 "away": e["away_team"],
@@ -160,8 +157,22 @@ def run():
                 "notified": True,
                 "settled_at": None
             })
-
             sent_ids.add(uid)
+
+            with open(FILE, "w", encoding="utf-8") as f:
+                json.dump(coupons, f, indent=2)
+
+            # Telegram
+            msg = (
+                f"🎯 <b>OKAZJA ({lname})</b>\n"
+                f"{e['home_team']} vs {e['away_team']}\n"
+                f"⏰ {dt.astimezone(timezone(timedelta(hours=1))).strftime('%d.%m %H:%M')}\n\n"
+                f"Typ: <b>{pick}</b>\n"
+                f"Kurs: <b>{best_odds[pick]}</b> (NO TAX)\n"
+                f"Edge: <b>+{edge*100:.2f}%</b>\n"
+                f"Stawka: <b>{STAKE} zł</b>"
+            )
+            tg(msg)
             log(f"ACCEPT {lname} | {e['home_team']}-{e['away_team']} | {pick} | {best_odds[pick]} | EDGE {edge*100:.2f}%")
 
     log("SCAN COMPLETE")
