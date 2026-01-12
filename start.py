@@ -3,32 +3,31 @@ from datetime import datetime, timezone, timedelta
 from collections import defaultdict
 from dateutil import parser
 
-# ================= CONFIG (TAKTYKA STABILNA) =================
+# ================= CONFIG (TAKTYKA: ZŁOTY ŚRODEK) =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 TAX_PL = 0.88 
-MIN_EDGE = 0.02   # Szukamy min. 2% przewagi (bezpieczniejszy zysk)
-MIN_ODDS = 1.35   # Unikamy bardzo niskich kursów
-MAX_ODDS = 3.20   # Odcinamy wysokie ryzyko (max kurs 3.20)
+MIN_EDGE = 0.01   # Próg 1% - idealny balans między ilością a jakością
+MIN_ODDS = 1.35   # Bezpieczne kursy dolne
+MAX_ODDS = 3.20   # Bezpieczne kursy górne
 STAWKA = 100      
-SCAN_DAYS = 120   # Skanowanie 5 dni do przodu
+SCAN_DAYS = 120   
 
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in API_KEYS if k]
 
-# LIGI O NAJWIĘKSZEJ STABILNOŚCI (W TYM NHL)
+# ELITARNA LISTA 10 LIG (Największa płynność i wiarygodność)
 LEAGUES = {
     "basketball_nba": "🏀 NBA",
-    "basketball_euroleague": "🏀 Euroleague",
     "icehockey_nhl": "🏒 NHL",
-    "tennis_atp_australian_open": "🎾 ATP AusOpen",
-    "tennis_wta_australian_open": "🎾 WTA AusOpen",
+    "basketball_euroleague": "🏀 Euroleague",
     "soccer_poland_ekstraklasa": "⚽ Ekstraklasa",
     "soccer_england_premier_league": "⚽ Premier League",
     "soccer_spain_la_liga": "⚽ La Liga",
     "soccer_germany_bundesliga": "⚽ Bundesliga",
     "soccer_italy_serie_a": "⚽ Serie A",
-    "esports_csgo_esl_pro_league": "🎮 CS:GO ESL"
+    "tennis_atp_australian_open": "🎾 ATP AusOpen",
+    "tennis_wta_australian_open": "🎾 WTA AusOpen"
 }
 
 COUPONS_FILE = "coupons.json"
@@ -55,26 +54,21 @@ def fetch_odds(league_key):
     return None
 
 def run_scanner():
-    print(f"🔍 START SKANU (STABILNY): {datetime.now().strftime('%H:%M:%S')}")
+    print(f"🔍 START SKANU (ZŁOTY ŚRODEK): {datetime.now().strftime('%H:%M:%S')}")
     coupons = load_json(COUPONS_FILE, [])
     now = datetime.now(timezone.utc)
     existing_ids = {f"{c.get('home')}_{c.get('pick')}" for c in coupons}
     
-    # Statystyki skanu do logów
     debug_stats = {"total": 0, "sent": 0, "out_of_range": 0, "low_edge": 0, "dup": 0}
 
     for l_key, l_name in LEAGUES.items():
         print(f"📡 Sprawdzam: {l_name}...")
         events = fetch_odds(l_key)
-        if not events:
-            print(f"   ℹ️ Brak ofert.")
-            continue
+        if not events: continue
         
         for e in events:
             home, away = e['home_team'], e['away_team']
             dt = parser.isoparse(e["commence_time"])
-            
-            # Filtr czasu
             if not (now <= dt <= now + timedelta(hours=SCAN_DAYS)): continue
             
             odds_map = defaultdict(list)
@@ -82,7 +76,6 @@ def run_scanner():
                 for m in bm["markets"]:
                     for o in m["outcomes"]: odds_map[o["name"]].append(o["price"])
             
-            # Wymagamy minimum 2 bukmacherów do porównania
             best_odds = {n: max(l) for n, l in odds_map.items() if len(l) >= 2}
             if len(best_odds) != 2: continue 
             
@@ -94,52 +87,35 @@ def run_scanner():
                 o = best_odds[sel]
                 debug_stats["total"] += 1
 
-                # 1. FILTR KURSÓW (Taktyka stabilna)
                 if not (MIN_ODDS <= o <= MAX_ODDS):
                     debug_stats["out_of_range"] += 1
                     continue
 
-                # 2. OBLICZENIE PRZEWAGI (Z uwzględnieniem podatku)
                 edge = (prob - 1/(o * TAX_PL))
                 
-                # 3. SPRAWDZENIE DUPLIKATÓW
                 if f"{home}_{sel}" in existing_ids:
                     debug_stats["dup"] += 1
                     continue
 
-                # 4. DECYZJA O WYŁANIU ALERTU
                 if edge >= MIN_EDGE:
                     local_dt = dt.astimezone(timezone(timedelta(hours=1)))
                     date_str = local_dt.strftime("%d.%m o %H:%M")
 
-                    msg = (f"✅ <b>STABILNA OKAZJA ({l_name})</b>\n━━━━━━━━━━━━━━━━━━━━\n"
+                    msg = (f"🎯 <b>OKAZJA ({l_name})</b>\n━━━━━━━━━━━━━━━━━━━━\n"
                            f"🏟 <b>{home} vs {away}</b>\n"
                            f"⏰ Start: <b>{date_str}</b>\n\n"
                            f"🔸 Typ: <b>{sel}</b>\n🔹 Kurs: <b>{o}</b>\n"
                            f"📈 Edge: <b>+{edge*100:.1f}%</b>\n💰 Stawka: <b>{STAWKA} zł</b>\n"
                            f"━━━━━━━━━━━━━━━━━━━━")
                     send_msg(msg)
-                    
-                    coupons.append({
-                        "home": home, "away": away, "pick": sel, "odds": o, 
-                        "stake": float(STAWKA), "status": "PENDING", 
-                        "league_key": l_key, "league_name": l_name, 
-                        "date": dt.isoformat(), "edge": round(edge*100, 2)
-                    })
+                    coupons.append({"home": home, "away": away, "pick": sel, "odds": o, "stake": float(STAWKA), "status": "PENDING", "league_key": l_key, "league_name": l_name, "date": dt.isoformat(), "edge": round(edge*100, 2)})
                     existing_ids.add(f"{home}_{sel}")
                     debug_stats["sent"] += 1
                 else:
                     debug_stats["low_edge"] += 1
     
     save_json(COUPONS_FILE, coupons)
-    
-    print("\n" + "="*50)
-    print("📊 PODSUMOWANIE SKANU (TAKTYKA STABILNA)")
-    print(f"✅ Wysłano: {debug_stats['sent']}")
-    print(f"♻️ Pominięto duplikatów: {debug_stats['dup']}")
-    print(f"📉 Odrzucono (Zbyt niski Edge): {debug_stats['low_edge']}")
-    print(f"🚫 Odrzucono (Kurs poza zakresem): {debug_stats['out_of_range']}")
-    print("="*50 + "\n")
+    print(f"\n✅ SKAN ZAKOŃCZONY. Wysłano: {debug_stats['sent']} | Pominięto (Edge): {debug_stats['low_edge']} | Pominięto (Kurs): {debug_stats['out_of_range']}")
 
 if __name__ == "__main__":
     run_scanner()
