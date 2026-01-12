@@ -1,9 +1,26 @@
 import json, os
 from collections import defaultdict
+import requests
 
-FILE = "coupons_notax.json"
+# ================= CONFIG =================
+T_TOKEN = os.getenv("T_TOKEN")
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
+FILE = "coupons_notax.json"  # Plik z zakładami NO TAX
+
+# ================= FUNKCJE =================
+def tg(msg):
+    """Wyślij wiadomość na Telegram"""
+    if T_TOKEN and T_CHAT_RESULTS:
+        try:
+            requests.post(
+                f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+                json={"chat_id": T_CHAT_RESULTS, "text": msg, "parse_mode": "HTML"}
+            )
+        except:
+            pass
 
 def load():
+    """Wczytaj zakłady z JSON"""
     if os.path.exists(FILE):
         with open(FILE, "r", encoding="utf-8") as f:
             try:
@@ -14,22 +31,39 @@ def load():
 
 def run():
     coupons = load()
-    stats = defaultdict(lambda: {"WON":0,"LOST":0,"profit":0.0,"bets":0})
+    if not coupons:
+        tg("📊 Statystyki: brak zakładów w pliku.")
+        return
 
+    stats = defaultdict(lambda: {"WON":0,"LOST":0,"profit":0.0,"bets":0})
+    total_bets = total_won = total_lost = total_profit = 0
+
+    # Agregacja statystyk
     for c in coupons:
         league = c['league']
         stats[league]['bets'] += 1
-        if c['status']=="WON":
+        total_bets += 1
+
+        if c['status'] == "WON":
             stats[league]['WON'] += 1
             stats[league]['profit'] += c.get('profit',0)
-        elif c['status']=="LOST":
+            total_won += 1
+            total_profit += c.get('profit',0)
+        elif c['status'] == "LOST":
             stats[league]['LOST'] += 1
             stats[league]['profit'] += c.get('profit',0)
+            total_lost += 1
+            total_profit += c.get('profit',0)
 
-    print("\n📊 STATYSTYKI LIG / SPORTÓW")
+    # Tworzenie wiadomości
+    msg = f"📊 <b>Statystyki wszystkich lig</b>\n\n"
+    msg += f"Łącznie zakładów: {total_bets}\n✅ Wygrane: {total_won}\n❌ Przegrane: {total_lost}\n💰 Zysk/Strata: {round(total_profit,2)} zł\n\n"
+    msg += "<b>Podział na ligi:</b>\n"
     for league, data in stats.items():
-        print(f"{league}: Bets {data['bets']} | WON {data['WON']} | LOST {data['LOST']} | Profit {round(data['profit'],2)} zł")
-    print("\n")
+        msg += f"{league}: Bets {data['bets']} | ✅ {data['WON']} | ❌ {data['LOST']} | 💰 {round(data['profit'],2)} zł\n"
 
+    tg(msg)
+
+# ================= URUCHOMIENIE =================
 if __name__=="__main__":
     run()
