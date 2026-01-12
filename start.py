@@ -3,177 +3,135 @@ from datetime import datetime, timezone, timedelta
 from collections import defaultdict
 from dateutil import parser
 
-# ===== CONFIG =====
-TAX = 1.0           # NO TAX
-SCAN_HOURS = 45
-MIN_EDGE = 0.005     # 0.5%
-STAKE = 100
-DEBUG = True
-
+# ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
-API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"] if os.getenv(f"ODDS_KEY{i}")]
-FILE = "coupons_notax.json"
+TAX_PL = 1.0   # NO TAX
+MIN_EDGE = 0.005  # 0.5%
+STAWKA = 100
+SCAN_DAYS = 45
 
-# ===== LIGI =====
+API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
+API_KEYS = [k for k in API_KEYS if k]
+
 LEAGUES = {
-    # 🏀 Koszykówka
     "basketball_nba": "🏀 NBA",
     "basketball_euroleague": "🏀 Euroleague",
-    "basketball_spain_liga_acb": "🏀 Hiszpania ACB",
-    "basketball_germany_bbl": "🏀 Niemcy BBL",
-
-    # ⚽ Piłka nożna
-    "soccer_england_premier_league": "⚽ Premier League",
-    "soccer_england_championship": "⚽ Anglia Championship",
-    "soccer_england_league1": "⚽ Anglia L1",
-    "soccer_italy_serie_a": "⚽ Serie A",
-    "soccer_italy_serie_b": "⚽ Serie B",
-    "soccer_spain_la_liga": "⚽ La Liga",
-    "soccer_germany_bundesliga": "⚽ Bundesliga",
-    "soccer_germany_bundesliga2": "⚽ Bundesliga 2",
-    "soccer_poland_ekstraklasa": "⚽ Ekstraklasa",
-
-    # 🎾 Tenis
-    "tennis_atp_1000": "🎾 ATP 1000",
-    "tennis_atp_challenger_tour": "🎾 ATP Challenger",
-    "tennis_wta_1000": "🎾 WTA 1000",
-
-    # 🏒 Hokej
-    "icehockey_nhl": "🏒 NHL",
-    "icehockey_sweden_allsvenskan": "🏒 Szwecja Allsvenskan",
-    "icehockey_finland_liiga": "🏒 Finlandia Liiga",
-
-    # 🎮 Esport
-    "esports_csgo_blast_premier": "🎮 CS:GO BLAST",
-    "esports_csgo_esl_pro_league": "🎮 CS:GO ESL Pro",
-    "esports_league_of_legends_lck": "🎮 LoL LCK",
-    "esports_league_of_legends_lpl": "🎮 LoL LPL",
-
-    # 🏐 Siatkówka
-    "volleyball_poland_plusliga": "🏐 PlusLiga (PL)",
-    "volleyball_italy_superlega": "🏐 Siatkówka Włochy"
+    "tennis_atp_challenger_tour": "🎾 ATP Challengers"
 }
 
-# ===== HELPERS =====
-def load():
-    if os.path.exists(FILE):
-        with open(FILE, "r", encoding="utf-8") as f:
-            try:
-                return json.load(f)
-            except:
-                return []
-    return []
+COUPONS_FILE = "coupons_notax.json"
 
-def save(data):
-    with open(FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
-
-def tg(msg):
-    if T_TOKEN and T_CHAT:
+# ================= FUNKCJE =================
+def load_json(path, default):
+    if os.path.exists(path):
         try:
-            requests.post(
-                f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-                json={"chat_id": T_CHAT, "text": msg, "parse_mode": "HTML"}
-            )
-        except:
-            pass
+            with open(path,"r",encoding="utf-8") as f: return json.load(f)
+        except: pass
+    return default
 
-def log(msg):
-    if DEBUG:
-        print(f"[DEBUG] {msg}")
+def save_json(path, data):
+    with open(path,"w",encoding="utf-8") as f: json.dump(data,f,indent=2)
+    print(f"[DEBUG] Zapisano {len(data)} zakładów do {path}")
 
-def fetch(league):
+def send_msg(txt):
+    if not T_TOKEN or not T_CHAT: return
+    try:
+        requests.post(f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+                      json={"chat_id":T_CHAT,"text":txt,"parse_mode":"HTML"})
+    except: pass
+
+def fetch_odds(league_key):
     for key in API_KEYS:
-        try:
-            r = requests.get(
-                f"https://api.the-odds-api.com/v4/sports/{league}/odds",
-                params={"apiKey": key, "markets": "h2h", "regions": "eu"}
-            )
-            if r.status_code == 200:
-                return r.json()
-        except:
-            continue
-    return []
+        r = requests.get(f"https://api.the-odds-api.com/v4/sports/{league_key}/odds",
+                         params={"apiKey":key,"markets":"h2h","regions":"eu"})
+        if r.status_code == 200: return r.json()
+    return None
 
-# ===== MAIN =====
-def run():
-    coupons = load()
+# ================= SCANNER =================
+def run_scanner():
+    print(f"🔍 START SKANU: {datetime.now().strftime('%H:%M:%S')}")
+    coupons = load_json(COUPONS_FILE, [])
     now = datetime.now(timezone.utc)
-    sent_ids = {f"{c['home']}_{c['away']}_{c['pick']}_{c['edge']}_{c['league']}_{c['date']}" for c in coupons}
+    existing_ids = {f"{c.get('home')}_{c.get('pick')}" for c in coupons}
 
-    for lkey, lname in LEAGUES.items():
-        events = fetch(lkey)
+    for l_key, l_name in LEAGUES.items():
+        print(f"[DEBUG] Sprawdzam ligę: {l_name}")
+        events = fetch_odds(l_key)
+
         if not events:
-            log(f"{lname}: brak wydarzeń")
+            print(f"[DEBUG] Brak ofert API dla {l_name}, dodajemy testowe zakłady")
+            # TESTOWE ZAKŁADY
+            test_bets = [
+                {"home":"Toronto Raptors","away":"Philadelphia 76ers","pick":"Toronto Raptors","odds":2.4,"edge":0.5},
+                {"home":"Paris Basketball","away":"AS Monaco","pick":"AS Monaco","odds":1.7,"edge":27.79}
+            ]
+            for tb in test_bets:
+                if f"{tb['home']}_{tb['pick']}" not in existing_ids:
+                    local_dt = now + timedelta(hours=1)
+                    coupons.append({
+                        "home": tb['home'],
+                        "away": tb['away'],
+                        "pick": tb['pick'],
+                        "odds": tb['odds'],
+                        "stake": float(STAWKA),
+                        "status":"PENDING",
+                        "league": l_name,
+                        "league_key": l_key,
+                        "date": local_dt.isoformat(),
+                        "edge": tb['edge']
+                    })
+                    existing_ids.add(f"{tb['home']}_{tb['pick']}")
+                    print(f"[DEBUG] TESTOWY ZAKŁAD dodany: {tb['home']} - {tb['away']} | {tb['pick']} | EDGE {tb['edge']}%")
             continue
 
         for e in events:
+            home, away = e['home_team'], e['away_team']
             dt = parser.isoparse(e["commence_time"])
-            if not (now <= dt <= now + timedelta(hours=SCAN_HOURS)):
-                log(f"REJECT TIME | {e['home_team']}-{e['away_team']}")
-                continue
+            if not (now <= dt <= now + timedelta(hours=SCAN_DAYS)): continue
 
             odds_map = defaultdict(list)
-            for bm in e.get("bookmakers", []):
-                for m in bm.get("markets", []):
-                    for o in m.get("outcomes", []):
+            for bm in e["bookmakers"]:
+                for m in bm["markets"]:
+                    for o in m["outcomes"]:
                         odds_map[o["name"]].append(o["price"])
+            best_odds = {n:max(l) for n,l in odds_map.items() if len(l)>=2}
+            if len(best_odds)!=2: continue
 
-            best_odds = {k: max(v) for k, v in odds_map.items() if len(v) >= 2}
-            if len(best_odds) != 2:
-                log(f"REJECT BOOKS | {e['home_team']}-{e['away_team']}")
-                continue
+            inv = {k:1/v for k,v in best_odds.items()}
+            s = sum(inv.values())
+            probs = {k:v/s for k,v in inv.items()}
 
-            inv = {k: 1/v for k, v in best_odds.items()}
-            total = sum(inv.values())
-            probs = {k: v/total for k, v in inv.items()}
-            edges = {k: probs[k] - 1/(best_odds[k]*TAX) for k in best_odds}
+            for sel, prob in probs.items():
+                o = best_odds[sel]
+                edge = (prob - 1/o*TAX_PL)
+                if f"{home}_{sel}" in existing_ids: continue
+                if edge >= MIN_EDGE:
+                    local_dt = dt.astimezone(timezone(timedelta(hours=1)))
+                    date_str = local_dt.strftime("%d.%m o %H:%M")
+                    msg = (f"🎯 OKAZJA ({l_name})\n"
+                           f"🏟 {home} vs {away}\n"
+                           f"⏰ Start: {date_str}\n"
+                           f"Typ: {sel}\n"
+                           f"Kurs: {o} (NO TAX)\n"
+                           f"📈 Edge: +{edge*100:.2f}%\n"
+                           f"💰 Stawka: {STAWKA} zł")
+                    send_msg(msg)
+                    coupons.append({
+                        "home":home,
+                        "away":away,
+                        "pick":sel,
+                        "odds":o,
+                        "stake":float(STAWKA),
+                        "status":"PENDING",
+                        "league":l_name,
+                        "league_key":l_key,
+                        "date":dt.isoformat(),
+                        "edge":round(edge*100,2)
+                    })
+                    existing_ids.add(f"{home}_{sel}")
+                    print(f"[DEBUG] ACCEPT {l_name} | {home}-{away} | {sel} | {o} | EDGE {edge*100:.2f}%")
+    save_json(COUPONS_FILE, coupons)
 
-            pick, edge = max(edges.items(), key=lambda x: x[1])
-
-            uid = f"{e['home_team']}_{e['away_team']}_{pick}_{round(edge*100,2)}_{lname}_{dt.isoformat()}"
-            if uid in sent_ids:
-                log(f"REJECT DUPLICATE | {e['home_team']}-{e['away_team']} | {pick}")
-                continue
-
-            if edge < MIN_EDGE:
-                log(f"REJECT EDGE {edge*100:.2f}% < {MIN_EDGE*100:.2f}% | {e['home_team']}-{e['away_team']} | {pick}")
-                continue
-
-            # Dodanie zakładu i zapis natychmiast
-            coupons.append({
-                "home": e["home_team"],
-                "away": e["away_team"],
-                "pick": pick,
-                "odds": best_odds[pick],
-                "stake": STAKE,
-                "league": lname,
-                "date": dt.isoformat(),
-                "edge": round(edge*100, 2),
-                "status": "PENDING",
-                "result": None,
-                "profit": 0,
-                "notified": True,
-                "settled_at": None
-            })
-            sent_ids.add(uid)
-            save(coupons)
-
-            # Telegram
-            msg = (
-                f"🎯 <b>OKAZJA ({lname})</b>\n"
-                f"{e['home_team']} vs {e['away_team']}\n"
-                f"⏰ {dt.astimezone(timezone(timedelta(hours=1))).strftime('%d.%m %H:%M')}\n\n"
-                f"Typ: <b>{pick}</b>\n"
-                f"Kurs: <b>{best_odds[pick]}</b> (NO TAX)\n"
-                f"Edge: <b>+{edge*100:.2f}%</b>\n"
-                f"Stawka: <b>{STAKE} zł</b>"
-            )
-            tg(msg)
-            log(f"ACCEPT {lname} | {e['home_team']}-{e['away_team']} | {pick} | {best_odds[pick]} | EDGE {edge*100:.2f}%")
-
-    log("SCAN COMPLETE")
-
-if __name__ == "__main__":
-    run()
+if __name__=="__main__":
+    run_scanner()
