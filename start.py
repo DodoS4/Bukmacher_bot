@@ -14,7 +14,9 @@ SCAN_DAYS = 45
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in API_KEYS if k]
 
-# ================= LIGI DO TESTÓW =================
+COUPONS_FILE = "coupons_notax.json"
+
+# ================= LIGI =================
 LEAGUES = {
     "basketball_nba": "🏀 NBA",
     "basketball_euroleague": "🏀 Euroleague",
@@ -32,8 +34,6 @@ LEAGUES = {
     "volleyball_italy_superlega": "🏐 Siatkówka Włochy",
     "esports_csgo_blast_premier": "🎮 CS:GO BLAST"
 }
-
-COUPONS_FILE = "coupons_notax.json"
 
 # ================= FUNKCJE =================
 def load_json(path, default):
@@ -73,29 +73,30 @@ def run_scanner():
         events = fetch_odds(l_key)
 
         if not events:
-            print(f"[DEBUG] Brak ofert API dla {l_name}, dodajemy testowe zakłady")
-            # TESTOWE ZAKŁADY
-            test_bets = [
-                {"home":"Toronto Raptors","away":"Philadelphia 76ers","pick":"Toronto Raptors","odds":2.4,"edge":0.5},
-                {"home":"Paris Basketball","away":"AS Monaco","pick":"AS Monaco","odds":1.7,"edge":27.79}
-            ]
-            for tb in test_bets:
-                if f"{tb['home']}_{tb['pick']}" not in existing_ids:
-                    local_dt = now + timedelta(hours=1)
-                    coupons.append({
-                        "home": tb['home'],
-                        "away": tb['away'],
-                        "pick": tb['pick'],
-                        "odds": tb['odds'],
-                        "stake": float(STAWKA),
-                        "status":"PENDING",
-                        "league": l_name,
-                        "league_key": l_key,
-                        "date": local_dt.isoformat(),
-                        "edge": tb['edge']
-                    })
-                    existing_ids.add(f"{tb['home']}_{tb['pick']}")
-                    print(f"[DEBUG] TESTOWY ZAKŁAD dodany: {tb['home']} - {tb['away']} | {tb['pick']} | EDGE {tb['edge']}%")
+            # dodaj testowy zakład
+            tb = {
+                "home": f"TeamA_{l_key}",
+                "away": f"TeamB_{l_key}",
+                "pick": f"TeamA_{l_key}",
+                "odds": 1.8,
+                "edge": 1.0
+            }
+            if f"{tb['home']}_{tb['pick']}" not in existing_ids:
+                local_dt = now + timedelta(hours=1)
+                coupons.append({
+                    "home": tb['home'],
+                    "away": tb['away'],
+                    "pick": tb['pick'],
+                    "odds": tb['odds'],
+                    "stake": float(STAWKA),
+                    "status": "PENDING",
+                    "league": l_name,
+                    "league_key": l_key,
+                    "date": local_dt.isoformat(),
+                    "edge": tb['edge']
+                })
+                existing_ids.add(f"{tb['home']}_{tb['pick']}")
+                print(f"[DEBUG] TESTOWY ZAKŁAD dodany: {tb['home']} - {tb['away']} | {tb['pick']} | EDGE {tb['edge']}%")
             continue
 
         for e in events:
