@@ -14,10 +14,23 @@ SCAN_DAYS = 45
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in API_KEYS if k]
 
+# ================= LIGI DO TESTÓW =================
 LEAGUES = {
     "basketball_nba": "🏀 NBA",
     "basketball_euroleague": "🏀 Euroleague",
-    "tennis_atp_challenger_tour": "🎾 ATP Challengers"
+    "basketball_spain_liga_acb": "🏀 Hiszpania ACB",
+    "basketball_korea_kbl": "🏀 Korea KBL",
+    "tennis_atp_challenger_tour": "🎾 ATP Challengers",
+    "tennis_wta_1000": "🎾 WTA 1000",
+    "soccer_england_league1": "⚽ Anglia L1",
+    "soccer_england_championship": "⚽ Anglia Champ.",
+    "soccer_italy_serie_b": "⚽ Włochy B",
+    "soccer_poland_ekstraklasa": "⚽ Ekstraklasa",
+    "icehockey_nhl": "🏒 NHL",
+    "icehockey_sweden_allsvenskan": "🏒 Szwecja Allsv.",
+    "volleyball_poland_plusliga": "🏐 PlusLiga (PL)",
+    "volleyball_italy_superlega": "🏐 Siatkówka Włochy",
+    "esports_csgo_blast_premier": "🎮 CS:GO BLAST"
 }
 
 COUPONS_FILE = "coupons_notax.json"
