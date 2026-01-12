@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
-API_KEY = os.getenv("ODDS_KEY")
+API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"] if os.getenv(f"ODDS_KEY{i}")]
 FILE = "coupons_notax.json"
 TAX = 1.0  # NO TAX
 
@@ -18,15 +18,13 @@ def tg(msg):
             pass
 
 def load():
-    if not os.path.exists(FILE):
-        with open(FILE, "w", encoding="utf-8") as f:
-            json.dump([], f)
-        return []
-    with open(FILE, "r", encoding="utf-8") as f:
-        try:
-            return json.load(f)
-        except:
-            return []
+    if os.path.exists(FILE):
+        with open(FILE, "r", encoding="utf-8") as f:
+            try:
+                return json.load(f)
+            except:
+                return []
+    return []
 
 def save(data):
     with open(FILE, "w", encoding="utf-8") as f:
@@ -34,62 +32,50 @@ def save(data):
 
 def run():
     coupons = load()
-    pending = [c for c in coupons if c.get("status") == "PENDING"]
-    if not pending:
-        return
+    pending = [c for c in coupons if c.get("status")=="PENDING"]
+    if not pending: return
 
-    leagues = {c["league"] for c in pending}
-
-    for lkey in leagues:
-        url = f"https://api.the-odds-api.com/v4/sports/{lkey}/scores/"
-        try:
-            r = requests.get(url, params={"apiKey": API_KEY, "daysFrom": 3})
-            if r.status_code != 200:
-                continue
-            scores = r.json()
-        except:
-            continue
-
-        for c in coupons:
-            if c.get("status") != "PENDING" or c["league"] != lkey:
+    for c in pending:
+        # Szukamy odpowiedniego API key
+        for key in API_KEYS:
+            url = f"https://api.the-odds-api.com/v4/sports/{c['league'].lower().replace(' ','_')}/scores/"
+            try:
+                r = requests.get(url, params={"apiKey": key, "daysFrom":3})
+                if r.status_code != 200: continue
+                scores = r.json()
+            except:
                 continue
 
-            match = next(
-                (s for s in scores if s["home_team"] == c["home"] or s["away_team"] == c["home"]),
-                None
-            )
-            if not match or not match.get("completed"):
-                continue
+            # Szukamy meczu
+            match = next((m for m in scores if m['home_team']==c['home'] or m['away_team']==c['home']), None)
+            if not match or not match.get("completed"): continue
 
             try:
-                score_map = {s["name"]: int(s["score"]) for s in match["scores"]}
-                h_score = score_map.get(c["home"])
-                a_score = score_map.get(c["away"])
-                if h_score is None or a_score is None:
-                    continue
+                score_map = {s['name']: int(s['score']) for s in match.get("scores",[])}
+                h_score = score_map.get(c['home'])
+                a_score = score_map.get(c['away'])
+                if h_score is None or a_score is None: continue
 
-                winner = c["home"] if h_score > a_score else c["away"]
-                c["status"] = "WON" if c["pick"] == winner else "LOST"
-
-                if c["status"] == "WON":
-                    profit = (c["stake"] * c["odds"] * TAX) - c["stake"]
+                winner = c['home'] if h_score > a_score else c['away']
+                if c['pick'] == winner:
+                    c['status'] = "WON"
+                    profit = c['stake'] * c['odds'] * TAX - c['stake']
+                    c['profit'] = round(profit,2)
                     emoji = "✅"
-                    result_text = f"Zysk: <b>+{round(profit, 2)} zł</b>"
+                    msg = f"{emoji} <b>ROZLICZONO: {c['home']} - {c['away']}</b>\nWynik: {h_score}:{a_score}\nTyp: {c['pick']} | Zysk: <b>+{c['profit']} zł</b>"
                 else:
+                    c['status'] = "LOST"
+                    c['profit'] = -c['stake']
                     emoji = "❌"
-                    result_text = f"Strata: <b>-{c['stake']} zł</b>"
+                    msg = f"{emoji} <b>ROZLICZONO: {c['home']} - {c['away']}</b>\nWynik: {h_score}:{a_score}\nTyp: {c['pick']} | Strata: <b>{c['profit']} zł</b>"
 
-                txt = (
-                    f"{emoji} <b>ROZLICZONO: {c['home']} - {c['away']}</b>\n"
-                    f"Wynik: {h_score}:{a_score}\n"
-                    f"Typ: {c['pick']} | {result_text}"
-                )
-                tg(txt)
-
+                c['settled_at'] = datetime.now(timezone.utc).isoformat()
+                tg(msg)
+                break
             except:
                 continue
 
     save(coupons)
 
-if __name__ == "__main__":
+if __name__=="__main__":
     run()
