@@ -7,7 +7,6 @@ API_KEY = os.getenv("ODDS_KEY")
 FILE = "coupons_notax.json"
 TAX = 1.0  # NO TAX
 
-# ===== HELPERS =====
 def tg(msg):
     if T_TOKEN and T_CHAT_RESULTS:
         try:
@@ -33,7 +32,6 @@ def save(data):
     with open(FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
-# ===== MAIN =====
 def run():
     coupons = load()
     pending = [c for c in coupons if c.get("status") == "PENDING"]
