@@ -1,34 +1,60 @@
 import json, os
+from datetime import datetime, timedelta
+import requests
+from collections import defaultdict
 
-COUPONS_FILE = "coupons_notax.json"
+FILE = "coupons_notax.json"
+T_TOKEN = os.getenv("T_TOKEN")
+T_CHAT = os.getenv("T_CHAT_RESULTS")
 
-def run_stats():
-    if not os.path.exists(COUPONS_FILE):
-        return
-
-    with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-        coupons = json.load(f)
-
-    bets = [c for c in coupons if c["status"] in ("WON", "LOST")]
-    if not bets:
-        print("Brak danych.")
-        return
-
-    stake = sum(c["stake"] for c in bets)
-    profit = sum(
-        (c["stake"] * c["odds"] - c["stake"]) if c["status"] == "WON"
-        else -c["stake"]
-        for c in bets
+def tg(msg):
+    requests.post(
+        f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+        json={"chat_id": T_CHAT, "text": msg, "parse_mode": "HTML"}
     )
 
-    roi = (profit / stake) * 100
+with open(FILE, "r", encoding="utf-8") as f:
+    data = json.load(f)
 
-    print("=" * 40)
-    print(f"Bety: {len(bets)}")
-    print(f"Stawka: {stake:.2f} zł")
-    print(f"Profit: {profit:.2f} zł")
-    print(f"ROI: {roi:.2f}%")
-    print("=" * 40)
+today = datetime.utcnow().date()
 
-if __name__ == "__main__":
-    run_stats()
+daily = [c for c in data if c["settled_at"] and
+         datetime.fromisoformat(c["settled_at"]).date() == today]
+
+if not daily:
+    exit()
+
+profit = sum(c["profit"] for c in daily)
+stake = sum(c["stake"] for c in daily)
+wins = len([c for c in daily if c["profit"] > 0])
+
+msg = (
+    f"📊 <b>DZIENNY RAPORT • NO TAX</b>\n"
+    f"📅 {today}\n\n"
+    f"🎯 Bety: {len(daily)}\n"
+    f"✅ Wygrane: {wins}\n"
+    f"❌ Przegrane: {len(daily)-wins}\n\n"
+    f"💰 Profit: <b>{profit:.2f} zł</b>\n"
+    f"📊 ROI: <b>{(profit/stake)*100:.2f}%</b>\n"
+)
+
+# --- LIGI ---
+by_league = defaultdict(list)
+for c in daily:
+    by_league[c["league"]].append(c["profit"])
+
+msg += "\n📈 <b>LIGI</b>\n"
+for l, vals in by_league.items():
+    msg += f"{l}: {sum(vals):.2f} zł\n"
+
+# --- KELLY (symulacja 0.5x) ---
+kelly_profit = 0
+for c in daily:
+    b = c["odds"] - 1
+    p = 0.5  # uproszczone EV
+    k = max((p*b - (1-p))/b, 0) * 0.5
+    kelly_profit += c["profit"] * k
+
+msg += f"\n📐 <b>Flat vs Kelly (sym)</b>\nFlat: {profit:.2f} zł\nKelly: ~{kelly_profit:.2f} zł"
+
+tg(msg)
