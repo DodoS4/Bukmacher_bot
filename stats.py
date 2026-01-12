@@ -1,51 +1,35 @@
 import json, os
-from datetime import datetime
-import requests
+from collections import defaultdict
 
-T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 FILE = "coupons_notax.json"
 
-def tg(msg):
-    if T_TOKEN and T_CHAT_RESULTS:
-        try:
-            requests.post(
-                f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-                json={"chat_id": T_CHAT_RESULTS, "text": msg, "parse_mode": "HTML"}
-            )
-        except:
-            pass
+def load():
+    if os.path.exists(FILE):
+        with open(FILE, "r", encoding="utf-8") as f:
+            try:
+                return json.load(f)
+            except:
+                return []
+    return []
 
 def run():
-    if not os.path.exists(FILE):
-        return
+    coupons = load()
+    stats = defaultdict(lambda: {"WON":0,"LOST":0,"profit":0.0,"bets":0})
 
-    with open(FILE, "r", encoding="utf-8") as f:
-        try:
-            coupons = json.load(f)
-        except:
-            return
-
-    leagues = {}
     for c in coupons:
-        lname = c["league"]
-        if lname not in leagues:
-            leagues[lname] = {"won":0,"lost":0,"profit":0,"bets":0}
-        if c.get("status") in ["WON","LOST"]:
-            leagues[lname]["bets"] += 1
-            if c["status"]=="WON":
-                leagues[lname]["won"] += 1
-                leagues[lname]["profit"] += (c["stake"]*c["odds"]*1.0 - c["stake"])
-            else:
-                leagues[lname]["lost"] += 1
-                leagues[lname]["profit"] -= c["stake"]
+        league = c['league']
+        stats[league]['bets'] += 1
+        if c['status']=="WON":
+            stats[league]['WON'] += 1
+            stats[league]['profit'] += c.get('profit',0)
+        elif c['status']=="LOST":
+            stats[league]['LOST'] += 1
+            stats[league]['profit'] += c.get('profit',0)
 
-    msg = f"📊 <b>Raport dzienny lig</b> - {datetime.now().strftime('%d.%m.%Y')}\n\n"
-    for lname,data in leagues.items():
-        roi = (data["profit"]/ (data["bets"]*100) *100) if data["bets"]>0 else 0
-        msg += f"{lname}: Bets {data['bets']} | Won {data['won']} | Lost {data['lost']} | ROI {roi:.2f}%\n"
-
-    tg(msg)
+    print("\n📊 STATYSTYKI LIG / SPORTÓW")
+    for league, data in stats.items():
+        print(f"{league}: Bets {data['bets']} | WON {data['WON']} | LOST {data['LOST']} | Profit {round(data['profit'],2)} zł")
+    print("\n")
 
 if __name__=="__main__":
     run()
