@@ -5,7 +5,7 @@ from dateutil import parser
 
 # ===== CONFIG =====
 TAX = 1.0           # NO TAX
-SCAN_HOURS = 45
+SCAN_HOURS = 90
 MIN_EDGE = 0.005     # 0.5%
 STAKE = 100
 DEBUG = True
