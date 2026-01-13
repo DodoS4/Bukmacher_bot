@@ -2,10 +2,10 @@ name: Betting Bot 24/7
 
 on:
   schedule:
-    # skan + settle + stats kilka razy dziennie
+    # Skan + settle + stats (kilka razy dziennie)
     - cron: '0 6,12,18,22 * * *'
 
-    # tygodniowy raport (niedziela 22:00)
+    # Tygodniowy raport + ranking lig (niedziela 22:00)
     - cron: '0 22 * * 0'
 
   workflow_dispatch:
@@ -15,9 +15,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ================= CHECKOUT =================
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0   # WAŻNE – potrzebne do rebase
 
+      # ================= PYTHON =================
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -52,19 +56,24 @@ jobs:
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python settle.py
 
-      # ================= STATS / WEEKLY REPORT =================
+      # ================= STATS / WEEKLY =================
       - name: Run Stats (weekly report + ranking)
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
         run: python stats.py
 
-      # ================= SAVE FILES =================
-      - name: Commit and push data
+      # ================= SAVE DATA =================
+      - name: Commit and push data safely
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
           git add coupons_notax.json
-          git commit -m "Update coupons & stats [skip ci]" || exit 0
-          git push
+          git commit -m "Update coupons & stats [skip ci]" || echo "Nothing to commit"
+
+          # POBIERZ ZMIANY Z GITHUBA (rozwiązuje konflikty)
+          git pull --rebase origin main || true
+
+          # WYPCHNIJ DANE
+          git push origin main
