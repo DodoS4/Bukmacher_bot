@@ -202,5 +202,17 @@
     "league_name": "\ud83c\udfc0 NBA",
     "date": "2026-01-14T04:10:00+00:00",
     "edge": 1.77
+  },
+  {
+    "home": "New Orleans Pelicans",
+    "away": "Denver Nuggets",
+    "pick": "New Orleans Pelicans",
+    "odds": 2.38,
+    "stake": 100,
+    "status": "PENDING",
+    "league_key": "basketball_nba",
+    "league_name": "\ud83c\udfc0 NBA",
+    "date": "2026-01-14T01:10:00+00:00",
+    "edge": 1.05
   }
 ]
