@@ -9,6 +9,18 @@ FILE = "coupons_notax.json"
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
+# ================= LEAGUE NORMALIZATION =================
+LEAGUE_MAP = {
+    "basketball_nba": "🏀 NBA",
+    "🏀 NBA": "🏀 NBA",
+
+    "basketball_euroleague": "🏀 Euroleague",
+    "🏀 Euroleague": "🏀 Euroleague",
+
+    "soccer_poland_ekstraklasa": "⚽ Ekstraklasa",
+    "⚽ Ekstraklasa": "⚽ Ekstraklasa",
+}
+
 # ================= HELPERS =================
 def send_msg(txt):
     if not T_TOKEN or not T_CHAT_RESULTS:
@@ -36,9 +48,10 @@ def calc_stats(coupons):
     total = len(coupons)
     win = sum(1 for c in coupons if c["status"] == "WIN")
     lose = sum(1 for c in coupons if c["status"] == "LOSE")
+    pending = sum(1 for c in coupons if c["status"] == "PENDING")
     profit = sum(c.get("profit", 0) for c in coupons)
 
-    return total, win, lose, round(profit, 2)
+    return total, win, lose, pending, round(profit, 2)
 
 # ================= WEEKLY REPORT =================
 def run_weekly_report():
@@ -65,27 +78,25 @@ def run_weekly_report():
 
     leagues = defaultdict(list)
     for c in weekly:
-        league = (
-            c.get("league_name")
-            or c.get("league_key")
-            or "UNKNOWN"
-        )
+        raw = c.get("league_name") or c.get("league_key") or "UNKNOWN"
+        league = LEAGUE_MAP.get(raw, raw)
         leagues[league].append(c)
 
-    total, win, lose, profit = calc_stats(weekly)
+    total, win, lose, pending, profit = calc_stats(weekly)
 
     msg = (
         f"📊 <b>STATYSTYKI – OSTATNIE 7 DNI</b>\n\n"
         f"Łącznie zakładów: <b>{total}</b>\n"
         f"✅ Wygrane: <b>{win}</b>\n"
         f"❌ Przegrane: <b>{lose}</b>\n"
+        f"⏳ Pending: <b>{pending}</b>\n"
         f"💰 Zysk/Strata: <b>{profit} zł</b>\n\n"
         f"<b>Podział na ligi:</b>\n"
     )
 
     for lg, bets in leagues.items():
-        t, w, l, p = calc_stats(bets)
-        msg += f"• {lg}: {t} | ✅ {w} | ❌ {l} | 💰 {p} zł\n"
+        t, w, l, pnd, p = calc_stats(bets)
+        msg += f"• {lg}: {t} | ✅ {w} | ❌ {l} | ⏳ {pnd} | 💰 {p} zł\n"
 
     send_msg(msg)
 
