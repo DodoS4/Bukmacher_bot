@@ -1,98 +1,94 @@
-import json, os
-from datetime import datetime, timedelta, timezone
+import json
+import os
 from collections import defaultdict
+from datetime import datetime, timedelta, timezone
 import requests
 
-COUPONS_FILE = "coupons_notax.json"
+# ================= CONFIG =================
+FILE = "coupons_notax.json"
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
 
+# ================= HELPERS =================
 def send_msg(txt):
     if not T_TOKEN or not T_CHAT_RESULTS:
         return
     try:
         requests.post(
             f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-            json={"chat_id": T_CHAT_RESULTS, "text": txt, "parse_mode": "HTML"}
+            json={
+                "chat_id": T_CHAT_RESULTS,
+                "text": txt,
+                "parse_mode": "HTML"
+            }
         )
     except:
         pass
 
-def load_coupons():
-    if not os.path.exists(COUPONS_FILE):
+def load():
+    if not os.path.exists(FILE):
         return []
-    try:
-        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return []
+    with open(FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
+# ================= STATS =================
+def calc_stats(coupons):
+    total = len(coupons)
+    win = sum(1 for c in coupons if c["status"] == "WIN")
+    lose = sum(1 for c in coupons if c["status"] == "LOSE")
+    profit = sum(c.get("profit", 0) for c in coupons)
+
+    return total, win, lose, round(profit, 2)
+
+# ================= WEEKLY REPORT =================
 def run_weekly_report():
-    coupons = load_coupons()
+    coupons = load()
+    if not coupons:
+        send_msg("📊 Brak danych do raportu")
+        return
+
     now = datetime.now(timezone.utc)
     week_ago = now - timedelta(days=7)
 
-    week = []
+    weekly = []
     for c in coupons:
         try:
-            dt = datetime.fromisoformat(c["date"])
-            if dt >= week_ago and c.get("status") in ("WON", "LOST"):
-                week.append(c)
+            d = datetime.fromisoformat(c["date"])
+            if d >= week_ago:
+                weekly.append(c)
         except:
             continue
 
-    if not week:
-        send_msg("📊 RAPORT TYGODNIOWY\nBrak rozliczonych zakładów w ostatnich 7 dniach.")
+    if not weekly:
+        send_msg("📊 Brak zakładów z ostatnich 7 dni")
         return
 
-    total = len(week)
-    won = sum(1 for c in week if c["status"] == "WON")
-    lost = total - won
-
-    profit = 0
-    for c in week:
-        if c["status"] == "WON":
-            profit += (c["stake"] * c["odds"]) - c["stake"]
-        else:
-            profit -= c["stake"]
-
-    acc = (won / total) * 100 if total else 0
-
     leagues = defaultdict(list)
-    for c in week:
-        leagues[c["league_name"]].append(c)
+    for c in weekly:
+        league = (
+            c.get("league_name")
+            or c.get("league_key")
+            or "UNKNOWN"
+        )
+        leagues[league].append(c)
 
-    ranking = []
-    for league, lst in leagues.items():
-        l_profit = 0
-        l_stake = 0
-        for c in lst:
-            l_stake += c["stake"]
-            if c["status"] == "WON":
-                l_profit += (c["stake"] * c["odds"]) - c["stake"]
-            else:
-                l_profit -= c["stake"]
-
-        roi = (l_profit / l_stake) * 100 if l_stake else 0
-        ranking.append((league, len(lst), l_profit, roi))
-
-    ranking.sort(key=lambda x: x[2], reverse=True)
+    total, win, lose, profit = calc_stats(weekly)
 
     msg = (
-        "📊 <b>RAPORT TYGODNIOWY (NO TAX)</b>\n"
-        "📅 Ostatnie 7 dni\n\n"
-        f"Zakłady: <b>{total}</b>\n"
-        f"✅ Wygrane: <b>{won}</b>\n"
-        f"❌ Przegrane: <b>{lost}</b>\n"
-        f"🎯 Skuteczność: <b>{acc:.1f}%</b>\n"
-        f"💰 Wynik: <b>{profit:.2f} zł</b>\n\n"
-        "🏆 <b>RANKING LIG:</b>\n"
+        f"📊 <b>STATYSTYKI – OSTATNIE 7 DNI</b>\n\n"
+        f"Łącznie zakładów: <b>{total}</b>\n"
+        f"✅ Wygrane: <b>{win}</b>\n"
+        f"❌ Przegrane: <b>{lose}</b>\n"
+        f"💰 Zysk/Strata: <b>{profit} zł</b>\n\n"
+        f"<b>Podział na ligi:</b>\n"
     )
 
-    for i, (l, cnt, p, roi) in enumerate(ranking, 1):
-        msg += f"{i}️⃣ {l} | Bets: {cnt} | 💰 {p:.2f} zł | ROI: {roi:.1f}%\n"
+    for lg, bets in leagues.items():
+        t, w, l, p = calc_stats(bets)
+        msg += f"• {lg}: {t} | ✅ {w} | ❌ {l} | 💰 {p} zł\n"
 
     send_msg(msg)
 
+# ================= RUN =================
 if __name__ == "__main__":
     run_weekly_report()
