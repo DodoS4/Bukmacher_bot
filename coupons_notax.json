@@ -29,7 +29,7 @@
     "pick": "Philadelphia 76ers",
     "odds": 1.73,
     "stake": 100.0,
-    "status": "PENDING",
+    "status": "LOST",
     "league": "\ud83c\udfc0 NBA",
     "league_key": "basketball_nba",
     "date": "2026-01-13T00:40:00+00:00",
@@ -118,5 +118,89 @@
     "league_key": "basketball_euroleague",
     "date": "2026-01-14T18:30:00+00:00",
     "edge": 19.37
+  },
+  {
+    "home": "Houston Rockets",
+    "away": "Chicago Bulls",
+    "pick": "Houston Rockets",
+    "odds": 1.21,
+    "stake": 100,
+    "status": "PENDING",
+    "league_key": "basketball_nba",
+    "league_name": "\ud83c\udfc0 NBA",
+    "date": "2026-01-14T01:10:00+00:00",
+    "edge": 0.96
+  },
+  {
+    "home": "New Orleans Pelicans",
+    "away": "Denver Nuggets",
+    "pick": "Denver Nuggets",
+    "odds": 1.77,
+    "stake": 100,
+    "status": "PENDING",
+    "league_key": "basketball_nba",
+    "league_name": "\ud83c\udfc0 NBA",
+    "date": "2026-01-14T01:10:00+00:00",
+    "edge": 0.65
+  },
+  {
+    "home": "Milwaukee Bucks",
+    "away": "Minnesota Timberwolves",
+    "pick": "Milwaukee Bucks",
+    "odds": 1.74,
+    "stake": 100,
+    "status": "PENDING",
+    "league_key": "basketball_nba",
+    "league_name": "\ud83c\udfc0 NBA",
+    "date": "2026-01-14T01:10:00+00:00",
+    "edge": 1.1
+  },
+  {
+    "home": "Milwaukee Bucks",
+    "away": "Minnesota Timberwolves",
+    "pick": "Minnesota Timberwolves",
+    "odds": 2.46,
+    "stake": 100,
+    "status": "PENDING",
+    "league_key": "basketball_nba",
+    "league_name": "\ud83c\udfc0 NBA",
+    "date": "2026-01-14T01:10:00+00:00",
+    "edge": 0.78
+  },
+  {
+    "home": "Los Angeles Lakers",
+    "away": "Atlanta Hawks",
+    "pick": "Atlanta Hawks",
+    "odds": 1.73,
+    "stake": 100,
+    "status": "PENDING",
+    "league_key": "basketball_nba",
+    "league_name": "\ud83c\udfc0 NBA",
+    "date": "2026-01-14T03:40:00+00:00",
+    "edge": 1.3
+  },
+  {
+    "home": "Los Angeles Lakers",
+    "away": "Atlanta Hawks",
+    "pick": "Los Angeles Lakers",
+    "odds": 2.5,
+    "stake": 100,
+    "status": "PENDING",
+    "league_key": "basketball_nba",
+    "league_name": "\ud83c\udfc0 NBA",
+    "date": "2026-01-14T03:40:00+00:00",
+    "edge": 0.9
+  },
+  {
+    "home": "Golden State Warriors",
+    "away": "Portland Trail Blazers",
+    "pick": "Golden State Warriors",
+    "odds": 1.3,
+    "stake": 100,
+    "status": "PENDING",
+    "league_key": "basketball_nba",
+    "league_name": "\ud83c\udfc0 NBA",
+    "date": "2026-01-14T04:10:00+00:00",
+    "edge": 1.77
   }
 ]
