@@ -42,19 +42,25 @@ def fetch_scores(league_key):
     for key in API_KEYS:
         r = requests.get(
             f"https://api.the-odds-api.com/v4/sports/{league_key}/scores/",
-            params={"apiKey": key, "daysFrom": 5},
+            params={"apiKey": key, "daysFrom": 7},
             timeout=15
         )
         if r.status_code == 200:
             return r.json()
     return []
 
-def norm(t):
-    return t.lower().replace(".", "").replace("-", "").strip()
+def norm(name):
+    return (
+        name.lower()
+        .replace(".", "")
+        .replace("-", "")
+        .replace("fc ", "")
+        .replace(" bk", "")
+        .strip()
+    )
 
-def team_match(a, b):
-    a, b = norm(a), norm(b)
-    return a in b or b in a
+def team_set(a, b):
+    return {norm(a), norm(b)}
 
 # ================= SETTLE =================
 
@@ -66,54 +72,56 @@ def run_settler():
         print("[SETTLE] Brak PENDING")
         return
 
-    print(f"[SETTLE] Pending: {len(pending)}")
+    print(f"[SETTLE] Pending coupons: {len(pending)}")
 
     leagues = {c["league_key"] for c in pending}
 
     for league in leagues:
         scores = fetch_scores(league)
-        print(f"[SETTLE] {league} | games: {len(scores)}")
+        print(f"[SETTLE] {league} | API games: {len(scores)}")
 
         for c in coupons:
             if c.get("status") != "PENDING" or c["league_key"] != league:
                 continue
 
-            c_time = parser.isoparse(c["date"])
+            coupon_time = parser.isoparse(c["date"])
+            coupon_teams = team_set(c["home"], c["away"])
+            settled = False
 
             for s in scores:
                 if not s.get("completed"):
                     continue
 
-                s_time = parser.isoparse(s["commence_time"])
-
-                # ⏱️ time window ±6h
-                if abs((s_time - c_time).total_seconds()) > 6 * 3600:
+                if not s.get("scores"):
+                    print(f"[SKIP] NO SCORES | {s.get('home_team')} - {s.get('away_team')}")
                     continue
 
-                if not (
-                    team_match(s["home_team"], c["home"]) and
-                    team_match(s["away_team"], c["away"])
-                ):
+                game_time = parser.isoparse(s["commence_time"])
+
+                # ⏱️ ±24h window
+                if abs((game_time - coupon_time).total_seconds()) > 24 * 3600:
+                    print(f"[SKIP] TIME | {c['home']} - {c['away']}")
+                    continue
+
+                api_teams = team_set(s["home_team"], s["away_team"])
+
+                if api_teams != coupon_teams:
+                    print(f"[SKIP] TEAM | coupon={coupon_teams} api={api_teams}")
                     continue
 
                 # ✅ MATCH FOUND
                 try:
                     scores_map = {
-                        sc["name"]: int(sc["score"])
-                        for sc in s.get("scores", [])
+                        norm(sc["name"]): int(sc["score"])
+                        for sc in s["scores"]
                         if sc.get("score") is not None
                     }
 
-                    h_score = next(
-                        v for k, v in scores_map.items()
-                        if team_match(k, c["home"])
-                    )
-                    a_score = next(
-                        v for k, v in scores_map.items()
-                        if team_match(k, c["away"])
-                    )
+                    h_score = scores_map[norm(c["home"])]
+                    a_score = scores_map[norm(c["away"])]
 
-                except:
+                except Exception as e:
+                    print(f"[SKIP] SCORE MAP ERROR | {e}")
                     continue
 
                 winner = c["home"] if h_score > a_score else c["away"]
@@ -140,11 +148,15 @@ def run_settler():
                 )
 
                 send_msg(msg)
-                print(f"[SETTLE] {c['home']} - {c['away']} | {c['status']}")
+                print(f"[SETTLE] OK | {c['home']} - {c['away']} | {c['status']}")
+                settled = True
                 break
 
+            if not settled:
+                print(f"[PENDING] {c['home']} - {c['away']}")
+
     save_coupons(coupons)
-    print("[SETTLE] Zapisano plik")
+    print("[SETTLE] Zapisano coupons_notax.json")
 
 # ================= RUN =================
 
