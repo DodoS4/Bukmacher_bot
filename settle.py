@@ -1,163 +1,81 @@
-import requests
 import json
 import os
-from datetime import datetime
-
-# ================== CONFIG ==================
-
-T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
-
-API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
-API_KEYS = [k for k in API_KEYS if k]
+from datetime import datetime, timedelta
 
 COUPONS_FILE = "coupons_notax.json"
-TAX_PL = 1.0  # NO TAX
 
-AUTO_SETTLE_LEAGUES = {
-    "basketball_nba",
-    "soccer_epl",
-    "soccer_laliga",
-    "soccer_bundesliga",
-    "soccer_serie_a",
-    "soccer_ligue_1",
-    "soccer_uefa_champs_league",
-    "soccer_uefa_europa_league",
-    "soccer_uefa_conference_league",
-}
+DAYS = 7
 
-# ================== HELPERS ==================
-
-def send_msg(text):
-    if not T_TOKEN or not T_CHAT_RESULTS:
-        return
-    try:
-        requests.post(
-            f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-            json={
-                "chat_id": T_CHAT_RESULTS,
-                "text": text,
-                "parse_mode": "HTML"
-            },
-            timeout=10
-        )
-    except:
-        pass
-
-
-def load_coupons():
+def load():
     if not os.path.exists(COUPONS_FILE):
         return []
+    with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def in_last_days(c, days):
+    ts = c.get("created_at") or c.get("time")
+    if not ts:
+        return True
     try:
-        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        dt = datetime.fromisoformat(ts.replace("Z", ""))
+        return dt >= datetime.utcnow() - timedelta(days=days)
     except:
-        return []
+        return True
 
+def run():
+    data = load()
+    data = [c for c in data if in_last_days(c, DAYS)]
 
-def save_coupons(data):
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    total = len(data)
+    won = lost = pending = 0
+    profit = 0.0
 
+    leagues = {}
 
-def fetch_scores(league_key):
-    for key in API_KEYS:
-        try:
-            r = requests.get(
-                f"https://api.the-odds-api.com/v4/sports/{league_key}/scores/",
-                params={"apiKey": key, "daysFrom": 3},
-                timeout=10
-            )
-            if r.status_code == 200:
-                return r.json()
-        except:
-            continue
-    return []
+    for c in data:
+        league = c.get("league_name") or c.get("league_key", "UNKNOWN")
+        leagues.setdefault(league, {
+            "bets": 0,
+            "won": 0,
+            "lost": 0,
+            "pending": 0,
+            "profit": 0.0
+        })
 
-# ================== MAIN ==================
+        leagues[league]["bets"] += 1
 
-def run_settler():
-    coupons = load_coupons()
-    pending = [c for c in coupons if c.get("status") == "PENDING"]
+        status = c.get("status", "PENDING")
 
-    print(f"[SETTLE] Pending coupons: {len(pending)}")
+        if status == "WON":
+            won += 1
+            leagues[league]["won"] += 1
+            profit += c.get("profit", 0)
+            leagues[league]["profit"] += c.get("profit", 0)
 
-    if not pending:
-        return
+        elif status == "LOST":
+            lost += 1
+            leagues[league]["lost"] += 1
+            profit += c.get("profit", 0)
+            leagues[league]["profit"] += c.get("profit", 0)
 
-    leagues = {c["league_key"] for c in pending}
+        else:
+            pending += 1
+            leagues[league]["pending"] += 1
 
-    for league_key in leagues:
+    print("\n📊 STATYSTYKI – OSTATNIE 7 DNI\n")
+    print(f"Łącznie zakładów: {total}")
+    print(f"✅ Wygrane: {won}")
+    print(f"❌ Przegrane: {lost}")
+    print(f"⏳ Pending: {pending}")
+    print(f"💰 Zysk/Strata: {round(profit,2)} zł\n")
 
-        if league_key not in AUTO_SETTLE_LEAGUES:
-            print(f"[SKIP] {league_key} – brak auto settle")
-            continue
-
-        scores = fetch_scores(league_key)
-        print(f"[SETTLE] {league_key} | API games: {len(scores)}")
-
-        if not scores:
-            continue
-
-        for c in coupons:
-            if c.get("status") != "PENDING":
-                continue
-            if c["league_key"] != league_key:
-                continue
-
-            game = next(
-                (
-                    g for g in scores
-                    if g.get("home_team") == c["home"]
-                    and g.get("away_team") == c["away"]
-                ),
-                None
-            )
-
-            if not game or not game.get("completed"):
-                print(f"[PENDING] {c['home']} - {c['away']}")
-                continue
-
-            try:
-                score_map = {s["name"]: int(s["score"]) for s in game["scores"]}
-                h_score = score_map.get(c["home"])
-                a_score = score_map.get(c["away"])
-
-                if h_score is None or a_score is None:
-                    continue
-
-                winner = c["home"] if h_score > a_score else c["away"]
-                c["status"] = "WON" if c["pick"] == winner else "LOST"
-                c["settled_at"] = datetime.utcnow().isoformat()
-
-                if c["status"] == "WON":
-                    profit = round((c["stake"] * c["odds"] * TAX_PL) - c["stake"], 2)
-                    emoji = "✅"
-                    result_txt = f"Zysk: <b>+{profit} zł</b>"
-                else:
-                    profit = -c["stake"]
-                    emoji = "❌"
-                    result_txt = f"Strata: <b>-{c['stake']} zł</b>"
-
-                c["profit"] = profit
-
-                msg = (
-                    f"{emoji} <b>ROZLICZONO</b>\n"
-                    f"{c['home']} - {c['away']}\n"
-                    f"Wynik: {h_score}:{a_score}\n"
-                    f"Typ: {c['pick']} @ {c['odds']}\n"
-                    f"{result_txt}"
-                )
-
-                send_msg(msg)
-                print(f"[OK] {c['home']} - {c['away']} | {c['status']}")
-
-            except Exception as e:
-                print(f"[ERROR] {c['home']} - {c['away']} | {e}")
-
-    save_coupons(coupons)
-    print("[SETTLE] Zapisano coupons_notax.json")
-
+    print("Podział na ligi:")
+    for l, s in leagues.items():
+        print(
+            f"• {l}: {s['bets']} | "
+            f"✅ {s['won']} | ❌ {s['lost']} | ⏳ {s['pending']} | "
+            f"💰 {round(s['profit'],2)} zł"
+        )
 
 if __name__ == "__main__":
-    run_settler()
+    run()
