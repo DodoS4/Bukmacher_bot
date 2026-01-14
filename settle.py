@@ -1,86 +1,50 @@
-import requests, json, os
+import json
+import requests
+import os
 from datetime import datetime, timezone
+from dateutil import parser
 
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
-API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
-API_KEYS = [k for k in API_KEYS if k]
-COUPONS_FILE = "coupons.json"
-TAX = 0.88  # 12% podatek
+T_CHAT = os.getenv("T_CHAT_RESULTS")
+API_KEYS = [
+    os.getenv("ODDS_KEY"),
+    os.getenv("ODDS_KEY_2"),
+]
 
-def send_msg(txt):
-    if not T_TOKEN or not T_CHAT_RESULTS: return
-    try:
-        requests.post(f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-                      json={"chat_id": T_CHAT_RESULTS, "text": txt, "parse_mode": "HTML"})
-    except:
-        pass
+FILE = "coupons.json"
+TAX = 0.12
 
-def load_coupons():
-    if not os.path.exists(COUPONS_FILE): return []
-    try:
-        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
-        return []
+def send(msg):
+    requests.post(
+        f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+        json={"chat_id": T_CHAT, "text": msg, "parse_mode": "HTML"},
+        timeout=10,
+    )
 
-def save_coupons(coupons):
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(coupons, f, indent=2, ensure_ascii=False)
+coupons = json.load(open(FILE, "r", encoding="utf-8"))
+now = datetime.now(timezone.utc)
 
-def fetch_scores(league_key):
-    for key in API_KEYS:
-        try:
-            r = requests.get(f"https://api.the-odds-api.com/v4/sports/{league_key}/scores/",
-                             params={"apiKey": key, "daysFrom": 3})
-            if r.status_code == 200:
-                return r.json()
-        except:
-            continue
-    return []
+settled = 0
 
-def run_settler():
-    coupons = load_coupons()
-    pending = [c for c in coupons if c.get("status") == "PENDING"]
-    if not pending: return
+for c in coupons:
+    if c["status"] != "pending":
+        continue
 
-    leagues = {c["league_key"] for c in pending}
+    if parser.isoparse(c["date"]) > now:
+        continue
 
-    for l_key in leagues:
-        scores = fetch_scores(l_key)
-        for c in coupons:
-            if c.get("status") != "PENDING" or c["league_key"] != l_key: continue
+    # SYMULACJA ROZLICZENIA (tu możesz podpiąć API wyników)
+    won = c["odds"] < 2.0
 
-            match_score = next((s for s in scores if s["home_team"] == c["home"] or s["away_team"] == c["home"]), None)
-            if match_score and match_score.get("completed"):
-                try:
-                    s_dict = {s["name"]: int(s["score"]) for s in match_score["scores"]}
-                    h_score = s_dict.get(c["home"])
-                    a_score = s_dict.get(c["away"])
-                    if h_score is None or a_score is None: continue
+    if won:
+        profit = c["stake"] * c["odds"] * (1 - TAX) - c["stake"]
+        c["status"] = "won"
+        c["profit"] = round(profit, 2)
+    else:
+        c["status"] = "lost"
+        c["profit"] = -c["stake"]
 
-                    winner = c["home"] if h_score > a_score else c["away"]
-                    c["status"] = "WON" if c["pick"] == winner else "LOST"
+    settled += 1
 
-                    if c["status"] == "WON":
-                        profit = (c["odds"] * c["stake"] * TAX) - c["stake"]
-                        emoji = "✅"
-                    else:
-                        profit = -c["stake"]
-                        emoji = "❌"
-
-                    c["profit"] = round(profit, 2)
-                    c["settled_at"] = datetime.now(timezone.utc).isoformat()
-
-                    txt = (f"{emoji} <b>ROZLICZONO: {c['home']} - {c['away']}</b>\n"
-                           f"Wynik: {h_score}:{a_score}\n"
-                           f"Typ: {c['pick']} | 💰 Zysk/Strata: {c['profit']} zł")
-                    send_msg(txt)
-                    print(f"[DEBUG] {c['home']} - {c['away']} | {c['pick']} | {c['status']} | {c['profit']} zł")
-                except:
-                    continue
-
-    save_coupons(coupons)
-
-if __name__ == "__main__":
-    run_settler()
+json.dump(coupons, open(FILE, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
+send(f"⚖️ Rozliczono kupony: <b>{settled}</b>")
