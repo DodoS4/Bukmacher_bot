@@ -2,15 +2,8 @@ name: Betting Bot 24/7
 
 on:
   schedule:
-    # Skan + settle + stats (kilka razy dziennie)
     - cron: '0 6,12,18,22 * * *'
-
-    # Tygodniowy raport + ranking lig (niedziela 22:00)
     - cron: '0 22 * * 0'
-
-    # Miesięczny raport (1. dzień miesiąca 22:00)
-    - cron: '0 22 1 * *'
-
   workflow_dispatch:
 
 jobs:
@@ -18,13 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ================= CHECKOUT =================
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      # ================= PYTHON =================
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -35,8 +26,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # ================= SCANNER =================
-      - name: Run Scanner (start.py)
+      # ===== SCAN =====
+      - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
@@ -47,8 +38,8 @@ jobs:
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python start.py
 
-      # ================= SETTLER =================
-      - name: Run Settler (settle.py)
+      # ===== SETTLE =====
+      - name: Run Settler
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
@@ -59,24 +50,20 @@ jobs:
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python settle.py
 
-      # ================= STATS =================
-      - name: Run Stats (daily, weekly, monthly)
+      # ===== STATS =====
+      - name: Run Stats
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
         run: python stats.py
 
-      # ================= SAVE DATA =================
-      - name: Commit and push coupons.json
+      # ===== SAVE DATA (SAFE) =====
+      - name: Commit coupons.json safely
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git add coupons.json
-          git commit -m "Update coupons & stats [skip ci]" || echo "Nothing to commit"
+          git diff --cached --quiet || git commit -m "Update coupons [skip ci]"
 
-          # Pobierz zmiany z GitHub (rozwiązuje konflikty)
-          git pull --rebase origin main || true
-
-          # Wypchnij dane
-          git push origin main
+          git push --force-with-lease origin main
