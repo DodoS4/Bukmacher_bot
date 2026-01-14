@@ -2,13 +2,13 @@ name: Betting Bot 24/7
 
 on:
   schedule:
-    # Codzienny skan i settle
+    # Skan + settle + stats (kilka razy dziennie)
     - cron: '0 6,12,18,22 * * *'
 
-    # Tygodniowy raport (niedziela 22:00)
+    # Tygodniowy raport + ranking lig (niedziela 22:00)
     - cron: '0 22 * * 0'
 
-    # Miesięczny raport (pierwszy dzień miesiąca 22:00)
+    # Miesięczny raport (1. dzień miesiąca 22:00)
     - cron: '0 22 1 * *'
 
   workflow_dispatch:
@@ -57,18 +57,17 @@ jobs:
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
-          TAX_PL: 0.88    # uwzględnienie 12% podatku
         run: python settle.py
 
       # ================= STATS =================
-      - name: Run Stats (daily/weekly/monthly)
+      - name: Run Stats (daily, weekly, monthly)
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
         run: python stats.py
 
       # ================= SAVE DATA =================
-      - name: Commit and push data safely
+      - name: Commit and push coupons.json
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -76,8 +75,8 @@ jobs:
           git add coupons.json
           git commit -m "Update coupons & stats [skip ci]" || echo "Nothing to commit"
 
-          # Pobranie zmian z GitHub (rebase zamiast merge)
-          git pull --rebase origin main || echo "Rebase failed, check manually"
+          # Pobierz zmiany z GitHub (rozwiązuje konflikty)
+          git pull --rebase origin main || true
 
-          # Push danych
+          # Wypchnij dane
           git push origin main
