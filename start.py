@@ -1,108 +1,97 @@
-import os
 import requests
-from datetime import datetime, timedelta, timezone
 import json
+from datetime import datetime, timedelta, timezone
+import os
 
-# ================= CONFIG =================
-T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT = os.getenv("T_CHAT")
+# ================= KONFIGURACJA =================
+T_TOKEN = os.getenv("T_TOKEN")        # Telegram token
+T_CHAT = os.getenv("T_CHAT")          # Telegram chat ID
+API_KEYS = [
+    os.getenv("ODDS_KEY"),
+    os.getenv("ODDS_KEY_2"),
+    os.getenv("ODDS_KEY_3"),
+    os.getenv("ODDS_KEY_4"),
+    os.getenv("ODDS_KEY_5")
+]
+
 COUPONS_FILE = "coupons.json"
-MAX_HOURS_AHEAD = 48
 
-# ================= HELPERS =================
-def fetch_matches():
-    """
-    Pobiera mecze z API (tu przykładowe dane statyczne).
-    W produkcji podmień na prawdziwe API typu OddsAPI lub inny źródło.
-    """
-    # Przykładowe dane
-    return [
-        {
-            "home": "Paris Basketball",
-            "away": "AS Monaco",
-            "odds_home": 1.54,
-            "odds_away": 2.5,
-            "edge_home": 2.5,
-            "edge_away": -1.2,
-            "league": "🏀 Euroleague",
-            "date": (datetime.now(timezone.utc) + timedelta(hours=5)).isoformat()
-        },
-        {
-            "home": "NBA Team A",
-            "away": "NBA Team B",
-            "odds_home": 1.21,
-            "odds_away": 3.1,
-            "edge_home": 0.3,
-            "edge_away": 5.0,
-            "league": "🏀 NBA",
-            "date": (datetime.now(timezone.utc) + timedelta(hours=50)).isoformat()
-        }
-    ]
+# ================= FUNKCJE =================
+def get_upcoming_matches(api_key):
+    url = "https://api.example.com/odds/upcoming"  # zmień na prawdziwe endpointy
+    headers = {"Authorization": f"Bearer {api_key}"}
+    resp = requests.get(url, headers=headers)
+    if resp.status_code != 200:
+        print(f"API error {resp.status_code}")
+        return []
+    return resp.json()
 
-def save_coupons(coupons):
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(coupons, f, ensure_ascii=False, indent=2)
-
-def send_telegram(message):
-    if not T_CHAT or not T_TOKEN:
-        print("Brak T_CHAT lub T_TOKEN – nie można wysłać kuponu")
-        return
-    url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
-    requests.post(url, data={"chat_id": T_CHAT, "text": message, "parse_mode": "HTML"})
-
-def format_coupon(match, pick, type_label):
-    date_obj = datetime.fromisoformat(match["date"])
-    date_str = date_obj.strftime("%d.%m.%Y %H:%M")
-    odds = match[f"odds_{pick.lower()}"]
-    status = "⏳ Pending"
+def format_coupon(match, pick, odds, status="Pending"):
+    league = match.get("league", "🏀 Unknown")
+    date = datetime.fromisoformat(match["date"]).strftime("%d.%m.%Y %H:%M")
+    value_type = match.get("value_type", "VALUE") if status == "Pending" else ""
     return (
-        f"{match['league']}\n"
+        f"{league}\n"
         f"{match['home']} 🆚 {match['away']}\n"
-        f"🎯 Typ: {pick} ({type_label})\n"
-        f"💸 Kurs: {odds} | {status}\n"
-        f"📅 {date_str}"
+        f"🎯 Typ: {pick} ({value_type})\n"
+        f"💸 Kurs: {odds} | ⏳ {status}\n"
+        f"📅 {date}"
     )
 
-# ================= MAIN =================
-if __name__ == "__main__":
-    matches = fetch_matches()
+def send_telegram(message):
+    url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
+    data = {"chat_id": T_CHAT, "text": message}
+    requests.post(url, data=data)
+
+# ================= GŁÓWNY SKAN =================
+def main():
+    all_matches = []
+    for key in API_KEYS:
+        matches = get_upcoming_matches(key)
+        all_matches.extend(matches)
+
     now = datetime.now(timezone.utc)
+    max_time = now + timedelta(hours=48)
+
     coupons = []
 
-    for m in matches:
-        match_date = datetime.fromisoformat(m["date"])
-        if match_date > now + timedelta(hours=MAX_HOURS_AHEAD):
-            continue  # Pomiń mecze >48h w przód
+    for m in all_matches:
+        match_time = datetime.fromisoformat(m["date"])
+        if match_time > max_time:
+            continue  # max 48h do przodu
 
-        # Wybór typu
-        if m["edge_home"] > 1:
-            pick = m["home"]
-            type_label = "VALUE"
-        elif m["edge_away"] > 1:
-            pick = m["away"]
-            type_label = "VALUE"
-        else:
-            # Pewniak – wybierz minimalny kurs
-            pick = m["home"] if m["odds_home"] < m["odds_away"] else m["away"]
-            type_label = "PEWNIAK"
+        for pick in [m["home"], m["away"]]:
+            odds_key = f"odds_{pick.lower().replace(' ', '_')}"
+            odds = m.get(odds_key)
+            if odds is None:
+                continue  # brak kursu → pomijamy
 
-        coupon = {
-            "home": m["home"],
-            "away": m["away"],
-            "pick": pick,
-            "odds": m[f"odds_{pick.lower()}"],
-            "stake": 100,
-            "status": "PENDING",
-            "league": m["league"],
-            "league_name": m["league"],
-            "date": m["date"],
-            "type": type_label
-        }
-        coupons.append(coupon)
+            # określ Value lub Pewniak
+            value_type = "VALUE" if m.get("edge", 0) > 1.0 else "SAFE"
 
-        # Wyślij Telegram
-        msg = format_coupon(m, pick, type_label)
-        send_telegram(msg)
+            coupon = {
+                "home": m["home"],
+                "away": m["away"],
+                "pick": pick,
+                "odds": odds,
+                "date": m["date"],
+                "league": m.get("league", "🏀 Unknown"),
+                "value_type": value_type,
+                "status": "Pending"
+            }
+            coupons.append(coupon)
 
-    save_coupons(coupons)
-    print(f"📌 Dodano {len(coupons)} nowych kuponów.")
+            # Wyślij na Telegram
+            msg = format_coupon(coupon, pick, odds)
+            send_telegram(msg)
+
+    # Zapisz do pliku
+    try:
+        with open(COUPONS_FILE, "w", encoding="utf-8") as f:
+            json.dump(coupons, f, ensure_ascii=False, indent=2)
+        print(f"Zapisano {len(coupons)} kuponów do {COUPONS_FILE}")
+    except Exception as e:
+        print("Błąd zapisu kuponów:", e)
+
+if __name__ == "__main__":
+    main()
