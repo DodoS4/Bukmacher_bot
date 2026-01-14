@@ -1,81 +1,108 @@
-import json, os
-from datetime import datetime, timedelta, timezone
-from dateutil import parser
+import os
 import requests
+from datetime import datetime, timedelta, timezone
+import json
 
-FILE = "coupons.json"
-
+# ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT = os.getenv("T_CHAT_RESULTS")
+T_CHAT = os.getenv("T_CHAT")
+COUPONS_FILE = "coupons.json"
+MAX_HOURS_AHEAD = 48
 
-def send(msg):
-    if not T_TOKEN or not T_CHAT:
+# ================= HELPERS =================
+def fetch_matches():
+    """
+    Pobiera mecze z API (tu przykładowe dane statyczne).
+    W produkcji podmień na prawdziwe API typu OddsAPI lub inny źródło.
+    """
+    # Przykładowe dane
+    return [
+        {
+            "home": "Paris Basketball",
+            "away": "AS Monaco",
+            "odds_home": 1.54,
+            "odds_away": 2.5,
+            "edge_home": 2.5,
+            "edge_away": -1.2,
+            "league": "🏀 Euroleague",
+            "date": (datetime.now(timezone.utc) + timedelta(hours=5)).isoformat()
+        },
+        {
+            "home": "NBA Team A",
+            "away": "NBA Team B",
+            "odds_home": 1.21,
+            "odds_away": 3.1,
+            "edge_home": 0.3,
+            "edge_away": 5.0,
+            "league": "🏀 NBA",
+            "date": (datetime.now(timezone.utc) + timedelta(hours=50)).isoformat()
+        }
+    ]
+
+def save_coupons(coupons):
+    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
+        json.dump(coupons, f, ensure_ascii=False, indent=2)
+
+def send_telegram(message):
+    if not T_CHAT or not T_TOKEN:
+        print("Brak T_CHAT lub T_TOKEN – nie można wysłać kuponu")
         return
-    requests.post(
-        f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-        json={"chat_id": T_CHAT, "text": msg},
-        timeout=10
+    url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
+    requests.post(url, data={"chat_id": T_CHAT, "text": message, "parse_mode": "HTML"})
+
+def format_coupon(match, pick, type_label):
+    date_obj = datetime.fromisoformat(match["date"])
+    date_str = date_obj.strftime("%d.%m.%Y %H:%M")
+    odds = match[f"odds_{pick.lower()}"]
+    status = "⏳ Pending"
+    return (
+        f"{match['league']}\n"
+        f"{match['home']} 🆚 {match['away']}\n"
+        f"🎯 Typ: {pick} ({type_label})\n"
+        f"💸 Kurs: {odds} | {status}\n"
+        f"📅 {date_str}"
     )
 
-def safe_date(d):
-    try:
-        return parser.isoparse(d).astimezone(timezone.utc)
-    except:
-        return None
-
-def report(days, title):
+# ================= MAIN =================
+if __name__ == "__main__":
+    matches = fetch_matches()
     now = datetime.now(timezone.utc)
-    since = now - timedelta(days=days)
+    coupons = []
 
-    coupons = json.load(open(FILE, encoding="utf-8"))
+    for m in matches:
+        match_date = datetime.fromisoformat(m["date"])
+        if match_date > now + timedelta(hours=MAX_HOURS_AHEAD):
+            continue  # Pomiń mecze >48h w przód
 
-    data = []
-    for c in coupons:
-        d = safe_date(c.get("date"))
-        if not d:
-            continue
-        if d >= since:
-            data.append(c)
+        # Wybór typu
+        if m["edge_home"] > 1:
+            pick = m["home"]
+            type_label = "VALUE"
+        elif m["edge_away"] > 1:
+            pick = m["away"]
+            type_label = "VALUE"
+        else:
+            # Pewniak – wybierz minimalny kurs
+            pick = m["home"] if m["odds_home"] < m["odds_away"] else m["away"]
+            type_label = "PEWNIAK"
 
-    won = sum(1 for c in data if c.get("status") == "won")
-    lost = sum(1 for c in data if c.get("status") == "lost")
-    pending = sum(1 for c in data if c.get("status") == "pending")
-    profit = round(sum(c.get("profit", 0) for c in data if c.get("status") in ("won", "lost")), 2)
+        coupon = {
+            "home": m["home"],
+            "away": m["away"],
+            "pick": pick,
+            "odds": m[f"odds_{pick.lower()}"],
+            "stake": 100,
+            "status": "PENDING",
+            "league": m["league"],
+            "league_name": m["league"],
+            "date": m["date"],
+            "type": type_label
+        }
+        coupons.append(coupon)
 
-    leagues = {}
-    for c in data:
-        lg = c.get("league_name") or c.get("league_key", "OTHER")
-        leagues.setdefault(lg, {"bets": 0, "won": 0, "lost": 0, "profit": 0})
-        leagues[lg]["bets"] += 1
-        if c.get("status") == "won":
-            leagues[lg]["won"] += 1
-            leagues[lg]["profit"] += c.get("profit", 0)
-        elif c.get("status") == "lost":
-            leagues[lg]["lost"] += 1
-            leagues[lg]["profit"] += c.get("profit", 0)
+        # Wyślij Telegram
+        msg = format_coupon(m, pick, type_label)
+        send_telegram(msg)
 
-    msg = (
-        f"📊 {title}\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"🏆 Zakładów: {len(data)}\n"
-        f"✅ Wygrane: {won}\n"
-        f"❌ Przegrane: {lost}\n"
-        f"⏳ Pending: {pending}\n"
-        f"💰 Zysk/Strata: {profit:+,.2f} zł\n"
-        f"━━━━━━━━━━━━━━━━━━━━\n"
-        f"📊 Ligi:\n"
-    )
-
-    for lg, s in leagues.items():
-        msg += (
-            f"{lg} │ Bets: {s['bets']} │ "
-            f"✅ {s['won']} │ ❌ {s['lost']} │ "
-            f"💰 {s['profit']:+,.2f} zł\n"
-        )
-
-    send(msg)
-
-# ================= RUN =================
-report(1, "RAPORT DZIENNY")
-report(7, "RAPORT TYGODNIOWY")
-report(30, "RAPORT MIESIĘCZNY")
+    save_coupons(coupons)
+    print(f"📌 Dodano {len(coupons)} nowych kuponów.")
