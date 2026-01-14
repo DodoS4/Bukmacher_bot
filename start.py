@@ -1,110 +1,142 @@
-import requests, json, os
+import requests
+import json
+import os
 from datetime import datetime, timedelta, timezone
+from dateutil import parser
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
-API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
-API_KEYS = [k for k in API_KEYS if k]
+
+API_KEYS = [
+    os.getenv("ODDS_KEY"),
+    os.getenv("ODDS_KEY_2"),
+    os.getenv("ODDS_KEY_3"),
+    os.getenv("ODDS_KEY_4"),
+    os.getenv("ODDS_KEY_5"),
+]
+
 COUPONS_FILE = "coupons.json"
-MAX_HOURS_AHEAD = 48  # maksymalnie 48h do przodu
+BOOKMAKER = "pinnacle"
 
-# ================= HELPERS =================
-def send_msg(txt):
-    if not T_TOKEN or not T_CHAT: return
-    try:
-        requests.post(f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-                      json={"chat_id": T_CHAT, "text": txt, "parse_mode": "HTML"})
-    except Exception as e:
-        print(f"[ERROR] Telegram send failed: {e}")
+MAX_HOURS = 48
+STAKE = 50
+VALUE_EDGE = 0.04
+SURE_ODDS_MAX = 1.75
 
-def load_coupons():
-    if not os.path.exists(COUPONS_FILE): return []
-    try:
-        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except:
+LEAGUES = {
+    "basketball_nba": "🏀 NBA",
+    "basketball_euroleague": "🏀 Euroleague",
+    "icehockey_nhl": "🏒 NHL",
+    "soccer_epl": "⚽ Premier League",
+    "soccer_laliga": "⚽ La Liga",
+    "soccer_serie_a": "⚽ Serie A",
+    "soccer_bundesliga": "⚽ Bundesliga",
+    "soccer_ligue_1": "⚽ Ligue 1",
+    "soccer_champions_league": "⚽ Champions League",
+    "soccer_europa_league": "⚽ Europa League",
+}
+
+# ================= UTILS =================
+def send(msg):
+    requests.post(
+        f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
+        json={"chat_id": T_CHAT, "text": msg, "parse_mode": "HTML"},
+        timeout=10,
+    )
+
+def load():
+    if not os.path.exists(COUPONS_FILE):
         return []
+    return json.load(open(COUPONS_FILE, "r", encoding="utf-8"))
 
-def save_coupons(coupons):
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(coupons, f, indent=2, ensure_ascii=False)
+def save(data):
+    json.dump(data, open(COUPONS_FILE, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
 
-# ================= FETCH ODDS =================
-def fetch_odds(league_key):
-    for key in API_KEYS:
-        try:
-            r = requests.get(f"https://api.the-odds-api.com/v4/sports/{league_key}/odds/",
-                             params={"apiKey": key, "regions": "eu", "markets": "h2h", "oddsFormat": "decimal"})
-            if r.status_code == 200:
-                return r.json()
-        except:
-            continue
-    return []
-
-# ================= VALUE & SURE BET FILTER =================
-def filter_bets(odds_list):
+# ================= MAIN =================
+def main():
     now = datetime.now(timezone.utc)
-    max_time = now + timedelta(hours=MAX_HOURS_AHEAD)
-    coupons = []
+    limit = now + timedelta(hours=MAX_HOURS)
 
-    for game in odds_list:
-        game_time = datetime.fromisoformat(game["commence_time"].replace("Z","+00:00"))
-        if not (now <= game_time <= max_time):
-            continue
+    coupons = load()
+    ids = {c["id"] for c in coupons}
+    added = 0
 
-        for book in game.get("bookmakers", []):
-            for market in book.get("markets", []):
-                if market["key"] != "h2h": continue
-                for i, outcome in enumerate(market["outcomes"]):
-                    pick = outcome["name"]
-                    odds = outcome["price"]
-                    # przykładowy prosty filtr: kurs <1.8 = pewniak, >1.8 = value
-                    bet_type = "PEWNIAK" if odds < 1.8 else "VALUE"
+    for league, name in LEAGUES.items():
+        for key in API_KEYS:
+            if not key:
+                continue
+
+            r = requests.get(
+                f"https://api.the-odds-api.com/v4/sports/{league}/odds",
+                params={
+                    "apiKey": key,
+                    "regions": "eu",
+                    "markets": "h2h",
+                    "oddsFormat": "decimal",
+                },
+                timeout=15,
+            )
+
+            if r.status_code != 200:
+                continue
+
+            for g in r.json():
+                start = parser.isoparse(g["commence_time"])
+                if not now <= start <= limit:
+                    continue
+
+                home, away = g["home_team"], g["away_team"]
+                pin = next((b for b in g["bookmakers"] if b["key"] == BOOKMAKER), None)
+                if not pin:
+                    continue
+
+                for o in pin["markets"][0]["outcomes"]:
+                    odds = o["price"]
+                    prob = 1 / odds
+                    true_prob = prob * 1.05
+                    edge = round(true_prob - prob, 4)
+
+                    bet_type = None
+                    if edge >= VALUE_EDGE:
+                        bet_type = "VALUE"
+                    elif odds <= SURE_ODDS_MAX:
+                        bet_type = "SURE"
+                    else:
+                        continue
+
+                    cid = f"{league}|{home}|{away}|{o['name']}|{start.isoformat()}"
+                    if cid in ids:
+                        continue
 
                     coupon = {
-                        "home": game["home_team"],
-                        "away": game["away_team"],
-                        "pick": pick,
+                        "id": cid,
+                        "league": name,
+                        "home": home,
+                        "away": away,
+                        "pick": o["name"],
                         "odds": odds,
-                        "league": game["sport_key"].replace("_", " ").title(),
-                        "league_key": game["sport_key"],
-                        "status": "PENDING",
-                        "bet_type": bet_type,
-                        "date": game_time.isoformat()
+                        "edge": edge,
+                        "type": bet_type,
+                        "stake": STAKE,
+                        "status": "pending",
+                        "date": start.isoformat(),
                     }
+
                     coupons.append(coupon)
-    return coupons
+                    ids.add(cid)
+                    added += 1
 
-# ================= RUN =================
-def run():
-    all_leagues = ["basketball_nba", "basketball_euroleague",
-                   "soccer_epl", "soccer_uefa_champs_league",
-                   "icehockey_nhl"]  # dodaj inne ligi według potrzeb
+                    send(
+                        f"{name}\n"
+                        f"{home} 🆚 {away}\n"
+                        f"🎯 Typ: <b>{o['name']}</b> ({bet_type})\n"
+                        f"💸 Kurs: <b>{odds}</b> | ⏳ Pending\n"
+                        f"📅 {start.astimezone().strftime('%d.%m.%Y %H:%M')}"
+                    )
 
-    coupons = load_coupons()
-    new_coupons = []
-
-    for league in all_leagues:
-        odds_list = fetch_odds(league)
-        bets = filter_bets(odds_list)
-        for bet in bets:
-            # unikamy duplikatów
-            if not any(c["home"] == bet["home"] and c["away"] == bet["away"] and c["pick"] == bet["pick"] for c in coupons):
-                coupons.append(bet)
-                new_coupons.append(bet)
-
-    save_coupons(coupons)
-
-    # ================= SEND TO TELEGRAM =================
-    for c in new_coupons:
-        txt = (f"🏀 {c['league'].title()}\n"
-               f"{c['home']} 🆚 {c['away']}\n"
-               f"🎯 Typ: {c['pick']} ({c['bet_type']})\n"
-               f"💸 Kurs: {c['odds']} | ⏳ {c['status'].title()}\n"
-               f"📅 {datetime.fromisoformat(c['date']).strftime('%d.%m.%Y %H:%M')}")
-        send_msg(txt)
-        print(f"[NEW COUPON] {c['home']} vs {c['away']} | {c['pick']} ({c['bet_type']})")
+    save(coupons)
+    send(f"📊 <b>Skan zakończony</b>\n📌 Nowe kupony: {added}")
 
 if __name__ == "__main__":
-    run()
+    main()
