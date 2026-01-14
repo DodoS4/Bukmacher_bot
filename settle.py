@@ -1,120 +1,85 @@
-import requests, json, os, time
+import os
+import json
 from datetime import datetime, timezone
-from dateutil import parser
+import requests
 
-FILE = "coupons.json"
-TAX = 0.12
-MAX_ATTEMPTS = 7
+# ================= KONFIGURACJA =================
+T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")  # Telegram chat do wyników
+COUPONS_FILE = "coupons.json"
+SCORES_API_KEY = os.getenv("SCORES_KEY")    # API do wyników (opcjonalnie)
+SCORES_API_URL = "https://api.scoresapi.io/v1/scores"  # przykład endpointu
 
-T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT = os.getenv("T_CHAT_RESULTS")
+# ================= FUNKCJE =================
+def load_coupons():
+    try:
+        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
 
-API_KEYS = [
-    os.getenv("ODDS_KEY"),
-    os.getenv("ODDS_KEY_2"),
-    os.getenv("ODDS_KEY_3"),
-    os.getenv("ODDS_KEY_4"),
-    os.getenv("ODDS_KEY_5"),
-]
+def save_coupons(coupons):
+    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
+        json.dump(coupons, f, indent=2, ensure_ascii=False)
 
-def send(msg):
-    if not T_TOKEN or not T_CHAT:
-        return
-    requests.post(
-        f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-        json={"chat_id": T_CHAT, "text": msg},
-        timeout=10
-    )
+def fetch_score(league_key, home, away, date):
+    """
+    Pobiera wynik meczu z API scores.
+    Zwraca 'home', 'away' lub None jeśli brak wyniku.
+    """
+    if not SCORES_API_KEY:
+        return None
 
-def norm(name):
-    return (
-        name.lower()
-        .replace(".", "")
-        .replace("-", " ")
-        .replace("los angeles", "la")
-        .replace("new york", "ny")
-        .strip()
-    )
+    try:
+        params = {
+            "api_key": SCORES_API_KEY,
+            "league": league_key,
+            "date": date[:10],  # YYYY-MM-DD
+        }
+        resp = requests.get(SCORES_API_URL, params=params, timeout=10)
+        resp.raise_for_status()
+        data = resp.json()
 
-def fetch_scores(league, days):
-    for key in API_KEYS:
-        if not key:
-            continue
-        r = requests.get(
-            f"https://api.the-odds-api.com/v4/sports/{league}/scores",
-            params={"apiKey": key, "daysFrom": days},
-            timeout=15,
-        )
-        if r.status_code == 200:
-            return r.json()
-    return []
+        # szukamy meczu po drużynach i czasie
+        for match in data.get("matches", []):
+            if match["home"] == home and match["away"] == away:
+                if match.get("status") == "finished":
+                    if match["home_score"] > match["away_score"]:
+                        return home
+                    elif match["away_score"] > match["home_score"]:
+                        return away
+                    else:
+                        return "DRAW"
+        return None
+    except Exception as e:
+        print(f"[WARN] Nie udało się pobrać wyniku: {e}")
+        return None
 
-coupons = json.load(open(FILE, encoding="utf-8"))
-now = datetime.now(timezone.utc)
+def settle_coupons():
+    coupons = load_coupons()
+    updated = False
 
-for c in coupons:
-    if c.get("status") != "pending":
-        continue
-
-    c.setdefault("settle_attempts", 0)
-    c.setdefault("last_checked", None)
-
-    if c["settle_attempts"] >= MAX_ATTEMPTS:
-        c["status"] = "ERROR_NO_DATA"
-        continue
-
-    days = 3 if c["settle_attempts"] < 3 else 7
-    scores = fetch_scores(c["league"], days)
-
-    found = False
-
-    for g in scores:
-        if not g.get("completed"):
-            continue
-
-        if (
-            norm(g["home_team"]) == norm(c["home"])
-            and norm(g["away_team"]) == norm(c["away"])
-        ) or (
-            norm(g["home_team"]) == norm(c["away"])
-            and norm(g["away_team"]) == norm(c["home"])
-        ):
-            try:
-                s = {x["name"]: int(x["score"]) for x in g["scores"]}
-                h = s.get(g["home_team"])
-                a = s.get(g["away_team"])
-                if h is None or a is None:
-                    continue
-
-                winner = g["home_team"] if h > a else g["away_team"]
-
-                if norm(winner) == norm(c["pick"]):
-                    profit = c["stake"] * c["odds"] * (1 - TAX) - c["stake"]
-                    c["status"] = "won"
-                    c["profit"] = round(profit, 2)
-                    emoji = "✅"
+    for c in coupons:
+        if c.get("status") == "PENDING":
+            result = fetch_score(c.get("league_key"), c["home"], c["away"], c["date"])
+            if result:
+                if result == c["pick"]:
+                    c["status"] = "WON"
+                    c["profit"] = round(c["stake"] * (c["odds"] - 1), 2)
+                elif result == "DRAW":
+                    c["status"] = "DRAW"
+                    c["profit"] = 0
                 else:
-                    c["status"] = "lost"
+                    c["status"] = "LOST"
                     c["profit"] = -c["stake"]
-                    emoji = "❌"
+                c["settled_at"] = datetime.now(timezone.utc).isoformat()
+                updated = True
 
-                send(
-                    f"{emoji} ROZLICZONO\n"
-                    f"{c['home']} vs {c['away']}\n"
-                    f"Wynik: {h}:{a}\n"
-                    f"Typ: {c['pick']}\n"
-                    f"💰 {c['profit']} zł"
-                )
+    if updated:
+        save_coupons(coupons)
+        print(f"[INFO] Rozliczono kupony. Zapisano {len(coupons)} rekordów.")
+    else:
+        print("[INFO] Brak nowych wyników do rozliczenia.")
 
-                found = True
-                break
-            except:
-                continue
-
-    c["settle_attempts"] += 1
-    c["last_checked"] = now.isoformat()
-
-    if not found:
-        time.sleep(0.3)
-
-json.dump(coupons, open(FILE, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
+# ================= URUCHOMIENIE =================
+if __name__ == "__main__":
+    settle_coupons()
