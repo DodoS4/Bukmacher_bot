@@ -1,115 +1,82 @@
 import json
-import os
 from datetime import datetime, timedelta, timezone
 
 COUPONS_FILE = "coupons.json"
 
-T_TOKEN = os.getenv("T_TOKEN")
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
-
-
-# ================= TELEGRAM =================
-def send_msg(txt):
-    if not T_TOKEN or not T_CHAT_RESULTS:
-        return
-    try:
-        import requests
-        requests.post(
-            f"https://api.telegram.org/bot{T_TOKEN}/sendMessage",
-            json={"chat_id": T_CHAT_RESULTS, "text": txt, "parse_mode": "HTML"}
-        )
-    except Exception as e:
-        print(f"[ERROR] Telegram: {e}")
-
-
-# ================= LOAD COUPONS =================
 def load_coupons():
-    if not os.path.exists(COUPONS_FILE):
-        return []
     try:
         with open(COUPONS_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    except Exception as e:
-        print(f"[ERROR] load_coupons: {e}")
+    except:
         return []
 
-
-# ================= FILTER BY DATE =================
-def filter_coupons(coupons, start):
+def filter_coupons(coupons, start, end):
     filtered = []
     for c in coupons:
         try:
-            # Zamiana formatu 'Z' na '+00:00' dla fromisoformat
-            dt_str = c["date"].replace("Z", "+00:00")
-            dt = datetime.fromisoformat(dt_str)
-            if dt >= start:
+            match_date = datetime.fromisoformat(c["date"])
+            if start <= match_date <= end:
                 filtered.append(c)
-        except Exception:
+        except:
             continue
     return filtered
 
-
-# ================= GENERATE REPORT =================
 def generate_report(period="daily"):
-    coupons = load_coupons()
     now = datetime.now(timezone.utc)
 
     if period == "daily":
         start = now - timedelta(days=1)
-        title = f"📊 RAPORT DZIENNY – {start.date()} – {now.date()}"
+        label = "DZIENNY"
     elif period == "weekly":
         start = now - timedelta(days=7)
-        title = f"📊 RAPORT TYGODNIOWY – {start.date()} – {now.date()}"
+        label = "TYGODNIOWY"
     elif period == "monthly":
         start = now.replace(day=1)
-        title = f"📊 RAPORT MIESIĘCZNY – {start.date()} – {now.date()}"
+        label = "MIESIĘCZNY"
     else:
-        start = now - timedelta(days=1)
-        title = f"📊 RAPORT – {now.date()}"
+        raise ValueError("Nieznany okres raportu")
 
-    filtered = filter_coupons(coupons, start)
+    end = now
+    coupons = load_coupons()
+    filtered = filter_coupons(coupons, start, end)
 
-    total = len(filtered)
+    total_bets = len(filtered)
     won = sum(1 for c in filtered if c.get("status") == "WON")
     lost = sum(1 for c in filtered if c.get("status") == "LOST")
     pending = sum(1 for c in filtered if c.get("status") == "PENDING")
     profit = sum(c.get("profit", 0) for c in filtered)
 
-    # ====== Podział na ligi ======
+    print(f"\n📊 RAPORT {label} – {start.strftime('%d.%m.%Y')} – {end.strftime('%d.%m.%Y')}")
+    print("━━━━━━━━━━━━━━━━━━━━")
+    print(f"🏆 Łącznie zakładów: {total_bets}")
+    print(f"✅ Wygrane: {won}")
+    print(f"❌ Przegrane: {lost}")
+    print(f"⏳ Pending: {pending}")
+    print(f"💰 Zysk/Strata: {'+' if profit>=0 else ''}{round(profit,2)} zł")
+    print("━━━━━━━━━━━━━━━━━━━━")
+
+    # Rozkład na ligi
     leagues = {}
     for c in filtered:
-        league = c.get("league_name") or c.get("league_key") or "Unknown"
+        league = c.get("league", "Inne")
         if league not in leagues:
-            leagues[league] = []
-        leagues[league].append(c)
+            leagues[league] = {"bets":0, "won":0, "lost":0, "profit":0}
+        leagues[league]["bets"] += 1
+        if c.get("status") == "WON":
+            leagues[league]["won"] += 1
+        elif c.get("status") == "LOST":
+            leagues[league]["lost"] += 1
+        leagues[league]["profit"] += c.get("profit", 0)
 
-    # ====== Tworzenie tekstu ======
-    lines = [title, "━━━━━━━━━━━━━━━━━━━━",
-             f"🏆 Łącznie zakładów: {total}",
-             f"✅ Wygrane: {won}",
-             f"❌ Przegrane: {lost}",
-             f"⏳ Pending: {pending}",
-             f"💰 Zysk/Strata: {profit:.2f} zł",
-             "━━━━━━━━━━━━━━━━━━━━",
-             "📊 Rozkład na ligi:"]
-    
-    for league, bets in leagues.items():
-        b_total = len(bets)
-        b_won = sum(1 for c in bets if c.get("status") == "WON")
-        b_lost = sum(1 for c in bets if c.get("status") == "LOST")
-        b_pending = sum(1 for c in bets if c.get("status") == "PENDING")
-        b_profit = sum(c.get("profit", 0) for c in bets)
-        # wizualny pasek
-        win_ratio = int((b_won / b_total) * 10) if b_total else 0
-        bar = "▓" * win_ratio + "░" * (10 - win_ratio)
-        lines.append(f"{league:<15} │ Bets: {b_total} │ ✅ {b_won} │ ❌ {b_lost} │ ⏳ {b_pending} │ 💰 {b_profit:.2f} zł │ {bar}")
+    for league, stats in leagues.items():
+        bar_len = 10
+        if stats["bets"]:
+            won_ratio = int(stats["won"]/stats["bets"]*bar_len)
+        else:
+            won_ratio = 0
+        bar = "▓"*won_ratio + "░"*(bar_len-won_ratio)
+        print(f"{league:<15} │ Bets: {stats['bets']:<3} │ ✅ {stats['won']:<3} │ ❌ {stats['lost']:<3} │ 💰 {'+' if stats['profit']>=0 else ''}{round(stats['profit'],2):<8} │ {bar}")
 
-    report = "\n".join(lines)
-    print(report)
-    send_msg(report)
-
-
-# ================= MAIN =================
 if __name__ == "__main__":
     generate_report("daily")
     generate_report("weekly")
