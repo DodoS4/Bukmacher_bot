@@ -1,19 +1,15 @@
 import requests, json, os
-from datetime import datetime
+from datetime import datetime, timezone
 
 # ================= CONFIG =================
 T_TOKEN = os.getenv("T_TOKEN")
 T_CHAT = os.getenv("T_CHAT")
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in API_KEYS if k]
-
 COUPONS_FILE = "coupons.json"
-MIN_ODDS = 1.2
-MAX_ODDS = 15.0
+TAX_PL = 0.88  # podatek 12%
 
-TAX = 0.88  # 12% podatek
-
-# ================= FUNKCJE =================
+# ================= HELPERS =================
 def send_msg(txt):
     if not T_TOKEN or not T_CHAT: return
     try:
@@ -26,8 +22,7 @@ def load_coupons():
     try:
         with open(COUPONS_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    except:
-        return []
+    except: return []
 
 def save_coupons(coupons):
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
@@ -36,62 +31,53 @@ def save_coupons(coupons):
 def fetch_offers(league_key):
     for key in API_KEYS:
         r = requests.get(f"https://api.the-odds-api.com/v4/sports/{league_key}/odds/",
-                         params={"apiKey": key, "regions": "eu", "markets": "h2h", "oddsFormat": "decimal"})
-        if r.status_code == 200:
-            return r.json()
+                         params={"apiKey": key, "regions":"eu","markets":"h2h","oddsFormat":"decimal"})
+        if r.status_code == 200: return r.json()
     return []
 
-def classify_bet(odd):
-    if 1.2 <= odd <= 1.5:
-        return "PEWNIAK"
-    elif 1.5 < odd <= 15:
-        return "VALUE"
-    return None
-
 # ================= SCANNER =================
-def run_scanner():
-    leagues = ["basketball_nba", "basketball_euroleague",
-               "soccer_epl", "soccer_uefa_champs", "hockey_nhl"]  # tu możesz dodać 12-15 lig
-
+def generate_offers():
+    leagues = ["basketball_nba","basketball_euroleague","soccer_epl","soccer_uefa_champs_league",
+               "hockey_nhl","basketball_gbl","soccer_serie_a","soccer_la_liga","soccer_bundesliga",
+               "basketball_wnba","soccer_ligue_one","basketball_nbl","soccer_eredivisie","basketball_ik"]
     coupons = load_coupons()
-    pewniaki = []
-    value_bets = []
+    new_coupons = []
 
     for league in leagues:
         offers = fetch_offers(league)
-        for game in offers:
-            home = game["home_team"]
-            away = game["away_team"]
-            date = game.get("commence_time", datetime.utcnow().isoformat())
-            for outcome in game.get("bookmakers", [{}])[0].get("markets", [{}])[0].get("outcomes", []):
-                odd = outcome.get("price")
-                pick = outcome.get("name")
-                if not odd or odd < MIN_ODDS or odd > MAX_ODDS:
-                    continue
-                bet_type = classify_bet(odd)
-                if not bet_type:
-                    continue
-                coupon = {
-                    "home": home, "away": away, "pick": pick, "odds": odd,
-                    "stake": 100, "status": "PENDING",
-                    "league_key": league, "league": league.upper(),
-                    "date": date, "type": bet_type
-                }
-                if bet_type == "PEWNIAK":
-                    pewniaki.append(coupon)
-                else:
-                    value_bets.append(coupon)
+        for o in offers[:5]:  # pobierz max 5 ofert na ligę
+            home, away = o["home_team"], o["away_team"]
+            odds_home, odds_away = o["bookmakers"][0]["markets"][0]["outcomes"][0]["price"], o["bookmakers"][0]["markets"][0]["outcomes"][1]["price"]
+            # przykładowa prosta logika: PEWNIAK <1.5, VALUE >1.8
+            if odds_home < 1.5: type_bet="PEWNIAK"
+            else: type_bet="VALUE BET"
 
-    # ================= WYŚLIJ NA TELEGRAM =================
-    for c in pewniaki:
-        send_msg(f"🎯 PEWNIAK\n🏀 {c['home']} - {c['away']}\n📈 Kurs: {c['odds']}")
-    for c in value_bets:
-        send_msg(f"🎯 VALUE BET\n🏀 {c['home']} - {c['away']}\n📈 Kurs: {c['odds']}")
+            coupon = {
+                "home": home,
+                "away": away,
+                "pick": home,
+                "odds": round(odds_home,2),
+                "stake": 100,
+                "status": "PENDING",
+                "league_key": league,
+                "league": league,
+                "type": type_bet,
+                "date": datetime.now(timezone.utc).isoformat()
+            }
+            new_coupons.append(coupon)
 
-    coupons.extend(pewniaki + value_bets)
+    coupons.extend(new_coupons)
     save_coupons(coupons)
-    print(f"[INFO] Dodano {len(pewniaki)} pewniaków i {len(value_bets)} value betów")
 
-# ================= MAIN =================
+    # wysyłanie telegram
+    for c in new_coupons:
+        txt = (f"🎯 <b>{c['type']}</b>\n"
+               f"🏀 {c['home']} - {c['away']}\n"
+               f"📈 Kurs: {c['odds']}\n"
+               f"💎 Edge: {round(c.get('edge',0),2)}%\n"
+               f"💰 Stake: {c['stake']} zł")
+        send_msg(txt)
+    print(f"[INFO] Dodano {len(new_coupons)} nowych kuponów")
+    
 if __name__ == "__main__":
-    run_scanner()
+    generate_offers()
