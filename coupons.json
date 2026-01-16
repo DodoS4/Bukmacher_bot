@@ -26,7 +26,7 @@
         "home": "Brooklyn Nets",
         "away": "Chicago Bulls",
         "time": "2026-01-17T00:40:00Z",
-        "odds": 1.75,
+        "odds": 1.76,
         "pick": "Brooklyn Nets"
     },
     {
@@ -36,7 +36,7 @@
         "home": "Toronto Raptors",
         "away": "Los Angeles Clippers",
         "time": "2026-01-17T00:40:00Z",
-        "odds": 1.76,
+        "odds": 2.05,
         "pick": "Los Angeles Clippers"
     },
     {
@@ -56,7 +56,7 @@
         "home": "Carolina Hurricanes",
         "away": "Florida Panthers",
         "time": "2026-01-17T00:10:00Z",
-        "odds": 2.1,
+        "odds": 2.0,
         "pick": "Carolina Hurricanes"
     },
     {
@@ -66,7 +66,7 @@
         "home": "Detroit Red Wings",
         "away": "San Jose Sharks",
         "time": "2026-01-17T00:10:00Z",
-        "odds": 1.8,
+        "odds": 1.82,
         "pick": "Detroit Red Wings"
     },
     {
@@ -96,7 +96,7 @@
         "home": "Los Angeles Kings",
         "away": "Anaheim Ducks",
         "time": "2026-01-17T03:40:00Z",
-        "odds": 2.04,
+        "odds": 2.12,
         "pick": "Los Angeles Kings"
     },
     {
@@ -174,7 +174,7 @@
         "sport_key": "icehockey_nhl",
         "sport": "NHL",
         "home": "Ottawa Senators",
-        "away": "Montr\u00e9al Canadiens",
+        "away": "Montréal Canadiens",
         "time": "2026-01-18T00:00:00Z",
         "odds": 2.23,
         "pick": "Ottawa Senators"
@@ -186,8 +186,8 @@
         "home": "Winnipeg Jets",
         "away": "Toronto Maple Leafs",
         "time": "2026-01-18T00:00:00Z",
-        "odds": 2.45,
-        "pick": "Toronto Maple Leafs"
+        "odds": 2.38,
+        "pick": "Winnipeg Jets"
     },
     {
         "id": "720dea61990bf14431875a73120d9933",
@@ -246,7 +246,7 @@
         "home": "Chelsea",
         "away": "Brentford",
         "time": "2026-01-17T15:00:00Z",
-        "odds": 1.74,
+        "odds": 1.76,
         "pick": "Chelsea"
     },
     {
@@ -286,7 +286,7 @@
         "home": "Aston Villa",
         "away": "Everton",
         "time": "2026-01-18T16:30:00Z",
-        "odds": 1.75,
+        "odds": 1.74,
         "pick": "Aston Villa"
     },
     {
@@ -296,7 +296,7 @@
         "home": "Espanyol",
         "away": "Girona",
         "time": "2026-01-16T20:00:00Z",
-        "odds": 1.8,
+        "odds": 1.78,
         "pick": "Espanyol"
     },
     {
@@ -363,11 +363,11 @@
         "id": "16cfa9455a9796f667118f6450024757",
         "sport_key": "soccer_germany_bundesliga",
         "sport": "Bundesliga - Germany",
-        "home": "1. FC K\u00f6ln",
+        "home": "1. FC Köln",
         "away": "FSV Mainz 05",
         "time": "2026-01-17T14:30:00Z",
-        "odds": 2.1,
-        "pick": "1. FC K\u00f6ln"
+        "odds": 2.15,
+        "pick": "1. FC Köln"
     },
     {
         "id": "3334b9a452b572ca5f136d524bba816e",
@@ -426,7 +426,7 @@
         "home": "Cagliari",
         "away": "Juventus",
         "time": "2026-01-17T19:45:00Z",
-        "odds": 1.54,
+        "odds": 1.53,
         "pick": "Juventus"
     },
     {
@@ -476,7 +476,7 @@
         "home": "Angers",
         "away": "Marseille",
         "time": "2026-01-17T20:05:00Z",
-        "odds": 1.58,
+        "odds": 1.56,
         "pick": "Marseille"
     },
     {
@@ -496,7 +496,47 @@
         "home": "Nantes",
         "away": "Paris FC",
         "time": "2026-01-18T16:15:00Z",
-        "odds": 2.3,
+        "odds": 2.35,
         "pick": "Paris FC"
+    },
+    {
+        "id": "aa16a48d5e016963e076f7f5ecfc2f68",
+        "sport_key": "soccer_epl",
+        "sport": "EPL",
+        "home": "Sunderland",
+        "away": "Crystal Palace",
+        "time": "2026-01-17T15:00:00Z",
+        "odds": 2.5,
+        "pick": "Sunderland"
+    },
+    {
+        "id": "691835b0e7a9385fccf0b29bd3492a08",
+        "sport_key": "soccer_spain_la_liga",
+        "sport": "La Liga - Spain",
+        "home": "Celta Vigo",
+        "away": "Rayo Vallecano",
+        "time": "2026-01-18T17:30:00Z",
+        "odds": 2.05,
+        "pick": "Celta Vigo"
+    },
+    {
+        "id": "497ef12ef1554f6ca4015fbded78b264",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport": "Bundesliga - Germany",
+        "home": "Hamburger SV",
+        "away": "Borussia Monchengladbach",
+        "time": "2026-01-17T14:30:00Z",
+        "odds": 2.5,
+        "pick": "Hamburger SV"
+    },
+    {
+        "id": "833f3a993ae8d16996603ba818af71aa",
+        "sport_key": "soccer_italy_serie_a",
+        "sport": "Serie A - Italy",
+        "home": "Torino",
+        "away": "AS Roma",
+        "time": "2026-01-18T17:00:00Z",
+        "odds": 2.1,
+        "pick": "AS Roma"
     }
 ]
