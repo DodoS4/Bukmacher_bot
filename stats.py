@@ -1,91 +1,64 @@
 import json
 import os
 import requests
-from datetime import datetime, timedelta, timezone
-from collections import defaultdict
+from datetime import datetime
 
 # Konfiguracja
-RESULTS_FILE = "history.json"
+HISTORY_FILE = "history.json"
 TELEGRAM_TOKEN = os.getenv("T_TOKEN")
 TELEGRAM_CHAT = os.getenv("T_CHAT_RESULTS")
 
 def send_telegram(message):
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "HTML"}
     try:
-        requests.post(url, json=payload)
-    except Exception as e:
-        print(f"Błąd wysyłki statystyk: {e}")
-
-def load_results():
-    try:
-        with open(RESULTS_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        requests.post(url, json={"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "HTML"})
     except:
-        return []
+        pass
 
-def generate_report(results, days=7):
-    if not results:
-        return "Brak danych do raportu."
+def generate_stats():
+    if not os.path.exists(HISTORY_FILE):
+        print("Brak pliku historii.")
+        return
 
-    now = datetime.now(timezone.utc)
-    since = now - timedelta(days=days)
+    with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+        history = json.load(f)
+
+    if not history:
+        print("Historia jest pusta.")
+        return
+
+    total_bets = len(history)
+    wins = sum(1 for x in history if x["win"])
+    losses = total_bets - wins
+    win_rate = (wins / total_bets) * 100 if total_bets > 0 else 0
     
-    # Filtrowanie po dacie (jeśli masz datę w wynikach)
-    filtered = []
-    for r in results:
-        # Zakładamy, że data jest w formacie ISO z settle.py
-        try:
-            r_date = datetime.fromisoformat(r["date"].replace("Z", "+00:00"))
-            if r_date >= since:
-                filtered.append(r)
-        except:
-            filtered.append(r) # fallback jeśli brak daty
-
-    if not filtered:
-        return f"Brak wyników w ostatnich {days} dniach."
-
-    total_profit = 0
-    total_bets = len(filtered)
-    wins = 0
+    total_profit = sum(x["profit"] for x in history)
     
-    # Statystyki per sport/liga
-    stats = defaultdict(lambda: {"count": 0, "profit": 0, "wins": 0})
+    # Obliczanie Yield (Zysk / Suma stawek)
+    # Zakładając stałą stawkę dla uproszczenia statystyk lub sumując realne stawki
+    # Tutaj przyjmiemy sumę bezwzględnych wartości strat i kosztów wygranych
+    total_staked = sum(abs(x["profit"] / (1.70 - 1)) if x["win"] else abs(x["profit"]) for x in history) # Przybliżenie
+    yield_val = (total_profit / total_staked) * 100 if total_staked > 0 else 0
 
-    for r in filtered:
-        profit = r["profit"]
-        # Przyjmujemy nazwę sportu z klucza lub wyciągamy z meczu
-        sport = r.get("sport", "Inne")
-        
-        stats[sport]["count"] += 1
-        stats[sport]["profit"] += profit
-        if profit > 0:
-            stats[sport]["wins"] += 1
-            wins += 1
-        total_profit += profit
-
-    # Budowanie wiadomości HTML
-    msg = f"📊 <b>RAPORT Z OSTATNICH {days} DNI</b>\n"
-    msg += "━━━━━━━━━━━━━━━━━━\n"
+    # Budowanie raportu
+    status_icon = "📈" if total_profit >= 0 else "📉"
     
-    for sport, s in stats.items():
-        win_rate = (s["wins"] / s["count"]) * 100
-        emoji = "📈" if s["profit"] > 0 else "📉"
-        msg += f"{emoji} <b>{sport}</b>: {s['profit']:+.2f} PLN\n"
-        msg += f"   Skuteczność: {win_rate:.1f}% ({s['count']} typów)\n\n"
+    report = (
+        f"📊 <b>RAPORT SKUTECZNOŚCI</b>\n"
+        f"━━━━━━━━━━━━━━━\n"
+        f"✅ Trafione: <b>{wins}</b>\n"
+        f"❌ Przegrane: <b>{losses}</b>\n"
+        f"🎯 Skuteczność: <b>{win_rate:.1f}%</b>\n"
+        f"━━━━━━━━━━━━━━━\n"
+        f"💰 Całkowity zysk: <b>{total_profit:+.2f} PLN</b>\n"
+        f"{status_icon} Yield: <b>{yield_val:+.2f}%</b>\n"
+        f"━━━━━━━━━━━━━━━\n"
+        f"<i>Ostatnia aktualizacja: {datetime.now().strftime('%d.%m %H:%M')}</i>"
+    )
 
-    msg += "━━━━━━━━━━━━━━━━━━\n"
-    total_win_rate = (wins / total_bets) * 100
-    color = "🟢" if total_profit > 0 else "🔴"
-    msg += f"{color} <b>SUMA: {total_profit:+.2f} PLN</b>\n"
-    msg += f"🎯 Total WinRate: <b>{total_win_rate:.1f}%</b>"
-
-    return msg
+    send_telegram(report)
+    print("Statystyki wysłane na Telegram.")
 
 if __name__ == "__main__":
-    results = load_results()
-    
-    # Raz w tygodniu (np. w niedzielę) wysyłaj raport tygodniowy
-    # Ale domyślnie wysyłaj podsumowanie po każdym przebiegu settle.py
-    report = generate_report(results, days=7)
-    send_telegram(report)
+    generate_stats()
