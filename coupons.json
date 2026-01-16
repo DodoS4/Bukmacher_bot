@@ -1,1 +1,472 @@
-[]
+[
+    {
+        "id": "7cde35496195f0d6f99ee352fa0bba65",
+        "sport_key": "basketball_nba",
+        "sport": "NBA",
+        "home": "Philadelphia 76ers",
+        "away": "Cleveland Cavaliers",
+        "time": "2026-01-17T00:10:00Z",
+        "odds": 2.1,
+        "pick": "Cleveland Cavaliers"
+    },
+    {
+        "id": "7e6506c4bcd0439f38393b5c1efac771",
+        "sport_key": "basketball_nba",
+        "sport": "NBA",
+        "home": "Indiana Pacers",
+        "away": "New Orleans Pelicans",
+        "time": "2026-01-17T00:10:00Z",
+        "odds": 1.56,
+        "pick": "Indiana Pacers"
+    },
+    {
+        "id": "0faca6073061c0d2d76f628039823a00",
+        "sport_key": "basketball_nba",
+        "sport": "NBA",
+        "home": "Brooklyn Nets",
+        "away": "Chicago Bulls",
+        "time": "2026-01-17T00:40:00Z",
+        "odds": 1.74,
+        "pick": "Brooklyn Nets"
+    },
+    {
+        "id": "51d7a3906f3d85a499b459c4ab5fdee3",
+        "sport_key": "basketball_nba",
+        "sport": "NBA",
+        "home": "Toronto Raptors",
+        "away": "Los Angeles Clippers",
+        "time": "2026-01-17T00:40:00Z",
+        "odds": 1.76,
+        "pick": "Los Angeles Clippers"
+    },
+    {
+        "id": "1a69e04063ab1bafaaa377b3e0ac5993",
+        "sport_key": "basketball_nba",
+        "sport": "NBA",
+        "home": "Houston Rockets",
+        "away": "Minnesota Timberwolves",
+        "time": "2026-01-17T02:40:00Z",
+        "odds": 1.58,
+        "pick": "Houston Rockets"
+    },
+    {
+        "id": "2e07a070a22b3c8be5ef895fd5678366",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Carolina Hurricanes",
+        "away": "Florida Panthers",
+        "time": "2026-01-17T00:10:00Z",
+        "odds": 2.1,
+        "pick": "Carolina Hurricanes"
+    },
+    {
+        "id": "b0d94fffbdd0b6d44d2ea3476cb25ed9",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Detroit Red Wings",
+        "away": "San Jose Sharks",
+        "time": "2026-01-17T00:10:00Z",
+        "odds": 1.8,
+        "pick": "Detroit Red Wings"
+    },
+    {
+        "id": "791b2f340b484d74ac3a07d8ad66cbe2",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "St Louis Blues",
+        "away": "Tampa Bay Lightning",
+        "time": "2026-01-17T01:10:00Z",
+        "odds": 1.91,
+        "pick": "Tampa Bay Lightning"
+    },
+    {
+        "id": "0d6d103dab5d7037edb505288dab378b",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Colorado Avalanche",
+        "away": "Nashville Predators",
+        "time": "2026-01-17T02:10:00Z",
+        "odds": 1.55,
+        "pick": "Colorado Avalanche"
+    },
+    {
+        "id": "664b99ada4e0ee31d6caa987eb12db33",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Los Angeles Kings",
+        "away": "Anaheim Ducks",
+        "time": "2026-01-17T03:40:00Z",
+        "odds": 2.0,
+        "pick": "Los Angeles Kings"
+    },
+    {
+        "id": "18f20c44ddd60d5c1cf0b7de5a343fbe",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Buffalo Sabres",
+        "away": "Minnesota Wild",
+        "time": "2026-01-17T17:30:00Z",
+        "odds": 2.48,
+        "pick": "Buffalo Sabres"
+    },
+    {
+        "id": "75eb527369744d118a396905c7b0afa0",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Philadelphia Flyers",
+        "away": "New York Rangers",
+        "time": "2026-01-17T18:00:00Z",
+        "odds": 2.2,
+        "pick": "Philadelphia Flyers"
+    },
+    {
+        "id": "793d5a067062ea802d41a89da204d7ca",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Calgary Flames",
+        "away": "New York Islanders",
+        "time": "2026-01-17T20:00:00Z",
+        "odds": 2.45,
+        "pick": "Calgary Flames"
+    },
+    {
+        "id": "91497674673e557191f393c61e65087f",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Utah Mammoth",
+        "away": "Seattle Kraken",
+        "time": "2026-01-17T22:00:00Z",
+        "odds": 2.02,
+        "pick": "Utah Mammoth"
+    },
+    {
+        "id": "691211736713bd18de65bda1ded8542a",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "New Jersey Devils",
+        "away": "Carolina Hurricanes",
+        "time": "2026-01-18T00:00:00Z",
+        "odds": 2.43,
+        "pick": "Carolina Hurricanes"
+    },
+    {
+        "id": "4d770d654d17af3d6351f507be56d2e5",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Pittsburgh Penguins",
+        "away": "Columbus Blue Jackets",
+        "time": "2026-01-18T00:00:00Z",
+        "odds": 2.16,
+        "pick": "Pittsburgh Penguins"
+    },
+    {
+        "id": "8500f512e0b189d2f7b16007970535fe",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Washington Capitals",
+        "away": "Florida Panthers",
+        "time": "2026-01-18T00:00:00Z",
+        "odds": 2.25,
+        "pick": "Washington Capitals"
+    },
+    {
+        "id": "4db27bafa96e7cf9db1246d5302361cc",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Ottawa Senators",
+        "away": "Montr\u00e9al Canadiens",
+        "time": "2026-01-18T00:00:00Z",
+        "odds": 2.23,
+        "pick": "Ottawa Senators"
+    },
+    {
+        "id": "78967c50060a0dfdc31d6c86dd84f91a",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Winnipeg Jets",
+        "away": "Toronto Maple Leafs",
+        "time": "2026-01-18T00:00:00Z",
+        "odds": 2.45,
+        "pick": "Toronto Maple Leafs"
+    },
+    {
+        "id": "720dea61990bf14431875a73120d9933",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Chicago Blackhawks",
+        "away": "Boston Bruins",
+        "time": "2026-01-18T01:00:00Z",
+        "odds": 2.28,
+        "pick": "Boston Bruins"
+    },
+    {
+        "id": "784eb5fb32a5372dd14e963999989b61",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Anaheim Ducks",
+        "away": "Los Angeles Kings",
+        "time": "2026-01-18T03:00:00Z",
+        "odds": 2.45,
+        "pick": "Anaheim Ducks"
+    },
+    {
+        "id": "bf399dedb92a63e3fbdafeeb9966569f",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Vancouver Canucks",
+        "away": "Edmonton Oilers",
+        "time": "2026-01-18T03:00:00Z",
+        "odds": 1.97,
+        "pick": "Edmonton Oilers"
+    },
+    {
+        "id": "251eccdd135bf18a885ad5d115fe241f",
+        "sport_key": "icehockey_nhl",
+        "sport": "NHL",
+        "home": "Vegas Golden Knights",
+        "away": "Nashville Predators",
+        "time": "2026-01-18T03:00:00Z",
+        "odds": 1.74,
+        "pick": "Vegas Golden Knights"
+    },
+    {
+        "id": "3fd1e970c718bfc0f99a7e4575e46f49",
+        "sport_key": "soccer_epl",
+        "sport": "EPL",
+        "home": "Manchester United",
+        "away": "Manchester City",
+        "time": "2026-01-17T12:30:00Z",
+        "odds": 1.94,
+        "pick": "Manchester City"
+    },
+    {
+        "id": "876bd00ab1c4cff1c6635a8ac7f93d75",
+        "sport_key": "soccer_epl",
+        "sport": "EPL",
+        "home": "Chelsea",
+        "away": "Brentford",
+        "time": "2026-01-17T15:00:00Z",
+        "odds": 1.7,
+        "pick": "Chelsea"
+    },
+    {
+        "id": "86609aa022312a15ec01d5bc0c172dbc",
+        "sport_key": "soccer_epl",
+        "sport": "EPL",
+        "home": "Leeds United",
+        "away": "Fulham",
+        "time": "2026-01-17T15:00:00Z",
+        "odds": 2.05,
+        "pick": "Leeds United"
+    },
+    {
+        "id": "47e36aed7df3160f584a73fbd1fd0830",
+        "sport_key": "soccer_epl",
+        "sport": "EPL",
+        "home": "Tottenham Hotspur",
+        "away": "West Ham United",
+        "time": "2026-01-17T15:00:00Z",
+        "odds": 1.72,
+        "pick": "Tottenham Hotspur"
+    },
+    {
+        "id": "e15eb2362921b16a6b6a0397ce607a11",
+        "sport_key": "soccer_epl",
+        "sport": "EPL",
+        "home": "Wolverhampton Wanderers",
+        "away": "Newcastle United",
+        "time": "2026-01-18T14:00:00Z",
+        "odds": 1.66,
+        "pick": "Newcastle United"
+    },
+    {
+        "id": "92d36e6b5b03266bf386354eb489ad97",
+        "sport_key": "soccer_spain_la_liga",
+        "sport": "La Liga - Spain",
+        "home": "Espanyol",
+        "away": "Girona",
+        "time": "2026-01-16T20:00:00Z",
+        "odds": 1.8,
+        "pick": "Espanyol"
+    },
+    {
+        "id": "81eeaa276b0f874eee70a3cc0e2c039a",
+        "sport_key": "soccer_spain_la_liga",
+        "sport": "La Liga - Spain",
+        "home": "Mallorca",
+        "away": "Athletic Bilbao",
+        "time": "2026-01-17T15:15:00Z",
+        "odds": 2.15,
+        "pick": "Athletic Bilbao"
+    },
+    {
+        "id": "a87f04984f0a2d9b361da24ff21178b8",
+        "sport_key": "soccer_spain_la_liga",
+        "sport": "La Liga - Spain",
+        "home": "CA Osasuna",
+        "away": "Oviedo",
+        "time": "2026-01-17T17:30:00Z",
+        "odds": 1.75,
+        "pick": "CA Osasuna"
+    },
+    {
+        "id": "42414e1da7f830259646d76907dd1269",
+        "sport_key": "soccer_spain_la_liga",
+        "sport": "La Liga - Spain",
+        "home": "Real Betis",
+        "away": "Villarreal",
+        "time": "2026-01-17T20:00:00Z",
+        "odds": 2.45,
+        "pick": "Villarreal"
+    },
+    {
+        "id": "137fef737a82bc36ead5fb9442f68eaf",
+        "sport_key": "soccer_spain_la_liga",
+        "sport": "La Liga - Spain",
+        "home": "Getafe",
+        "away": "Valencia",
+        "time": "2026-01-18T13:00:00Z",
+        "odds": 2.43,
+        "pick": "Getafe"
+    },
+    {
+        "id": "d5dc97aab1d29cfc809130fe57a2db14",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport": "Bundesliga - Germany",
+        "home": "Werder Bremen",
+        "away": "Eintracht Frankfurt",
+        "time": "2026-01-16T19:30:00Z",
+        "odds": 2.4,
+        "pick": "Eintracht Frankfurt"
+    },
+    {
+        "id": "271496e78982c89d82c981ae2e2008c7",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport": "Bundesliga - Germany",
+        "home": "VfL Wolfsburg",
+        "away": "1. FC Heidenheim",
+        "time": "2026-01-17T14:30:00Z",
+        "odds": 1.66,
+        "pick": "VfL Wolfsburg"
+    },
+    {
+        "id": "16cfa9455a9796f667118f6450024757",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport": "Bundesliga - Germany",
+        "home": "1. FC K\u00f6ln",
+        "away": "FSV Mainz 05",
+        "time": "2026-01-17T14:30:00Z",
+        "odds": 2.1,
+        "pick": "1. FC K\u00f6ln"
+    },
+    {
+        "id": "3334b9a452b572ca5f136d524bba816e",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport": "Bundesliga - Germany",
+        "home": "TSG Hoffenheim",
+        "away": "Bayer Leverkusen",
+        "time": "2026-01-17T14:30:00Z",
+        "odds": 2.4,
+        "pick": "TSG Hoffenheim"
+    },
+    {
+        "id": "e0532a11798c2e3bbe0e20c889cde2d7",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport": "Bundesliga - Germany",
+        "home": "RB Leipzig",
+        "away": "Bayern Munich",
+        "time": "2026-01-17T17:30:00Z",
+        "odds": 1.59,
+        "pick": "Bayern Munich"
+    },
+    {
+        "id": "baa7dbc232573c12de3b94c5126518ec",
+        "sport_key": "soccer_germany_bundesliga",
+        "sport": "Bundesliga - Germany",
+        "home": "VfB Stuttgart",
+        "away": "Union Berlin",
+        "time": "2026-01-18T14:30:00Z",
+        "odds": 1.67,
+        "pick": "VfB Stuttgart"
+    },
+    {
+        "id": "09a25c81cc9c0d2ee95a39858526b187",
+        "sport_key": "soccer_italy_serie_a",
+        "sport": "Serie A - Italy",
+        "home": "Pisa",
+        "away": "Atalanta BC",
+        "time": "2026-01-16T19:45:00Z",
+        "odds": 1.62,
+        "pick": "Atalanta BC"
+    },
+    {
+        "id": "2e402618e8f128fd17ac85c1075dc642",
+        "sport_key": "soccer_italy_serie_a",
+        "sport": "Serie A - Italy",
+        "home": "Napoli",
+        "away": "Sassuolo",
+        "time": "2026-01-17T17:00:00Z",
+        "odds": 1.51,
+        "pick": "Napoli"
+    },
+    {
+        "id": "7cccb3c5504678aa2bbd5490aab3881f",
+        "sport_key": "soccer_italy_serie_a",
+        "sport": "Serie A - Italy",
+        "home": "Cagliari",
+        "away": "Juventus",
+        "time": "2026-01-17T19:45:00Z",
+        "odds": 1.54,
+        "pick": "Juventus"
+    },
+    {
+        "id": "18de9ca5efc2136cd1204211f2d36011",
+        "sport_key": "soccer_italy_serie_a",
+        "sport": "Serie A - Italy",
+        "home": "Bologna",
+        "away": "Fiorentina",
+        "time": "2026-01-18T14:00:00Z",
+        "odds": 2.2,
+        "pick": "Bologna"
+    },
+    {
+        "id": "8db02bc3086459d6f01e3fae5eebde04",
+        "sport_key": "soccer_france_ligue_one",
+        "sport": "Ligue 1 - France",
+        "home": "AS Monaco",
+        "away": "Lorient",
+        "time": "2026-01-16T18:00:00Z",
+        "odds": 1.67,
+        "pick": "AS Monaco"
+    },
+    {
+        "id": "7c31284c2c36f12fd3cdce8b23ac9ee2",
+        "sport_key": "soccer_france_ligue_one",
+        "sport": "Ligue 1 - France",
+        "home": "RC Lens",
+        "away": "Auxerre",
+        "time": "2026-01-17T16:00:00Z",
+        "odds": 1.5,
+        "pick": "RC Lens"
+    },
+    {
+        "id": "540a9a67c337cf21bee313e260efaf69",
+        "sport_key": "soccer_france_ligue_one",
+        "sport": "Ligue 1 - France",
+        "home": "Toulouse",
+        "away": "Nice",
+        "time": "2026-01-17T18:00:00Z",
+        "odds": 1.94,
+        "pick": "Toulouse"
+    },
+    {
+        "id": "ffe24fdea2d5ad6483292eb749b97506",
+        "sport_key": "soccer_france_ligue_one",
+        "sport": "Ligue 1 - France",
+        "home": "Angers",
+        "away": "Marseille",
+        "time": "2026-01-17T20:05:00Z",
+        "odds": 1.58,
+        "pick": "Marseille"
+    }
+]
