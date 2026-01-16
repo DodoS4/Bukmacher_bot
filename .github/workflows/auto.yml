@@ -2,13 +2,12 @@ name: Betting Bot 24/7 Professional
 
 on:
   schedule:
-    # Co 6 godzin (6:00, 12:00, 18:00, 00:00)
+    # Uruchamia się co 6 godzin
     - cron: '0 0,6,12,18 * * *'
-    # Dodatkowy przebieg w niedzielę wieczorem (22:00)
+    # Dodatkowy przebieg w niedzielę wieczorem
     - cron: '0 22 * * 0'
-  workflow_dispatch: # Możliwość ręcznego odpalenia guzikiem
+  workflow_dispatch: # Pozwala na ręczne uruchomienie przyciskiem w zakładce Actions
 
-# Zapobiega jednoczesnemu uruchomieniu dwóch botów (ochrona bazy JSON)
 concurrency:
   group: betting-bot
   cancel-in-progress: false
@@ -16,28 +15,27 @@ concurrency:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    # Nadajemy uprawnienia do zapisu w repozytorium
     permissions:
       contents: write
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # Najnowsza wersja v4
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10' # Stabilna wersja z dobrym wsparciem dat
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # ===== KROK 1: SKANOWANIE =====
-      - name: Run Scanner (start.py)
+      # ===== KROK 1: SKANOWANIE (Nowe mecze) =====
+      - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
@@ -49,20 +47,18 @@ jobs:
           SPORTS_API_KEY: ${{ secrets.SPORTS_API_KEY }}
         run: python start.py
 
-      # ===== KROK 2: ROZLICZANIE =====
-      - name: Run Settler (settle.py)
+      # ===== KROK 2: ROZLICZANIE (Wyniki) =====
+      - name: Run Settler
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
-          # Przekazujemy klucze również tutaj, by settle mógł sprawdzić wyniki
-          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           SPORTS_API_KEY: ${{ secrets.SPORTS_API_KEY }}
         run: python settle.py
-        continue-on-error: true # Jeśli API z wynikami nie odpowie, idź dalej
+        continue-on-error: true
 
       # ===== KROK 3: STATYSTYKI =====
-      - name: Run Stats (stats.py)
+      - name: Run Stats
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
@@ -70,22 +66,35 @@ jobs:
         run: python stats.py
         continue-on-error: true
 
-      # ===== KROK 4: BEZPIECZNY ZAPIS =====
+      # ===== KROK 4: BEZPIECZNY ZAPIS DANYCH =====
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Pobierz ewentualne zmiany z serwera przed wysyłką
-          git pull --rebase origin main
+          # Dodaj pliki do poczekalni (staging)
+          # Dodaj wszystkie pliki JSON, które Twój bot modyfikuje
+          git add coupons.json history.json bankroll.json results.json || echo "No files to add"
           
-          # Dodaj pliki danych (dodaj inne, jeśli bot tworzy np. history.json)
-          git add coupons.json
-          
-          # Sprawdź czy są zmiany, jeśli tak - zrób commit i push
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
+          # Sprawdź, czy są jakiekolwiek zmiany do zapisania
+          if ! git diff --cached --quiet; then
+            echo "Zmiany wykryte, przygotowuję synchronizację..."
+            
+            # Schowaj zmiany tymczasowo
+            git stash
+            
+            # Pobierz najnowszą wersję z repozytorium (rebase)
+            git pull --rebase origin main
+            
+            # Przywróć zmiany wykonane przez skrypty bota
+            git stash pop || echo "No stash to pop"
+            
+            # Ponownie dodaj pliki po połączeniu zmian
+            git add coupons.json history.json bankroll.json results.json
+            
+            # Zrób commit i wyślij do repozytorium
             git commit -m "Bot Update: New bets/results [skip ci]"
             git push origin main
+          else
+            echo "Brak zmian do zapisania."
           fi
