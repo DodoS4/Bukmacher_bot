@@ -47,7 +47,7 @@ def main():
         all_coupons = []
 
     now = datetime.now(timezone.utc)
-    max_future = now + timedelta(hours=48) # Filtr 48h
+    max_future = now + timedelta(hours=48)
 
     for league, emoji in SPORTS_CONFIG.items():
         data = None
@@ -66,11 +66,10 @@ def main():
             if event['id'] in already_sent_ids:
                 continue
             
-            # --- SPRAWDZANIE CZASU (MAX 48H) ---
             try:
                 match_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
                 if match_time > max_future:
-                    continue # Pomiń, jeśli mecz jest za daleko w przyszłości
+                    continue 
             except:
                 continue
 
@@ -78,10 +77,17 @@ def main():
             best_choice = None
             league_header = league.replace("soccer_", "").replace("_", " ").upper()
 
+            # Szukanie najlepszego kursu z wykluczeniem remisów dla USA
             for bookie in event['bookmakers']:
                 for market in bookie['markets']:
                     if market['key'] == 'h2h':
                         for outcome in market['outcomes']:
+                            
+                            # FILTR: Brak remisów dla NHL i NBA
+                            is_us_sport = league in ["icehockey_nhl", "basketball_nba"]
+                            if is_us_sport and outcome['name'].lower() == "draw":
+                                continue
+
                             if 1.95 <= outcome['price'] <= 4.0:
                                 if outcome['price'] > best_odds:
                                     best_odds = outcome['price']
