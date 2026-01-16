@@ -1168,5 +1168,68 @@
     "status": "pending",
     "stake": 50,
     "profit": 0
+  },
+  {
+    "league": "⚽ Premier League",
+    "home": "Manchester United",
+    "away": "Manchester City",
+    "pick": "Draw",
+    "odds": 3.95,
+    "date": "2026-01-17T12:30:00+00:00",
+    "status": "pending"
+  },
+  {
+    "league": "⚽ Premier League",
+    "home": "Chelsea",
+    "away": "Brentford",
+    "pick": "Brentford",
+    "odds": 4.8,
+    "date": "2026-01-17T15:00:00+00:00",
+    "status": "pending"
+  },
+  {
+    "league": "⚽ Premier League",
+    "home": "Liverpool",
+    "away": "Burnley",
+    "pick": "Burnley",
+    "odds": 11.0,
+    "date": "2026-01-17T15:00:00+00:00",
+    "status": "pending"
+  },
+  {
+    "league": "⚽ Premier League",
+    "home": "Sunderland",
+    "away": "Crystal Palace",
+    "pick": "Draw",
+    "odds": 3.21,
+    "date": "2026-01-17T15:00:00+00:00",
+    "status": "pending"
+  },
+  {
+    "league": "⚽ Premier League",
+    "home": "Leeds United",
+    "away": "Fulham",
+    "pick": "Fulham",
+    "odds": 3.3,
+    "date": "2026-01-17T15:00:00+00:00",
+    "status": "pending"
+  },
+  {
+    "league": "⚽ Premier League",
+    "home": "Tottenham Hotspur",
+    "away": "West Ham United",
+    "pick": "West Ham United",
+    "odds": 4.6,
+    "date": "2026-01-17T15:00:00+00:00",
+    "status": "pending"
+  },
+  {
+    "league": "⚽ Premier League",
+    "home": "Nottingham Forest",
+    "away": "Arsenal",
+    "pick": "Nottingham Forest",
+    "odds": 5.9,
+    "date": "2026-01-17T17:30:00+00:00",
+    "status": "pending"
   }
 ]
