@@ -1,1 +1,4 @@
-[]
+[
+  {"date": "2026-01-16", "match": "Test vs Demo", "sport": "soccer_epl", "profit": 20.0, "win": true},
+  {"date": "2026-01-16", "match": "Porażka vs Test", "sport": "soccer_spain_la_liga", "profit": -10.0, "win": false}
+]
