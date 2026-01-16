@@ -50,17 +50,13 @@ def filter_matches(matches, sport):
             match_time = datetime.fromisoformat(m["commence_time"].replace("Z", "+00:00"))
             if not now <= match_time <= max_time:
                 continue
-
-            # wybór najlepszej oferty
             if not m.get("bookmakers"):
                 continue
             market = m["bookmakers"][0]["markets"][0]["outcomes"][0]
             odds = market["price"]
-
             max_odds = NBA_NHL_MAX if sport in ["basketball_nba","hockey_nhl"] else MAX_ODDS
             if odds < MIN_ODDS or odds > max_odds:
                 continue
-
             filtered.append({
                 "sport": m["sport_title"],
                 "home": m["home_team"],
@@ -82,6 +78,7 @@ def main():
                 filtered = filter_matches(matches, sport)
                 all_matches.extend(filtered)
                 break  # jeśli klucz działa, nie próbujemy kolejnych
+
     # anty-duplikaty
     unique = {f"{m['home']}_{m['away']}_{m['time']}": m for m in all_matches}.values()
 
