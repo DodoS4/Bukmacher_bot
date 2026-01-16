@@ -4,7 +4,7 @@
         "home": "Philadelphia 76ers",
         "away": "Cleveland Cavaliers",
         "outcome": "Cleveland Cavaliers",
-        "odds": 2.32,
+        "odds": 2.31,
         "stake": 250,
         "sport": "basketball_nba",
         "time": "2026-01-17T00:10:00Z"
@@ -54,7 +54,7 @@
         "home": "Sacramento Kings",
         "away": "Washington Wizards",
         "outcome": "Washington Wizards",
-        "odds": 3.35,
+        "odds": 3.4,
         "stake": 250,
         "sport": "basketball_nba",
         "time": "2026-01-17T03:10:00Z"
@@ -364,7 +364,7 @@
         "home": "Burnley",
         "away": "Tottenham Hotspur",
         "outcome": "Burnley",
-        "odds": 4.0,
+        "odds": 3.95,
         "stake": 250,
         "sport": "soccer_epl",
         "time": "2026-01-24T15:00:00Z"
@@ -484,7 +484,7 @@
         "home": "Levante",
         "away": "Elche CF",
         "outcome": "Draw",
-        "odds": 3.42,
+        "odds": 3.36,
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-23T20:00:00Z"
@@ -504,7 +504,7 @@
         "home": "Valencia",
         "away": "Espanyol",
         "outcome": "Draw",
-        "odds": 3.5,
+        "odds": 3.45,
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-24T15:15:00Z"
@@ -514,7 +514,7 @@
         "home": "Sevilla",
         "away": "Athletic Bilbao",
         "outcome": "Draw",
-        "odds": 3.21,
+        "odds": 3.16,
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-24T17:30:00Z"
@@ -524,7 +524,7 @@
         "home": "Villarreal",
         "away": "Real Madrid",
         "outcome": "Draw",
-        "odds": 4.0,
+        "odds": 3.95,
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-24T20:00:00Z"
@@ -534,7 +534,7 @@
         "home": "Real Sociedad",
         "away": "Celta Vigo",
         "outcome": "Celta Vigo",
-        "odds": 3.94,
+        "odds": 3.88,
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-25T17:30:00Z"
@@ -544,7 +544,7 @@
         "home": "Alav\u00e9s",
         "away": "Real Betis",
         "outcome": "Alav\u00e9s",
-        "odds": 3.17,
+        "odds": 3.15,
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-25T20:00:00Z"
@@ -633,7 +633,7 @@
         "id": "a9424bfa2336811753a079d3a9e33285",
         "home": "1. FC Heidenheim",
         "away": "RB Leipzig",
-        "outcome": "1. FC Heidenheim",
+        "outcome": "Draw",
         "odds": 4.0,
         "stake": 250,
         "sport": "soccer_germany_bundesliga",
