@@ -1,14 +1,13 @@
-name: Betting Bot 24/7 Professional
+name: Betting Bot Professional - Split Mode
 
 on:
   schedule:
-    # Uruchamia się 4 razy dziennie (północ, 6:00, 12:00, 18:00)
+    # Skanowanie co 6 godzin (00:00, 06:00, 12:00, 18:00)
     - cron: '0 0,6,12,18 * * *'
-    # Dodatkowy przebieg w niedzielę o 22:00 na podsumowanie tygodnia
-    - cron: '0 22 * * 0'
-  workflow_dispatch: # Pozwala odpalić bota ręcznie przyciskiem
+    # Główne rozliczenie i raport o 22:00
+    - cron: '0 22 * * *'
+  workflow_dispatch: # Pozwala odpalić ręcznie w dowolnej chwili
 
-# Blokada jednoczesnych uruchomień (chroni pliki JSON przed uszkodzeniem)
 concurrency:
   group: betting-bot
   cancel-in-progress: false
@@ -17,13 +16,13 @@ jobs:
   run-bot:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Wymagane, aby bot mógł zapisywać wyniki w repozytorium
+      contents: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Pobiera całą historię dla bezpieczniejszego git pull
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -33,10 +32,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # Dodano python-dateutil dla poprawnego wyświetlania polskich dat
-          pip install requests python-dateutil 
+          pip install requests python-dateutil
 
-      # KROK 1: SKANOWANIE (start.py)
+      # KROK 1: SKANOWANIE (zawsze)
       - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -46,41 +44,28 @@ jobs:
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
         run: python start.py
 
-      # KROK 2: ROZLICZANIE (settle.py)
-      - name: Run Settler
+      # KROK 2: ROZLICZANIE I STATYSTYKI (tylko o 22:00 lub ręcznie)
+      - name: Run Settler and Stats
+        if: github.event.schedule == '0 22 * * *' || github.event_name == 'workflow_dispatch'
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
-        run: python settle.py
-        continue-on-error: true # Idź dalej nawet jeśli API wyników nie odpowie
+        run: |
+          python settle.py
+          python stats.py
 
-      # KROK 3: STATYSTYKI (stats.py)
-      - name: Run Stats
-        env:
-          T_TOKEN: ${{ secrets.T_TOKEN }}
-          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
-        run: python stats.py
-        continue-on-error: true
-
-      # KROK 4: BEZPIECZNY ZAPIS ZMIAN (History & Coupons)
+      # KROK 3: ZAPIS DANYCH
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Dodajemy pliki baz danych JSON do stagingu
-          git add coupons.json history.json bankroll.json || echo "Brak plików do dodania"
-          
-          # Sprawdzenie czy są zmiany przed wysyłką
+          git add coupons.json history.json bankroll.json || echo "Brak plików"
           if ! git diff --cached --quiet; then
-            echo "Wykryto nowe dane, synchronizuję z repozytorium..."
             git stash
             git pull --rebase origin main
-            git stash pop || echo "Brak zmian w stashu"
+            git stash pop || echo "No stash"
             git add coupons.json history.json bankroll.json
             git commit -m "Bot Update: [skip ci]"
             git push origin main
-          else
-            echo "Brak nowych zmian do zapisania."
           fi
