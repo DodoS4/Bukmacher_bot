@@ -1,95 +1,96 @@
 import requests
 import json
-from datetime import datetime, timedelta
+import os
+from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA =================
-API_KEYS = [
-    "TWÓJ_KLUCZ_1",
-    "TWÓJ_KLUCZ_2",
-    "TWÓJ_KLUCZ_3",
-    "TWÓJ_KLUCZ_4",
-    "TWÓJ_KLUCZ_5"
-]
+# Pobieranie kluczy z GitHub Secrets
+API_KEYS = [os.getenv(f"ODDS_KEY_{i}") for i in range(1, 6) if os.getenv(f"ODDS_KEY_{i}")]
+if not API_KEYS:
+    API_KEYS = [os.getenv("ODDS_KEY")]
 
 SPORTS = ["basketball_nba", "hockey_nhl", "soccer_epl", "soccer_spain_la_liga"]
 COUPON_FILE = "coupons.json"
-TELEGRAM_TOKEN = "<T_TOKEN>"
-TELEGRAM_CHAT = "<T_CHAT>"
 
-# Kursy
-MIN_ODDS = 1.55
-MAX_ODDS = 2.05
-NBA_NHL_MAX = 2.20
-
-# Maksymalny czas do meczu w godzinach
-MAX_HOURS_AHEAD = 48
-
-# ================= FUNKCJE =================
-def send_telegram(message):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    requests.post(url, data={"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "Markdown"})
+# POLUZOWANE FILTRY DLA TESTU
+MIN_ODDS = 1.20
+MAX_ODDS = 3.50
+MAX_HOURS_AHEAD = 72 # Zwiększone do 3 dni
 
 def get_matches(sport, key):
-    url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds/?apiKey={key}&regions=eu&markets=h2h"
+    url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds/"
+    params = {
+        'apiKey': key,
+        'regions': 'eu',
+        'markets': 'h2h',
+        'oddsFormat': 'decimal'
+    }
     try:
-        resp = requests.get(url, timeout=10)
-        resp.raise_for_status()
-        return resp.json()
-    except requests.HTTPError as e:
-        print(f"[ERROR] {sport} | {e}")
-    except requests.RequestException as e:
-        print(f"[ERROR] {sport} | {e}")
-    return []
-
-def filter_matches(matches, sport):
-    filtered = []
-    now = datetime.utcnow()
-    max_time = now + timedelta(hours=MAX_HOURS_AHEAD)
-    for m in matches:
-        try:
-            match_time = datetime.fromisoformat(m["commence_time"].replace("Z", "+00:00"))
-            if not now <= match_time <= max_time:
-                continue
-            if not m.get("bookmakers"):
-                continue
-            market = m["bookmakers"][0]["markets"][0]["outcomes"][0]
-            odds = market["price"]
-            max_odds = NBA_NHL_MAX if sport in ["basketball_nba","hockey_nhl"] else MAX_ODDS
-            if odds < MIN_ODDS or odds > max_odds:
-                continue
-            filtered.append({
-                "sport": m["sport_title"],
-                "home": m["home_team"],
-                "away": m["away_team"],
-                "time": match_time.isoformat(),
-                "odds": odds,
-                "pick": market["name"]
-            })
-        except Exception as e:
-            print(f"[WARN] Problem z datą lub kursem: {m.get('home_team')} vs {m.get('away_team')} | {e}")
-    return filtered
+        resp = requests.get(url, params=params, timeout=15)
+        print(f"[DEBUG] API Status dla {sport}: {resp.status_code}")
+        if resp.status_code == 200:
+            return resp.json()
+        return []
+    except Exception as e:
+        print(f"[ERROR] {sport}: {e}")
+        return []
 
 def main():
-    all_matches = []
+    all_filtered_matches = []
+    now = datetime.now(timezone.utc)
+    max_time = now + timedelta(hours=MAX_HOURS_AHEAD)
+
     for sport in SPORTS:
+        print(f"\n--- Sprawdzam sport: {sport} ---")
+        matches = []
         for key in API_KEYS:
+            if not key: continue
             matches = get_matches(sport, key)
-            if matches:
-                filtered = filter_matches(matches, sport)
-                all_matches.extend(filtered)
-                break  # jeśli klucz działa, nie próbujemy kolejnych
+            if matches: break # Jeśli mamy dane, nie sprawdzamy kolejnych kluczy
 
-    # anty-duplikaty
-    unique = {f"{m['home']}_{m['away']}_{m['time']}": m for m in all_matches}.values()
+        print(f"[DEBUG] Znaleziono meczów w API dla {sport}: {len(matches)}")
 
-    if unique:
+        for m in matches:
+            try:
+                m_time = datetime.fromisoformat(m["commence_time"].replace("Z", "+00:00"))
+                
+                # Logika filtrowania
+                if not (now <= m_time <= max_time):
+                    continue
+
+                if not m.get("bookmakers"):
+                    continue
+
+                # Bierzemy pierwszego bukmachera i sprawdzamy kursy
+                outcomes = m["bookmakers"][0]["markets"][0]["outcomes"]
+                for outcome in outcomes:
+                    odds = outcome["price"]
+                    if MIN_ODDS <= odds <= MAX_ODDS:
+                        all_filtered_matches.append({
+                            "id": m["id"],
+                            "sport_key": sport,
+                            "sport": m["sport_title"],
+                            "home": m["home_team"],
+                            "away": m["away_team"],
+                            "time": m["commence_time"],
+                            "odds": odds,
+                            "pick": outcome["name"]
+                        })
+                        print(f"[MATCH] Znaleziono: {m['home']} vs {m['away']} - Kurs: {odds}")
+                        break # Jeden typ na mecz wystarczy
+            except Exception as e:
+                print(f"[WARN] Błąd meczu: {e}")
+
+    # Zapisywanie (z zabezpieczeniem przed pustym {})
+    if all_filtered_matches:
         with open(COUPON_FILE, "w", encoding="utf-8") as f:
-            json.dump(list(unique), f, ensure_ascii=False, indent=4)
-        for m in unique:
-            send_telegram(f"🏀 {m['sport']}\n{m['home']} vs {m['away']}\n🎯 {m['pick']}\n💸 {m['odds']} | ⏳ Pending\n📅 {m['time']}")
-        print(f"[INFO] Wysłano {len(unique)} ofert na Telegram")
+            json.dump(all_filtered_matches, f, indent=4, ensure_ascii=False)
+        print(f"\n[SUCCESS] Zapisano {len(all_filtered_matches)} ofert do {COUPON_FILE}")
     else:
-        print("[INFO] Brak nowych ofert")
+        # Bardzo ważne: jeśli nic nie ma, zapisujemy pustą listę, nie pusty słownik
+        with open(COUPON_FILE, "w", encoding="utf-8") as f:
+            json.dump([], f)
+        print("\n[INFO] Brak meczów spełniających kryteria.")
 
 if __name__ == "__main__":
     main()
