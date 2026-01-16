@@ -1,0 +1,30 @@
+name: 🛠 Manual API Diagnosis
+
+on:
+  # Umożliwia ręczne uruchomienie przyciskiem "Run workflow"
+  workflow_dispatch: 
+
+jobs:
+  diagnose-keys:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run API Keys Check
+        env:
+          ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
+          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+        run: python test_api.py
