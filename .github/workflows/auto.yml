@@ -2,9 +2,9 @@ name: Betting Bot Professional - 5 Keys Mode
 
 on:
   schedule:
-    # SKANOWANIE: Co godzinę, od 07:00 do 22:00 czasu polskiego (06:00 - 21:00 UTC)
+    # SKANOWANIE: Co godzinę (o pełnej), od 07:00 do 22:00 czasu PL (06:00-21:00 UTC)
     - cron: '0 6-21 * * *'
-    # ROZLICZENIE I STATYSTYKI: Raz dziennie o 22:30 czasu polskiego (21:30 UTC)
+    # ROZLICZENIE I STATYSTYKI: Raz dziennie o 22:30 czasu PL (21:30 UTC)
     - cron: '30 21 * * *'
   workflow_dispatch: 
 
@@ -34,7 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # KROK 1: SKANOWANIE KURSÓW (Działa co godzinę w oknie czasowym)
+      # KROK 1: SKANOWANIE (Działa co godzinę w oknie czasowym)
       - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python start.py
 
-      # KROK 2: ROZLICZANIE I STATYSTYKI (Tylko wieczorem o 22:30 PL lub ręcznie)
+      # KROK 2: ROZLICZANIE I STATYSTYKI (Tylko wieczorem lub ręcznie)
       - name: Run Settler and Stats
         if: github.event.schedule == '30 21 * * *' || github.event_name == 'workflow_dispatch'
         env:
@@ -58,20 +58,22 @@ jobs:
           python settle.py
           python stats.py
 
-      # KROK 3: AUTOMATYCZNY ZAPIS DANYCH DO REPOZYTORIUM
+      # KROK 3: BEZPIECZNY ZAPIS DANYCH
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Dodajemy wszystkie pliki baz danych i archiwa
+          # Dodajemy pliki baz danych
           git add *.json
           
           if ! git diff --cached --quiet; then
-            # Rebase chroni przed konfliktami przy częstych zapisach
-            git pull --rebase origin main
+            # Najpierw tworzymy commit lokalnie (rozwiązuje błąd 128)
             git commit -m "Bot Auto-Update: Data Sync [skip ci]"
+            
+            # Pobieramy ewentualne zmiany i wypychamy nasze
+            git pull --rebase origin main
             git push origin main
           else
-            echo "Brak zmian w bazach danych do zapisania."
+            echo "Brak zmian do zapisania."
           fi
