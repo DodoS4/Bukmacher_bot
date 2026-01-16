@@ -1,121 +1,95 @@
 import os
-import json
 import requests
-from datetime import datetime, timezone
+import json
+from datetime import datetime
 
 # ================= KONFIGURACJA =================
-COUPON_FILE = "coupons.json"
+COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 BANKROLL_FILE = "bankroll.json"
-TELEGRAM_TOKEN = os.getenv("T_TOKEN")
-TELEGRAM_CHAT = os.getenv("T_CHAT_RESULTS") or os.getenv("T_CHAT")
-API_KEY = os.getenv("ODDS_KEY")
+API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 
-TAX_PL = 0.88 # 12% podatku
-
-def send_telegram(message):
-    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    try:
-        requests.post(url, json={"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "HTML"})
-    except Exception as e: print(f"Błąd Telegrama: {e}")
-
-def load_json(filename, default):
-    if os.path.exists(filename):
-        with open(filename, "r", encoding="utf-8") as f:
+def load_json(file, default):
+    if os.path.exists(file):
+        with open(file, "r", encoding="utf-8") as f:
             try: return json.load(f)
             except: return default
     return default
 
-def get_results(sport_key):
-    url = f"https://api.the-odds-api.com/v4/sports/{sport_key}/scores/?apiKey={API_KEY}&daysFrom=3"
-    try:
-        resp = requests.get(url, timeout=15)
-        return resp.json() if resp.status_code == 200 else []
-    except: return []
+def save_json(file, data):
+    with open(file, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
-def determine_winner(scores, c):
-    # Dopasowanie punktów do nazw drużyn
-    h_score = next((s["score"] for s in scores if s["name"] == c["home"]), None)
-    a_score = next((s["score"] for s in scores if s["name"] == c["away"]), None)
-    
-    if h_score is None or a_score is None: return None
-    
-    h_score, a_score = int(h_score), int(a_score)
-    if h_score > a_score: return c["home"]
-    if a_score > h_score: return c["away"]
-    return "Draw"
-
-def settle():
-    coupons = load_json(COUPON_FILE, [])
+def settle_matches():
+    coupons = load_json(COUPONS_FILE, [])
     history = load_json(HISTORY_FILE, [])
-    br_data = load_json(BANKROLL_FILE, {"bankroll": 10000.0})
+    bankroll_data = load_json(BANKROLL_FILE, {"bankroll": 1000.0})
     
-    bankroll = br_data["bankroll"]
-    start_br = bankroll
-    still_active = []
-    scores_cache = {}
-    results_list = []
+    if not coupons:
+        return
 
-    for c in coupons:
-        # Ujednolicenie kluczy z start.py
-        sport = c.get("sport") # w start.py jest 'sport'
-        pick = c.get("outcome") # w start.py jest 'outcome'
+    updated_coupons = []
+    new_history_entries = []
+    current_bankroll = bankroll_data["bankroll"]
+
+    # Używamy pierwszego dostępnego klucza API
+    api_key = next((k for k in API_KEYS if k), None)
+
+    for bet in coupons:
+        # Sprawdzamy wyniki (scores) dla danej ligi
+        url = f"https://api.the-odds-api.com/v4/sports/{bet['sport']}/scores/"
+        params = {"apiKey": api_key, "daysFrom": 3}
         
-        # Zapobiegamy błędom przy braku czasu w kuponie
         try:
-            match_time = datetime.fromisoformat(c.get("time", datetime.now(timezone.utc).isoformat()).replace("Z", "+00:00"))
-        except:
-            match_time = datetime.now(timezone.utc)
-
-        if sport not in scores_cache:
-            scores_cache[sport] = get_results(sport)
-
-        match_data = next((m for m in scores_cache[sport] if m["id"] == c["id"]), None)
-
-        if match_data and match_data.get("completed"):
-            winner = determine_winner(match_data.get("scores"), c)
-            if winner is None:
-                still_active.append(c)
-                continue
-
-            is_win = (pick == winner)
-            stake = c.get("stake", 250)
+            resp = requests.get(url, params=params)
+            results = resp.json()
             
-            if is_win:
-                profit = round((stake * TAX_PL * c["odds"]) - stake, 2)
+            # Szukamy konkretnego meczu w wynikach
+            match_result = next((m for m in results if m['id'] == bet['id']), None)
+
+            if match_result and match_result.get('completed'):
+                # Wyciągamy wynik końcowy
+                home_score = next((s['score'] for s in match_result['scores'] if s['name'] == bet['home']), 0)
+                away_score = next((s['score'] for s in match_result['scores'] if s['name'] == bet['away']), 0)
+                
+                home_score = int(home_score)
+                away_score = int(away_score)
+
+                # Określamy zwycięzcę
+                winner = "Draw"
+                if home_score > away_score: winner = bet['home']
+                elif away_score > home_score: winner = bet['away']
+
+                # Rozliczamy kupon
+                if bet['outcome'] == winner:
+                    # Wygrana: (Stawka * Kurs * 0.88) - Stawka
+                    # Używamy round(), aby uniknąć błędów w groszach
+                    raw_profit = (bet['stake'] * bet['odds'] * 0.88) - bet['stake']
+                    bet['profit'] = round(raw_profit, 2)
+                else:
+                    # Przegrana: tracimy stawkę
+                    bet['profit'] = -float(bet['stake'])
+
+                current_bankroll += bet['profit']
+                new_history_entries.append(bet)
             else:
-                profit = -float(stake)
-            
-            bankroll += profit
-            status = "✅" if is_win else "❌"
-            results_list.append(f"{status} {c['home']} - {c['away']}\n└ Typ: {pick} | <b>{profit:+.2f} PLN</b>")
+                # Mecz jeszcze trwa lub nie ma wyników - zostaje w coupons.json
+                updated_coupons.append(bet)
 
-            history.append({
-                "date": datetime.now().isoformat(), 
-                "match": f"{c['home']} vs {c['away']}",
-                "profit": profit, 
-                "win": is_win,
-                "sport": sport
-            })
-        else:
-            still_active.append(c)
+        except Exception as e:
+            print(f"Błąd rozliczania meczu {bet['id']}: {e}")
+            updated_coupons.append(bet)
 
-    if results_list:
-        daily_profit = bankroll - start_br
-        msg = (
-            f"📊 <b>RAPORT ZYSKÓW</b>\n"
-            f"━━━━━━━━━━━━━━━\n" +
-            "\n".join(results_list) +
-            f"\n━━━━━━━━━━━━━━━\n"
-            f"💰 Wynik sesji: <b>{daily_profit:+.2f} PLN</b>\n"
-            f"🏦 Kapitał: <b>{bankroll:.2f} PLN</b>"
-        )
-        send_telegram(msg)
-
-    with open(COUPON_FILE, "w", encoding="utf-8") as f: json.dump(still_active, f, indent=4)
-    with open(HISTORY_FILE, "w", encoding="utf-8") as f: json.dump(history, f, indent=4)
-    with open(BANKROLL_FILE, "w", encoding="utf-8") as f: json.dump({"bankroll": round(bankroll, 2)}, f, indent=4)
+    # Zapisujemy zmiany
+    if new_history_entries:
+        history.extend(new_history_entries)
+        save_json(HISTORY_FILE, history)
+        
+        bankroll_data["bankroll"] = round(current_bankroll, 2)
+        save_json(BANKROLL_FILE, bankroll_data)
+        
+    save_json(COUPONS_FILE, updated_coupons)
+    print(f"Rozliczono {len(new_history_entries)} meczów. Aktualny bankroll: {bankroll_data['bankroll']}")
 
 if __name__ == "__main__":
-    settle()
+    settle_matches()
