@@ -1,47 +1,42 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 COUPON_FILE = "coupons.json"
-RESULTS_FILE = "results.json"  # Tutaj można trzymać rozliczone kupony
+RESULTS_FILE = "results.json"
+TELEGRAM_TOKEN = "<T_TOKEN>"
+TELEGRAM_CHAT = "<T_CHAT>"
 
-# Funkcja symulująca pobranie wyniku meczu
-# W produkcji możesz podpiąć API wyników (np. sportsdata.io, api-football)
-def get_match_result(sport, home_team, away_team):
-    # Dummy: w realnym systemie podajesz wynik z API
-    # Zwraca nazwę zwycięzcy lub "Draw"
-    # Tu na razie symulacja
-    return None
+def send_telegram(message):
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    import requests
+    requests.post(url, data={"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "Markdown"})
 
-def settle_coupons():
-    try:
-        with open(COUPON_FILE, "r", encoding="utf-8") as f:
-            coupons = json.load(f)
-    except FileNotFoundError:
-        print("[WARN] Brak pliku coupons.json")
-        return
+def load_coupons():
+    with open(COUPON_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
+def settle_coupons(coupons):
     results = []
+    now = datetime.utcnow()
     for c in coupons:
-        result = get_match_result(c["sport"], c["home_team"], c["away_team"])
-        if result is None:
-            status = "pending"
-            profit = 0
-        elif result == c["pick"]:
-            status = "win"
-            profit = round((c["odds"] - 1), 2)  # Stawka 1 jednostka
-        else:
-            status = "lose"
-            profit = -1  # Stawka 1 jednostka
+        match_time = datetime.fromisoformat(c["time"])
+        if match_time > now:
+            continue
+        # PROSTE: losowy wynik symulowany (do podmiany na live API)
+        from random import choice
+        outcome = choice([c["pick"], "other"])
+        profit = c["odds"] if outcome == c["pick"] else -1
+        results.append({"match": f"{c['home']} vs {c['away']}", "pick": c["pick"], "result": outcome, "profit": profit})
+    return results
 
-        results.append({
-            **c,
-            "status": status,
-            "profit": profit
-        })
-
+def main():
+    coupons = load_coupons()
+    results = settle_coupons(coupons)
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=4)
-    print(f"[INFO] Kupony rozliczone i zapisane w {RESULTS_FILE}")
+    for r in results:
+        send_telegram(f"⚡ {r['match']} | Pick: {r['pick']} | Result: {r['result']} | Profit: {r['profit']}")
+    print(f"[INFO] Rozliczono {len(results)} kuponów")
 
 if __name__ == "__main__":
-    settle_coupons()
+    main()
