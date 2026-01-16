@@ -1,69 +1,71 @@
 import requests
-import os
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta
+import os
 
-COUPONS_FILE = "coupons.json"
-T_CHAT_RESULTS = os.getenv("T_CHAT_RESULTS")
-SCORES_API_KEY = os.getenv("SCORES_KEY")  # Twój klucz do Score API
+COUPON_FILE = "coupons.json"
+RESULTS_FILE = "results.json"
+API_SCORE_KEY = os.getenv("SCORE_API_KEY")  # Twój klucz do API wyników
 
 def load_coupons():
     try:
-        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+        with open(COUPON_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
-    except:
+    except FileNotFoundError:
         return []
 
-def save_coupons(coupons):
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(coupons, f, ensure_ascii=False, indent=2)
+def save_results(results):
+    with open(RESULTS_FILE, "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=4)
 
-def fetch_results(match):
-    """
-    Pobiera wynik meczu z Score API
-    """
+def get_match_score(league, home_team, away_team, commence_time):
+    # POBIERZ WYNIKI Z API
+    # To przykład, trzeba dostosować do faktycznego API
+    url = f"https://api.scoresapi.com/match?league={league}&home={home_team}&away={away_team}&apikey={API_SCORE_KEY}"
     try:
-        url = f"https://api.scoreapi.com/v1/match?league={match['league']}&home={match['home']}&away={match['away']}&apiKey={SCORES_API_KEY}"
         resp = requests.get(url, timeout=10)
         resp.raise_for_status()
         data = resp.json()
         return data.get("home_score"), data.get("away_score")
     except Exception as e:
-        print(f"[WARN] Nie udało się pobrać wyników {match['home']} vs {match['away']}: {e}")
+        print(f"[WARN] Nie udało się pobrać wyniku {home_team} vs {away_team} | {e}")
         return None, None
 
-def settle():
+def settle_coupons():
     coupons = load_coupons()
-    updated = False
-
+    results = []
     for c in coupons:
-        if c["status"] != "Pending":
-            continue
-
-        home_score, away_score = fetch_results(c)
+        home, away = c["home_team"], c["away_team"]
+        league = c["sport_key"]
+        commence_time = c["commence_time"]
+        home_score, away_score = get_match_score(league, home, away, commence_time)
         if home_score is None or away_score is None:
-            continue  # nadal pending
-
-        if (c["pick"] == c["home"] and home_score > away_score) or (c["pick"] == c["away"] and away_score > home_score):
-            c["status"] = "✅ Wygrany"
-        else:
-            c["status"] = "❌ Przegrany"
-        updated = True
-
-    if updated:
-        save_coupons(coupons)
-        send_results_telegram(coupons)
-
-def send_results_telegram(coupons):
-    for c in coupons:
-        if c["status"] == "Pending":
             continue
-        text = f"🏀 {c['league']}\n{c['home']} 🆚 {c['away']}\n🎯 Typ: {c['pick']} ({c['type']})\n💸 Kurs: {c['odds']} | {c['status']}\n📅 {c['date']}"
-        url = f"https://api.telegram.org/bot{T_CHAT_RESULTS}/sendMessage"
-        try:
-            requests.post(url, data={"chat_id": T_CHAT_RESULTS, "text": text})
-        except Exception as e:
-            print(f"[ERROR] Telegram: {e}")
+
+        outcome_settled = []
+        for o in c["odds"]:
+            if home_score > away_score and o["name"] == home:
+                result = "win"
+            elif away_score > home_score and o["name"] == away:
+                result = "win"
+            elif home_score == away_score and o["name"].lower() == "draw":
+                result = "win"
+            else:
+                result = "lose"
+            outcome_settled.append({
+                "name": o["name"],
+                "price": o["price"],
+                "result": result
+            })
+        results.append({
+            "home_team": home,
+            "away_team": away,
+            "league": league,
+            "commence_time": commence_time,
+            "settled_odds": outcome_settled
+        })
+    save_results(results)
+    print(f"[INFO] Rozliczono {len(results)} kuponów")
 
 if __name__ == "__main__":
-    settle()
+    settle_coupons()
