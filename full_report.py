@@ -10,7 +10,7 @@ TELEGRAM_CHAT = os.getenv("T_CHAT")
 
 def send_telegram(message):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT:
-        print(message) # Jeśli brak tokenów, wypisz w konsoli
+        print(message)
         return
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     requests.post(url, json={"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "HTML"})
@@ -25,8 +25,16 @@ def load_json(file, default):
 def generate_full_report():
     history = load_json(HISTORY_FILE, [])
     
+    # --- WIADOMOŚĆ POWITALNA ---
+    welcome_msg = "🚀 <b>SYSTEM RAPORTOWANIA URUCHOMIONY</b>\n"
+    welcome_msg += "━━━━━━━━━━━━━━━━━━\n"
+    welcome_msg += f"📅 Data: <b>{datetime.now().strftime('%d.%m.%Y')}</b>\n"
+    welcome_msg += "🔍 Status: <i>Analizowanie historii zakładów...</i>\n"
+    welcome_msg += "━━━━━━━━━━━━━━━━━━"
+    send_telegram(welcome_msg)
+
     if not history:
-        send_telegram("⚠️ <b>Brak danych w historii</b> do wygenerowania raportu.")
+        send_telegram("⚠️ <b>Brak danych!</b> Twoja historia jest jeszcze pusta. Postaw pierwsze mecze, aby zobaczyć statystyki.")
         return
 
     monthly_stats = {} 
@@ -43,14 +51,11 @@ def generate_full_report():
         total_profit += profit
         if profit > 0: wins += 1
         
-        # Statystyki miesięczne
         monthly_stats[month_key] = monthly_stats.get(month_key, 0) + profit
-        
-        # Statystyki dyscyplin
         sport = bet.get('sport', 'INNE').replace('soccer_', '').replace('icehockey_', '').replace('basketball_', '').upper()
         sport_stats[sport] = sport_stats.get(sport, 0) + profit
 
-    # Budowanie wiadomości
+    # --- RAPORT GŁÓWNY ---
     msg = "📜 <b>PEŁNY RAPORT WYNIKÓW</b>\n"
     msg += "━━━━━━━━━━━━━━━━━━\n"
     msg += f"💰 Zysk całkowity: <b>{total_profit:.2f} PLN</b>\n"
@@ -68,7 +73,7 @@ def generate_full_report():
     for sport, val in sorted_sports:
         msg += f"🔹 {sport}: <b>{val:+.2f} PLN</b>\n"
     
-    msg += "━━━━━━━━━━━━━━━━━━"
+    msg += "\n👋 <i>Powodzenia w kolejnych typach!</i>"
     
     send_telegram(msg)
 
