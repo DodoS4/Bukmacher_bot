@@ -29,17 +29,16 @@ def send_telegram(message):
     except: pass
 
 def load_existing_data():
-    """Wczytuje kupony i czyści te starsze niż 48h, aby plik nie rósł w nieskończoność."""
+    """Zarządzanie pamięcią podręczną wysłanych kuponów."""
     if os.path.exists("coupons.json"):
         with open("coupons.json", "r", encoding="utf-8") as f:
             try:
                 data = json.load(f)
                 now = datetime.now(timezone.utc)
                 cutoff = now - timedelta(hours=48)
-                
-                # Zatrzymujemy tylko świeże mecze w pamięci wysyłek
-                valid_coupons = [c for c in data if datetime.fromisoformat(c['time'].replace("Z", "+00:00")) > cutoff]
-                return valid_coupons
+                # Czyścimy tylko to, co już się odbyło
+                valid = [c for c in data if datetime.fromisoformat(c['time'].replace("Z", "+00:00")) > cutoff]
+                return valid
             except: return []
     return []
 
@@ -68,41 +67,54 @@ def main():
         if not data: continue
 
         for event in data:
-            # 1. Sprawdź czy już wysłano
             if event['id'] in already_sent_ids:
                 continue
             
-            # 2. Filtr czasu (max 48h)
             try:
                 match_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
                 if match_time > max_future or match_time < now:
                     continue 
             except: continue
 
+            # --- INTELIGENTNY WYBÓR KURSU (VALUE HUNTING) ---
             best_odds = 0
             best_choice = None
-            league_header = league.replace("soccer_", "").replace("_", " ").upper()
+            
+            # 1. Agregujemy kursy od wszystkich bukmacherów dla tego meczu
+            market_prices = {} 
 
-            # 3. Szukanie najlepszego kursu
             for bookie in event['bookmakers']:
                 for market in bookie['markets']:
                     if market['key'] == 'h2h':
                         for outcome in market['outcomes']:
-                            
-                            # Blokada remisów dla hokeja i kosza
-                            is_us_sport = league in ["icehockey_nhl", "basketball_nba"]
-                            if is_us_sport and outcome['name'].lower() == "draw":
-                                continue
+                            name = outcome['name']
+                            price = outcome['price']
+                            if name not in market_prices:
+                                market_prices[name] = []
+                            market_prices[name].append(price)
 
-                            if 1.95 <= outcome['price'] <= 4.0:
-                                if outcome['price'] > best_odds:
-                                    best_odds = outcome['price']
-                                    best_choice = outcome['name']
+            # 2. Wybieramy najlepszą opcję na podstawie matematycznego odchylenia
+            for name, prices in market_prices.items():
+                # Blokada remisów dla USA (NBA/NHL)
+                if league in ["icehockey_nhl", "basketball_nba"] and name.lower() == "draw":
+                    continue
+
+                max_p = max(prices)
+                avg_p = sum(prices) / len(prices)
+                
+                # Warunki:
+                # - Kurs w Twoim przedziale 1.95 - 4.0
+                # - Kurs musi być o min. 3% wyższy od średniej rynkowej (Inteligentne Value)
+                if 1.95 <= max_p <= 4.0:
+                    if max_p > (avg_p * 1.03): 
+                        if max_p > best_odds:
+                            best_odds = max_p
+                            best_choice = name
 
             if best_choice:
                 date_str = match_time.strftime('%d.%m | %H:%M')
+                league_header = league.replace("soccer_", "").replace("_", " ").upper()
 
-                # TWOJA WIADOMOŚĆ (STARY WYGLĄD)
                 msg = f"{emoji} {league_header}\n"
                 msg += f"━━━━━━━━━━━━━━━\n"
                 msg += f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
@@ -114,21 +126,13 @@ def main():
 
                 send_telegram(msg)
                 
-                # Dodaj do listy (zostanie zapisane w coupons.json)
-                new_entry = {
-                    "id": event['id'], 
-                    "home": event['home_team'], 
-                    "away": event['away_team'],
-                    "outcome": best_choice, 
-                    "odds": best_odds, 
-                    "stake": STAKE, 
-                    "sport": league, 
-                    "time": event['commence_time']
-                }
-                all_coupons.append(new_entry)
+                all_coupons.append({
+                    "id": event['id'], "home": event['home_team'], "away": event['away_team'],
+                    "outcome": best_choice, "odds": best_odds, "stake": STAKE, 
+                    "sport": league, "time": event['commence_time']
+                })
                 already_sent_ids.append(event['id'])
 
-    # Zapisz zaktualizowaną listę (z nowymi kuponami i po wyczyszczeniu starych)
     with open("coupons.json", "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
 
