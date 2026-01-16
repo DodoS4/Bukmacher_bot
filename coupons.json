@@ -468,5 +468,425 @@
         "time": "2026-01-17T20:05:00Z",
         "odds": 1.58,
         "pick": "Marseille"
+    },
+    {
+        "id": "80b312e80c4c6e8f267a99606665ac8c",
+        "home": "Aston Villa",
+        "away": "Everton",
+        "pick": "Aston Villa",
+        "odds": 1.75,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-18T16:30:00Z"
+    },
+    {
+        "id": "342788786c22e570ed2da53a9608113f",
+        "home": "Brighton and Hove Albion",
+        "away": "Bournemouth",
+        "pick": "Brighton and Hove Albion",
+        "odds": 1.96,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-19T20:00:00Z"
+    },
+    {
+        "id": "a396966205b21287109ea8cae42e44c1",
+        "home": "West Ham United",
+        "away": "Sunderland",
+        "pick": "West Ham United",
+        "odds": 2.3,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-24T12:30:00Z"
+    },
+    {
+        "id": "db78ecd9c2d10ab045a91fa64d90a172",
+        "home": "Fulham",
+        "away": "Brighton and Hove Albion",
+        "pick": "Fulham",
+        "odds": 2.42,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-24T15:00:00Z"
+    },
+    {
+        "id": "1e811fa7ead0a3e6ef920b15b2bbb95d",
+        "home": "Burnley",
+        "away": "Tottenham Hotspur",
+        "pick": "Tottenham Hotspur",
+        "odds": 1.95,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-24T15:00:00Z"
+    },
+    {
+        "id": "7f9f2414fa5b890e516960bfcb8f153d",
+        "home": "Bournemouth",
+        "away": "Liverpool",
+        "pick": "Liverpool",
+        "odds": 1.82,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-24T17:30:00Z"
+    },
+    {
+        "id": "1ca6d3d9cde3e58a39211feb9188530c",
+        "home": "Newcastle United",
+        "away": "Aston Villa",
+        "pick": "Newcastle United",
+        "odds": 1.91,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-25T14:00:00Z"
+    },
+    {
+        "id": "84aeb5074adb6205fcb1206830a62861",
+        "home": "Brentford",
+        "away": "Nottingham Forest",
+        "pick": "Brentford",
+        "odds": 2.17,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-25T14:00:00Z"
+    },
+    {
+        "id": "4d6c0ac53b2b38aeb5bc8c8163f3f8b9",
+        "home": "Crystal Palace",
+        "away": "Chelsea",
+        "pick": "Chelsea",
+        "odds": 2.12,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-25T14:00:00Z"
+    },
+    {
+        "id": "691835b0e7a9385fccf0b29bd3492a08",
+        "home": "Celta Vigo",
+        "away": "Rayo Vallecano",
+        "pick": "Celta Vigo",
+        "odds": 2.05,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-18T17:30:00Z"
+    },
+    {
+        "id": "6076a8b61a97dd15f216e348fdba88b8",
+        "home": "Elche CF",
+        "away": "Sevilla",
+        "pick": "Elche CF",
+        "odds": 2.36,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-19T20:00:00Z"
+    },
+    {
+        "id": "56556cba4837be525240fd3e4009e972",
+        "home": "Rayo Vallecano",
+        "away": "CA Osasuna",
+        "pick": "Rayo Vallecano",
+        "odds": 2.0,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-24T13:00:00Z"
+    },
+    {
+        "id": "faa776cd5170281870e980baa230156d",
+        "home": "Valencia",
+        "away": "Espanyol",
+        "pick": "Valencia",
+        "odds": 2.33,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-24T15:15:00Z"
+    },
+    {
+        "id": "12fa958a04a07de7b95dbfce718db8cc",
+        "home": "Sevilla",
+        "away": "Athletic Bilbao",
+        "pick": "Athletic Bilbao",
+        "odds": 2.35,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-24T17:30:00Z"
+    },
+    {
+        "id": "a24e5370b8826d1b1e448493af7164c3",
+        "home": "Villarreal",
+        "away": "Real Madrid",
+        "pick": "Real Madrid",
+        "odds": 1.9,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-24T20:00:00Z"
+    },
+    {
+        "id": "016e617802dc1812996ca074d7306086",
+        "home": "Real Sociedad",
+        "away": "Celta Vigo",
+        "pick": "Real Sociedad",
+        "odds": 1.85,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-25T17:30:00Z"
+    },
+    {
+        "id": "76ba4426a6a4d04532c74a44eea4c848",
+        "home": "Alav\u00e9s",
+        "away": "Real Betis",
+        "pick": "Real Betis",
+        "odds": 2.3,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-25T20:00:00Z"
+    },
+    {
+        "id": "4ac6cf5bfb4cef2e3a48939a6a112550",
+        "home": "Girona",
+        "away": "Getafe",
+        "pick": "Girona",
+        "odds": 2.29,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-26T20:00:00Z"
+    },
+    {
+        "id": "98b3998b0629d9035e5aa1afeef24137",
+        "home": "FC St. Pauli",
+        "away": "Hamburger SV",
+        "pick": "FC St. Pauli",
+        "odds": 2.41,
+        "stake": 20.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-23T19:30:00Z"
+    },
+    {
+        "id": "a9424bfa2336811753a079d3a9e33285",
+        "home": "1. FC Heidenheim",
+        "away": "RB Leipzig",
+        "pick": "RB Leipzig",
+        "odds": 1.73,
+        "stake": 20.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T14:30:00Z"
+    },
+    {
+        "id": "3aa63ac9164cb0d7fcaa13522620d9b1",
+        "home": "Eintracht Frankfurt",
+        "away": "TSG Hoffenheim",
+        "pick": "Eintracht Frankfurt",
+        "odds": 2.45,
+        "stake": 20.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T14:30:00Z"
+    },
+    {
+        "id": "cd358949d5708d2b0909fa3d5d18cbba",
+        "home": "FSV Mainz 05",
+        "away": "VfL Wolfsburg",
+        "pick": "FSV Mainz 05",
+        "odds": 2.35,
+        "stake": 20.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T14:30:00Z"
+    },
+    {
+        "id": "ef261f1adb9a34642f07c113bea16eb6",
+        "home": "Union Berlin",
+        "away": "Borussia Dortmund",
+        "pick": "Borussia Dortmund",
+        "odds": 1.97,
+        "stake": 20.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T17:30:00Z"
+    },
+    {
+        "id": "3f300d6cc22952ec4914be8fe3d92463",
+        "home": "Borussia Monchengladbach",
+        "away": "VfB Stuttgart",
+        "pick": "VfB Stuttgart",
+        "odds": 2.25,
+        "stake": 20.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-25T14:30:00Z"
+    },
+    {
+        "id": "78a72e14e5c1dbee61854658f3fe70f1",
+        "home": "SC Freiburg",
+        "away": "1. FC K\u00f6ln",
+        "pick": "SC Freiburg",
+        "odds": 1.85,
+        "stake": 20.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-25T16:30:00Z"
+    },
+    {
+        "id": "833f3a993ae8d16996603ba818af71aa",
+        "home": "Torino",
+        "away": "AS Roma",
+        "pick": "AS Roma",
+        "odds": 2.1,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-18T17:00:00Z"
+    },
+    {
+        "id": "fb8869e33f590378c2782c8908d89ac4",
+        "home": "Cremonese",
+        "away": "Hellas Verona",
+        "pick": "Cremonese",
+        "odds": 2.45,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-19T17:30:00Z"
+    },
+    {
+        "id": "04d137c94e7951ff930547e76f54cff9",
+        "home": "Como",
+        "away": "Torino",
+        "pick": "Como",
+        "odds": 1.75,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-24T14:00:00Z"
+    },
+    {
+        "id": "251e0102e2db4573c4eb74e3d5f8dc84",
+        "home": "Lecce",
+        "away": "Lazio",
+        "pick": "Lazio",
+        "odds": 1.98,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-24T19:45:00Z"
+    },
+    {
+        "id": "4a59e59a4d82f67dc9db3fb7c53ea0e7",
+        "home": "Sassuolo",
+        "away": "Cremonese",
+        "pick": "Sassuolo",
+        "odds": 1.95,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-25T11:30:00Z"
+    },
+    {
+        "id": "b27ba3c204153eae8e94a94c6c75b21b",
+        "home": "Genoa",
+        "away": "Bologna",
+        "pick": "Bologna",
+        "odds": 2.48,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-25T14:00:00Z"
+    },
+    {
+        "id": "35687e2aefebca1baa98b1bc0f774d17",
+        "home": "Juventus",
+        "away": "Napoli",
+        "pick": "Juventus",
+        "odds": 1.97,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-25T17:00:00Z"
+    },
+    {
+        "id": "e8fc45ec3a1b922340f62fa03a374971",
+        "home": "AS Roma",
+        "away": "AC Milan",
+        "pick": "AS Roma",
+        "odds": 2.3,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-25T19:45:00Z"
+    },
+    {
+        "id": "e0f35fec256e380610e50e2d0860f4e1",
+        "home": "Hellas Verona",
+        "away": "Udinese",
+        "pick": "Hellas Verona",
+        "odds": 2.45,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-26T19:45:00Z"
+    },
+    {
+        "id": "0d51cc2b1f298a9974fc19f6c5692ad2",
+        "home": "Nantes",
+        "away": "Paris FC",
+        "pick": "Paris FC",
+        "odds": 2.3,
+        "stake": 20.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-18T16:15:00Z"
+    },
+    {
+        "id": "70515793c70633c192edc4f52444db3b",
+        "home": "Le Havre",
+        "away": "AS Monaco",
+        "pick": "AS Monaco",
+        "odds": 1.8,
+        "stake": 20.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-24T18:00:00Z"
+    },
+    {
+        "id": "98e55b8d48476f5c58e3e3e525907a7a",
+        "home": "Marseille",
+        "away": "RC Lens",
+        "pick": "Marseille",
+        "odds": 1.95,
+        "stake": 20.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-24T20:05:00Z"
+    },
+    {
+        "id": "798588eee18cc212f748c619f024a1d8",
+        "home": "Nantes",
+        "away": "Nice",
+        "pick": "Nice",
+        "odds": 2.15,
+        "stake": 20.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-25T14:00:00Z"
+    },
+    {
+        "id": "259ba4ae53e75f1718871fe49017d240",
+        "home": "Paris FC",
+        "away": "Angers",
+        "pick": "Paris FC",
+        "odds": 1.9,
+        "stake": 20.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-25T16:15:00Z"
+    },
+    {
+        "id": "b12927a56bc19fb041ef8131b7610f23",
+        "home": "Metz",
+        "away": "Lyon",
+        "pick": "Lyon",
+        "odds": 1.72,
+        "stake": 20.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-25T16:15:00Z"
+    },
+    {
+        "id": "87e6aa9bade1d15a02900e9dbd73d6d5",
+        "home": "Lille",
+        "away": "Strasbourg",
+        "pick": "Lille",
+        "odds": 1.78,
+        "stake": 20.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-25T19:45:00Z"
+    },
+    {
+        "id": "d149b0e5ad9dd363c76d6308dea81c74",
+        "home": "Memphis Grizzlies",
+        "away": "Orlando Magic",
+        "pick": "Memphis Grizzlies",
+        "odds": 2.5,
+        "stake": 20.0,
+        "sport": "basketball_nba",
+        "time": "2026-01-18T17:10:00Z"
     }
 ]
