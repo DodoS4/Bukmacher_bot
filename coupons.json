@@ -1,1 +1,434 @@
-[]
+[
+    {
+        "id": "2e07a070a22b3c8be5ef895fd5678366",
+        "time": "2026-01-17T00:10:00Z",
+        "home": "Carolina Hurricanes",
+        "away": "Florida Panthers",
+        "pick": "Florida Panthers",
+        "odds": 3.55,
+        "status": "PENDING"
+    },
+    {
+        "id": "b0d94fffbdd0b6d44d2ea3476cb25ed9",
+        "time": "2026-01-17T00:10:00Z",
+        "home": "Detroit Red Wings",
+        "away": "San Jose Sharks",
+        "pick": "San Jose Sharks",
+        "odds": 3.45,
+        "status": "PENDING"
+    },
+    {
+        "id": "791b2f340b484d74ac3a07d8ad66cbe2",
+        "time": "2026-01-17T01:10:00Z",
+        "home": "St Louis Blues",
+        "away": "Tampa Bay Lightning",
+        "pick": "St Louis Blues",
+        "odds": 3.85,
+        "status": "PENDING"
+    },
+    {
+        "id": "0d6d103dab5d7037edb505288dab378b",
+        "time": "2026-01-17T02:10:00Z",
+        "home": "Colorado Avalanche",
+        "away": "Nashville Predators",
+        "pick": "Nashville Predators",
+        "odds": 5.4,
+        "status": "PENDING"
+    },
+    {
+        "id": "75eb527369744d118a396905c7b0afa0",
+        "time": "2026-01-17T18:00:00Z",
+        "home": "Philadelphia Flyers",
+        "away": "New York Rangers",
+        "pick": "New York Rangers",
+        "odds": 3.04,
+        "status": "PENDING"
+    },
+    {
+        "id": "793d5a067062ea802d41a89da204d7ca",
+        "time": "2026-01-17T20:00:00Z",
+        "home": "Calgary Flames",
+        "away": "New York Islanders",
+        "pick": "Calgary Flames",
+        "odds": 2.61,
+        "status": "PENDING"
+    },
+    {
+        "id": "bf399dedb92a63e3fbdafeeb9966569f",
+        "time": "2026-01-18T03:00:00Z",
+        "home": "Vancouver Canucks",
+        "away": "Edmonton Oilers",
+        "pick": "Vancouver Canucks",
+        "odds": 3.4,
+        "status": "PENDING"
+    },
+    {
+        "id": "80cf233ec08173f3d8cf4645b687589d",
+        "time": "2026-01-17T15:00:00Z",
+        "home": "Liverpool",
+        "away": "Burnley",
+        "pick": "Burnley",
+        "odds": 16.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "db78ecd9c2d10ab045a91fa64d90a172",
+        "time": "2026-01-24T15:00:00Z",
+        "home": "Fulham",
+        "away": "Brighton and Hove Albion",
+        "pick": "Fulham",
+        "odds": 3.05,
+        "status": "PENDING"
+    },
+    {
+        "id": "1e811fa7ead0a3e6ef920b15b2bbb95d",
+        "time": "2026-01-24T15:00:00Z",
+        "home": "Burnley",
+        "away": "Tottenham Hotspur",
+        "pick": "Burnley",
+        "odds": 4.8,
+        "status": "PENDING"
+    },
+    {
+        "id": "b32426b16a13c60170645be87a6b5cf5",
+        "time": "2026-01-24T15:00:00Z",
+        "home": "Manchester City",
+        "away": "Wolverhampton Wanderers",
+        "pick": "Wolverhampton Wanderers",
+        "odds": 19.5,
+        "status": "PENDING"
+    },
+    {
+        "id": "b32426b16a13c60170645be87a6b5cf5",
+        "time": "2026-01-24T15:00:00Z",
+        "home": "Manchester City",
+        "away": "Wolverhampton Wanderers",
+        "pick": "Draw",
+        "odds": 9.4,
+        "status": "PENDING"
+    },
+    {
+        "id": "5d6e09834e58cd6190113f232aece005",
+        "time": "2026-01-25T16:30:00Z",
+        "home": "Arsenal",
+        "away": "Manchester United",
+        "pick": "Manchester United",
+        "odds": 8.2,
+        "status": "PENDING"
+    },
+    {
+        "id": "92d36e6b5b03266bf386354eb489ad97",
+        "time": "2026-01-16T20:01:00Z",
+        "home": "Espanyol",
+        "away": "Girona",
+        "pick": "Espanyol",
+        "odds": 46.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "92d36e6b5b03266bf386354eb489ad97",
+        "time": "2026-01-16T20:01:00Z",
+        "home": "Espanyol",
+        "away": "Girona",
+        "pick": "Draw",
+        "odds": 5.3,
+        "status": "PENDING"
+    },
+    {
+        "id": "794960888cc173eb96cc55dad0dd8d2a",
+        "time": "2026-01-17T13:00:00Z",
+        "home": "Real Madrid",
+        "away": "Levante",
+        "pick": "Levante",
+        "odds": 18.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "5a54196ed79c9ce5e335d59a40e41a32",
+        "time": "2026-01-18T15:15:00Z",
+        "home": "Atl\u00e9tico Madrid",
+        "away": "Alav\u00e9s",
+        "pick": "Alav\u00e9s",
+        "odds": 11.5,
+        "status": "PENDING"
+    },
+    {
+        "id": "6664cc513e04469013e67de10178d926",
+        "time": "2026-01-25T13:00:00Z",
+        "home": "Atl\u00e9tico Madrid",
+        "away": "Mallorca",
+        "pick": "Mallorca",
+        "odds": 12.5,
+        "status": "PENDING"
+    },
+    {
+        "id": "46f70d26f23b04d8f0547cb124a9d18d",
+        "time": "2026-01-25T15:15:00Z",
+        "home": "Barcelona",
+        "away": "Oviedo",
+        "pick": "Oviedo",
+        "odds": 25.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "46f70d26f23b04d8f0547cb124a9d18d",
+        "time": "2026-01-25T15:15:00Z",
+        "home": "Barcelona",
+        "away": "Oviedo",
+        "pick": "Draw",
+        "odds": 13.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "d0a6a8a3647b5bb5198ccd43cc6114ea",
+        "time": "2026-01-17T14:30:00Z",
+        "home": "Borussia Dortmund",
+        "away": "FC St. Pauli",
+        "pick": "FC St. Pauli",
+        "odds": 12.5,
+        "status": "PENDING"
+    },
+    {
+        "id": "e9cb63d676a2f241d54090c4bcd0ccca",
+        "time": "2026-01-24T14:30:00Z",
+        "home": "Bayern Munich",
+        "away": "Augsburg",
+        "pick": "Augsburg",
+        "odds": 25.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "e9cb63d676a2f241d54090c4bcd0ccca",
+        "time": "2026-01-24T14:30:00Z",
+        "home": "Bayern Munich",
+        "away": "Augsburg",
+        "pick": "Draw",
+        "odds": 14.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "09a25c81cc9c0d2ee95a39858526b187",
+        "time": "2026-01-16T19:45:00Z",
+        "home": "Pisa",
+        "away": "Atalanta BC",
+        "pick": "Atalanta BC",
+        "odds": 36.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "09a25c81cc9c0d2ee95a39858526b187",
+        "time": "2026-01-16T19:45:00Z",
+        "home": "Pisa",
+        "away": "Atalanta BC",
+        "pick": "Pisa",
+        "odds": 210.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "09a25c81cc9c0d2ee95a39858526b187",
+        "time": "2026-01-16T19:45:00Z",
+        "home": "Pisa",
+        "away": "Atalanta BC",
+        "pick": "Draw",
+        "odds": 1.72,
+        "status": "PENDING"
+    },
+    {
+        "id": "2e402618e8f128fd17ac85c1075dc642",
+        "time": "2026-01-17T17:00:00Z",
+        "home": "Napoli",
+        "away": "Sassuolo",
+        "pick": "Sassuolo",
+        "odds": 9.4,
+        "status": "PENDING"
+    },
+    {
+        "id": "39873448090264429546500aff311230",
+        "time": "2026-01-18T19:45:00Z",
+        "home": "AC Milan",
+        "away": "Lecce",
+        "pick": "Lecce",
+        "odds": 16.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "6a50431a94013e245ccd8a3bdc01dff6",
+        "time": "2026-01-23T19:45:00Z",
+        "home": "Inter Milan",
+        "away": "Pisa",
+        "pick": "Pisa",
+        "odds": 34.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "6a50431a94013e245ccd8a3bdc01dff6",
+        "time": "2026-01-23T19:45:00Z",
+        "home": "Inter Milan",
+        "away": "Pisa",
+        "pick": "Draw",
+        "odds": 10.5,
+        "status": "PENDING"
+    },
+    {
+        "id": "04d137c94e7951ff930547e76f54cff9",
+        "time": "2026-01-24T14:00:00Z",
+        "home": "Como",
+        "away": "Torino",
+        "pick": "Torino",
+        "odds": 6.6,
+        "status": "PENDING"
+    },
+    {
+        "id": "1668d28735b6e23a585e12cc1c31b45d",
+        "time": "2026-01-24T17:00:00Z",
+        "home": "Fiorentina",
+        "away": "Cagliari",
+        "pick": "Cagliari",
+        "odds": 980.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "251e0102e2db4573c4eb74e3d5f8dc84",
+        "time": "2026-01-24T19:45:00Z",
+        "home": "Lecce",
+        "away": "Lazio",
+        "pick": "Lazio",
+        "odds": 980.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "251e0102e2db4573c4eb74e3d5f8dc84",
+        "time": "2026-01-24T19:45:00Z",
+        "home": "Lecce",
+        "away": "Lazio",
+        "pick": "Lecce",
+        "odds": 980.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "251e0102e2db4573c4eb74e3d5f8dc84",
+        "time": "2026-01-24T19:45:00Z",
+        "home": "Lecce",
+        "away": "Lazio",
+        "pick": "Draw",
+        "odds": 980.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "4a59e59a4d82f67dc9db3fb7c53ea0e7",
+        "time": "2026-01-25T11:30:00Z",
+        "home": "Sassuolo",
+        "away": "Cremonese",
+        "pick": "Cremonese",
+        "odds": 4.8,
+        "status": "PENDING"
+    },
+    {
+        "id": "4a59e59a4d82f67dc9db3fb7c53ea0e7",
+        "time": "2026-01-25T11:30:00Z",
+        "home": "Sassuolo",
+        "away": "Cremonese",
+        "pick": "Draw",
+        "odds": 4.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "9668e5b753c1b8c8cdb5c5263f87b372",
+        "time": "2026-01-25T14:00:00Z",
+        "home": "Atalanta BC",
+        "away": "Parma",
+        "pick": "Parma",
+        "odds": 12.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "b27ba3c204153eae8e94a94c6c75b21b",
+        "time": "2026-01-25T14:00:00Z",
+        "home": "Genoa",
+        "away": "Bologna",
+        "pick": "Genoa",
+        "odds": 980.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "35687e2aefebca1baa98b1bc0f774d17",
+        "time": "2026-01-25T17:00:00Z",
+        "home": "Juventus",
+        "away": "Napoli",
+        "pick": "Juventus",
+        "odds": 980.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "35687e2aefebca1baa98b1bc0f774d17",
+        "time": "2026-01-25T17:00:00Z",
+        "home": "Juventus",
+        "away": "Napoli",
+        "pick": "Napoli",
+        "odds": 980.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "35687e2aefebca1baa98b1bc0f774d17",
+        "time": "2026-01-25T17:00:00Z",
+        "home": "Juventus",
+        "away": "Napoli",
+        "pick": "Draw",
+        "odds": 980.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "e8fc45ec3a1b922340f62fa03a374971",
+        "time": "2026-01-25T19:45:00Z",
+        "home": "AS Roma",
+        "away": "AC Milan",
+        "pick": "AC Milan",
+        "odds": 3.5,
+        "status": "PENDING"
+    },
+    {
+        "id": "e0f35fec256e380610e50e2d0860f4e1",
+        "time": "2026-01-26T19:45:00Z",
+        "home": "Hellas Verona",
+        "away": "Udinese",
+        "pick": "Udinese",
+        "odds": 3.35,
+        "status": "PENDING"
+    },
+    {
+        "id": "81c8d8f5a9c64d4f79302689372beb61",
+        "time": "2026-01-16T20:00:00Z",
+        "home": "Paris Saint Germain",
+        "away": "Lille",
+        "pick": "Lille",
+        "odds": 400.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "81c8d8f5a9c64d4f79302689372beb61",
+        "time": "2026-01-16T20:00:00Z",
+        "home": "Paris Saint Germain",
+        "away": "Lille",
+        "pick": "Draw",
+        "odds": 56.0,
+        "status": "PENDING"
+    },
+    {
+        "id": "ffe24fdea2d5ad6483292eb749b97506",
+        "time": "2026-01-17T20:05:00Z",
+        "home": "Angers",
+        "away": "Marseille",
+        "pick": "Angers",
+        "odds": 6.8,
+        "status": "PENDING"
+    },
+    {
+        "id": "890935e813405256ab29af3d12eab246",
+        "time": "2026-01-18T14:00:00Z",
+        "home": "Strasbourg",
+        "away": "Metz",
+        "pick": "Metz",
+        "odds": 7.0,
+        "status": "PENDING"
+    }
+]
