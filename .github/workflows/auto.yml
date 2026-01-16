@@ -2,10 +2,10 @@ name: Betting Bot Professional - 5 Keys Mode
 
 on:
   schedule:
-    # Skanowanie 4 razy dziennie (północ, 06:00, 12:00, 18:00)
-    - cron: '0 0,6,12,18 * * *'
-    # Główne rozliczenie, raport i statystyki o 22:00
-    - cron: '0 22 * * *'
+    # SKANOWANIE: Co godzinę, od 07:00 do 22:00 czasu polskiego (06:00 - 21:00 UTC)
+    - cron: '0 6-21 * * *'
+    # ROZLICZENIE I STATYSTYKI: Raz dziennie o 22:30 czasu polskiego (21:30 UTC)
+    - cron: '30 21 * * *'
   workflow_dispatch: 
 
 concurrency:
@@ -34,7 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # KROK 1: SKANOWANIE
+      # KROK 1: SKANOWANIE KURSÓW (Działa co godzinę w oknie czasowym)
       - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -46,9 +46,9 @@ jobs:
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python start.py
 
-      # KROK 2: ROZLICZANIE I STATYSTYKI (Tylko o 22:00 lub ręcznie)
+      # KROK 2: ROZLICZANIE I STATYSTYKI (Tylko wieczorem o 22:30 PL lub ręcznie)
       - name: Run Settler and Stats
-        if: github.event.schedule == '0 22 * * *' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '30 21 * * *' || github.event_name == 'workflow_dispatch'
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
@@ -58,23 +58,20 @@ jobs:
           python settle.py
           python stats.py
 
-      # KROK 3: ZAPIS DANYCH DO REPOZYTORIUM
+      # KROK 3: AUTOMATYCZNY ZAPIS DANYCH DO REPOZYTORIUM
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Kluczowa zmiana: dodajemy wszystkie pliki JSON (*.json)
-          # Dzięki temu archiwa history_archive_YYYY_MM.json zostaną zapisane automatycznie
-          git add *.json || echo "Brak plików do dodania"
+          # Dodajemy wszystkie pliki baz danych i archiwa
+          git add *.json
           
           if ! git diff --cached --quiet; then
-            git stash
+            # Rebase chroni przed konfliktami przy częstych zapisach
             git pull --rebase origin main
-            git stash pop || echo "Brak zmian w stashu"
-            git add *.json
-            git commit -m "Bot Update: Database and Archives [skip ci]"
+            git commit -m "Bot Auto-Update: Data Sync [skip ci]"
             git push origin main
           else
-            echo "Brak zmian do wysłania."
+            echo "Brak zmian w bazach danych do zapisania."
           fi
