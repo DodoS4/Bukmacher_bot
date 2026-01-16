@@ -2,30 +2,31 @@ import requests
 import json
 import os
 from datetime import datetime, timedelta, timezone
-import hashlib
 
 # ================= CONFIG =================
-API_KEYS = [
-    os.getenv("ODDS_KEY"),
-    os.getenv("ODDS_KEY_2"),
-    os.getenv("ODDS_KEY_3"),
-    os.getenv("ODDS_KEY_4"),
-    os.getenv("ODDS_KEY_5"),
-]
-API_KEYS = [k for k in API_KEYS if k]
+ODDS_KEY = os.getenv("ODDS_KEY")
+T_TOKEN = os.getenv("T_TOKEN")
+T_CHAT = os.getenv("T_CHAT")
 
 COUPON_FILE = "coupons.json"
-MAX_HOURS_AHEAD = 48
+MAX_HOURS = 48
 
 SPORTS = {
     "soccer_epl": "⚽ Premier League",
-    "soccer_spain_la_liga": "⚽ La Liga",
-    "soccer_germany_bundesliga": "⚽ Bundesliga",
-    "soccer_france_ligue_one": "⚽ Ligue 1",
-    "soccer_italy_serie_a": "⚽ Serie A",
 }
 
-# ================= HELPERS =================
+# ================= TELEGRAM =================
+def send_telegram(text):
+    url = f"https://api.telegram.org/bot{T_TOKEN}/sendMessage"
+    payload = {
+        "chat_id": T_CHAT,
+        "text": text,
+        "parse_mode": "HTML"
+    }
+    r = requests.post(url, json=payload, timeout=10)
+    print("[TG]", r.status_code, r.text)
+
+# ================= LOAD / SAVE =================
 def load_coupons():
     if not os.path.exists(COUPON_FILE):
         return []
@@ -36,78 +37,67 @@ def save_coupons(data):
     with open(COUPON_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
-def coupon_id(match_id, pick):
-    raw = f"{match_id}-{pick}"
-    return hashlib.md5(raw.encode()).hexdigest()
-
 # ================= API =================
-def fetch_matches(api_key, sport):
+def fetch_matches(sport):
     url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds"
     params = {
-        "apiKey": api_key,
+        "apiKey": ODDS_KEY,
         "regions": "eu",
         "markets": "h2h",
         "oddsFormat": "decimal"
     }
     r = requests.get(url, params=params, timeout=10)
+    print("[API]", r.status_code, r.url)
     r.raise_for_status()
     return r.json()
 
 # ================= MAIN =================
 def main():
     now = datetime.now(timezone.utc)
-    max_time = now + timedelta(hours=MAX_HOURS_AHEAD)
+    limit = now + timedelta(hours=MAX_HOURS)
 
     coupons = load_coupons()
-    existing_ids = {c["id"] for c in coupons}
-    added = 0
+    sent = 0
 
-    for sport, sport_name in SPORTS.items():
-        for key in API_KEYS:
-            try:
-                print(f"[DEBUG] {sport} | klucz: {key[:6]}***")
-                matches = fetch_matches(key, sport)
+    for sport, league in SPORTS.items():
+        matches = fetch_matches(sport)
 
-                for m in matches:
-                    match_time = datetime.fromisoformat(
-                        m["commence_time"].replace("Z", "+00:00")
-                    )
-                    if not (now <= match_time <= max_time):
-                        continue
+        for m in matches:
+            start = datetime.fromisoformat(
+                m["commence_time"].replace("Z", "+00:00")
+            )
+            if not (now <= start <= limit):
+                continue
 
-                    market = m["bookmakers"][0]["markets"][0]["outcomes"]
+            outcomes = m["bookmakers"][0]["markets"][0]["outcomes"]
 
-                    for o in market:
-                        pick = o["name"]
-                        odds = o["price"]
-                        cid = coupon_id(m["id"], pick)
+            pick = max(outcomes, key=lambda x: x["price"])
 
-                        if cid in existing_ids:
-                            continue
+            coupon = {
+                "league": league,
+                "home": m["home_team"],
+                "away": m["away_team"],
+                "pick": pick["name"],
+                "odds": pick["price"],
+                "date": start.isoformat(),
+                "status": "pending"
+            }
 
-                        coupons.append({
-                            "id": cid,
-                            "match_id": m["id"],
-                            "league": sport_name,
-                            "home": m["home_team"],
-                            "away": m["away_team"],
-                            "pick": pick,
-                            "odds": odds,
-                            "date": match_time.isoformat(),
-                            "status": "pending",
-                            "stake": 50,
-                            "profit": 0
-                        })
-                        existing_ids.add(cid)
-                        added += 1
+            coupons.append(coupon)
 
-                break  # sport OK → nie męcz kolejnych kluczy
+            msg = (
+                f"{league}\n"
+                f"{m['home_team']} 🆚 {m['away_team']}\n"
+                f"🎯 Typ: {pick['name']}\n"
+                f"💸 Kurs: {pick['price']}\n"
+                f"📅 {start.strftime('%d.%m.%Y %H:%M')} UTC"
+            )
 
-            except Exception as e:
-                print(f"[ERROR] {sport} | {e}")
+            send_telegram(msg)
+            sent += 1
 
     save_coupons(coupons)
-    print(f"[INFO] Dodano {added} kuponów")
+    print(f"[DONE] Wysłano {sent} ofert")
 
 if __name__ == "__main__":
     main()
