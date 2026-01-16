@@ -1,143 +1,127 @@
-import requests
 import json
 import os
-from datetime import datetime, timedelta, timezone
-from dateutil import tz
+import requests
+from datetime import datetime
 
-# ================= KONFIGURACJA =================
-# Pobieranie kluczy z GitHub Secrets
-API_KEYS = [os.getenv(f"ODDS_KEY_{i}") for i in range(1, 6) if os.getenv(f"ODDS_KEY_{i}")]
-if not API_KEYS:
-    API_KEYS = [os.getenv("ODDS_KEY")]
+# --- KONFIGURACJA ---
+ODDS_API_KEY = os.getenv("ODDS_KEY")
+TELEGRAM_TOKEN = os.getenv("T_TOKEN")
+TELEGRAM_CHAT = os.getenv("T_CHAT_ALERTS")
+COUPONS_FILE = "coupons.json"
 
-# KONFIGURACJA LIG I EMOJI
-SPORTS_CONFIG = {
-    "basketball_nba": "🏀",
-    "icehockey_nhl": "🏒",
-    "soccer_epl": "⚽",
-    "soccer_spain_la_liga": "🇪🇸",
-    "soccer_germany_bundesliga": "🇩🇪",
-    "soccer_italy_serie_a": "🇮🇹",
-    "soccer_france_ligue_one": "🇫🇷"
-}
-
-COUPON_FILE = "coupons.json"
-MIN_ODDS = 1.50
-MAX_ODDS = 2.50
-MAX_HOURS_AHEAD = 48 
+# Lista lig do skanowania
+SPORTS = [
+    "soccer_epl",                 # Premier League
+    "soccer_spain_la_liga",       # La Liga
+    "soccer_germany_bundesliga",  # Bundesliga
+    "soccer_italy_serie_a",       # Serie A
+    "soccer_france_ligue_one",    # Ligue 1
+    "basketball_nba",             # NBA
+    "icehockey_nhl"               # NHL
+]
 
 def send_telegram(message):
-    token = os.getenv("T_TOKEN")
-    chat = os.getenv("T_CHAT")
-    if not token or not chat: 
-        print("[ERROR] Brak T_TOKEN lub T_CHAT w Secrets!")
+    """Wysyła powiadomienie o nowym typie na Telegram"""
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT:
+        print("Błąd: Brak tokena lub ID czatu Telegram.")
         return
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     try:
-        resp = requests.post(url, json={
-            "chat_id": chat, 
+        requests.post(url, json={
+            "chat_id": TELEGRAM_CHAT, 
             "text": message, 
-            "parse_mode": "HTML",
-            "disable_web_page_preview": True
+            "parse_mode": "HTML"
         })
-        if resp.status_code != 200:
-            print(f"[ERROR] Telegram API: {resp.text}")
     except Exception as e:
-        print(f"[ERROR] Błąd wysyłki Telegram: {e}")
+        print(f"Błąd wysyłania do Telegrama: {e}")
 
-def get_matches(sport, key):
-    url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds/"
-    params = {
-        'apiKey': key,
-        'regions': 'eu',
-        'markets': 'h2h',
-        'oddsFormat': 'decimal'
-    }
-    try:
-        resp = requests.get(url, params=params, timeout=15)
-        if resp.status_code == 200:
-            return resp.json()
-        return []
-    except:
-        return []
+def scan_odds():
+    """Skanuje kursy i zapisuje nowe okazje"""
+    print(f"Rozpoczynam skanowanie: {datetime.now().strftime('%H:%M:%S')}")
 
-def main():
-    all_filtered_matches = []
-    now = datetime.now(timezone.utc)
-    max_time = now + timedelta(hours=MAX_HOURS_AHEAD)
-
-    # Wczytaj już wysłane mecze, by uniknąć spamu
-    existing_ids = []
-    if os.path.exists(COUPON_FILE):
-        try:
-            with open(COUPON_FILE, "r", encoding="utf-8") as f:
-                old_data = json.load(f)
-                existing_ids = [m["id"] for m in old_data if "id" in m]
-        except:
-            existing_ids = []
-
-    for sport, icon in SPORTS_CONFIG.items():
-        print(f"Skanuję {sport}...")
-        matches = []
-        for key in API_KEYS:
-            matches = get_matches(sport, key)
-            if matches: break 
-
-        for m in matches:
-            try:
-                # Czas meczu i konwersja na strefę PL
-                utc_time = datetime.fromisoformat(m["commence_time"].replace("Z", "+00:00"))
-                
-                if not (now <= utc_time <= max_time): continue
-                if not m.get("bookmakers"): continue
-
-                # Formatuje datę na polski czas
-                pl_zone = tz.gettz('Europe/Warsaw')
-                local_time = utc_time.astimezone(pl_zone)
-                date_str = local_time.strftime("%d.%m | %H:%M")
-
-                # Sprawdzamy kursy (pierwszy bukmacher)
-                outcomes = m["bookmakers"][0]["markets"][0]["outcomes"]
-                for outcome in outcomes:
-                    odds = outcome["price"]
-                    
-                    if MIN_ODDS <= odds <= MAX_ODDS:
-                        match_id = m["id"]
-                        
-                        # Budujemy obiekt do zapisu
-                        match_obj = {
-                            "id": match_id,
-                            "sport_key": sport,
-                            "sport": m["sport_title"],
-                            "home": m["home_team"],
-                            "away": m["away_team"],
-                            "time": m["commence_time"],
-                            "odds": odds,
-                            "pick": outcome["name"]
-                        }
-                        all_filtered_matches.append(match_obj)
-
-                        # Wysyłamy wiadomość tylko jeśli to nowość
-                        if match_id not in existing_ids:
-                            msg = (
-                                f"{icon} <b>{m['sport_title'].upper()}</b>\n"
-                                f"━━━━━━━━━━━━━━━\n"
-                                f"🏟 <b>{m['home_team']}</b> vs <b>{m['away_team']}</b>\n"
-                                f"⏰ Start: <code>{date_str}</code>\n\n"
-                                f"✅ Typ: <b>{outcome['name']}</b>\n"
-                                f"📈 Kurs: <b>{odds:.2f}</b>\n"
-                                f"━━━━━━━━━━━━━━━"
-                            )
-                            send_telegram(msg)
-                        break 
-            except Exception as e:
-                print(f"[WARN] Błąd meczu {m.get('id')}: {e}")
-
-    # Zapis do pliku
-    with open(COUPON_FILE, "w", encoding="utf-8") as f:
-        json.dump(all_filtered_matches, f, indent=4, ensure_ascii=False)
+    # 1. Załadowanie istniejących kuponów, aby nie dublować ofert
+    if not os.path.exists(COUPONS_FILE):
+        with open(COUPONS_FILE, "w") as f:
+            json.dump([], f)
     
-    print(f"[SUCCESS] Zapisano {len(all_filtered_matches)} ofert.")
+    with open(COUPONS_FILE, "r") as f:
+        coupons = json.load(f)
+    
+    existing_ids = [c['id'] for c in coupons]
+
+    # 2. Iteracja po każdej lidze
+    for sport in SPORTS:
+        print(f"Sprawdzam ligę: {sport}...")
+        url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds/?apiKey={ODDS_API_KEY}&regions=eu&markets=h2h"
+        
+        try:
+            response = requests.get(url)
+            data = response.json()
+            
+            if response.status_code != 200:
+                print(f"Błąd API ({sport}): {data.get('message', 'Nieznany błąd')}")
+                continue
+
+            for match in data:
+                match_id = match['id']
+                
+                # Pomiń, jeśli już mamy ten mecz w bazie
+                if match_id in existing_ids:
+                    continue
+                
+                home_team = match['home_team']
+                away_team = match['away_team']
+                commence_time = match['commence_time']
+
+                # Pobieramy kursy od pierwszego dostępnego bukmachera
+                if not match['bookmakers']:
+                    continue
+                
+                outcomes = match['bookmakers'][0]['markets'][0]['outcomes']
+                
+                for outcome in outcomes:
+                    selected_team = outcome['name']
+                    price = outcome['price']
+
+                    # --- LOGIKA FILTROWANIA (KURS 1.70 - 2.50) ---
+                    if 1.70 <= price <= 2.50:
+                        # Tworzymy nowy kupon
+                        new_coupon = {
+                            "id": match_id,
+                            "home": home_team,
+                            "away": away_team,
+                            "pick": selected_team,
+                            "odds": price,      # KLUCZOWE: Zapisujemy kurs dla stats.py
+                            "stake": 20.0,      # Stała stawka 20 PLN
+                            "sport": sport,
+                            "time": commence_time
+                        }
+                        
+                        coupons.append(new_coupon)
+                        existing_ids.append(match_id)
+
+                        # Formatuje wiadomość na Telegram
+                        msg = (
+                            f"🎯 <b>NOWY TYP WYKRYTY</b>\n"
+                            f"🏆 Liga: {sport.upper()}\n"
+                            f"⚽ Mecz: <b>{home_team} vs {away_team}</b>\n"
+                            f"📝 Typ: <b>{selected_team}</b>\n"
+                            f"📈 Kurs: <b>{price}</b>\n"
+                            f"💰 Stawka: <b>20 PLN</b>"
+                        )
+                        send_telegram(msg)
+                        
+                        # Wyślij tylko jeden typ na mecz (np. na faworyta), aby nie spamować
+                        break 
+
+        except Exception as e:
+            print(f"Wystąpił błąd podczas skanowania {sport}: {e}")
+
+    # 3. Zapisanie zaktualizowanej listy do pliku
+    with open(COUPONS_FILE, "w") as f:
+        json.dump(coupons, f, indent=4)
+    
+    print("Skanowanie zakończone. Dane zapisane.")
 
 if __name__ == "__main__":
-    main()
+    scan_odds()
