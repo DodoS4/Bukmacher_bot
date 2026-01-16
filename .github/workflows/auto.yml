@@ -1,12 +1,13 @@
-name: Betting Bot Professional - Split Mode
+name: Betting Bot Professional - Spit Mode
 
 on:
   schedule:
-    # Skanowanie co 6 godzin (00:00, 06:00, 12:00, 18:00)
-    - cron: '0 0,6,12,18 * * *'
+    # Skanowanie co 2 godziny (00:00, 02:00, 04:00 itd.)
+    # Z 5 kluczami masz zapas na częstsze sprawdzanie kursów.
+    - cron: '0 */2 * * *'
     # Główne rozliczenie i raport o 22:00
     - cron: '0 22 * * *'
-  workflow_dispatch: # Pozwala odpalić ręcznie w dowolnej chwili
+  workflow_dispatch: 
 
 concurrency:
   group: betting-bot
@@ -34,7 +35,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # KROK 1: SKANOWANIE (zawsze)
+      # KROK 1: SKANOWANIE
+      # Tutaj podajemy wszystkie 5 kluczy do skryptu start.py
       - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -42,15 +44,18 @@ jobs:
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python start.py
 
-      # KROK 2: ROZLICZANIE I STATYSTYKI (tylko o 22:00 lub ręcznie)
+      # KROK 2: ROZLICZANIE I STATYSTYKI (Raz dziennie o 22:00)
       - name: Run Settler and Stats
         if: github.event.schedule == '0 22 * * *' || github.event_name == 'workflow_dispatch'
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
         run: |
           python settle.py
           python stats.py
@@ -64,7 +69,7 @@ jobs:
           if ! git diff --cached --quiet; then
             git stash
             git pull --rebase origin main
-            git stash pop || echo "No stash"
+            git stash pop || echo "Brak zmian"
             git add coupons.json history.json bankroll.json
             git commit -m "Bot Update: [skip ci]"
             git push origin main
