@@ -2,13 +2,14 @@ import json
 import os
 import requests
 import shutil
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # ================= KONFIGURACJA =================
 HISTORY_FILE = "history.json"
 BANKROLL_FILE = "bankroll.json"
 TELEGRAM_TOKEN = os.getenv("T_TOKEN")
 TELEGRAM_CHAT = os.getenv("T_CHAT_RESULTS")
+MONTHLY_TARGET = 5000.0  # TWÓJ CEL
 
 def send_telegram(message):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
@@ -24,50 +25,28 @@ def load_json(filename, default):
             except: return default
     return default
 
-def archive_monthly_results():
-    """Tworzy kopię zapasową historii na koniec miesiąca"""
-    if not os.path.exists(HISTORY_FILE): return
-    
-    now = datetime.now()
-    # Sprawdź czy plik archiwum dla poprzedniego miesiąca już istnieje
-    # Jeśli dzisiaj jest 1. dzień miesiąca, archiwizujemy poprzedni
-    if now.day == 1:
-        last_month = (now.replace(day=1) - timedelta(days=1))
-        archive_name = f"history_archive_{last_month.strftime('%Y_%m')}.json"
-        
-        if not os.path.exists(archive_name):
-            shutil.copy(HISTORY_FILE, archive_name)
-            print(f"[ARCHIVE] Utworzono archiwum: {archive_name}")
-
-def get_day_name(date_str):
-    days = ["Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota", "Niedziela"]
-    try:
-        dt = datetime.fromisoformat(date_str.replace("Z", "+00:00"))
-        return days[dt.weekday()]
-    except: return "Nieznany"
-
 def analyze_stats():
-    # 0. Archiwizacja (opcjonalnie na starcie miesiąca)
-    archive_monthly_results()
-    
     history = load_json(HISTORY_FILE, [])
-    br_data = load_json(BANKROLL_FILE, {"bankroll": 1000.0})
+    br_data = load_json(BANKROLL_FILE, {"bankroll": 10000.0})
     
     if not history:
         print("Brak danych do analizy.")
         return
 
-    total_bets = len(history)
+    # --- OBLICZENIA GŁÓWNE ---
     total_profit = sum([b['profit'] for b in history])
+    # Zakładamy stawkę z historii, jeśli jej nie ma, bierzemy domyślną 200 (zgodnie ze start.py)
+    total_turnover = sum([b.get('stake', 200) for b in history])
     
-    day_stats = {}
-    league_stats = {}
-    odds_ranges = {"Niskie (1.5-1.8)": [], "Średnie (1.8-2.2)": [], "Wysokie (2.2-2.5)": []}
+    # YIELD: (Zysk / Obrót) * 100
+    yield_val = (total_profit / total_turnover) * 100 if total_turnover > 0 else 0
+    
+    # PROGRES DO 5000 PLN
+    progress_pct = min((total_profit / MONTHLY_TARGET) * 100, 100) if total_profit > 0 else 0
+    progress_bar = "▓" * int(progress_pct / 10) + "░" * (10 - int(progress_pct / 10))
 
+    league_stats = {}
     for b in history:
-        day = get_day_name(b['date'])
-        day_stats[day] = day_stats.get(day, 0) + b['profit']
-        
         sport = b.get('sport', 'Inne')
         if sport not in league_stats:
             league_stats[sport] = {'wins': 0, 'total': 0, 'profit': 0}
@@ -75,41 +54,31 @@ def analyze_stats():
         league_stats[sport]['profit'] += b['profit']
         if b['win']: league_stats[sport]['wins'] += 1
 
-        o = b['odds']
-        res = 1 if b['win'] else 0
-        if o < 1.8: odds_ranges["Niskie (1.5-1.8)"].append(res)
-        elif o < 2.2: odds_ranges["Średnie (1.8-2.2)"].append(res)
-        else: odds_ranges["Wysokie (2.2-2.5)"].append(res)
-
     # --- RAPORT ---
-    msg = f"🧠 <b>ANALIZA SYSTEMOWA BOT-PRO</b>\n"
+    msg = f"📈 <b>STATYSTYKI DROGI DO 5000 PLN</b>\n"
     msg += f"━━━━━━━━━━━━━━━━━━\n"
-    msg += f"🏦 Bankroll: <b>{br_data['bankroll']:.2f} PLN</b>\n"
-    msg += f"💰 Zysk całkowity: <b>{total_profit:+.2f} PLN</b>\n\n"
+    msg += f"💰 Zysk netto: <b>{total_profit:+.2f} PLN</b>\n"
+    msg += f"📊 Yield: <b>{yield_val:.2f}%</b>\n"
+    msg += f"🔄 Obrót: <b>{total_turnover:.0f} PLN</b>\n"
+    msg += f"🏦 Kapitał: <b>{br_data['bankroll']:.2f} PLN</b>\n\n"
 
-    best_day = max(day_stats, key=day_stats.get)
-    msg += f"📅 <b>NAJLEPSZY DZIEŃ:</b> <code>{best_day}</code>\n"
+    msg += f"🎯 <b>CEL: 5 000 PLN / m-c</b>\n"
+    msg += f"<code>[{progress_bar}]</code> {progress_pct:.1f}%\n"
     msg += f"━━━━━━━━━━━━━━━━━━\n\n"
 
-    msg += f"🏆 <b>PERFORMANCE LIG:</b>\n"
+    msg += f"🏆 <b>SKUTECZNOŚĆ DYSCYPLIN:</b>\n"
     sorted_leagues = sorted(league_stats.items(), key=lambda x: x[1]['profit'], reverse=True)
     for league, s in sorted_leagues:
-        icon = "🔥" if s['profit'] > 0 else "🧊"
-        acc = (s['wins']/s['total'])*100
-        msg += f"{icon} {league}: <b>{s['profit']:+.2f}</b> ({acc:.0f}%)\n"
+        icon = "✅" if s['profit'] > 0 else "❌"
+        msg += f"{icon} {league}: <b>{s['profit']:+.2f}</b>\n"
 
-    msg += f"\n📈 <b>SKUTECZNOŚĆ KURSÓW:</b>\n"
-    for r_name, results in odds_ranges.items():
-        if results:
-            r_acc = (sum(results)/len(results))*100
-            msg += f"• {r_name}: <b>{r_acc:.1f}%</b>\n"
-
-    msg += f"\n💡 <b>REKOMENDACJE:</b>\n"
-    msg += f"• Główny zysk: <b>{sorted_leagues[0][0]}</b>\n"
-    
-    worst_day = min(day_stats, key=day_stats.get)
-    if day_stats[worst_day] < 0:
-        msg += f"• Słaby punkt: <b>{worst_day}</b>\n"
+    msg += f"\n💡 <b>REKOMENDACJA:</b>\n"
+    if yield_val > 5:
+        msg += "• Strategia działa świetnie. Zwiększ obrót."
+    elif yield_val > 0:
+        msg += "• Zarabiasz, ale podatek Cię goni. Szukaj wyższych EV."
+    else:
+        msg += "• Uważaj! Obecnie dopłacasz do interesu. Sprawdź selekcję."
 
     send_telegram(msg)
 
