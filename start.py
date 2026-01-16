@@ -1,7 +1,7 @@
 import os
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA =================
 SPORTS_CONFIG = {
@@ -37,17 +37,17 @@ def load_existing_ids():
 
 def main():
     active_key_index = 0
-    # Wczytujemy ID meczów, które już są w bazie, żeby ich NIE wysyłać ponownie
     already_sent_ids = load_existing_ids()
-    new_coupons = []
     
-    # Lista obecnych kuponów (żeby ich nie skasować przy nowym skanie)
     if os.path.exists("coupons.json"):
         with open("coupons.json", "r") as f:
             try: all_coupons = json.load(f)
             except: all_coupons = []
     else:
         all_coupons = []
+
+    now = datetime.now(timezone.utc)
+    max_future = now + timedelta(hours=48) # Filtr 48h
 
     for league, emoji in SPORTS_CONFIG.items():
         data = None
@@ -63,10 +63,17 @@ def main():
         if not data: continue
 
         for event in data:
-            # BLOKADA DUBLOWANIA: Jeśli ID meczu już wysłaliśmy wcześniej - pomiń
             if event['id'] in already_sent_ids:
                 continue
             
+            # --- SPRAWDZANIE CZASU (MAX 48H) ---
+            try:
+                match_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
+                if match_time > max_future:
+                    continue # Pomiń, jeśli mecz jest za daleko w przyszłości
+            except:
+                continue
+
             best_odds = 0
             best_choice = None
             league_header = league.replace("soccer_", "").replace("_", " ").upper()
@@ -81,14 +88,8 @@ def main():
                                     best_choice = outcome['name']
 
             if best_choice:
-                # NAPRAWA DATY: %m zamiast %01
-                try:
-                    dt = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
-                    date_str = dt.strftime('%d.%m | %H:%M')
-                except:
-                    date_str = "Brak daty"
+                date_str = match_time.strftime('%d.%m | %H:%M')
 
-                # TWOJA WIADOMOŚĆ
                 msg = f"{emoji} {league_header}\n"
                 msg += f"━━━━━━━━━━━━━━━\n"
                 msg += f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
@@ -99,7 +100,7 @@ def main():
                 msg += f"━━━━━━━━━━━━━━━"
 
                 send_telegram(msg)
-                already_sent_ids.append(event['id']) # Dodaj do wysłanych w tej sesji
+                already_sent_ids.append(event['id'])
                 
                 all_coupons.append({
                     "id": event['id'], "home": event['home_team'], "away": event['away_team'],
