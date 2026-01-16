@@ -2,8 +2,8 @@ name: Betting Bot 24/7
 
 on:
   schedule:
-    - cron: '0 6,12,18,22 * * *'
-    - cron: '0 22 * * 0'
+    - cron: '0 6,12,18,22 * * *'   # codziennie 4 razy
+    - cron: '0 22 * * 0'           # niedziela wieczorem
   workflow_dispatch:
 
 jobs:
@@ -36,6 +36,7 @@ jobs:
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+          SPORTS_API_KEY: ${{ secrets.SPORTS_API_KEY }}
         run: python start.py
 
       # ===== SETTLE =====
@@ -48,6 +49,7 @@ jobs:
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+          SPORTS_API_KEY: ${{ secrets.SPORTS_API_KEY }}
         run: python settle.py
 
       # ===== STATS =====
@@ -55,6 +57,7 @@ jobs:
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
+          SPORTS_API_KEY: ${{ secrets.SPORTS_API_KEY }}
         run: python stats.py
 
       # ===== SAVE DATA (SAFE) =====
