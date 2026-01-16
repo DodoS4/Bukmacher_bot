@@ -17,48 +17,57 @@ def send_telegram(message):
         pass
 
 def generate_stats():
-    if not os.path.exists(HISTORY_FILE):
-        print("Brak pliku historii.")
-        return
+    if not os.path.exists(HISTORY_FILE): return
 
     with open(HISTORY_FILE, "r", encoding="utf-8") as f:
         history = json.load(f)
 
-    if not history:
-        print("Historia jest pusta.")
-        return
+    if not history: return
 
+    stats_by_sport = {}
+    for x in history:
+        sport = x.get("sport", "Inne").replace("Soccer", "Piłka").replace("Basketball", "Kosz")
+        if sport not in stats_by_sport:
+            stats_by_sport[sport] = {"wins": 0, "total": 0, "profit": 0.0}
+        
+        stats_by_sport[sport]["total"] += 1
+        stats_by_sport[sport]["profit"] += x["profit"]
+        if x["win"]: stats_by_sport[sport]["wins"] += 1
+
+    # Sortowanie lig od najlepszej
+    sorted_sports = sorted(stats_by_sport.items(), key=lambda item: item[1]['profit'], reverse=True)
+
+    # Budowanie nagłówka
+    msg = "🏆 <b>RANKING SKUTECZNOŚCI LIG</b>\n"
+    msg += f"📅 <i>Stan na: {datetime.now().strftime('%d.%m | %H:%M')}</i>\n"
+    msg += "<code>━━━━━━━━━━━━━━━━━━</code>\n\n"
+
+    for i, (sport, data) in enumerate(sorted_sports):
+        wr = (data["wins"] / data["total"]) * 100
+        profit = data["profit"]
+        
+        # Ikony miejsc
+        rank_icon = "🥇" if i == 0 else "🥈" if i == 1 else "🥉" if i == 2 else "🔹"
+        trend = "📈" if profit >= 0 else "📉"
+        
+        msg += f"{rank_icon} <b>{sport.upper()}</b>\n"
+        msg += f"<blockquote>"
+        msg += f"Skuteczność: <b>{wr:.1f}%</b> ({data['wins']}/{data['total']})\n"
+        msg += f"Zysk netto:  <b>{profit:+.2f} PLN</b> {trend}"
+        msg += f"</blockquote>\n"
+
+    # Podsumowanie ogólne
+    total_profit = sum(x['profit'] for x in history)
     total_bets = len(history)
-    wins = sum(1 for x in history if x["win"])
-    losses = total_bets - wins
-    win_rate = (wins / total_bets) * 100 if total_bets > 0 else 0
+    overall_wr = (sum(1 for x in history if x['win']) / total_bets) * 100
     
-    total_profit = sum(x["profit"] for x in history)
-    
-    # Obliczanie Yield (Zysk / Suma stawek)
-    # Zakładając stałą stawkę dla uproszczenia statystyk lub sumując realne stawki
-    # Tutaj przyjmiemy sumę bezwzględnych wartości strat i kosztów wygranych
-    total_staked = sum(abs(x["profit"] / (1.70 - 1)) if x["win"] else abs(x["profit"]) for x in history) # Przybliżenie
-    yield_val = (total_profit / total_staked) * 100 if total_staked > 0 else 0
+    msg += "<code>━━━━━━━━━━━━━━━━━━</code>\n"
+    msg += f"📊 <b>PODSUMOWANIE OGÓLNE</b>\n"
+    msg += f"📦 Wszystkie typy: <b>{total_bets}</b>\n"
+    msg += f"🎯 Skuteczność: <b>{overall_wr:.1f}%</b>\n"
+    msg += f"💰 Łączny profit: <u><b>{total_profit:+.2f} PLN</b></u>"
 
-    # Budowanie raportu
-    status_icon = "📈" if total_profit >= 0 else "📉"
-    
-    report = (
-        f"📊 <b>RAPORT SKUTECZNOŚCI</b>\n"
-        f"━━━━━━━━━━━━━━━\n"
-        f"✅ Trafione: <b>{wins}</b>\n"
-        f"❌ Przegrane: <b>{losses}</b>\n"
-        f"🎯 Skuteczność: <b>{win_rate:.1f}%</b>\n"
-        f"━━━━━━━━━━━━━━━\n"
-        f"💰 Całkowity zysk: <b>{total_profit:+.2f} PLN</b>\n"
-        f"{status_icon} Yield: <b>{yield_val:+.2f}%</b>\n"
-        f"━━━━━━━━━━━━━━━\n"
-        f"<i>Ostatnia aktualizacja: {datetime.now().strftime('%d.%m %H:%M')}</i>"
-    )
-
-    send_telegram(report)
-    print("Statystyki wysłane na Telegram.")
+    send_telegram(msg)
 
 if __name__ == "__main__":
     generate_stats()
