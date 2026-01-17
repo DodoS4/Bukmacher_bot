@@ -408,5 +408,15 @@
         "stake": 250,
         "sport": "icehockey_nhl",
         "time": "2026-01-19T01:00:00Z"
+    },
+    {
+        "id": "47e36aed7df3160f584a73fbd1fd0830",
+        "home": "Tottenham Hotspur",
+        "away": "West Ham United",
+        "outcome": "Draw",
+        "odds": 3.95,
+        "stake": 250,
+        "sport": "soccer_epl",
+        "time": "2026-01-17T15:00:00Z"
     }
 ]
