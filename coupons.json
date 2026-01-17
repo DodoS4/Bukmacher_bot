@@ -408,5 +408,75 @@
         "stake": 250,
         "sport": "soccer_france_ligue_one",
         "time": "2026-01-18T16:15:00Z"
+    },
+    {
+        "id": "74a2ce699a67094d664e6f11f876fd8b",
+        "home": "Dallas Mavericks",
+        "away": "Utah Jazz",
+        "outcome": "Utah Jazz",
+        "odds": 2.62,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-17T22:10:00Z"
+    },
+    {
+        "id": "ee33d9e84247204b91f88df26df1db6f",
+        "home": "Atlanta Hawks",
+        "away": "Boston Celtics",
+        "outcome": "Atlanta Hawks",
+        "odds": 2.44,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-18T00:40:00Z"
+    },
+    {
+        "id": "5dd9d109817aa5065517eda2d22abd47",
+        "home": "New York Knicks",
+        "away": "Phoenix Suns",
+        "outcome": "Phoenix Suns",
+        "odds": 2.52,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-18T00:40:00Z"
+    },
+    {
+        "id": "ec4374304055d759d9e735b24be94cdb",
+        "home": "San Antonio Spurs",
+        "away": "Minnesota Timberwolves",
+        "outcome": "Minnesota Timberwolves",
+        "odds": 3.15,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-18T01:10:00Z"
+    },
+    {
+        "id": "1b253261c5a0c36cc77a7e3f3ec0813f",
+        "home": "Golden State Warriors",
+        "away": "Charlotte Hornets",
+        "outcome": "Charlotte Hornets",
+        "odds": 3.35,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-18T01:40:00Z"
+    },
+    {
+        "id": "c40f627c22f80050fd8efec135704313",
+        "home": "Portland Trail Blazers",
+        "away": "Los Angeles Lakers",
+        "outcome": "Los Angeles Lakers",
+        "odds": 2.36,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-18T03:10:00Z"
+    },
+    {
+        "id": "876bd00ab1c4cff1c6635a8ac7f93d75",
+        "home": "Chelsea",
+        "away": "Brentford",
+        "outcome": "Draw",
+        "odds": 4.0,
+        "stake": 250,
+        "sport": "soccer_epl",
+        "time": "2026-01-17T15:00:00Z"
     }
 ]
