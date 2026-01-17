@@ -428,5 +428,35 @@
         "stake": 250,
         "sport": "soccer_italy_serie_a",
         "time": "2026-01-19T17:30:00Z"
+    },
+    {
+        "id": "342788786c22e570ed2da53a9608113f",
+        "home": "Brighton and Hove Albion",
+        "away": "Bournemouth",
+        "outcome": "Bournemouth",
+        "odds": 4.0,
+        "stake": 250,
+        "sport": "soccer_epl",
+        "time": "2026-01-19T20:00:00Z"
+    },
+    {
+        "id": "6076a8b61a97dd15f216e348fdba88b8",
+        "home": "Elche CF",
+        "away": "Sevilla",
+        "outcome": "Sevilla",
+        "odds": 3.5,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-19T20:00:00Z"
+    },
+    {
+        "id": "e578bafd1b7879b4e3c0831f1eca8b8f",
+        "home": "Lazio",
+        "away": "Como",
+        "outcome": "Como",
+        "odds": 3.05,
+        "stake": 250,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-19T19:45:00Z"
     }
 ]
