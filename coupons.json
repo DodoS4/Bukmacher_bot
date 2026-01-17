@@ -10,26 +10,6 @@
         "time": "2026-01-18T17:10:00Z"
     },
     {
-        "id": "18f20c44ddd60d5c1cf0b7de5a343fbe",
-        "home": "Buffalo Sabres",
-        "away": "Minnesota Wild",
-        "outcome": "Minnesota Wild",
-        "odds": 2.85,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-17T17:30:00Z"
-    },
-    {
-        "id": "75eb527369744d118a396905c7b0afa0",
-        "home": "Philadelphia Flyers",
-        "away": "New York Rangers",
-        "outcome": "New York Rangers",
-        "odds": 3.02,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-17T18:00:00Z"
-    },
-    {
         "id": "793d5a067062ea802d41a89da204d7ca",
         "home": "Calgary Flames",
         "away": "New York Islanders",
@@ -140,26 +120,6 @@
         "time": "2026-01-17T12:30:00Z"
     },
     {
-        "id": "aa16a48d5e016963e076f7f5ecfc2f68",
-        "home": "Sunderland",
-        "away": "Crystal Palace",
-        "outcome": "Draw",
-        "odds": 3.35,
-        "stake": 250,
-        "sport": "soccer_epl",
-        "time": "2026-01-17T15:00:00Z"
-    },
-    {
-        "id": "86609aa022312a15ec01d5bc0c172dbc",
-        "home": "Leeds United",
-        "away": "Fulham",
-        "outcome": "Fulham",
-        "odds": 3.7,
-        "stake": 250,
-        "sport": "soccer_epl",
-        "time": "2026-01-17T15:00:00Z"
-    },
-    {
         "id": "80b312e80c4c6e8f267a99606665ac8c",
         "home": "Aston Villa",
         "away": "Everton",
@@ -168,16 +128,6 @@
         "stake": 250,
         "sport": "soccer_epl",
         "time": "2026-01-18T16:30:00Z"
-    },
-    {
-        "id": "81eeaa276b0f874eee70a3cc0e2c039a",
-        "home": "Mallorca",
-        "away": "Athletic Bilbao",
-        "outcome": "Mallorca",
-        "odds": 3.9,
-        "stake": 250,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-01-17T15:15:00Z"
     },
     {
         "id": "a87f04984f0a2d9b361da24ff21178b8",
@@ -230,26 +180,6 @@
         "time": "2026-01-17T14:30:00Z"
     },
     {
-        "id": "3334b9a452b572ca5f136d524bba816e",
-        "home": "TSG Hoffenheim",
-        "away": "Bayer Leverkusen",
-        "outcome": "Draw",
-        "odds": 4.0,
-        "stake": 250,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-17T14:30:00Z"
-    },
-    {
-        "id": "497ef12ef1554f6ca4015fbded78b264",
-        "home": "Hamburger SV",
-        "away": "Borussia Monchengladbach",
-        "outcome": "Draw",
-        "odds": 3.6,
-        "stake": 250,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-17T14:30:00Z"
-    },
-    {
         "id": "6127455e36c2c5474eeb98ba9a14834e",
         "home": "Augsburg",
         "away": "SC Freiburg",
@@ -288,16 +218,6 @@
         "stake": 250,
         "sport": "soccer_italy_serie_a",
         "time": "2026-01-18T17:00:00Z"
-    },
-    {
-        "id": "540a9a67c337cf21bee313e260efaf69",
-        "home": "Toulouse",
-        "away": "Nice",
-        "outcome": "Draw",
-        "odds": 3.75,
-        "stake": 250,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-01-17T18:00:00Z"
     },
     {
         "id": "0d51cc2b1f298a9974fc19f6c5692ad2",
@@ -368,16 +288,6 @@
         "stake": 250,
         "sport": "basketball_nba",
         "time": "2026-01-18T03:10:00Z"
-    },
-    {
-        "id": "876bd00ab1c4cff1c6635a8ac7f93d75",
-        "home": "Chelsea",
-        "away": "Brentford",
-        "outcome": "Draw",
-        "odds": 4.0,
-        "stake": 250,
-        "sport": "soccer_epl",
-        "time": "2026-01-17T15:00:00Z"
     },
     {
         "id": "32f6bca9f7004f9c7a413d34f1a71567",
