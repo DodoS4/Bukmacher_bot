@@ -378,5 +378,35 @@
         "stake": 250,
         "sport": "soccer_epl",
         "time": "2026-01-17T15:00:00Z"
+    },
+    {
+        "id": "32f6bca9f7004f9c7a413d34f1a71567",
+        "home": "Dallas Stars",
+        "away": "Tampa Bay Lightning",
+        "outcome": "Tampa Bay Lightning",
+        "odds": 2.7,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-18T19:00:00Z"
+    },
+    {
+        "id": "df8bab02a6507bf6c5dfe9700b110ced",
+        "home": "Detroit Red Wings",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 3.05,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-18T22:00:00Z"
+    },
+    {
+        "id": "0a878dd0611cb8ab2eafb9a708b10a81",
+        "home": "Edmonton Oilers",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 3.75,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-19T01:00:00Z"
     }
 ]
