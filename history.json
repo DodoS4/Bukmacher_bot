@@ -1,1 +1,13 @@
-[]
+[
+    {
+        "id": "7cde35496195f0d6f99ee352fa0bba65",
+        "home": "Philadelphia 76ers",
+        "away": "Cleveland Cavaliers",
+        "outcome": "Cleveland Cavaliers",
+        "odds": 2.26,
+        "stake": 250,
+        "profit": 247.20,
+        "sport": "basketball_nba",
+        "time": "2026-01-17T00:10:00Z"
+    }
+]
