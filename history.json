@@ -6,8 +6,107 @@
         "outcome": "Cleveland Cavaliers",
         "odds": 2.26,
         "stake": 250,
-        "profit": 247.20,
+        "profit": 247.2,
         "sport": "basketball_nba",
         "time": "2026-01-17T00:10:00Z"
+    },
+    {
+        "id": "7e6506c4bcd0439f38393b5c1efac771",
+        "home": "Indiana Pacers",
+        "away": "New Orleans Pelicans",
+        "outcome": "New Orleans Pelicans",
+        "odds": 2.66,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-17T00:10:00Z",
+        "profit": -250.0
+    },
+    {
+        "id": "0faca6073061c0d2d76f628039823a00",
+        "home": "Brooklyn Nets",
+        "away": "Chicago Bulls",
+        "outcome": "Brooklyn Nets",
+        "odds": 1.95,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-17T00:40:00Z",
+        "profit": 179.0
+    },
+    {
+        "id": "51d7a3906f3d85a499b459c4ab5fdee3",
+        "home": "Toronto Raptors",
+        "away": "Los Angeles Clippers",
+        "outcome": "Los Angeles Clippers",
+        "odds": 2.18,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-17T00:40:00Z",
+        "profit": 229.6
+    },
+    {
+        "id": "1a69e04063ab1bafaaa377b3e0ac5993",
+        "home": "Houston Rockets",
+        "away": "Minnesota Timberwolves",
+        "outcome": "Minnesota Timberwolves",
+        "odds": 2.56,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-17T02:40:00Z",
+        "profit": -250.0
+    },
+    {
+        "id": "d393058e77e5e64075b0c6ff97a8ac1f",
+        "home": "Sacramento Kings",
+        "away": "Washington Wizards",
+        "outcome": "Washington Wizards",
+        "odds": 3.29,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-17T03:10:00Z",
+        "profit": -250.0
+    },
+    {
+        "id": "2e07a070a22b3c8be5ef895fd5678366",
+        "home": "Carolina Hurricanes",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 3.55,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-17T00:10:00Z",
+        "profit": -250.0
+    },
+    {
+        "id": "b0d94fffbdd0b6d44d2ea3476cb25ed9",
+        "home": "Detroit Red Wings",
+        "away": "San Jose Sharks",
+        "outcome": "San Jose Sharks",
+        "odds": 3.45,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-17T00:10:00Z",
+        "profit": -250.0
+    },
+    {
+        "id": "791b2f340b484d74ac3a07d8ad66cbe2",
+        "home": "St Louis Blues",
+        "away": "Tampa Bay Lightning",
+        "outcome": "St Louis Blues",
+        "odds": 3.85,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-17T01:10:00Z",
+        "profit": 597.0
+    },
+    {
+        "id": "664b99ada4e0ee31d6caa987eb12db33",
+        "home": "Los Angeles Kings",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 3.02,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-17T03:40:00Z",
+        "profit": 414.4
     }
 ]
