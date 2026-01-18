@@ -117,7 +117,7 @@ def main():
                 max_p = max(prices)
                 avg_p = sum(prices) / len(prices)
                 
-                if 1.95 <= max_p <= 5.0:
+                if 1.95 <= max_p <= 4.2:
                     if max_p > (avg_p * 1.03): 
                         if max_p > best_odds:
                             best_odds = max_p
