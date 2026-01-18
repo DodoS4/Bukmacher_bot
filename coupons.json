@@ -498,5 +498,35 @@
         "stake": 250,
         "sport": "icehockey_nhl",
         "time": "2026-01-20T03:00:00Z"
+    },
+    {
+        "id": "61a1fed5c9979276f4d68d3781ec18ad",
+        "home": "Colorado Avalanche",
+        "away": "Washington Capitals",
+        "outcome": "Washington Capitals",
+        "odds": 4.2,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-19T21:00:00Z"
+    },
+    {
+        "id": "3d4889892d426e9a6f98f7ff0dd775b2",
+        "home": "Real Sociedad",
+        "away": "Barcelona",
+        "outcome": "Draw",
+        "odds": 4.75,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-18T20:00:00Z"
+    },
+    {
+        "id": "b8268290e25d0cf4b9aa64b521c3ad5a",
+        "home": "Lyon",
+        "away": "Brest",
+        "outcome": "Draw",
+        "odds": 4.15,
+        "stake": 250,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-18T19:45:00Z"
     }
 ]
