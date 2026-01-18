@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inwestycje Sportowe - Dashboard</title>
+    <title>Inwestycje Sportowe - Smart Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -11,44 +11,42 @@
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .progress-bg { background-color: #1e293b; border-radius: 999px; overflow: hidden; }
         .progress-fill { background: linear-gradient(90deg, #3b82f6, #10b981); transition: width 1s ease-in-out; }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-4 md:p-8 text-sm md:text-base">
     <div class="max-w-6xl mx-auto">
-        <header class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
+        <header class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
             <div>
-                <h1 class="text-4xl font-black tracking-tight text-white">PROJEKT <span class="text-blue-500">5000</span></h1>
-                <p id="last-update" class="text-slate-500 text-sm mt-1 uppercase tracking-widest"></p>
+                <h1 class="text-4xl font-black tracking-tight text-white uppercase">Projekt <span class="text-blue-500 italic">5000</span></h1>
+                <p id="last-update" class="text-slate-500 text-xs mt-1 tracking-widest"></p>
             </div>
             <div class="glass px-6 py-3 rounded-2xl flex items-center gap-4">
-                <span class="text-slate-400">STATUS:</span>
-                <span class="flex items-center gap-2 text-green-400 font-bold">
-                    <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>
-                    AKTYWNY
-                </span>
+                <span class="text-slate-400 text-xs">AI RISK MANAGER:</span>
+                <span id="ai-status" class="text-green-400 font-bold text-sm tracking-tighter">🛡️ AKTYWNY</span>
             </div>
         </header>
 
-        <div class="glass p-6 rounded-3xl mb-8">
-            <div class="flex justify-between items-end mb-4">
+        <div class="glass p-6 rounded-3xl mb-8 border-b-4 border-blue-500/20">
+            <div class="flex justify-between items-end mb-4 text-sm md:text-base">
                 <div>
-                    <p class="text-slate-400 text-sm uppercase font-bold">Postęp do celu</p>
-                    <h2 id="total-profit-title" class="text-3xl font-bold text-white">0.00 PLN</h2>
+                    <p class="text-slate-400 uppercase font-bold text-xs">Twój Zysk Netto</p>
+                    <h2 id="total-profit-title" class="text-4xl font-black text-white tracking-tighter">0.00 PLN</h2>
                 </div>
                 <div class="text-right">
                     <p id="progress-percent" class="text-2xl font-black text-blue-500">0%</p>
                 </div>
             </div>
-            <div class="progress-bg h-4 w-full">
+            <div class="progress-bg h-5 w-full">
                 <div id="progress-bar" class="progress-fill h-full w-0"></div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             <div class="glass p-6 rounded-3xl lg:col-span-1">
-                <h3 class="text-lg font-bold mb-6 flex items-center gap-2">🏆 PODZIAŁ DYSCYPLIN</h3>
-                <canvas id="leagueChart"></canvas>
-                <div id="league-list" class="mt-6 space-y-3 text-sm"></div>
+                <h3 class="text-lg font-bold mb-6 flex items-center gap-2">📊 ANALIZA RYZYKA LIG</h3>
+                <div id="league-list" class="space-y-4">
+                    </div>
             </div>
 
             <div class="glass p-6 rounded-3xl lg:col-span-2">
@@ -57,18 +55,21 @@
             </div>
         </div>
 
-        <div class="glass p-6 rounded-3xl">
-            <h3 class="text-lg font-bold mb-6">📋 OSTATNIE ROZLICZENIA</h3>
+        <div class="glass p-6 rounded-3xl overflow-hidden">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-lg font-bold">📋 DZIENNIK OPERACJI</h3>
+                <span id="match-count" class="bg-slate-800 text-slate-400 text-[10px] px-3 py-1 rounded-full font-bold uppercase"></span>
+            </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="text-slate-500 border-b border-slate-800 text-xs uppercase tracking-tighter">
+                    <thead class="text-slate-500 border-b border-slate-800 text-[10px] uppercase tracking-widest">
                         <tr>
-                            <th class="pb-4">Mecz / Dyscyplina</th>
+                            <th class="pb-4">Zdarzenie / Liga</th>
                             <th class="pb-4 text-center">Wynik</th>
                             <th class="pb-4 text-right">Profit</th>
                         </tr>
                     </thead>
-                    <tbody id="history-table" class="divide-y divide-slate-800"></tbody>
+                    <tbody id="history-table" class="divide-y divide-slate-800/50"></tbody>
                 </table>
             </div>
         </div>
@@ -85,90 +86,80 @@
                 const brData = await brRes.json();
 
                 let totalProfit = 0;
-                let winCount = 0;
                 const leagues = {};
                 const chartLabels = [];
                 const chartData = [];
 
                 history.forEach((m, i) => {
                     totalProfit += m.profit;
-                    if(m.profit > 0) winCount++;
-                    
-                    // Statystyki ligowe
-                    const sportName = m.sport.replace("icehockey_nhl", "NHL").replace("basketball_nba", "NBA").split('_').pop().toUpperCase();
+                    let rawSport = m.sport || "unknown";
+                    let sportName = rawSport.replace("icehockey_nhl", "NHL").replace("basketball_nba", "NBA").split('_').pop().toUpperCase();
                     leagues[sportName] = (leagues[sportName] || 0) + m.profit;
-
                     chartLabels.push(i + 1);
                     chartData.push(totalProfit.toFixed(2));
                 });
 
-                // UI - Teksty i Pasek
+                // UI Nagłówki
                 document.getElementById('total-profit-title').innerText = totalProfit.toFixed(2) + ' PLN';
+                document.getElementById('match-count').innerText = history.length + ' Rozliczonych';
                 const progress = Math.min((totalProfit / 5000) * 100, 100);
                 document.getElementById('progress-percent').innerText = progress.toFixed(1) + '%';
                 document.getElementById('progress-bar').style.width = progress + '%';
-                document.getElementById('last-update').innerText = 'Ostatnia synchronizacja: ' + new Date().toLocaleString();
+                document.getElementById('last-update').innerText = 'Sync: ' + new Date().toLocaleString();
 
-                // Wykres Kołowy
-                const leagueNames = Object.keys(leagues);
-                const leagueValues = Object.values(leagues);
-                new Chart(document.getElementById('leagueChart'), {
-                    type: 'doughnut',
-                    data: {
-                        labels: leagueNames,
-                        datasets: [{
-                            data: leagueValues,
-                            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'],
-                            borderWidth: 0
-                        }]
-                    },
-                    options: { plugins: { legend: { display: false } }, cutout: '70%' }
-                });
-
-                // Lista lig pod wykresem
+                // Ranking Lig z ikonami Smart Stake
                 const leagueList = document.getElementById('league-list');
-                leagueNames.forEach((name, i) => {
+                Object.keys(leagues).sort((a,b) => leagues[b] - leagues[a]).forEach(name => {
                     const val = leagues[name];
+                    let icon = "🔹";
+                    let riskLabel = "Normal Risk";
+                    let colorClass = "text-slate-400";
+
+                    if (val > 500) { icon = "🔥"; riskLabel = "High Confidence"; colorClass = "text-orange-400"; }
+                    if (val < -300) { icon = "🛡️"; riskLabel = "Smart Stake 80%"; colorClass = "text-yellow-500"; }
+                    if (val < -700) { icon = "🚨"; riskLabel = "Smart Stake 50%"; colorClass = "text-red-500"; }
+
                     leagueList.innerHTML += `
-                        <div class="flex justify-between items-center">
-                            <span class="flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full" style="background:${['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'][i]}"></span>
-                                ${name}
+                        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-800/30 border border-white/5">
+                            <div>
+                                <p class="text-white font-bold flex items-center gap-2">${icon} ${name}</p>
+                                <p class="${colorClass} text-[10px] uppercase font-black">${riskLabel}</p>
+                            </div>
+                            <span class="font-mono font-bold ${val >= 0 ? 'text-green-400' : 'text-red-400'}">
+                                ${val > 0 ? '+' : ''}${val.toFixed(2)}
                             </span>
-                            <span class="font-bold ${val >= 0 ? 'text-green-400' : 'text-red-400'}">${val > 0 ? '+' : ''}${val.toFixed(2)}</span>
                         </div>`;
                 });
 
-                // Wykres Liniowy
+                // Wykres
                 new Chart(document.getElementById('profitChart'), {
                     type: 'line',
                     data: {
                         labels: chartLabels,
                         datasets: [{
-                            label: 'Zysk (PLN)',
                             data: chartData,
                             borderColor: '#3b82f6',
-                            borderWidth: 3,
+                            borderWidth: 4,
                             pointRadius: 0,
                             fill: true,
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.05)',
                             tension: 0.4
                         }]
                     },
-                    options: { scales: { y: { grid: { color: '#1e293b' } }, x: { display: false } } }
+                    options: { responsive: true, scales: { y: { grid: { color: '#1e293b' } }, x: { display: false } }, plugins: { legend: { display: false } } }
                 });
 
                 // Tabela
                 const tableBody = document.getElementById('history-table');
-                history.slice(-10).reverse().forEach(m => {
+                history.slice().reverse().forEach(m => {
                     tableBody.innerHTML += `
-                        <tr class="hover:bg-slate-800/50 transition-colors">
+                        <tr class="hover:bg-slate-800/30 transition-colors">
                             <td class="py-4">
-                                <p class="text-white font-medium">${m.home} - ${m.away}</p>
-                                <p class="text-xs text-slate-500 uppercase">${m.sport.split('_').pop()}</p>
+                                <p class="text-white font-medium text-xs md:text-sm">${m.home} - ${m.away}</p>
+                                <p class="text-[9px] text-slate-500 uppercase tracking-widest">${m.sport ? m.sport.split('_').pop() : 'BET'}</p>
                             </td>
-                            <td class="py-4 text-center font-mono font-bold">${m.score || '-:-'}</td>
-                            <td class="py-4 text-right ${m.profit >= 0 ? 'text-green-400' : 'text-red-400'} font-bold">
+                            <td class="py-4 text-center font-mono font-bold text-slate-400 text-xs">${m.score || '-:-'}</td>
+                            <td class="py-4 text-right ${m.profit >= 0 ? 'text-green-400' : 'text-red-400'} font-bold text-xs md:text-sm">
                                 ${m.profit >= 0 ? '+' : ''}${m.profit.toFixed(2)}
                             </td>
                         </tr>`;
