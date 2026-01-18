@@ -368,5 +368,45 @@
         "stake": 250,
         "sport": "soccer_italy_serie_a",
         "time": "2026-01-19T19:45:00Z"
+    },
+    {
+        "id": "aaf6ee6cd6b915e0e0adac8f761f6ffc",
+        "home": "Chicago Bulls",
+        "away": "Brooklyn Nets",
+        "outcome": "Brooklyn Nets",
+        "odds": 3.2,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-19T00:10:00Z"
+    },
+    {
+        "id": "ce1d230f9bfe9f2902f1f7c58ab1baf8",
+        "home": "Denver Nuggets",
+        "away": "Charlotte Hornets",
+        "outcome": "Charlotte Hornets",
+        "odds": 2.25,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-19T01:10:00Z"
+    },
+    {
+        "id": "e6912002f8fd69349b2425510251c7ad",
+        "home": "Sacramento Kings",
+        "away": "Portland Trail Blazers",
+        "outcome": "Portland Trail Blazers",
+        "odds": 2.22,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-19T02:10:00Z"
+    },
+    {
+        "id": "58a64738a04be2c7c6d1be7d69051e09",
+        "home": "Los Angeles Lakers",
+        "away": "Toronto Raptors",
+        "outcome": "Toronto Raptors",
+        "odds": 2.15,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-19T02:40:00Z"
     }
 ]
