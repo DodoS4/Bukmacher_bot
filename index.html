@@ -3,70 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inwestycje Sportowe - Smart Dashboard</title>
+    <title>Inwestycje Sportowe - Pro Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { background-color: #0b0f19; color: #e2e8f0; font-family: 'Inter', sans-serif; }
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
         .progress-bg { background-color: #1e293b; border-radius: 999px; overflow: hidden; }
         .progress-fill { background: linear-gradient(90deg, #3b82f6, #10b981); transition: width 1s ease-in-out; }
-        html { scroll-behavior: smooth; }
     </style>
 </head>
-<body class="p-4 md:p-8 text-sm md:text-base">
+<body class="p-4 md:p-8">
     <div class="max-w-6xl mx-auto">
-        <header class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        <header class="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
-                <h1 class="text-4xl font-black tracking-tight text-white uppercase">Projekt <span class="text-blue-500 italic">5000</span></h1>
-                <p id="last-update" class="text-slate-500 text-xs mt-1 tracking-widest"></p>
+                <h1 class="text-3xl font-black tracking-tighter text-white uppercase italic">Projekt <span class="text-blue-500 italic">5000</span></h1>
+                <p id="last-update" class="text-slate-500 text-[10px] mt-1 tracking-widest font-bold"></p>
             </div>
-            <div class="glass px-6 py-3 rounded-2xl flex items-center gap-4">
-                <span class="text-slate-400 text-xs">AI RISK MANAGER:</span>
-                <span id="ai-status" class="text-green-400 font-bold text-sm tracking-tighter">🛡️ AKTYWNY</span>
+            <div id="ai-badge" class="glass px-4 py-2 rounded-xl flex items-center gap-3 border-l-4 border-green-500">
+                <span class="text-slate-400 text-[10px] font-bold">SMART STAKING:</span>
+                <span class="text-green-400 font-black text-xs">🛡️ ACTIVE</span>
             </div>
         </header>
 
-        <div class="glass p-6 rounded-3xl mb-8 border-b-4 border-blue-500/20">
-            <div class="flex justify-between items-end mb-4 text-sm md:text-base">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8 text-center md:text-left">
+            <div class="glass p-4 rounded-2xl border-b-2 border-blue-500/50">
+                <p class="text-slate-500 text-[9px] uppercase font-black mb-1">Wysłane stawki</p>
+                <h2 id="total-staked" class="text-lg font-black text-white tracking-tighter">0.00</h2>
+            </div>
+            <div class="glass p-4 rounded-2xl border-b-2 border-green-500/50">
+                <p class="text-slate-500 text-[9px] uppercase font-black mb-1">Łączne wygrane</p>
+                <h2 id="total-returned" class="text-lg font-black text-white tracking-tighter">0.00</h2>
+            </div>
+            <div class="glass p-4 rounded-2xl border-b-2 border-purple-500/50">
+                <p class="text-slate-500 text-[9px] uppercase font-black mb-1">Liczba operacji</p>
+                <h2 id="total-bets" class="text-lg font-black text-white tracking-tighter">0</h2>
+            </div>
+            <div class="glass p-4 rounded-2xl border-b-2 border-orange-500/50">
+                <p class="text-slate-500 text-[9px] uppercase font-black mb-1">Średni Kurs</p>
+                <h2 id="avg-odds" class="text-lg font-black text-white tracking-tighter">0.00</h2>
+            </div>
+        </div>
+
+        <div class="glass p-6 rounded-3xl mb-8">
+            <div class="flex justify-between items-end mb-4">
                 <div>
-                    <p class="text-slate-400 uppercase font-bold text-xs">Twój Zysk Netto</p>
+                    <p class="text-slate-400 uppercase font-black text-[10px]">Zysk netto (Profit)</p>
                     <h2 id="total-profit-title" class="text-4xl font-black text-white tracking-tighter">0.00 PLN</h2>
                 </div>
                 <div class="text-right">
                     <p id="progress-percent" class="text-2xl font-black text-blue-500">0%</p>
                 </div>
             </div>
-            <div class="progress-bg h-5 w-full">
+            <div class="progress-bg h-4 w-full">
                 <div id="progress-bar" class="progress-fill h-full w-0"></div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
             <div class="glass p-6 rounded-3xl lg:col-span-1">
-                <h3 class="text-lg font-bold mb-6 flex items-center gap-2">📊 ANALIZA RYZYKA LIG</h3>
-                <div id="league-list" class="space-y-4">
-                    </div>
+                <h3 class="text-sm font-black mb-6 uppercase tracking-widest text-slate-400">📊 Wydajność Ligi</h3>
+                <div id="league-list" class="space-y-3"></div>
             </div>
-
             <div class="glass p-6 rounded-3xl lg:col-span-2">
-                <h3 class="text-lg font-bold mb-6">📈 HISTORIA KAPITAŁU</h3>
-                <canvas id="profitChart" height="150"></canvas>
+                <h3 class="text-sm font-black mb-6 uppercase tracking-widest text-slate-400">📈 Historia wzrostu</h3>
+                <canvas id="profitChart" height="140"></canvas>
             </div>
         </div>
 
-        <div class="glass p-6 rounded-3xl overflow-hidden">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-lg font-bold">📋 DZIENNIK OPERACJI</h3>
-                <span id="match-count" class="bg-slate-800 text-slate-400 text-[10px] px-3 py-1 rounded-full font-bold uppercase"></span>
-            </div>
+        <div class="glass p-6 rounded-3xl">
+            <h3 class="text-sm font-black mb-6 uppercase tracking-widest text-slate-400">📋 Wszystkie Rozliczenia</h3>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="text-slate-500 border-b border-slate-800 text-[10px] uppercase tracking-widest">
+                    <thead class="text-slate-500 border-b border-slate-800 text-[10px] uppercase font-black">
                         <tr>
-                            <th class="pb-4">Zdarzenie / Liga</th>
-                            <th class="pb-4 text-center">Wynik</th>
-                            <th class="pb-4 text-right">Profit</th>
+                            <th class="pb-4 px-2">Wydarzenie</th>
+                            <th class="pb-4 text-center">Score</th>
+                            <th class="pb-4 text-right px-2">Profit</th>
                         </tr>
                     </thead>
                     <tbody id="history-table" class="divide-y divide-slate-800/50"></tbody>
@@ -83,55 +97,57 @@
                     fetch('bankroll.json?v=' + Date.now())
                 ]);
                 const history = await histRes.json();
-                const brData = await brRes.json();
-
+                
                 let totalProfit = 0;
+                let totalStaked = 0;
+                let totalReturned = 0;
+                let totalOdds = 0;
                 const leagues = {};
                 const chartLabels = [];
                 const chartData = [];
 
                 history.forEach((m, i) => {
                     totalProfit += m.profit;
-                    let rawSport = m.sport || "unknown";
+                    totalStaked += m.stake;
+                    totalReturned += (m.stake + m.profit);
+                    totalOdds += m.odds;
+
+                    let rawSport = m.sport || "other";
                     let sportName = rawSport.replace("icehockey_nhl", "NHL").replace("basketball_nba", "NBA").split('_').pop().toUpperCase();
                     leagues[sportName] = (leagues[sportName] || 0) + m.profit;
+                    
                     chartLabels.push(i + 1);
                     chartData.push(totalProfit.toFixed(2));
                 });
 
-                // UI Nagłówki
+                // Update Liczników
                 document.getElementById('total-profit-title').innerText = totalProfit.toFixed(2) + ' PLN';
-                document.getElementById('match-count').innerText = history.length + ' Rozliczonych';
+                document.getElementById('total-staked').innerText = totalStaked.toFixed(2) + ' PLN';
+                document.getElementById('total-returned').innerText = totalReturned.toFixed(2) + ' PLN';
+                document.getElementById('total-bets').innerText = history.length;
+                document.getElementById('avg-odds').innerText = (totalOdds / history.length).toFixed(2);
+                
                 const progress = Math.min((totalProfit / 5000) * 100, 100);
                 document.getElementById('progress-percent').innerText = progress.toFixed(1) + '%';
                 document.getElementById('progress-bar').style.width = progress + '%';
                 document.getElementById('last-update').innerText = 'Sync: ' + new Date().toLocaleString();
 
-                // Ranking Lig z ikonami Smart Stake
+                // Ranking Lig
                 const leagueList = document.getElementById('league-list');
                 Object.keys(leagues).sort((a,b) => leagues[b] - leagues[a]).forEach(name => {
                     const val = leagues[name];
-                    let icon = "🔹";
-                    let riskLabel = "Normal Risk";
-                    let colorClass = "text-slate-400";
-
-                    if (val > 500) { icon = "🔥"; riskLabel = "High Confidence"; colorClass = "text-orange-400"; }
-                    if (val < -300) { icon = "🛡️"; riskLabel = "Smart Stake 80%"; colorClass = "text-yellow-500"; }
-                    if (val < -700) { icon = "🚨"; riskLabel = "Smart Stake 50%"; colorClass = "text-red-500"; }
-
+                    let icon = val >= 0 ? "🔥" : "🛡️";
+                    if (val < -300) icon = "🚨";
                     leagueList.innerHTML += `
-                        <div class="flex justify-between items-center p-3 rounded-xl bg-slate-800/30 border border-white/5">
-                            <div>
-                                <p class="text-white font-bold flex items-center gap-2">${icon} ${name}</p>
-                                <p class="${colorClass} text-[10px] uppercase font-black">${riskLabel}</p>
-                            </div>
-                            <span class="font-mono font-bold ${val >= 0 ? 'text-green-400' : 'text-red-400'}">
+                        <div class="flex justify-between items-center p-2 rounded-lg bg-white/5 border border-white/5">
+                            <span class="text-xs font-bold">${icon} ${name}</span>
+                            <span class="font-mono text-xs font-black ${val >= 0 ? 'text-green-400' : 'text-red-400'}">
                                 ${val > 0 ? '+' : ''}${val.toFixed(2)}
                             </span>
                         </div>`;
                 });
 
-                // Wykres
+                // Chart
                 new Chart(document.getElementById('profitChart'), {
                     type: 'line',
                     data: {
@@ -143,29 +159,29 @@
                             pointRadius: 0,
                             fill: true,
                             backgroundColor: 'rgba(59, 130, 246, 0.05)',
-                            tension: 0.4
+                            tension: 0.3
                         }]
                     },
                     options: { responsive: true, scales: { y: { grid: { color: '#1e293b' } }, x: { display: false } }, plugins: { legend: { display: false } } }
                 });
 
-                // Tabela
+                // Tabela (Pełna Historia)
                 const tableBody = document.getElementById('history-table');
                 history.slice().reverse().forEach(m => {
                     tableBody.innerHTML += `
-                        <tr class="hover:bg-slate-800/30 transition-colors">
-                            <td class="py-4">
-                                <p class="text-white font-medium text-xs md:text-sm">${m.home} - ${m.away}</p>
-                                <p class="text-[9px] text-slate-500 uppercase tracking-widest">${m.sport ? m.sport.split('_').pop() : 'BET'}</p>
+                        <tr class="hover:bg-slate-800/30 transition-colors border-b border-slate-800/30">
+                            <td class="py-4 px-2">
+                                <p class="text-white font-bold text-xs">${m.home} - ${m.away}</p>
+                                <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest">${m.sport.split('_').pop()}</p>
                             </td>
-                            <td class="py-4 text-center font-mono font-bold text-slate-400 text-xs">${m.score || '-:-'}</td>
-                            <td class="py-4 text-right ${m.profit >= 0 ? 'text-green-400' : 'text-red-400'} font-bold text-xs md:text-sm">
+                            <td class="py-4 text-center font-mono font-black text-slate-400 text-[10px]">${m.score || '-:-'}</td>
+                            <td class="py-4 text-right px-2 ${m.profit >= 0 ? 'text-green-400' : 'text-red-400'} font-black text-xs">
                                 ${m.profit >= 0 ? '+' : ''}${m.profit.toFixed(2)}
                             </td>
                         </tr>`;
                 });
 
-            } catch (e) { console.log(e); }
+            } catch (e) { console.error(e); }
         }
         loadData();
     </script>
