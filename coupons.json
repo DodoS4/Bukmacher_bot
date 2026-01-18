@@ -408,5 +408,95 @@
         "stake": 250,
         "sport": "basketball_nba",
         "time": "2026-01-19T02:40:00Z"
+    },
+    {
+        "id": "5dda9709fbd9470ba1551dc88ce8923d",
+        "home": "Carolina Hurricanes",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 3.9,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-19T18:30:00Z"
+    },
+    {
+        "id": "d79bbfcc60bac2b1d7a3a59addb16436",
+        "home": "Seattle Kraken",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Seattle Kraken",
+        "odds": 2.58,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-19T22:00:00Z"
+    },
+    {
+        "id": "b910ddb01d9b100a140857063abf7d84",
+        "home": "Florida Panthers",
+        "away": "San Jose Sharks",
+        "outcome": "San Jose Sharks",
+        "odds": 4.0,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-19T23:00:00Z"
+    },
+    {
+        "id": "c28760643efcf42e829eeaa59c23fa45",
+        "home": "Toronto Maple Leafs",
+        "away": "Minnesota Wild",
+        "outcome": "Minnesota Wild",
+        "odds": 2.85,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-20T00:30:00Z"
+    },
+    {
+        "id": "e69d25b1fdf12f6c21d8d86a59e60cd6",
+        "home": "Vegas Golden Knights",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.75,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-20T01:00:00Z"
+    },
+    {
+        "id": "fdf84e8b6863f65b1b3c857bbaca439b",
+        "home": "Chicago Blackhawks",
+        "away": "Winnipeg Jets",
+        "outcome": "Chicago Blackhawks",
+        "odds": 2.8,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-20T01:30:00Z"
+    },
+    {
+        "id": "268c1a74c11817f897e376aebd76e084",
+        "home": "Calgary Flames",
+        "away": "New Jersey Devils",
+        "outcome": "Calgary Flames",
+        "odds": 2.65,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-20T02:00:00Z"
+    },
+    {
+        "id": "38e816309910762f5fab836d33bef34e",
+        "home": "Anaheim Ducks",
+        "away": "New York Rangers",
+        "outcome": "New York Rangers",
+        "odds": 2.69,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-20T03:00:00Z"
+    },
+    {
+        "id": "17a821b92d8fc4f73197e4f68231c137",
+        "home": "Vancouver Canucks",
+        "away": "New York Islanders",
+        "outcome": "Vancouver Canucks",
+        "odds": 2.63,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-20T03:00:00Z"
     }
 ]
