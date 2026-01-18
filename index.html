@@ -1,108 +1,185 @@
-        // ŁADOWANIE DANYCH
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Betting - Business Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body { transition: background-color 0.3s, color 0.3s; }
+        .stat-card { transition: transform 0.2s; }
+        .stat-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-8 border-b dark:border-slate-700 pb-4">
+            <div>
+                <h1 class="text-2xl font-bold">AI Betting Engine</h1>
+                <p id="last-update" class="text-xs text-gray-500 dark:text-gray-400 italic mt-1">Ładowanie...</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <span id="refresh-timer" class="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-600 px-2 py-1 rounded">Auto-ref: 300s</span>
+                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-lg bg-gray-200 dark:bg-slate-800 hover:ring-2 ring-blue-500 transition-all">
+                    <i id="theme-icon" class="fas fa-moon text-blue-600 dark:text-yellow-400"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="stat-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
+                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Zysk Netto</p>
+                <p id="total-profit" class="text-2xl font-black text-blue-600 dark:text-blue-400">0.00 PLN</p>
+            </div>
+            <div class="stat-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
+                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Obrót</p>
+                <p id="total-staked" class="text-2xl font-black">0.00 PLN</p>
+            </div>
+            <div class="stat-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
+                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Yield %</p>
+                <p id="yield-val" class="text-2xl font-black text-orange-500">0%</p>
+            </div>
+            <div class="stat-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
+                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Kupony</p>
+                <p id="total-bets" class="text-2xl font-black">0</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
+                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm"><i class="fas fa-chart-line text-blue-500"></i> PROGRESJA</h3>
+                <canvas id="profitChart" height="200"></canvas>
+            </div>
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
+                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm"><i class="fas fa-list-ol text-yellow-500"></i> RANKING LIG</h3>
+                <div id="league-ranking" class="space-y-3"></div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border dark:border-slate-700">
+            <div class="p-4 bg-gray-50 dark:bg-slate-700/30 border-b dark:border-slate-700">
+                <h3 class="font-bold text-xs uppercase tracking-widest">Historia Operacji</h3>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="text-[10px] text-gray-400 uppercase border-b dark:border-slate-700">
+                        <tr>
+                            <th class="px-6 py-4">Data</th>
+                            <th class="px-6 py-4">Mecz / Liga</th>
+                            <th class="px-6 py-4">Typ / Kurs</th>
+                            <th class="px-6 py-4">Wynik</th>
+                            <th class="px-6 py-4 text-right">Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table" class="divide-y dark:divide-slate-700"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // TRYB DARK
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.className = 'fas fa-sun text-yellow-400';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.theme = isDark ? 'dark' : 'light';
+            themeIcon.className = isDark ? 'fas fa-sun text-yellow-400' : 'fas fa-moon text-blue-600';
+        });
+
+        let profitChart = null;
+        let countdown = 300;
+
         async function loadData() {
             try {
-                // Dodajemy timestamp, aby uniknąć cache'owania przez przeglądarkę
                 const res = await fetch('history.json?v=' + Date.now());
                 const history = await res.json();
                 
                 let totalProfit = 0, totalStaked = 0;
                 const leagues = {}, chartLabels = [], chartData = [];
-
-                // Reset ranking kontenera przed ładowaniem
-                document.getElementById('league-ranking').innerHTML = '';
+                
                 document.getElementById('history-table').innerHTML = '';
+                document.getElementById('league-ranking').innerHTML = '';
 
                 history.forEach((m, idx) => {
                     totalProfit += m.profit;
                     totalStaked += (m.stake || 250);
-                    
-                    // Czytelniejsza nazwa ligi (np. NHL, EKSTRAKLASA, LA LIGA)
                     let sport = m.sport.replace('soccer_', '').replace('icehockey_', '').replace(/_/g, ' ').toUpperCase();
                     leagues[sport] = (leagues[sport] || 0) + m.profit;
-                    
                     chartLabels.push(idx + 1);
                     chartData.push(totalProfit.toFixed(2));
                 });
 
-                // Podstawowe statystyki
                 document.getElementById('total-profit').innerText = totalProfit.toFixed(2) + ' PLN';
                 document.getElementById('total-staked').innerText = totalStaked.toFixed(2) + ' PLN';
                 document.getElementById('total-bets').innerText = history.length;
-                
-                const yieldVal = totalStaked > 0 ? ((totalProfit / totalStaked) * 100).toFixed(1) : 0;
-                document.getElementById('yield-val').innerText = yieldVal + '%';
-                
-                // Progress Bar
-                const prog = Math.max(0, Math.min(100, (totalProfit / 5000) * 100));
-                document.getElementById('progress-bar').style.width = prog + '%';
-                document.getElementById('progress-percent').innerText = prog.toFixed(1) + '%';
-                document.getElementById('last-update').innerText = 'Sync: ' + new Date().toLocaleString();
+                document.getElementById('yield-val').innerText = ((totalProfit / totalStaked) * 100).toFixed(1) + '%';
+                document.getElementById('last-update').innerText = 'Sync: ' + new Date().toLocaleTimeString();
 
-                // Generowanie rankingu lig
-                const ranking = document.getElementById('league-ranking');
+                // Ranking
                 Object.entries(leagues).sort((a,b) => b[1] - a[1]).forEach(([name, val]) => {
-                    ranking.innerHTML += `
-                        <div class="flex justify-between items-center p-2 rounded bg-gray-50 dark:bg-slate-700/30 border-l-4 ${val >= 0 ? 'border-green-500' : 'border-red-500'}">
-                            <span class="text-[10px] font-bold uppercase tracking-widest">${name}</span>
-                            <span class="text-sm font-black ${val >= 0 ? 'text-green-500' : 'text-red-500'}">${val > 0 ? '+' : ''}${val.toFixed(2)}</span>
+                    document.getElementById('league-ranking').innerHTML += `
+                        <div class="flex justify-between items-center p-2 rounded bg-gray-50 dark:bg-slate-800/50 border-l-4 ${val >= 0 ? 'border-green-500' : 'border-red-500'}">
+                            <span class="text-[10px] font-bold uppercase">${name}</span>
+                            <span class="text-xs font-black ${val >= 0 ? 'text-green-500' : 'text-red-500'}">${val > 0 ? '+' : ''}${val.toFixed(2)}</span>
                         </div>`;
                 });
 
-                // Generowanie tabeli historii
-                const table = document.getElementById('history-table');
+                // Tabela
                 history.slice().reverse().forEach(m => {
                     const isWin = m.profit > 0;
-                    const oddsColor = m.odds >= 3.0 ? 'text-yellow-500' : 'text-blue-500';
-                    
-                    table.innerHTML += `
-                        <tr class="hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors border-b dark:border-slate-800">
-                            <td class="px-6 py-4 text-[10px] text-gray-400 font-mono">${m.time ? m.time.split('T')[0] : '--'}</td>
+                    document.getElementById('history-table').innerHTML += `
+                        <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors">
+                            <td class="px-6 py-4 text-[10px] text-gray-400">${m.time ? m.time.split('T')[0] : '--'}</td>
                             <td class="px-6 py-4">
                                 <div class="text-xs font-bold">${m.home} - ${m.away}</div>
-                                <div class="text-[9px] text-gray-500 uppercase">${m.sport.split('_').pop()}</div>
+                                <div class="text-[9px] text-gray-400 uppercase">${m.sport.split('_').pop()}</div>
                             </td>
-                            <td class="px-6 py-4 text-xs italic">
-                                ${m.outcome} <span class="${oddsColor} font-black">@${m.odds}</span>
-                            </td>
-                            <td class="px-6 py-4 text-xs font-mono font-bold">${m.score || '-- : --'}</td>
-                            <td class="px-6 py-4 text-right font-black ${isWin ? 'text-green-500' : 'text-red-500'}">
-                                ${isWin ? '+' : ''}${m.profit.toFixed(2)}
-                            </td>
+                            <td class="px-6 py-4 text-xs italic">${m.outcome} <span class="text-blue-500 font-bold">@${m.odds}</span></td>
+                            <td class="px-6 py-4 text-xs font-mono">${m.score || '-- : --'}</td>
+                            <td class="px-6 py-4 text-right font-black ${isWin ? 'text-green-500' : 'text-red-500'}">${isWin ? '+' : ''}${m.profit.toFixed(2)}</td>
                         </tr>`;
                 });
 
                 // Wykres
-                new Chart(document.getElementById('profitChart'), {
+                if(profitChart) profitChart.destroy();
+                profitChart = new Chart(document.getElementById('profitChart'), {
                     type: 'line',
                     data: {
                         labels: chartLabels,
                         datasets: [{
-                            label: 'Zysk',
                             data: chartData,
                             borderColor: '#3b82f6',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             fill: true,
                             tension: 0.4,
-                            pointRadius: 2,
-                            pointBackgroundColor: '#3b82f6'
+                            pointRadius: 1
                         }]
                     },
-                    options: {
-                        responsive: true,
-                        plugins: { legend: { display: false } },
-                        scales: { 
-                            x: { display: false },
-                            y: { 
-                                grid: { color: 'rgba(156, 163, 175, 0.05)' },
-                                ticks: { font: { size: 10 } }
-                            }
-                        }
-                    }
+                    options: { plugins: { legend: { display: false } }, scales: { x: { display: false } } }
                 });
-
-            } catch (e) { 
-                console.error("Data error", e); 
-                document.getElementById('league-ranking').innerHTML = '<p class="text-red-500">Błąd ładowania danych historycznych.</p>';
-            }
+                
+                countdown = 300;
+            } catch (e) { console.error(e); }
         }
+
+        // Timer odświeżania
+        setInterval(() => {
+            countdown--;
+            document.getElementById('refresh-timer').innerText = `Auto-ref: ${countdown}s`;
+            if(countdown <= 0) loadData();
+        }, 1000);
+
         loadData();
+    </script>
+</body>
+</html>
