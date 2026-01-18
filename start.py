@@ -26,7 +26,7 @@ TELEGRAM_CHAT = os.getenv("T_CHAT")
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 BASE_STAKE = 250
-MAX_ACTIVE_BETS = 15  # Limit aktywnych kuponów (kontroluje obrót)
+MAX_ACTIVE_BETS = 55  # Limit aktywnych kuponów (kontroluje obrót)
 
 def get_smart_stake(league_key):
     """Oblicza stawkę i próg Value na podstawie historii ligi."""
