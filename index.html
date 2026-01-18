@@ -3,186 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inwestycje Sportowe - Pro Dashboard</title>
+    <title>AI Betting Engine Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/customParseFormat.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #0b0f19; color: #e2e8f0; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .progress-bg { background-color: #1e293b; border-radius: 999px; overflow: hidden; }
-        .progress-fill { background: linear-gradient(90deg, #3b82f6, #10b981); transition: width 1s ease-in-out; }
+        body { 
+            background: #0f172a; /* Ciemniejszy bazowy kolor */
+            color: #f8fafc; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh;
+        }
+        .sidebar {
+            background: #1e293b;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        .main-content {
+            background: #0f172a; /* Główna powierzchnia */
+        }
+        .glass-card { 
+            background: rgba(30, 41, 59, 0.4); 
+            backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .neon-border-blue { border-bottom: 3px solid #3b82f6; box-shadow: 0 4px 15px -5px #3b82f6; }
+        .neon-border-green { border-bottom: 3px solid #10b981; box-shadow: 0 4px 15px -5px #10b981; }
+        .form-dot { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+        .win { background: #10b981; box-shadow: 0 0 8px #10b981; }
+        .loss { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+        .progress-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        .menu-item.active { background-color: #3b82f6; color: white; }
+        .scrollable-table { max-height: 600px; overflow-y: auto; } /* Dodano scroll dla tabeli */
+        .table-header th { cursor: pointer; }
+        .table-header th:hover { background-color: rgba(255,255,255,0.05); }
+
     </style>
 </head>
-<body class="p-4 md:p-8">
-    <div class="max-w-6xl mx-auto">
-        <header class="mb-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-                <h1 class="text-3xl font-black tracking-tighter text-white uppercase italic">Projekt <span class="text-blue-500 italic">5000</span></h1>
-                <p id="last-update" class="text-slate-500 text-[10px] mt-1 tracking-widest font-bold"></p>
-            </div>
-            <div id="ai-badge" class="glass px-4 py-2 rounded-xl flex items-center gap-3 border-l-4 border-green-500">
-                <span class="text-slate-400 text-[10px] font-bold">SMART STAKING:</span>
-                <span class="text-green-400 font-black text-xs">🛡️ ACTIVE</span>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8 text-center md:text-left">
-            <div class="glass p-4 rounded-2xl border-b-2 border-blue-500/50">
-                <p class="text-slate-500 text-[9px] uppercase font-black mb-1">Wysłane stawki</p>
-                <h2 id="total-staked" class="text-lg font-black text-white tracking-tighter">0.00</h2>
-            </div>
-            <div class="glass p-4 rounded-2xl border-b-2 border-green-500/50">
-                <p class="text-slate-500 text-[9px] uppercase font-black mb-1">Łączne wygrane</p>
-                <h2 id="total-returned" class="text-lg font-black text-white tracking-tighter">0.00</h2>
-            </div>
-            <div class="glass p-4 rounded-2xl border-b-2 border-purple-500/50">
-                <p class="text-slate-500 text-[9px] uppercase font-black mb-1">Liczba operacji</p>
-                <h2 id="total-bets" class="text-lg font-black text-white tracking-tighter">0</h2>
-            </div>
-            <div class="glass p-4 rounded-2xl border-b-2 border-orange-500/50">
-                <p class="text-slate-500 text-[9px] uppercase font-black mb-1">Średni Kurs</p>
-                <h2 id="avg-odds" class="text-lg font-black text-white tracking-tighter">0.00</h2>
-            </div>
+<body class="flex flex-col lg:flex-row">
+    <aside class="sidebar w-full lg:w-64 p-6 lg:h-screen lg:fixed flex flex-col z-50">
+        <div class="flex items-center gap-3 mb-10">
+            <div class="h-4 w-4 bg-blue-500 rounded-full animate-pulse"></div>
+            <h1 class="text-3xl font-extrabold tracking-tight italic uppercase">Engine <span class="text-blue-500">5K</span></h1>
         </div>
+        <nav class="flex-grow">
+            <ul class="space-y-3">
+                <li><a href="#" class="menu-item flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:bg-slate-700 hover:text-white transition-colors active" data-section="overview"><i class="fas fa-chart-line w-5"></i><span>Overview</span></a></li>
+                <li><a href="#" class="menu-item flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:bg-slate-700 hover:text-white transition-colors" data-section="history"><i class="fas fa-history w-5"></i><span>History</span></a></li>
+                <li><a href="#" class="menu-item flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:bg-slate-700 hover:text-white transition-colors" data-section="strategies"><i class="fas fa-brain w-5"></i><span>Strategies</span></a></li>
+            </ul>
+        </nav>
+        <div class="mt-auto pt-6 border-t border-slate-700 text-center">
+            <p id="last-update" class="text-slate-500 text-xs font-semibold tracking-widest uppercase"></p>
+            <p class="text-slate-600 text-[10px] mt-2">© 2026 AI Betting Engine</p>
+        </div>
+    </aside>
 
-        <div class="glass p-6 rounded-3xl mb-8">
-            <div class="flex justify-between items-end mb-4">
+    <main class="main-content flex-1 lg:ml-64 p-6 md:p-10">
+        <section id="overview" class="active-section">
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
                 <div>
-                    <p class="text-slate-400 uppercase font-black text-[10px]">Zysk netto (Profit)</p>
-                    <h2 id="total-profit-title" class="text-4xl font-black text-white tracking-tighter">0.00 PLN</h2>
+                    <h2 class="text-3xl font-extrabold tracking-tight">Dashboard Overview</h2>
+                    <p class="text-slate-400 text-sm mt-1">Kompleksowa analiza efektywności bota.</p>
                 </div>
-                <div class="text-right">
-                    <p id="progress-percent" class="text-2xl font-black text-blue-500">0%</p>
+                <div class="glass-card px-6 py-4 rounded-2xl flex items-center gap-4">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-tighter">Ostatnia forma:</span>
+                    <div id="form-beads" class="flex gap-2"></div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="glass-card p-6 rounded-3xl neon-border-blue">
+                    <p class="text-slate-400 text-[10px] font-bold uppercase mb-2">Obrót Kapitału</p>
+                    <h2 id="total-staked" class="text-3xl font-black tracking-tighter">0.00</h2>
+                    <div class="text-[10px] text-blue-400 font-bold mt-2">Σ WSZYSTKIE STAWKI</div>
+                </div>
+                <div class="glass-card p-6 rounded-3xl neon-border-green">
+                    <p class="text-slate-400 text-[10px] font-bold uppercase mb-2">Wypłaty</p>
+                    <h2 id="total-returned" class="text-3xl font-black tracking-tighter text-green-400">0.00</h2>
+                    <div class="text-[10px] text-green-500/70 font-bold mt-2">Σ ZWROTY Z KUPONÓW</div>
+                </div>
+                <div class="glass-card p-6 rounded-3xl">
+                    <p class="text-slate-400 text-[10px] font-bold uppercase mb-2">Średni Kurs</p>
+                    <h2 id="avg-odds" class="text-3xl font-black tracking-tighter text-purple-400">0.00</h2>
+                    <div id="total-bets" class="text-[10px] text-slate-500 font-bold mt-2 uppercase">0 OPERACJI</div>
+                </div>
+                <div class="glass-card p-6 rounded-3xl">
+                    <p class="text-slate-400 text-[10px] font-bold uppercase mb-2">Yield %</p>
+                    <h2 id="yield-val" class="text-3xl font-black tracking-tighter text-orange-400">0.0%</h2>
+                    <div class="text-[10px] text-slate-500 font-bold mt-2 uppercase">EFEKTYWNOŚĆ</div>
                 </div>
             </div>
-            <div class="progress-bg h-4 w-full">
-                <div id="progress-bar" class="progress-fill h-full w-0"></div>
-            </div>
-        </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-            <div class="glass p-6 rounded-3xl lg:col-span-1">
-                <h3 class="text-sm font-black mb-6 uppercase tracking-widest text-slate-400">📊 Wydajność Ligi</h3>
-                <div id="league-list" class="space-y-3"></div>
+            <div class="glass-card p-8 rounded-[2rem] mb-10 relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-6">
+                        <div>
+                            <span class="bg-blue-600/20 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Live Profit</span>
+                            <h2 id="total-profit-title" class="text-6xl font-black mt-4 tracking-tighter italic">0.00 PLN</h2>
+                        </div>
+                        <div class="text-right mt-4 md:mt-0">
+                            <p class="text-slate-500 text-xs font-bold uppercase mb-1">Target 5,000</p>
+                            <p id="progress-percent" class="text-4xl font-black text-blue-500 italic">0%</p>
+                        </div>
+                    </div>
+                    <div class="w-full bg-slate-800/50 h-4 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-600 to-cyan-400 progress-glow transition-all duration-1000"></div>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <canvas id="profitChart" height="150"></canvas>
+                </div>
             </div>
-            <div class="glass p-6 rounded-3xl lg:col-span-2">
-                <h3 class="text-sm font-black mb-6 uppercase tracking-widest text-slate-400">📈 Historia wzrostu</h3>
-                <canvas id="profitChart" height="140"></canvas>
-            </div>
-        </div>
 
-        <div class="glass p-6 rounded-3xl">
-            <h3 class="text-sm font-black mb-6 uppercase tracking-widest text-slate-400">📋 Wszystkie Rozliczenia</h3>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="text-slate-500 border-b border-slate-800 text-[10px] uppercase font-black">
-                        <tr>
-                            <th class="pb-4 px-2">Wydarzenie</th>
-                            <th class="pb-4 text-center">Score</th>
-                            <th class="pb-4 text-right px-2">Profit</th>
-                        </tr>
-                    </thead>
-                    <tbody id="history-table" class="divide-y divide-slate-800/50"></tbody>
-                </table>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                <div class="glass-card p-6 rounded-3xl">
+                    <h3 class="text-xs font-black uppercase tracking-[0.2em] mb-6 text-slate-400">Dominacja Lig</h3>
+                    <div id="league-list" class="space-y-4"></div>
+                </div>
+                <div class="glass-card p-6 rounded-3xl">
+                    <h3 class="text-xs font-black uppercase tracking-[0.2em] mb-6 text-slate-400">Analiza Bankroll</h3>
+                    <canvas id="bankrollChart" height="200"></canvas>
+                </div>
             </div>
-        </div>
-    </div>
+        </section>
+
+        <section id="history" class="hidden active-section">
+            <h2 class="text-3xl font-extrabold tracking-tight mb-8">Historia Rozliczeń</h2>
+            
+            <div class="glass-card p-6 rounded-2xl mb-6">
+                <div class="flex flex-wrap items-center gap-4 mb-4">
+                    <input type="text" id="search-input" placeholder="Szukaj meczu..." class="flex-1 min-w-[200px] p-2 rounded-lg bg-slate-700 border border-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-slate-400" />
+                    <select id="sport-filter" class="p-2 rounded-lg bg-slate-700 border border-slate-600 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Wszystkie ligi</option>
+                        </select>
+                    <button id="reset-filters" class="p-2 px-4 rounded-lg bg-slate-700 border border-slate-600 text-white hover:bg-slate-600 transition-colors">Reset</button>
+                </div>
+
+                <div class="scrollable-table">
+                    <table class="min-w-full divide-y divide-slate-700">
+                        <thead class="bg-slate-800 sticky top-0 z-10">
+                            <tr class="table-header text-xs text-slate-400 uppercase tracking-wider">
+                                <th class="px-6 py-3 text-left font-medium" data-sort="time">Data <i class="fas fa-sort ml-1"></i></th>
+                                <th class="px-6 py-3 text-left font-medium" data-sort="sport">Liga <i class="fas fa-sort ml-1"></i></th>
+                                <th class="px-6 py-3 text-left font-medium" data-sort="home">Mecz <i class="fas fa-sort ml-1"></i></th>
+                                <th class="px-6 py-3 text-left font-medium" data-sort="score">Wynik <i class="fas fa-sort ml-1"></i></th>
+                                <th class="px-6 py-3 text-left font-medium" data-sort="outcome">Typ <i class="fas fa-sort ml-1"></i></th>
+                                <th class="px-6 py-3 text-left font-medium" data-sort="odds">Kurs <i class="fas fa-sort ml-1"></i></th>
+                                <th class="px-6 py-3 text-right font-medium" data-sort="profit">Profit <i class="fas fa-sort ml-1"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body" class="divide-y divide-slate-700">
+                            </tbody>
+                    </table>
+                </div>
+                <div class="flex justify-between items-center mt-4">
+                    <button id="prev-page" class="px-4 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors"><i class="fas fa-chevron-left"></i></button>
+                    <span id="page-info" class="text-slate-400">Strona 1 z 1</span>
+                    <button id="next-page" class="px-4 py-2 bg-slate-700 rounded-lg hover:bg-slate-600 transition-colors"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategies" class="hidden active-section">
+            <h2 class="text-3xl font-extrabold tracking-tight mb-8">Zarządzanie Strategiami</h2>
+            <div class="glass-card p-6 rounded-2xl text-slate-400">
+                <p>Tutaj możesz zarządzać różnymi strategiami bota, ustawiać progi ryzyka i cele dla każdego algorytmu.</p>
+                <p class="mt-4"><i>Funkcjonalność w trakcie rozwoju...</i></p>
+            </div>
+        </section>
+    </main>
 
     <script>
+        dayjs.extend(dayjs_plugin_customParseFormat);
+
+        let fullHistory = [];
+        let currentPage = 1;
+        const rowsPerPage = 10;
+        let currentSortColumn = 'time';
+        let currentSortDirection = 'desc'; // Domyślnie najnowsze na górze
+        let currentFilters = { search: '', sport: '' };
+
+        // Funkcja do dynamicznego renderowania tabeli
+        function renderTable(historyData) {
+            const tableBody = document.getElementById('history-table-body');
+            tableBody.innerHTML = ''; // Wyczyść starą tabelę
+
+            // Filtrowanie
+            let filteredData = historyData.filter(m => {
+                const searchMatch = currentFilters.search ? 
+                                    (m.home.toLowerCase().includes(currentFilters.search) || 
+                                     m.away.toLowerCase().includes(currentFilters.search) ||
+                                     m.sport.toLowerCase().includes(currentFilters.search)) : true;
+                const sportMatch = currentFilters.sport ? m.sport === currentFilters.sport : true;
+                return searchMatch && sportMatch;
+            });
+
+            // Sortowanie
+            filteredData.sort((a, b) => {
+                let valA = a[currentSortColumn];
+                let valB = b[currentSortColumn];
+
+                if (currentSortColumn === 'time') {
+                    valA = dayjs(a.time);
+                    valB = dayjs(b.time);
+                } else if (currentSortColumn === 'profit' || currentSortColumn === 'odds') {
+                    valA = parseFloat(a[currentSortColumn]);
+                    valB = parseFloat(b[currentSortColumn]);
+                } else if (currentSortColumn === 'home' || currentSortColumn === 'away') {
+                    valA = a.home.toLowerCase();
+                    valB = b.home.toLowerCase();
+                }
+
+                if (currentSortDirection === 'asc') {
+                    return valA < valB ? -1 : (valA > valB ? 1 : 0);
+                } else {
+                    return valA > valB ? -1 : (valA < valB ? 1 : 0);
+                }
+            });
+
+            // Paginacja
+            const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const paginatedData = filteredData.slice(start, end);
+
+            document.getElementById('page-info').innerText = `Strona ${currentPage} z ${totalPages}`;
+            document.getElementById('prev-page').disabled = currentPage === 1;
+            document.getElementById('next-page').disabled = currentPage === totalPages;
+
+            paginatedData.forEach(m => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-800 transition-colors';
+                const profitClass = m.profit >= 0 ? 'text-green-400' : 'text-red-400';
+                const scoreDisplay = m.score || '-:-';
+                const sportClean = m.sport.split('_').pop().toUpperCase();
+
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-400">${dayjs(m.time).format('YYYY-MM-DD HH:mm')}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-300">${sportClean}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">${m.home} vs ${m.away}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">${scoreDisplay}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-400">${m.outcome}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-purple-400">${m.odds.toFixed(2)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-right ${profitClass}">${m.profit >= 0 ? '+' : ''}${m.profit.toFixed(2)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+
         async function loadData() {
             try {
-                const [histRes, brRes] = await Promise.all([
-                    fetch('history.json?v=' + Date.now()),
-                    fetch('bankroll.json?v=' + Date.now())
-                ]);
-                const history = await histRes.json();
+                // Fetch history and bankroll data
+                const historyRes = await fetch('history.json?v=' + Date.now());
+                fullHistory = await historyRes.json();
                 
-                let totalProfit = 0;
-                let totalStaked = 0;
-                let totalReturned = 0;
-                let totalOdds = 0;
-                const leagues = {};
-                const chartLabels = [];
-                const chartData = [];
+                const bankrollRes = await fetch('bankroll.json?v=' + Date.now());
+                const bankrollData = await bankrollRes.json();
+                const initialBankroll = 1000.0; // Początkowy bankroll
 
-                history.forEach((m, i) => {
+                // --- Overview Section ---
+                let totalProfit = 0, totalStaked = 0, totalOdds = 0, totalWins = 0, totalLosses = 0;
+                const leagues = {};
+                const profitChartLabels = [], profitChartData = [], bankrollChartData = [];
+                let currentRunningProfit = 0;
+                let currentRunningBankroll = initialBankroll;
+
+
+                // Przetwarzanie historii dla Overview i Chartów
+                fullHistory.forEach((m, i) => {
                     totalProfit += m.profit;
                     totalStaked += m.stake;
-                    totalReturned += (m.stake + m.profit);
                     totalOdds += m.odds;
-
-                    let rawSport = m.sport || "other";
-                    let sportName = rawSport.replace("icehockey_nhl", "NHL").replace("basketball_nba", "NBA").split('_').pop().toUpperCase();
-                    leagues[sportName] = (leagues[sportName] || 0) + m.profit;
                     
-                    chartLabels.push(i + 1);
-                    chartData.push(totalProfit.toFixed(2));
+                    if (m.profit > 0) totalWins++;
+                    else totalLosses++;
+
+                    let sport = m.sport.split('_').pop().toUpperCase();
+                    leagues[sport] = (leagues[sport] || 0) + m.profit;
+                    
+                    // Dane dla wykresu zysku
+                    currentRunningProfit += m.profit;
+                    profitChartLabels.push(dayjs(m.time).format('DD/MM'));
+                    profitChartData.push(currentRunningProfit.toFixed(2));
+
+                    // Dane dla wykresu bankrolla
+                    currentRunningBankroll += m.profit;
+                    bankrollChartData.push(currentRunningBankroll.toFixed(2));
+                });
+
+                // Form Beads (Ostatnie 10)
+                const formBeads = document.getElementById('form-beads');
+                formBeads.innerHTML = ''; // Wyczyść stare
+                fullHistory.slice(-10).reverse().forEach(m => {
+                    const bead = document.createElement('div');
+                    bead.className = `form-dot ${m.profit > 0 ? 'win' : 'loss'}`;
+                    formBeads.appendChild(bead);
                 });
 
                 // Update Liczników
                 document.getElementById('total-profit-title').innerText = totalProfit.toFixed(2) + ' PLN';
-                document.getElementById('total-staked').innerText = totalStaked.toFixed(2) + ' PLN';
-                document.getElementById('total-returned').innerText = totalReturned.toFixed(2) + ' PLN';
-                document.getElementById('total-bets').innerText = history.length;
-                document.getElementById('avg-odds').innerText = (totalOdds / history.length).toFixed(2);
+                document.getElementById('total-staked').innerText = totalStaked.toFixed(2);
+                document.getElementById('total-returned').innerText = (totalStaked + totalProfit).toFixed(2);
+                document.getElementById('total-bets').innerText = fullHistory.length + " OPERACJI";
+                document.getElementById('avg-odds').innerText = (totalOdds / fullHistory.length).toFixed(2);
+                document.getElementById('yield-val').innerText = ((totalProfit / totalStaked) * 100).toFixed(1) + '%';
                 
                 const progress = Math.min((totalProfit / 5000) * 100, 100);
                 document.getElementById('progress-percent').innerText = progress.toFixed(1) + '%';
                 document.getElementById('progress-bar').style.width = progress + '%';
-                document.getElementById('last-update').innerText = 'Sync: ' + new Date().toLocaleString();
+                document.getElementById('last-update').innerText = 'System Live: ' + dayjs().format('YYYY-MM-DD HH:mm:ss');
 
-                // Ranking Lig
+                // League Ranking
                 const leagueList = document.getElementById('league-list');
-                Object.keys(leagues).sort((a,b) => leagues[b] - leagues[a]).forEach(name => {
-                    const val = leagues[name];
-                    let icon = val >= 0 ? "🔥" : "🛡️";
-                    if (val < -300) icon = "🚨";
+                leagueList.innerHTML = '';
+                Object.entries(leagues).sort((a,b) => b[1] - a[1]).forEach(([name, val]) => {
                     leagueList.innerHTML += `
-                        <div class="flex justify-between items-center p-2 rounded-lg bg-white/5 border border-white/5">
-                            <span class="text-xs font-bold">${icon} ${name}</span>
-                            <span class="font-mono text-xs font-black ${val >= 0 ? 'text-green-400' : 'text-red-400'}">
-                                ${val > 0 ? '+' : ''}${val.toFixed(2)}
-                            </span>
+                        <div class="flex justify-between items-center group cursor-default">
+                            <span class="text-[11px] font-bold text-slate-400 group-hover:text-blue-400 transition-colors">${name}</span>
+                            <div class="flex-1 border-b border-dashed border-slate-700 mx-4"></div>
+                            <span class="font-mono text-xs font-black ${val >= 0 ? 'text-green-400' : 'text-red-400'}">${val > 0 ? '+' : ''}${val.toFixed(2)}</span>
                         </div>`;
                 });
 
-                // Chart
+                // Profit Chart
                 new Chart(document.getElementById('profitChart'), {
                     type: 'line',
                     data: {
-                        labels: chartLabels,
+                        labels: profitChartLabels,
                         datasets: [{
-                            data: chartData,
+                            data: profitChartData,
                             borderColor: '#3b82f6',
-                            borderWidth: 4,
+                            borderWidth: 3,
                             pointRadius: 0,
                             fill: true,
-                            backgroundColor: 'rgba(59, 130, 246, 0.05)',
-                            tension: 0.3
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
                         }]
                     },
-                    options: { responsive: true, scales: { y: { grid: { color: '#1e293b' } }, x: { display: false } }, plugins: { legend: { display: false } } }
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        scales: { y: { display: false }, x: { display: false } }, 
+                        plugins: { legend: { display: false } } 
+                    }
                 });
 
-                // Tabela (Pełna Historia)
-                const tableBody = document.getElementById('history-table');
-                history.slice().reverse().forEach(m => {
-                    tableBody.innerHTML += `
-                        <tr class="hover:bg-slate-800/30 transition-colors border-b border-slate-800/30">
-                            <td class="py-4 px-2">
-                                <p class="text-white font-bold text-xs">${m.home} - ${m.away}</p>
-                                <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest">${m.sport.split('_').pop()}</p>
-                            </td>
-                            <td class="py-4 text-center font-mono font-black text-slate-400 text-[10px]">${m.score || '-:-'}</td>
-                            <td class="py-4 text-right px-2 ${m.profit >= 0 ? 'text-green-400' : 'text-red-400'} font-black text-xs">
-                                ${m.profit >= 0 ? '+' : ''}${m.profit.toFixed(2)}
-                            </td>
-                        </tr>`;
+                // Bankroll Chart
+                new Chart(document.getElementById('bankrollChart'), {
+                    type: 'line',
+                    data: {
+                        labels: profitChartLabels, // Używamy tych samych etykiet czasu
+                        datasets: [{
+                            data: bankrollChartData,
+                            borderColor: '#10b981',
+                            borderWidth: 3,
+                            pointRadius: 0,
+                            fill: true,
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        scales: { y: { display: false }, x: { display: false } }, 
+                        plugins: { legend: { display: false } } 
+                    }
                 });
 
-            } catch (e) { console.error(e); }
+
+                // --- History Section (Table) ---
+                // Wypełnij opcje filtra sportów
+                const sportFilter = document.getElementById('sport-filter');
+                sportFilter.innerHTML = '<option value="">Wszystkie ligi</option>';
+                const uniqueSports = [...new Set(fullHistory.map(m => m.sport))].sort();
+                uniqueSports.forEach(sport => {
+                    const option = document.createElement('option');
+                    option.value = sport;
+                    option.innerText = sport.split('_').pop().toUpperCase();
+                    sportFilter.appendChild(option);
+                });
+                
+                renderTable(fullHistory);
+
+            } catch (e) { 
+                console.error("Błąd ładowania danych:", e);
+                document.getElementById('last-update').innerText = 'Błąd ładowania danych!';
+            }
         }
+
+        // --- Event Listeners dla nawigacji ---
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.menu-item').forEach(link => link.classList.remove('active'));
+                this.classList.add('active');
+
+                document.querySelectorAll('.active-section').forEach(section => section.classList.add('hidden'));
+                document.getElementById(this.dataset.section).classList.remove('hidden');
+            });
+        });
+
+        // --- Event Listeners dla tabeli historii ---
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            currentPage = 1;
+            currentFilters.search = e.target.value.toLowerCase();
+            renderTable(fullHistory);
+        });
+
+        document.getElementById('sport-filter').addEventListener('change', (e) => {
+            currentPage = 1;
+            currentFilters.sport = e.target.value;
+            renderTable(fullHistory);
+        });
+
+        document.getElementById('reset-filters').addEventListener('click', () => {
+            document.getElementById('search-input').value = '';
+            document.getElementById('sport-filter').value = '';
+            currentPage = 1;
+            currentFilters = { search: '', sport: '' };
+            currentSortColumn = 'time';
+            currentSortDirection = 'desc';
+            renderTable(fullHistory);
+        });
+
+        document.getElementById('prev-page').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable(fullHistory);
+            }
+        });
+
+        document.getElementById('next-page').addEventListener('click', () => {
+            const totalPages = Math.ceil(fullHistory.filter(m => {
+                const searchMatch = currentFilters.search ? 
+                                    (m.home.toLowerCase().includes(currentFilters.search) || 
+                                     m.away.toLowerCase().includes(currentFilters.search) ||
+                                     m.sport.toLowerCase().includes(currentFilters.search)) : true;
+                const sportMatch = currentFilters.sport ? m.sport === currentFilters.sport : true;
+                return searchMatch && sportMatch;
+            }).length / rowsPerPage);
+
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable(fullHistory);
+            }
+        });
+
+        document.querySelectorAll('.table-header th').forEach(header => {
+            header.addEventListener('click', () => {
+                const column = header.dataset.sort;
+                if (currentSortColumn === column) {
+                    currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSortColumn = column;
+                    currentSortDirection = 'desc'; // Domyślnie malejąco dla nowego sortowania
+                }
+                renderTable(fullHistory);
+            });
+        });
+
+        // Initial data load
         loadData();
     </script>
 </body>
