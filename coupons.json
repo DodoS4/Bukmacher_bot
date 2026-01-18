@@ -528,5 +528,15 @@
         "stake": 250,
         "sport": "soccer_france_ligue_one",
         "time": "2026-01-18T19:45:00Z"
+    },
+    {
+        "id": "d9b1ce3cf25e2645fdb24e89d4f1a38e",
+        "home": "Cleveland Cavaliers",
+        "away": "Oklahoma City Thunder",
+        "outcome": "Cleveland Cavaliers",
+        "odds": 2.9,
+        "stake": 250,
+        "sport": "basketball_nba",
+        "time": "2026-01-19T19:40:00Z"
     }
 ]
