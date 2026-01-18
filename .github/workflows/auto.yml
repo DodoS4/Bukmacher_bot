@@ -4,7 +4,7 @@ on:
   schedule:
     # SKANOWANIE: Co godzinę (o pełnej), od 07:00 do 22:00 czasu PL (06:00-21:00 UTC)
     - cron: '0 6-21 * * *'
-    # ROZLICZENIE I STATYSTYKI: Raz dziennie o 22:30 czasu PL (21:30 UTC)
+    # ROZLICZENIE I STATYSTYKI: Raz dziennie o 21:30 czasu PL (20:30 UTC)
     - cron: '30 21 * * *'
   workflow_dispatch: 
 
