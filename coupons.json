@@ -218,5 +218,25 @@
         "stake": 250,
         "sport": "basketball_nba",
         "time": "2026-01-19T18:10:00Z"
+    },
+    {
+        "id": "a4e8ccce36990cf2c182d761d4ba6a55",
+        "home": "CF Estrela",
+        "away": "Estoril",
+        "outcome": "Draw",
+        "odds": 3.6,
+        "stake": 250,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-19T20:15:00Z"
+    },
+    {
+        "id": "d83e3a6de719f872d8af6632781718c1",
+        "home": "Washington Wizards",
+        "away": "Los Angeles Clippers",
+        "outcome": "Washington Wizards",
+        "odds": 3.5,
+        "stake": 200,
+        "sport": "basketball_nba",
+        "time": "2026-01-19T20:10:00Z"
     }
 ]
