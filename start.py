@@ -19,7 +19,30 @@ SPORTS_CONFIG = {
 API_KEYS = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 TELEGRAM_TOKEN = os.getenv("T_TOKEN")
 TELEGRAM_CHAT = os.getenv("T_CHAT")
-STAKE = 250
+HISTORY_FILE = "history.json"
+BASE_STAKE = 250
+
+def get_smart_stake(league_key):
+    """Oblicza stawkę na podstawie historycznych zysków w danej lidze."""
+    if not os.path.exists(HISTORY_FILE):
+        return BASE_STAKE
+    
+    try:
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            history = json.load(f)
+        
+        # Obliczamy zysk tylko dla tej konkretnej ligi
+        league_profit = sum(m['profit'] for m in history if m.get('sport') == league_key)
+        
+        # --- LOGIKA BEZPIECZNIKA ---
+        if league_profit <= -700:
+            return 125  # Tniemy o 50% (Sytuacja jak obecnie w EPL)
+        elif league_profit <= -300:
+            return 200  # Tniemy o 20%
+        
+        return BASE_STAKE
+    except:
+        return BASE_STAKE
 
 def send_telegram(message):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
@@ -29,14 +52,12 @@ def send_telegram(message):
     except: pass
 
 def load_existing_data():
-    """Zarządzanie pamięcią podręczną wysłanych kuponów."""
     if os.path.exists("coupons.json"):
         with open("coupons.json", "r", encoding="utf-8") as f:
             try:
                 data = json.load(f)
                 now = datetime.now(timezone.utc)
                 cutoff = now - timedelta(hours=48)
-                # Czyścimy tylko to, co już się odbyło
                 valid = [c for c in data if datetime.fromisoformat(c['time'].replace("Z", "+00:00")) > cutoff]
                 return valid
             except: return []
@@ -51,6 +72,9 @@ def main():
     max_future = now + timedelta(hours=48)
 
     for league, emoji in SPORTS_CONFIG.items():
+        # --- DYNAMICZNA STAWKA DLA LIGI ---
+        current_stake = get_smart_stake(league)
+        
         data = None
         while active_key_index < len(API_KEYS):
             if not API_KEYS[active_key_index]:
@@ -67,44 +91,32 @@ def main():
         if not data: continue
 
         for event in data:
-            if event['id'] in already_sent_ids:
-                continue
+            if event['id'] in already_sent_ids: continue
             
             try:
                 match_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
-                if match_time > max_future or match_time < now:
-                    continue 
+                if match_time > max_future or match_time < now: continue 
             except: continue
 
-            # --- INTELIGENTNY WYBÓR KURSU (VALUE HUNTING) ---
-            best_odds = 0
-            best_choice = None
-            
-            # 1. Agregujemy kursy od wszystkich bukmacherów dla tego meczu
             market_prices = {} 
-
             for bookie in event['bookmakers']:
                 for market in bookie['markets']:
                     if market['key'] == 'h2h':
                         for outcome in market['outcomes']:
                             name = outcome['name']
                             price = outcome['price']
-                            if name not in market_prices:
-                                market_prices[name] = []
+                            if name not in market_prices: market_prices[name] = []
                             market_prices[name].append(price)
 
-            # 2. Wybieramy najlepszą opcję na podstawie matematycznego odchylenia
+            best_odds = 0
+            best_choice = None
+            
             for name, prices in market_prices.items():
-                # Blokada remisów dla USA (NBA/NHL)
-                if league in ["icehockey_nhl", "basketball_nba"] and name.lower() == "draw":
-                    continue
+                if league in ["icehockey_nhl", "basketball_nba"] and name.lower() == "draw": continue
 
                 max_p = max(prices)
                 avg_p = sum(prices) / len(prices)
                 
-                # Warunki:
-                # - Kurs w Twoim przedziale 1.95 - 4.0
-                # - Kurs musi być o min. 3% wyższy od średniej rynkowej (Inteligentne Value)
                 if 1.95 <= max_p <= 4.0:
                     if max_p > (avg_p * 1.03): 
                         if max_p > best_odds:
@@ -114,6 +126,11 @@ def main():
             if best_choice:
                 date_str = match_time.strftime('%d.%m | %H:%M')
                 league_header = league.replace("soccer_", "").replace("_", " ").upper()
+                
+                # Dodajemy info o Smart Stake do wiadomości, jeśli stawka jest obniżona
+                stake_msg = f"<b>{current_stake} PLN</b>"
+                if current_stake < BASE_STAKE:
+                    stake_msg += " ⚠️ (Zredukowana - słaba forma ligi)"
 
                 msg = f"{emoji} {league_header}\n"
                 msg += f"━━━━━━━━━━━━━━━\n"
@@ -121,14 +138,14 @@ def main():
                 msg += f"⏰ Start: {date_str}\n\n"
                 msg += f"✅ Typ: <b>{best_choice}</b>\n"
                 msg += f"📈 Kurs: <b>{best_odds}</b>\n"
-                msg += f"💰 Stawka: <b>{STAKE} PLN</b>\n"
+                msg += f"💰 Stawka: {stake_msg}\n"
                 msg += f"━━━━━━━━━━━━━━━"
 
                 send_telegram(msg)
                 
                 all_coupons.append({
                     "id": event['id'], "home": event['home_team'], "away": event['away_team'],
-                    "outcome": best_choice, "odds": best_odds, "stake": STAKE, 
+                    "outcome": best_choice, "odds": best_odds, "stake": current_stake, # Zapisujemy inteligentną stawkę
                     "sport": league, "time": event['commence_time']
                 })
                 already_sent_ids.append(event['id'])
