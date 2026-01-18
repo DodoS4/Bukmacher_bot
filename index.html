@@ -3,53 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bot Inwestycyjny - Dashboard</title>
+    <title>Inwestycje Sportowe - Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #0f172a; color: white; font-family: sans-serif; }
-        .card { background-color: #1e293b; border-radius: 1rem; padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        body { background-color: #0b0f19; color: #e2e8f0; font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .progress-bg { background-color: #1e293b; border-radius: 999px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #3b82f6, #10b981); transition: width 1s ease-in-out; }
     </style>
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-6xl mx-auto">
-        <header class="mb-8 flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-blue-400">📈 BOT DASHBOARD</h1>
-            <div id="last-update" class="text-slate-400 text-sm"></div>
+        <header class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-4xl font-black tracking-tight text-white">PROJEKT <span class="text-blue-500">5000</span></h1>
+                <p id="last-update" class="text-slate-500 text-sm mt-1 uppercase tracking-widest"></p>
+            </div>
+            <div class="glass px-6 py-3 rounded-2xl flex items-center gap-4">
+                <span class="text-slate-400">STATUS:</span>
+                <span class="flex items-center gap-2 text-green-400 font-bold">
+                    <span class="relative flex h-3 w-3"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span></span>
+                    AKTYWNY
+                </span>
+            </div>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="card border-l-4 border-green-500">
-                <p class="text-slate-400 text-sm">ZYSK CAŁKOWITY</p>
-                <h2 id="total-profit" class="text-4xl font-bold text-green-400">Ładowanie...</h2>
+        <div class="glass p-6 rounded-3xl mb-8">
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <p class="text-slate-400 text-sm uppercase font-bold">Postęp do celu</p>
+                    <h2 id="total-profit-title" class="text-3xl font-bold text-white">0.00 PLN</h2>
+                </div>
+                <div class="text-right">
+                    <p id="progress-percent" class="text-2xl font-black text-blue-500">0%</p>
+                </div>
             </div>
-            <div class="card border-l-4 border-blue-500">
-                <p class="text-slate-400 text-sm">SKUTECZNOŚĆ</p>
-                <h2 id="win-rate" class="text-4xl font-bold text-blue-400">--%</h2>
-            </div>
-            <div class="card border-l-4 border-purple-500">
-                <p class="text-slate-400 text-sm">BANKROLL</p>
-                <h2 id="bankroll" class="text-4xl font-bold text-purple-400">-- PLN</h2>
+            <div class="progress-bg h-4 w-full">
+                <div id="progress-bar" class="progress-fill h-full w-0"></div>
             </div>
         </div>
 
-        <div class="card mb-8">
-            <h3 class="text-xl font-bold mb-4">Krzywa wzrostu kapitału</h3>
-            <canvas id="profitChart" height="100"></canvas>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+            <div class="glass p-6 rounded-3xl lg:col-span-1">
+                <h3 class="text-lg font-bold mb-6 flex items-center gap-2">🏆 PODZIAŁ DYSCYPLIN</h3>
+                <canvas id="leagueChart"></canvas>
+                <div id="league-list" class="mt-6 space-y-3 text-sm"></div>
+            </div>
+
+            <div class="glass p-6 rounded-3xl lg:col-span-2">
+                <h3 class="text-lg font-bold mb-6">📈 HISTORIA KAPITAŁU</h3>
+                <canvas id="profitChart" height="150"></canvas>
+            </div>
         </div>
 
-        <div class="card">
-            <h3 class="text-xl font-bold mb-4">Ostatnie operacje</h3>
+        <div class="glass p-6 rounded-3xl">
+            <h3 class="text-lg font-bold mb-6">📋 OSTATNIE ROZLICZENIA</h3>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="text-slate-400 border-b border-slate-700">
+                    <thead class="text-slate-500 border-b border-slate-800 text-xs uppercase tracking-tighter">
                         <tr>
-                            <th class="py-2">Mecz</th>
-                            <th class="py-2 text-center">Wynik</th>
-                            <th class="py-2 text-right">Profit</th>
+                            <th class="pb-4">Mecz / Dyscyplina</th>
+                            <th class="pb-4 text-center">Wynik</th>
+                            <th class="pb-4 text-right">Profit</th>
                         </tr>
                     </thead>
-                    <tbody id="history-table"></tbody>
+                    <tbody id="history-table" class="divide-y divide-slate-800"></tbody>
                 </table>
             </div>
         </div>
@@ -58,66 +77,104 @@
     <script>
         async function loadData() {
             try {
-                // Pobieranie danych (używamy cache-busting, żeby dane były świeże)
-                const histRes = await fetch('history.json?v=' + Date.now());
+                const [histRes, brRes] = await Promise.all([
+                    fetch('history.json?v=' + Date.now()),
+                    fetch('bankroll.json?v=' + Date.now())
+                ]);
                 const history = await histRes.json();
-                
-                const brRes = await fetch('bankroll.json?v=' + Date.now());
                 const brData = await brRes.json();
 
-                // Obliczenia
-                let cumulativeProfit = 0;
+                let totalProfit = 0;
+                let winCount = 0;
+                const leagues = {};
                 const chartLabels = [];
                 const chartData = [];
-                let winCount = 0;
 
-                const tableBody = document.getElementById('history-table');
-                
-                history.forEach((m, index) => {
-                    cumulativeProfit += m.profit;
-                    chartLabels.push(index + 1);
-                    chartData.push(cumulativeProfit.toFixed(2));
+                history.forEach((m, i) => {
+                    totalProfit += m.profit;
                     if(m.profit > 0) winCount++;
+                    
+                    // Statystyki ligowe
+                    const sportName = m.sport.replace("icehockey_nhl", "NHL").replace("basketball_nba", "NBA").split('_').pop().toUpperCase();
+                    leagues[sportName] = (leagues[sportName] || 0) + m.profit;
 
-                    // Dodawanie do tabeli (ostatnie 5)
-                    if (index >= history.length - 10) {
-                        const row = `
-                            <tr class="border-b border-slate-800">
-                                <td class="py-3 text-sm">${m.home} vs ${m.away}</td>
-                                <td class="py-3 text-center text-xs font-mono">${m.score || '-:-'}</td>
-                                <td class="py-3 text-right ${m.profit >= 0 ? 'text-green-400' : 'text-red-400'} font-bold">
-                                    ${m.profit >= 0 ? '+' : ''}${m.profit.toFixed(2)}
-                                </td>
-                            </tr>
-                        `;
-                        tableBody.insertAdjacentHTML('afterbegin', row);
-                    }
+                    chartLabels.push(i + 1);
+                    chartData.push(totalProfit.toFixed(2));
                 });
 
-                // Aktualizacja UI
-                document.getElementById('total-profit').innerText = cumulativeProfit.toFixed(2) + ' PLN';
-                document.getElementById('win-rate').innerText = ((winCount / history.length) * 100).toFixed(1) + '%';
-                document.getElementById('bankroll').innerText = brData.bankroll.toFixed(2) + ' PLN';
-                document.getElementById('last-update').innerText = 'Ostatnia analiza: ' + new Date().toLocaleString();
+                // UI - Teksty i Pasek
+                document.getElementById('total-profit-title').innerText = totalProfit.toFixed(2) + ' PLN';
+                const progress = Math.min((totalProfit / 5000) * 100, 100);
+                document.getElementById('progress-percent').innerText = progress.toFixed(1) + '%';
+                document.getElementById('progress-bar').style.width = progress + '%';
+                document.getElementById('last-update').innerText = 'Ostatnia synchronizacja: ' + new Date().toLocaleString();
 
-                // Wykres
+                // Wykres Kołowy
+                const leagueNames = Object.keys(leagues);
+                const leagueValues = Object.values(leagues);
+                new Chart(document.getElementById('leagueChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: leagueNames,
+                        datasets: [{
+                            data: leagueValues,
+                            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: { plugins: { legend: { display: false } }, cutout: '70%' }
+                });
+
+                // Lista lig pod wykresem
+                const leagueList = document.getElementById('league-list');
+                leagueNames.forEach((name, i) => {
+                    const val = leagues[name];
+                    leagueList.innerHTML += `
+                        <div class="flex justify-between items-center">
+                            <span class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full" style="background:${['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'][i]}"></span>
+                                ${name}
+                            </span>
+                            <span class="font-bold ${val >= 0 ? 'text-green-400' : 'text-red-400'}">${val > 0 ? '+' : ''}${val.toFixed(2)}</span>
+                        </div>`;
+                });
+
+                // Wykres Liniowy
                 new Chart(document.getElementById('profitChart'), {
                     type: 'line',
                     data: {
                         labels: chartLabels,
                         datasets: [{
-                            label: 'Zysk skumulowany',
+                            label: 'Zysk (PLN)',
                             data: chartData,
-                            borderColor: '#60a5fa',
-                            backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 3,
+                            pointRadius: 0,
                             fill: true,
-                            tension: 0.3
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            tension: 0.4
                         }]
                     },
-                    options: { responsive: true, scales: { y: { grid: { color: '#334155' } }, x: { display: false } } }
+                    options: { scales: { y: { grid: { color: '#1e293b' } }, x: { display: false } } }
                 });
 
-            } catch (e) { console.error("Błąd ładowania danych:", e); }
+                // Tabela
+                const tableBody = document.getElementById('history-table');
+                history.slice(-10).reverse().forEach(m => {
+                    tableBody.innerHTML += `
+                        <tr class="hover:bg-slate-800/50 transition-colors">
+                            <td class="py-4">
+                                <p class="text-white font-medium">${m.home} - ${m.away}</p>
+                                <p class="text-xs text-slate-500 uppercase">${m.sport.split('_').pop()}</p>
+                            </td>
+                            <td class="py-4 text-center font-mono font-bold">${m.score || '-:-'}</td>
+                            <td class="py-4 text-right ${m.profit >= 0 ? 'text-green-400' : 'text-red-400'} font-bold">
+                                ${m.profit >= 0 ? '+' : ''}${m.profit.toFixed(2)}
+                            </td>
+                        </tr>`;
+                });
+
+            } catch (e) { console.log(e); }
         }
         loadData();
     </script>
