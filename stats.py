@@ -1,6 +1,7 @@
 import json
 import os
 import requests
+from datetime import datetime
 
 # ================= KONFIGURACJA =================
 HISTORY_FILE = "history.json"
@@ -17,64 +18,75 @@ def send_telegram(message):
     except: pass
 
 def analyze_stats():
-    if not os.path.exists(HISTORY_FILE): return
+    if not os.path.exists(HISTORY_FILE): 
+        print("Brak historii.")
+        return
     
     with open(HISTORY_FILE, "r", encoding="utf-8") as f:
         history = json.load(f)
     
-    if not os.path.exists(BANKROLL_FILE):
-        br_data = {"bankroll": 0.0}
-    else:
+    br_data = {"bankroll": 0.0}
+    if os.path.exists(BANKROLL_FILE):
         with open(BANKROLL_FILE, "r", encoding="utf-8") as f:
             br_data = json.load(f)
     
     if not history: return
 
-    # --- 1. LOGIKA GORĄCEJ SERII ---
-    streak = 0
-    for bet in reversed(history):
-        if bet.get('profit', 0) > 0:
-            streak += 1
-        else:
-            break
-    
-    if streak >= 3:
-        streak_msg = f"🔥 <b>GORĄCA SERIA: {streak} WYGRANE!</b> 🔥\n"
-        streak_msg += f"━━━━━━━━━━━━━━━━━━\n"
-        streak_msg += f"System właśnie rozbił bank! 🚀"
-        send_telegram(streak_msg)
-
-    # --- 2. RANKING LIG (NOWOŚĆ) ---
-    league_map = {}
+    # --- 1. RANKING LIG (ROZSZERZONY) ---
+    league_stats = {}
     for bet in history:
         l_name = bet.get('sport', 'Inne').replace('soccer_', '').replace('icehockey_', '').upper()
-        league_map[l_name] = league_map.get(l_name, 0) + bet.get('profit', 0)
+        if l_name not in league_stats:
+            league_stats[l_name] = {'profit': 0.0, 'bets': 0}
+        league_stats[l_name]['profit'] += bet.get('profit', 0)
+        league_stats[l_name]['bets'] += 1
     
     # Sortowanie lig od najlepszej
-    sorted_leagues = sorted(league_map.items(), key=lambda x: x[1], reverse=True)
-    ranking_str = ""
-    for i, (name, prof) in enumerate(sorted_leagues[:3]): # Top 3 ligi
-        emoji = "🥇" if i == 0 else "🥈" if i == 1 else "🥉"
-        ranking_str += f"{emoji} {name}: <b>{prof:+.2f}</b>\n"
-
-    # --- 3. RAPORT OGÓLNY ---
-    total_profit = sum([b['profit'] for b in history])
-    total_turnover = sum([b.get('stake', 250) for b in history])
-    yield_val = (total_profit / total_turnover) * 100 if total_turnover > 0 else 0
+    sorted_leagues = sorted(league_stats.items(), key=lambda x: x[1]['profit'], reverse=True)
     
-    progress_pct = (total_profit / MONTHLY_TARGET) * 100
-    progress_bar = "▓" * int(min(max(progress_pct, 0), 100) / 10) + "░" * (10 - int(min(max(progress_pct, 0), 100) / 10))
+    ranking_str = ""
+    for i, (name, data) in enumerate(sorted_leagues[:5]): # Top 5 lig
+        emoji = "🥇" if i == 0 else "🥈" if i == 1 else "🥉" if i == 2 else "🔹"
+        ranking_str += f"{emoji} {name}: <b>{data['profit']:+.2f}</b> ({data['bets']})\n"
 
-    msg = f"📈 <b>RAPORT ZYSKÓW</b>\n"
+    # --- 2. ANALIZA PODATKU I BRUTTO ---
+    total_net_profit = sum([b['profit'] for b in history])
+    total_turnover = sum([b.get('stake', 250) for b in history])
+    
+    # Wyliczamy ile zjadł podatek (12% od każdej stawki)
+    total_tax_paid = total_turnover * 0.12
+    # Zysk brutto (gdyby nie było podatku)
+    total_gross_profit = total_net_profit + total_tax_paid
+    
+    yield_val = (total_net_profit / total_turnover) * 100 if total_turnover > 0 else 0
+    gross_yield = (total_gross_profit / total_turnover) * 100 if total_turnover > 0 else 0
+    
+    # --- 3. PROGRES I RAPORT ---
+    progress_pct = (total_net_profit / MONTHLY_TARGET) * 100
+    progress_bar_count = int(min(max(progress_pct, 0), 100) / 10)
+    progress_bar = "▓" * progress_bar_count + "░" * (10 - progress_bar_count)
+
+    msg = f"📊 <b>RAPORT ZYSKÓW (PODATEK 12%)</b>\n"
     msg += f"━━━━━━━━━━━━━━━━━━\n"
-    msg += f"💰 Zysk netto: <b>{total_profit:+.2f} PLN</b>\n"
-    msg += f"📊 Yield: <b>{yield_val:.2f}%</b>\n"
-    msg += f"🏦 Bankroll: <b>{br_data['bankroll']:.2f} PLN</b>\n\n"
-    msg += f"🏆 <b>TOP LIGI:</b>\n{ranking_str}\n"
+    msg += f"💰 Zysk NETTO: <b>{total_net_profit:+.2f} PLN</b>\n"
+    msg += f"💸 Zysk BRUTTO: {total_gross_profit:+.2f} PLN\n"
+    msg += f"🏦 Bankroll: <b>{br_data['bankroll']:.2f} PLN</b>\n"
+    msg += f"📉 Zapłacony podatek: {total_tax_paid:.2f} PLN\n"
+    msg += f"━━━━━━━━━━━━━━━━━━\n"
+    msg += f"📈 Yield NETTO: <b>{yield_val:.2f}%</b>\n"
+    msg += f"📈 Yield BRUTTO: {gross_yield:.2f}%\n"
+    msg += f"━━━━━━━━━━━━━━━━━━\n"
+    msg += f"🏆 <b>NAJLEPSZE LIGI:</b>\n{ranking_str}\n"
     msg += f"🎯 Cel {MONTHLY_TARGET} PLN:\n"
     msg += f"<code>[{progress_bar}] {progress_pct:.1f}%</code>"
     
     send_telegram(msg)
+
+    # --- 4. POWIADOMIENIE O SŁABYCH LIGACH (ALERCIK) ---
+    worst_leagues = [name for name, data in sorted_leagues if data['profit'] < -500]
+    if worst_leagues:
+        warn_msg = f"⚠️ <b>ALERM: SŁABE WYNIKI</b>\nLigi do obserwacji: {', '.join(worst_leagues)}"
+        send_telegram(warn_msg)
 
 if __name__ == "__main__":
     analyze_stats()
