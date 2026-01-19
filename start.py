@@ -140,7 +140,7 @@ def main():
 
                 current_value = max_p / avg_p
 
-                if 1.95 <= max_p <= 4.5 and current_value > req_val:
+                if 1.95 <= max_p <= 4.0 and current_value > req_val:
                     if current_value > max_value_found:
                         max_value_found = current_value
                         best_odds = max_p
