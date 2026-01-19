@@ -1,25 +1,5 @@
 [
     {
-        "id": "df8bab02a6507bf6c5dfe9700b110ced",
-        "home": "Detroit Red Wings",
-        "away": "Ottawa Senators",
-        "outcome": "Ottawa Senators",
-        "odds": 3.05,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-18T22:00:00Z"
-    },
-    {
-        "id": "0a878dd0611cb8ab2eafb9a708b10a81",
-        "home": "Edmonton Oilers",
-        "away": "St Louis Blues",
-        "outcome": "St Louis Blues",
-        "odds": 3.75,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-19T01:00:00Z"
-    },
-    {
         "id": "fb8869e33f590378c2782c8908d89ac4",
         "home": "Cremonese",
         "away": "Hellas Verona",
@@ -58,46 +38,6 @@
         "stake": 250,
         "sport": "soccer_italy_serie_a",
         "time": "2026-01-19T19:45:00Z"
-    },
-    {
-        "id": "aaf6ee6cd6b915e0e0adac8f761f6ffc",
-        "home": "Chicago Bulls",
-        "away": "Brooklyn Nets",
-        "outcome": "Brooklyn Nets",
-        "odds": 3.2,
-        "stake": 250,
-        "sport": "basketball_nba",
-        "time": "2026-01-19T00:10:00Z"
-    },
-    {
-        "id": "ce1d230f9bfe9f2902f1f7c58ab1baf8",
-        "home": "Denver Nuggets",
-        "away": "Charlotte Hornets",
-        "outcome": "Charlotte Hornets",
-        "odds": 2.25,
-        "stake": 250,
-        "sport": "basketball_nba",
-        "time": "2026-01-19T01:10:00Z"
-    },
-    {
-        "id": "e6912002f8fd69349b2425510251c7ad",
-        "home": "Sacramento Kings",
-        "away": "Portland Trail Blazers",
-        "outcome": "Portland Trail Blazers",
-        "odds": 2.22,
-        "stake": 250,
-        "sport": "basketball_nba",
-        "time": "2026-01-19T02:10:00Z"
-    },
-    {
-        "id": "58a64738a04be2c7c6d1be7d69051e09",
-        "home": "Los Angeles Lakers",
-        "away": "Toronto Raptors",
-        "outcome": "Toronto Raptors",
-        "odds": 2.15,
-        "stake": 250,
-        "sport": "basketball_nba",
-        "time": "2026-01-19T02:40:00Z"
     },
     {
         "id": "5dda9709fbd9470ba1551dc88ce8923d",
