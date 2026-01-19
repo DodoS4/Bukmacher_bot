@@ -8,64 +8,61 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        body { transition: background-color 0.3s, color 0.3s; }
+        body { background-color: #f9fafb; color: #111827; }
         .stat-card { transition: transform 0.2s; }
         .stat-card:hover { transform: translateY(-2px); }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-gray-100 p-4 md:p-8">
+<body class="bg-gray-50 text-gray-900 p-4 md:p-8">
 
     <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-8 border-b dark:border-slate-700 pb-4">
+        <div class="flex justify-between items-center mb-8 border-b pb-4">
             <div>
                 <h1 class="text-2xl font-bold">AI Betting Engine</h1>
-                <p id="last-update" class="text-xs text-gray-500 dark:text-gray-400 italic mt-1">Ładowanie...</p>
+                <p id="last-update" class="text-xs text-gray-500 italic mt-1">Ładowanie...</p>
             </div>
             <div class="flex items-center gap-3">
-                <span id="refresh-timer" class="text-[10px] bg-blue-100 dark:bg-blue-900/30 text-blue-600 px-2 py-1 rounded">Auto-ref: 300s</span>
-                <button id="theme-toggle" class="p-2 w-10 h-10 rounded-lg bg-gray-200 dark:bg-slate-800 hover:ring-2 ring-blue-500 transition-all">
-                    <i id="theme-icon" class="fas fa-moon text-blue-600 dark:text-yellow-400"></i>
-                </button>
+                <span id="refresh-timer" class="text-[10px] bg-blue-100 text-blue-600 px-2 py-1 rounded">Auto-ref: 300s</span>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="stat-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
-                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Zysk Netto</p>
-                <p id="total-profit" class="text-2xl font-black text-blue-600 dark:text-blue-400">0.00 PLN</p>
+            <div class="stat-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Zysk Netto</p>
+                <p id="total-profit" class="text-2xl font-black text-blue-600">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
-                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Obrót</p>
+            <div class="stat-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Obrót</p>
                 <p id="total-staked" class="text-2xl font-black">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
-                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Yield %</p>
+            <div class="stat-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Yield %</p>
                 <p id="yield-val" class="text-2xl font-black text-orange-500">0%</p>
             </div>
-            <div class="stat-card bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
-                <p class="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Kupony</p>
+            <div class="stat-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Kupony</p>
                 <p id="total-bets" class="text-2xl font-black">0</p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
-                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm"><i class="fas fa-chart-line text-blue-500"></i> PROGRESJA</h3>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-chart-line text-blue-500"></i> PROGRESJA</h3>
                 <canvas id="profitChart" height="200"></canvas>
             </div>
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-sm border dark:border-slate-700">
-                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm"><i class="fas fa-list-ol text-yellow-500"></i> RANKING LIG</h3>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-list-ol text-yellow-500"></i> RANKING LIG</h3>
                 <div id="league-ranking" class="space-y-3"></div>
             </div>
         </div>
 
-        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden border dark:border-slate-700">
-            <div class="p-4 bg-gray-50 dark:bg-slate-700/30 border-b dark:border-slate-700">
-                <h3 class="font-bold text-xs uppercase tracking-widest">Historia Operacji</h3>
+        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+            <div class="p-4 bg-gray-50 border-b">
+                <h3 class="font-bold text-xs uppercase tracking-widest text-gray-500">Historia Operacji</h3>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="text-[10px] text-gray-400 uppercase border-b dark:border-slate-700">
+                    <thead class="text-[10px] text-gray-400 uppercase border-b">
                         <tr>
                             <th class="px-6 py-4">Data</th>
                             <th class="px-6 py-4">Mecz / Liga</th>
@@ -74,28 +71,13 @@
                             <th class="px-6 py-4 text-right">Profit</th>
                         </tr>
                     </thead>
-                    <tbody id="history-table" class="divide-y dark:divide-slate-700"></tbody>
+                    <tbody id="history-table" class="divide-y divide-gray-100"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
     <script>
-        // TRYB DARK
-        const themeToggle = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            themeIcon.className = 'fas fa-sun text-yellow-400';
-        }
-
-        themeToggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            const isDark = document.documentElement.classList.contains('dark');
-            localStorage.theme = isDark ? 'dark' : 'light';
-            themeIcon.className = isDark ? 'fas fa-sun text-yellow-400' : 'fas fa-moon text-blue-600';
-        });
-
         let profitChart = null;
         let countdown = 300;
 
@@ -128,8 +110,8 @@
                 // Ranking
                 Object.entries(leagues).sort((a,b) => b[1] - a[1]).forEach(([name, val]) => {
                     document.getElementById('league-ranking').innerHTML += `
-                        <div class="flex justify-between items-center p-2 rounded bg-gray-50 dark:bg-slate-800/50 border-l-4 ${val >= 0 ? 'border-green-500' : 'border-red-500'}">
-                            <span class="text-[10px] font-bold uppercase">${name}</span>
+                        <div class="flex justify-between items-center p-2 rounded bg-gray-50 border-l-4 ${val >= 0 ? 'border-green-500' : 'border-red-500'}">
+                            <span class="text-[10px] font-bold uppercase text-gray-600">${name}</span>
                             <span class="text-xs font-black ${val >= 0 ? 'text-green-500' : 'text-red-500'}">${val > 0 ? '+' : ''}${val.toFixed(2)}</span>
                         </div>`;
                 });
@@ -138,14 +120,14 @@
                 history.slice().reverse().forEach(m => {
                     const isWin = m.profit > 0;
                     document.getElementById('history-table').innerHTML += `
-                        <tr class="hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors">
+                        <tr class="hover:bg-gray-50 transition-colors">
                             <td class="px-6 py-4 text-[10px] text-gray-400">${m.time ? m.time.split('T')[0] : '--'}</td>
                             <td class="px-6 py-4">
-                                <div class="text-xs font-bold">${m.home} - ${m.away}</div>
+                                <div class="text-xs font-bold text-gray-800">${m.home} - ${m.away}</div>
                                 <div class="text-[9px] text-gray-400 uppercase">${m.sport.split('_').pop()}</div>
                             </td>
-                            <td class="px-6 py-4 text-xs italic">${m.outcome} <span class="text-blue-500 font-bold">@${m.odds}</span></td>
-                            <td class="px-6 py-4 text-xs font-mono">${m.score || '-- : --'}</td>
+                            <td class="px-6 py-4 text-xs italic text-gray-600">${m.outcome} <span class="text-blue-500 font-bold">@${m.odds}</span></td>
+                            <td class="px-6 py-4 text-xs font-mono text-gray-600">${m.score || '-- : --'}</td>
                             <td class="px-6 py-4 text-right font-black ${isWin ? 'text-green-500' : 'text-red-500'}">${isWin ? '+' : ''}${m.profit.toFixed(2)}</td>
                         </tr>`;
                 });
@@ -159,20 +141,25 @@
                         datasets: [{
                             data: chartData,
                             borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.05)',
                             fill: true,
                             tension: 0.4,
                             pointRadius: 1
                         }]
                     },
-                    options: { plugins: { legend: { display: false } }, scales: { x: { display: false } } }
+                    options: { 
+                        plugins: { legend: { display: false } }, 
+                        scales: { 
+                            x: { display: false },
+                            y: { ticks: { color: '#94a3b8' }, grid: { color: '#f1f5f9' } }
+                        } 
+                    }
                 });
                 
                 countdown = 300;
             } catch (e) { console.error(e); }
         }
 
-        // Timer odświeżania
         setInterval(() => {
             countdown--;
             document.getElementById('refresh-timer').innerText = `Auto-ref: ${countdown}s`;
