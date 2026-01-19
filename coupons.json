@@ -338,5 +338,45 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-20T19:45:00Z"
+    },
+    {
+        "id": "1f3739162c542981a8abfd7bfa983aab",
+        "home": "Dallas Stars",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 3.75,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-21T00:30:00Z"
+    },
+    {
+        "id": "672b90b10dfa05178ecfd57c95ad5d58",
+        "home": "IF Troja-Ljungby",
+        "away": "Almtuna IS",
+        "outcome": "Almtuna IS",
+        "odds": 3.1,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-21T18:00:00Z"
+    },
+    {
+        "id": "c8f6d3c8579c27f32e33032a224c39d6",
+        "home": "BIK Karlskoga",
+        "away": "IF Bj\u00f6rkl\u00f6ven",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.6,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-21T18:00:00Z"
+    },
+    {
+        "id": "feed17688255818459798513dc008ebf",
+        "home": "\u00d6stersunds IK",
+        "away": "Modo Hockey",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 3.75,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-21T18:00:00Z"
     }
 ]
