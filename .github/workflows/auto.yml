@@ -2,10 +2,10 @@ name: Betting Bot Professional - 5 Keys Mode
 
 on:
   schedule:
-    # SKANOWANIE: Co godzinę (o pełnej), od 07:00 do 22:00 czasu PL (06:00-21:00 UTC)
-    - cron: '0 6-21 * * *'
-    # ROZLICZENIE I STATYSTYKI: Raz dziennie o 22:30 czasu PL (21:30 UTC)
-    - cron: '30 21 * * *'
+    # SKANOWANIE: 4 razy dziennie (08:00, 12:00, 16:00, 20:00 czasu PL)
+    - cron: '0 7,11,15,19 * * *'
+    # ROZLICZENIE I STATYSTYKI: Rano (06:30 UTC = 07:30 PL) oraz Wieczorem (21:30 UTC = 22:30 PL)
+    - cron: '30 6,21 * * *'
   workflow_dispatch: 
 
 concurrency:
@@ -34,7 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # KROK 1: SKANOWANIE (Działa co godzinę w oknie czasowym)
+      # KROK 1: SKANOWANIE
       - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -46,9 +46,10 @@ jobs:
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
         run: python start.py
 
-      # KROK 2: ROZLICZANIE I STATYSTYKI (Tylko wieczorem lub ręcznie)
+      # KROK 2: ROZLICZANIE I STATYSTYKI (Teraz dwa razy dziennie)
       - name: Run Settler and Stats
-        if: github.event.schedule == '30 21 * * *' || github.event_name == 'workflow_dispatch'
+        # Warunek: uruchom jeśli to zaplanowany czas statystyk (rano/wieczór) LUB uruchomienie ręczne
+        if: github.event.schedule == '30 6 * * *' || github.event.schedule == '30 21 * * *' || github.event_name == 'workflow_dispatch'
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
@@ -64,14 +65,10 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Dodajemy pliki baz danych
           git add *.json
           
           if ! git diff --cached --quiet; then
-            # Najpierw tworzymy commit lokalnie (rozwiązuje błąd 128)
             git commit -m "Bot Auto-Update: Data Sync [skip ci]"
-            
-            # Pobieramy ewentualne zmiany i wypychamy nasze
             git pull --rebase origin main
             git push origin main
           else
