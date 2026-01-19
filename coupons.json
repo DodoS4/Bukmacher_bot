@@ -268,5 +268,15 @@
         "stake": 200,
         "sport": "basketball_nba",
         "time": "2026-01-20T03:10:00Z"
+    },
+    {
+        "id": "df230babfc6ef1362f740fbb16136e77",
+        "home": "Detroit Pistons",
+        "away": "Boston Celtics",
+        "outcome": "Boston Celtics",
+        "odds": 2.38,
+        "stake": 200,
+        "sport": "basketball_nba",
+        "time": "2026-01-20T01:10:00Z"
     }
 ]
