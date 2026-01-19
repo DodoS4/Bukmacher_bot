@@ -378,5 +378,15 @@
         "stake": 250,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-01-21T18:00:00Z"
+    },
+    {
+        "id": "66c756700e6753aaaf3b86c53723857c",
+        "home": "Virtus Segafredo Bologna",
+        "away": "Fenerbahce SK",
+        "outcome": "Virtus Segafredo Bologna",
+        "odds": 2.55,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-21T19:30:00Z"
     }
 ]
