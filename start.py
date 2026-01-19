@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA =================
 SPORTS_CONFIG = {
+    # Twoje dotychczasowe ligi
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_allsvenskan": "🇸🇪",
     "icehockey_finland_liiga": "🇫🇮",
@@ -17,7 +18,15 @@ SPORTS_CONFIG = {
     "soccer_france_ligue_one": "🇫🇷",
     "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
     "soccer_portugal_primeira_liga": "🇵🇹",
-    "basketball_nba": "🏀"
+    "basketball_nba": "🏀",
+    # NOWE DODANE LIGI (7)
+    "soccer_netherlands_erevidisie": "🇳🇱",
+    "soccer_belgium_first_division_a": "🇧🇪",
+    "soccer_turkey_super_lig": "🇹🇷",
+    "soccer_germany_bundesliga_2": "🇩🇪",
+    "soccer_italy_serie_b": "🇮🇹",
+    "soccer_france_ligue_two": "🇫🇷",
+    "basketball_euroleague": "🇪🇺"
 }
 
 KEYS_RAW = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
@@ -114,7 +123,6 @@ def main():
             best_odds = 0
             max_value_found = 0
 
-            # ANALIZA VALUE DLA KAŻDEJ OPCJI (1, X, 2)
             for name, prices in market_prices.items():
                 if ("icehockey" in league or "basketball" in league) and name.lower() == "draw":
                     continue
@@ -122,18 +130,17 @@ def main():
                 max_p = max(prices)
                 avg_p = sum(prices) / len(prices)
                 
-                # SKALOWANIE PROGU (Klucz do wyższego yieldu)
+                # Skalowanie progu dla lepszego yieldu
                 if max_p < 2.2:
-                    req_val = base_threshold        # np. 1.03
+                    req_val = base_threshold
                 elif max_p < 3.2:
-                    req_val = base_threshold + 0.03 # np. 1.06
+                    req_val = base_threshold + 0.03
                 else:
-                    req_val = base_threshold + 0.07 # np. 1.10 (10% dla wysokich kursów)
+                    req_val = base_threshold + 0.07
 
                 current_value = max_p / avg_p
 
                 if 1.95 <= max_p <= 4.5 and current_value > req_val:
-                    # Wybieramy opcję, która ma największą przewagę nad średnią
                     if current_value > max_value_found:
                         max_value_found = current_value
                         best_odds = max_p
