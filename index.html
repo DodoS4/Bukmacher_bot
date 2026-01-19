@@ -18,57 +18,62 @@
     <div class="max-w-6xl mx-auto">
         <div class="flex justify-between items-center mb-8 border-b pb-4">
             <div>
-                <h1 class="text-2xl font-bold">AI Betting Engine</h1>
-                <p id="last-update" class="text-xs text-gray-500 italic mt-1">Ładowanie...</p>
+                <h1 class="text-2xl font-bold italic tracking-tight text-slate-800">AI BETTING <span class="text-blue-600">PRO</span></h1>
+                <p id="last-update" class="text-xs text-gray-400 italic mt-1">Ładowanie danych...</p>
             </div>
             <div class="flex items-center gap-3">
-                <span id="refresh-timer" class="text-[10px] bg-blue-100 text-blue-600 px-2 py-1 rounded">Auto-ref: 300s</span>
+                <span id="refresh-timer" class="text-[10px] font-medium bg-blue-50 text-blue-500 border border-blue-100 px-3 py-1 rounded-full uppercase">Auto-ref: 300s</span>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <div class="stat-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Zysk Netto</p>
-                <p id="total-profit" class="text-2xl font-black text-blue-600">0.00 PLN</p>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+            <div class="stat-card bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Zysk Dzisiaj</p>
+                <p id="today-profit" class="text-xl font-black text-gray-800">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Obrót</p>
-                <p id="total-staked" class="text-2xl font-black">0.00 PLN</p>
+            <div class="stat-card bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Zysk Całkowity</p>
+                <p id="total-profit" class="text-xl font-black text-blue-600">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Yield %</p>
-                <p id="yield-val" class="text-2xl font-black text-orange-500">0%</p>
+            <div class="stat-card bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Obrót (Stawki)</p>
+                <p id="total-staked" class="text-xl font-black text-gray-800">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <p class="text-xs text-gray-400 uppercase font-bold tracking-wider mb-1">Kupony</p>
-                <p id="total-bets" class="text-2xl font-black">0</p>
+            <div class="stat-card bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Yield %</p>
+                <p id="yield-val" class="text-xl font-black text-orange-500">0%</p>
+            </div>
+            <div class="stat-card bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">Liczba Typów</p>
+                <p id="total-bets" class="text-xl font-black text-gray-800">0</p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-chart-line text-blue-500"></i> PROGRESJA</h3>
+                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm text-gray-500 uppercase tracking-widest"><i class="fas fa-chart-line text-blue-500"></i> Progresja Zysku</h3>
                 <canvas id="profitChart" height="200"></canvas>
             </div>
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-list-ol text-yellow-500"></i> RANKING LIG</h3>
+                <h3 class="font-bold mb-6 flex items-center gap-2 text-sm text-gray-500 uppercase tracking-widest"><i class="fas fa-trophy text-yellow-500"></i> Wydajność Lig</h3>
                 <div id="league-ranking" class="space-y-3"></div>
             </div>
         </div>
 
         <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-            <div class="p-4 bg-gray-50 border-b">
-                <h3 class="font-bold text-xs uppercase tracking-widest text-gray-500">Historia Operacji</h3>
+            <div class="p-4 bg-gray-50 border-b flex justify-between items-center">
+                <h3 class="font-bold text-xs uppercase tracking-widest text-gray-400">Ostatnie Rozliczenia</h3>
+                <span class="text-[10px] text-gray-400">Ostatnie 50 operacji</span>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="text-[10px] text-gray-400 uppercase border-b">
+                    <thead class="text-[10px] text-gray-400 uppercase border-b bg-gray-50/50">
                         <tr>
                             <th class="px-6 py-4">Data</th>
                             <th class="px-6 py-4">Mecz / Liga</th>
                             <th class="px-6 py-4">Typ / Kurs</th>
                             <th class="px-6 py-4">Wynik</th>
-                            <th class="px-6 py-4 text-right">Profit</th>
+                            <th class="px-6 py-4 text-right">Zysk/Strata</th>
                         </tr>
                     </thead>
                     <tbody id="history-table" class="divide-y divide-gray-100"></tbody>
@@ -86,8 +91,9 @@
                 const res = await fetch('history.json?v=' + Date.now());
                 const history = await res.json();
                 
-                let totalProfit = 0, totalStaked = 0;
+                let totalProfit = 0, totalStaked = 0, todayProfit = 0;
                 const leagues = {}, chartLabels = [], chartData = [];
+                const now = new Date();
                 
                 document.getElementById('history-table').innerHTML = '';
                 document.getElementById('league-ranking').innerHTML = '';
@@ -95,69 +101,91 @@
                 history.forEach((m, idx) => {
                     totalProfit += m.profit;
                     totalStaked += (m.stake || 250);
+                    
+                    // Obliczanie zysku z dzisiaj (ostatnie 24h)
+                    const matchDate = new Date(m.time);
+                    if ((now - matchDate) < (24 * 60 * 60 * 1000)) {
+                        todayProfit += m.profit;
+                    }
+
                     let sport = m.sport.replace('soccer_', '').replace('icehockey_', '').replace(/_/g, ' ').toUpperCase();
                     leagues[sport] = (leagues[sport] || 0) + m.profit;
+                    
                     chartLabels.push(idx + 1);
                     chartData.push(totalProfit.toFixed(2));
                 });
 
+                // Aktualizacja liczników
                 document.getElementById('total-profit').innerText = totalProfit.toFixed(2) + ' PLN';
+                document.getElementById('today-profit').innerText = todayProfit.toFixed(2) + ' PLN';
+                document.getElementById('today-profit').className = `text-xl font-black ${todayProfit >= 0 ? 'text-green-500' : 'text-red-500'}`;
                 document.getElementById('total-staked').innerText = totalStaked.toFixed(2) + ' PLN';
                 document.getElementById('total-bets').innerText = history.length;
                 document.getElementById('yield-val').innerText = ((totalProfit / totalStaked) * 100).toFixed(1) + '%';
-                document.getElementById('last-update').innerText = 'Sync: ' + new Date().toLocaleTimeString();
+                document.getElementById('last-update').innerText = 'Ostatnia synchronizacja: ' + new Date().toLocaleTimeString();
 
-                // Ranking
+                // Ranking lig
                 Object.entries(leagues).sort((a,b) => b[1] - a[1]).forEach(([name, val]) => {
                     document.getElementById('league-ranking').innerHTML += `
-                        <div class="flex justify-between items-center p-2 rounded bg-gray-50 border-l-4 ${val >= 0 ? 'border-green-500' : 'border-red-500'}">
-                            <span class="text-[10px] font-bold uppercase text-gray-600">${name}</span>
+                        <div class="flex justify-between items-center p-3 rounded-lg bg-gray-50 border border-gray-100">
+                            <span class="text-[10px] font-extrabold uppercase text-gray-500">${name}</span>
                             <span class="text-xs font-black ${val >= 0 ? 'text-green-500' : 'text-red-500'}">${val > 0 ? '+' : ''}${val.toFixed(2)}</span>
                         </div>`;
                 });
 
-                // Tabela
-                history.slice().reverse().forEach(m => {
+                // Tabela (ostatnie 50 meczów)
+                history.slice().reverse().slice(0, 50).forEach(m => {
                     const isWin = m.profit > 0;
                     document.getElementById('history-table').innerHTML += `
-                        <tr class="hover:bg-gray-50 transition-colors">
-                            <td class="px-6 py-4 text-[10px] text-gray-400">${m.time ? m.time.split('T')[0] : '--'}</td>
+                        <tr class="hover:bg-blue-50/30 transition-colors">
+                            <td class="px-6 py-4 text-[10px] text-gray-400 font-mono">${m.time ? m.time.split('T')[0] : '--'}</td>
                             <td class="px-6 py-4">
-                                <div class="text-xs font-bold text-gray-800">${m.home} - ${m.away}</div>
-                                <div class="text-[9px] text-gray-400 uppercase">${m.sport.split('_').pop()}</div>
+                                <div class="text-xs font-bold text-gray-700">${m.home} - ${m.away}</div>
+                                <div class="text-[9px] text-gray-400 uppercase font-medium">${m.sport.split('_').pop()}</div>
                             </td>
                             <td class="px-6 py-4 text-xs italic text-gray-600">${m.outcome} <span class="text-blue-500 font-bold">@${m.odds}</span></td>
-                            <td class="px-6 py-4 text-xs font-mono text-gray-600">${m.score || '-- : --'}</td>
+                            <td class="px-6 py-4 text-xs font-mono text-gray-500">${m.score || '-- : --'}</td>
                             <td class="px-6 py-4 text-right font-black ${isWin ? 'text-green-500' : 'text-red-500'}">${isWin ? '+' : ''}${m.profit.toFixed(2)}</td>
                         </tr>`;
                 });
 
                 // Wykres
                 if(profitChart) profitChart.destroy();
-                profitChart = new Chart(document.getElementById('profitChart'), {
+                const ctx = document.getElementById('profitChart').getContext('2d');
+                const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                gradient.addColorStop(0, 'rgba(59, 130, 246, 0.2)');
+                gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+
+                profitChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: chartLabels,
                         datasets: [{
                             data: chartData,
                             borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                            borderWidth: 3,
+                            backgroundColor: gradient,
                             fill: true,
                             tension: 0.4,
-                            pointRadius: 1
+                            pointRadius: 0,
+                            pointHoverRadius: 5
                         }]
                     },
                     options: { 
+                        responsive: true,
                         plugins: { legend: { display: false } }, 
                         scales: { 
                             x: { display: false },
-                            y: { ticks: { color: '#94a3b8' }, grid: { color: '#f1f5f9' } }
+                            y: { 
+                                ticks: { color: '#cbd5e1', font: { size: 10 } }, 
+                                grid: { color: '#f1f5f9' } 
+                            }
                         } 
                     }
                 });
                 
                 countdown = 300;
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Błąd ładowania danych:", e); }
         }
 
         setInterval(() => {
