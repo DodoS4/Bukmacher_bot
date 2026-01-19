@@ -238,5 +238,35 @@
         "stake": 200,
         "sport": "basketball_nba",
         "time": "2026-01-19T20:10:00Z"
+    },
+    {
+        "id": "b68ce56ffffc7b2cb21f03e660422899",
+        "home": "Philadelphia 76ers",
+        "away": "Indiana Pacers",
+        "outcome": "Indiana Pacers",
+        "odds": 3.9,
+        "stake": 200,
+        "sport": "basketball_nba",
+        "time": "2026-01-20T00:10:00Z"
+    },
+    {
+        "id": "41cd5f6adac96f85be9cf529b363f604",
+        "home": "Brooklyn Nets",
+        "away": "Phoenix Suns",
+        "outcome": "Brooklyn Nets",
+        "odds": 3.7,
+        "stake": 200,
+        "sport": "basketball_nba",
+        "time": "2026-01-20T00:40:00Z"
+    },
+    {
+        "id": "4d7a9815b4e6215ab1309ddb47162781",
+        "home": "Golden State Warriors",
+        "away": "Miami Heat",
+        "outcome": "Miami Heat",
+        "odds": 3.31,
+        "stake": 200,
+        "sport": "basketball_nba",
+        "time": "2026-01-20T03:10:00Z"
     }
 ]
