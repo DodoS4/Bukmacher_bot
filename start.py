@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA =================
 SPORTS_CONFIG = {
-    # Twoje dotychczasowe ligi
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_allsvenskan": "🇸🇪",
     "icehockey_finland_liiga": "🇫🇮",
@@ -19,7 +18,6 @@ SPORTS_CONFIG = {
     "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
     "soccer_portugal_primeira_liga": "🇵🇹",
     "basketball_nba": "🏀",
-    # NOWE DODANE LIGI (7)
     "soccer_netherlands_erevidisie": "🇳🇱",
     "soccer_belgium_first_division_a": "🇧🇪",
     "soccer_turkey_super_lig": "🇹🇷",
@@ -37,7 +35,6 @@ TELEGRAM_CHAT = os.getenv("T_CHAT")
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 BASE_STAKE = 250
-MAX_ACTIVE_BETS = 9999  # Limit usunięty
 
 def get_smart_stake(league_key):
     if not os.path.exists(HISTORY_FILE):
@@ -124,8 +121,10 @@ def main():
             max_value_found = 0
 
             for name, prices in market_prices.items():
-                if ("icehockey" in league or "basketball" in league) and name.lower() == "draw":
+                # --- KLUCZOWA ZMIANA: CAŁKOWITA REZYGNACJA Z REMISÓW ---
+                if name.lower() == "draw":
                     continue
+                # ------------------------------------------------------
 
                 max_p = max(prices)
                 avg_p = sum(prices) / len(prices)
