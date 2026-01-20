@@ -39,7 +39,7 @@ def settle_matches():
     leagues = list(set(c['sport'] for c in coupons))
     results_cache = {}
     
-    # KROK 1: Pobieranie wyników z API (z rotacją kluczy)
+    # KROK 1: Pobieranie wyników
     key_idx = 0
     for league in leagues:
         success = False
@@ -55,16 +55,14 @@ def settle_matches():
                     print(f"⚠️ Klucz {key_idx} wyczerpany. Przełączam...")
                     key_idx += 1
                 else:
-                    print(f"ℹ️ Liga {league}: błąd {resp.status_code}")
                     break
             except Exception as e:
                 print(f"💥 Błąd połączenia dla {league}: {e}")
                 key_idx += 1
     
-    # KROK 2: Analiza wyników i obliczanie zysku/straty
+    # KROK 2: Analiza wyników
     for bet in coupons:
         league_data = results_cache.get(bet['sport'], [])
-        # Szukamy meczu po ID
         match = next((m for m in league_data if m['id'] == bet['id']), None)
         
         if match and match.get('completed'):
@@ -73,7 +71,6 @@ def settle_matches():
                 h_score, a_score = None, None
 
                 if scores and len(scores) >= 2:
-                    # Próba dopasowania po nazwach drużyn
                     h_score_obj = next((s for s in scores if s['name'] == bet['home']), None)
                     a_score_obj = next((s for s in scores if s['name'] == bet['away']), None)
                     
@@ -81,21 +78,21 @@ def settle_matches():
                         h_score = int(h_score_obj['score'])
                         a_score = int(a_score_obj['score'])
                     else:
-                        # Rezerwowe: bierzemy pierwsze dwa wyniki z listy
                         h_score = int(scores[0]['score'])
                         a_score = int(scores[1]['score'])
 
                 if h_score is not None:
                     bet['score'] = f"{h_score}:{a_score}"
                     
-                    # Logika wyłaniania zwycięzcy
-                    actual_winner = "Draw"
+                    # Logika wyłaniania zwycięzcy (Uwzględnia Draw dla poprawności meczu)
                     if h_score > a_score:
                         actual_winner = bet['home']
                     elif a_score > h_score:
                         actual_winner = bet['away']
+                    else:
+                        actual_winner = "Draw"
 
-                    # --- OBLICZENIA (POLSKI PODATEK 12%) ---
+                    # --- ROZLICZENIE (Z PODATKIEM 12%) ---
                     if bet['outcome'] == actual_winner:
                         # Wygrana: (Stawka * 0.88) * Kurs - Stawka
                         clean_stake = float(bet['stake']) * 0.88
@@ -115,7 +112,6 @@ def settle_matches():
                 print(f"⚠️ Problem z rozliczeniem meczu {bet['id']}: {e}")
                 updated_coupons.append(bet)
         else:
-            # Mecz jeszcze trwa lub brak danych
             updated_coupons.append(bet)
 
     # KROK 3: Zapisywanie zmian
@@ -127,12 +123,11 @@ def settle_matches():
         bankroll_data["bankroll"] = round(bankroll_data["bankroll"], 2)
         with open(BANKROLL_FILE, "w", encoding="utf-8") as f:
             json.dump(bankroll_data, f, indent=4)
-        print(f"📊 Zaktualizowano historię o {len(new_history)} meczów.")
     
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(updated_coupons, f, indent=4)
     
-    print(f"🏁 KONIEC. Pozostało aktywnych kuponów: {len(updated_coupons)}")
+    print(f"🏁 KONIEC. Rozliczono: {len(new_history)} | Pozostało: {len(updated_coupons)}")
 
 if __name__ == "__main__":
     settle_matches()
