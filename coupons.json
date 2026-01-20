@@ -318,5 +318,35 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-21T19:30:00Z"
+    },
+    {
+        "id": "7ec75b9510a78b94f97084b712848e8d",
+        "home": "IK Oskarshamn",
+        "away": "Mora IK",
+        "outcome": "IK Oskarshamn",
+        "odds": 2.23,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-21T18:00:00Z"
+    },
+    {
+        "id": "6d59de25cc37129df0fa325e40dce844",
+        "home": "Denver Nuggets",
+        "away": "Los Angeles Lakers",
+        "outcome": "Denver Nuggets",
+        "odds": 2.35,
+        "stake": 200,
+        "sport": "basketball_nba",
+        "time": "2026-01-21T03:10:00Z"
+    },
+    {
+        "id": "874e9cbd808fbf58aab0cda4e49c9236",
+        "home": "Golden State Warriors",
+        "away": "Toronto Raptors",
+        "outcome": "Toronto Raptors",
+        "odds": 2.71,
+        "stake": 200,
+        "sport": "basketball_nba",
+        "time": "2026-01-21T03:10:00Z"
     }
 ]
