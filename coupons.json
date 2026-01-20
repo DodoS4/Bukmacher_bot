@@ -188,5 +188,55 @@
         "stake": 200,
         "sport": "basketball_nba",
         "time": "2026-01-21T03:10:00Z"
+    },
+    {
+        "id": "48420af2545f436ace3549551175a79a",
+        "home": "Toronto Maple Leafs",
+        "away": "Detroit Red Wings",
+        "outcome": "Toronto Maple Leafs",
+        "odds": 2.45,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-22T00:00:00Z"
+    },
+    {
+        "id": "a866b136a9f8c3ccb73d07edb07f2e93",
+        "home": "Utah Mammoth",
+        "away": "Philadelphia Flyers",
+        "outcome": "Utah Mammoth",
+        "odds": 2.13,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-22T02:00:00Z"
+    },
+    {
+        "id": "a8e6530a0668674f2a6a234e1b1617b0",
+        "home": "Calgary Flames",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 2.67,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-22T02:30:00Z"
+    },
+    {
+        "id": "c04cab81c7b550db23dd43fac295cc39",
+        "home": "Seattle Kraken",
+        "away": "New York Islanders",
+        "outcome": "Seattle Kraken",
+        "odds": 2.7,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-22T02:30:00Z"
+    },
+    {
+        "id": "c3152c72ea65dee7f0a9dabbdde469d0",
+        "home": "Vancouver Canucks",
+        "away": "Washington Capitals",
+        "outcome": "Washington Capitals",
+        "odds": 2.29,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-22T03:00:00Z"
     }
 ]
