@@ -1,55 +1,5 @@
 [
     {
-        "id": "055a75649821f46b0e1ffdcb44963cc8",
-        "home": "Nashville Predators",
-        "away": "Buffalo Sabres",
-        "outcome": "Nashville Predators",
-        "odds": 2.49,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-21T01:00:00Z"
-    },
-    {
-        "id": "52802de7a999b6e32f341e5e5511ccbb",
-        "home": "Winnipeg Jets",
-        "away": "St Louis Blues",
-        "outcome": "Winnipeg Jets",
-        "odds": 2.28,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-21T01:00:00Z"
-    },
-    {
-        "id": "1ea2874c758e04e808bb64cc36457758",
-        "home": "Edmonton Oilers",
-        "away": "New Jersey Devils",
-        "outcome": "Edmonton Oilers",
-        "odds": 2.14,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-21T03:00:00Z"
-    },
-    {
-        "id": "5df7c788ba4963420a0c30636dcf833f",
-        "home": "Los Angeles Kings",
-        "away": "New York Rangers",
-        "outcome": "Los Angeles Kings",
-        "odds": 2.02,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-21T03:00:00Z"
-    },
-    {
-        "id": "1f3739162c542981a8abfd7bfa983aab",
-        "home": "Dallas Stars",
-        "away": "Boston Bruins",
-        "outcome": "Boston Bruins",
-        "odds": 3.75,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-21T00:30:00Z"
-    },
-    {
         "id": "672b90b10dfa05178ecfd57c95ad5d58",
         "home": "IF Troja-Ljungby",
         "away": "Almtuna IS",
@@ -98,26 +48,6 @@
         "stake": 250,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-01-21T18:00:00Z"
-    },
-    {
-        "id": "6d59de25cc37129df0fa325e40dce844",
-        "home": "Denver Nuggets",
-        "away": "Los Angeles Lakers",
-        "outcome": "Denver Nuggets",
-        "odds": 2.35,
-        "stake": 200,
-        "sport": "basketball_nba",
-        "time": "2026-01-21T03:10:00Z"
-    },
-    {
-        "id": "874e9cbd808fbf58aab0cda4e49c9236",
-        "home": "Golden State Warriors",
-        "away": "Toronto Raptors",
-        "outcome": "Toronto Raptors",
-        "odds": 2.71,
-        "stake": 200,
-        "sport": "basketball_nba",
-        "time": "2026-01-21T03:10:00Z"
     },
     {
         "id": "48420af2545f436ace3549551175a79a",
