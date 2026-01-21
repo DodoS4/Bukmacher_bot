@@ -1,45 +1,5 @@
 [
     {
-        "id": "6f4c7834144855829d017b6116adbae2",
-        "home": "ASVEL Lyon Villeurbanne",
-        "away": "\u017dalgiris",
-        "outcome": "ASVEL Lyon Villeurbanne",
-        "odds": 2.48,
-        "stake": 250,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-20T19:00:00Z"
-    },
-    {
-        "id": "0d482b3dda29429cff8bf6e3ff05cb29",
-        "home": "FC Barcelona B\u00e0squet",
-        "away": "Dubai Basketball",
-        "outcome": "Dubai Basketball",
-        "odds": 4.13,
-        "stake": 250,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-20T19:30:00Z"
-    },
-    {
-        "id": "39c4692a0a66497be7d496f166a458d3",
-        "home": "Columbus Blue Jackets",
-        "away": "Ottawa Senators",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.57,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-21T00:00:00Z"
-    },
-    {
-        "id": "1fcee56369654b9ef18555d30759c946",
-        "home": "Montr\u00e9al Canadiens",
-        "away": "Minnesota Wild",
-        "outcome": "Montr\u00e9al Canadiens",
-        "odds": 2.27,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-21T00:00:00Z"
-    },
-    {
         "id": "055a75649821f46b0e1ffdcb44963cc8",
         "home": "Nashville Predators",
         "away": "Buffalo Sabres",
@@ -78,36 +38,6 @@
         "stake": 250,
         "sport": "icehockey_nhl",
         "time": "2026-01-21T03:00:00Z"
-    },
-    {
-        "id": "182c81b63f413ca61dafc88bf561048b",
-        "home": "AS Monaco",
-        "away": "KK Crvena zvezda",
-        "outcome": "KK Crvena zvezda",
-        "odds": 4.5,
-        "stake": 250,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-20T17:45:00Z"
-    },
-    {
-        "id": "9b6f622243b7d6e49f221801f9337bfa",
-        "home": "FC Bayern M\u00fcnchen",
-        "away": "KK Partizan NIS",
-        "outcome": "KK Partizan NIS",
-        "odds": 3.42,
-        "stake": 250,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-20T19:30:00Z"
-    },
-    {
-        "id": "ca5f2856539c8534b21b876d446eacdd",
-        "home": "Real Madrid",
-        "away": "Pallacanestro Olimpia Milano",
-        "outcome": "Pallacanestro Olimpia Milano",
-        "odds": 4.4,
-        "stake": 250,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-20T19:45:00Z"
     },
     {
         "id": "1f3739162c542981a8abfd7bfa983aab",
@@ -248,5 +178,55 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-22T17:30:00Z"
+    },
+    {
+        "id": "98c3423f08777d4b20922a767ac9d848",
+        "home": "Sacramento Kings",
+        "away": "Toronto Raptors",
+        "outcome": "Sacramento Kings",
+        "odds": 3.1,
+        "stake": 125,
+        "sport": "basketball_nba",
+        "time": "2026-01-22T03:10:00Z"
+    },
+    {
+        "id": "b3a51d2c08495e2674da76def5f52d3f",
+        "home": "Maccabi Tel Aviv",
+        "away": "Panathinaikos",
+        "outcome": "Maccabi Tel Aviv",
+        "odds": 2.18,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T19:05:00Z"
+    },
+    {
+        "id": "467163f7f7d10fc76677bfbc9821d78b",
+        "home": "FC Bayern M\u00fcnchen",
+        "away": "Valencia Basket",
+        "outcome": "FC Bayern M\u00fcnchen",
+        "odds": 2.35,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T19:30:00Z"
+    },
+    {
+        "id": "a2952e5a7850da7c1a3ddbe128fdc31c",
+        "home": "Real Madrid",
+        "away": "AS Monaco",
+        "outcome": "AS Monaco",
+        "odds": 2.72,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T19:45:00Z"
+    },
+    {
+        "id": "5806f59f487ec499c54cb1fc10f8407d",
+        "home": "Paris Basketball",
+        "away": "Dubai Basketball",
+        "outcome": "Dubai Basketball",
+        "odds": 1.99,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T20:00:00Z"
     }
 ]
