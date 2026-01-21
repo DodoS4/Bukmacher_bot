@@ -168,5 +168,25 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-22T19:30:00Z"
+    },
+    {
+        "id": "a0b794407c060727a15e7cb6623f8968",
+        "home": "Boston Bruins",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 2.48,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-23T00:10:00Z"
+    },
+    {
+        "id": "7808f42d6a896fccbebf545d1e3ef91f",
+        "home": "Columbus Blue Jackets",
+        "away": "Dallas Stars",
+        "outcome": "Dallas Stars",
+        "odds": 2.45,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-23T00:10:00Z"
     }
 ]
