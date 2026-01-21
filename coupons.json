@@ -158,5 +158,15 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-22T20:00:00Z"
+    },
+    {
+        "id": "e8343d855851dbf0abb268f7f302db9e",
+        "home": "Pallacanestro Olimpia Milano",
+        "away": "\u017dalgiris",
+        "outcome": "\u017dalgiris",
+        "odds": 2.77,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T19:30:00Z"
     }
 ]
