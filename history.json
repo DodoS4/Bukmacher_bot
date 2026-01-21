@@ -1156,5 +1156,57 @@
         "score": "127:145",
         "profit": 276.96,
         "status": "WIN"
+    },
+    {
+        "id": "672b90b10dfa05178ecfd57c95ad5d58",
+        "home": "IF Troja-Ljungby",
+        "away": "Almtuna IS",
+        "outcome": "Almtuna IS",
+        "odds": 3.1,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-21T18:00:00Z",
+        "score": "0:6",
+        "profit": 432.0,
+        "status": "WIN"
+    },
+    {
+        "id": "c8f6d3c8579c27f32e33032a224c39d6",
+        "home": "BIK Karlskoga",
+        "away": "IF Bj\u00f6rkl\u00f6ven",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.6,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-21T18:00:00Z",
+        "score": "1:4",
+        "profit": -250.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "feed17688255818459798513dc008ebf",
+        "home": "\u00d6stersunds IK",
+        "away": "Modo Hockey",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 3.75,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-21T18:00:00Z",
+        "score": "3:1",
+        "profit": 575.0,
+        "status": "WIN"
+    },
+    {
+        "id": "7ec75b9510a78b94f97084b712848e8d",
+        "home": "IK Oskarshamn",
+        "away": "Mora IK",
+        "outcome": "IK Oskarshamn",
+        "odds": 2.23,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-21T18:00:00Z",
+        "score": "2:1",
+        "profit": 240.6,
+        "status": "WIN"
     }
 ]

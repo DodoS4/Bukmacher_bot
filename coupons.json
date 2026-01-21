@@ -1,35 +1,5 @@
 [
     {
-        "id": "672b90b10dfa05178ecfd57c95ad5d58",
-        "home": "IF Troja-Ljungby",
-        "away": "Almtuna IS",
-        "outcome": "Almtuna IS",
-        "odds": 3.1,
-        "stake": 250,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-21T18:00:00Z"
-    },
-    {
-        "id": "c8f6d3c8579c27f32e33032a224c39d6",
-        "home": "BIK Karlskoga",
-        "away": "IF Bj\u00f6rkl\u00f6ven",
-        "outcome": "BIK Karlskoga",
-        "odds": 2.6,
-        "stake": 250,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-21T18:00:00Z"
-    },
-    {
-        "id": "feed17688255818459798513dc008ebf",
-        "home": "\u00d6stersunds IK",
-        "away": "Modo Hockey",
-        "outcome": "\u00d6stersunds IK",
-        "odds": 3.75,
-        "stake": 250,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-21T18:00:00Z"
-    },
-    {
         "id": "66c756700e6753aaaf3b86c53723857c",
         "home": "Virtus Segafredo Bologna",
         "away": "Fenerbahce SK",
@@ -38,16 +8,6 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-21T19:30:00Z"
-    },
-    {
-        "id": "7ec75b9510a78b94f97084b712848e8d",
-        "home": "IK Oskarshamn",
-        "away": "Mora IK",
-        "outcome": "IK Oskarshamn",
-        "odds": 2.23,
-        "stake": 250,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-21T18:00:00Z"
     },
     {
         "id": "48420af2545f436ace3549551175a79a",
@@ -278,5 +238,25 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-23T19:30:00Z"
+    },
+    {
+        "id": "23faa2755b2a07c3a0ca03bd4fc6a8e3",
+        "home": "Levante",
+        "away": "Elche CF",
+        "outcome": "Elche CF",
+        "odds": 3.15,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-23T20:00:00Z"
+    },
+    {
+        "id": "e494f3595a8f0c0a7322e7cd6cf7fa5a",
+        "home": "Casa Pia",
+        "away": "AVS Futebol SAD",
+        "outcome": "Casa Pia",
+        "odds": 2.04,
+        "stake": 250,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-23T20:15:00Z"
     }
 ]
