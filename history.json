@@ -1312,5 +1312,18 @@
         "score": "68:74",
         "profit": -250.0,
         "status": "LOSS"
+    },
+    {
+        "id": "b3a51d2c08495e2674da76def5f52d3f",
+        "home": "Maccabi Tel Aviv",
+        "away": "Panathinaikos",
+        "outcome": "Maccabi Tel Aviv",
+        "odds": 2.18,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T19:05:00Z",
+        "score": "75:71",
+        "profit": 229.6,
+        "status": "WIN"
     }
 ]
