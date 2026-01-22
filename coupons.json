@@ -358,5 +358,55 @@
         "stake": 250,
         "sport": "icehockey_nhl",
         "time": "2026-01-24T03:10:00Z"
+    },
+    {
+        "id": "2020abfc96814c99f15f6866dbac5c3f",
+        "home": "Vancouver Canucks",
+        "away": "New Jersey Devils",
+        "outcome": "Vancouver Canucks",
+        "odds": 3.02,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-24T03:10:00Z"
+    },
+    {
+        "id": "ef261f1adb9a34642f07c113bea16eb6",
+        "home": "Union Berlin",
+        "away": "Borussia Dortmund",
+        "outcome": "Borussia Dortmund",
+        "odds": 2.14,
+        "stake": 250,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T17:30:00Z"
+    },
+    {
+        "id": "56556cba4837be525240fd3e4009e972",
+        "home": "Rayo Vallecano",
+        "away": "CA Osasuna",
+        "outcome": "Rayo Vallecano",
+        "odds": 2.28,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-24T13:00:00Z"
+    },
+    {
+        "id": "faa776cd5170281870e980baa230156d",
+        "home": "Valencia",
+        "away": "Espanyol",
+        "outcome": "Valencia",
+        "odds": 2.56,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-24T15:15:00Z"
+    },
+    {
+        "id": "12fa958a04a07de7b95dbfce718db8cc",
+        "home": "Sevilla",
+        "away": "Athletic Bilbao",
+        "outcome": "Athletic Bilbao",
+        "odds": 2.78,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-24T17:30:00Z"
     }
 ]
