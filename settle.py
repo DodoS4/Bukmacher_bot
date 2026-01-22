@@ -8,7 +8,6 @@ COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 BANKROLL_FILE = "bankroll.json"
 
-# Pobieranie kluczy z GitHub Secrets
 KEYS_RAW = [os.getenv(f"ODDS_KEY{i}") for i in ["", "_2", "_3", "_4", "_5"]]
 API_KEYS = [k for k in KEYS_RAW if k and len(k) > 10]
 
@@ -32,18 +31,25 @@ def settle_matches():
 
     # Ładowanie historii i bankrolla
     history = json.load(open(HISTORY_FILE, "r", encoding="utf-8")) if os.path.exists(HISTORY_FILE) else []
-    bankroll_data = json.load(open(BANKROLL_FILE, "r", encoding="utf-8")) if os.path.exists(BANKROLL_FILE) else {"bankroll": 10000.0}
+    
+    # Inicjalizacja bankrolla jeśli nie istnieje (zaczynamy od 1000 PLN + Twój obecny zysk)
+    if os.path.exists(BANKROLL_FILE):
+        bankroll_data = json.load(open(BANKROLL_FILE, "r", encoding="utf-8"))
+    else:
+        bankroll_data = {"bankroll": 1000.0} 
     
     updated_coupons = []
     new_history = []
+    # Pobieramy unikalne klucze lig z aktywnych kuponów
     leagues = list(set(c['sport'] for c in coupons))
     results_cache = {}
     
-    # KROK 1: Pobieranie wyników
+    # KROK 1: Pobieranie wyników (z obsługą wielu kluczy)
     key_idx = 0
     for league in leagues:
         success = False
         while key_idx < len(API_KEYS):
+            # Używamy endpointu /scores/
             url = f"https://api.the-odds-api.com/v4/sports/{league}/scores/?apiKey={API_KEYS[key_idx]}&daysFrom=3"
             try:
                 resp = requests.get(url, timeout=15)
@@ -65,26 +71,25 @@ def settle_matches():
         league_data = results_cache.get(bet['sport'], [])
         match = next((m for m in league_data if m['id'] == bet['id']), None)
         
+        # Rozliczamy tylko jeśli API potwierdza zakończenie meczu
         if match and match.get('completed'):
             try:
                 scores = match.get('scores', [])
                 h_score, a_score = None, None
 
                 if scores and len(scores) >= 2:
+                    # Szukanie wyniku po nazwie drużyny (najbezpieczniejsza metoda)
                     h_score_obj = next((s for s in scores if s['name'] == bet['home']), None)
                     a_score_obj = next((s for s in scores if s['name'] == bet['away']), None)
                     
                     if h_score_obj and a_score_obj:
                         h_score = int(h_score_obj['score'])
                         a_score = int(a_score_obj['score'])
-                    else:
-                        h_score = int(scores[0]['score'])
-                        a_score = int(scores[1]['score'])
-
+                
                 if h_score is not None:
                     bet['score'] = f"{h_score}:{a_score}"
                     
-                    # Logika wyłaniania zwycięzcy (Uwzględnia Draw dla poprawności meczu)
+                    # Logika zwycięstwa
                     if h_score > a_score:
                         actual_winner = bet['home']
                     elif a_score > h_score:
@@ -92,14 +97,15 @@ def settle_matches():
                     else:
                         actual_winner = "Draw"
 
-                    # --- ROZLICZENIE (Z PODATKIEM 12%) ---
+                    # Rozliczenie (Polska: podatek 12%)
                     if bet['outcome'] == actual_winner:
-                        # Wygrana: (Stawka * 0.88) * Kurs - Stawka
+                        # Wygrana: (Stawka * 0.88 * Kurs) - Stawka
+                        # Używamy 0.88, ponieważ podatek 12% pobierany jest od stawki wejściowej
                         clean_stake = float(bet['stake']) * 0.88
                         bet['profit'] = round((clean_stake * float(bet['odds'])) - float(bet['stake']), 2)
                         bet['status'] = "WIN"
                     else:
-                        # Przegrana: Tracimy 100% stawki
+                        # Przegrana: Tracimy całą postawioną stawkę
                         bet['profit'] = -float(bet['stake'])
                         bet['status'] = "LOSS"
 
@@ -109,12 +115,13 @@ def settle_matches():
                 else:
                     updated_coupons.append(bet)
             except Exception as e:
-                print(f"⚠️ Problem z rozliczeniem meczu {bet['id']}: {e}")
+                print(f"⚠️ Problem z meczem {bet['id']}: {e}")
                 updated_coupons.append(bet)
         else:
+            # Jeśli meczu nie ma w wynikach lub jeszcze trwa, zostaje w kuponach
             updated_coupons.append(bet)
 
-    # KROK 3: Zapisywanie zmian
+    # KROK 3: Zapisywanie
     if new_history:
         history.extend(new_history)
         with open(HISTORY_FILE, "w", encoding="utf-8") as f:
