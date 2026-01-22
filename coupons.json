@@ -278,5 +278,15 @@
         "stake": 250,
         "sport": "soccer_france_ligue_two",
         "time": "2026-01-23T19:00:00Z"
+    },
+    {
+        "id": "3aa63ac9164cb0d7fcaa13522620d9b1",
+        "home": "Eintracht Frankfurt",
+        "away": "TSG Hoffenheim",
+        "outcome": "Eintracht Frankfurt",
+        "odds": 3.0,
+        "stake": 250,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T14:30:00Z"
     }
 ]
