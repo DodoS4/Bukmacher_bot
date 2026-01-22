@@ -248,5 +248,25 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-23T19:30:00Z"
+    },
+    {
+        "id": "e327b82dc2c5b4c488774549ad97f5e0",
+        "home": "Modo Hockey",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "S\u00f6dert\u00e4lje SK",
+        "odds": 3.75,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T17:00:00Z"
+    },
+    {
+        "id": "6ec08430ff5f77a6e4c74acce8bb4760",
+        "home": "Vimmerby HC",
+        "away": "Almtuna IS",
+        "outcome": "Vimmerby HC",
+        "odds": 2.25,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T18:00:00Z"
     }
 ]
