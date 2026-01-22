@@ -268,5 +268,15 @@
         "stake": 250,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-01-23T18:00:00Z"
+    },
+    {
+        "id": "a69e2e233b2af45e3178f58a6eab6d4e",
+        "home": "SC Bastia",
+        "away": "Montpellier",
+        "outcome": "Montpellier",
+        "odds": 2.65,
+        "stake": 250,
+        "sport": "soccer_france_ligue_two",
+        "time": "2026-01-23T19:00:00Z"
     }
 ]
