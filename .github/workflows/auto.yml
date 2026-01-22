@@ -1,10 +1,10 @@
-name: Betting Bot Professional - 5 Keys Mode
+name: Betting Bot Professional - 10 Keys Mode
 
 on:
   schedule:
-    # SKANOWANIE: 4 razy dziennie (08:00, 12:00, 16:00, 20:00 czasu PL)
+    # SKANOWANIE: 4 razy dziennie
     - cron: '0 7,11,15,19 * * *'
-    # ROZLICZENIE I STATYSTYKI: Rano (06:30 UTC = 07:30 PL) oraz Wieczorem (21:30 UTC = 22:30 PL)
+    # ROZLICZENIE I STATYSTYKI: Rano i Wieczorem
     - cron: '30 6,21 * * *'
   workflow_dispatch: 
 
@@ -34,26 +34,30 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # KROK 1: SKANOWANIE
+      # KROK 1: SKANOWANIE (Przekazujemy pełne 10 kluczy)
       - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
-          ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_1: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
           ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
           ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+          ODDS_KEY_6: ${{ secrets.ODDS_KEY_6 }}
+          ODDS_KEY_7: ${{ secrets.ODDS_KEY_7 }}
+          ODDS_KEY_8: ${{ secrets.ODDS_KEY_8 }}
+          ODDS_KEY_9: ${{ secrets.ODDS_KEY_9 }}
+          ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
         run: python start.py
 
-      # KROK 2: ROZLICZANIE I STATYSTYKI (Teraz dwa razy dziennie)
+      # KROK 2: ROZLICZANIE I STATYSTYKI
       - name: Run Settler and Stats
-        # Warunek: uruchom jeśli to zaplanowany czas statystyk (rano/wieczór) LUB uruchomienie ręczne
         if: github.event.schedule == '30 6 * * *' || github.event.schedule == '30 21 * * *' || github.event_name == 'workflow_dispatch'
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
-          ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_1: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
         run: |
           python settle.py
@@ -64,9 +68,7 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          
           git add *.json
-          
           if ! git diff --cached --quiet; then
             git commit -m "Bot Auto-Update: Data Sync [skip ci]"
             git pull --rebase origin main
