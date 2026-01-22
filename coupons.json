@@ -238,5 +238,15 @@
         "stake": 250,
         "sport": "soccer_france_ligue_two",
         "time": "2026-01-23T19:00:00Z"
+    },
+    {
+        "id": "75ec27d8af593062b247b9dd005edade",
+        "home": "KK Partizan NIS",
+        "away": "Hapoel Tel Aviv",
+        "outcome": "KK Partizan NIS",
+        "odds": 3.56,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-23T19:30:00Z"
     }
 ]
