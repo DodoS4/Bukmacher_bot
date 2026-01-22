@@ -4,9 +4,9 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG (ROZSZERZONA) =================
+# ================= KONFIGURACJA LIG (WERSJA ROZSZERZONA) =================
 SPORTS_CONFIG = {
-    # --- TWOJE OBECNE LIGI ---
+    # --- HOKEJ ---
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_allsvenskan": "🇸🇪",
     "icehockey_sweden_svenska_rinkbandy": "🇸🇪",
@@ -14,44 +14,37 @@ SPORTS_CONFIG = {
     "icehockey_germany_del": "🇩🇪",
     "icehockey_czech_extraliga": "🇨🇿",
     "icehockey_switzerland_nla": "🇨🇭",
+    "icehockey_austria_liga": "🇦🇹",
+    "icehockey_denmark_metal_ligaen": "🇩🇰",
+    "icehockey_norway_eliteserien": "🇳🇴",
+    "icehockey_slovakia_extraliga": "🇸🇰",
+
+    # --- PIŁKA NOŻNA ---
     "soccer_epl": "⚽",
     "soccer_germany_bundesliga": "🇩🇪",
     "soccer_italy_serie_a": "🇮🇹", 
     "soccer_spain_la_liga": "🇪🇸",
     "soccer_poland_ekstraklasa": "🇵🇱",
     "soccer_france_ligue_one": "🇫🇷",
-    "soccer_france_ligue_two": "🇫🇷",
-    "soccer_germany_bundesliga_2": "🇩🇪",
-    "soccer_italy_serie_b": "🇮🇹",
-    "soccer_spain_la_liga_2": "🇪🇸",
     "soccer_portugal_primeira_liga": "🇵🇹",
     "soccer_netherlands_erevidisie": "🇳🇱",
     "soccer_turkey_super_lig": "🇹🇷",
-    "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-    "basketball_euroleague": "🇪🇺",
-
-    # --- DODATKOWY HOKEJ (Mocne rynki) ---
-    "icehockey_austria_liga": "🇦🇹",
-    "icehockey_denmark_metal_ligaen": "🇩🇰",
-    "icehockey_norway_eliteserien": "🇳🇴",
-    "icehockey_slovakia_extraliga": "🇸🇰",
-
-    # --- DODATKOWA PIŁKA (Dobra płynność) ---
+    "soccer_belgium_first_division_a": "🇧🇪",
     "soccer_austria_bundesliga": "🇦🇹",
     "soccer_denmark_superliga": "🇩🇰",
     "soccer_greece_super_league": "🇬🇷",
     "soccer_switzerland_superleague": "🇨🇭",
     "soccer_scotland_premier_league": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
-    "soccer_belgium_first_division_a": "🇧🇪",
-    
-    # --- TENIS ---
+    "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+
+    # --- INNE ---
+    "basketball_euroleague": "🏀",
     "tennis_atp_australian_open": "🎾",
     "tennis_wta_australian_open": "🎾"
 }
 
 # ================= OBSŁUGA WIELU API KEYS =================
 API_KEYS = []
-# Pobieramy ODDS_KEY, ODDS_KEY_2... ODDS_KEY_10
 if os.getenv("ODDS_KEY"): API_KEYS.append(os.getenv("ODDS_KEY"))
 for i in range(2, 11):
     key = os.getenv(f"ODDS_KEY_{i}")
@@ -102,7 +95,6 @@ def load_existing_data():
             try:
                 data = json.load(f)
                 now = datetime.now(timezone.utc)
-                # Zostawiamy kupony z ostatnich 72h, żeby nie duplikować
                 return [c for c in data if datetime.fromisoformat(c['time'].replace("Z", "+00:00")) > (now - timedelta(hours=72))]
             except: return []
     return []
@@ -119,7 +111,7 @@ def main():
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
 
-    for league, emoji in SPORTS_CONFIG.items():
+    for league, flag_emoji in SPORTS_CONFIG.items():
         current_stake, base_threshold = get_smart_stake(league)
         print(f"📡 SKANOWANIE: {league.upper()}")
         
@@ -171,7 +163,6 @@ def main():
                 if name.lower() == "draw": continue
                 max_p, avg_p = max(prices), sum(prices) / len(prices)
                 
-                # Progi Value
                 req_val = base_threshold
                 if max_p >= 2.2: req_val += 0.03
                 if max_p >= 3.2: req_val += 0.04
@@ -183,12 +174,20 @@ def main():
 
             if best_choice:
                 date_str = m_time.strftime('%d.%m | %H:%M')
-                l_header = league.replace("soccer_", "").replace("icehockey_", "").replace("_", " ").upper()
+                l_header = league.replace("soccer_", "").replace("icehockey_", "").replace("basketball_", "").replace("tennis_", "").replace("_", " ").upper()
                 
-                msg = (f"{emoji} {l_header}\n━━━━━━━━━━━━━━━\n"
+                # Dynamiczne ikony sportu
+                s_icon = "🏒" if "icehockey" in league else "⚽" if "soccer" in league else "🏀" if "basketball" in league else "🎾" if "tennis" in league else "🔹"
+                
+                msg = (f"{s_icon} {flag_emoji} <b>{l_header}</b>\n"
+                       f"━━━━━━━━━━━━━━━\n"
                        f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
-                       f"⏰: {date_str}\n\n✅ Typ: <b>{best_choice}</b>\n📈 Kurs: <b>{best_odds}</b>\n"
-                       f"💰 Stawka: <b>{current_stake} PLN</b>\n📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>")
+                       f"⏰ Start: {date_str}\n\n"
+                       f"✅ Typ: <b>{best_choice}</b>\n"
+                       f"📈 Kurs: <b>{best_odds}</b>\n"
+                       f"💰 Stawka: <b>{current_stake} PLN</b>\n"
+                       f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
+                       f"━━━━━━━━━━━━━━━")
 
                 send_telegram(msg)
                 all_coupons.append({
@@ -201,7 +200,7 @@ def main():
     save_current_key_idx(current_key_idx)
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
-    print(f"✅ KONIEC. Aktywne: {len(all_coupons)}")
+    print(f"✅ KONIEC. Aktywne kupony w bazie: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
