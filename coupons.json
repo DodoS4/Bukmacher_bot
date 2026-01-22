@@ -1,65 +1,5 @@
 [
     {
-        "id": "66c756700e6753aaaf3b86c53723857c",
-        "home": "Virtus Segafredo Bologna",
-        "away": "Fenerbahce SK",
-        "outcome": "Virtus Segafredo Bologna",
-        "odds": 2.55,
-        "stake": 250,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-21T19:30:00Z"
-    },
-    {
-        "id": "48420af2545f436ace3549551175a79a",
-        "home": "Toronto Maple Leafs",
-        "away": "Detroit Red Wings",
-        "outcome": "Toronto Maple Leafs",
-        "odds": 2.45,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-22T00:00:00Z"
-    },
-    {
-        "id": "a866b136a9f8c3ccb73d07edb07f2e93",
-        "home": "Utah Mammoth",
-        "away": "Philadelphia Flyers",
-        "outcome": "Utah Mammoth",
-        "odds": 2.13,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-22T02:00:00Z"
-    },
-    {
-        "id": "a8e6530a0668674f2a6a234e1b1617b0",
-        "home": "Calgary Flames",
-        "away": "Pittsburgh Penguins",
-        "outcome": "Pittsburgh Penguins",
-        "odds": 2.67,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-22T02:30:00Z"
-    },
-    {
-        "id": "c04cab81c7b550db23dd43fac295cc39",
-        "home": "Seattle Kraken",
-        "away": "New York Islanders",
-        "outcome": "Seattle Kraken",
-        "odds": 2.7,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-22T02:30:00Z"
-    },
-    {
-        "id": "c3152c72ea65dee7f0a9dabbdde469d0",
-        "home": "Vancouver Canucks",
-        "away": "Washington Capitals",
-        "outcome": "Washington Capitals",
-        "odds": 2.29,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-22T03:00:00Z"
-    },
-    {
         "id": "b0661a57b942b1766809743145133785",
         "home": "Anadolu Efes",
         "away": "Olympiacos",
@@ -68,16 +8,6 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-22T17:30:00Z"
-    },
-    {
-        "id": "98c3423f08777d4b20922a767ac9d848",
-        "home": "Sacramento Kings",
-        "away": "Toronto Raptors",
-        "outcome": "Sacramento Kings",
-        "odds": 3.1,
-        "stake": 125,
-        "sport": "basketball_nba",
-        "time": "2026-01-22T03:10:00Z"
     },
     {
         "id": "b3a51d2c08495e2674da76def5f52d3f",
@@ -258,5 +188,55 @@
         "stake": 250,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-01-23T20:15:00Z"
+    },
+    {
+        "id": "07d5f00ef6f460e1c78f6e9d09d5baac",
+        "home": "Mora IK",
+        "away": "AIK",
+        "outcome": "AIK",
+        "odds": 2.6,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T18:00:00Z"
+    },
+    {
+        "id": "55dedf1370c40e055eccfceec965518b",
+        "home": "IF Troja-Ljungby",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 2.1,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T18:00:00Z"
+    },
+    {
+        "id": "5ccaf3e6d77cb70f367e7a6d13ca04d0",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "\u00d6stersunds IK",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 2.55,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T18:00:00Z"
+    },
+    {
+        "id": "e5ab08985478075eb4dda331157df055",
+        "home": "Kalmar HC",
+        "away": "BIK Karlskoga",
+        "outcome": "Kalmar HC",
+        "odds": 2.0,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T19:30:00Z"
+    },
+    {
+        "id": "bb86665f241cc8ad3b744fc044b25f07",
+        "home": "Annecy FC",
+        "away": "Clermont",
+        "outcome": "Annecy FC",
+        "odds": 1.96,
+        "stake": 250,
+        "sport": "soccer_france_ligue_two",
+        "time": "2026-01-23T19:00:00Z"
     }
 ]
