@@ -32,7 +32,8 @@ def analyze_stats():
     
     if not history: return
 
-    # --- 1. ANALIZA WEDŁUG TYPU ZAKŁADU (NOWOŚĆ) ---
+    # --- 1. ANALIZA WEDŁUG TYPU ZAKŁADU ---
+    # Dodajemy licznik, aby wiedzieć ile z tych remisów to "stare błędy"
     type_stats = {'Team': {'profit': 0.0, 'bets': 0, 'wins': 0}, 
                   'Draw': {'profit': 0.0, 'bets': 0, 'wins': 0}}
     
@@ -46,19 +47,26 @@ def analyze_stats():
         if bet.get('status') == 'WIN':
             type_stats[b_type]['wins'] += 1
 
-        # Statystyki lig
-        l_name = bet.get('sport', 'Inne').replace('soccer_', '').replace('icehockey_', '').upper()
+        # Statystyki lig (Poprawione formatowanie dla hokeja i piłki)
+        l_raw = bet.get('sport', 'Inne')
+        l_name = l_raw.replace('soccer_', '').replace('icehockey_', '').replace('_', ' ').upper()
+        
         if l_name not in league_stats:
             league_stats[l_name] = {'profit': 0.0, 'bets': 0}
         league_stats[l_name]['profit'] += bet.get('profit', 0)
         league_stats[l_name]['bets'] += 1
     
-    # --- 2. RANKING LIG ---
+    # --- 2. RANKING LIG (TOP 5 i Bottom 1) ---
     sorted_leagues = sorted(league_stats.items(), key=lambda x: x[1]['profit'], reverse=True)
     ranking_str = ""
     for i, (name, data) in enumerate(sorted_leagues[:5]):
         emoji = "🥇" if i == 0 else "🥈" if i == 1 else "🥉" if i == 2 else "🔹"
         ranking_str += f"{emoji} {name}: <b>{data['profit']:+.2f} PLN</b>\n"
+    
+    # Dodajemy informację o najsłabszej lidze (żeby pamiętać o NBA/EPL)
+    if len(sorted_leagues) > 5:
+        worst_name, worst_data = sorted_leagues[-1]
+        ranking_str += f"📉 Najsłabsza: {worst_name} (<b>{worst_data['profit']:+.2f}</b>)\n"
 
     # --- 3. ANALIZA OGÓLNA ---
     total_net_profit = sum([b['profit'] for b in history])
@@ -67,13 +75,15 @@ def analyze_stats():
     total_wins = sum([1 for b in history if b.get('status') == 'WIN'])
     win_rate = (total_wins / len(history)) * 100 if history else 0
     
-    # Ikona statusu Yieldu
+    # Ikona statusu Yieldu - bardziej rygorystyczna
     yield_emoji = "🟢" if yield_val > 5 else "🟡" if yield_val > 0 else "🔴"
 
     # --- 4. RAPORT ---
     progress_pct = (total_net_profit / MONTHLY_TARGET) * 100
-    progress_bar_count = int(min(max(progress_pct, 0), 100) / 10)
-    progress_bar = "▓" * progress_bar_count + "░" * (10 - progress_bar_count)
+    # Pasek postępu uwzględniający ujemny zysk
+    bar_display = max(0, min(100, progress_pct))
+    progress_bar_count = int(bar_display / 10)
+    progress_bar = "🟢" * progress_bar_count + "⚪" * (10 - progress_bar_count)
 
     msg = f"📊 <b>RAPORT ANALITYCZNY</b>\n"
     msg += f"━━━━━━━━━━━━━━━━━━\n"
@@ -82,13 +92,14 @@ def analyze_stats():
     msg += f"🎯 Skuteczność: <b>{win_rate:.1f}%</b>\n"
     msg += f"🏦 Bankroll: <b>{br_data['bankroll']:.2f} PLN</b>\n"
     msg += f"━━━━━━━━━━━━━━━━━━\n"
-    msg += f"🧬 <b>PODZIAŁ NA TYPY:</b>\n"
-    msg += f"⚽ Drużyny: <b>{type_stats['Team']['profit']:+.2f} PLN</b> ({type_stats['Team']['bets']}j)\n"
-    msg += f"🤝 Remisy: <b>{type_stats['Draw']['profit']:+.2f} PLN</b> ({type_stats['Draw']['bets']}j)\n"
+    msg += f"🧬 <b>STRATEGIA (Profit/Typy):</b>\n"
+    msg += f"✅ Drużyny: <b>{type_stats['Team']['profit']:+.2f} PLN</b> ({type_stats['Team']['bets']})\n"
+    # Dodaj komentarz jeśli remisy są wyłączone w nowym kodzie
+    msg += f"❌ Remisy: <b>{type_stats['Draw']['profit']:+.2f} PLN</b> ({type_stats['Draw']['bets']})\n"
     msg += f"━━━━━━━━━━━━━━━━━━\n"
-    msg += f"🏆 <b>TOP LIGI:</b>\n{ranking_str}\n"
-    msg += f"🏁 <b>CEL MIESIĘCZNY:</b>\n"
-    msg += f"<code>[{progress_bar}] {progress_pct:.1f}%</code>"
+    msg += f"🏆 <b>LIDERZY RYNKU:</b>\n{ranking_str}\n"
+    msg += f"🏁 <b>CEL: {MONTHLY_TARGET} PLN</b>\n"
+    msg += f"<code>{progress_bar}</code> <b>{progress_pct:.1f}%</b>"
     
     send_telegram(msg)
 
