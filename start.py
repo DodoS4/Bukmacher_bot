@@ -4,26 +4,35 @@ import json
 from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA =================
+# Zmodyfikowana lista: Dodany hokej, usunięte NBA, EPL pod obserwacją
 SPORTS_CONFIG = {
+    # --- HOKEJ (Twoja najsilniejsza strona) ---
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_allsvenskan": "🇸🇪",
+    "icehockey_sweden_svenska_rinkbandy": "🇸🇪", # SHL (Szwecja 1)
     "icehockey_finland_liiga": "🇫🇮",
-    "soccer_spain_la_liga_2": "🇪🇸",
-    "soccer_poland_ekstraklasa": "🇵🇱",
-    "soccer_epl": "⚽",
-    "soccer_spain_la_liga": "🇪🇸", 
+    "icehockey_germany_del": "🇩🇪",              # Niemcy
+    "icehockey_czech_extraliga": "🇨🇿",          # Czechy
+    "icehockey_switzerland_nla": "🇨🇭",          # Szwajcaria
+
+    # --- PIŁKA NOŻNA ---
+    "soccer_epl": "⚽",                         # EPL - OBSERWACJA
     "soccer_germany_bundesliga": "🇩🇪",
     "soccer_italy_serie_a": "🇮🇹", 
+    "soccer_spain_la_liga": "🇪🇸",
+    "soccer_poland_ekstraklasa": "🇵🇱",
     "soccer_france_ligue_one": "🇫🇷",
-    "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "soccer_france_ligue_two": "🇫🇷",
+    "soccer_germany_bundesliga_2": "🇩🇪",
+    "soccer_italy_serie_b": "🇮🇹",
+    "soccer_spain_la_liga_2": "🇪🇸",
     "soccer_portugal_primeira_liga": "🇵🇹",
-    "basketball_nba": "🏀",
     "soccer_netherlands_erevidisie": "🇳🇱",
     "soccer_belgium_first_division_a": "🇧🇪",
     "soccer_turkey_super_lig": "🇹🇷",
-    "soccer_germany_bundesliga_2": "🇩🇪",
-    "soccer_italy_serie_b": "🇮🇹",
-    "soccer_france_ligue_two": "🇫🇷",
+    "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+
+    # --- KOSZYKÓWKA (NBA wyłączone) ---
     "basketball_euroleague": "🇪🇺"
 }
 
@@ -43,6 +52,7 @@ def get_smart_stake(league_key):
         with open(HISTORY_FILE, "r", encoding="utf-8") as f:
             history = json.load(f)
         league_profit = sum(m['profit'] for m in history if m.get('sport') == league_key)
+        # Dynamiczne progi dla lig generujących straty
         if league_profit <= -700: return 125, 1.07
         if league_profit <= -300: return 200, 1.05
         return BASE_STAKE, 1.03
@@ -61,6 +71,7 @@ def load_existing_data():
             try:
                 data = json.load(f)
                 now = datetime.now(timezone.utc)
+                # Zatrzymujemy kupony z ostatnich 72h
                 return [c for c in data if datetime.fromisoformat(c['time'].replace("Z", "+00:00")) > (now - timedelta(hours=72))]
             except: return []
     return []
@@ -121,15 +132,14 @@ def main():
             max_value_found = 0
 
             for name, prices in market_prices.items():
-                # --- KLUCZOWA ZMIANA: CAŁKOWITA REZYGNACJA Z REMISÓW ---
+                # --- CAŁKOWITA REZYGNACJA Z REMISÓW ---
                 if name.lower() == "draw":
                     continue
-                # ------------------------------------------------------
 
                 max_p = max(prices)
                 avg_p = sum(prices) / len(prices)
                 
-                # Skalowanie progu dla lepszego yieldu
+                # Skalowanie progu bezpieczeństwa względem wysokości kursu
                 if max_p < 2.2:
                     req_val = base_threshold
                 elif max_p < 3.2:
@@ -147,7 +157,8 @@ def main():
 
             if best_choice:
                 date_str = match_time.strftime('%d.%m | %H:%M')
-                league_header = league.replace("soccer_", "").replace("_", " ").upper()
+                # Formatowanie nazwy ligi do nagłówka
+                league_header = league.replace("soccer_", "").replace("icehockey_", "").replace("_", " ").upper()
                 
                 msg = (f"{emoji} {league_header}\n━━━━━━━━━━━━━━━\n"
                        f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
