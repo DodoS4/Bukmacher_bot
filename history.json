@@ -1299,5 +1299,18 @@
         "score": "109:122",
         "profit": -125.0,
         "status": "LOSS"
+    },
+    {
+        "id": "b0661a57b942b1766809743145133785",
+        "home": "Anadolu Efes",
+        "away": "Olympiacos",
+        "outcome": "Anadolu Efes",
+        "odds": 3.1,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T17:30:00Z",
+        "score": "68:74",
+        "profit": -250.0,
+        "status": "LOSS"
     }
 ]
