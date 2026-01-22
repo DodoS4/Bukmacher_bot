@@ -1,4 +1,4 @@
-name: Betting Bot Professional - 10 Keys Mode
+name: Betting Bot Professional Dawid
 
 on:
   schedule:
@@ -33,11 +33,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # URUCHOMIENIE SKANERA
-      - name: Run Scanner
+      # JEDNA WSPÓLNA SEKRETY DLA CAŁEGO PROCESU
+      - name: Run Betting Logic
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
+          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
@@ -48,36 +49,35 @@ jobs:
           ODDS_KEY_8: ${{ secrets.ODDS_KEY_8 }}
           ODDS_KEY_9: ${{ secrets.ODDS_KEY_9 }}
           ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
-        run: python start.py
-
-      # ROZLICZANIE I STATYSTYKI
-      - name: Run Settler and Stats
-        env:
-          T_TOKEN: ${{ secrets.T_TOKEN }}
-          T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
-          ODDS_KEY: ${{ secrets.ODDS_KEY }}
         run: |
+          echo "Step 1: Running Scanner..."
+          python start.py
+          echo "Step 2: Running Settler..."
           python settle.py
+          echo "Step 3: Generating Stats..."
           python stats.py
 
-      # ZAPIS DANYCH Z ZABEZPIECZENIEM PRZED BŁĘDEM PATHSPEC
+      # ZAPIS DANYCH Z ZABEZPIECZENIEM
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Sprawdzamy każdy plik przed dodaniem, aby uniknąć błędu "did not match any files"
-          for file in history.json coupons.json bankroll.json key_index.txt; do
+          # Lista plików do synchronizacji
+          FILES_TO_ADD="history.json coupons.json bankroll.json key_index.txt"
+          
+          for file in $FILES_TO_ADD; do
             if [ -f "$file" ]; then
               git add "$file"
-              echo "Dodano do zapisu: $file"
+              echo "✅ Przygotowano do zapisu: $file"
             fi
           done
 
           if ! git diff --cached --quiet; then
-            git commit -m "Bot Update: Syncing stats and key index [skip ci]"
+            git commit -m "Bot Update: Syncing stats, coupons and key index [skip ci]"
             git pull --rebase origin main
             git push origin main
+            echo "🚀 Dane zostały wysłane do repozytorium."
           else
-            echo "Brak zmian w plikach danych."
+            echo "ℹ️ Brak zmian w plikach danych (nic nowego do zapisu)."
           fi
