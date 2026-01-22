@@ -1325,5 +1325,57 @@
         "score": "75:71",
         "profit": 229.6,
         "status": "WIN"
+    },
+    {
+        "id": "467163f7f7d10fc76677bfbc9821d78b",
+        "home": "FC Bayern M\u00fcnchen",
+        "away": "Valencia Basket",
+        "outcome": "FC Bayern M\u00fcnchen",
+        "odds": 2.35,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T19:30:00Z",
+        "score": "97:89",
+        "profit": 267.0,
+        "status": "WIN"
+    },
+    {
+        "id": "a2952e5a7850da7c1a3ddbe128fdc31c",
+        "home": "Real Madrid",
+        "away": "AS Monaco",
+        "outcome": "AS Monaco",
+        "odds": 2.72,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T19:45:00Z",
+        "score": "90:78",
+        "profit": -250.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "5806f59f487ec499c54cb1fc10f8407d",
+        "home": "Paris Basketball",
+        "away": "Dubai Basketball",
+        "outcome": "Dubai Basketball",
+        "odds": 1.99,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T20:00:00Z",
+        "score": "90:99",
+        "profit": 187.8,
+        "status": "WIN"
+    },
+    {
+        "id": "e8343d855851dbf0abb268f7f302db9e",
+        "home": "Pallacanestro Olimpia Milano",
+        "away": "\u017dalgiris",
+        "outcome": "\u017dalgiris",
+        "odds": 2.77,
+        "stake": 250,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-22T19:30:00Z",
+        "score": "90:86",
+        "profit": -250.0,
+        "status": "LOSS"
     }
 ]
