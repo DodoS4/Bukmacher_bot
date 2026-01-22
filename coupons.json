@@ -288,5 +288,15 @@
         "stake": 250,
         "sport": "soccer_germany_bundesliga",
         "time": "2026-01-24T14:30:00Z"
+    },
+    {
+        "id": "231273434ccb5e971d716782952d99c3",
+        "home": "Moreirense FC",
+        "away": "Santa Clara",
+        "outcome": "Santa Clara",
+        "odds": 3.1,
+        "stake": 250,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-24T15:30:00Z"
     }
 ]
