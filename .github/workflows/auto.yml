@@ -34,11 +34,28 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
-      # KROK 1: SKANOWANIE (Przekazujemy pełne 10 kluczy)
+      # TEST KLUCZY: Sprawdzamy status przed skanowaniem
+      - name: Verify API Keys
+        env:
+          ODDS_KEY: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_1: ${{ secrets.ODDS_KEY }}
+          ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
+          ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
+          ODDS_KEY_4: ${{ secrets.ODDS_KEY_4 }}
+          ODDS_KEY_5: ${{ secrets.ODDS_KEY_5 }}
+          ODDS_KEY_6: ${{ secrets.ODDS_KEY_6 }}
+          ODDS_KEY_7: ${{ secrets.ODDS_KEY_7 }}
+          ODDS_KEY_8: ${{ secrets.ODDS_KEY_8 }}
+          ODDS_KEY_9: ${{ secrets.ODDS_KEY_9 }}
+          ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
+        run: python test_keys.py
+
+      # URUCHOMIENIE SKANERA
       - name: Run Scanner
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
+          ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_1: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
@@ -51,28 +68,29 @@ jobs:
           ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
         run: python start.py
 
-      # KROK 2: ROZLICZANIE I STATYSTYKI
+      # ROZLICZANIE I STATYSTYKI
       - name: Run Settler and Stats
         if: github.event.schedule == '30 6 * * *' || github.event.schedule == '30 21 * * *' || github.event_name == 'workflow_dispatch'
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
+          ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_1: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
         run: |
           python settle.py
           python stats.py
 
-      # KROK 3: BEZPIECZNY ZAPIS DANYCH
+      # ZAPIS DANYCH DO REPOZYTORIUM
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add *.json
           if ! git diff --cached --quiet; then
-            git commit -m "Bot Auto-Update: Data Sync [skip ci]"
+            git commit -m "Bot Data Update [skip ci]"
             git pull --rebase origin main
             git push origin main
           else
-            echo "Brak zmian do zapisania."
+            echo "Brak zmian w plikach JSON."
           fi
