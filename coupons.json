@@ -348,5 +348,15 @@
         "stake": 250,
         "sport": "soccer_germany_bundesliga",
         "time": "2026-01-23T19:30:00Z"
+    },
+    {
+        "id": "b2be1655610b0158c733ab6b098b67b2",
+        "home": "San Jose Sharks",
+        "away": "New York Rangers",
+        "outcome": "San Jose Sharks",
+        "odds": 2.48,
+        "stake": 250,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-24T03:10:00Z"
     }
 ]
