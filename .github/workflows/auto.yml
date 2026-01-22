@@ -2,7 +2,8 @@ name: Betting Bot Professional - 10 Keys Mode
 
 on:
   schedule:
-    # SKANOWANIE I ROZLICZANIE: 4 razy dziennie (07:00, 11:00, 15:00, 19:00 UTC)
+    # SKANOWANIE I ROZLICZANIE: 07:00, 11:00, 15:00, 19:00 UTC
+    # W Polsce to: 08:00, 12:00, 16:00, 20:00
     - cron: '0 7,11,15,19 * * *'
   workflow_dispatch: 
 
@@ -49,7 +50,7 @@ jobs:
           ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
         run: python start.py
 
-      # ROZLICZANIE I STATYSTYKI (zawsze po skanowaniu)
+      # ROZLICZANIE I STATYSTYKI
       - name: Run Settler and Stats
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -59,17 +60,24 @@ jobs:
           python settle.py
           python stats.py
 
-      # ZAPIS DANYCH DO REPOZYTORIUM
+      # ZAPIS DANYCH Z ZABEZPIECZENIEM PRZED BŁĘDEM PATHSPEC
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          # Zapisujemy historię, kupony, bankroll oraz pamięć indeksu klucza
-          git add history.json coupons.json bankroll.json key_index.txt
+          
+          # Sprawdzamy każdy plik przed dodaniem, aby uniknąć błędu "did not match any files"
+          for file in history.json coupons.json bankroll.json key_index.txt; do
+            if [ -f "$file" ]; then
+              git add "$file"
+              echo "Dodano do zapisu: $file"
+            fi
+          done
+
           if ! git diff --cached --quiet; then
-            git commit -m "Bot Update: 4-times-daily scan [skip ci]"
+            git commit -m "Bot Update: Syncing stats and key index [skip ci]"
             git pull --rebase origin main
             git push origin main
           else
-            echo "Brak zmian w danych."
+            echo "Brak zmian w plikach danych."
           fi
