@@ -478,5 +478,55 @@
         "stake": 250,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-01-25T15:30:00Z"
+    },
+    {
+        "id": "cd358949d5708d2b0909fa3d5d18cbba",
+        "home": "FSV Mainz 05",
+        "away": "VfL Wolfsburg",
+        "outcome": "FSV Mainz 05",
+        "odds": 2.5,
+        "stake": 250,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T14:30:00Z"
+    },
+    {
+        "id": "251e0102e2db4573c4eb74e3d5f8dc84",
+        "home": "Lecce",
+        "away": "Lazio",
+        "outcome": "Lazio",
+        "odds": 2.3,
+        "stake": 250,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-24T19:45:00Z"
+    },
+    {
+        "id": "35687e2aefebca1baa98b1bc0f774d17",
+        "home": "Juventus",
+        "away": "Napoli",
+        "outcome": "Juventus",
+        "odds": 2.1,
+        "stake": 250,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-25T17:00:00Z"
+    },
+    {
+        "id": "016e617802dc1812996ca074d7306086",
+        "home": "Real Sociedad",
+        "away": "Celta Vigo",
+        "outcome": "Real Sociedad",
+        "odds": 2.06,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-25T17:30:00Z"
+    },
+    {
+        "id": "6cd76abe3cb810a838a568780a6dc6c1",
+        "home": "OFI Crete",
+        "away": "Panetolikos Agrinio",
+        "outcome": "OFI Crete",
+        "odds": 2.03,
+        "stake": 250,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-01-25T16:00:00Z"
     }
 ]
