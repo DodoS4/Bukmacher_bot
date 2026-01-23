@@ -1,75 +1,5 @@
 [
     {
-        "id": "a0b794407c060727a15e7cb6623f8968",
-        "home": "Boston Bruins",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 2.48,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-23T00:10:00Z"
-    },
-    {
-        "id": "7808f42d6a896fccbebf545d1e3ef91f",
-        "home": "Columbus Blue Jackets",
-        "away": "Dallas Stars",
-        "outcome": "Dallas Stars",
-        "odds": 2.45,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-23T00:10:00Z"
-    },
-    {
-        "id": "776b3a3de2f5ccc9c6fa9bf8b1666736",
-        "home": "Montr\u00e9al Canadiens",
-        "away": "Buffalo Sabres",
-        "outcome": "Buffalo Sabres",
-        "odds": 2.92,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-23T00:10:00Z"
-    },
-    {
-        "id": "a29775d7aa76f4a6dd632364ea694a2d",
-        "home": "Winnipeg Jets",
-        "away": "Florida Panthers",
-        "outcome": "Florida Panthers",
-        "odds": 2.54,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-23T01:10:00Z"
-    },
-    {
-        "id": "cc387e402c6be62a7a5c42b3a4b31e2d",
-        "home": "Nashville Predators",
-        "away": "Ottawa Senators",
-        "outcome": "Ottawa Senators",
-        "odds": 2.59,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-23T01:10:00Z"
-    },
-    {
-        "id": "904bf422ee1c9f587068c216954f6152",
-        "home": "Edmonton Oilers",
-        "away": "Pittsburgh Penguins",
-        "outcome": "Pittsburgh Penguins",
-        "odds": 3.55,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-23T02:10:00Z"
-    },
-    {
-        "id": "d21587864199aaa9141885eb644582a2",
-        "home": "Minnesota Wild",
-        "away": "Detroit Red Wings",
-        "outcome": "Detroit Red Wings",
-        "odds": 3.3,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-23T02:40:00Z"
-    },
-    {
         "id": "cd0bb53890d73dc731ce57970db7623d",
         "home": "Carrarese",
         "away": "Empoli",
@@ -368,5 +298,15 @@
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-24T20:00:00Z"
+    },
+    {
+        "id": "e1fed6f50a86a85e91b1a4b832cdc578",
+        "home": "Estoril",
+        "away": "Vit\u00f3ria SC",
+        "outcome": "Estoril",
+        "odds": 2.66,
+        "stake": 250,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-24T20:30:00Z"
     }
 ]
