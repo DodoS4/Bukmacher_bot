@@ -1468,5 +1468,18 @@
         "score": "4:3",
         "profit": -250.0,
         "status": "LOSS"
+    },
+    {
+        "id": "e327b82dc2c5b4c488774549ad97f5e0",
+        "home": "Modo Hockey",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "S\u00f6dert\u00e4lje SK",
+        "odds": 3.75,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T17:00:00Z",
+        "score": "1:4",
+        "profit": 575.0,
+        "status": "WIN"
     }
 ]
