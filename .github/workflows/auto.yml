@@ -1,7 +1,9 @@
-name: Betting Bot Professional Dawid
+Name: Betting Bot Professional Dawid
 
 on:
   schedule:
+    # SKANOWANIE I ROZLICZANIE: 07:00, 11:00, 15:00, 19:00 UTC
+    # W Polsce to: 08:00, 12:00, 16:00, 20:00
     - cron: '0 7,11,15,19 * * *'
   workflow_dispatch: 
 
@@ -31,6 +33,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests python-dateutil
 
+      # JEDNA WSPÓLNA SEKRETY DLA CAŁEGO PROCESU
       - name: Run Betting Logic
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -47,25 +50,36 @@ jobs:
           ODDS_KEY_9: ${{ secrets.ODDS_KEY_9 }}
           ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
         run: |
-          echo "Step 1: Settling old matches..."
-          python settle.py
-          echo "Step 2: Scanning for new value bets..."
+          echo "Step 1: Running Scanner..."
           python start.py
-          echo "Step 3: Updating stats..."
+          echo "Step 2: Running Settler..."
+          python settle.py
+          echo "Step 3: Generating Stats..."
           python stats.py
 
+      # ZAPIS DANYCH Z ROZWIĄZYWANIEM KONFLIKTÓW
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
+          # Pobranie najświeższych zmian z serwera
           git fetch origin main
-          git add history.json coupons.json bankroll.json key_index.txt
           
+          FILES_TO_ADD="history.json coupons.json bankroll.json key_index.txt"
+          for file in $FILES_TO_ADD; do
+            if [ -f "$file" ]; then
+              git add "$file"
+              echo "✅ Przygotowano do zapisu: $file"
+            fi
+          done
+
           if ! git diff --cached --quiet; then
-            git commit -m "Bot Sync: Results & New Bets [skip ci]"
+            git commit -m "Bot Update: Syncing stats, coupons and key index [skip ci]"
+            # Rebase z flagą '-X theirs' rozwiązuje konflikty, dając pierwszeństwo danym wygenerowanym przez bota
             git pull --rebase -X theirs origin main
             git push origin main
+            echo "🚀 Dane zostały wysłane do repozytorium."
           else
-            echo "No changes to commit"
+            echo "ℹ️ Brak zmian w plikach danych (nic nowego do zapisu)."
           fi
