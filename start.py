@@ -4,7 +4,7 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG (WERSJA ROZSZERZONA) =================
+# ================= KONFIGURACJA LIG (BEZ NBA) =================
 SPORTS_CONFIG = {
     # --- HOKEJ ---
     "icehockey_nhl": "🏒", 
@@ -43,13 +43,12 @@ SPORTS_CONFIG = {
     "tennis_wta_australian_open": "🎾"
 }
 
-# ================= OBSŁUGA WIELU API KEYS =================
+# ================= POZOSTAŁA KONFIGURACJA =================
 API_KEYS = []
 if os.getenv("ODDS_KEY"): API_KEYS.append(os.getenv("ODDS_KEY"))
 for i in range(2, 11):
     key = os.getenv(f"ODDS_KEY_{i}")
-    if key and len(key) > 10:
-        API_KEYS.append(key)
+    if key and len(key) > 10: API_KEYS.append(key)
 
 TELEGRAM_TOKEN = os.getenv("T_TOKEN")
 TELEGRAM_CHAT = os.getenv("T_CHAT")
@@ -70,18 +69,37 @@ def save_current_key_idx(idx):
     with open(KEY_STATE_FILE, "w") as f:
         f.write(str(idx))
 
+# ================= NOWA LOGIKA SMART STAKE PRO =================
 def get_smart_stake(league_key):
-    if not os.path.exists(HISTORY_FILE):
-        return BASE_STAKE, 1.03
-    try:
-        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-            history = json.load(f)
-        league_profit = sum(m['profit'] for m in history if m.get('sport') == league_key)
-        if league_profit <= -700: return 125, 1.07
-        if league_profit <= -300: return 200, 1.05
-        return BASE_STAKE, 1.03
-    except:
-        return BASE_STAKE, 1.03
+    """
+    Zwraca stawkę i wymagany próg Value.
+    Dla NHL: +20% do stawki bazowej.
+    Dla stratnych lig: redukcja stawki.
+    """
+    current_multiplier = 1.0
+    threshold = 1.03
+
+    if os.path.exists(HISTORY_FILE):
+        try:
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                history = json.load(f)
+            
+            league_profit = sum(m['profit'] for m in history if m.get('sport') == league_key)
+            
+            # Reakcja na straty
+            if league_profit <= -700: 
+                current_multiplier = 0.5  # 125 PLN
+                threshold = 1.07
+            elif league_profit <= -300: 
+                current_multiplier = 0.8  # 200 PLN
+                threshold = 1.05
+        except: pass
+
+    # NAGRODA DLA NHL (Twoja najlepsza liga)
+    if "nhl" in league_key.lower():
+        return round(BASE_STAKE * 1.2 * current_multiplier, 2), threshold
+    
+    return round(BASE_STAKE * current_multiplier, 2), threshold
 
 def send_telegram(message):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
@@ -100,7 +118,7 @@ def load_existing_data():
     return []
 
 def main():
-    print(f"🚀 START BOT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"🚀 START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     if not API_KEYS:
         print("❌ Błąd: Brak kluczy API!")
         return
@@ -112,8 +130,10 @@ def main():
     max_future = now + timedelta(hours=48)
 
     for league, flag_emoji in SPORTS_CONFIG.items():
+        # Pobieranie inteligentnej stawki
         current_stake, base_threshold = get_smart_stake(league)
-        print(f"📡 SKANOWANIE: {league.upper()}")
+        
+        print(f"📡 SKANOWANIE: {league.upper()} (Stawka: {current_stake} PLN)")
         
         data = None
         attempts = 0
@@ -127,15 +147,11 @@ def main():
                 resp = requests.get(url, params=params)
                 if resp.status_code == 200:
                     data = resp.json()
-                    rem = resp.headers.get('x-requests-remaining', '?')
-                    print(f"  ✅ Klucz {current_key_idx + 1} OK (Zostało: {rem})")
                     break
                 elif resp.status_code in [401, 429]:
-                    print(f"  ⚠️ Klucz {current_key_idx + 1} limit. Przełączam...")
                     current_key_idx = (current_key_idx + 1) % len(API_KEYS)
                     attempts += 1
-                else:
-                    break
+                else: break
             except:
                 current_key_idx = (current_key_idx + 1) % len(API_KEYS)
                 attempts += 1
@@ -174,10 +190,8 @@ def main():
 
             if best_choice:
                 date_str = m_time.strftime('%d.%m | %H:%M')
-                l_header = league.replace("soccer_", "").replace("icehockey_", "").replace("basketball_", "").replace("tennis_", "").replace("_", " ").upper()
-                
-                # Dynamiczne ikony sportu
-                s_icon = "🏒" if "icehockey" in league else "⚽" if "soccer" in league else "🏀" if "basketball" in league else "🎾" if "tennis" in league else "🔹"
+                l_header = league.replace("soccer_", "").replace("icehockey_", "").replace("_", " ").upper()
+                s_icon = "🏒" if "icehockey" in league else "⚽"
                 
                 msg = (f"{s_icon} {flag_emoji} <b>{l_header}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
@@ -200,7 +214,7 @@ def main():
     save_current_key_idx(current_key_idx)
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
-    print(f"✅ KONIEC. Aktywne kupony w bazie: {len(all_coupons)}")
+    print(f"✅ KONIEC. Aktywne kupony: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
