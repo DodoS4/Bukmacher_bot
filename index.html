@@ -11,11 +11,9 @@
         body { background-color: #f9fafb; color: #111827; font-family: 'Inter', sans-serif; }
         .stat-card { transition: transform 0.2s; }
         .stat-card:hover { transform: translateY(-2px); }
-        .custom-gradient { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .league-row:hover { background-color: #f8fafc; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 p-2 md:p-8">
@@ -54,26 +52,21 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <div class="mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h3 class="font-bold mb-6 flex items-center gap-2 text-[11px] text-gray-500 uppercase tracking-widest">
                     <i class="fas fa-chart-line text-blue-500"></i> Akumulacja Zysku (Netto)
                 </h3>
-                <canvas id="profitChart" height="180"></canvas>
-            </div>
-
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 class="font-bold mb-6 flex items-center gap-2 text-[11px] text-gray-500 uppercase tracking-widest">
-                    <i class="fas fa-microchip text-indigo-500"></i> Wydajność Lig
-                </h3>
-                <div id="league-ranking" class="space-y-2 max-h-[400px] overflow-y-auto pr-2"></div>
+                <canvas id="profitChart" height="100"></canvas>
             </div>
         </div>
 
         <div class="mb-10">
-            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic mb-4 px-2">
-                Rozliczone mecze (Grupowane według lig)
-            </h3>
+            <div class="flex justify-between items-center mb-4 px-2">
+                <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic">
+                    Rozliczone mecze (Grupowane według lig)
+                </h3>
+            </div>
             <div id="history-groups" class="space-y-3">
                 </div>
         </div>
@@ -109,12 +102,10 @@
                 const chartLabels = [], chartData = [];
                 const now = new Date();
                 
-                document.getElementById('league-ranking').innerHTML = '';
                 document.getElementById('history-groups').innerHTML = '';
 
                 let validBetsCount = 0;
 
-                // 1. Procesowanie danych
                 history.forEach((m) => {
                     if (m.outcome === 'Draw') return;
 
@@ -145,7 +136,6 @@
                     chartData.push(totalProfit.toFixed(2));
                 });
 
-                // 2. Aktualizacja Liczników
                 document.getElementById('total-profit').innerText = totalProfit.toFixed(2) + ' PLN';
                 document.getElementById('today-profit').innerText = (todayProfit >= 0 ? '+' : '') + todayProfit.toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black ${todayProfit >= 0 ? 'text-green-500' : 'text-red-500'}`;
@@ -154,7 +144,6 @@
                 document.getElementById('yield-val').innerText = totalStaked > 0 ? ((totalProfit / totalStaked) * 100).toFixed(1) + '%' : '0%';
                 document.getElementById('last-update').innerText = 'Ostatnia aktualizacja: ' + new Date().toLocaleTimeString();
 
-                // 3. Generowanie Folderów Lig
                 Object.entries(leagues)
                     .sort((a, b) => b[1].profit - a[1].profit)
                     .forEach(([name, data], index) => {
@@ -162,14 +151,6 @@
                         const lYield = ((data.profit / data.staked) * 100).toFixed(1);
                         const groupId = `group-${index}`;
                         
-                        // Dodanie do rankingu po prawej
-                        document.getElementById('league-ranking').innerHTML += `
-                            <div class="flex justify-between items-center p-3 rounded-lg bg-gray-50 border border-gray-100 mb-2">
-                                <span class="text-[9px] font-black uppercase tracking-tighter">${flag} ${name}</span>
-                                <span class="text-[10px] font-bold ${data.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${data.profit.toFixed(0)}</span>
-                            </div>`;
-
-                        // Dodanie folderu do sekcji głównej
                         document.getElementById('history-groups').innerHTML += `
                             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                                 <button onclick="document.getElementById('${groupId}').classList.toggle('hidden')" 
@@ -178,7 +159,7 @@
                                         <span class="text-lg">${flag}</span>
                                         <div class="text-left">
                                             <div class="text-[10px] font-black uppercase text-slate-700 tracking-widest">${name}</div>
-                                            <div class="text-[8px] text-gray-400 font-bold uppercase">${data.count} rozegranych</div>
+                                            <div class="text-[8px] text-gray-400 font-bold uppercase">${data.count} typów</div>
                                         </div>
                                     </div>
                                     <div class="flex items-center gap-6">
@@ -204,7 +185,7 @@
                                         <tbody class="divide-y divide-gray-100">
                                             ${data.matches.reverse().map(m => `
                                                 <tr class="hover:bg-white transition-colors">
-                                                    <td class="px-6 py-3 font-mono text-gray-400 italic">${m.time ? m.time.split('T')[0] : '--'}</td>
+                                                    <td class="px-6 py-3 font-mono text-gray-400 italic whitespace-nowrap">${m.time ? m.time.split('T')[0] : '--'}</td>
                                                     <td class="px-6 py-3 font-bold text-slate-700">${m.home} - ${m.away}</td>
                                                     <td class="px-6 py-3">${m.outcome} <span class="text-blue-500 font-bold">@${m.odds}</span></td>
                                                     <td class="px-6 py-3 text-right font-black ${m.profit > 0 ? 'text-green-500' : 'text-red-500'}">
@@ -246,6 +227,7 @@
                 },
                 options: { 
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: { legend: { display: false } }, 
                     scales: { 
                         x: { display: false },
