@@ -1,19 +1,24 @@
-import os
+Import os
 import requests
 import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG =================
+# ================= KONFIGURACJA LIG (WERSJA ROZSZERZONA) =================
 SPORTS_CONFIG = {
     # --- HOKEJ ---
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_allsvenskan": "🇸🇪",
+    "icehockey_sweden_svenska_rinkbandy": "🇸🇪",
     "icehockey_finland_liiga": "🇫🇮",
     "icehockey_germany_del": "🇩🇪",
     "icehockey_czech_extraliga": "🇨🇿",
     "icehockey_switzerland_nla": "🇨🇭",
     "icehockey_austria_liga": "🇦🇹",
+    "icehockey_denmark_metal_ligaen": "🇩🇰",
+    "icehockey_norway_eliteserien": "🇳🇴",
+    "icehockey_slovakia_extraliga": "🇸🇰",
+
     # --- PIŁKA NOŻNA ---
     "soccer_epl": "⚽",
     "soccer_germany_bundesliga": "🇩🇪",
@@ -24,10 +29,21 @@ SPORTS_CONFIG = {
     "soccer_portugal_primeira_liga": "🇵🇹",
     "soccer_netherlands_erevidisie": "🇳🇱",
     "soccer_turkey_super_lig": "🇹🇷",
-    "soccer_belgium_first_division_a": "🇧🇪"
+    "soccer_belgium_first_division_a": "🇧🇪",
+    "soccer_austria_bundesliga": "🇦🇹",
+    "soccer_denmark_superliga": "🇩🇰",
+    "soccer_greece_super_league": "🇬🇷",
+    "soccer_switzerland_superleague": "🇨🇭",
+    "soccer_scotland_premier_league": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+
+    # --- INNE ---
+    "basketball_euroleague": "🏀",
+    "tennis_atp_australian_open": "🎾",
+    "tennis_wta_australian_open": "🎾"
 }
 
-# ================= OBSŁUGA API KEYS =================
+# ================= OBSŁUGA WIELU API KEYS =================
 API_KEYS = []
 if os.getenv("ODDS_KEY"): API_KEYS.append(os.getenv("ODDS_KEY"))
 for i in range(2, 11):
@@ -39,7 +55,6 @@ TELEGRAM_TOKEN = os.getenv("T_TOKEN")
 TELEGRAM_CHAT = os.getenv("T_CHAT")
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
-BANKROLL_FILE = "bankroll.json"
 KEY_STATE_FILE = "key_index.txt"
 BASE_STAKE = 250
 
@@ -71,7 +86,7 @@ def get_smart_stake(league_key):
 def send_telegram(message):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    try: requests.post(url, json={"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "HTML"}, timeout=10)
+    try: requests.post(url, json={"chat_id": TELEGRAM_CHAT, "text": message, "parse_mode": "HTML"})
     except: pass
 
 def load_existing_data():
@@ -86,17 +101,6 @@ def load_existing_data():
 
 def main():
     print(f"🚀 START BOT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    
-    # --- BEZPIECZNIK BANKROLLA ---
-    if os.path.exists(BANKROLL_FILE):
-        try:
-            with open(BANKROLL_FILE, "r") as f:
-                br = json.load(f).get("bankroll", 0)
-                if br < 150:
-                    print(f"🛑 STOP: Bankroll ({br} PLN) jest zbyt niski na kolejną stawkę.")
-                    return
-        except: pass
-
     if not API_KEYS:
         print("❌ Błąd: Brak kluczy API!")
         return
@@ -120,15 +124,15 @@ def main():
             params = {"apiKey": active_key, "regions": "eu", "markets": "h2h"}
             
             try:
-                # DODANY TIMEOUT 20s
-                resp = requests.get(url, params=params, timeout=20)
+                resp = requests.get(url, params=params)
                 if resp.status_code == 200:
                     data = resp.json()
+                    rem = resp.headers.get('x-requests-remaining', '?')
+                    print(f"  ✅ Klucz {current_key_idx + 1} OK (Zostało: {rem})")
                     break
                 elif resp.status_code in [401, 429]:
                     print(f"  ⚠️ Klucz {current_key_idx + 1} limit. Przełączam...")
                     current_key_idx = (current_key_idx + 1) % len(API_KEYS)
-                    save_current_key_idx(current_key_idx) # Zapis natychmiastowy
                     attempts += 1
                 else:
                     break
@@ -157,8 +161,6 @@ def main():
 
             for name, prices in market_prices.items():
                 if name.lower() == "draw": continue
-                if len(prices) < 3: continue # Wymagamy min. 3 bukmacherów do średniej
-                
                 max_p, avg_p = max(prices), sum(prices) / len(prices)
                 
                 req_val = base_threshold
@@ -166,14 +168,16 @@ def main():
                 if max_p >= 3.2: req_val += 0.04
                 
                 curr_val = max_p / avg_p
-                if 1.90 <= max_p <= 4.5 and curr_val > req_val:
+                if 1.95 <= max_p <= 4.0 and curr_val > req_val:
                     if curr_val > max_val:
                         max_val, best_odds, best_choice = curr_val, max_p, name
 
             if best_choice:
                 date_str = m_time.strftime('%d.%m | %H:%M')
-                l_header = league.replace("soccer_", "").replace("icehockey_", "").upper().replace("_", " ")
-                s_icon = "🏒" if "icehockey" in league else "⚽"
+                l_header = league.replace("soccer_", "").replace("icehockey_", "").replace("basketball_", "").replace("tennis_", "").replace("_", " ").upper()
+                
+                # Dynamiczne ikony sportu
+                s_icon = "🏒" if "icehockey" in league else "⚽" if "soccer" in league else "🏀" if "basketball" in league else "🎾" if "tennis" in league else "🔹"
                 
                 msg = (f"{s_icon} {flag_emoji} <b>{l_header}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
@@ -196,7 +200,11 @@ def main():
     save_current_key_idx(current_key_idx)
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
-    print(f"✅ KONIEC. Aktywne kupony: {len(all_coupons)}")
+    print(f"✅ KONIEC. Aktywne kupony w bazie: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
+
+
+
+Sprawdź mój kod 
