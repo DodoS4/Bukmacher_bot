@@ -1650,5 +1650,18 @@
         "score": "91:98",
         "profit": -250.0,
         "status": "LOSS"
+    },
+    {
+        "id": "23faa2755b2a07c3a0ca03bd4fc6a8e3",
+        "home": "Levante",
+        "away": "Elche CF",
+        "outcome": "Elche CF",
+        "odds": 3.15,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-23T20:00:00Z",
+        "score": "3:2",
+        "profit": -250.0,
+        "status": "LOSS"
     }
 ]

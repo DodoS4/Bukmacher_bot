@@ -1,15 +1,5 @@
 [
     {
-        "id": "23faa2755b2a07c3a0ca03bd4fc6a8e3",
-        "home": "Levante",
-        "away": "Elche CF",
-        "outcome": "Elche CF",
-        "odds": 3.15,
-        "stake": 250,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-01-23T20:00:00Z"
-    },
-    {
         "id": "e494f3595a8f0c0a7322e7cd6cf7fa5a",
         "home": "Casa Pia",
         "away": "AVS Futebol SAD",
