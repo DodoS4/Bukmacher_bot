@@ -33,15 +33,15 @@
         <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
-                <p id="today-profit" class="text-lg font-black tracking-tighter">0.00</p>
+                <p id="today-profit" class="text-lg font-black tracking-tighter">0.00 PLN</p>
             </div>
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center border-b-2 border-b-blue-500">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk Total</p>
-                <p id="total-profit" class="text-lg font-black text-blue-600 tracking-tighter">0.00</p>
+                <p id="total-profit" class="text-lg font-black text-blue-600 tracking-tighter">0.00 PLN</p>
             </div>
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Obrót</p>
-                <p id="total-staked" class="text-lg font-black tracking-tighter">0.00</p>
+                <p id="total-staked" class="text-lg font-black tracking-tighter">0.00 PLN</p>
             </div>
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Yield %</p>
@@ -95,7 +95,6 @@
                 const dailyProfits = {}; 
                 const now = new Date();
 
-                // Sortowanie chronologiczne dla wykresu
                 const sortedHistory = [...history].sort((a, b) => new Date(a.time) - new Date(b.time));
 
                 sortedHistory.forEach((m) => {
@@ -109,7 +108,6 @@
                     const dateObj = new Date(m.time);
                     const dateKey = dateObj.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' });
 
-                    // Przypisanie zysku narastającego do daty
                     dailyProfits[dateKey] = totalProfit;
 
                     if ((now - dateObj) < (24 * 60 * 60 * 1000)) todayProfit += profit;
@@ -122,16 +120,14 @@
                     leagues[lName].matches.push(m);
                 });
 
-                // UI
                 document.getElementById('total-profit').innerText = totalProfit.toFixed(2) + ' PLN';
-                document.getElementById('today-profit').innerText = (todayProfit >= 0 ? '+' : '') + todayProfit.toFixed(2);
+                document.getElementById('today-profit').innerText = (todayProfit >= 0 ? '+' : '') + todayProfit.toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black ${todayProfit >= 0 ? 'text-green-500' : 'text-red-500'}`;
                 document.getElementById('total-staked').innerText = totalStaked.toFixed(2) + ' PLN';
                 document.getElementById('total-bets').innerText = history.length;
                 document.getElementById('yield-val').innerText = totalStaked > 0 ? ((totalProfit / totalStaked) * 100).toFixed(1) + '%' : '0%';
                 document.getElementById('last-update').innerText = 'Sync: ' + new Date().toLocaleTimeString();
 
-                // Grupy ligowe
                 const historyGroups = document.getElementById('history-groups');
                 historyGroups.innerHTML = '';
                 Object.entries(leagues).sort((a,b) => b[1].profit - a[1].profit).forEach(([name, data], i) => {
@@ -145,7 +141,7 @@
                                     <span class="text-[10px] font-black uppercase text-slate-700 truncate max-w-[150px]">${name}</span>
                                 </div>
                                 <div class="flex items-center gap-4">
-                                    <span class="text-[11px] font-black ${data.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${data.profit > 0 ? '+' : ''}${data.profit.toFixed(0)}</span>
+                                    <span class="text-[11px] font-black ${data.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${data.profit > 0 ? '+' : ''}${data.profit.toFixed(2)} PLN</span>
                                     <i class="fas fa-chevron-down text-gray-300 text-[10px]"></i>
                                 </div>
                             </button>
@@ -156,7 +152,7 @@
                                             <span class="font-bold text-slate-800">${m.home} - ${m.away}</span>
                                             <span class="text-[8px] text-gray-400 italic">${m.time.split('T')[0]}</span>
                                         </div>
-                                        <span class="font-black ${m.profit > 0 ? 'text-green-500' : 'text-red-500'}">${parseFloat(m.profit).toFixed(2)}</span>
+                                        <span class="font-black ${m.profit > 0 ? 'text-green-500' : 'text-red-500'}">${parseFloat(m.profit).toFixed(2)} PLN</span>
                                     </div>
                                 `).join('')}
                             </div>
@@ -198,7 +194,7 @@
                             grid: { display: false } 
                         },
                         y: { 
-                            ticks: { font: { size: 9 }, callback: value => value + ' zł' },
+                            ticks: { font: { size: 9 }, callback: value => value + ' PLN' },
                             grid: { color: '#f1f5f9' }
                         }
                     }
@@ -206,7 +202,7 @@
             });
         }
 
-            setInterval(() => { 
+        setInterval(() => { 
             countdown--; 
             document.getElementById('refresh-timer').innerText = `Ref: ${countdown}s`; 
             if(countdown <= 0) { loadData(); countdown = 300; }
