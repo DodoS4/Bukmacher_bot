@@ -1481,5 +1481,31 @@
         "score": "1:4",
         "profit": 575.0,
         "status": "WIN"
+    },
+    {
+        "id": "5ccaf3e6d77cb70f367e7a6d13ca04d0",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "\u00d6stersunds IK",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 2.55,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T18:00:00Z",
+        "score": "1:3",
+        "profit": 311.0,
+        "status": "WIN"
+    },
+    {
+        "id": "6ec08430ff5f77a6e4c74acce8bb4760",
+        "home": "Vimmerby HC",
+        "away": "Almtuna IS",
+        "outcome": "Vimmerby HC",
+        "odds": 2.25,
+        "stake": 250,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-23T18:00:00Z",
+        "score": "2:2",
+        "profit": -250.0,
+        "status": "LOSS"
     }
 ]

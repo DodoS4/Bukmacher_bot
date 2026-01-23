@@ -80,16 +80,6 @@
         "time": "2026-01-23T18:00:00Z"
     },
     {
-        "id": "5ccaf3e6d77cb70f367e7a6d13ca04d0",
-        "home": "V\u00e4ster\u00e5s IK",
-        "away": "\u00d6stersunds IK",
-        "outcome": "\u00d6stersunds IK",
-        "odds": 2.55,
-        "stake": 250,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-23T18:00:00Z"
-    },
-    {
         "id": "e5ab08985478075eb4dda331157df055",
         "home": "Kalmar HC",
         "away": "BIK Karlskoga",
@@ -118,16 +108,6 @@
         "stake": 250,
         "sport": "basketball_euroleague",
         "time": "2026-01-23T19:30:00Z"
-    },
-    {
-        "id": "6ec08430ff5f77a6e4c74acce8bb4760",
-        "home": "Vimmerby HC",
-        "away": "Almtuna IS",
-        "outcome": "Vimmerby HC",
-        "odds": 2.25,
-        "stake": 250,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-23T18:00:00Z"
     },
     {
         "id": "a69e2e233b2af45e3178f58a6eab6d4e",
@@ -518,5 +498,15 @@
         "stake": 250,
         "sport": "soccer_greece_super_league",
         "time": "2026-01-25T16:00:00Z"
+    },
+    {
+        "id": "76ba4426a6a4d04532c74a44eea4c848",
+        "home": "Alav\u00e9s",
+        "away": "Real Betis",
+        "outcome": "Real Betis",
+        "odds": 2.92,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-25T20:00:00Z"
     }
 ]
