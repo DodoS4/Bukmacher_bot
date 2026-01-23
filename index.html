@@ -15,6 +15,7 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .league-row:hover { background-color: #f8fafc; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 p-2 md:p-8">
@@ -31,24 +32,24 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center md:text-left">
+            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100">
                 <p class="text-[9px] text-gray-400 uppercase font-black tracking-widest mb-1">Zysk 24h</p>
                 <p id="today-profit" class="text-lg font-black text-gray-800">0.00</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center md:text-left">
+            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100">
                 <p class="text-[9px] text-gray-400 uppercase font-black tracking-widest mb-1">Zysk Total</p>
                 <p id="total-profit" class="text-lg font-black text-blue-600">0.00</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center md:text-left">
+            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100">
                 <p class="text-[9px] text-gray-400 uppercase font-black tracking-widest mb-1">Obrót</p>
                 <p id="total-staked" class="text-lg font-black text-gray-800">0.00</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center md:text-left">
+            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100">
                 <p class="text-[9px] text-gray-400 uppercase font-black tracking-widest mb-1">Yield %</p>
                 <p id="yield-val" class="text-lg font-black text-orange-500">0%</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center md:text-left col-span-2 md:col-span-1">
-                <p class="text-[9px] text-gray-400 uppercase font-black tracking-widest mb-1">Liczba Typów</p>
+            <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 col-span-2 md:col-span-1">
+                <p class="text-[9px] text-gray-400 uppercase font-black tracking-widest mb-1">Typy</p>
                 <p id="total-bets" class="text-lg font-black text-gray-800">0</p>
             </div>
         </div>
@@ -63,38 +64,40 @@
 
             <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h3 class="font-bold mb-6 flex items-center gap-2 text-[11px] text-gray-500 uppercase tracking-widest">
-                    <i class="fas fa-microchip text-indigo-500"></i> Wydajność Lig (Yield)
+                    <i class="fas fa-microchip text-indigo-500"></i> Wydajność Lig
                 </h3>
-                <div id="league-ranking" class="space-y-2 max-h-[400px] overflow-y-auto pr-2">
-                    </div>
+                <div id="league-ranking" class="space-y-2 max-h-[400px] overflow-y-auto pr-2"></div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 mb-10">
-            <div class="p-4 bg-gray-50 border-b flex justify-between items-center">
-                <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic">Ostatnie Rozliczenia (Zwycięstwa/Porażki)</h3>
-                <span class="text-[9px] px-2 py-1 bg-white border rounded text-gray-400 font-bold uppercase">Tylko 1-2</span>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
-                    <thead class="text-[9px] text-gray-400 uppercase border-b bg-gray-50/50">
-                        <tr>
-                            <th class="px-6 py-4">Data</th>
-                            <th class="px-6 py-4">Mecz / Dyscyplina</th>
-                            <th class="px-6 py-4">Typ / Kurs</th>
-                            <th class="px-6 py-4">Wynik</th>
-                            <th class="px-6 py-4 text-right">Zysk/Strata</th>
-                        </tr>
-                    </thead>
-                    <tbody id="history-table" class="divide-y divide-gray-100"></tbody>
-                </table>
-            </div>
+        <div class="mb-10">
+            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic mb-4 px-2">
+                Rozliczone mecze (Grupowane według lig)
+            </h3>
+            <div id="history-groups" class="space-y-3">
+                </div>
         </div>
     </div>
 
     <script>
         let profitChart = null;
         let countdown = 300;
+
+        const FLAG_MAP = {
+            "AUSTRIA": "🇦🇹", "DENMARK": "🇩🇰", "NORWAY": "🇳🇴", "SLOVAKIA": "🇸🇰",
+            "SWEDEN": "🇸🇪", "FINLAND": "🇫🇮", "GERMANY": "🇩🇪", "CZECH": "🇨🇿",
+            "SWITZERLAND": "🇨🇭", "POLAND": "🇵🇱", "SPAIN": "🇪🇸", "ITALY": "🇮🇹",
+            "FRANCE": "🇫🇷", "PORTUGAL": "🇵🇹", "NETHERLANDS": "🇳🇱", "TURKEY": "🇹🇷",
+            "BELGIUM": "🇧🇪", "GREECE": "🇬🇷", "SCOTLAND": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "UK": "🇬🇧", 
+            "USA": "🇺🇸", "NHL": "🇺🇸", "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "NBA": "🇺🇸", "AUSTRALIAN": "🇦🇺"
+        };
+
+        function getFlag(name) {
+            for (const [key, flag] of Object.entries(FLAG_MAP)) {
+                if (name.includes(key)) return flag;
+            }
+            return "🏳️";
+        }
 
         async function loadData() {
             try {
@@ -106,13 +109,13 @@
                 const chartLabels = [], chartData = [];
                 const now = new Date();
                 
-                document.getElementById('history-table').innerHTML = '';
                 document.getElementById('league-ranking').innerHTML = '';
+                document.getElementById('history-groups').innerHTML = '';
 
                 let validBetsCount = 0;
 
+                // 1. Procesowanie danych
                 history.forEach((m) => {
-                    // Filtr strategii: Ignorujemy remisy
                     if (m.outcome === 'Draw') return;
 
                     validBetsCount++;
@@ -127,65 +130,93 @@
                         todayProfit += profit;
                     }
 
-                    // Statystyki per liga
-                    let lName = m.sport.replace('soccer_', '').replace('icehockey_', '').replace('basketball_', '').replace('tennis_', '').replace(/_/g, ' ').toUpperCase();
+                    let lRaw = m.sport.toUpperCase();
+                    let lName = lRaw.replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace('BASKETBALL_', '').replace('TENNIS_', '').replace(/_/g, ' ');
+                    
                     if (!leagues[lName]) {
-                        leagues[lName] = { profit: 0, staked: 0, count: 0 };
+                        leagues[lName] = { profit: 0, staked: 0, count: 0, matches: [] };
                     }
                     leagues[lName].profit += profit;
                     leagues[lName].staked += stake;
                     leagues[lName].count += 1;
+                    leagues[lName].matches.push(m);
                     
                     chartLabels.push(validBetsCount);
                     chartData.push(totalProfit.toFixed(2));
                 });
 
-                // Aktualizacja UI
+                // 2. Aktualizacja Liczników
                 document.getElementById('total-profit').innerText = totalProfit.toFixed(2) + ' PLN';
                 document.getElementById('today-profit').innerText = (todayProfit >= 0 ? '+' : '') + todayProfit.toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black ${todayProfit >= 0 ? 'text-green-500' : 'text-red-500'}`;
                 document.getElementById('total-staked').innerText = totalStaked.toFixed(2) + ' PLN';
                 document.getElementById('total-bets').innerText = validBetsCount;
-                
-                const totalYield = totalStaked > 0 ? ((totalProfit / totalStaked) * 100).toFixed(1) : 0;
-                document.getElementById('yield-val').innerText = totalYield + '%';
+                document.getElementById('yield-val').innerText = totalStaked > 0 ? ((totalProfit / totalStaked) * 100).toFixed(1) + '%' : '0%';
                 document.getElementById('last-update').innerText = 'Ostatnia aktualizacja: ' + new Date().toLocaleTimeString();
 
-                // Ranking lig z Yieldem
+                // 3. Generowanie Folderów Lig
                 Object.entries(leagues)
                     .sort((a, b) => b[1].profit - a[1].profit)
-                    .forEach(([name, data]) => {
+                    .forEach(([name, data], index) => {
+                        const flag = getFlag(name);
                         const lYield = ((data.profit / data.staked) * 100).toFixed(1);
-                        const yieldColor = lYield >= 0 ? 'text-green-500' : 'text-red-500';
+                        const groupId = `group-${index}`;
                         
+                        // Dodanie do rankingu po prawej
                         document.getElementById('league-ranking').innerHTML += `
-                            <div class="flex justify-between items-center p-3 rounded-lg bg-gray-50 border border-gray-100 mb-2 hover:bg-white transition-all shadow-hover">
-                                <div class="flex flex-col">
-                                    <span class="text-[9px] font-black uppercase text-slate-700">${name}</span>
-                                    <span class="text-[8px] text-gray-400 font-bold uppercase">${data.count} typów</span>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-[11px] font-black ${data.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${data.profit > 0 ? '+' : ''}${data.profit.toFixed(0)} PLN</div>
-                                    <div class="text-[9px] font-bold ${yieldColor}">Y: ${lYield}%</div>
+                            <div class="flex justify-between items-center p-3 rounded-lg bg-gray-50 border border-gray-100 mb-2">
+                                <span class="text-[9px] font-black uppercase tracking-tighter">${flag} ${name}</span>
+                                <span class="text-[10px] font-bold ${data.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${data.profit.toFixed(0)}</span>
+                            </div>`;
+
+                        // Dodanie folderu do sekcji głównej
+                        document.getElementById('history-groups').innerHTML += `
+                            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                                <button onclick="document.getElementById('${groupId}').classList.toggle('hidden')" 
+                                        class="w-full flex justify-between items-center p-4 hover:bg-gray-50 transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-lg">${flag}</span>
+                                        <div class="text-left">
+                                            <div class="text-[10px] font-black uppercase text-slate-700 tracking-widest">${name}</div>
+                                            <div class="text-[8px] text-gray-400 font-bold uppercase">${data.count} rozegranych</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-6">
+                                        <div class="text-right">
+                                            <div class="text-[11px] font-black ${data.profit >= 0 ? 'text-green-600' : 'text-red-600'}">
+                                                ${data.profit > 0 ? '+' : ''}${data.profit.toFixed(2)} PLN
+                                            </div>
+                                            <div class="text-[8px] font-bold text-gray-400">YIELD: ${lYield}%</div>
+                                        </div>
+                                        <i class="fas fa-chevron-down text-gray-300 text-xs"></i>
+                                    </div>
+                                </button>
+                                <div id="${groupId}" class="hidden border-t border-gray-50 bg-gray-50/30 overflow-x-auto">
+                                    <table class="w-full text-left text-[10px]">
+                                        <thead class="bg-gray-100/50 text-gray-400 uppercase text-[8px] font-bold">
+                                            <tr>
+                                                <th class="px-6 py-2">Data</th>
+                                                <th class="px-6 py-2">Mecz</th>
+                                                <th class="px-6 py-2">Typ</th>
+                                                <th class="px-6 py-2 text-right">Zysk</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-100">
+                                            ${data.matches.reverse().map(m => `
+                                                <tr class="hover:bg-white transition-colors">
+                                                    <td class="px-6 py-3 font-mono text-gray-400 italic">${m.time ? m.time.split('T')[0] : '--'}</td>
+                                                    <td class="px-6 py-3 font-bold text-slate-700">${m.home} - ${m.away}</td>
+                                                    <td class="px-6 py-3">${m.outcome} <span class="text-blue-500 font-bold">@${m.odds}</span></td>
+                                                    <td class="px-6 py-3 text-right font-black ${m.profit > 0 ? 'text-green-500' : 'text-red-500'}">
+                                                        ${m.profit > 0 ? '+' : ''}${parseFloat(m.profit).toFixed(2)}
+                                                    </td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>`;
                     });
-
-                // Tabela (ostatnie 40)
-                history.filter(m => m.outcome !== 'Draw').slice().reverse().slice(0, 40).forEach(m => {
-                    const isWin = m.profit > 0;
-                    document.getElementById('history-table').innerHTML += `
-                        <tr class="hover:bg-blue-50/20 transition-colors">
-                            <td class="px-6 py-4 text-[9px] text-gray-400 font-mono italic">${m.time ? m.time.split('T')[0] : '--'}</td>
-                            <td class="px-6 py-4">
-                                <div class="text-[11px] font-bold text-slate-800">${m.home} - ${m.away}</div>
-                                <div class="text-[8px] text-gray-400 uppercase font-bold tracking-tighter">${m.sport.replace(/_/g, ' ')}</div>
-                            </td>
-                            <td class="px-6 py-4 text-[10px] font-medium text-gray-600">${m.outcome} <span class="text-blue-600 font-bold ml-1">@${m.odds}</span></td>
-                            <td class="px-6 py-4 text-[10px] font-mono font-bold text-slate-400">${m.score || '...'}</td>
-                            <td class="px-6 py-4 text-right font-black ${isWin ? 'text-green-500' : 'text-red-500'}">${isWin ? '+' : ''}${m.profit.toFixed(2)}</td>
-                        </tr>`;
-                });
 
                 updateChart(chartLabels, chartData);
                 countdown = 300;
@@ -218,10 +249,7 @@
                     plugins: { legend: { display: false } }, 
                     scales: { 
                         x: { display: false },
-                        y: { 
-                            ticks: { color: '#94a3b8', font: { size: 9 } }, 
-                            grid: { color: '#f1f5f9' } 
-                        }
+                        y: { ticks: { color: '#94a3b8', font: { size: 9 } }, grid: { color: '#f1f5f9' } }
                     } 
                 }
             });
