@@ -1,4 +1,4 @@
-Import os
+import os
 import requests
 import json
 from datetime import datetime
@@ -8,7 +8,7 @@ COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 BANKROLL_FILE = "bankroll.json"
 
-# Obsługa 10 kluczy API (zgodnie z systemem w start.py)
+# Obsługa 10 kluczy API
 API_KEYS = []
 if os.getenv("ODDS_KEY"): API_KEYS.append(os.getenv("ODDS_KEY"))
 for i in range(2, 11):
@@ -18,17 +18,15 @@ for i in range(2, 11):
 
 def settle_matches():
     print(f"🔄 START ROZLICZANIA: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"🔑 Dostępnych kluczy do rozliczeń: {len(API_KEYS)}")
     
     if not os.path.exists(COUPONS_FILE):
-        print("ℹ️ Brak pliku kuponów do rozliczenia.")
+        print("ℹ️ Brak pliku kuponów.")
         return
         
     try:
         with open(COUPONS_FILE, "r", encoding="utf-8") as f:
             coupons = json.load(f)
-    except Exception as e:
-        print(f"❌ Błąd odczytu kuponów: {e}")
+    except:
         return
     
     if not coupons:
@@ -36,25 +34,20 @@ def settle_matches():
         return
 
     history = json.load(open(HISTORY_FILE, "r", encoding="utf-8")) if os.path.exists(HISTORY_FILE) else []
-    
-    if os.path.exists(BANKROLL_FILE):
-        bankroll_data = json.load(open(BANKROLL_FILE, "r", encoding="utf-8"))
-    else:
-        bankroll_data = {"bankroll": 1000.0} 
+    bankroll_data = json.load(open(BANKROLL_FILE, "r", encoding="utf-8")) if os.path.exists(BANKROLL_FILE) else {"bankroll": 1000.0}
     
     updated_coupons = []
     new_history = []
     leagues = list(set(c['sport'] for c in coupons))
     results_cache = {}
     
-    # KROK 1: Pobieranie wyników (Rotacja 10 kluczy)
+    # KROK 1: Pobieranie wyników
     key_idx = 0
     for league in leagues:
         success = False
         attempts = 0
         while attempts < len(API_KEYS):
             active_key = API_KEYS[key_idx]
-            # Sprawdzamy wyniki z ostatnich 3 dni
             url = f"https://api.the-odds-api.com/v4/sports/{league}/scores/?apiKey={active_key}&daysFrom=3"
             try:
                 resp = requests.get(url, timeout=15)
@@ -63,7 +56,6 @@ def settle_matches():
                     success = True
                     break
                 elif resp.status_code in [401, 429]:
-                    print(f"⚠️ Klucz {key_idx + 1} wyczerpany/limit. Przełączam...")
                     key_idx = (key_idx + 1) % len(API_KEYS)
                     attempts += 1
                 else:
@@ -77,17 +69,14 @@ def settle_matches():
         league_data = results_cache.get(bet['sport'], [])
         match = next((m for m in league_data if m['id'] == bet['id']), None)
         
-        # Rozliczamy tylko ukończone mecze
         if match and match.get('completed'):
             try:
                 scores = match.get('scores', [])
                 h_score, a_score = None, None
 
                 if scores:
-                    # Szukanie po nazwie drużyny - obsługa Tenisa, Hokeja i Piłki
                     h_score_obj = next((s for s in scores if s['name'] == bet['home']), None)
                     a_score_obj = next((s for s in scores if s['name'] == bet['away']), None)
-                    
                     if h_score_obj and a_score_obj:
                         h_score = int(h_score_obj['score'])
                         a_score = int(a_score_obj['score'])
@@ -95,20 +84,22 @@ def settle_matches():
                 if h_score is not None:
                     bet['score'] = f"{h_score}:{a_score}"
                     
-                    # Logika zwycięzcy
-                    if h_score > a_score:
-                        actual_winner = bet['home']
-                    elif a_score > h_score:
-                        actual_winner = bet['away']
-                    else:
-                        actual_winner = "Draw"
+                    if h_score > a_score: actual_winner = bet['home']
+                    elif a_score > h_score: actual_winner = bet['away']
+                    else: actual_winner = "Draw"
 
-                    # Rozliczenie (Podatek 12% od stawki)
+                    # ROZLICZENIE
                     if bet['outcome'] == actual_winner:
+                        # WYGRANA: (Stawka * 0.88 * Kurs) - Stawka
                         clean_stake = float(bet['stake']) * 0.88
                         bet['profit'] = round((clean_stake * float(bet['odds'])) - float(bet['stake']), 2)
                         bet['status'] = "WIN"
+                    elif actual_winner == "Draw" and bet['outcome'] not in [bet['home'], bet['away'], "Draw"]:
+                        # ZWROT (np. jeśli system postawił coś innego a był remis - do decyzji)
+                        bet['profit'] = 0.0
+                        bet['status'] = "VOID"
                     else:
+                        # PRZEGRANA
                         bet['profit'] = -float(bet['stake'])
                         bet['status'] = "LOSS"
 
@@ -117,8 +108,7 @@ def settle_matches():
                     print(f"✅ {bet['home']} - {bet['away']} | {bet['score']} | {bet['status']} ({bet['profit']} PLN)")
                 else:
                     updated_coupons.append(bet)
-            except Exception as e:
-                print(f"⚠️ Błąd przy meczu {bet['id']}: {e}")
+            except:
                 updated_coupons.append(bet)
         else:
             updated_coupons.append(bet)
@@ -136,7 +126,7 @@ def settle_matches():
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(updated_coupons, f, indent=4)
     
-    print(f"🏁 KONIEC. Rozliczono: {len(new_history)} | Aktywne: {len(updated_coupons)}")
+    print(f"🏁 Rozliczono: {len(new_history)} | Aktywne: {len(updated_coupons)}")
 
 if __name__ == "__main__":
     settle_matches()
