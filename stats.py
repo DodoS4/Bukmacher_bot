@@ -29,39 +29,25 @@ def send_telegram(message):
     except: pass
 
 def analyze_stats():
-    # 1. Wczytywanie plików
+    # 1. Wczytywanie plików (Z poprawką kodowania)
     history = []
     if os.path.exists(HISTORY_FILE):
         with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-            history = json.load(f)
+            try:
+                history = json.load(f)
+            except: history = []
     
     coupons = []
     if os.path.exists(COUPONS_FILE):
         with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-            coupons = json.load(f)
+            try:
+                coupons = json.load(f)
+            except: coupons = []
 
-    br_data = {"bankroll": 0.0}
-    if os.path.exists(BANKROLL_FILE):
-        with open(BANKROLL_FILE, "r", encoding="utf-8") as f:
-            br_data = json.load(f)
-
-    # 2. Liczenie oczekujących
+    # 2. Liczenie oczekujących (z kuponów)
     pending_count = len([c for c in coupons if not c.get('result')])
     
-    now = datetime.now()
-    next_24h = now + timedelta(hours=24)
-    upcoming_24h_count = 0
-    
-    for c in coupons:
-        if 'start_time' in c:
-            try:
-                st_str = c['start_time'].replace('Z', '+00:00')
-                match_time = datetime.fromisoformat(st_str).replace(tzinfo=None)
-                if now <= match_time <= next_24h:
-                    upcoming_24h_count += 1
-            except: continue
-
-    # 3. Analiza historii
+    # 3. Analiza historii (Całkowita i spójna ze stroną WWW)
     league_stats = {}
     total_net_profit = 0.0
     total_turnover = 0.0
@@ -69,63 +55,54 @@ def analyze_stats():
     valid_bets_count = 0
 
     for bet in history:
-        if bet.get('outcome') == 'Draw' and bet.get('status') == 'VOID':
-            continue
-
-        valid_bets_count += 1
-        profit = bet.get('profit', 0)
-        total_net_profit += profit
-        total_turnover += bet.get('stake', 250)
+        # Pomiń tylko jeśli to zwrot (Draw/VOID), ale licz wszystko co ma zysk/stratę
+        profit = float(bet.get('profit', 0))
+        stake = float(bet.get('stake', 250))
         
-        if bet.get('status') == 'WIN':
+        # Jeśli mecz jest rozliczony (ma profit różny od 0 lub status WIN/LOSS)
+        valid_bets_count += 1
+        total_net_profit += profit
+        total_turnover += stake
+        
+        if profit > 0 or bet.get('status') == 'WIN':
             total_wins += 1
 
+        # Generowanie ikony i nazwy ligi
         sport_raw = bet.get('sport', '').lower()
         s_icon = "🏒" if "icehockey" in sport_raw else "⚽" if "soccer" in sport_raw else "🏀" if "basketball" in sport_raw else "🎾" if "tennis" in sport_raw else "🔹"
+        
+        # Bardziej agresywne czyszczenie nazwy ligi
         l_name_clean = sport_raw.replace('soccer_', '').replace('icehockey_', '').replace('basketball_', '').replace('tennis_', '').replace('_', ' ').upper()
         
         flag = "🏳️"
         for country, f_emoji in FLAG_MAP.items():
-            if country in l_name_clean:
+            if country in l_name_clean or country in sport_raw.upper():
                 flag = f_emoji
                 break
         
-        full_display = f"{s_icon} {flag} {l_name_clean}"
-        if full_display not in league_stats:
-            league_stats[full_display] = {'profit': 0.0}
-        league_stats[full_display]['profit'] += profit
+        league_key = f"{s_icon} {flag} {l_name_clean}"
+        if league_key not in league_stats:
+            league_stats[league_key] = {'profit': 0.0}
+        league_stats[league_key]['profit'] += profit
     
-    # 4. Obliczenia
+    # 4. Obliczenia końcowe
     yield_val = (total_net_profit / total_turnover * 100) if total_turnover > 0 else 0
-    win_rate = (total_wins / valid_bets_count * 100) if valid_bets_count > 0 else 0
     progress_pct = (total_net_profit / MONTHLY_TARGET * 100)
 
-    # 5. Zapis dla WWW
-    web_data = {
-        "total_profit": round(total_net_profit, 2),
-        "yield": round(yield_val, 2),
-        "pending_count": pending_count,
-        "upcoming_24h": upcoming_24h_count,
-        "win_rate": round(win_rate, 1),
-        "bankroll": round(br_data.get('bankroll', 0), 2),
-        "last_update": datetime.now().strftime("%H:%M")
-    }
-    with open(WEB_STATS_FILE, "w", encoding="utf-8") as f:
-        json.dump(web_data, f, indent=4)
-
-    # 6. Telegram
+    # 5. Telegram - Generowanie wiadomości
     bar_len = int(max(0, min(100, progress_pct)) / 10)
     progress_bar = "🟢" * bar_len + "⚪" * (10 - bar_len)
 
     msg = f"🚀 <b>STATUS TYPERA: DAWID</b> 🚀\n"
     msg += f"📅 <code>Aktualizacja: {datetime.now().strftime('%d.%m %H:%M')}</code>\n\n"
-    msg += f"💰 <b>WYNIKI:</b>\n"
+    msg += f"💰 <b>WYNIKI CAŁKOWITE:</b>\n" # Zmienione na TOTAL
     msg += f"┣ Zysk netto: <b>{total_net_profit:+.2f} PLN</b>\n"
     msg += f"┗ Yield: <b>{yield_val:.2f}%</b>\n\n"
-    msg += f"⏳ <b>W GRZE: {pending_count} kuponów</b>\n"
-    msg += f"📅 <b>NASTĘPNE 24H: {upcoming_24h_count} meczów</b>\n\n"
-    msg += f"🏆 <b>TOP LIGI:</b>\n"
+    msg += f"⏳ <b>W GRZE: {pending_count} kuponów</b>\n\n"
     
+    msg += f"🏆 <b>TOP LIGI (ALL-TIME):</b>\n"
+    
+    # Sortowanie lig po zysku
     sorted_leagues = sorted(league_stats.items(), key=lambda x: x[1]['profit'], reverse=True)
     for i, (name, data) in enumerate(sorted_leagues[:3]):
         icon = ["🥇", "🥈", "🥉"][i]
@@ -135,6 +112,7 @@ def analyze_stats():
     msg += f"<code>{progress_bar}</code> <b>{progress_pct:.1f}%</b>"
     
     send_telegram(msg)
+    print(f"✅ Statystyki wysłane. Zysk: {total_net_profit}")
 
 if __name__ == "__main__":
     analyze_stats()
