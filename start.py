@@ -1,4 +1,4 @@
-Import os
+import os
 import requests
 import json
 import time
@@ -204,7 +204,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-Sprawdź mój kod 
