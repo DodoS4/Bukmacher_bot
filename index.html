@@ -112,7 +112,7 @@
 
                     if ((now - dateObj) < (24 * 60 * 60 * 1000)) todayProfit += profit;
 
-                    let lName = m.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ');
+                    let lName = m.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace('BASKETBALL_', '').replace(/_/g, ' ');
                     if (!leagues[lName]) leagues[lName] = { profit: 0, staked: 0, count: 0, matches: [] };
                     leagues[lName].profit += profit;
                     leagues[lName].staked += stake;
@@ -148,11 +148,11 @@
                             <div id="${id}" class="hidden border-t bg-gray-50/30 p-2 space-y-1">
                                 ${data.matches.reverse().map(m => `
                                     <div class="flex justify-between items-center p-2 bg-white rounded border border-gray-50 text-[10px]">
-                                        <div class="flex flex-col">
+                                        <div class="flex flex-col text-left">
                                             <span class="font-bold text-slate-800">${m.home} - ${m.away}</span>
-                                            <span class="text-[8px] text-gray-400 italic">${m.time.split('T')[0]}</span>
+                                            <span class="text-[8px] text-gray-400 italic">${m.time ? m.time.split('T')[0] : '--'}</span>
                                         </div>
-                                        <span class="font-black ${m.profit > 0 ? 'text-green-500' : 'text-red-500'}">${parseFloat(m.profit).toFixed(2)} PLN</span>
+                                        <span class="font-black ${parseFloat(m.profit) >= 0 ? 'text-green-500' : 'text-red-500'}">${parseFloat(m.profit) > 0 ? '+' : ''}${parseFloat(m.profit).toFixed(2)} PLN</span>
                                     </div>
                                 `).join('')}
                             </div>
