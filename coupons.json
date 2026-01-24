@@ -1,35 +1,5 @@
 [
     {
-        "id": "ef261f1adb9a34642f07c113bea16eb6",
-        "home": "Union Berlin",
-        "away": "Borussia Dortmund",
-        "outcome": "Borussia Dortmund",
-        "odds": 2.14,
-        "stake": 250,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-24T17:30:00Z"
-    },
-    {
-        "id": "12fa958a04a07de7b95dbfce718db8cc",
-        "home": "Sevilla",
-        "away": "Athletic Bilbao",
-        "outcome": "Athletic Bilbao",
-        "odds": 2.78,
-        "stake": 250,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-01-24T17:30:00Z"
-    },
-    {
-        "id": "93977b00ebc151cbd4f8cad5bc7372d9",
-        "home": "FC Sion",
-        "away": "FC Luzern",
-        "outcome": "FC Sion",
-        "odds": 2.08,
-        "stake": 250,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-01-24T19:30:00Z"
-    },
-    {
         "id": "a24e5370b8826d1b1e448493af7164c3",
         "home": "Villarreal",
         "away": "Real Madrid",
@@ -47,26 +17,6 @@
         "odds": 2.66,
         "stake": 250,
         "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-01-24T20:30:00Z"
-    },
-    {
-        "id": "bbcbbc20e883ae0663d08a5b5b5f4bad",
-        "home": "New York Islanders",
-        "away": "Buffalo Sabres",
-        "outcome": "New York Islanders",
-        "odds": 2.31,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-24T18:00:00Z"
-    },
-    {
-        "id": "ebb8a1b7d88729508f096c80777a4e98",
-        "home": "Nashville Predators",
-        "away": "Utah Mammoth",
-        "outcome": "Nashville Predators",
-        "odds": 2.52,
-        "stake": 250,
-        "sport": "icehockey_nhl",
         "time": "2026-01-24T20:30:00Z"
     },
     {
@@ -210,16 +160,6 @@
         "time": "2026-01-25T15:30:00Z"
     },
     {
-        "id": "251e0102e2db4573c4eb74e3d5f8dc84",
-        "home": "Lecce",
-        "away": "Lazio",
-        "outcome": "Lazio",
-        "odds": 2.3,
-        "stake": 250,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-01-24T19:45:00Z"
-    },
-    {
         "id": "35687e2aefebca1baa98b1bc0f774d17",
         "home": "Juventus",
         "away": "Napoli",
@@ -348,5 +288,25 @@
         "stake": 300.0,
         "sport": "icehockey_nhl",
         "time": "2026-01-26T01:10:00Z"
+    },
+    {
+        "id": "e0f35fec256e380610e50e2d0860f4e1",
+        "home": "Hellas Verona",
+        "away": "Udinese",
+        "outcome": "Hellas Verona",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-26T19:45:00Z"
+    },
+    {
+        "id": "4ac6cf5bfb4cef2e3a48939a6a112550",
+        "home": "Girona",
+        "away": "Getafe",
+        "outcome": "Girona",
+        "odds": 2.18,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-26T20:00:00Z"
     }
 ]
