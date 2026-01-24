@@ -1,25 +1,5 @@
 [
     {
-        "id": "e494f3595a8f0c0a7322e7cd6cf7fa5a",
-        "home": "Casa Pia",
-        "away": "AVS Futebol SAD",
-        "outcome": "Casa Pia",
-        "odds": 2.04,
-        "stake": 250,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-01-23T20:15:00Z"
-    },
-    {
-        "id": "e5ab08985478075eb4dda331157df055",
-        "home": "Kalmar HC",
-        "away": "BIK Karlskoga",
-        "outcome": "Kalmar HC",
-        "odds": 2.0,
-        "stake": 250,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-23T19:30:00Z"
-    },
-    {
         "id": "3aa63ac9164cb0d7fcaa13522620d9b1",
         "home": "Eintracht Frankfurt",
         "away": "TSG Hoffenheim",
@@ -38,66 +18,6 @@
         "stake": 250,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-01-24T15:30:00Z"
-    },
-    {
-        "id": "58690745e23cc2aacc840f6079920cda",
-        "home": "Toronto Maple Leafs",
-        "away": "Vegas Golden Knights",
-        "outcome": "Toronto Maple Leafs",
-        "odds": 2.63,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-24T00:10:00Z"
-    },
-    {
-        "id": "eccb9f689d2b68e28c5a2982ad19dfdd",
-        "home": "Dallas Stars",
-        "away": "St Louis Blues",
-        "outcome": "St Louis Blues",
-        "odds": 3.5,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-24T01:10:00Z"
-    },
-    {
-        "id": "96191f11c354d295927bf3346092d334",
-        "home": "Calgary Flames",
-        "away": "Washington Capitals",
-        "outcome": "Washington Capitals",
-        "odds": 2.43,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-24T02:10:00Z"
-    },
-    {
-        "id": "6d3a07127cb3297415504f8ff16711a2",
-        "home": "Seattle Kraken",
-        "away": "Anaheim Ducks",
-        "outcome": "Anaheim Ducks",
-        "odds": 2.7,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-24T03:10:00Z"
-    },
-    {
-        "id": "b2be1655610b0158c733ab6b098b67b2",
-        "home": "San Jose Sharks",
-        "away": "New York Rangers",
-        "outcome": "San Jose Sharks",
-        "odds": 2.48,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-24T03:10:00Z"
-    },
-    {
-        "id": "2020abfc96814c99f15f6866dbac5c3f",
-        "home": "Vancouver Canucks",
-        "away": "New Jersey Devils",
-        "outcome": "Vancouver Canucks",
-        "odds": 3.02,
-        "stake": 250,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-24T03:10:00Z"
     },
     {
         "id": "ef261f1adb9a34642f07c113bea16eb6",
@@ -388,5 +308,25 @@
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-25T20:00:00Z"
+    },
+    {
+        "id": "dbd847e8ed0d13b81d399e7b5e0db63c",
+        "home": "Mora IK",
+        "away": "Modo Hockey",
+        "outcome": "Mora IK",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-25T15:30:00Z"
+    },
+    {
+        "id": "e8fc45ec3a1b922340f62fa03a374971",
+        "home": "AS Roma",
+        "away": "AC Milan",
+        "outcome": "AS Roma",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-25T19:45:00Z"
     }
 ]
