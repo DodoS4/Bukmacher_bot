@@ -328,5 +328,15 @@
         "stake": 250.0,
         "sport": "soccer_italy_serie_a",
         "time": "2026-01-25T19:45:00Z"
+    },
+    {
+        "id": "0affce7a00f20db0532bdf607d8ded1b",
+        "home": "FC Lausanne-Sport",
+        "away": "Grasshopper Z\u00fcrich",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 1.95,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-01-24T17:00:00Z"
     }
 ]
