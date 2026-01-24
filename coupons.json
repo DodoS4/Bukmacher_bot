@@ -1,25 +1,5 @@
 [
     {
-        "id": "3aa63ac9164cb0d7fcaa13522620d9b1",
-        "home": "Eintracht Frankfurt",
-        "away": "TSG Hoffenheim",
-        "outcome": "Eintracht Frankfurt",
-        "odds": 3.0,
-        "stake": 250,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-24T14:30:00Z"
-    },
-    {
-        "id": "231273434ccb5e971d716782952d99c3",
-        "home": "Moreirense FC",
-        "away": "Santa Clara",
-        "outcome": "Santa Clara",
-        "odds": 3.1,
-        "stake": 250,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-01-24T15:30:00Z"
-    },
-    {
         "id": "ef261f1adb9a34642f07c113bea16eb6",
         "home": "Union Berlin",
         "away": "Borussia Dortmund",
@@ -28,16 +8,6 @@
         "stake": 250,
         "sport": "soccer_germany_bundesliga",
         "time": "2026-01-24T17:30:00Z"
-    },
-    {
-        "id": "faa776cd5170281870e980baa230156d",
-        "home": "Valencia",
-        "away": "Espanyol",
-        "outcome": "Valencia",
-        "odds": 2.56,
-        "stake": 250,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-01-24T15:15:00Z"
     },
     {
         "id": "12fa958a04a07de7b95dbfce718db8cc",
@@ -240,16 +210,6 @@
         "time": "2026-01-25T15:30:00Z"
     },
     {
-        "id": "cd358949d5708d2b0909fa3d5d18cbba",
-        "home": "FSV Mainz 05",
-        "away": "VfL Wolfsburg",
-        "outcome": "FSV Mainz 05",
-        "odds": 2.5,
-        "stake": 250,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-24T14:30:00Z"
-    },
-    {
         "id": "251e0102e2db4573c4eb74e3d5f8dc84",
         "home": "Lecce",
         "away": "Lazio",
@@ -330,13 +290,63 @@
         "time": "2026-01-25T16:30:00Z"
     },
     {
-        "id": "0affce7a00f20db0532bdf607d8ded1b",
-        "home": "FC Lausanne-Sport",
-        "away": "Grasshopper Z\u00fcrich",
-        "outcome": "FC Lausanne-Sport",
-        "odds": 1.95,
-        "stake": 250.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-01-24T17:00:00Z"
+        "id": "13dd143c0d58aa8e5a3c33c6837dc1bb",
+        "home": "Toronto Maple Leafs",
+        "away": "Colorado Avalanche",
+        "outcome": "Toronto Maple Leafs",
+        "odds": 3.2,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-25T18:40:00Z"
+    },
+    {
+        "id": "c9cc5bf563cc6119f4a91d9cd27af59f",
+        "home": "Seattle Kraken",
+        "away": "New Jersey Devils",
+        "outcome": "Seattle Kraken",
+        "odds": 2.71,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-25T20:10:00Z"
+    },
+    {
+        "id": "94887cea145b627fcb22629978f27695",
+        "home": "Ottawa Senators",
+        "away": "Vegas Golden Knights",
+        "outcome": "Ottawa Senators",
+        "odds": 2.8,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-25T22:10:00Z"
+    },
+    {
+        "id": "c3c8d9a03450a98faff6915826a30a98",
+        "home": "Vancouver Canucks",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Vancouver Canucks",
+        "odds": 2.92,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-25T23:10:00Z"
+    },
+    {
+        "id": "f25c18acb060c5a7ec1831f813793e42",
+        "home": "Chicago Blackhawks",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 2.2,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-26T00:10:00Z"
+    },
+    {
+        "id": "475553fc69308bb2c88642217cccab3e",
+        "home": "Calgary Flames",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.59,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-26T01:10:00Z"
     }
 ]

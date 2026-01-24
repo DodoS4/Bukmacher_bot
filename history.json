@@ -1780,5 +1780,70 @@
         "score": "1:3",
         "profit": -250.0,
         "status": "LOSS"
+    },
+    {
+        "id": "3aa63ac9164cb0d7fcaa13522620d9b1",
+        "home": "Eintracht Frankfurt",
+        "away": "TSG Hoffenheim",
+        "outcome": "Eintracht Frankfurt",
+        "odds": 3.0,
+        "stake": 250,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T14:30:00Z",
+        "score": "1:3",
+        "profit": -250.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "231273434ccb5e971d716782952d99c3",
+        "home": "Moreirense FC",
+        "away": "Santa Clara",
+        "outcome": "Santa Clara",
+        "odds": 3.1,
+        "stake": 250,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-24T15:30:00Z",
+        "score": "1:0",
+        "profit": -250.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "faa776cd5170281870e980baa230156d",
+        "home": "Valencia",
+        "away": "Espanyol",
+        "outcome": "Valencia",
+        "odds": 2.56,
+        "stake": 250,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-24T15:15:00Z",
+        "score": "3:2",
+        "profit": 313.2,
+        "status": "WIN"
+    },
+    {
+        "id": "cd358949d5708d2b0909fa3d5d18cbba",
+        "home": "FSV Mainz 05",
+        "away": "VfL Wolfsburg",
+        "outcome": "FSV Mainz 05",
+        "odds": 2.5,
+        "stake": 250,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-24T14:30:00Z",
+        "score": "3:1",
+        "profit": 300.0,
+        "status": "WIN"
+    },
+    {
+        "id": "0affce7a00f20db0532bdf607d8ded1b",
+        "home": "FC Lausanne-Sport",
+        "away": "Grasshopper Z\u00fcrich",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 1.95,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-01-24T17:00:00Z",
+        "score": "1:1",
+        "profit": -250.0,
+        "status": "LOSS"
     }
 ]
