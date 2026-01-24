@@ -30,16 +30,6 @@
         "time": "2026-01-24T17:30:00Z"
     },
     {
-        "id": "56556cba4837be525240fd3e4009e972",
-        "home": "Rayo Vallecano",
-        "away": "CA Osasuna",
-        "outcome": "Rayo Vallecano",
-        "odds": 2.28,
-        "stake": 250,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-01-24T13:00:00Z"
-    },
-    {
         "id": "faa776cd5170281870e980baa230156d",
         "home": "Valencia",
         "away": "Espanyol",
@@ -328,6 +318,16 @@
         "stake": 250.0,
         "sport": "soccer_italy_serie_a",
         "time": "2026-01-25T19:45:00Z"
+    },
+    {
+        "id": "78a72e14e5c1dbee61854658f3fe70f1",
+        "home": "SC Freiburg",
+        "away": "1. FC K\u00f6ln",
+        "outcome": "SC Freiburg",
+        "odds": 1.98,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-25T16:30:00Z"
     },
     {
         "id": "0affce7a00f20db0532bdf607d8ded1b",
