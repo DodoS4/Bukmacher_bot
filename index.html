@@ -72,16 +72,18 @@
         let profitChart = null;
         let countdown = 300;
 
-        // MAPA FLAG Z UWZGLĘDNIENIEM SERIE A I LIGUE ONE
+        // MAPA FLAG - ZAKTUALIZOWANA O USA DLA NHL I NBA
         const FLAG_MAP = {
+            "NHL": "🇺🇸 🏒",
+            "NBA": "🇺🇸 🏀",
             "SERIE A": "🇮🇹", "SERIE B": "🇮🇹", "ITALY": "🇮🇹",
             "LIGUE ONE": "🇫🇷", "LIGUE TWO": "🇫🇷", "FRANCE": "🇫🇷",
             "SPAIN": "🇪🇸", "LA LIGA": "🇪🇸",
             "GERMANY": "🇩🇪", "BUNDESLIGA": "🇩🇪",
             "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "CHAMPIONSHIP": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "ENGLAND": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
             "EKSTRAKLASA": "🇵🇱", "POLAND": "🇵🇱",
-            "NHL": "🏒", "ALLSVENSKAN": "🇸🇪", "SWEDEN": "🇸🇪",
-            "EURO LEAGUE": "🏀", "EUROLEAGUE": "🏀", "NBA": "🏀",
+            "ALLSVENSKAN": "🇸🇪", "SWEDEN": "🇸🇪",
+            "EURO LEAGUE": "🏀", "EUROLEAGUE": "🏀",
             "SWITZERLAND": "🇨🇭", "SUPERLEAGUE": "🇨🇭",
             "GREECE": "🇬🇷", "SUPER LEAGUE": "🇬🇷",
             "PORTUGAL": "🇵🇹", "PRIMEIRA LIGA": "🇵🇹",
@@ -92,7 +94,8 @@
             "AUSTRIA": "🇦🇹", "BUNDESLIGA AT": "🇦🇹",
             "NORWAY": "🇳🇴", "ELITESERIEN": "🇳🇴",
             "FINLAND": "🇫🇮", "LIIGA": "🇫🇮",
-            "CZECH": "🇨🇿", "EXTRALIGA": "🇨🇿"
+            "CZECH": "🇨🇿", "EXTRALIGA": "🇨🇿",
+            "AUSTRALIAN OPEN": "🎾"
         };
 
         function getFlag(name) {
@@ -195,7 +198,7 @@
                 });
 
                 updateChart(Object.keys(dailyProfits), Object.values(dailyProfits));
-            } catch (e) { console.error("Błąd podczas ładowania danych:", e); }
+            } catch (e) { console.error("Błąd ładowania danych:", e); }
         }
 
         function updateChart(labels, data) {
