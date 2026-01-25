@@ -55,7 +55,7 @@ TELEGRAM_CHAT = os.getenv("T_CHAT")
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
-BASE_STAKE = 250
+BASE_STAKE = 350
 
 def get_current_key_idx():
     if os.path.exists(KEY_STATE_FILE):
@@ -73,7 +73,7 @@ def save_current_key_idx(idx):
 def get_smart_stake(league_key):
     """
     Zwraca stawkę i wymagany próg Value.
-    Dla NHL: +20% do stawki bazowej.
+    Dla NHL: +30% do stawki bazowej.
     Dla stratnych lig: redukcja stawki.
     """
     current_multiplier = 1.0
