@@ -2209,5 +2209,18 @@
         "score": "0:0",
         "profit": -250.0,
         "status": "LOSS"
+    },
+    {
+        "id": "13dd143c0d58aa8e5a3c33c6837dc1bb",
+        "home": "Toronto Maple Leafs",
+        "away": "Colorado Avalanche",
+        "outcome": "Toronto Maple Leafs",
+        "odds": 3.2,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-25T18:40:00Z",
+        "score": "1:4",
+        "profit": -300.0,
+        "status": "LOSS"
     }
 ]
