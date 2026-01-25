@@ -218,5 +218,15 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-26T20:00:00Z"
+    },
+    {
+        "id": "5a26caf8730e02a8081964249b9aa8f0",
+        "home": "Atromitos Athens",
+        "away": "Panathinaikos",
+        "outcome": "Panathinaikos",
+        "odds": 1.95,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-01-25T17:30:00Z"
     }
 ]
