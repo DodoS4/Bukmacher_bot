@@ -63,7 +63,7 @@
         </div>
 
         <div class="mb-10">
-            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic mb-4 px-2">Historia meczów</h3>
+            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic mb-4 px-2">Historia meczów według lig</h3>
             <div id="history-groups" class="space-y-3"></div>
         </div>
     </div>
@@ -72,15 +72,21 @@
         let profitChart = null;
         let countdown = 300;
 
+        // KOLOROWE SYMBOLE FLAG I SPORTÓW
         const FLAG_MAP = {
-            "AUSTRIA": "🇦🇹", "DENMARK": "🇩🇰", "NORWAY": "🇳🇴", "POLAND": "🇵🇱", 
-            "SPAIN": "🇪🇸", "ITALY": "🇮🇹", "FRANCE": "🇫🇷", "GERMANY": "🇩🇪",
-            "NHL": "🇺🇸", "NBA": "🇺🇸", "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "AUSTRALIAN": "🇦🇺", "TURKEY": "🇹🇷"
+            "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "BUNDESLIGA": "🇩🇪", "SERIE A": "🇮🇹", "LA LIGA": "🇪🇸",
+            "EKSTRAKLASA": "🇵🇱", "LIGUE ONE": "🇫🇷", "PRIMEIRA LIGA": "🇵🇹", "EREVIDISIE": "🇳🇱",
+            "SUPER LIG": "🇹🇷", "FIRST DIVISION A": "🇧🇪", "SUPERLIGA": "🇩🇰", "SUPER LEAGUE": "🇬🇷",
+            "SUPERLEAGUE": "🇨🇭", "PREMIER LEAGUE": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "CHAMPIONSHIP": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+            "NHL": "🏒", "ALLSVENSKAN": "🇸🇪", "SVENSKA RINKBANDY": "🇸🇪", "LIIGA": "🇫🇮",
+            "DEL": "🇩🇪", "EXTRALIGA": "🇨🇿", "NLA": "🇨🇭", "METAL LIGAEN": "🇩🇰",
+            "ELITESERIEN": "🇳🇴", "EUROLEAGUE": "🏀", "NBA": "🏀", "AUSTRALIAN OPEN": "🎾"
         };
 
         function getFlag(name) {
+            const upperName = name.toUpperCase();
             for (const [key, flag] of Object.entries(FLAG_MAP)) {
-                if (name.includes(key)) return flag;
+                if (upperName.includes(key)) return flag;
             }
             return "🏳️";
         }
@@ -146,7 +152,6 @@
                             </button>
                             <div id="${id}" class="hidden border-t bg-gray-50/30 p-2 space-y-1">
                                 ${data.matches.reverse().map(m => {
-                                    // LOGIKA KOLOROWANIA ZWYCIĘZCY
                                     let homeClass = "text-slate-800";
                                     let awayClass = "text-slate-800";
                                     if(m.score && m.score.includes(':')) {
