@@ -1,65 +1,5 @@
 [
     {
-        "id": "3f300d6cc22952ec4914be8fe3d92463",
-        "home": "Borussia Monchengladbach",
-        "away": "VfB Stuttgart",
-        "outcome": "VfB Stuttgart",
-        "odds": 2.46,
-        "stake": 250,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-25T14:30:00Z"
-    },
-    {
-        "id": "10785c8c25187d23f5e898df768b0fc0",
-        "home": "Aris Thessaloniki",
-        "away": "Levadiakos",
-        "outcome": "Aris Thessaloniki",
-        "odds": 2.7,
-        "stake": 250,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-01-25T14:00:00Z"
-    },
-    {
-        "id": "46498fd4008dd8035ba56691610859b2",
-        "home": "Nacional",
-        "away": "Rio Ave FC",
-        "outcome": "Rio Ave FC",
-        "odds": 3.6,
-        "stake": 250,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-01-25T15:30:00Z"
-    },
-    {
-        "id": "c20cae63a32435861acd30ac3559a552",
-        "home": "FC Zurich",
-        "away": "FC Basel",
-        "outcome": "FC Zurich",
-        "odds": 3.7,
-        "stake": 250,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-01-25T15:30:00Z"
-    },
-    {
-        "id": "6e07190ef934c19c9503532713905987",
-        "home": "FC St Gallen",
-        "away": "Servette",
-        "outcome": "Servette",
-        "odds": 2.97,
-        "stake": 250,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-01-25T15:30:00Z"
-    },
-    {
-        "id": "35687e2aefebca1baa98b1bc0f774d17",
-        "home": "Juventus",
-        "away": "Napoli",
-        "outcome": "Juventus",
-        "odds": 2.1,
-        "stake": 250,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-01-25T17:00:00Z"
-    },
-    {
         "id": "016e617802dc1812996ca074d7306086",
         "home": "Real Sociedad",
         "away": "Celta Vigo",
@@ -68,16 +8,6 @@
         "stake": 250,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-25T17:30:00Z"
-    },
-    {
-        "id": "6cd76abe3cb810a838a568780a6dc6c1",
-        "home": "OFI Crete",
-        "away": "Panetolikos Agrinio",
-        "outcome": "OFI Crete",
-        "odds": 2.03,
-        "stake": 250,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-01-25T16:00:00Z"
     },
     {
         "id": "76ba4426a6a4d04532c74a44eea4c848",
@@ -90,16 +20,6 @@
         "time": "2026-01-25T20:00:00Z"
     },
     {
-        "id": "dbd847e8ed0d13b81d399e7b5e0db63c",
-        "home": "Mora IK",
-        "away": "Modo Hockey",
-        "outcome": "Mora IK",
-        "odds": 2.8,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-25T15:30:00Z"
-    },
-    {
         "id": "e8fc45ec3a1b922340f62fa03a374971",
         "home": "AS Roma",
         "away": "AC Milan",
@@ -108,16 +28,6 @@
         "stake": 250.0,
         "sport": "soccer_italy_serie_a",
         "time": "2026-01-25T19:45:00Z"
-    },
-    {
-        "id": "78a72e14e5c1dbee61854658f3fe70f1",
-        "home": "SC Freiburg",
-        "away": "1. FC K\u00f6ln",
-        "outcome": "SC Freiburg",
-        "odds": 1.98,
-        "stake": 250.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-25T16:30:00Z"
     },
     {
         "id": "13dd143c0d58aa8e5a3c33c6837dc1bb",
@@ -225,6 +135,26 @@
         "away": "Los Angeles Kings",
         "outcome": "Columbus Blue Jackets",
         "odds": 2.7,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-27T00:00:00Z"
+    },
+    {
+        "id": "026849177275f3ed96d0c21836e6141d",
+        "home": "Philadelphia Flyers",
+        "away": "New York Islanders",
+        "outcome": "Philadelphia Flyers",
+        "odds": 2.46,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-27T00:00:00Z"
+    },
+    {
+        "id": "3e51da4bc644bee670cb390c850c4fc9",
+        "home": "Tampa Bay Lightning",
+        "away": "Utah Mammoth",
+        "outcome": "Utah Mammoth",
+        "odds": 3.55,
         "stake": 300.0,
         "sport": "icehockey_nhl",
         "time": "2026-01-27T00:00:00Z"
