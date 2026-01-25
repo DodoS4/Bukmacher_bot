@@ -63,7 +63,7 @@
         </div>
 
         <div class="mb-10">
-            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic mb-4 px-2">Historia meczów według lig</h3>
+            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic mb-4 px-2">Historia meczów</h3>
             <div id="history-groups" class="space-y-3"></div>
         </div>
     </div>
@@ -72,15 +72,27 @@
         let profitChart = null;
         let countdown = 300;
 
-        // KOLOROWE SYMBOLE FLAG I SPORTÓW
+        // MAPA FLAG Z UWZGLĘDNIENIEM SERIE A I LIGUE ONE
         const FLAG_MAP = {
-            "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "BUNDESLIGA": "🇩🇪", "SERIE A": "🇮🇹", "LA LIGA": "🇪🇸",
-            "EKSTRAKLASA": "🇵🇱", "LIGUE ONE": "🇫🇷", "PRIMEIRA LIGA": "🇵🇹", "EREVIDISIE": "🇳🇱",
-            "SUPER LIG": "🇹🇷", "FIRST DIVISION A": "🇧🇪", "SUPERLIGA": "🇩🇰", "SUPER LEAGUE": "🇬🇷",
-            "SUPERLEAGUE": "🇨🇭", "PREMIER LEAGUE": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "CHAMPIONSHIP": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-            "NHL": "🏒", "ALLSVENSKAN": "🇸🇪", "SVENSKA RINKBANDY": "🇸🇪", "LIIGA": "🇫🇮",
-            "DEL": "🇩🇪", "EXTRALIGA": "🇨🇿", "NLA": "🇨🇭", "METAL LIGAEN": "🇩🇰",
-            "ELITESERIEN": "🇳🇴", "EUROLEAGUE": "🏀", "NBA": "🏀", "AUSTRALIAN OPEN": "🎾"
+            "SERIE A": "🇮🇹", "SERIE B": "🇮🇹", "ITALY": "🇮🇹",
+            "LIGUE ONE": "🇫🇷", "LIGUE TWO": "🇫🇷", "FRANCE": "🇫🇷",
+            "SPAIN": "🇪🇸", "LA LIGA": "🇪🇸",
+            "GERMANY": "🇩🇪", "BUNDESLIGA": "🇩🇪",
+            "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "CHAMPIONSHIP": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "ENGLAND": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+            "EKSTRAKLASA": "🇵🇱", "POLAND": "🇵🇱",
+            "NHL": "🏒", "ALLSVENSKAN": "🇸🇪", "SWEDEN": "🇸🇪",
+            "EURO LEAGUE": "🏀", "EUROLEAGUE": "🏀", "NBA": "🏀",
+            "SWITZERLAND": "🇨🇭", "SUPERLEAGUE": "🇨🇭",
+            "GREECE": "🇬🇷", "SUPER LEAGUE": "🇬🇷",
+            "PORTUGAL": "🇵🇹", "PRIMEIRA LIGA": "🇵🇹",
+            "NETHERLANDS": "🇳🇱", "EREVIDISIE": "🇳🇱",
+            "TURKEY": "🇹🇷", "SUPER LIG": "🇹🇷",
+            "BELGIUM": "🇧🇪", "FIRST DIVISION A": "🇧🇪",
+            "DENMARK": "🇩🇰", "SUPERLIGA": "🇩🇰",
+            "AUSTRIA": "🇦🇹", "BUNDESLIGA AT": "🇦🇹",
+            "NORWAY": "🇳🇴", "ELITESERIEN": "🇳🇴",
+            "FINLAND": "🇫🇮", "LIIGA": "🇫🇮",
+            "CZECH": "🇨🇿", "EXTRALIGA": "🇨🇿"
         };
 
         function getFlag(name) {
@@ -183,7 +195,7 @@
                 });
 
                 updateChart(Object.keys(dailyProfits), Object.values(dailyProfits));
-            } catch (e) { console.error("Error loading data:", e); }
+            } catch (e) { console.error("Błąd podczas ładowania danych:", e); }
         }
 
         function updateChart(labels, data) {
