@@ -72,30 +72,59 @@
         let profitChart = null;
         let countdown = 300;
 
-        // MAPA FLAG - ZAKTUALIZOWANA O USA DLA NHL I NBA
+        // MAPA FLAG I IKON DYSCYPLIN
         const FLAG_MAP = {
+            // USA / MIĘDZYNARODOWE
             "NHL": "🇺🇸 🏒",
             "NBA": "🇺🇸 🏀",
-            "SERIE A": "🇮🇹", "SERIE B": "🇮🇹", "ITALY": "🇮🇹",
-            "LIGUE ONE": "🇫🇷", "LIGUE TWO": "🇫🇷", "FRANCE": "🇫🇷",
-            "SPAIN": "🇪🇸", "LA LIGA": "🇪🇸",
-            "GERMANY": "🇩🇪", "BUNDESLIGA": "🇩🇪",
-            "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "CHAMPIONSHIP": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "ENGLAND": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-            "EKSTRAKLASA": "🇵🇱", "POLAND": "🇵🇱",
-            "ALLSVENSKAN": "🇸🇪", "SWEDEN": "🇸🇪",
-            "EURO LEAGUE": "🏀", "EUROLEAGUE": "🏀",
-            "SWITZERLAND": "🇨🇭", "SUPERLEAGUE": "🇨🇭",
-            "GREECE": "🇬🇷", "SUPER LEAGUE": "🇬🇷",
-            "PORTUGAL": "🇵🇹", "PRIMEIRA LIGA": "🇵🇹",
-            "NETHERLANDS": "🇳🇱", "EREVIDISIE": "🇳🇱",
-            "TURKEY": "🇹🇷", "SUPER LIG": "🇹🇷",
-            "BELGIUM": "🇧🇪", "FIRST DIVISION A": "🇧🇪",
-            "DENMARK": "🇩🇰", "SUPERLIGA": "🇩🇰",
-            "AUSTRIA": "🇦🇹", "BUNDESLIGA AT": "🇦🇹",
-            "NORWAY": "🇳🇴", "ELITESERIEN": "🇳🇴",
-            "FINLAND": "🇫🇮", "LIIGA": "🇫🇮",
-            "CZECH": "🇨🇿", "EXTRALIGA": "🇨🇿",
-            "AUSTRALIAN OPEN": "🎾"
+            "EURO LEAGUE": "🏀",
+            "EUROLEAGUE": "🏀",
+            "AUSTRALIAN OPEN": "🎾",
+            
+            // PIŁKA NOŻNA - EUROPA
+            "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽",
+            "CHAMPIONSHIP": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽",
+            "ENGLAND": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽",
+            "PREMIER LEAGUE": "🏴󠁧󠁢󠁳󠁣󠁴󠁿 ⚽",
+            "LA LIGA": "🇪🇸 ⚽",
+            "SPAIN": "🇪🇸 ⚽",
+            "BUNDESLIGA": "🇩🇪 ⚽",
+            "GERMANY": "🇩🇪 ⚽",
+            "SERIE A": "🇮🇹 ⚽",
+            "SERIE B": "🇮🇹 ⚽",
+            "ITALY": "🇮🇹 ⚽",
+            "LIGUE ONE": "🇫🇷 ⚽",
+            "LIGUE TWO": "🇫🇷 ⚽",
+            "FRANCE": "🇫🇷 ⚽",
+            "EKSTRAKLASA": "🇵🇱 ⚽",
+            "POLAND": "🇵🇱 ⚽",
+            "PRIMEIRA LIGA": "🇵🇹 ⚽",
+            "PORTUGAL": "🇵🇹 ⚽",
+            "EREVIDISIE": "🇳🇱 ⚽",
+            "NETHERLANDS": "🇳🇱 ⚽",
+            "SUPER LIG": "🇹🇷 ⚽",
+            "TURKEY": "🇹🇷 ⚽",
+            "FIRST DIVISION A": "🇧🇪 ⚽",
+            "BELGIUM": "🇧🇪 ⚽",
+            "SUPERLIGA": "🇩🇰 ⚽",
+            "DENMARK": "🇩🇰 ⚽",
+            "SUPER LEAGUE": "🇬🇷 ⚽",
+            "GREECE": "🇬🇷 ⚽",
+            "SUPERLEAGUE": "🇨🇭 ⚽",
+            "SWITZERLAND": "🇨🇭 ⚽",
+            "ELITESERIEN": "🇳🇴 ⚽",
+            "NORWAY": "🇳🇴 ⚽",
+            "AUSTRIA": "🇦🇹 ⚽",
+            "BUNDESLIGA AT": "🇦🇹 ⚽",
+            
+            // HOKEJ
+            "ALLSVENSKAN": "🇸🇪 🏒",
+            "SWEDEN": "🇸🇪 🏒",
+            "LIIGA": "🇫🇮 🏒",
+            "FINLAND": "🇫🇮 🏒",
+            "DEL": "🇩🇪 🏒",
+            "EXTRALIGA": "🇨🇿 🏒",
+            "CZECH": "🇨🇿 🏒"
         };
 
         function getFlag(name) {
