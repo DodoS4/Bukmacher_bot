@@ -10,16 +10,6 @@
         "time": "2026-01-25T20:00:00Z"
     },
     {
-        "id": "e8fc45ec3a1b922340f62fa03a374971",
-        "home": "AS Roma",
-        "away": "AC Milan",
-        "outcome": "AS Roma",
-        "odds": 2.88,
-        "stake": 250.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-01-25T19:45:00Z"
-    },
-    {
         "id": "c9cc5bf563cc6119f4a91d9cd27af59f",
         "home": "Seattle Kraken",
         "away": "New Jersey Devils",
