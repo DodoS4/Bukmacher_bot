@@ -2040,5 +2040,31 @@
         "score": "6:5",
         "profit": 212.0,
         "status": "WIN"
+    },
+    {
+        "id": "4a59e59a4d82f67dc9db3fb7c53ea0e7",
+        "home": "Sassuolo",
+        "away": "Cremonese",
+        "outcome": "Sassuolo",
+        "odds": 2.04,
+        "stake": 250,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-25T11:30:00Z",
+        "score": "1:0",
+        "profit": 198.8,
+        "status": "WIN"
+    },
+    {
+        "id": "e48888bbec48e582cdbb1f75208ac93b",
+        "home": "FC Thun",
+        "away": "BSC Young Boys",
+        "outcome": "FC Thun",
+        "odds": 2.16,
+        "stake": 250,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-01-25T13:00:00Z",
+        "score": "4:1",
+        "profit": 225.2,
+        "status": "WIN"
     }
 ]
