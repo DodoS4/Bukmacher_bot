@@ -138,5 +138,15 @@
         "stake": 300.0,
         "sport": "icehockey_nhl",
         "time": "2026-01-27T00:00:00Z"
+    },
+    {
+        "id": "07d5f577e0ababd379aa09bc0047647d",
+        "home": "Paris Basketball",
+        "away": "Real Madrid",
+        "outcome": "Paris Basketball",
+        "odds": 3.55,
+        "stake": 350.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-27T20:00:00Z"
     }
 ]
