@@ -68,5 +68,15 @@
         "stake": 350.0,
         "sport": "basketball_euroleague",
         "time": "2026-01-27T20:00:00Z"
+    },
+    {
+        "id": "bd1b2719e6a4c69fcb18d81ff471283d",
+        "home": "Werder Bremen",
+        "away": "TSG Hoffenheim",
+        "outcome": "TSG Hoffenheim",
+        "odds": 2.16,
+        "stake": 350.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-27T19:30:00Z"
     }
 ]
