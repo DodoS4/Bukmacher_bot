@@ -158,5 +158,25 @@
         "stake": 350.0,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-01-28T18:00:00Z"
+    },
+    {
+        "id": "4af523cb83d096676ba2abdccde3a63a",
+        "home": "New York Islanders",
+        "away": "New York Rangers",
+        "outcome": "New York Islanders",
+        "odds": 2.18,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-29T00:00:00Z"
+    },
+    {
+        "id": "328b01857a777941eccdacfb63fb8244",
+        "home": "Ottawa Senators",
+        "away": "Colorado Avalanche",
+        "outcome": "Colorado Avalanche",
+        "odds": 2.03,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-29T00:30:00Z"
     }
 ]
