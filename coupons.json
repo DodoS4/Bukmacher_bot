@@ -178,5 +178,25 @@
         "stake": 420.0,
         "sport": "icehockey_nhl",
         "time": "2026-01-29T00:30:00Z"
+    },
+    {
+        "id": "3904ba5c19c1ef077f11ca2e47e863a5",
+        "home": "Columbus Blue Jackets",
+        "away": "Philadelphia Flyers",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.35,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-29T00:30:00Z"
+    },
+    {
+        "id": "d5e7d95863015986004ed11ff70ab8bd",
+        "home": "Olympiacos",
+        "away": "FC Barcelona B\u00e0squet",
+        "outcome": "FC Barcelona B\u00e0squet",
+        "odds": 3.17,
+        "stake": 350.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-29T19:15:00Z"
     }
 ]
