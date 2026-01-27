@@ -2313,5 +2313,70 @@
         "score": "3:4",
         "profit": 383.76,
         "status": "WIN"
+    },
+    {
+        "id": "e0f35fec256e380610e50e2d0860f4e1",
+        "home": "Hellas Verona",
+        "away": "Udinese",
+        "outcome": "Hellas Verona",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-26T19:45:00Z",
+        "score": "1:3",
+        "profit": -250.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "4ac6cf5bfb4cef2e3a48939a6a112550",
+        "home": "Girona",
+        "away": "Getafe",
+        "outcome": "Girona",
+        "odds": 2.18,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-26T20:00:00Z",
+        "score": "1:1",
+        "profit": -250.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "58530aa7e2cff4e480e19d39c3a5430e",
+        "home": "New York Rangers",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 2.63,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-27T00:00:00Z",
+        "score": "4:3",
+        "profit": -300.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "026849177275f3ed96d0c21836e6141d",
+        "home": "Philadelphia Flyers",
+        "away": "New York Islanders",
+        "outcome": "Philadelphia Flyers",
+        "odds": 2.46,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-27T00:00:00Z",
+        "score": "0:4",
+        "profit": -300.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "3e51da4bc644bee670cb390c850c4fc9",
+        "home": "Tampa Bay Lightning",
+        "away": "Utah Mammoth",
+        "outcome": "Utah Mammoth",
+        "odds": 3.55,
+        "stake": 300.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-27T00:00:00Z",
+        "score": "2:0",
+        "profit": -300.0,
+        "status": "LOSS"
     }
 ]

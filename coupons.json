@@ -1,60 +1,10 @@
 [
     {
-        "id": "e0f35fec256e380610e50e2d0860f4e1",
-        "home": "Hellas Verona",
-        "away": "Udinese",
-        "outcome": "Hellas Verona",
-        "odds": 3.05,
-        "stake": 250.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-01-26T19:45:00Z"
-    },
-    {
-        "id": "4ac6cf5bfb4cef2e3a48939a6a112550",
-        "home": "Girona",
-        "away": "Getafe",
-        "outcome": "Girona",
-        "odds": 2.18,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-01-26T20:00:00Z"
-    },
-    {
-        "id": "58530aa7e2cff4e480e19d39c3a5430e",
-        "home": "New York Rangers",
-        "away": "Boston Bruins",
-        "outcome": "Boston Bruins",
-        "odds": 2.63,
-        "stake": 300.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-27T00:00:00Z"
-    },
-    {
         "id": "40c02a07bc44ff52fe319ce9b7bf1594",
         "home": "Columbus Blue Jackets",
         "away": "Los Angeles Kings",
         "outcome": "Columbus Blue Jackets",
         "odds": 2.7,
-        "stake": 300.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-27T00:00:00Z"
-    },
-    {
-        "id": "026849177275f3ed96d0c21836e6141d",
-        "home": "Philadelphia Flyers",
-        "away": "New York Islanders",
-        "outcome": "Philadelphia Flyers",
-        "odds": 2.46,
-        "stake": 300.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-27T00:00:00Z"
-    },
-    {
-        "id": "3e51da4bc644bee670cb390c850c4fc9",
-        "home": "Tampa Bay Lightning",
-        "away": "Utah Mammoth",
-        "outcome": "Utah Mammoth",
-        "odds": 3.55,
         "stake": 300.0,
         "sport": "icehockey_nhl",
         "time": "2026-01-27T00:00:00Z"
@@ -185,6 +135,26 @@
         "away": "Mora IK",
         "outcome": "Mora IK",
         "odds": 3.07,
+        "stake": 350.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-28T18:00:00Z"
+    },
+    {
+        "id": "e5a0fbccb867724ee208fc4b01915331",
+        "home": "Almtuna IS",
+        "away": "IF Troja-Ljungby",
+        "outcome": "IF Troja-Ljungby",
+        "odds": 3.1,
+        "stake": 350.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-28T18:00:00Z"
+    },
+    {
+        "id": "1a1dd5ba73c7af541ed9cec563129f34",
+        "home": "Modo Hockey",
+        "away": "Kalmar HC",
+        "outcome": "Modo Hockey",
+        "odds": 2.38,
         "stake": 350.0,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-01-28T18:00:00Z"
