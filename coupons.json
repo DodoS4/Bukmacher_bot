@@ -98,5 +98,75 @@
         "stake": 350.0,
         "sport": "basketball_euroleague",
         "time": "2026-01-29T19:45:00Z"
+    },
+    {
+        "id": "66965e4fb0a3aeb474708bf663cc3038",
+        "home": "Boston Bruins",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.27,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "c3358713fe31e4542a012b9461d6ab57",
+        "home": "Buffalo Sabres",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 3.15,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "cd23d03850ee181739fe9397b91d8e7b",
+        "home": "Carolina Hurricanes",
+        "away": "Utah Mammoth",
+        "outcome": "Carolina Hurricanes",
+        "odds": 1.96,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "1f7d207fc5e7a8debd72f74150bf83cb",
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Colorado Avalanche",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 3.0,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "684f50298cb49cccc347dda11e9b0bd6",
+        "home": "Detroit Red Wings",
+        "away": "Washington Capitals",
+        "outcome": "Detroit Red Wings",
+        "odds": 2.39,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:30:00Z"
+    },
+    {
+        "id": "5d43ce538e1eccd34a9813f7f136cfcc",
+        "home": "Minnesota Wild",
+        "away": "Calgary Flames",
+        "outcome": "Minnesota Wild",
+        "odds": 2.12,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T01:00:00Z"
+    },
+    {
+        "id": "ac9b5e3f5be0a386d846c9d7e1850a45",
+        "home": "St Louis Blues",
+        "away": "Florida Panthers",
+        "outcome": "St Louis Blues",
+        "odds": 2.98,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T01:00:00Z"
     }
 ]
