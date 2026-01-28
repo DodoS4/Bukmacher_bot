@@ -10,46 +10,6 @@
         "time": "2026-01-27T00:00:00Z"
     },
     {
-        "id": "675b36f22f11c4409fe043d1e596735f",
-        "home": "Nybro Vikings IF",
-        "away": "AIK",
-        "outcome": "Nybro Vikings IF",
-        "odds": 2.75,
-        "stake": 350.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-28T18:00:00Z"
-    },
-    {
-        "id": "07034b04d9d55ef6b297c2359f6e7a16",
-        "home": "S\u00f6dert\u00e4lje SK",
-        "away": "Mora IK",
-        "outcome": "Mora IK",
-        "odds": 3.07,
-        "stake": 350.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-28T18:00:00Z"
-    },
-    {
-        "id": "e5a0fbccb867724ee208fc4b01915331",
-        "home": "Almtuna IS",
-        "away": "IF Troja-Ljungby",
-        "outcome": "IF Troja-Ljungby",
-        "odds": 3.1,
-        "stake": 350.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-28T18:00:00Z"
-    },
-    {
-        "id": "1a1dd5ba73c7af541ed9cec563129f34",
-        "home": "Modo Hockey",
-        "away": "Kalmar HC",
-        "outcome": "Modo Hockey",
-        "odds": 2.38,
-        "stake": 350.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-28T18:00:00Z"
-    },
-    {
         "id": "4af523cb83d096676ba2abdccde3a63a",
         "home": "New York Islanders",
         "away": "New York Rangers",
@@ -318,5 +278,45 @@
         "stake": 350.0,
         "sport": "basketball_euroleague",
         "time": "2026-01-30T19:30:00Z"
+    },
+    {
+        "id": "128f6ef4a4bb60a9e73338195f0ea1bd",
+        "home": "Lazio",
+        "away": "Genoa",
+        "outcome": "Lazio",
+        "odds": 2.16,
+        "stake": 350.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-30T19:45:00Z"
+    },
+    {
+        "id": "4ef6295d306e5dd7c9bce9cd4b94e005",
+        "home": "Espanyol",
+        "away": "Alav\u00e9s",
+        "outcome": "Espanyol",
+        "odds": 2.08,
+        "stake": 280.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-30T20:00:00Z"
+    },
+    {
+        "id": "eb9023bc5dbbd91cfa83cffc01a5a5e6",
+        "home": "Vit\u00f3ria SC",
+        "away": "Moreirense FC",
+        "outcome": "Vit\u00f3ria SC",
+        "odds": 2.16,
+        "stake": 280.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-30T20:45:00Z"
+    },
+    {
+        "id": "f1b5fa013ebb49815d98fe0596fce560",
+        "home": "ASVEL Lyon Villeurbanne",
+        "away": "Panathinaikos",
+        "outcome": "ASVEL Lyon Villeurbanne",
+        "odds": 4.13,
+        "stake": 350.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-30T19:45:00Z"
     }
 ]

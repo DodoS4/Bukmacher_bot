@@ -2521,5 +2521,57 @@
         "score": "5:1",
         "profit": -420.0,
         "status": "LOSS"
+    },
+    {
+        "id": "675b36f22f11c4409fe043d1e596735f",
+        "home": "Nybro Vikings IF",
+        "away": "AIK",
+        "outcome": "Nybro Vikings IF",
+        "odds": 2.75,
+        "stake": 350.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-28T18:00:00Z",
+        "score": "5:4",
+        "profit": 497.0,
+        "status": "WIN"
+    },
+    {
+        "id": "07034b04d9d55ef6b297c2359f6e7a16",
+        "home": "S\u00f6dert\u00e4lje SK",
+        "away": "Mora IK",
+        "outcome": "Mora IK",
+        "odds": 3.07,
+        "stake": 350.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-28T18:00:00Z",
+        "score": "1:2",
+        "profit": 595.56,
+        "status": "WIN"
+    },
+    {
+        "id": "e5a0fbccb867724ee208fc4b01915331",
+        "home": "Almtuna IS",
+        "away": "IF Troja-Ljungby",
+        "outcome": "IF Troja-Ljungby",
+        "odds": 3.1,
+        "stake": 350.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-28T18:00:00Z",
+        "score": "5:2",
+        "profit": -350.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "1a1dd5ba73c7af541ed9cec563129f34",
+        "home": "Modo Hockey",
+        "away": "Kalmar HC",
+        "outcome": "Modo Hockey",
+        "odds": 2.38,
+        "stake": 350.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-28T18:00:00Z",
+        "score": "3:0",
+        "profit": 383.04,
+        "status": "WIN"
     }
 ]
