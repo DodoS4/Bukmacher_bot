@@ -288,5 +288,15 @@
         "stake": 350.0,
         "sport": "basketball_euroleague",
         "time": "2026-01-30T18:30:00Z"
+    },
+    {
+        "id": "a3b3453966924d13a56338b14415806b",
+        "home": "KK Crvena zvezda",
+        "away": "Dubai Basketball",
+        "outcome": "Dubai Basketball",
+        "odds": 3.45,
+        "stake": 350.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-30T19:00:00Z"
     }
 ]
