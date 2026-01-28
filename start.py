@@ -169,7 +169,7 @@ def main():
                 if max_p >= 2.2: req_val += 0.03
                 if max_p >= 3.2: req_val += 0.04
                 curr_val = max_p / avg_p
-                if 1.95 <= max_p <= 4.0 and curr_val > req_val:
+                if 1.85 <= max_p <= 5.0 and curr_val > req_val:
                     if curr_val > max_val:
                         max_val, best_odds, best_choice = curr_val, max_p, name
 
