@@ -168,5 +168,75 @@
         "stake": 420.0,
         "sport": "icehockey_nhl",
         "time": "2026-01-30T01:00:00Z"
+    },
+    {
+        "id": "1b3e0f12d958b8303e85fe8d1ce9b860",
+        "home": "Pittsburgh Penguins",
+        "away": "Chicago Blackhawks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 4.0,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "7e32c2e1f45f7c26fa219d118ea12694",
+        "home": "New Jersey Devils",
+        "away": "Nashville Predators",
+        "outcome": "Nashville Predators",
+        "odds": 2.98,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "0248e3c53e0c5259ab4b213fee196277",
+        "home": "New York Rangers",
+        "away": "New York Islanders",
+        "outcome": "New York Rangers",
+        "odds": 2.59,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "3d78d21eaf2116aeff730567a03bcaa8",
+        "home": "Vancouver Canucks",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.41,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T03:00:00Z"
+    },
+    {
+        "id": "55d868059145bdffc842d07496fcac5f",
+        "home": "Vegas Golden Knights",
+        "away": "Dallas Stars",
+        "outcome": "Vegas Golden Knights",
+        "odds": 2.38,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T03:00:00Z"
+    },
+    {
+        "id": "65c33010332e3c0d69e40acb049b5452",
+        "home": "Seattle Kraken",
+        "away": "Toronto Maple Leafs",
+        "outcome": "Seattle Kraken",
+        "odds": 2.59,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T03:00:00Z"
+    },
+    {
+        "id": "4b8ad8ba32b83ee86502e11f2ef80636",
+        "home": "Zag\u0142\u0119bie Lubin",
+        "away": "GKS Katowice",
+        "outcome": "GKS Katowice",
+        "odds": 3.1,
+        "stake": 350.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-01-30T17:00:00Z"
     }
 ]
