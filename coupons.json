@@ -10,116 +10,6 @@
         "time": "2026-01-27T00:00:00Z"
     },
     {
-        "id": "07d5f577e0ababd379aa09bc0047647d",
-        "home": "Paris Basketball",
-        "away": "Real Madrid",
-        "outcome": "Paris Basketball",
-        "odds": 3.55,
-        "stake": 350.0,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-27T20:00:00Z"
-    },
-    {
-        "id": "bd1b2719e6a4c69fcb18d81ff471283d",
-        "home": "Werder Bremen",
-        "away": "TSG Hoffenheim",
-        "outcome": "TSG Hoffenheim",
-        "odds": 2.16,
-        "stake": 350.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-27T19:30:00Z"
-    },
-    {
-        "id": "215298fc29524464a10cc2b948d6dd29",
-        "home": "Boston Bruins",
-        "away": "Nashville Predators",
-        "outcome": "Nashville Predators",
-        "odds": 2.75,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T00:00:00Z"
-    },
-    {
-        "id": "86268b0b88bf1467ea6113a35086f519",
-        "home": "Toronto Maple Leafs",
-        "away": "Buffalo Sabres",
-        "outcome": "Buffalo Sabres",
-        "odds": 2.73,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T00:00:00Z"
-    },
-    {
-        "id": "10d0bf7fb297d864c650d6dfd0ead959",
-        "home": "Detroit Red Wings",
-        "away": "Los Angeles Kings",
-        "outcome": "Los Angeles Kings",
-        "odds": 3.05,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T00:00:00Z"
-    },
-    {
-        "id": "5883189b5d971fdbe03f75a362f91e5d",
-        "home": "Florida Panthers",
-        "away": "Utah Mammoth",
-        "outcome": "Utah Mammoth",
-        "odds": 3.55,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T00:00:00Z"
-    },
-    {
-        "id": "f0442dd138e4e9d43757016109afe494",
-        "home": "Montr\u00e9al Canadiens",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 2.45,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T00:00:00Z"
-    },
-    {
-        "id": "124b8ae55d63993554673c7973756215",
-        "home": "New Jersey Devils",
-        "away": "Winnipeg Jets",
-        "outcome": "Winnipeg Jets",
-        "odds": 2.88,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T00:00:00Z"
-    },
-    {
-        "id": "0f23cacf897b18cf1b78e7154b4ecf12",
-        "home": "St Louis Blues",
-        "away": "Dallas Stars",
-        "outcome": "Dallas Stars",
-        "odds": 2.21,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T01:00:00Z"
-    },
-    {
-        "id": "c2cc3d111da89dd61b01a954cf44167f",
-        "home": "Vancouver Canucks",
-        "away": "San Jose Sharks",
-        "outcome": "San Jose Sharks",
-        "odds": 2.52,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T03:00:00Z"
-    },
-    {
-        "id": "3cdd4a8440db0e4315a90122de15ee41",
-        "home": "Seattle Kraken",
-        "away": "Washington Capitals",
-        "outcome": "Washington Capitals",
-        "odds": 2.33,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-28T03:00:00Z"
-    },
-    {
         "id": "675b36f22f11c4409fe043d1e596735f",
         "home": "Nybro Vikings IF",
         "away": "AIK",
@@ -198,5 +88,15 @@
         "stake": 350.0,
         "sport": "basketball_euroleague",
         "time": "2026-01-29T19:15:00Z"
+    },
+    {
+        "id": "2fdf5ea088cc3724ac33af320f3f9fd8",
+        "home": "Valencia Basket",
+        "away": "Maccabi Tel Aviv",
+        "outcome": "Maccabi Tel Aviv",
+        "odds": 3.35,
+        "stake": 350.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-29T19:45:00Z"
     }
 ]
