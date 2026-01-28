@@ -298,5 +298,25 @@
         "stake": 350.0,
         "sport": "basketball_euroleague",
         "time": "2026-01-30T19:00:00Z"
+    },
+    {
+        "id": "8dc4651cd60b7477111f94425761cbf0",
+        "home": "Radomiak Radom",
+        "away": "Arka Gdynia",
+        "outcome": "Arka Gdynia",
+        "odds": 4.6,
+        "stake": 350.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-01-30T19:30:00Z"
+    },
+    {
+        "id": "c6eaecf160e1a288fd84a9678a86b87d",
+        "home": "Saski Baskonia",
+        "away": "\u017dalgiris",
+        "outcome": "\u017dalgiris",
+        "odds": 1.89,
+        "stake": 350.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-01-30T19:30:00Z"
     }
 ]
