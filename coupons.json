@@ -200,6 +200,16 @@
         "time": "2026-01-30T00:00:00Z"
     },
     {
+        "id": "e9e1ef8d7fbfcf163e9ee8f74c6f12bc",
+        "home": "Tampa Bay Lightning",
+        "away": "Winnipeg Jets",
+        "outcome": "Winnipeg Jets",
+        "odds": 3.73,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
         "id": "3d78d21eaf2116aeff730567a03bcaa8",
         "home": "Vancouver Canucks",
         "away": "Anaheim Ducks",
@@ -224,7 +234,7 @@
         "home": "Seattle Kraken",
         "away": "Toronto Maple Leafs",
         "outcome": "Seattle Kraken",
-        "odds": 2.59,
+        "odds": 2.6,
         "stake": 420.0,
         "sport": "icehockey_nhl",
         "time": "2026-01-30T03:00:00Z"
