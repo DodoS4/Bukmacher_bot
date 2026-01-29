@@ -13,7 +13,7 @@ def generate_stats():
     except Exception as e:
         return None, f"❌ Błąd krytyczny: {e}"
 
-    # Wczytujemy poprzednie statystyki
+    # Wczytujemy poprzednie statystyki do porównania
     old_total_bets = 0
     if os.path.exists('stats.json'):
         try:
@@ -27,14 +27,12 @@ def generate_stats():
     total_turnover = 0.0
     profit_24h = 0.0
     wins, losses = 0, 0
-    
-    # Lista do zbierania meczów (wszystkich przefiltrowanych)
     processed_matches = []
+    series_icons = [] # Do śledzenia formy (ostatnie 10)
     
     now = datetime.now(timezone.utc)
     yesterday = now - timedelta(days=1)
 
-    # Najpierw filtrujemy i liczymy wszystko (chronologicznie)
     for bet in history:
         sport_key = str(bet.get('sport', '')).lower()
         if "basketball_nba" in sport_key:
@@ -49,8 +47,11 @@ def generate_stats():
         total_profit += profit
         total_turnover += stake
         
+        icon = "✅" if profit > 0 else "❌"
         if profit > 0: wins += 1
         else: losses += 1
+        
+        series_icons.append(icon)
 
         # Statystyki 24h
         try:
@@ -60,8 +61,6 @@ def generate_stats():
                 profit_24h += profit
         except: pass
 
-        # Dodajemy do listy wszystkich przetworzonych (bez NBA)
-        icon = "✅" if profit > 0 else "❌"
         home = bet.get('home') or "???"
         away = bet.get('away') or "???"
         score = bet.get('score', '')
@@ -70,8 +69,10 @@ def generate_stats():
     total_bets = wins + losses
     yield_val = (total_profit / total_turnover * 100) if total_turnover > 0 else 0
     win_rate = (wins / total_bets * 100) if total_bets > 0 else 0
+    
+    # Ostatnia forma (10 meczów)
+    form_string = "".join(series_icons[-10:])
 
-    # Zapis do stats.json dla WWW
     web_data = {
         "total_profit": round(total_profit, 2),
         "profit_24h": round(profit_24h, 2),
@@ -84,8 +85,6 @@ def generate_stats():
     with open('stats.json', 'w', encoding='utf-8') as f:
         json.dump(web_data, f, indent=4)
 
-    # --- LOGIKA POWIADOMIENIA ---
-    # Ile nowych meczów doszło od ostatniego raportu?
     diff = total_bets - old_total_bets
     should_send_telegram = (diff > 0)
 
@@ -94,20 +93,17 @@ def generate_stats():
         "━━━━━━━━━━━━━━━",
         f"💰 *Zysk 24h:* `{profit_24h:+.2f} PLN`",
         f"💎 *Zysk całkowity:* `{total_profit:.2f} PLN`",
-        f"📈 *Yield:* `{yield_val:.2f}%`",
-        f"🎯 *Skuteczność:* `{win_rate:.1f}%` ({wins}/{total_bets})",
-        f"🔄 *Obrót:* `{total_turnover:.2f} PLN`",
+        f"📈 *Yield:* `{yield_val:.2f}%` | *WR:* `{win_rate:.1f}%`",
+        f"🔥 *Ostatnia forma:* {form_string}",
         "━━━━━━━━━━━━━━━",
     ]
 
     if diff > 0:
         report.append(f"📝 *NOWE ROZLICZENIA ({diff}):*")
-        # Wybieramy tylko te mecze, które są nowe (końcówka listy)
-        new_entries = processed_matches[-diff:]
-        report.extend(new_entries)
+        report.extend(processed_matches[-diff:])
     else:
         report.append("📝 *OSTATNIE ROZLICZENIA:*")
-        report.extend(processed_matches[-5:]) # Jeśli wymusisz ręcznie, pokaże 5
+        report.extend(processed_matches[-5:])
 
     report.append("━━━━━━━━━━━━━━━")
     report.append(f"🕒 _Aktualizacja: {now.strftime('%H:%M:%S')} UTC_")
