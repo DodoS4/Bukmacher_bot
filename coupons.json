@@ -458,5 +458,25 @@
         "stake": 350.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-01-31T19:15:00Z"
+    },
+    {
+        "id": "4eb2f2cca6e6f500dd3618ecbf243582",
+        "home": "Napoli",
+        "away": "Fiorentina",
+        "outcome": "Napoli",
+        "odds": 1.85,
+        "stake": 350.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-31T17:00:00Z"
+    },
+    {
+        "id": "6d7111f336acec3656d9011c6a09d2aa",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC Lugano",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 3.5,
+        "stake": 350.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-01-31T19:30:00Z"
     }
 ]
