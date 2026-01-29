@@ -209,13 +209,5 @@ def main():
     
     print(f"✅ KONIEC SKANOWANIA. Aktywne: {len(all_coupons)}")
 
-    # --- WYSYŁKA STATYSTYK ---
-    try:
-        raport_stats = generate_stats()
-        send_telegram(raport_stats, mode="Markdown")
-        print("✅ STATYSTYKI WYSŁANE")
-    except Exception as e:
-        print(f"❌ BŁĄD STATYSTYK: {e}")
-
 if __name__ == "__main__":
     main()
