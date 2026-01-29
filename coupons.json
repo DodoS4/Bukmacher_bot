@@ -10,36 +10,6 @@
         "time": "2026-01-27T00:00:00Z"
     },
     {
-        "id": "4af523cb83d096676ba2abdccde3a63a",
-        "home": "New York Islanders",
-        "away": "New York Rangers",
-        "outcome": "New York Islanders",
-        "odds": 2.18,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-29T00:00:00Z"
-    },
-    {
-        "id": "328b01857a777941eccdacfb63fb8244",
-        "home": "Ottawa Senators",
-        "away": "Colorado Avalanche",
-        "outcome": "Colorado Avalanche",
-        "odds": 2.03,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-29T00:30:00Z"
-    },
-    {
-        "id": "3904ba5c19c1ef077f11ca2e47e863a5",
-        "home": "Columbus Blue Jackets",
-        "away": "Philadelphia Flyers",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.35,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-29T00:30:00Z"
-    },
-    {
         "id": "d5e7d95863015986004ed11ff70ab8bd",
         "home": "Olympiacos",
         "away": "FC Barcelona B\u00e0squet",
@@ -318,5 +288,25 @@
         "stake": 350.0,
         "sport": "basketball_euroleague",
         "time": "2026-01-30T19:45:00Z"
+    },
+    {
+        "id": "71606cff0f207e382b071545b56c7732",
+        "home": "IK Oskarshamn",
+        "away": "\u00d6stersunds IK",
+        "outcome": "IK Oskarshamn",
+        "odds": 1.93,
+        "stake": 350.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-30T18:00:00Z"
+    },
+    {
+        "id": "783588ec37c8ab44da673b30425312c8",
+        "home": "Nybro Vikings IF",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "S\u00f6dert\u00e4lje SK",
+        "odds": 2.3,
+        "stake": 350.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-01-30T18:00:00Z"
     }
 ]

@@ -2573,5 +2573,44 @@
         "score": "3:0",
         "profit": 383.04,
         "status": "WIN"
+    },
+    {
+        "id": "4af523cb83d096676ba2abdccde3a63a",
+        "home": "New York Islanders",
+        "away": "New York Rangers",
+        "outcome": "New York Islanders",
+        "odds": 2.18,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-29T00:00:00Z",
+        "score": "5:2",
+        "profit": 385.73,
+        "status": "WIN"
+    },
+    {
+        "id": "328b01857a777941eccdacfb63fb8244",
+        "home": "Ottawa Senators",
+        "away": "Colorado Avalanche",
+        "outcome": "Colorado Avalanche",
+        "odds": 2.03,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-29T00:30:00Z",
+        "score": "5:2",
+        "profit": -420.0,
+        "status": "LOSS"
+    },
+    {
+        "id": "3904ba5c19c1ef077f11ca2e47e863a5",
+        "home": "Columbus Blue Jackets",
+        "away": "Philadelphia Flyers",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.35,
+        "stake": 420.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-29T00:30:00Z",
+        "score": "5:3",
+        "profit": 448.56,
+        "status": "WIN"
     }
 ]
