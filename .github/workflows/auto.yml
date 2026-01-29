@@ -3,7 +3,6 @@ name: Betting Bot Professional Dawid
 on:
   schedule:
     # Uruchomienie: 07:00, 11:00, 15:00, 19:00 UTC
-    # W Polsce (zależnie od czasu): ok. 08:00, 12:00, 16:00, 20:00
     - cron: '0 7,11,15,19 * * *'
   workflow_dispatch: 
 
@@ -27,7 +26,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip' # Automatyczne cachowanie zależności
+          cache: 'pip'
 
       - name: Install dependencies
         run: |
@@ -50,16 +49,8 @@ jobs:
           ODDS_KEY_9: ${{ secrets.ODDS_KEY_9 }}
           ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
         run: |
-          echo "--- KROK 1: Rozliczanie starych meczów ---"
-          # Robimy to najpierw, żeby zaktualizować bankroll i historię dla skanera
           python settle.py
-          
-          echo "--- KROK 2: Skanowanie ofert (Value Betting) ---"
-          # Skaner teraz widzi nowe wyniki i może dopasować stawkę (Smart Stake)
           python start.py
-          
-          echo "--- KROK 3: Generowanie i wysyłka statystyk ---"
-          # Raport końcowy uwzględniający wszystko powyżej
           python stats.py
 
       - name: Commit and Push Changes
@@ -67,11 +58,10 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Pobranie ewentualnych zmian zdalnych (bezpieczeństwo danych)
           git fetch origin main
           
-          # Lista plików, które bot modyfikuje w trakcie pracy
-          FILES_TO_ADD="history.json coupons.json bankroll.json key_index.txt"
+          # KLUCZOWA ZMIANA: Dodaliśmy stats.json i index.html do listy
+          FILES_TO_ADD="history.json coupons.json bankroll.json key_index.txt stats.json index.html"
           
           for file in $FILES_TO_ADD; do
             if [ -f "$file" ]; then
@@ -80,13 +70,11 @@ jobs:
             fi
           done
 
-          # Sprawdzenie czy są realne zmiany do wysłania
           if ! git diff --cached --quiet; then
             git commit -m "Bot Auto-Update: Results, Bets & Stats [skip ci]"
-            # Rebase -X theirs rozwiązuje konflikty na korzyść danych wygenerowanych w tej sesji
             git pull --rebase -X theirs origin main
             git push origin main
-            echo "🚀 Wszystkie dane zostały zsynchronizowane z repozytorium."
+            echo "🚀 Wszystkie dane zostały zsynchronizowane."
           else
-            echo "ℹ️ Brak nowych danych do zapisu."
+            echo "ℹ️ Brak nowych danych."
           fi
