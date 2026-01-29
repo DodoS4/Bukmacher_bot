@@ -8,44 +8,46 @@ def send_full_backup():
     chat = os.getenv("T_CHAT")
     zip_name = "full_bot_backup.zip"
 
-    # Tworzenie ZIP
     with zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        # Przeszukujemy cały katalog główny projektu
+        # 1. Pakujemy wszystkie pliki z głównego folderu
         for root, dirs, files in os.walk('.'):
-            # Ignorujemy tylko folder .git, bo jest za duży
-            if '.git' in root:
+            # Wykluczamy ciężkie/niepotrzebne foldery
+            if any(x in root for x in ['.git', 'venv', '__pycache__']):
                 continue
-            
+                
             for file in files:
-                # Szukamy skryptów, danych i plików workflow (.yml)
                 if file.endswith(('.py', '.json', '.yml', '.yaml', '.txt')):
-                    file_path = os.path.join(root, file)
-                    
-                    # Tworzymy ścieżkę wewnątrz ZIP (zachowuje foldery np. .github/workflows)
-                    arcname = os.path.relpath(file_path, '.')
-                    
-                    zipf.write(file_path, arcname)
-                    print(f"📦 Spakowano: {arcname}")
+                    if file != zip_name:
+                        file_path = os.path.join(root, file)
+                        arcname = os.path.relpath(file_path, '.')
+                        zipf.write(file_path, arcname)
+                        print(f"📦 Dodano: {arcname}")
+
+        # 2. WYMUSZONE DODANIE WORKFLOWS (jeśli os.walk je pominął)
+        workflow_path = ".github/workflows"
+        if os.path.exists(workflow_path):
+            for file in os.listdir(workflow_path):
+                if file.endswith(('.yml', '.yaml')):
+                    file_path = os.path.join(workflow_path, file)
+                    arcname = os.path.join(".github", "workflows", file)
+                    # Sprawdzamy czy pliku już nie ma w ZIP, żeby nie dublować
+                    if arcname not in zipf.namelist():
+                        zipf.write(file_path, arcname)
+                        print(f"📦 Wymuszono dodanie: {arcname}")
 
     date_str = datetime.now().strftime("%d.%m.%Y %H:%M")
     url = f"https://api.telegram.org/bot{token}/sendDocument"
     
     try:
         with open(zip_name, "rb") as f:
-            r = requests.post(
-                url, 
-                data={"chat_id": chat, "caption": f"🗄 PEŁNY BACKUP: {date_str}\n(Zawiera pliki YAML i skrypty)"},
-                files={"document": f},
-                timeout=30
-            )
-            if r.status_code == 200:
-                print("✅ Backup wysłany na Telegram.")
-            else:
-                print(f"❌ Błąd Telegrama: {r.status_code} - {r.text}")
-        
+            requests.post(url, 
+                         data={"chat_id": chat, "caption": f"🗄 FULL BACKUP (Scripts + YAMLs): {date_str}"},
+                         files={"document": f},
+                         timeout=30)
         os.remove(zip_name)
+        print("✅ Backup wysłany.")
     except Exception as e:
-        print(f"❌ Błąd krytyczny: {e}")
+        print(f"❌ Błąd: {e}")
 
 if __name__ == "__main__":
     send_full_backup()
