@@ -408,5 +408,25 @@
         "stake": 280.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-01-31T15:00:00Z"
+    },
+    {
+        "id": "098818bd0974f099c22a332bac1920dc",
+        "home": "NAC Breda",
+        "away": "FC Twente Enschede",
+        "outcome": "FC Twente Enschede",
+        "odds": 2.0,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-01-30T19:00:00Z"
+    },
+    {
+        "id": "dfd76719105889eacd72fa4939b89cf6",
+        "home": "AZ Alkmaar",
+        "away": "NEC Nijmegen",
+        "outcome": "NEC Nijmegen",
+        "odds": 4.25,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-01-31T15:30:00Z"
     }
 ]
