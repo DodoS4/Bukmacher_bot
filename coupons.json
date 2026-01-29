@@ -428,5 +428,15 @@
         "stake": 350.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-01-31T15:30:00Z"
+    },
+    {
+        "id": "8729ab6a380ab2eb6c7983b74b0d96ed",
+        "home": "FC Zwolle",
+        "away": "SC Telstar",
+        "outcome": "SC Telstar",
+        "odds": 3.05,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-01-31T17:45:00Z"
     }
 ]
