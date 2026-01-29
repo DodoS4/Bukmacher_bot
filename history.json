@@ -2612,5 +2612,19 @@
         "score": "5:3",
         "profit": 448.56,
         "status": "WIN"
+    },
+    {
+        "id": "383d6452447cfac80ad57296ab1a6249",
+        "home": "Fenerbahce SK",
+        "away": "Anadolu Efes",
+        "sport": "basketball_euroleague",
+        "outcome": "Anadolu Efes",
+        "odds": 4.1,
+        "stake": 350.0,
+        "stake_gross": 397.73,
+        "profit": -350.0,
+        "status": "LOSS",
+        "score": "79:62",
+        "time": "2026-01-29T17:45:00Z"
     }
 ]
