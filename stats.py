@@ -120,7 +120,7 @@ def generate_stats():
 if __name__ == "__main__":
     # T_TOKEN zostaje ten sam, ale wysyłamy na T_CHAT_STATS
     token = os.getenv("T_TOKEN")
-    chat_stats_id = os.getenv("T_CHAT_STATS")
+    chat_stats_id = os.getenv("T_CHAT_RESULTS")
     
     report_text = generate_stats()
     
