@@ -6,26 +6,36 @@ from datetime import datetime, timedelta, timezone
 # --- KONFIGURACJA ---
 TOKEN = os.getenv("T_TOKEN")
 CHAT_STATS = os.getenv("T_CHAT_STATS")
-STARTING_BANKROLL = 5000.0 
+STARTING_BANKROLL = 5000.0  # Kwota bazowa do obliczeń ROI
 
 def get_upcoming_count():
-    """Liczy aktywne kupony z pliku coupons.json"""
+    """Liczy mecze z coupons.json zaplanowane na najbliższe 12h"""
     count = 0
-    # Na podstawie Twojego screena, nadchodzące mecze są w coupons.json
-    filename = 'coupons.json' 
+    now = datetime.now(timezone.utc)
+    limit = now + timedelta(hours=12)
+    filename = 'coupons.json'
     
     if not os.path.exists(filename):
         return 0
     
     try:
         with open(filename, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            # Jeśli coupons.json to lista kuponów
-            if isinstance(data, list):
-                count = len(data)
-            # Jeśli coupons.json to słownik, zależy od jego struktury
-            elif isinstance(data, dict):
-                count = len(data.keys())
+            coupons = json.load(f)
+            if isinstance(coupons, list):
+                for coupon in coupons:
+                    # Pomijamy NBA
+                    if "basketball_nba" in str(coupon.get('sport', '')).lower():
+                        continue
+                    
+                    time_str = coupon.get('time')
+                    if time_str:
+                        try:
+                            # Format ISO: 2026-01-29T19:15:00Z
+                            event_time = datetime.fromisoformat(time_str.replace("Z", "+00:00"))
+                            if now <= event_time <= limit:
+                                count += 1
+                        except:
+                            continue
     except:
         pass
     return count
@@ -34,10 +44,13 @@ def generate_stats():
     if not os.path.exists('history.json'):
         return None, "❌ Brak history.json"
         
-    with open('history.json', 'r', encoding='utf-8') as f:
-        history = json.load(f)
+    try:
+        with open('history.json', 'r', encoding='utf-8') as f:
+            history = json.load(f)
+    except Exception as e:
+        return None, f"❌ Błąd odczytu history: {e}"
 
-    # Silent Update - sprawdzenie czy przybyło meczów
+    # Sprawdzenie dla Silent Update (czy przybyły nowe rozliczone mecze)
     old_total_bets = 0
     if os.path.exists('stats.json'):
         try:
@@ -52,11 +65,9 @@ def generate_stats():
     yesterday = now - timedelta(days=1)
 
     for bet in history:
-        # Filtr NBA - usuwamy z statystyk całkowitych
-        if "basketball_nba" in str(bet.get('sport', '')).lower():
-            continue
-        if str(bet.get('status', '')).upper() == "VOID":
-            continue
+        # Filtracja NBA i VOID
+        if "basketball_nba" in str(bet.get('sport', '')).lower(): continue
+        if str(bet.get('status', '')).upper() == "VOID": continue
 
         prof = float(bet.get('profit', 0))
         stk = float(bet.get('stake', 0))
@@ -75,16 +86,17 @@ def generate_stats():
                 profit_24h += prof
         except: pass
 
-        matches.append(f"{icon} {bet.get('home')}-{bet.get('away')} | `{prof:+.2f} PLN`")
+        processed_matches.append(f"{icon} {bet.get('home')}-{bet.get('away')} | `{prof:+.2f} PLN`")
 
     total_bets = wins + losses
     upcoming = get_upcoming_count()
     
-    # Obliczenia końcowe
+    # Obliczenia wskaźników
     yield_val = (total_profit / total_turnover * 100) if total_turnover > 0 else 0
     roi_val = (total_profit / STARTING_BANKROLL * 100) if STARTING_BANKROLL > 0 else 0
     win_rate = (wins / total_bets * 100) if total_bets > 0 else 0
 
+    # Dane do index.html
     web_data = {
         "total_profit": round(total_profit, 2),
         "profit_24h": round(profit_24h, 2),
@@ -100,19 +112,26 @@ def generate_stats():
     with open('stats.json', 'w', encoding='utf-8') as f:
         json.dump(web_data, f, indent=4)
 
+    # Raport Telegram
     diff = total_bets - old_total_bets
-    
     report = [
-        "📊 *OFICJALNE STATYSTYKI*",
+        "📊 *DASHBOARD STATYSTYK*",
         "━━━━━━━━━━━━━━━",
         f"💰 *Zysk Total:* `{total_profit:.2f} PLN`",
         f"📈 *Yield:* `{yield_val:.2f}%` | *ROI:* `{roi_val:.2f}%`",
         f"🔄 *Obrót:* `{total_turnover:.2f} PLN`",
-        f"🕒 *W grze:* `{upcoming} kuponów`",
+        f"🕒 *W grze (12h):* `{upcoming} typów`",
         f"🎯 *Skuteczność:* `{win_rate:.1f}%` ({wins}/{total_bets})",
-        f"🔥 *Forma:* {''.join(series_icons[-10:])}",
+        f"🔥 *Ostatnie:* {''.join(series_icons[-10:])}",
         "━━━━━━━━━━━━━━━"
     ]
+
+    if diff > 0:
+        report.append(f"📝 *NOWE ({diff}):*")
+        report.extend(processed_matches[-diff:])
+    else:
+        report.append("📝 *OSTATNIE WYNIKI:*")
+        report.extend(processed_matches[-5:])
 
     return (diff > 0), "\n".join(report)
 
