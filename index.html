@@ -30,27 +30,22 @@
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
                 <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
             </div>
-            
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-blue-500">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-500">Zysk Total</p>
                 <p id="total-profit" class="text-lg font-black text-blue-600 italic">0.00 PLN</p>
             </div>
-
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-purple-500">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500">ROI %</p>
                 <p id="roi-val" class="text-lg font-black text-purple-600">+0%</p>
             </div>
-
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-gray-400">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-gray-500">Obrót</p>
                 <p id="turnover-val" class="text-lg font-black text-gray-700">0 PLN</p>
             </div>
-
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-blue-400">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-400 italic">W grze (12h)</p>
                 <p id="upcoming-val-card" class="text-lg font-black text-blue-500">0</p>
             </div>
-
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-orange-500">Yield %</p>
                 <p id="yield-val" class="text-lg font-black text-orange-500">0%</p>
@@ -83,7 +78,6 @@
                 const sRes = await fetch('stats.json?v=' + Date.now());
                 const s = await sRes.json();
                 
-                // Aktualizacja Kart
                 document.getElementById('total-profit').innerText = s.total_profit.toLocaleString() + ' PLN';
                 document.getElementById('today-profit').innerText = (s.profit_24h >= 0 ? '+' : '') + s.profit_24h.toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black italic ${s.profit_24h >= 0 ? 'text-green-500' : 'text-red-500'}`;
@@ -92,8 +86,6 @@
                 document.getElementById('yield-val').innerText = s.yield + '%';
                 document.getElementById('total-bets').innerText = `${s.total_bets} typów / ${s.win_rate}% WR`;
                 document.getElementById('last-update').innerText = 'Sync: ' + s.last_update;
-
-                // Aktualizacja nowej karty "W grze"
                 document.getElementById('upcoming-val-card').innerText = s.upcoming_count || 0;
 
                 const hRes = await fetch('history.json?v=' + Date.now());
@@ -139,9 +131,14 @@
                         </button>
                         <div id="${id}" class="hidden border-t bg-gray-50/50 p-2 space-y-1">
                             ${d.matches.reverse().map(m => `
-                                <div class="flex justify-between p-2 bg-white rounded border border-gray-100 text-[10px]">
+                                <div class="flex justify-between items-center p-2 bg-white rounded border border-gray-100 text-[10px]">
                                     <span class="text-gray-600">${m.home} - ${m.away}</span>
-                                    <span class="font-bold ${m.profit >= 0 ? 'text-green-500' : 'text-red-500'}">${m.profit >= 0 ? '+' : ''}${m.profit.toFixed(2)}</span>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-gray-400 text-[9px]">S: ${m.stake}</span>
+                                        <span class="font-bold ${m.profit >= 0 ? 'text-green-500' : 'text-red-500'}">
+                                            ${m.profit >= 0 ? '+' : ''}${parseFloat(m.profit).toFixed(2)}
+                                        </span>
+                                    </div>
                                 </div>`).join('')}
                         </div>
                     </div>`;
