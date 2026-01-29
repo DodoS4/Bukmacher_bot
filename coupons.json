@@ -438,5 +438,15 @@
         "stake": 350.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-01-31T17:45:00Z"
+    },
+    {
+        "id": "041b5802be27fac414c479bb96ff800f",
+        "home": "Volos FC",
+        "away": "AEL",
+        "outcome": "Volos FC",
+        "odds": 2.16,
+        "stake": 280.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-01-31T18:00:00Z"
     }
 ]
