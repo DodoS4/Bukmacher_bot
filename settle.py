@@ -6,8 +6,7 @@ from datetime import datetime, timezone
 # --- KONFIGURACJA ---
 COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
-# Klucz API do sprawdzania wyników (możesz użyć tego samego co w start.py)
-API_KEY = os.getenv("ODDS_KEY") 
+API_KEY = os.getenv("ODDS_KEY")  # Twój klucz API
 
 def get_match_results(sport, event_id):
     """Pobiera wyniki meczu z API."""
@@ -49,42 +48,36 @@ def settle_matches():
 
     for coupon in active_coupons:
         results = get_match_results(coupon['sport'], coupon['id'])
-        
-        # Szukamy konkretnego meczu w wynikach
         match_data = next((m for m in results if m['id'] == coupon['id']), None) if results else None
 
         if match_data and match_data.get('completed'):
-            home_score = 0
-            away_score = 0
-            
-            # Pobieranie punktów/bramek
+            home_score, away_score = 0, 0
             for score in match_data.get('scores', []):
                 if score['name'] == match_data['home_team']:
                     home_score = int(score['score'])
                 else:
                     away_score = int(score['score'])
 
-            # Logika wygranej
+            # Sprawdzenie wygranej
             won = False
             if coupon['outcome'] == match_data['home_team'] and home_score > away_score:
                 won = True
             elif coupon['outcome'] == match_data['away_team'] and away_score > home_score:
                 won = True
-            
-            # ================= OBLICZENIA Z PODATKIEM 12% =================
-            stake = float(coupon['stake'])
+
+            # ================= OBLICZENIA BEZ PODWÓJNEGO PODATKU =================
+            stake = float(coupon['stake'])       # już netto po 12% z start.py
             odds = float(coupon['odds'])
 
             if won:
-                # Wzór: (Stawka * 0.88 * Kurs) - Stawka
-                profit = (stake * 0.88 * odds) - stake
+                profit = (stake * odds) - stake
                 status = "WIN"
             else:
                 profit = -stake
                 status = "LOSS"
-            # =============================================================
+            # ====================================================================
 
-            # Dodajemy do historii
+            # Dodanie do historii z polem stake_gross dla przejrzystości
             history.append({
                 "id": coupon['id'],
                 "home": coupon['home'],
@@ -92,7 +85,8 @@ def settle_matches():
                 "sport": coupon['sport'],
                 "outcome": coupon['outcome'],
                 "odds": odds,
-                "stake": stake,
+                "stake": stake,                 # netto
+                "stake_gross": round(stake / 0.88, 2),  # przed podatkiem
                 "profit": round(profit, 2),
                 "status": status,
                 "score": f"{home_score}:{away_score}",
