@@ -2,20 +2,25 @@ name: 📦 Dzienny Backup Bazy
 
 on:
   schedule:
-    - cron: '0 4 * * *' # Codziennie o 4:00 UTC (czyli 5:00 rano w Polsce)
-  workflow_dispatch: # Przycisk do ręcznego wywołania w każdej chwili
+    - cron: '0 4 * * *' # 5:00 rano w Polsce
+  workflow_dispatch: # Przycisk do ręcznego odpalenia
 
 jobs:
   backup:
     runs-on: ubuntu-latest
+    # Dodajemy uprawnienia dla bezpieczeństwa, choć przy samym ZIP nie są krytyczne
+    permissions:
+      contents: read
+
     steps:
       - name: Pobierz kod
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Zaktualizowano do v4 (szybsza i nowsza)
 
       - name: Konfiguracja Pythona
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5 # Zaktualizowano do v5
         with:
-          python-version: '3.9'
+          python-version: '3.10'
+          cache: 'pip'
 
       - name: Instalacja bibliotek
         run: pip install requests
