@@ -3,13 +3,12 @@ import requests
 import json
 import time
 from datetime import datetime, timedelta, timezone
-from stats import generate_stats  # Import Twojej funkcji
+from stats import generate_stats
 
-# ================= KONFIGURACJA LIG =================
+# ================= KONFIGURACJA LIG (POPRAWIONE NAZWY API) =================
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
-    "icehockey_sweden_allsvenskan": "🇸🇪",
-    "icehockey_sweden_svenska_rinkbandy": "🇸🇪",
+    "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
     "icehockey_finland_liiga": "🇫🇮",
     "icehockey_germany_del": "🇩🇪",
     "icehockey_czech_extraliga": "🇨🇿",
@@ -25,15 +24,15 @@ SPORTS_CONFIG = {
     "soccer_poland_ekstraklasa": "🇵🇱",
     "soccer_france_ligue_one": "🇫🇷",
     "soccer_portugal_primeira_liga": "🇵🇹",
-    "soccer_netherlands_erevidisie": "🇳🇱",
+    "soccer_netherlands_eredivisie": "🇳🇱",
     "soccer_turkey_super_lig": "🇹🇷",
     "soccer_belgium_first_division_a": "🇧🇪",
     "soccer_austria_bundesliga": "🇦🇹",
     "soccer_denmark_superliga": "🇩🇰",
     "soccer_greece_super_league": "🇬🇷",
     "soccer_switzerland_superleague": "🇨🇭",
-    "soccer_scotland_premier_league": "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
-    "soccer_efl_championship": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "soccer_scotland_premier_league": "🏴",
+    "soccer_efl_championship": "🏴",
     "basketball_euroleague": "🏀",
     "tennis_atp_australian_open": "🎾",
     "tennis_wta_australian_open": "🎾"
@@ -82,9 +81,12 @@ def get_smart_stake(league_key):
                 current_multiplier = 0.8
                 threshold = 1.05
         except: pass
+    
+    final_stake = BASE_STAKE * current_multiplier
     if "nhl" in league_key.lower():
-        return round(BASE_STAKE * 1.2 * current_multiplier, 2), threshold
-    return round(BASE_STAKE * current_multiplier, 2), threshold
+        final_stake *= 1.2
+        
+    return round(final_stake, 2), threshold
 
 def send_telegram(message, mode="HTML"):
     if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
@@ -94,17 +96,15 @@ def send_telegram(message, mode="HTML"):
             "chat_id": TELEGRAM_CHAT, 
             "text": message, 
             "parse_mode": mode
-        })
+        }, timeout=10)
     except: pass
 
 def load_existing_data():
     if os.path.exists(COUPONS_FILE):
-        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-            try:
-                data = json.load(f)
-                now = datetime.now(timezone.utc)
-                return [c for c in data if datetime.fromisoformat(c['time'].replace("Z", "+00:00")) > (now - timedelta(hours=72))]
-            except: return []
+        try:
+            with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except: return []
     return []
 
 # ================= GŁÓWNA LOGIKA =================
@@ -118,12 +118,13 @@ def main():
     current_key_idx = get_current_key_idx()
     all_coupons = load_existing_data()
     already_sent_ids = [c['id'] for c in all_coupons]
+    
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
 
     for league, flag_emoji in SPORTS_CONFIG.items():
         current_stake, base_threshold = get_smart_stake(league)
-        print(f"📡 SKANOWANIE: {league.upper()} (Stawka: {current_stake} PLN)")
+        print(f"📡 SKANOWANIE: {league.upper()} (Threshold: {base_threshold})")
         
         data = None
         attempts = 0
@@ -132,7 +133,7 @@ def main():
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
             params = {"apiKey": active_key, "regions": "eu", "markets": "h2h"}
             try:
-                resp = requests.get(url, params=params)
+                resp = requests.get(url, params=params, timeout=15)
                 if resp.status_code == 200:
                     data = resp.json()
                     break
@@ -148,6 +149,7 @@ def main():
 
         for event in data:
             if event['id'] in already_sent_ids: continue
+            
             try:
                 m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
                 if m_time > max_future or m_time < now: continue 
@@ -164,11 +166,15 @@ def main():
             best_choice, best_odds, max_val = None, 0, 0
             for name, prices in market_prices.items():
                 if name.lower() == "draw": continue
-                max_p, avg_p = max(prices), sum(prices) / len(prices)
+                
+                max_p = max(prices)
+                avg_p = sum(prices) / len(prices)
+                curr_val = max_p / avg_p
+                
                 req_val = base_threshold
                 if max_p >= 2.2: req_val += 0.03
                 if max_p >= 3.2: req_val += 0.04
-                curr_val = max_p / avg_p
+                
                 if 1.85 <= max_p <= 5.0 and curr_val > req_val:
                     if curr_val > max_val:
                         max_val, best_odds, best_choice = curr_val, max_p, name
@@ -187,7 +193,9 @@ def main():
                        f"💰 Stawka: <b>{current_stake} PLN</b>\n"
                        f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
                        f"━━━━━━━━━━━━━━━")
+                
                 send_telegram(msg)
+                
                 all_coupons.append({
                     "id": event['id'], "home": event['home_team'], "away": event['away_team'],
                     "outcome": best_choice, "odds": best_odds, "stake": current_stake,
@@ -199,14 +207,13 @@ def main():
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
     
-    print(f"✅ KONIEC SKANOWANIA. Aktywne kupony: {len(all_coupons)}")
+    print(f"✅ KONIEC SKANOWANIA. Aktywne: {len(all_coupons)}")
 
     # --- WYSYŁKA STATYSTYK ---
-    print("📊 GENEROWANIE STATYSTYK...")
     try:
         raport_stats = generate_stats()
         send_telegram(raport_stats, mode="Markdown")
-        print("✅ STATYSTYKI WYSŁANE NA TELEGRAM")
+        print("✅ STATYSTYKI WYSŁANE")
     except Exception as e:
         print(f"❌ BŁĄD STATYSTYK: {e}")
 
