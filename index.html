@@ -130,16 +130,20 @@
                             <span class="${d.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${d.profit >= 0 ? '+' : ''}${d.profit.toFixed(2)} PLN</span>
                         </button>
                         <div id="${id}" class="hidden border-t bg-gray-50/50 p-2 space-y-1">
-                            ${d.matches.reverse().map(m => `
-                                <div class="flex justify-between items-center p-2 bg-white rounded border border-gray-100 text-[10px]">
-                                    <span class="text-gray-600">${m.home} - ${m.away}</span>
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-gray-400 text-[9px]">S: ${m.stake}</span>
-                                        <span class="font-bold ${m.profit >= 0 ? 'text-green-500' : 'text-red-500'}">
-                                            ${m.profit >= 0 ? '+' : ''}${parseFloat(m.profit).toFixed(2)}
+                            ${d.matches.reverse().map(m => {
+                                const profitValue = parseFloat(m.profit || 0);
+                                const statusLabel = profitValue >= 0 ? 'Wygrana:' : 'Strata:';
+                                return `
+                                <div class="flex flex-col md:flex-row md:justify-between p-3 bg-white rounded border border-gray-100 text-[10px] gap-1">
+                                    <span class="text-gray-700 font-medium">${m.home} - ${m.away}</span>
+                                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                                        <span class="text-gray-400">Stawka: <span class="text-gray-600 font-bold">${m.stake} PLN</span></span>
+                                        <span class="${profitValue >= 0 ? 'text-green-500' : 'text-red-500'} font-bold">
+                                            ${statusLabel} ${profitValue >= 0 ? '+' : ''}${profitValue.toFixed(2)} PLN
                                         </span>
                                     </div>
-                                </div>`).join('')}
+                                </div>`;
+                            }).join('')}
                         </div>
                     </div>`;
             });
