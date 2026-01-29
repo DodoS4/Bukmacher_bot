@@ -2614,6 +2614,20 @@
         "status": "WIN"
     },
     {
+        "id": "d5e7d95863015986004ed11ff70ab8bd",
+        "home": "Olympiacos",
+        "away": "FC Barcelona B\u00e0squet",
+        "sport": "basketball_euroleague",
+        "outcome": "FC Barcelona B\u00e0squet",
+        "odds": 3.17,
+        "stake": 350.0,
+        "stake_gross": 397.73,
+        "profit": -350.0,
+        "status": "LOSS",
+        "score": "87:75",
+        "time": "2026-01-29T19:15:00Z"
+    },
+    {
         "id": "383d6452447cfac80ad57296ab1a6249",
         "home": "Fenerbahce SK",
         "away": "Anadolu Efes",

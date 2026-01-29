@@ -10,16 +10,6 @@
         "time": "2026-01-27T00:00:00Z"
     },
     {
-        "id": "d5e7d95863015986004ed11ff70ab8bd",
-        "home": "Olympiacos",
-        "away": "FC Barcelona B\u00e0squet",
-        "outcome": "FC Barcelona B\u00e0squet",
-        "odds": 3.17,
-        "stake": 350.0,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-29T19:15:00Z"
-    },
-    {
         "id": "2fdf5ea088cc3724ac33af320f3f9fd8",
         "home": "Valencia Basket",
         "away": "Maccabi Tel Aviv",
@@ -470,13 +460,13 @@
         "time": "2026-01-31T19:30:00Z"
     },
     {
-        "id": "0a989e0e588a7fa9fcdd1ab09ff07faf",
-        "home": "Sparta Rotterdam",
-        "away": "Groningen",
-        "outcome": "Sparta Rotterdam",
-        "odds": 2.76,
-        "stake": 350.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-01-31T20:00:00Z"
+        "id": "01582fc5c1eef56c7141a86e0a585c25",
+        "home": "1. FC K\u00f6ln",
+        "away": "VfL Wolfsburg",
+        "outcome": "1. FC K\u00f6ln",
+        "odds": 2.17,
+        "stake": 455.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-01-30T19:30:00Z"
     }
 ]
