@@ -67,25 +67,40 @@ def save_current_key_idx(idx):
         f.write(str(idx))
 
 def get_smart_stake(league_key):
+    """Automatyczne dobieranie stawki w zależności od historii zysków/strat i ligi."""
     current_multiplier = 1.0
     threshold = 1.03
+    history_profit = 0
+
+    # Pobierz historię
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
-            league_profit = sum(m['profit'] for m in history if m.get('sport') == league_key)
-            if league_profit <= -700: 
+            league_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
+            history_profit = league_profit
+            # Skala stawki w zależności od strat
+            if league_profit <= -700:
                 current_multiplier = 0.5
                 threshold = 1.07
-            elif league_profit <= -300: 
+            elif league_profit <= -300:
                 current_multiplier = 0.8
                 threshold = 1.05
+            elif league_profit >= 500:
+                current_multiplier = 1.3  # większa stawka przy dobrym wyniku
+            elif league_profit >= 1000:
+                current_multiplier = 1.5  # bonus przy dużym zysku
         except: pass
     
     final_stake = BASE_STAKE * current_multiplier
+
+    # Bonus dla NHL
     if "nhl" in league_key.lower():
-        final_stake *= 1.2
-        
+        if history_profit > 0:
+            final_stake *= 1.2  # zwiększenie stawki jeśli NHL przynosi zysk
+        else:
+            final_stake *= 1.1  # lekkie zwiększenie dla NHL nawet przy stracie
+
     return round(final_stake, 2), threshold
 
 def send_telegram(message, mode="HTML"):
