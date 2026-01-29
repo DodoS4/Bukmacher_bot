@@ -48,14 +48,14 @@
                 <p id="yield-val" class="text-lg font-black text-orange-500">0%</p>
             </div>
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm border border-gray-100 text-center col-span-2 md:col-span-1">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Liczba Typów</p>
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Typy / WR%</p>
                 <p id="total-bets" class="text-lg font-black text-gray-800">0</p>
             </div>
         </div>
 
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mb-8">
             <h3 class="font-bold mb-6 flex items-center gap-2 text-[11px] text-gray-500 uppercase tracking-widest">
-                <i class="fas fa-chart-line text-blue-500"></i> Progresja Zysku (Dzień po dniu)
+                <i class="fas fa-chart-line text-blue-500"></i> Progresja Zysku (Kapitał)
             </h3>
             <div class="chart-container">
                 <canvas id="profitChart"></canvas>
@@ -63,7 +63,7 @@
         </div>
 
         <div class="mb-10">
-            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic mb-4 px-2">Historia meczów</h3>
+            <h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-500 italic mb-4 px-2">Historia Rozliczeń</h3>
             <div id="history-groups" class="space-y-3"></div>
         </div>
     </div>
@@ -72,59 +72,17 @@
         let profitChart = null;
         let countdown = 300;
 
-        // MAPA FLAG I IKON DYSCYPLIN
         const FLAG_MAP = {
-            // USA / MIĘDZYNARODOWE
-            "NHL": "🇺🇸 🏒",
-            "NBA": "🇺🇸 🏀",
-            "EURO LEAGUE": "🏀",
-            "EUROLEAGUE": "🏀",
-            "AUSTRALIAN OPEN": "🎾",
-            
-            // PIŁKA NOŻNA - EUROPA
-            "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽",
-            "CHAMPIONSHIP": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽",
-            "ENGLAND": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽",
-            "PREMIER LEAGUE": "🏴󠁧󠁢󠁳󠁣󠁴󠁿 ⚽",
-            "LA LIGA": "🇪🇸 ⚽",
-            "SPAIN": "🇪🇸 ⚽",
-            "BUNDESLIGA": "🇩🇪 ⚽",
-            "GERMANY": "🇩🇪 ⚽",
-            "SERIE A": "🇮🇹 ⚽",
-            "SERIE B": "🇮🇹 ⚽",
-            "ITALY": "🇮🇹 ⚽",
-            "LIGUE ONE": "🇫🇷 ⚽",
-            "LIGUE TWO": "🇫🇷 ⚽",
-            "FRANCE": "🇫🇷 ⚽",
-            "EKSTRAKLASA": "🇵🇱 ⚽",
-            "POLAND": "🇵🇱 ⚽",
-            "PRIMEIRA LIGA": "🇵🇹 ⚽",
-            "PORTUGAL": "🇵🇹 ⚽",
-            "EREVIDISIE": "🇳🇱 ⚽",
-            "NETHERLANDS": "🇳🇱 ⚽",
-            "SUPER LIG": "🇹🇷 ⚽",
-            "TURKEY": "🇹🇷 ⚽",
-            "FIRST DIVISION A": "🇧🇪 ⚽",
-            "BELGIUM": "🇧🇪 ⚽",
-            "SUPERLIGA": "🇩🇰 ⚽",
-            "DENMARK": "🇩🇰 ⚽",
-            "SUPER LEAGUE": "🇬🇷 ⚽",
-            "GREECE": "🇬🇷 ⚽",
-            "SUPERLEAGUE": "🇨🇭 ⚽",
-            "SWITZERLAND": "🇨🇭 ⚽",
-            "ELITESERIEN": "🇳🇴 ⚽",
-            "NORWAY": "🇳🇴 ⚽",
-            "AUSTRIA": "🇦🇹 ⚽",
-            "BUNDESLIGA AT": "🇦🇹 ⚽",
-            
-            // HOKEJ
-            "ALLSVENSKAN": "🇸🇪 🏒",
-            "SWEDEN": "🇸🇪 🏒",
-            "LIIGA": "🇫🇮 🏒",
-            "FINLAND": "🇫🇮 🏒",
-            "DEL": "🇩🇪 🏒",
-            "EXTRALIGA": "🇨🇿 🏒",
-            "CZECH": "🇨🇿 🏒"
+            "NHL": "🇺🇸 🏒", "NBA": "🇺🇸 🏀", "EURO LEAGUE": "🏀", "EUROLEAGUE": "🏀", "AUSTRALIAN OPEN": "🎾",
+            "EPL": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽", "CHAMPIONSHIP": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽", "ENGLAND": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽", "PREMIER LEAGUE": "🏴󠁧󠁢󠁳󠁣󠁴󠁿 ⚽",
+            "LA LIGA": "🇪🇸 ⚽", "SPAIN": "🇪🇸 ⚽", "BUNDESLIGA": "🇩🇪 ⚽", "GERMANY": "🇩🇪 ⚽",
+            "SERIE A": "🇮🇹 ⚽", "ITALY": "🇮🇹 ⚽", "LIGUE ONE": "🇫🇷 ⚽", "FRANCE": "🇫🇷 ⚽",
+            "EKSTRAKLASA": "🇵🇱 ⚽", "POLAND": "🇵🇱 ⚽", "PRIMEIRA LIGA": "🇵🇹 ⚽", "PORTUGAL": "🇵🇹 ⚽",
+            "EREDIVISIE": "🇳🇱 ⚽", "NETHERLANDS": "🇳🇱 ⚽", "SUPER LIG": "🇹🇷 ⚽", "TURKEY": "🇹🇷 ⚽",
+            "FIRST DIVISION A": "🇧🇪 ⚽", "BELGIUM": "🇧🇪 ⚽", "SUPERLIGA": "🇩🇰 ⚽", "DENMARK": "🇩🇰 ⚽",
+            "SUPER LEAGUE": "🇬🇷 ⚽", "GREECE": "🇬🇷 ⚽", "SUPERLEAGUE": "🇨🇭 ⚽", "SWITZERLAND": "🇨🇭 ⚽",
+            "ELITESERIEN": "🇳🇴 ⚽", "NORWAY": "🇳🇴 ⚽", "AUSTRIA": "🇦🇹 ⚽", "ALLSVENSKAN": "🇸🇪 🏒",
+            "SWEDEN": "🇸🇪 🏒", "LIIGA": "🇫🇮 🏒", "FINLAND": "🇫🇮 🏒", "DEL": "🇩🇪 🏒", "EXTRALIGA": "🇨🇿 🏒"
         };
 
         function getFlag(name) {
@@ -140,20 +98,24 @@
                 const res = await fetch('history.json?v=' + Date.now());
                 const history = await res.json();
                 
-                let totalProfit = 0, totalStaked = 0, todayProfit = 0;
+                let totalProfit = 0, totalStaked = 0, todayProfit = 0, wins = 0;
                 const leagues = {}; 
                 const dailyProfits = {}; 
                 const now = new Date();
 
+                // Sortowanie po dacie, aby wykres rósł chronologicznie
                 const sortedHistory = [...history].sort((a, b) => new Date(a.time) - new Date(b.time));
 
                 sortedHistory.forEach((m) => {
-                    if (m.outcome === 'Draw') return;
-                    const profit = parseFloat(m.profit);
-                    const stake = parseFloat(m.stake || 250);
+                    // POMINIĘCIE TYLKO VOID - Wszystkie inne typy (w tym Draw) są liczone
+                    if (m.status === "VOID") return;
+
+                    const profit = parseFloat(m.profit || 0);
+                    const stake = parseFloat(m.stake || 350); // Ustawione na 350 PLN zgodnie z botem
                     
                     totalProfit += profit;
                     totalStaked += stake;
+                    if (profit > 0) wins++;
                     
                     const dateObj = new Date(m.time);
                     const dateKey = dateObj.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' });
@@ -169,12 +131,16 @@
                     leagues[lName].matches.push(m);
                 });
 
-                document.getElementById('total-profit').innerText = totalProfit.toFixed(2) + ' PLN';
+                // Aktualizacja UI
+                document.getElementById('total-profit').innerText = totalProfit.toLocaleString('pl-PL', {minimumFractionDigits: 2}) + ' PLN';
                 document.getElementById('today-profit').innerText = (todayProfit >= 0 ? '+' : '') + todayProfit.toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black ${todayProfit >= 0 ? 'text-green-500' : 'text-red-500'}`;
-                document.getElementById('total-staked').innerText = totalStaked.toFixed(2) + ' PLN';
-                document.getElementById('total-bets').innerText = history.length;
-                document.getElementById('yield-val').innerText = totalStaked > 0 ? ((totalProfit / totalStaked) * 100).toFixed(1) + '%' : '0%';
+                document.getElementById('total-staked').innerText = totalStaked.toLocaleString('pl-PL', {maximumFractionDigits: 0}) + ' PLN';
+                
+                const winRate = history.length > 0 ? ((wins / (history.length - (history.filter(x=>x.status==="VOID").length))) * 100).toFixed(1) : 0;
+                document.getElementById('total-bets').innerText = `${history.length} / ${winRate}%`;
+                
+                document.getElementById('yield-val').innerText = totalStaked > 0 ? ((totalProfit / totalStaked) * 100).toFixed(2) + '%' : '0%';
                 document.getElementById('last-update').innerText = 'Sync: ' + new Date().toLocaleTimeString();
 
                 const historyGroups = document.getElementById('history-groups');
@@ -196,29 +162,20 @@
                             </button>
                             <div id="${id}" class="hidden border-t bg-gray-50/30 p-2 space-y-1">
                                 ${data.matches.reverse().map(m => {
-                                    let homeClass = "text-slate-800";
-                                    let awayClass = "text-slate-800";
-                                    if(m.score && m.score.includes(':')) {
-                                        const scores = m.score.split(':').map(Number);
-                                        if(scores[0] > scores[1]) homeClass = "text-green-600 font-black";
-                                        else if(scores[1] > scores[0]) awayClass = "text-green-600 font-black";
-                                    }
-
+                                    const pVal = parseFloat(m.profit || 0);
                                     return `
                                     <div class="flex justify-between items-center p-2 bg-white rounded border border-gray-50 text-[10px]">
                                         <div class="flex flex-col text-left w-[40%]">
-                                            <span class="${homeClass} leading-tight">${m.home}</span>
-                                            <span class="${awayClass} leading-tight">${m.away}</span>
-                                            <span class="text-[7px] text-gray-400 italic mt-1">${m.time ? m.time.split('T')[0] : '--'}</span>
+                                            <span class="font-bold leading-tight">${m.home}</span>
+                                            <span class="font-bold leading-tight">${m.away}</span>
+                                            <span class="text-[7px] text-gray-400 mt-1">${m.time ? m.time.split('T')[0] : '--'} | TYP: ${m.outcome}</span>
                                         </div>
                                         <div class="flex flex-col text-center w-[20%]">
                                             <span class="font-bold text-blue-600">@${m.odds}</span>
-                                            <span class="text-gray-500 font-mono text-[10px] font-bold bg-gray-100 rounded px-1">${m.score || '-:-'}</span>
+                                            <span class="text-gray-500 font-mono text-[9px] bg-gray-100 rounded px-1">${m.score || '-:-'}</span>
                                         </div>
-                                        <div class="w-[40%] text-right">
-                                            <span class="font-black ${parseFloat(m.profit) >= 0 ? 'text-green-500' : 'text-red-500'}">
-                                                ${parseFloat(m.profit) > 0 ? '+' : ''}${parseFloat(m.profit).toFixed(2)} PLN
-                                            </span>
+                                        <div class="w-[40%] text-right font-black ${pVal >= 0 ? 'text-green-500' : 'text-red-500'}">
+                                            ${pVal > 0 ? '+' : ''}${pVal.toFixed(2)} PLN
                                         </div>
                                     </div>`;
                                 }).join('')}
@@ -227,7 +184,7 @@
                 });
 
                 updateChart(Object.keys(dailyProfits), Object.values(dailyProfits));
-            } catch (e) { console.error("Błąd ładowania danych:", e); }
+            } catch (e) { console.error("Błąd danych:", e); }
         }
 
         function updateChart(labels, data) {
@@ -242,9 +199,7 @@
                         borderColor: '#2563eb',
                         backgroundColor: 'rgba(37, 99, 235, 0.1)',
                         borderWidth: 3,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#fff',
-                        pointBorderColor: '#2563eb',
+                        pointRadius: 2,
                         fill: true,
                         tension: 0.3
                     }]
@@ -254,8 +209,8 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { ticks: { font: { size: 9 }, autoSkip: true, maxTicksLimit: 6 }, grid: { display: false } },
-                        y: { ticks: { font: { size: 9 }, callback: value => value + ' PLN' }, grid: { color: '#f1f5f9' } }
+                        x: { ticks: { font: { size: 8 }, autoSkip: true, maxTicksLimit: 7 }, grid: { display: false } },
+                        y: { ticks: { font: { size: 8 } }, grid: { color: '#f1f5f9' } }
                     }
                 }
             });
