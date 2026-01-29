@@ -23,15 +23,14 @@ def generate_stats():
     wins, losses, voids = 0, 0, 0
     last_matches_list = []
     
-    # Czas do obliczeń 24h (obsługa UTC dla GitHub Actions)
+    # Czas do obliczeń 24h (UTC dla GitHub Actions)
     now = datetime.now(timezone.utc)
     yesterday = now - timedelta(days=1)
 
-    # Jedna pętla - procesujemy wszystko naraz
-    # Używamy reversed(), aby pobrać 5 najświeższych meczów do listy
+    # Procesujemy historię od najnowszych
     for bet in reversed(history):
-        # Pomijamy tylko czyste zwroty (VOID), Draw w 1X2 to normalny wynik
-        status = bet.get('status', '')
+        # Sprawdzamy status
+        status = str(bet.get('status', '')).upper()
         if status == "VOID":
             voids += 1
             continue
@@ -43,6 +42,7 @@ def generate_stats():
             # 1. Statystyki ogólne
             total_profit += profit
             total_turnover += stake
+            
             if profit > 0:
                 wins += 1
                 icon = "✅"
@@ -50,12 +50,13 @@ def generate_stats():
                 losses += 1
                 icon = "❌"
             else:
-                icon = "⚪" # Profit 0 ale nie VOID (rzadkie)
+                icon = "⚪"
 
             # 2. Obliczanie zysku z ostatnich 24h
             bet_date_str = bet.get('time') or bet.get('date')
             if bet_date_str:
                 try:
+                    # Elastyczne parsowanie daty (ISO lub format standardowy)
                     if "T" in bet_date_str:
                         bet_date = datetime.fromisoformat(bet_date_str.replace("Z", "+00:00"))
                     else:
@@ -66,7 +67,7 @@ def generate_stats():
                 except:
                     pass
 
-            # 3. Lista 5 ostatnich rozliczeń
+            # 3. Lista 5 ostatnich rozliczeń (do raportu Telegram)
             if len(last_matches_list) < 5:
                 home = bet.get('home') or bet.get('home_team') or "???"
                 away = bet.get('away') or bet.get('away_team') or "???"
@@ -99,21 +100,20 @@ def generate_stats():
         report.append("_Brak rozliczonych meczów_")
         
     report.append("━━━━━━━━━━━━━━━")
-    report.append(f"🕒 _Aktualizacja: {datetime.now().strftime('%H:%M:%S')}_")
+    report.append(f"🕒 _Aktualizacja: {datetime.now(timezone.utc).strftime('%H:%M:%S')} UTC_")
 
     return "\n".join(report)
 
 if __name__ == "__main__":
-    # Pobranie danych z env (GitHub Secrets)
+    # Ten blok wykonuje się, gdy GitHub odpala stats.py bezpośrednio
     token = os.getenv("T_TOKEN")
     chat_id = os.getenv("T_CHAT")
     
     report_text = generate_stats()
     
-    # Zawsze drukuj w konsoli logów GitHub
+    # Wyświetl w logach GitHub Actions (ułatwia debugowanie)
     print(report_text)
     
-    # Wysyłka na Telegram
     if token and chat_id:
         url = f"https://api.telegram.org/bot{token}/sendMessage"
         payload = {
@@ -123,11 +123,7 @@ if __name__ == "__main__":
         }
         try:
             r = requests.post(url, json=payload, timeout=10)
-            if r.status_code == 200:
-                print("✅ Raport wysłany pomyślnie na Telegram.")
-            else:
+            if r.status_code != 200:
                 print(f"❌ Błąd Telegram API: {r.text}")
         except Exception as e:
             print(f"❌ Wyjątek przy wysyłce: {e}")
-    else:
-        print("⚠️ Pominięto wysyłkę Telegram (brak T_TOKEN lub T_CHAT).")
