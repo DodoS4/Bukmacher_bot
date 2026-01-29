@@ -398,5 +398,15 @@
         "stake": 280.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-01-31T15:00:00Z"
+    },
+    {
+        "id": "dfd76719105889eacd72fa4939b89cf6",
+        "home": "AZ Alkmaar",
+        "away": "NEC Nijmegen",
+        "outcome": "NEC Nijmegen",
+        "odds": 4.25,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-01-31T15:30:00Z"
     }
 ]
