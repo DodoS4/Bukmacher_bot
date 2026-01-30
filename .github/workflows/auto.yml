@@ -35,9 +35,16 @@ jobs:
 
       - name: Run Betting Logic
         env:
+          # Mapowanie kluczy dla start.py, settle.py i stats.py
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           T_CHAT_RESULTS: ${{ secrets.T_CHAT_RESULTS }}
+          
+          # Dodatkowe mapowanie (na wypadek, gdyby inne skrypty używały tych nazw)
+          TELEGRAM_TOKEN: ${{ secrets.T_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.T_CHAT }}
+          
+          # Klucze do ODDS API (1-10)
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
           ODDS_KEY_2: ${{ secrets.ODDS_KEY_2 }}
           ODDS_KEY_3: ${{ secrets.ODDS_KEY_3 }}
@@ -60,7 +67,7 @@ jobs:
           
           git fetch origin main
           
-          # KLUCZOWA ZMIANA: Dodaliśmy stats.json i index.html do listy
+          # Synchronizacja wszystkich kluczowych plików
           FILES_TO_ADD="history.json coupons.json bankroll.json key_index.txt stats.json index.html"
           
           for file in $FILES_TO_ADD; do
@@ -74,7 +81,7 @@ jobs:
             git commit -m "Bot Auto-Update: Results, Bets & Stats [skip ci]"
             git pull --rebase -X theirs origin main
             git push origin main
-            echo "🚀 Wszystkie dane zostały zsynchronizowane."
+            echo "🚀 Wszystkie dane zostały zsynchronizowane i wysłane."
           else
-            echo "ℹ️ Brak nowych danych."
+            echo "ℹ️ Brak nowych danych do zapisu."
           fi
