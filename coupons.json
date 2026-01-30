@@ -1,15 +1,5 @@
 [
     {
-        "id": "40c02a07bc44ff52fe319ce9b7bf1594",
-        "home": "Columbus Blue Jackets",
-        "away": "Los Angeles Kings",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.7,
-        "stake": 300.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-27T00:00:00Z"
-    },
-    {
         "id": "4b8ad8ba32b83ee86502e11f2ef80636",
         "home": "Zag\u0142\u0119bie Lubin",
         "away": "GKS Katowice",
