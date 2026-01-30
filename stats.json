@@ -1,10 +1,10 @@
 {
     "balance": 100.0,
-    "upcoming_count": 80,
+    "upcoming_count": 81,
     "total_profit": 0.0,
     "roi": "0%",
     "turnover": 0.0,
-    "in_game_amount": 401.0,
+    "in_game_amount": 406.0,
     "groups": {
         "GERMANY BUNDESLIGA": {
             "matches": [
@@ -208,9 +208,16 @@
                     "odds": 3.5,
                     "stake": 5.0,
                     "profit": 10.4
+                },
+                {
+                    "teams": "Nantes - Lyon",
+                    "outcome": "Lyon",
+                    "odds": 1.65,
+                    "stake": 5.0,
+                    "profit": 2.26
                 }
             ],
-            "total_potential_profit": 69.56
+            "total_potential_profit": 71.82000000000001
         },
         "ITALY SERIE A": {
             "matches": [
@@ -617,5 +624,5 @@
             "total_potential_profit": 7.1
         }
     },
-    "last_update": "10:41:41"
+    "last_update": "11:36:23"
 }

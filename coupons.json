@@ -864,5 +864,16 @@
         "odds": 3.5,
         "stake": 5.0,
         "time": "2026-02-08T16:15:00Z"
+    },
+    {
+        "id": "edfe36614e6a6e62028187eeccf89b71",
+        "unique_id": "edfe36614e6a6e62028187eeccf89b71_Lyon",
+        "sport": "soccer_france_ligue_one",
+        "home": "Nantes",
+        "away": "Lyon",
+        "outcome": "Lyon",
+        "odds": 1.65,
+        "stake": 5.0,
+        "time": "2026-02-07T20:05:00Z"
     }
 ]
