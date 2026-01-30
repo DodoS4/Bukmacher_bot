@@ -60,47 +60,39 @@ def send_telegram(message, mode="HTML"):
         requests.post(url, json=payload, timeout=15)
     except: pass
 
-# ================= LOGIKA STAWEK I BEZPIECZEŃSTWA =================
+# ================= LOGIKA STAWEK I VALUE =================
 def get_smart_stake(league_key):
-    """Dobieranie stawki i blokada stratnych dyscyplin."""
+    """Agresywne dobieranie stawki dla dochodowych lig hokejowych."""
     current_multiplier = 1.0
-    threshold = 1.035
+    threshold = 1.035 # Standard: 3.5%
     history_profit = 0
-    is_blocked = False
 
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
-            
-            # Sumujemy zysk dla danej dyscypliny (np. piłka vs hokej)
-            sport_category = "icehockey" if "icehockey" in league_key else ("soccer" if "soccer" in league_key else "other")
-            total_sport_profit = sum(m.get('profit', 0) for m in history if sport_category in m.get('sport', ''))
             league_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
+            history_profit = league_profit
             
-            # --- TRYB BEZPIECZEŃSTWA (Opcja 1) ---
-            if total_sport_profit <= -2000:
-                print(f"🛑 BLOKADA: Kategoria {sport_category} wyłączona (Profit: {total_sport_profit})")
-                is_blocked = True
-
-            # Dynamiczne progi
+            # Hamulec dla strat
             if league_profit <= -700:
                 current_multiplier, threshold = 0.5, 1.08
+            # Boost dla maszynek do zarabiania (NHL, Sweden)
             elif league_profit >= 3000:
                 current_multiplier = 1.6
             elif league_profit >= 1000:
                 current_multiplier = 1.3
-            
-            history_profit = league_profit
         except: pass
     
     final_stake = BASE_STAKE * current_multiplier
+    
+    # SPECJALNE TRAKTOWANIE HOKEJA
     if "icehockey" in league_key.lower():
-        threshold -= 0.01 
+        threshold -= 0.01 # Niższy próg wejścia (więcej typów)
         if history_profit > 0:
-            final_stake *= 1.25 
+            final_stake *= 1.25 # Dodatkowe 25% kapitału na zyskowny hokej
             
-    return round(final_stake, 2), round(threshold, 3), is_blocked
+    return round(final_stake, 2), round(threshold, 3)
 
 def get_all_keys():
     keys = []
@@ -117,6 +109,7 @@ def main():
     api_keys = get_all_keys()
     if not api_keys: return
 
+    # Rotacja kluczy
     if os.path.exists(KEY_STATE_FILE):
         try:
             with open(KEY_STATE_FILE, "r") as f:
@@ -124,6 +117,7 @@ def main():
         except: idx = 0
     else: idx = 0
 
+    # Ładowanie bazy
     all_coupons = []
     if os.path.exists(COUPONS_FILE):
         try:
@@ -136,9 +130,7 @@ def main():
     max_future = now + timedelta(hours=48)
 
     for league, flag in SPORTS_CONFIG.items():
-        stake, threshold, is_blocked = get_smart_stake(league)
-        if is_blocked: continue # Pomija dyscyplinę w trybie bezpieczeństwa
-
+        stake, threshold = get_smart_stake(league)
         print(f"📡 Skan: {league} (Stawka: {stake}, Próg: {threshold})")
         
         data = None
@@ -165,6 +157,7 @@ def main():
                 if not (now < m_time < max_future): continue 
             except: continue
 
+            # Wyciąganie kursów
             prices = {}
             for bookie in event.get('bookmakers', []):
                 for market in bookie.get('markets', []):
@@ -176,10 +169,12 @@ def main():
             best_name, best_odd, max_val = None, 0, 0
             for name, p_list in prices.items():
                 if name.lower() == "draw": continue
+                
                 m_p, a_p = max(p_list), sum(p_list)/len(p_list)
                 val = m_p / a_p
+                
                 req = threshold
-                if m_p >= 2.5: req += 0.02 
+                if m_p >= 2.5: req += 0.02 # Wyższy próg dla ryzykownych kursów
                 
                 if 1.80 <= m_p <= 4.50 and val > req:
                     if val > max_val:
@@ -187,24 +182,14 @@ def main():
 
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
-                value_percent = round((max_val - 1) * 100, 1)
-                
-                # --- ALERT WYSOKIEGO VALUE (Opcja 2) ---
-                alert_header = ""
-                if value_percent >= 15.0:
-                    alert_header = "🔥 <b>ALERT: WYSOKIE VALUE!</b> 🔥\n"
-                elif value_percent >= 10.0:
-                    alert_header = "⭐ <b>DOBRY TYP</b>\n"
-
-                msg = (f"{alert_header}"
-                       f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
+                msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
                        f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
                        f"⏰ Start: {m_time.strftime('%d.%m | %H:%M')}\n\n"
                        f"✅ Typ: <b>{best_name}</b>\n"
                        f"📈 Kurs: <b>{best_odd}</b>\n"
                        f"💰 Stawka: <b>{stake} PLN</b>\n"
-                       f"📊 Value: <b>+{value_percent}%</b>\n"
+                       f"📊 Value: <b>+{round((val-1)*100, 1)}%</b>\n"
                        f"━━━━━━━━━━━━━━━")
                 
                 send_telegram(msg)
