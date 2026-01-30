@@ -90,41 +90,11 @@
         "time": "2026-01-31T01:30:00Z"
     },
     {
-        "id": "db96499c302a770166d96e499f19bfb6",
-        "home": "AIK",
-        "away": "Almtuna IS",
-        "outcome": "Almtuna IS",
-        "odds": 4.3,
-        "stake": 350.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-30T18:00:00Z"
-    },
-    {
         "id": "b9269b9440d2076bff5d2bdfa7b3fc12",
         "home": "IF Troja-Ljungby",
         "away": "BIK Karlskoga",
         "outcome": "IF Troja-Ljungby",
         "odds": 4.7,
-        "stake": 350.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-30T18:00:00Z"
-    },
-    {
-        "id": "71606cff0f207e382b071545b56c7732",
-        "home": "IK Oskarshamn",
-        "away": "\u00d6stersunds IK",
-        "outcome": "\u00d6stersunds IK",
-        "odds": 3.33,
-        "stake": 350.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-01-30T18:00:00Z"
-    },
-    {
-        "id": "783588ec37c8ab44da673b30425312c8",
-        "home": "Nybro Vikings IF",
-        "away": "S\u00f6dert\u00e4lje SK",
-        "outcome": "S\u00f6dert\u00e4lje SK",
-        "odds": 2.3,
         "stake": 350.0,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-01-30T18:00:00Z"

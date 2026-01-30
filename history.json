@@ -2895,5 +2895,44 @@
         "status": "VOID",
         "score": "PPD",
         "time": "2026-01-27T00:00:00Z"
+    },
+    {
+        "id": "db96499c302a770166d96e499f19bfb6",
+        "home": "AIK",
+        "away": "Almtuna IS",
+        "sport": "icehockey_sweden_allsvenskan",
+        "outcome": "Almtuna IS",
+        "odds": 4.3,
+        "stake": 350.0,
+        "profit": -350.0,
+        "status": "LOSS",
+        "score": "4:3",
+        "time": "2026-01-30T18:00:00Z"
+    },
+    {
+        "id": "71606cff0f207e382b071545b56c7732",
+        "home": "IK Oskarshamn",
+        "away": "\u00d6stersunds IK",
+        "sport": "icehockey_sweden_allsvenskan",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 3.33,
+        "stake": 350.0,
+        "profit": 815.5,
+        "status": "WIN",
+        "score": "1:2",
+        "time": "2026-01-30T18:00:00Z"
+    },
+    {
+        "id": "783588ec37c8ab44da673b30425312c8",
+        "home": "Nybro Vikings IF",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "sport": "icehockey_sweden_allsvenskan",
+        "outcome": "S\u00f6dert\u00e4lje SK",
+        "odds": 2.3,
+        "stake": 350.0,
+        "profit": -350.0,
+        "status": "LOSS",
+        "score": "4:0",
+        "time": "2026-01-30T18:00:00Z"
     }
 ]
