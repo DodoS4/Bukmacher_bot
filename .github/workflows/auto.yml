@@ -1,51 +1,92 @@
-name: DEBUG-TEST-V3
+name: Betting Bot Professional Dawid
 
 on:
+  schedule:
+    # Uruchomienie: 07:00, 11:00, 15:00, 19:00 UTC
+    - cron: '0 7,11,15,19 * * *'
   workflow_dispatch: 
 
+concurrency:
+  group: betting-bot
+  cancel-in-progress: false
+
 jobs:
-  debug-job:
+  run-bot:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Niezbędne do zapisu history.json i stats.json
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Pobiera pełną historię, aby uniknąć błędów przy git push
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+          cache: 'pip'
 
-      - name: Install Requests
-        run: pip install requests
-
-      - name: Run Test Script
-        env:
-          T_TOKEN: ${{ secrets.T_TOKEN }}
-          T_CHAT: ${{ secrets.T_CHAT }}
+      - name: Install dependencies
         run: |
-          cat << 'EOF' > final_test.py
-          import os
-          import requests
+          python -m pip install --upgrade pip
+          pip install requests python-dateutil
 
-          def run_debug():
-              token = os.environ.get("T_TOKEN")
-              chat = os.environ.get("T_CHAT")
-              
-              print(f"DEBUG: Token obecny: {bool(token)}")
-              print(f"DEBUG: Chat obecny: {bool(chat)}")
-
-              msg_url = f"https://api.telegram.org/bot{token}/sendMessage"
-              res = requests.post(msg_url, json={
-                  "chat_id": chat,
-                  "text": "🚀 TEST V3: Jeśli to widzisz, to znaczy ze wszystko dziala!"
-              }).json()
-              
-              if res.get("ok"):
-                  print("SUKCES! Wiadomosc wyslana.")
-              else:
-                  print(f"BLAD TELEGRAMA: {res}")
-
-          run_debug()
-          EOF
+      - name: Run Betting Logic
+        env:
+          # Mapowanie kluczy w cudzysłowach (zabezpieczenie przed błędnym formatowaniem ID czatu)
+          T_TOKEN: "${{ secrets.T_TOKEN }}"
+          T_CHAT: "${{ secrets.T_CHAT }}"
+          T_CHAT_RESULTS: "${{ secrets.T_CHAT_RESULTS }}"
           
-          python final_test.py
+          # Dodatkowe mapowanie dla kompatybilności wstecznej
+          TELEGRAM_TOKEN: "${{ secrets.T_TOKEN }}"
+          TELEGRAM_CHAT_ID: "${{ secrets.T_CHAT }}"
+          
+          # Klucze do ODDS API (1-10)
+          ODDS_KEY: "${{ secrets.ODDS_KEY }}"
+          ODDS_KEY_2: "${{ secrets.ODDS_KEY_2 }}"
+          ODDS_KEY_3: "${{ secrets.ODDS_KEY_3 }}"
+          ODDS_KEY_4: "${{ secrets.ODDS_KEY_4 }}"
+          ODDS_KEY_5: "${{ secrets.ODDS_KEY_5 }}"
+          ODDS_KEY_6: "${{ secrets.ODDS_KEY_6 }}"
+          ODDS_KEY_7: "${{ secrets.ODDS_KEY_7 }}"
+          ODDS_KEY_8: "${{ secrets.ODDS_KEY_8 }}"
+          ODDS_KEY_9: "${{ secrets.ODDS_KEY_9 }}"
+          ODDS_KEY_10: "${{ secrets.ODDS_KEY_10 }}"
+        run: |
+          # 1. Rozliczanie (ważne, by najpierw sprawdzić stare wyniki)
+          python settle.py
+          # 2. Szukanie nowych typów
+          python start.py
+          # 3. Aktualizacja statystyk i wykresów
+          python stats.py
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git fetch origin main
+          
+          # Lista wszystkich kluczowych plików baz danych bota
+          FILES_TO_ADD="history.json coupons.json bankroll.json key_index.txt stats.json index.html"
+          
+          for file in $FILES_TO_ADD; do
+            if [ -f "$file" ]; then
+              git add "$file"
+              echo "✅ Dodano do synchronizacji: $file"
+            fi
+          done
+
+          # Sprawdzenie, czy są zmiany do zapisu
+          if ! git diff --cached --quiet; then
+            git commit -m "Bot Auto-Update: Results, Bets & Stats [skip ci]"
+            # Rebase pozwala uniknąć konfliktów, jeśli w międzyczasie coś się zmieniło w repo
+            git pull --rebase -X theirs origin main
+            git push origin main
+            echo "🚀 Wszystkie dane zostały zsynchronizowane i wysłane."
+          else
+            echo "ℹ️ Brak nowych danych do zapisu."
+          fi
