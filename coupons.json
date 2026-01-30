@@ -578,5 +578,115 @@
         "stake": 350.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-01T13:00:00Z"
+    },
+    {
+        "id": "12eb7e5579087927a26a35783f072333",
+        "home": "Philadelphia Flyers",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.65,
+        "stake": 546.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-31T17:30:00Z"
+    },
+    {
+        "id": "b668bc7749f63ae984b898b07a6dfcf5",
+        "home": "Detroit Red Wings",
+        "away": "Colorado Avalanche",
+        "outcome": "Detroit Red Wings",
+        "odds": 3.15,
+        "stake": 546.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-31T18:00:00Z"
+    },
+    {
+        "id": "38fe3aa2732f3cac408bc31c9244a708",
+        "home": "Calgary Flames",
+        "away": "San Jose Sharks",
+        "outcome": "Calgary Flames",
+        "odds": 2.45,
+        "stake": 546.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-01-31T21:00:00Z"
+    },
+    {
+        "id": "669a6f20580e76a6c221731903a9e21a",
+        "home": "Buffalo Sabres",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.85,
+        "stake": 546.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T00:00:00Z"
+    },
+    {
+        "id": "908baa081cd00ca3db6bc9acc2bc675a",
+        "home": "St Louis Blues",
+        "away": "Columbus Blue Jackets",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.7,
+        "stake": 546.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T00:00:00Z"
+    },
+    {
+        "id": "6df2a3a824ef9488baa7c1f2454b9a22",
+        "home": "Ottawa Senators",
+        "away": "New Jersey Devils",
+        "outcome": "New Jersey Devils",
+        "odds": 2.96,
+        "stake": 546.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T00:00:00Z"
+    },
+    {
+        "id": "644e1daf564743ae627248d612dca339",
+        "home": "Edmonton Oilers",
+        "away": "Minnesota Wild",
+        "outcome": "Minnesota Wild",
+        "odds": 2.92,
+        "stake": 546.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T03:00:00Z"
+    },
+    {
+        "id": "dba2103c0ee6f140ccf7eb476a25ba0f",
+        "home": "Vegas Golden Knights",
+        "away": "Seattle Kraken",
+        "outcome": "Seattle Kraken",
+        "odds": 3.85,
+        "stake": 546.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T03:00:00Z"
+    },
+    {
+        "id": "8a2f061fef3092d9cb56453b1378f5d4",
+        "home": "Cagliari",
+        "away": "Hellas Verona",
+        "outcome": "Cagliari",
+        "odds": 2.36,
+        "stake": 350.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-31T19:45:00Z"
+    },
+    {
+        "id": "d5add1b42d967331cd06e5e3eca15831",
+        "home": "BSC Young Boys",
+        "away": "FC Zurich",
+        "outcome": "FC Zurich",
+        "odds": 4.25,
+        "stake": 350.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-01T15:30:00Z"
+    },
+    {
+        "id": "c2e5888b8978726b02fb6af5b4bc861e",
+        "home": "FC Basel",
+        "away": "FC Thun",
+        "outcome": "FC Basel",
+        "odds": 2.2,
+        "stake": 350.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-01T15:30:00Z"
     }
 ]
