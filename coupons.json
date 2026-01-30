@@ -708,5 +708,25 @@
         "stake": 350.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-02-01T15:45:00Z"
+    },
+    {
+        "id": "24216ede15ce47e095a2ffb2d529b6fe",
+        "home": "Atromitos Athens",
+        "away": "OFI Crete",
+        "outcome": "OFI Crete",
+        "odds": 4.1,
+        "stake": 280.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-01-31T16:00:00Z"
+    },
+    {
+        "id": "261e849fdaa8ead74569e9d72b581c91",
+        "home": "FC Winterthur",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Winterthur",
+        "odds": 4.4,
+        "stake": 350.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-01-31T17:00:00Z"
     }
 ]
