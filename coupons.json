@@ -688,5 +688,25 @@
         "stake": 350.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-01T15:30:00Z"
+    },
+    {
+        "id": "19627b4e94bbf549a41e077b0bc229fe",
+        "home": "Legia Warszawa",
+        "away": "Korona Kielce",
+        "outcome": "Korona Kielce",
+        "odds": 4.8,
+        "stake": 350.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-01T16:30:00Z"
+    },
+    {
+        "id": "bacf0ed1069a732381c7920293645f14",
+        "home": "Heerenveen",
+        "away": "FC Utrecht",
+        "outcome": "Heerenveen",
+        "odds": 1.92,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-01T15:45:00Z"
     }
 ]
