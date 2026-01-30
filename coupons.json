@@ -408,5 +408,65 @@
         "stake": 280.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-31T13:00:00Z"
+    },
+    {
+        "id": "34115607b8423bb49924870b192a4af6",
+        "home": "Torino",
+        "away": "Lecce",
+        "outcome": "Torino",
+        "odds": 2.06,
+        "stake": 350.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-01T11:30:00Z"
+    },
+    {
+        "id": "a74907ed2ca7629e6eee63fbc9973c2c",
+        "home": "Motor Lublin",
+        "away": "Pogo\u0144 Szczecin",
+        "outcome": "Pogo\u0144 Szczecin",
+        "odds": 2.6,
+        "stake": 350.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-01T11:15:00Z"
+    },
+    {
+        "id": "b8c529224c3614fc5d8fff529e125ec5",
+        "home": "Rio Ave FC",
+        "away": "Arouca",
+        "outcome": "Rio Ave FC",
+        "odds": 2.7,
+        "stake": 280.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-31T18:00:00Z"
+    },
+    {
+        "id": "c1fbd9c01b1bb1eb61ce0e9ba64f429c",
+        "home": "Alverca",
+        "away": "CF Estrela",
+        "outcome": "CF Estrela",
+        "odds": 4.2,
+        "stake": 280.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-31T20:30:00Z"
+    },
+    {
+        "id": "0a989e0e588a7fa9fcdd1ab09ff07faf",
+        "home": "Sparta Rotterdam",
+        "away": "Groningen",
+        "outcome": "Sparta Rotterdam",
+        "odds": 2.8,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-01-31T20:00:00Z"
+    },
+    {
+        "id": "521c3a1d3b15f330bdb115a71ed6e9f9",
+        "home": "Excelsior",
+        "away": "Ajax",
+        "outcome": "Excelsior",
+        "odds": 4.7,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-01T11:15:00Z"
     }
 ]
