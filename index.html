@@ -3,125 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Challenge 100 PLN - Kula Śnieżna</title>
+    <title>Kula Śnieżna - Dashboard Dawida</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
-        .stat-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .accent-gradient { background: linear-gradient(135deg, #38bdf8 0%, #1d4ed8 100%); }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #f8fafc; }
+        .glass-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        .league-card { border-top: 4px solid #3b82f6; transition: transform 0.2s; }
+        .league-card:hover { transform: translateY(-2px); }
+        .gradient-text { background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
 
-    <div class="max-w-6xl mx-auto">
-        <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
             <div>
-                <h1 class="text-3xl font-bold text-white tracking-tight">🎯 Challenge <span class="text-blue-400">Kula Śnieżna</span></h1>
-                <p class="text-slate-400">Automatyczny system bettingowy - Dawid 2026</p>
+                <h1 class="text-4xl font-extrabold tracking-tight text-white mb-1">
+                    CHALLENGE <span class="gradient-text">KULA ŚNIEŻNA</span>
+                </h1>
+                <p class="text-slate-400 font-medium">Automatyczny system wysokich stawek (5% bankrolla)</p>
             </div>
-            <div class="text-right">
-                <span class="text-xs uppercase tracking-widest text-slate-500">Ostatnia aktualizacja</span>
-                <p id="last-update" class="text-sm font-mono text-blue-300">Ładowanie...</p>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            
-            <div class="stat-card p-6 rounded-2xl">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-blue-500/20 rounded-lg text-blue-400"><i class="fas fa-wallet fa-lg"></i></div>
-                    <h3 class="text-slate-400 font-medium">Bankroll</h3>
-                </div>
-                <p id="balance" class="text-3xl font-bold text-white">0.00 PLN</p>
-            </div>
-
-            <div class="stat-card p-6 rounded-2xl border-l-4 border-blue-500">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-orange-500/20 rounded-lg text-orange-400"><i class="fas fa-clock fa-lg"></i></div>
-                    <h3 class="text-slate-400 font-medium">W grze</h3>
-                </div>
-                <p id="upcoming-count" class="text-3xl font-bold text-white">0</p>
-                <p id="in-game-amount" class="text-xs text-slate-500 mt-2">Kwota postawiona: 0 PLN</p>
-            </div>
-
-            <div class="stat-card p-6 rounded-2xl">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-green-500/20 rounded-lg text-green-400"><i class="fas fa-chart-line fa-lg"></i></div>
-                    <h3 class="text-slate-400 font-medium">Zysk całkowity</h3>
-                </div>
-                <p id="total-profit" class="text-3xl font-bold text-white">0.00 PLN</p>
-            </div>
-
-            <div class="stat-card p-6 rounded-2xl">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="p-3 bg-purple-500/20 rounded-lg text-purple-400"><i class="fas fa-percentage fa-lg"></i></div>
-                    <h3 class="text-slate-400 font-medium">ROI / Yield</h3>
-                </div>
-                <p id="roi" class="text-3xl font-bold text-white">0.0%</p>
-                <p id="yield" class="text-xs text-slate-500 mt-2">Yield: 0.0%</p>
+            <div class="glass-card px-6 py-3 rounded-2xl text-right">
+                <span class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">Ostatni Update API</span>
+                <p id="last-update" class="text-blue-400 font-mono text-sm">Ładowanie danych...</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 stat-card p-8 rounded-2xl">
-                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
-                    <i class="fas fa-info-circle text-blue-400"></i> O strategii
-                </h3>
-                <div class="space-y-4 text-slate-400 leading-relaxed">
-                    <p>System wykorzystuje strategię <span class="text-white font-semibold">kuli śnieżnej</span>, reinwestując wygrane przy zachowaniu stałego poziomu ryzyka 5% aktualnego bankrolla.</p>
-                    <ul class="list-disc list-inside space-y-2 text-sm">
-                        <li>Zakres kursów: <span class="text-blue-300">1.65 - 3.50</span></li>
-                        <li>Rynki: USA (NHL, NBA, NFL) + Top Europejskie Ligi Piłkarskie</li>
-                        <li>Stawkowanie: <span class="text-blue-300">5% bankrolla</span> na każdy typ</li>
-                    </ul>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="glass-card p-6 rounded-3xl">
+                <p class="text-slate-500 text-xs font-bold uppercase mb-2">Aktualny Portfel</p>
+                <p id="balance" class="text-3xl font-black text-white">0.00 PLN</p>
             </div>
+            <div class="glass-card p-6 rounded-3xl border-l-4 border-orange-500">
+                <p class="text-slate-500 text-xs font-bold uppercase mb-2">Mecze w grze</p>
+                <p id="upcoming-count" class="text-3xl font-black text-white text-orange-400">0</p>
+            </div>
+            <div class="glass-card p-6 rounded-3xl">
+                <p class="text-slate-500 text-xs font-bold uppercase mb-2">Zysk Netto</p>
+                <p id="total-profit" class="text-3xl font-black text-green-400">0.00 PLN</p>
+            </div>
+            <div class="glass-card p-6 rounded-3xl">
+                <p class="text-slate-500 text-xs font-bold uppercase mb-2">Skuteczność ROI</p>
+                <p id="roi" class="text-3xl font-black text-blue-400">0.0%</p>
+            </div>
+        </div>
 
-            <div class="stat-card p-8 rounded-2xl accent-gradient border-none">
-                <h3 class="text-xl font-bold text-white mb-4">Obrót całkowity</h3>
-                <p id="turnover" class="text-4xl font-black text-white mb-2">0 PLN</p>
-                <p class="text-blue-100 text-sm opacity-80">Łączna suma stawek postawionych przez bota od początku challenge'u.</p>
+        <div class="mb-8">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold flex items-center gap-3">
+                    <i class="fas fa-layer-group text-blue-500"></i> Aktywne Grupy 
+                    <span class="text-xs font-normal text-slate-500 bg-slate-800 px-3 py-1 rounded-full">Posortowane wg zysku</span>
+                </h2>
+            </div>
+            
+            <div id="groups-container" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div class="col-span-full py-20 text-center text-slate-600">
+                    <i class="fas fa-circle-notch fa-spin fa-2xl mb-4 text-blue-500"></i>
+                    <p>Pobieranie listy 80 meczów...</p>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        async function updateDashboard() {
+        async function loadDashboard() {
             try {
-                // Dodanie ?t= zapobiega cachowaniu pliku przez przeglądarkę
-                const response = await fetch('stats.json?t=' + new Date().getTime());
-                if (!response.ok) throw new Error('Błąd pobierania danych');
-                
+                // Anti-cache timestamp
+                const response = await fetch('stats.json?nocache=' + new Date().getTime());
                 const data = await response.json();
 
-                // Mapowanie danych do elementów HTML
+                // 1. Główne statystyki
                 document.getElementById('balance').innerText = data.balance.toFixed(2) + ' PLN';
                 document.getElementById('upcoming-count').innerText = data.upcoming_count;
                 document.getElementById('total-profit').innerText = (data.total_profit >= 0 ? '+' : '') + data.total_profit.toFixed(2) + ' PLN';
                 document.getElementById('roi').innerText = data.roi;
-                document.getElementById('turnover').innerText = data.turnover.toLocaleString() + ' PLN';
-                document.getElementById('last-update').innerText = data.last_update || 'Niedawno';
-                
-                // Dodatkowe pola (jeśli istnieją w JSON)
-                if(data.yield) document.getElementById('yield').innerText = 'Yield: ' + data.yield;
-                if(data.in_game_amount) document.getElementById('in-game-amount').innerText = 'Kwota postawiona: ' + data.in_game_amount.toFixed(2) + ' PLN';
+                document.getElementById('last-update').innerText = data.last_update;
 
-                // Kolorowanie zysku
-                const profitEl = document.getElementById('total-profit');
-                profitEl.className = data.total_profit >= 0 ? 'text-3xl font-bold text-green-400' : 'text-3xl font-bold text-red-400';
+                // 2. Budowanie grup meczów
+                const container = document.getElementById('groups-container');
+                container.innerHTML = '';
+
+                if (data.groups && Object.keys(data.groups).length > 0) {
+                    for (const [league, info] of Object.entries(data.groups)) {
+                        let matchesHtml = '';
+                        
+                        info.matches.forEach(m => {
+                            matchesHtml += `
+                                <div class="flex justify-between items-center py-3 border-b border-slate-800/50 last:border-0">
+                                    <div class="flex flex-col max-w-[70%]">
+                                        <span class="text-sm font-semibold text-slate-200 truncate">${m.teams}</span>
+                                        <span class="text-[10px] text-slate-500 uppercase font-bold">Typ: ${m.outcome} @ ${m.odds.toFixed(2)}</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs font-bold text-white">${m.stake.toFixed(2)} PLN</p>
+                                        <p class="text-[10px] text-green-400 font-bold">+${m.profit.toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        container.innerHTML += `
+                            <div class="glass-card p-6 rounded-3xl league-card">
+                                <div class="flex justify-between items-center mb-4 border-b border-slate-800 pb-3">
+                                    <div>
+                                        <h3 class="text-xs font-black text-blue-400 uppercase tracking-tighter">${league}</h3>
+                                        <p class="text-[10px] text-slate-500">${info.matches.length} meczów</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-[10px] text-slate-500 uppercase font-bold">Potencjał</p>
+                                        <p class="text-sm font-black text-green-400">+${info.total_potential_profit.toFixed(2)} PLN</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-1">
+                                    ${matchesHtml}
+                                </div>
+                            </div>
+                        `;
+                    }
+                } else {
+                    container.innerHTML = '<div class="col-span-full text-center p-12 glass-card rounded-3xl text-slate-500">Brak aktywnych kuponów w tej chwili.</div>';
+                }
 
             } catch (error) {
-                console.error('Błąd aktualizacji:', error);
+                console.error('Błąd:', error);
             }
         }
 
-        // Pierwsze wywołanie
-        updateDashboard();
-        
-        // Automatyczne odświeżanie co 30 sekund
-        setInterval(updateDashboard, 30000);
+        // Odświeżaj co 60 sekund
+        loadDashboard();
+        setInterval(loadDashboard, 60000);
     </script>
 </body>
 </html>
