@@ -107,43 +107,44 @@
         let countdown = 300;
 
         const ASSETS = {
-            'NHL': '🇺🇸 🏒', 'SWEDEN ALLSVENSKAN': '🇸🇪 ⚽', 'GERMANY BUNDESLIGA': '🇩🇪 ⚽',
-            'ITALY SERIE A': '🇮🇹 ⚽', 'ITALY SERIE B': '🇮🇹 ⚽', 'FRANCE LIGUE ONE': '🇫🇷 ⚽',
-            'FRANCE LIGUE TWO': '🇫🇷 ⚽', 'SPAIN LA LIGA': '🇪🇸 ⚽', 'PORTUGAL PRIMEIRA LIGA': '🇵🇹 ⚽',
-            'GREECE SUPER LEAGUE': '🇬🇷 ⚽', 'SWITZERLAND SUPERLEAGUE': '🇨🇭 ⚽', 'BASKETBALL EUROLEAGUE': '🇪🇺 🏀',
-            'EKSTRAKLASA': '🇵🇱 ⚽', 'EPL': '🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽'
+            'NHL': '🇺🇸 🏒', 'SWEDEN HOCKEYALLSVENSKAN': '🇸🇪 🏒', 'FINLAND LIIGA': '🇫🇮 🏒',
+            'GERMANY BUNDESLIGA': '🇩🇪 ⚽', 'ITALY SERIE A': '🇮🇹 ⚽', 'SPAIN LA LIGA': '🇪🇸 ⚽',
+            'EKSTRAKLASA': '🇵🇱 ⚽', 'EPL': '🏴󠁧󠁢󠁥󠁮󠁧󠁿 ⚽', 'EURO LEAGUE': '🏀'
         };
 
         async function loadData() {
             try {
+                // Fetch stats.json z nowym mapowaniem pól
                 const sRes = await fetch('stats.json?v=' + Date.now());
                 const s = await sRes.json();
                 
-                document.getElementById('total-profit').innerText = s.total_profit.toFixed(2) + ' PLN';
-                document.getElementById('today-profit').innerText = (s.profit_24h >= 0 ? '+' : '') + s.profit_24h.toFixed(2) + ' PLN';
-                document.getElementById('today-profit').className = `text-lg font-black italic ${s.profit_24h >= 0 ? 'text-green-600' : 'text-red-600'}`;
+                // Mapowanie nowych nazw pól ze stats.py do starych ID w HTML
+                document.getElementById('total-profit').innerText = s.zysk_total.toFixed(2) + ' PLN';
+                document.getElementById('today-profit').innerText = (s.zysk_24h >= 0 ? '+' : '') + s.zysk_24h.toFixed(2) + ' PLN';
+                document.getElementById('today-profit').className = `text-lg font-black italic ${s.zysk_24h >= 0 ? 'text-green-600' : 'text-red-600'}`;
                 document.getElementById('roi-val').innerText = (s.roi >= 0 ? '+' : '') + s.roi + '%';
-                document.getElementById('turnover-val').innerText = s.turnover.toLocaleString('pl-PL');
+                document.getElementById('turnover-val').innerText = s.obrot.toLocaleString('pl-PL');
                 document.getElementById('yield-val').innerText = s.yield + '%';
-                document.getElementById('last-update').innerText = 'Sync: ' + s.last_update;
-                document.getElementById('upcoming-val-card').innerText = s.upcoming_count || 0;
-                document.getElementById('active-count-badge').innerText = s.upcoming_count || 0;
-                document.getElementById('total-bets-info').innerText = `${s.total_bets} TYPÓW / ${s.win_rate}% WR`;
-
+                document.getElementById('last-update').innerText = 'Sync: ' + s.last_sync;
+                
+                // Pobieranie kuponów dla licznika "W grze"
                 const cRes = await fetch('coupons.json?v=' + Date.now());
                 const coupons = await cRes.json();
+                document.getElementById('upcoming-val-card').innerText = coupons.length;
+                document.getElementById('active-count-badge').innerText = coupons.length;
                 renderActive(coupons);
 
                 const hRes = await fetch('history.json?v=' + Date.now());
                 const history = await hRes.json();
+                document.getElementById('total-bets-info').innerText = `${history.length} TYPÓW / ${s.skutecznosc}% WR`;
                 renderHistory(history);
-            } catch (e) { console.error(e); }
+            } catch (e) { console.error("Błąd wczytywania danych:", e); }
         }
 
         function renderActive(coupons) {
             const container = document.getElementById('active-bets-container');
             if(!coupons || coupons.length === 0) {
-                container.innerHTML = '<p class="text-center col-span-2 text-gray-300 text-[10px] py-4 uppercase font-black italic text-slate-400 uppercase tracking-widest">Brak oczekujących</p>';
+                container.innerHTML = '<p class="text-center col-span-2 text-gray-300 text-[10px] py-4 uppercase font-black italic">Brak oczekujących</p>';
                 return;
             }
             container.innerHTML = coupons.map(c => {
@@ -165,13 +166,11 @@
         }
 
         function renderHistory(data) {
-            const filtered = data.filter(m => !m.sport.toLowerCase().includes('basketball_nba'));
-            const sortedByDate = [...filtered].sort((a, b) => new Date(a.time) - new Date(b.time));
+            const sortedByDate = [...data].sort((a, b) => new Date(a.time) - new Date(b.time));
             const labels = [], values = [], leagues = {};
             let sum = 0;
 
             sortedByDate.forEach(m => {
-                if(m.status === "VOID") return;
                 sum += parseFloat(m.profit || 0);
                 labels.push(new Date(m.time).toLocaleDateString('pl-PL', {day:'2-digit', month:'2-digit'}));
                 values.push(sum);
@@ -186,19 +185,19 @@
             profitChart = new Chart(document.getElementById('profitChart').getContext('2d'), {
                 type: 'line',
                 data: { labels, datasets: [{ data: values, borderColor: '#2563eb', borderWidth: 3, backgroundColor: 'rgba(37, 99, 235, 0.05)', fill: true, tension: 0.4, pointRadius: 0 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { ticks: { font: { size: 10 } } }, x: { ticks: { font: { size: 8 }, maxRotation: 45 } } } }
             });
 
             const recentContainer = document.getElementById('recent-results-container');
-            const last10 = [...filtered].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 10);
+            const last10 = [...data].sort((a, b) => new Date(b.time) - new Date(a.time)).slice(0, 10);
             recentContainer.innerHTML = last10.map(m => {
                 const isWin = m.profit > 0;
                 const dt = new Date(m.time).toLocaleString('pl-PL', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
                 return `
-                <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'}">
+                <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : (m.profit < 0 ? 'loss-border' : 'pending-border')}">
                     <div class="overflow-hidden">
                         <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5">${dt} | @${m.odds}</p>
-                        <p class="text-[9px] font-bold leading-tight text-slate-700">${m.home} - ${m.away}</p>
+                        <p class="text-[9px] font-bold leading-tight text-slate-700 truncate">${m.home} - ${m.away}</p>
                     </div>
                     <div class="text-right min-w-[60px]">
                         <p class="text-[10px] font-black ${isWin ? 'text-green-600' : 'text-red-600'}">${isWin ? '+' : ''}${m.profit.toFixed(2)}</p>
@@ -212,7 +211,7 @@
                 const id = `g-${i}`;
                 const asset = ASSETS[name] || '🌍 🏆';
                 historyContainer.innerHTML += `
-                <div class="bg-gray-50 rounded-xl border border-gray-100 overflow-hidden shadow-sm">
+                <div class="bg-gray-50 rounded-xl border border-gray-100 overflow-hidden shadow-sm mb-2">
                     <button onclick="document.getElementById('${id}').classList.toggle('hidden')" class="w-full flex justify-between items-center p-3 hover:bg-gray-100 transition-all">
                         <span class="text-[9px] font-black uppercase text-slate-600 text-left">${asset} ${name}</span>
                         <span class="text-[10px] font-black ${d.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${d.profit >= 0 ? '+' : ''}${d.profit.toFixed(2)}</span>
