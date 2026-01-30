@@ -3,163 +3,101 @@ import json
 import requests
 from datetime import datetime, timezone
 
-# --- KONFIGURACJA PLIKÓW ---
+# --- KONFIGURACJA ---
 COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 
-# ================= PANCERNE POBIERANIE KLUCZY =================
-def get_env_safe(name):
-    """Pobiera zmienną środowiskową i czyści ją ze spacji."""
-    val = os.environ.get(name) or os.getenv(name)
-    return str(val).strip() if val and len(str(val).strip()) > 0 else None
+def get_secrets():
+    """Pobiera wszystkie dostępne klucze API."""
+    keys = []
+    main_key = os.getenv("ODDS_KEY")
+    if main_key: keys.append(main_key)
+    for i in range(2, 11):
+        k = os.getenv(f"ODDS_KEY_{i}")
+        if k: keys.append(k)
+    return keys
 
-def send_telegram_result(message):
-    """Wysyła wynik rozliczenia na kanał wyników."""
-    token = get_env_safe("T_TOKEN")
-    # Próbuje wysłać na kanał wyników, jeśli brak - wysyła na główny
-    chat = get_env_safe("T_CHAT_RESULTS") or get_env_safe("T_CHAT")
-
-    if not token or not chat:
-        print(f"⚠️ Telegram wynikowy pominięty: brak kluczy.")
-        return
-
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {"chat_id": chat, "text": message, "parse_mode": "HTML"}
-    try:
-        requests.post(url, json=payload, timeout=10)
-    except: pass
-
-def get_match_results(sport, event_id):
-    """Pobiera wyniki meczu z API."""
-    api_key = get_env_safe("ODDS_KEY")
-    if not api_key:
-        print("❌ Błąd: Brak ODDS_KEY w środowisku!")
-        return None
-
-    url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores/"
-    params = {
-        "apiKey": api_key,
-        "daysFrom": 3
-    }
-    try:
-        resp = requests.get(url, params=params, timeout=15)
-        if resp.status_code == 200:
-            return resp.json()
-        else:
-            print(f"❌ API zwróciło kod {resp.status_code}")
-    except Exception as e:
-        print(f"❌ Błąd API przy sprawdzaniu wyniku: {e}")
+def get_match_results(sport, api_keys):
+    """Pobiera wyniki dla dyscypliny, próbując różnych kluczy w razie błędu."""
+    for key in api_keys:
+        url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores/"
+        params = {"apiKey": key, "daysFrom": 3}
+        try:
+            resp = requests.get(url, params=params, timeout=15)
+            if resp.status_code == 200:
+                return resp.json()
+            elif resp.status_code in [401, 429]:
+                print(f"⚠️ Klucz {key[:5]}... nieaktywny, sprawdzam następny.")
+                continue
+        except: continue
     return None
 
 def settle_matches():
     print(f"🚀 START ROZLICZANIA: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    api_keys = get_secrets()
     
     if not os.path.exists(COUPONS_FILE):
-        print("ℹ️ Brak aktywnych kuponów do rozliczenia.")
+        print("ℹ️ Brak kuponów.")
         return
 
-    try:
-        with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-            active_coupons = json.load(f)
-    except:
-        print("❌ Błąd odczytu pliku kuponów.")
-        return
-
-    if not active_coupons:
-        print("ℹ️ Lista kuponów jest pusta.")
-        return
+    with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+        active_coupons = json.load(f)
+    if not active_coupons: return
 
     history = []
     if os.path.exists(HISTORY_FILE):
-        try:
-            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                history = json.load(f)
-        except: pass
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            history = json.load(f)
 
     remaining_coupons = []
     new_settlements = 0
-
-    # Grupowanie sportów, aby nie odpytywać API za każdym razem (oszczędność limitów)
-    sports_to_check = list(set(c['sport'] for c in active_coupons))
-    all_results = {}
     
-    for sport in sports_to_check:
-        results = get_match_results(sport, None)
-        if results:
-            for r in results:
-                all_results[r['id']] = r
+    # Grupowanie wyników po sporcie
+    sports = list(set(c['sport'] for c in active_coupons))
+    all_results = {}
+    for s in sports:
+        res = get_match_results(s, api_keys)
+        if res:
+            for match in res: all_results[match['id']] = match
 
     for coupon in active_coupons:
         match_data = all_results.get(coupon['id'])
 
         if match_data and match_data.get('completed'):
-            home_score, away_score = 0, 0
-            for score in match_data.get('scores', []):
-                if score['name'] == match_data['home_team']:
-                    home_score = int(score['score'])
-                else:
-                    away_score = int(score['score'])
+            # Wyciąganie wyników
+            h_score = a_score = 0
+            for s in match_data.get('scores', []):
+                if s['name'] == match_data['home_team']: h_score = int(s['score'])
+                else: a_score = int(s['score'])
 
-            # Sprawdzenie wygranej
+            # Logika wygranej
             won = False
-            # Remis w H2H traktujemy zazwyczaj jako przegraną (zależy od rynku)
-            if coupon['outcome'] == match_data['home_team'] and home_score > away_score:
-                won = True
-            elif coupon['outcome'] == match_data['away_team'] and away_score > home_score:
-                won = True
+            if coupon['outcome'] == match_data['home_team'] and h_score > a_score: won = True
+            elif coupon['outcome'] == match_data['away_team'] and a_score > h_score: won = True
 
-            stake = float(coupon.get('stake', 0))
-            odds = float(coupon.get('odds', 0))
+            stake = float(coupon['stake'])
+            profit = (stake * float(coupon['odds'])) - stake if won else -stake
 
-            if won:
-                profit = (stake * odds) - stake
-                status = "WIN"
-                icon = "💰"
-            else:
-                profit = -stake
-                status = "LOSS"
-                icon = "❌"
-
-            # Dodanie do historii
-            res_entry = {
-                "id": coupon['id'],
-                "home": coupon['home'],
-                "away": coupon['away'],
-                "sport": coupon['sport'],
-                "outcome": coupon['outcome'],
-                "odds": odds,
-                "stake": stake,
-                "profit": round(profit, 2),
-                "status": status,
-                "score": f"{home_score}:{away_score}",
+            history.append({
+                "id": coupon['id'], "home": coupon['home'], "away": coupon['away'],
+                "sport": coupon['sport'], "outcome": coupon['outcome'],
+                "odds": coupon['odds'], "stake": stake, "profit": round(profit, 2),
+                "status": "WIN" if won else "LOSS", "score": f"{h_score}:{a_score}",
                 "time": coupon['time']
-            }
-            history.append(res_entry)
+            })
             new_settlements += 1
-
-            # Raport na Telegram
-            msg = (f"{icon} <b>ROZLICZONO: {status}</b>\n"
-                   f"━━━━━━━━━━━━━━━\n"
-                   f"🏟 {coupon['home']} - {coupon['away']}\n"
-                   f"🔢 Wynik: <b>{home_score}:{away_score}</b>\n"
-                   f"✅ Typ: {coupon['outcome']}\n"
-                   f"📈 Kurs: {odds}\n"
-                   f"💵 Profit: <b>{profit:.2f} PLN</b>")
-            send_telegram_result(msg)
-            
-            print(f"✅ Rozliczono: {coupon['home']} - {coupon['away']} | {status}")
+            print(f"✅ Rozliczono: {coupon['home']} - {coupon['away']} ({h_score}:{a_score})")
         else:
             remaining_coupons.append(coupon)
 
-    # Zapisywanie zmian
     if new_settlements > 0:
         with open(HISTORY_FILE, "w", encoding="utf-8") as f:
             json.dump(history, f, indent=4)
         with open(COUPONS_FILE, "w", encoding="utf-8") as f:
             json.dump(remaining_coupons, f, indent=4)
-        print(f"🚀 Zakończono! Nowych meczów: {new_settlements}")
+        print(f"🚀 Rozliczono nowych: {new_settlements}")
     else:
-        print("ℹ️ Brak nowych meczów do rozliczenia.")
+        print("ℹ️ Brak nowych wyników w API.")
 
 if __name__ == "__main__":
     settle_matches()
