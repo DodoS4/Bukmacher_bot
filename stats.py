@@ -21,11 +21,9 @@ def generate_stats():
     total_profit, profit_24h = 0.0, 0.0
     wins, losses, turnover = 0, 0, 0.0
     series_icons = []
-    match_list = []
     stats_by_sport = {}
-    chart_data = [] # Dane do wykresu na WWW
+    chart_data = []
     
-    current_balance = STARTING_BANKROLL
     now = datetime.now(timezone.utc)
     yesterday = now - timedelta(days=1)
 
@@ -34,7 +32,6 @@ def generate_stats():
         stk = float(bet.get('stake', 0))
         sport = bet.get('sport', 'other')
         
-        # Agregacja per sport
         sport_type = "🏒 Hokej" if "icehockey" in sport else ("⚽ Piłka" if "soccer" in sport else "🏀 Inne")
         if sport_type not in stats_by_sport:
             stats_by_sport[sport_type] = {"profit": 0.0, "count": 0}
@@ -43,14 +40,11 @@ def generate_stats():
 
         total_profit += prof
         turnover += stk
-        current_balance += prof
         icon = "✅" if prof > 0 else ("❌" if prof < 0 else "⚠️")
         
         if prof > 0: wins += 1
         elif prof < 0: losses += 1
         series_icons.append(icon)
-
-        # Dane do wykresu progresji
         chart_data.append(round(total_profit, 2))
 
         b_time = bet.get('time') or bet.get('date')
@@ -60,14 +54,11 @@ def generate_stats():
                 if dt_obj > yesterday: profit_24h += prof
             except: pass
 
-        match_list.append(f"{icon} {bet.get('home')} - {bet.get('away')} | <b>{bet.get('score', '?-?')}</b> | <code>{prof:+.2f}</code>")
-
-    total_bets = len(series_icons)
-    win_rate = round((wins/total_bets*100) if total_bets > 0 else 0, 1)
+    win_rate = round((wins/len(history)*100) if len(history) > 0 else 0, 1)
     yield_val = round((total_profit/turnover*100) if turnover > 0 else 0, 2)
     roi_val = round((total_profit / STARTING_BANKROLL * 100), 2)
 
-    # --- NOWOŚĆ: ZAPIS DO STATS.JSON DLA WWW ---
+    # Zapis do stats.json dla WWW
     web_stats = {
         "zysk_total": round(total_profit, 2),
         "zysk_24h": round(profit_24h, 2),
@@ -76,6 +67,7 @@ def generate_stats():
         "roi": roi_val,
         "obrot": round(turnover, 2),
         "bankroll": round(STARTING_BANKROLL + total_profit, 2),
+        "total_bets_count": len(history),
         "wykres": chart_data,
         "seria": series_icons[-15:],
         "last_sync": datetime.now().strftime("%H:%M:%S"),
@@ -85,30 +77,19 @@ def generate_stats():
     with open('stats.json', 'w', encoding='utf-8') as f:
         json.dump(web_stats, f, indent=4)
 
-    # --- RAPORT TELEGRAM ---
+    # Raport tekstowy
     report = [
         "📊 <b>DASHBOARD STATYSTYK</b>",
         f"━━━━━━━━━━━━━━━",
-        f"🏦 <b>BANKROLL:</b> <code>{(STARTING_BANKROLL + total_profit):.2f} PLN</code>",
         f"💰 Zysk Total: <b>{total_profit:.2f} PLN</b>",
-        f"📅 Ostatnie 24h: <b>{profit_24h:+.2f} PLN</b>",
         f"🎯 Skuteczność: <b>{win_rate}%</b>",
         f"📈 Yield: <b>{yield_val}%</b>",
-        f"━━━━━━━━━━━━━━━",
-        "🏆 <b>ZYSKI PER DYSCYPLINA:</b>"
+        f"🔢 Łącznie kuponów: <b>{len(history)}</b>",
+        f"━━━━━━━━━━━━━━━"
     ]
-    
-    for s_name, s_data in stats_by_sport.items():
-        report.append(f"{s_name}: <b>{s_data['profit']:+.2f} PLN</b> ({s_data['count']} typów)")
-
-    report.extend(["", "📝 <b>OSTATNIE WYNIKI:</b>"])
-    report.extend(match_list[-10:])
-    report.append(f"━━━━━━━━━━━━━━━\n🔥 <b>Seria:</b> {''.join(series_icons[-15:])}")
-
     return True, "\n".join(report)
 
 if __name__ == "__main__":
     success, text = generate_stats()
     if success and TOKEN and CHAT_TARGET:
-        requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", 
-                      json={"chat_id": CHAT_TARGET, "text": text, "parse_mode": "HTML"})
+        requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", json={"chat_id": CHAT_TARGET, "text": text, "parse_mode": "HTML"})
