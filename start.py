@@ -4,7 +4,7 @@ import json
 from datetime import datetime, timedelta, timezone
 from stats import generate_stats
 
-# ================= KONFIGURACJA LIG =================
+# ================= KONFIGURACJA LIG (USUNIĘTO KOSZYKÓWKĘ) =================
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
     "icehockey_finland_liiga": "🇫🇮", "icehockey_germany_del": "🇩🇪",
@@ -12,86 +12,103 @@ SPORTS_CONFIG = {
     "soccer_epl": "⚽", "soccer_germany_bundesliga": "🇩🇪",
     "soccer_italy_serie_a": "🇮🇹", "soccer_spain_la_liga": "🇪🇸",
     "soccer_poland_ekstraklasa": "🇵🇱", "soccer_france_ligue_one": "🇫🇷",
-    "soccer_portugal_primeira_liga": "🇵🇹", "basketball_euroleague": "🏀"
+    "soccer_portugal_primeira_liga": "🇵🇹"
 }
 
-# ================= KONFIGURACJA API I TELEGRAM =================
+# ================= KONFIGURACJA API I PLIKÓW =================
 API_KEYS = [os.getenv(f"ODDS_KEY_{i}" if i > 1 else "ODDS_KEY") for i in range(1, 11)]
 API_KEYS = [k for k in API_KEYS if k and len(k) > 10]
 
 TELEGRAM_TOKEN = os.getenv("T_TOKEN")
-TELEGRAM_CHAT = os.getenv("T_CHAT")           # Tu lecą TYPY
-TELEGRAM_RESULTS = os.getenv("T_CHAT_RESULTS") # Tu lecą STATYSTYKI
+TELEGRAM_CHAT = os.getenv("T_CHAT")           
+TELEGRAM_RESULTS = os.getenv("T_CHAT_RESULTS") 
 
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
-BASE_STAKE = 350
+BANKROLL_FILE = "bankroll.json"  # PLIK Z TWOIM SALDEM
+
+# --- PARAMETRY CHALLENGE ---
+START_BANKROLL = 100.0
+STAKE_PERCENT = 0.05  # 5% KULA ŚNIEŻNA
+MIN_STAKE = 2.0      # Minimalna stawka u buka
 
 # ================= FUNKCJE POMOCNICZE =================
+
+def get_current_bankroll():
+    """Pobiera aktualny stan kasy z pliku."""
+    if os.path.exists(BANKROLL_FILE):
+        try:
+            with open(BANKROLL_FILE, "r") as f:
+                data = json.load(f)
+                return float(data.get("balance", START_BANKROLL))
+        except: return START_BANKROLL
+    return START_BANKROLL
 
 def send_telegram(message, mode="HTML", is_stats=False):
     if not TELEGRAM_TOKEN: return
     target_chat = TELEGRAM_RESULTS if (is_stats and TELEGRAM_RESULTS) else TELEGRAM_CHAT
     if not target_chat: return
-
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     try:
         requests.post(url, json={"chat_id": target_chat, "text": message, "parse_mode": mode}, timeout=10)
     except: pass
 
 def get_smart_stake(league_key):
-    multiplier, threshold = 1.0, 1.03
+    """Oblicza stawkę 5% z aktualnego bankrolla (EFEKT KULI ŚNIEŻNEJ)"""
+    current_balance = get_current_bankroll()
+    
+    # Podstawowe 5%
+    stake = current_balance * STAKE_PERCENT
+    
+    # Threshold (próg wejścia) - zachowujemy Twoją logikę zyskowności ligi
+    threshold = 1.03
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 hist = json.load(f)
                 prof = sum(m['profit'] for m in hist if m.get('sport') == league_key)
-                if prof <= -700: multiplier, threshold = 0.5, 1.07
-                elif prof <= -300: multiplier, threshold = 0.8, 1.05
+                if prof <= -700: threshold = 1.07
+                elif prof <= -300: threshold = 1.05
         except: pass
-    stake = BASE_STAKE * multiplier
-    if "nhl" in league_key.lower(): stake *= 1.2
-    return round(stake, 2), threshold
+    
+    # Bonus dla NHL (z Twojego starego kodu)
+    if "nhl" in league_key.lower(): 
+        stake *= 1.2
+        
+    return round(max(stake, MIN_STAKE), 2), threshold
 
 def clean_old_coupons(coupons):
-    """Usuwa mecze starsze niż 48h, żeby plik nie rósł w nieskończoność."""
     now = datetime.now(timezone.utc)
     original_count = len(coupons)
-    # Zostawiamy tylko te, których czas rozpoczęcia jest nowszy niż "teraz - 48h"
     cleaned = [c for c in coupons if datetime.fromisoformat(c['time'].replace("Z", "+00:00")) > now - timedelta(hours=48)]
-    if len(cleaned) < original_count:
-        print(f"🧹 Usunięto {original_count - len(cleaned)} starych wpisów z bazy.")
     return cleaned
 
 # ================= GŁÓWNA LOGIKA =================
 
 def main():
-    print(f"🚀 START BOT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"🚀 START CHALLENGE 100 PLN (5% STAKE)")
     if not API_KEYS:
         print("❌ Błąd: Brak kluczy API!")
         return
 
-    # Ładowanie indeksu klucza
     try:
         with open(KEY_STATE_FILE, "r") as f: curr_idx = int(f.read().strip()) % len(API_KEYS)
     except: curr_idx = 0
     
-    # Ładowanie bazy wysłanych typów
     if os.path.exists(COUPONS_FILE):
         try:
             with open(COUPONS_FILE, "r", encoding="utf-8") as f: all_coupons = json.load(f)
         except: all_coupons = []
     else: all_coupons = []
     
-    # Zapamiętujemy stan początkowy, żeby wiedzieć czy doszły nowe typy
     initial_ids = {c['id'] for c in all_coupons}
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
 
     for league, flag in SPORTS_CONFIG.items():
         stake, threshold = get_smart_stake(league)
-        print(f"📡 Skanuję: {league.upper()}")
+        print(f"📡 Skanuję: {league.upper()} | Bieżąca stawka: {stake} PLN")
         
         data = None
         for _ in range(len(API_KEYS)):
@@ -133,46 +150,41 @@ def main():
                     if val > max_v: max_v, best_p, best_o = val, mx, name
 
             if best_o:
-                msg = (f"⚽ {flag} <b>{league.replace('soccer_','').upper()}</b>\n"
+                # Nagłówek dynamiczny (⚽ lub 🏒)
+                sport_icon = "🏒" if "icehockey" in league else "⚽"
+                msg = (f"{sport_icon} {flag} <b>{league.upper()}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
                        f"🏟 <b>{event['home_team']} - {event['away_team']}</b>\n"
                        f"⏰ Start: {m_time.strftime('%d.%m | %H:%M')}\n\n"
                        f"✅ Typ: <b>{best_o}</b>\n"
                        f"📈 Kurs: <b>{best_p}</b>\n"
-                       f"💰 Stawka: <b>{stake} PLN</b>\n"
+                       f"💰 Stawka: <b>{stake} PLN</b> (5%)\n"
                        f"📊 Value: <b>+{round((max_v-1)*100, 1)}%</b>\n"
                        f"━━━━━━━━━━━━━━━")
                 
-                send_telegram(msg, is_stats=False) # Wysyłka typu
+                send_telegram(msg, is_stats=False)
                 
-                # ZAPIS NATYCHMIASTOWY
                 all_coupons.append({
                     "id": event['id'], "sport": league, "home": event['home_team'], 
                     "away": event['away_team'], "outcome": best_o, "odds": best_p, 
                     "stake": stake, "time": event['commence_time']
                 })
-                initial_ids.add(event['id']) # Blokada duplikatu w tej samej pętli
+                initial_ids.add(event['id'])
                 
                 with open(COUPONS_FILE, "w", encoding="utf-8") as f:
                     json.dump(all_coupons, f, indent=4)
 
-    # Czyszczenie starych rekordów przed zapisem końcowym
     all_coupons = clean_old_coupons(all_coupons)
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
 
-    # Zapis indeksu klucza
     with open(KEY_STATE_FILE, "w") as f: f.write(str(curr_idx))
     
-    # NOWA LOGIKA: Wysyłaj raport tylko jeśli dodano nowe typy
-    new_bets_count = len(initial_ids) - len([c for c in all_coupons if c['id'] in initial_ids and c['id'] not in initial_ids]) 
-    # (Powyższe uproszczone: sprawdzamy po prostu czy w tej sesji wysłano wiadomość)
-    
-    if len(initial_ids) > len([c['id'] for c in all_coupons if datetime.fromisoformat(c['time'].replace("Z", "+00:00")) < now]):
-        print(f"📊 Wysyłam raport na kanał wyników...")
-        report = generate_stats()
-        if report and "Błąd" not in report:
-            send_telegram(report, mode="Markdown", is_stats=True)
+    # Raport wysyłany po sesji
+    print(f"📊 Generuję raport...")
+    report = generate_stats()
+    if report and "Błąd" not in report:
+        send_telegram(report, mode="Markdown", is_stats=True)
 
     print(f"✅ KONIEC. Aktywne typy: {len(all_coupons)}")
 
