@@ -2934,5 +2934,18 @@
         "status": "LOSS",
         "score": "4:0",
         "time": "2026-01-30T18:00:00Z"
+    },
+    {
+        "id": "b9269b9440d2076bff5d2bdfa7b3fc12",
+        "home": "IF Troja-Ljungby",
+        "away": "BIK Karlskoga",
+        "sport": "icehockey_sweden_allsvenskan",
+        "outcome": "IF Troja-Ljungby",
+        "odds": 4.7,
+        "stake": 350.0,
+        "profit": -350.0,
+        "status": "LOSS",
+        "score": "1:2",
+        "time": "2026-01-30T18:00:00Z"
     }
 ]
