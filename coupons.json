@@ -10,26 +10,6 @@
         "time": "2026-01-27T00:00:00Z"
     },
     {
-        "id": "c3358713fe31e4542a012b9461d6ab57",
-        "home": "Buffalo Sabres",
-        "away": "Los Angeles Kings",
-        "outcome": "Los Angeles Kings",
-        "odds": 3.15,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-30T00:00:00Z"
-    },
-    {
-        "id": "5d43ce538e1eccd34a9813f7f136cfcc",
-        "home": "Minnesota Wild",
-        "away": "Calgary Flames",
-        "outcome": "Minnesota Wild",
-        "odds": 2.12,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-30T01:00:00Z"
-    },
-    {
         "id": "1b3e0f12d958b8303e85fe8d1ce9b860",
         "home": "Pittsburgh Penguins",
         "away": "Chicago Blackhawks",
@@ -40,44 +20,14 @@
         "time": "2026-01-30T00:00:00Z"
     },
     {
-        "id": "7e32c2e1f45f7c26fa219d118ea12694",
-        "home": "New Jersey Devils",
-        "away": "Nashville Predators",
-        "outcome": "Nashville Predators",
-        "odds": 2.98,
+        "id": "e9e1ef8d7fbfcf163e9ee8f74c6f12bc",
+        "home": "Tampa Bay Lightning",
+        "away": "Winnipeg Jets",
+        "outcome": "Winnipeg Jets",
+        "odds": 3.73,
         "stake": 420.0,
         "sport": "icehockey_nhl",
         "time": "2026-01-30T00:00:00Z"
-    },
-    {
-        "id": "3d78d21eaf2116aeff730567a03bcaa8",
-        "home": "Vancouver Canucks",
-        "away": "Anaheim Ducks",
-        "outcome": "Anaheim Ducks",
-        "odds": 2.41,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-30T03:00:00Z"
-    },
-    {
-        "id": "55d868059145bdffc842d07496fcac5f",
-        "home": "Vegas Golden Knights",
-        "away": "Dallas Stars",
-        "outcome": "Vegas Golden Knights",
-        "odds": 2.38,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-30T03:00:00Z"
-    },
-    {
-        "id": "65c33010332e3c0d69e40acb049b5452",
-        "home": "Seattle Kraken",
-        "away": "Toronto Maple Leafs",
-        "outcome": "Seattle Kraken",
-        "odds": 2.6,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-30T03:00:00Z"
     },
     {
         "id": "4b8ad8ba32b83ee86502e11f2ef80636",
@@ -88,26 +38,6 @@
         "stake": 350.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-01-30T17:00:00Z"
-    },
-    {
-        "id": "8486a8e2f076facbe2f7425a83d6e49e",
-        "home": "Edmonton Oilers",
-        "away": "San Jose Sharks",
-        "outcome": "San Jose Sharks",
-        "odds": 4.3,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-30T02:00:00Z"
-    },
-    {
-        "id": "383d6452447cfac80ad57296ab1a6249",
-        "home": "Fenerbahce SK",
-        "away": "Anadolu Efes",
-        "outcome": "Anadolu Efes",
-        "odds": 4.1,
-        "stake": 350.0,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-29T17:45:00Z"
     },
     {
         "id": "873b8840ffe16c1c0c43afd26f36a9e5",
@@ -384,7 +314,7 @@
         "home": "1. FC K\u00f6ln",
         "away": "VfL Wolfsburg",
         "outcome": "1. FC K\u00f6ln",
-        "odds": 2.12,
+        "odds": 2.07,
         "stake": 455.0,
         "sport": "soccer_germany_bundesliga",
         "time": "2026-01-30T19:30:00Z"
@@ -408,5 +338,25 @@
         "stake": 280.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-01-31T13:00:00Z"
+    },
+    {
+        "id": "0a989e0e588a7fa9fcdd1ab09ff07faf",
+        "home": "Sparta Rotterdam",
+        "away": "Groningen",
+        "outcome": "Sparta Rotterdam",
+        "odds": 2.8,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-01-31T20:00:00Z"
+    },
+    {
+        "id": "261e849fdaa8ead74569e9d72b581c91",
+        "home": "FC Winterthur",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Winterthur",
+        "odds": 4.5,
+        "stake": 350.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-01-31T17:00:00Z"
     }
 ]
