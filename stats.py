@@ -1,75 +1,142 @@
 import json
 import os
+import requests
+from datetime import datetime, timedelta, timezone
+
+# --- KONFIGURACJA ---
+TOKEN = os.getenv("T_TOKEN")
+CHAT_STATS = os.getenv("T_CHAT_STATS")
+STARTING_BANKROLL = 5000.0  # Kwota bazowa do obliczeń ROI
+
+def get_upcoming_count():
+    """Liczy mecze z coupons.json zaplanowane na najbliższe 12h"""
+    count = 0
+    now = datetime.now(timezone.utc)
+    limit = now + timedelta(hours=12)
+    filename = 'coupons.json'
+    
+    if not os.path.exists(filename):
+        return 0
+    
+    try:
+        with open(filename, 'r', encoding='utf-8') as f:
+            coupons = json.load(f)
+            if isinstance(coupons, list):
+                for coupon in coupons:
+                    # Pomijamy NBA
+                    if "basketball_nba" in str(coupon.get('sport', '')).lower():
+                        continue
+                    
+                    time_str = coupon.get('time')
+                    if time_str:
+                        try:
+                            # Format ISO: 2026-01-29T19:15:00Z
+                            event_time = datetime.fromisoformat(time_str.replace("Z", "+00:00"))
+                            if now <= event_time <= limit:
+                                count += 1
+                        except:
+                            continue
+    except:
+        pass
+    return count
 
 def generate_stats():
-    upcoming_count = 0
-    groups = {}
-    total_staked_in_game = 0.0
+    if not os.path.exists('history.json'):
+        return None, "❌ Brak history.json"
+        
+    try:
+        with open('history.json', 'r', encoding='utf-8') as f:
+            history = json.load(f)
+    except Exception as e:
+        return None, f"❌ Błąd odczytu history: {e}"
+
+    # Sprawdzenie dla Silent Update (czy przybyły nowe rozliczone mecze)
+    old_total_bets = 0
+    if os.path.exists('stats.json'):
+        try:
+            with open('stats.json', 'r', encoding='utf-8') as f:
+                old_total_bets = json.load(f).get('total_bets', 0)
+        except: pass
+
+    total_profit, total_turnover, profit_24h = 0.0, 0.0, 0.0
+    wins, losses = 0, 0
+    processed_matches, series_icons = [], []
+    now = datetime.now(timezone.utc)
+    yesterday = now - timedelta(days=1)
+
+    for bet in history:
+        # Filtracja NBA i VOID
+        if "basketball_nba" in str(bet.get('sport', '')).lower(): continue
+        if str(bet.get('status', '')).upper() == "VOID": continue
+
+        prof = float(bet.get('profit', 0))
+        stk = float(bet.get('stake', 0))
+        total_profit += prof
+        total_turnover += stk
+        
+        icon = "✅" if prof > 0 else "❌"
+        if prof > 0: wins += 1
+        else: losses += 1
+        series_icons.append(icon)
+
+        # Statystyki 24h
+        try:
+            b_time = bet.get('time') or bet.get('date')
+            if datetime.fromisoformat(b_time.replace("Z", "+00:00")) > yesterday:
+                profit_24h += prof
+        except: pass
+
+        processed_matches.append(f"{icon} {bet.get('home')}-{bet.get('away')} | `{prof:+.2f} PLN`")
+
+    total_bets = wins + losses
+    upcoming = get_upcoming_count()
     
-    if os.path.exists("coupons.json"):
-        with open("coupons.json", "r") as f:
-            try:
-                coupons = json.load(f)
-                upcoming_count = len(coupons)
-                for c in coupons:
-                    sport_raw = c.get('sport', 'Inne')
-                    league = sport_raw.replace('soccer_', '').replace('icehockey_', '').replace('_', ' ').upper()
-                    
-                    if league not in groups:
-                        groups[league] = {"matches": [], "total_potential_profit": 0.0}
-                    
-                    odds = float(c.get('odds', 0))
-                    stake = float(c.get('stake', 0))
-                    
-                    # --- POTENCJALNY ZYSK NETTO (Z PODATKIEM 12%) ---
-                    # (Stawka * 0.88 * Kurs) - Stawka
-                    pot_profit = round((stake * 0.88 * odds) - stake, 2)
-                    
-                    groups[league]["matches"].append({
-                        "teams": f"{c.get('home')} - {c.get('away')}",
-                        "outcome": c.get('outcome'),
-                        "odds": odds,
-                        "stake": stake,
-                        "profit": pot_profit
-                    })
-                    groups[league]["total_potential_profit"] += pot_profit
-                    total_staked_in_game += stake
-            except: pass
+    # Obliczenia wskaźników
+    yield_val = (total_profit / total_turnover * 100) if total_turnover > 0 else 0
+    roi_val = (total_profit / STARTING_BANKROLL * 100) if STARTING_BANKROLL > 0 else 0
+    win_rate = (wins / total_bets * 100) if total_bets > 0 else 0
 
-    sorted_groups = dict(sorted(groups.items(), key=lambda item: item[1]['total_potential_profit'], reverse=True))
-
-    balance = 100.0
-    if os.path.exists("bankroll.json"):
-        with open("bankroll.json", "r") as f:
-            balance = json.load(f).get("balance", 100.0)
-
-    # Obliczanie obrotu z zabezpieczeniem przed duplikatami
-    total_turnover = 0.0
-    seen_ids = set()
-    if os.path.exists("history.json"):
-        with open("history.json", "r") as f:
-            try:
-                history = json.load(f)
-                for h in history:
-                    if h.get('id') not in seen_ids:
-                        total_turnover += float(h.get('stake', 0))
-                        seen_ids.add(h.get('id'))
-            except: pass
-
-    stats_data = {
-        "balance": balance,
-        "upcoming_count": upcoming_count,
-        "total_profit": round(balance - 100.0, 2),
-        "roi": f"{round(((balance - 100.0) / 100.0) * 100, 2) if balance != 100 else 0}%",
+    # Dane do index.html
+    web_data = {
+        "total_profit": round(total_profit, 2),
+        "profit_24h": round(profit_24h, 2),
+        "yield": round(yield_val, 2),
+        "roi": round(roi_val, 2),
         "turnover": round(total_turnover, 2),
-        "in_game_amount": round(total_staked_in_game, 2),
-        "groups": sorted_groups,
-        "last_update": os.popen('date "+%H:%M:%S"').read().strip()
+        "win_rate": round(win_rate, 1),
+        "total_bets": total_bets,
+        "upcoming_count": upcoming,
+        "last_update": now.strftime("%H:%M:%S")
     }
 
-    with open("stats.json", "w") as f:
-        json.dump(stats_data, f, indent=4)
-    print("✅ Statystyki zaktualizowane (uwzględniono podatek 12%).")
+    with open('stats.json', 'w', encoding='utf-8') as f:
+        json.dump(web_data, f, indent=4)
+
+    # Raport Telegram
+    diff = total_bets - old_total_bets
+    report = [
+        "📊 *DASHBOARD STATYSTYK*",
+        "━━━━━━━━━━━━━━━",
+        f"💰 *Zysk Total:* `{total_profit:.2f} PLN`",
+        f"📈 *Yield:* `{yield_val:.2f}%` | *ROI:* `{roi_val:.2f}%`",
+        f"🔄 *Obrót:* `{total_turnover:.2f} PLN`",
+        f"🕒 *W grze (12h):* `{upcoming} typów`",
+        f"🎯 *Skuteczność:* `{win_rate:.1f}%` ({wins}/{total_bets})",
+        f"🔥 *Ostatnie:* {''.join(series_icons[-10:])}",
+        "━━━━━━━━━━━━━━━"
+    ]
+
+    if diff > 0:
+        report.append(f"📝 *NOWE ({diff}):*")
+        report.extend(processed_matches[-diff:])
+    else:
+        report.append("📝 *OSTATNIE WYNIKI:*")
+        report.extend(processed_matches[-5:])
+
+    return (diff > 0), "\n".join(report)
 
 if __name__ == "__main__":
-    generate_stats()
+    should_send, text = generate_stats()
+    if should_send and TOKEN and CHAT_STATS:
+        requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", 
+                     json={"chat_id": CHAT_STATS, "text": text, "parse_mode": "Markdown"})
