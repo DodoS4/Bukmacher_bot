@@ -748,5 +748,45 @@
         "stake": 350.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-02-01T19:00:00Z"
+    },
+    {
+        "id": "cfc22e4738639bde4c31507fa6e312c6",
+        "home": "CA Osasuna",
+        "away": "Villarreal",
+        "outcome": "Villarreal",
+        "odds": 2.7,
+        "stake": 350.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-31T15:15:00Z"
+    },
+    {
+        "id": "b676acd01af1ef72f58cfdd42e29ab25",
+        "home": "Real Betis",
+        "away": "Valencia",
+        "outcome": "Real Betis",
+        "odds": 1.93,
+        "stake": 350.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-01T15:15:00Z"
+    },
+    {
+        "id": "aa3d772d9aa8460f7b7cea4190f7cb3b",
+        "home": "Santa Clara",
+        "away": "Estoril",
+        "outcome": "Estoril",
+        "odds": 3.6,
+        "stake": 350.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-31T15:30:00Z"
+    },
+    {
+        "id": "cb5032b14aded4e09d4d6d497110828d",
+        "home": "AEK Athens",
+        "away": "Olympiakos Piraeus",
+        "outcome": "Olympiakos Piraeus",
+        "odds": 2.78,
+        "stake": 350.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-01T19:00:00Z"
     }
 ]
