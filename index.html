@@ -3,164 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Betting PRO - Challenge 100 PLN</title>
+    <title>Challenge 100 PLN - Kula Śnieżna</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #f9fafb; color: #111827; font-family: 'Inter', sans-serif; }
-        .stat-card { transition: transform 0.2s; border: 1px solid #f1f5f9; }
-        .stat-card:hover { transform: translateY(-2px); }
-        .chart-container { position: relative; height: 300px; width: 100%; }
-        .bankroll-gradient { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .stat-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .accent-gradient { background: linear-gradient(135deg, #38bdf8 0%, #1d4ed8 100%); }
     </style>
 </head>
-<body class="p-2 md:p-8">
+<body class="min-h-screen p-4 md:p-8">
 
     <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-6 border-b pb-4">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
             <div>
-                <h1 class="text-2xl font-bold italic tracking-tight text-slate-800">AI BETTING <span class="text-blue-600">PRO</span></h1>
-                <p id="last-update" class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Challenge: Kula Śnieżna 5%</p>
+                <h1 class="text-3xl font-bold text-white tracking-tight">🎯 Challenge <span class="text-blue-400">Kula Śnieżna</span></h1>
+                <p class="text-slate-400">Automatyczny system bettingowy - Dawid 2026</p>
             </div>
-            <div class="flex items-center gap-2">
-                <span id="refresh-timer" class="text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-100 px-3 py-1 rounded-full">REF: 300s</span>
+            <div class="text-right">
+                <span class="text-xs uppercase tracking-widest text-slate-500">Ostatnia aktualizacja</span>
+                <p id="last-update" class="text-sm font-mono text-blue-300">Ładowanie...</p>
             </div>
-        </div>
+        </header>
 
-        <div class="grid grid-cols-2 md:grid-cols-7 gap-3 mb-6">
-            <div class="stat-card bankroll-gradient p-4 rounded-xl shadow-md text-center border-b-4 border-blue-900">
-                <p class="text-[9px] text-blue-100 uppercase font-black mb-1">Bankroll (Kula)</p>
-                <p id="current-bankroll" class="text-lg font-black text-white italic">100.00 PLN</p>
-            </div>
-
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
-                <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
-            </div>
-
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-blue-500">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-500">Zysk Total</p>
-                <p id="total-profit" class="text-lg font-black text-blue-600 italic">0.00 PLN</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            
+            <div class="stat-card p-6 rounded-2xl">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="p-3 bg-blue-500/20 rounded-lg text-blue-400"><i class="fas fa-wallet fa-lg"></i></div>
+                    <h3 class="text-slate-400 font-medium">Bankroll</h3>
+                </div>
+                <p id="balance" class="text-3xl font-bold text-white">0.00 PLN</p>
             </div>
 
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-purple-500">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500">ROI %</p>
-                <p id="roi-val" class="text-lg font-black text-purple-600">+0%</p>
+            <div class="stat-card p-6 rounded-2xl border-l-4 border-blue-500">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="p-3 bg-orange-500/20 rounded-lg text-orange-400"><i class="fas fa-clock fa-lg"></i></div>
+                    <h3 class="text-slate-400 font-medium">W grze</h3>
+                </div>
+                <p id="upcoming-count" class="text-3xl font-bold text-white">0</p>
+                <p id="in-game-amount" class="text-xs text-slate-500 mt-2">Kwota postawiona: 0 PLN</p>
             </div>
 
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-gray-400">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-gray-500">Obrót</p>
-                <p id="turnover-val" class="text-lg font-black text-gray-700">0 PLN</p>
+            <div class="stat-card p-6 rounded-2xl">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="p-3 bg-green-500/20 rounded-lg text-green-400"><i class="fas fa-chart-line fa-lg"></i></div>
+                    <h3 class="text-slate-400 font-medium">Zysk całkowity</h3>
+                </div>
+                <p id="total-profit" class="text-3xl font-bold text-white">0.00 PLN</p>
             </div>
 
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-blue-400">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-400 italic">W grze</p>
-                <p id="upcoming-val-card" class="text-lg font-black text-blue-500">0</p>
-            </div>
-
-            <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-orange-500">Yield %</p>
-                <p id="yield-val" class="text-lg font-black text-orange-500">0%</p>
-            </div>
-        </div>
-
-        <div class="bg-white p-3 rounded-xl shadow-sm border mb-6 text-center">
-             <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Statystyki Typów (Liczba / Skuteczność)</p>
-             <p id="total-bets" class="text-md font-bold text-gray-800">0 / 0% WR</p>
-        </div>
-
-        <div class="bg-white p-6 rounded-xl shadow-sm border mb-8">
-            <h3 class="font-bold mb-6 text-[11px] text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                <i class="fas fa-chart-line text-blue-500"></i> Progresja Kuli Śnieżnej
-            </h3>
-            <div class="chart-container">
-                <canvas id="profitChart"></canvas>
+            <div class="stat-card p-6 rounded-2xl">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="p-3 bg-purple-500/20 rounded-lg text-purple-400"><i class="fas fa-percentage fa-lg"></i></div>
+                    <h3 class="text-slate-400 font-medium">ROI / Yield</h3>
+                </div>
+                <p id="roi" class="text-3xl font-bold text-white">0.0%</p>
+                <p id="yield" class="text-xs text-slate-500 mt-2">Yield: 0.0%</p>
             </div>
         </div>
 
-        <div id="history-groups" class="space-y-3 mb-10"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 stat-card p-8 rounded-2xl">
+                <h3 class="text-xl font-semibold mb-6 flex items-center gap-2">
+                    <i class="fas fa-info-circle text-blue-400"></i> O strategii
+                </h3>
+                <div class="space-y-4 text-slate-400 leading-relaxed">
+                    <p>System wykorzystuje strategię <span class="text-white font-semibold">kuli śnieżnej</span>, reinwestując wygrane przy zachowaniu stałego poziomu ryzyka 5% aktualnego bankrolla.</p>
+                    <ul class="list-disc list-inside space-y-2 text-sm">
+                        <li>Zakres kursów: <span class="text-blue-300">1.65 - 3.50</span></li>
+                        <li>Rynki: USA (NHL, NBA, NFL) + Top Europejskie Ligi Piłkarskie</li>
+                        <li>Stawkowanie: <span class="text-blue-300">5% bankrolla</span> na każdy typ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="stat-card p-8 rounded-2xl accent-gradient border-none">
+                <h3 class="text-xl font-bold text-white mb-4">Obrót całkowity</h3>
+                <p id="turnover" class="text-4xl font-black text-white mb-2">0 PLN</p>
+                <p class="text-blue-100 text-sm opacity-80">Łączna suma stawek postawionych przez bota od początku challenge'u.</p>
+            </div>
+        </div>
     </div>
 
     <script>
-        let profitChart = null;
-        let countdown = 300;
-
-        async function loadData() {
+        async function updateDashboard() {
             try {
-                // Pobieranie statystyk ogólnych
-                const sRes = await fetch('stats.json?v=' + Date.now());
-                const s = await sRes.json();
+                // Dodanie ?t= zapobiega cachowaniu pliku przez przeglądarkę
+                const response = await fetch('stats.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('Błąd pobierania danych');
                 
-                // Aktualizacja UI
-                document.getElementById('total-profit').innerText = (s.total_profit || 0).toLocaleString() + ' PLN';
-                document.getElementById('today-profit').innerText = ((s.profit_24h || 0) >= 0 ? '+' : '') + (s.profit_24h || 0).toFixed(2) + ' PLN';
-                document.getElementById('today-profit').className = `text-lg font-black italic ${(s.profit_24h || 0) >= 0 ? 'text-green-500' : 'text-red-500'}`;
-                document.getElementById('roi-val').innerText = ((s.roi || 0) >= 0 ? '+' : '') + (s.roi || 0) + '%';
-                document.getElementById('turnover-val').innerText = (s.turnover || 0).toLocaleString() + ' PLN';
-                document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
-                document.getElementById('total-bets').innerText = `${s.total_bets || 0} typów / ${s.win_rate || 0}% WR`;
-                document.getElementById('last-update').innerText = 'Sync: ' + (s.last_update || 'Teraz');
-                document.getElementById('upcoming-val-card').innerText = s.upcoming_count || 0;
-                
-                // Wyświetlanie bankrolla z pliku (jeśli Twoje stats.json go zawiera)
-                // Jeśli nie, domyślnie startuje od 100 + zysk totalny
-                const br = s.current_bankroll || (100 + (s.total_profit || 0));
-                document.getElementById('current-bankroll').innerText = br.toFixed(2) + ' PLN';
+                const data = await response.json();
 
-                // Pobieranie historii
-                const hRes = await fetch('history.json?v=' + Date.now());
-                const history = await hRes.json();
+                // Mapowanie danych do elementów HTML
+                document.getElementById('balance').innerText = data.balance.toFixed(2) + ' PLN';
+                document.getElementById('upcoming-count').innerText = data.upcoming_count;
+                document.getElementById('total-profit').innerText = (data.total_profit >= 0 ? '+' : '') + data.total_profit.toFixed(2) + ' PLN';
+                document.getElementById('roi').innerText = data.roi;
+                document.getElementById('turnover').innerText = data.turnover.toLocaleString() + ' PLN';
+                document.getElementById('last-update').innerText = data.last_update || 'Niedawno';
                 
-                // Filtrujemy tylko nowe mecze (z dzisiejszą datą lub po resecie)
-                // Jeśli chcesz widzieć tylko NOWY challenge, upewnij się, że history.json na serwerze jest wyczyszczony.
-                render(history);
-            } catch (e) { 
-                console.log("Czekam na pierwsze dane..."); 
+                // Dodatkowe pola (jeśli istnieją w JSON)
+                if(data.yield) document.getElementById('yield').innerText = 'Yield: ' + data.yield;
+                if(data.in_game_amount) document.getElementById('in-game-amount').innerText = 'Kwota postawiona: ' + data.in_game_amount.toFixed(2) + ' PLN';
+
+                // Kolorowanie zysku
+                const profitEl = document.getElementById('total-profit');
+                profitEl.className = data.total_profit >= 0 ? 'text-3xl font-bold text-green-400' : 'text-3xl font-bold text-red-400';
+
+            } catch (error) {
+                console.error('Błąd aktualizacji:', error);
             }
         }
 
-        function render(data) {
-            if(!data || data.length === 0) {
-                document.getElementById('history-groups').innerHTML = '<p class="text-center text-gray-400 text-xs py-10">Czekam na pierwsze rozliczone mecze w Challenge 100 PLN...</p>';
-                return;
-            }
-
-            const sorted = data.sort((a, b) => new Date(a.time) - new Date(b.time));
-            const labels = [], values = [], leagues = {};
-            let sum = 0;
-
-            sorted.forEach(m => {
-                if(m.status === "VOID") return;
-                sum += parseFloat(m.profit || 0);
-                labels.push(new Date(m.time).toLocaleDateString('pl-PL', {day:'2-digit', month:'2-digit'}));
-                values.push(sum);
-
-                let lName = m.sport.toUpperCase().replace('ICEHOCKEY_', '').replace('SOCCER_', '').replace(/_/g, ' ');
-                if (!leagues[lName]) leagues[lName] = { profit: 0, matches: [] };
-                leagues[lName].profit += parseFloat(m.profit || 0);
-                leagues[lName].matches.push(m);
-            });
-
-            // Wykres
-            if(profitChart) profitChart.destroy();
-            const ctx = document.getElementById('profitChart').getContext('2d');
-            profitChart = new Chart(ctx, {
-                type: 'line',
-                data: { 
-                    labels, 
-                    datasets: [{ 
-                        label: 'Zysk skumulowany',
-                        data: values, 
-                        borderColor: '#2563eb', 
-                        backgroundColor: 'rgba(37, 99, 235, 0.1)', 
-                        fill: true, 
-                        tension: 0.3, 
-                        pointRadius: 2 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: false
+        // Pierwsze wywołanie
+        updateDashboard();
+        
+        // Automatyczne odświeżanie co 30 sekund
+        setInterval(updateDashboard, 30000);
+    </script>
+</body>
+</html>
