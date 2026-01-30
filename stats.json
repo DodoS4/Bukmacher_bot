@@ -6,6 +6,7 @@
     "roi": 106.9,
     "obrot": 64465.0,
     "bankroll": 10345.06,
+    "total_bets_count": 233,
     "wykres": [
         247.2,
         -2.8,
@@ -258,7 +259,7 @@
         "\u274c",
         "\u2705"
     ],
-    "last_sync": "20:43:45",
+    "last_sync": "20:59:14",
     "stats_by_sport": {
         "\ud83c\udfc0 Inne": {
             "profit": -1144.2400000000002,
