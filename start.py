@@ -3,9 +3,8 @@ import requests
 import json
 import time
 from datetime import datetime, timedelta, timezone
-from stats import generate_stats
 
-# ================= KONFIGURACJA LIG (POPRAWIONE NAZWY API) =================
+# ================= KONFIGURACJA LIG =================
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
@@ -38,21 +37,52 @@ SPORTS_CONFIG = {
     "tennis_wta_australian_open": "🎾"
 }
 
-# ================= POZOSTAŁA KONFIGURACJA =================
-API_KEYS = []
-if os.getenv("ODDS_KEY"): API_KEYS.append(os.getenv("ODDS_KEY"))
-for i in range(2, 11):
-    key = os.getenv(f"ODDS_KEY_{i}")
-    if key and len(key) > 10: API_KEYS.append(key)
+# ================= PANCERNA KONFIGURACJA KLUCZY =================
+def get_env_safe(name):
+    """Pobiera zmienną i usuwa zbędne spacje."""
+    val = os.environ.get(name) or os.getenv(name)
+    return str(val).strip() if val else None
 
-TELEGRAM_TOKEN = os.getenv("T_TOKEN")
-TELEGRAM_CHAT = os.getenv("T_CHAT")
+# Klucze API
+API_KEYS = []
+main_key = get_env_safe("ODDS_KEY")
+if main_key: API_KEYS.append(main_key)
+for i in range(2, 11):
+    k = get_env_safe(f"ODDS_KEY_{i}")
+    if k and len(k) > 10: API_KEYS.append(k)
+
+# Telegram - Poprawka
+TELEGRAM_TOKEN = get_env_safe("T_TOKEN")
+TELEGRAM_CHAT = get_env_safe("T_CHAT")
+
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
 BASE_STAKE = 350
 
 # ================= FUNKCJE POMOCNICZE =================
+
+def send_telegram(message, mode="HTML"):
+    """Wysyła wiadomość z pełną diagnostyką błędów."""
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT:
+        print(f"⚠️ POMINIĘTO TELEGRAM: TOKEN={bool(TELEGRAM_TOKEN)}, CHAT={bool(TELEGRAM_CHAT)}")
+        return
+
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    payload = {
+        "chat_id": TELEGRAM_CHAT, 
+        "text": message, 
+        "parse_mode": mode
+    }
+    
+    try: 
+        r = requests.post(url, json=payload, timeout=15)
+        if r.status_code == 200:
+            print("✅ Wiadomość wysłana na Telegram.")
+        else:
+            print(f"❌ Błąd Telegram API: {r.status_code} - {r.text}")
+    except Exception as e:
+        print(f"❌ Błąd połączenia z Telegram: {e}")
 
 def get_current_key_idx():
     if os.path.exists(KEY_STATE_FILE):
@@ -67,52 +97,33 @@ def save_current_key_idx(idx):
         f.write(str(idx))
 
 def get_smart_stake(league_key):
-    """Automatyczne dobieranie stawki w zależności od historii zysków/strat i ligi."""
+    """Automatyczne dobieranie stawki."""
     current_multiplier = 1.0
     threshold = 1.03
     history_profit = 0
 
-    # Pobierz historię
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
             league_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
             history_profit = league_profit
-            # Skala stawki w zależności od strat
+            
             if league_profit <= -700:
                 current_multiplier = 0.5
                 threshold = 1.07
             elif league_profit <= -300:
                 current_multiplier = 0.8
                 threshold = 1.05
-            elif league_profit >= 500:
-                current_multiplier = 1.3  # większa stawka przy dobrym wyniku
             elif league_profit >= 1000:
-                current_multiplier = 1.5  # bonus przy dużym zysku
+                current_multiplier = 1.5
         except: pass
     
     final_stake = BASE_STAKE * current_multiplier
-
-    # Bonus dla NHL
     if "nhl" in league_key.lower():
-        if history_profit > 0:
-            final_stake *= 1.2  # zwiększenie stawki jeśli NHL przynosi zysk
-        else:
-            final_stake *= 1.1  # lekkie zwiększenie dla NHL nawet przy stracie
+        final_stake *= 1.2 if history_profit > 0 else 1.1
 
     return round(final_stake, 2), threshold
-
-def send_telegram(message, mode="HTML"):
-    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    try: 
-        requests.post(url, json={
-            "chat_id": TELEGRAM_CHAT, 
-            "text": message, 
-            "parse_mode": mode
-        }, timeout=10)
-    except: pass
 
 def load_existing_data():
     if os.path.exists(COUPONS_FILE):
@@ -126,6 +137,10 @@ def load_existing_data():
 
 def main():
     print(f"🚀 START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    # Diagnostyka na starcie
+    print(f"🔑 STATUS: API_KEYS={len(API_KEYS)}, TOKEN={bool(TELEGRAM_TOKEN)}, CHAT={bool(TELEGRAM_CHAT)}")
+    
     if not API_KEYS:
         print("❌ Błąd: Brak kluczy API!")
         return
@@ -139,7 +154,7 @@ def main():
 
     for league, flag_emoji in SPORTS_CONFIG.items():
         current_stake, base_threshold = get_smart_stake(league)
-        print(f"📡 SKANOWANIE: {league.upper()} (Threshold: {base_threshold})")
+        print(f"📡 SKANOWANIE: {league.upper()}")
         
         data = None
         attempts = 0
@@ -188,7 +203,6 @@ def main():
                 
                 req_val = base_threshold
                 if max_p >= 2.2: req_val += 0.03
-                if max_p >= 3.2: req_val += 0.04
                 
                 if 1.85 <= max_p <= 5.0 and curr_val > req_val:
                     if curr_val > max_val:
@@ -196,7 +210,7 @@ def main():
 
             if best_choice:
                 date_str = m_time.strftime('%d.%m | %H:%M')
-                l_header = league.replace("soccer_", "").replace("icehockey_", "").replace("_", " ").upper()
+                l_header = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
                 s_icon = "🏒" if "icehockey" in league else "⚽"
                 
                 msg = (f"{s_icon} {flag_emoji} <b>{l_header}</b>\n"
@@ -221,7 +235,6 @@ def main():
     save_current_key_idx(current_key_idx)
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
-    
     print(f"✅ KONIEC SKANOWANIA. Aktywne: {len(all_coupons)}")
 
 if __name__ == "__main__":
