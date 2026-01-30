@@ -49,13 +49,8 @@ jobs:
           ODDS_KEY_9: ${{ secrets.ODDS_KEY_9 }}
           ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
         run: |
-          # 1. Rozliczamy stare mecze i aktualizujemy bankroll.json
           python settle.py
-          
-          # 2. Szukamy nowych typów (zapisuje do coupons.json)
           python start.py
-          
-          # 3. AKTUALIZACJA STATYSTYK (Naprawia wyświetlanie 0 na stronie)
           python stats.py
 
       - name: Commit and Push Changes
@@ -65,23 +60,21 @@ jobs:
           
           git fetch origin main
           
-          # Lista plików do zapamiętania (dodano stats.json dla pewności)
+          # KLUCZOWA ZMIANA: Dodaliśmy stats.json i index.html do listy
           FILES_TO_ADD="history.json coupons.json bankroll.json key_index.txt stats.json index.html"
           
           for file in $FILES_TO_ADD; do
             if [ -f "$file" ]; then
               git add "$file"
-              echo "✅ Zsynchronizowano: $file"
+              echo "✅ Dodano do synchronizacji: $file"
             fi
           done
 
-          # Sprawdzenie czy są zmiany do wypchnięcia
           if ! git diff --cached --quiet; then
             git commit -m "Bot Auto-Update: Results, Bets & Stats [skip ci]"
-            # Rebase zapobiega błędom, gdybyś coś zmienił ręcznie w repo
             git pull --rebase -X theirs origin main
             git push origin main
-            echo "🚀 Dane zostały zapisane w repozytorium i przesłane na stronę."
+            echo "🚀 Wszystkie dane zostały zsynchronizowane."
           else
-            echo "ℹ️ Brak zmian w danych, skip push."
+            echo "ℹ️ Brak nowych danych."
           fi
