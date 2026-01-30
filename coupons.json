@@ -1,15 +1,5 @@
 [
     {
-        "id": "a3b3453966924d13a56338b14415806b",
-        "home": "KK Crvena zvezda",
-        "away": "Dubai Basketball",
-        "outcome": "Dubai Basketball",
-        "odds": 3.45,
-        "stake": 350.0,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-30T19:00:00Z"
-    },
-    {
         "id": "8dc4651cd60b7477111f94425761cbf0",
         "home": "Radomiak Radom",
         "away": "Arka Gdynia",
@@ -20,36 +10,6 @@
         "time": "2026-01-30T19:30:00Z"
     },
     {
-        "id": "c6eaecf160e1a288fd84a9678a86b87d",
-        "home": "Saski Baskonia",
-        "away": "\u017dalgiris",
-        "outcome": "\u017dalgiris",
-        "odds": 1.89,
-        "stake": 350.0,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-30T19:30:00Z"
-    },
-    {
-        "id": "128f6ef4a4bb60a9e73338195f0ea1bd",
-        "home": "Lazio",
-        "away": "Genoa",
-        "outcome": "Lazio",
-        "odds": 2.16,
-        "stake": 350.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-01-30T19:45:00Z"
-    },
-    {
-        "id": "4ef6295d306e5dd7c9bce9cd4b94e005",
-        "home": "Espanyol",
-        "away": "Alav\u00e9s",
-        "outcome": "Espanyol",
-        "odds": 2.08,
-        "stake": 280.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-01-30T20:00:00Z"
-    },
-    {
         "id": "eb9023bc5dbbd91cfa83cffc01a5a5e6",
         "home": "Vit\u00f3ria SC",
         "away": "Moreirense FC",
@@ -58,16 +18,6 @@
         "stake": 280.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-01-30T20:45:00Z"
-    },
-    {
-        "id": "f1b5fa013ebb49815d98fe0596fce560",
-        "home": "ASVEL Lyon Villeurbanne",
-        "away": "Panathinaikos",
-        "outcome": "ASVEL Lyon Villeurbanne",
-        "odds": 4.13,
-        "stake": 350.0,
-        "sport": "basketball_euroleague",
-        "time": "2026-01-30T19:45:00Z"
     },
     {
         "id": "319e80424eef17c8f60948b718ed1e33",
@@ -150,16 +100,6 @@
         "time": "2026-01-31T15:00:00Z"
     },
     {
-        "id": "098818bd0974f099c22a332bac1920dc",
-        "home": "NAC Breda",
-        "away": "FC Twente Enschede",
-        "outcome": "FC Twente Enschede",
-        "odds": 2.0,
-        "stake": 350.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-01-30T19:00:00Z"
-    },
-    {
         "id": "dfd76719105889eacd72fa4939b89cf6",
         "home": "AZ Alkmaar",
         "away": "NEC Nijmegen",
@@ -218,16 +158,6 @@
         "stake": 350.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-01-31T19:30:00Z"
-    },
-    {
-        "id": "01582fc5c1eef56c7141a86e0a585c25",
-        "home": "1. FC K\u00f6ln",
-        "away": "VfL Wolfsburg",
-        "outcome": "1. FC K\u00f6ln",
-        "odds": 2.12,
-        "stake": 455.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-01-30T19:30:00Z"
     },
     {
         "id": "01260a68328c2f8d2474e4a30c50f1fd",
