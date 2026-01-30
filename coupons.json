@@ -128,5 +128,15 @@
         "odds": 2.4,
         "stake": 5.0,
         "time": "2026-01-31T15:30:00Z"
+    },
+    {
+        "id": "c1fbd9c01b1bb1eb61ce0e9ba64f429c",
+        "sport": "soccer_portugal_primeira_liga",
+        "home": "Alverca",
+        "away": "CF Estrela",
+        "outcome": "CF Estrela",
+        "odds": 4.1,
+        "stake": 5.0,
+        "time": "2026-01-31T20:30:00Z"
     }
 ]
