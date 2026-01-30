@@ -1,142 +1,89 @@
 import json
 import os
-import requests
 from datetime import datetime, timedelta, timezone
 
-# --- KONFIGURACJA ---
-TOKEN = os.getenv("T_TOKEN")
-CHAT_STATS = os.getenv("T_CHAT_STATS")
-STARTING_BANKROLL = 5000.0  # Kwota bazowa do obliczeń ROI
-
-def get_upcoming_count():
-    """Liczy mecze z coupons.json zaplanowane na najbliższe 12h"""
-    count = 0
-    now = datetime.now(timezone.utc)
-    limit = now + timedelta(hours=12)
-    filename = 'coupons.json'
-    
-    if not os.path.exists(filename):
-        return 0
-    
-    try:
-        with open(filename, 'r', encoding='utf-8') as f:
-            coupons = json.load(f)
-            if isinstance(coupons, list):
-                for coupon in coupons:
-                    # Pomijamy NBA
-                    if "basketball_nba" in str(coupon.get('sport', '')).lower():
-                        continue
-                    
-                    time_str = coupon.get('time')
-                    if time_str:
-                        try:
-                            # Format ISO: 2026-01-29T19:15:00Z
-                            event_time = datetime.fromisoformat(time_str.replace("Z", "+00:00"))
-                            if now <= event_time <= limit:
-                                count += 1
-                        except:
-                            continue
-    except:
-        pass
-    return count
+# ================= KONFIGURACJA =================
+HISTORY_FILE = "history.json"
+COUPONS_FILE = "coupons.json"
+STATS_FILE = "stats.json"
+STARTING_BANKROLL = 5000.0  # Twoja realna kwota startowa
 
 def generate_stats():
-    if not os.path.exists('history.json'):
-        return None, "❌ Brak history.json"
-        
-    try:
-        with open('history.json', 'r', encoding='utf-8') as f:
-            history = json.load(f)
-    except Exception as e:
-        return None, f"❌ Błąd odczytu history: {e}"
-
-    # Sprawdzenie dla Silent Update (czy przybyły nowe rozliczone mecze)
-    old_total_bets = 0
-    if os.path.exists('stats.json'):
-        try:
-            with open('stats.json', 'r', encoding='utf-8') as f:
-                old_total_bets = json.load(f).get('total_bets', 0)
-        except: pass
-
-    total_profit, total_turnover, profit_24h = 0.0, 0.0, 0.0
-    wins, losses = 0, 0
-    processed_matches, series_icons = [], []
-    now = datetime.now(timezone.utc)
-    yesterday = now - timedelta(days=1)
-
-    for bet in history:
-        # Filtracja NBA i VOID
-        if "basketball_nba" in str(bet.get('sport', '')).lower(): continue
-        if str(bet.get('status', '')).upper() == "VOID": continue
-
-        prof = float(bet.get('profit', 0))
-        stk = float(bet.get('stake', 0))
-        total_profit += prof
-        total_turnover += stk
-        
-        icon = "✅" if prof > 0 else "❌"
-        if prof > 0: wins += 1
-        else: losses += 1
-        series_icons.append(icon)
-
-        # Statystyki 24h
-        try:
-            b_time = bet.get('time') or bet.get('date')
-            if datetime.fromisoformat(b_time.replace("Z", "+00:00")) > yesterday:
-                profit_24h += prof
-        except: pass
-
-        processed_matches.append(f"{icon} {bet.get('home')}-{bet.get('away')} | `{prof:+.2f} PLN`")
-
-    total_bets = wins + losses
-    upcoming = get_upcoming_count()
-    
-    # Obliczenia wskaźników
-    yield_val = (total_profit / total_turnover * 100) if total_turnover > 0 else 0
-    roi_val = (total_profit / STARTING_BANKROLL * 100) if STARTING_BANKROLL > 0 else 0
-    win_rate = (wins / total_bets * 100) if total_bets > 0 else 0
-
-    # Dane do index.html
-    web_data = {
-        "total_profit": round(total_profit, 2),
-        "profit_24h": round(profit_24h, 2),
-        "yield": round(yield_val, 2),
-        "roi": round(roi_val, 2),
-        "turnover": round(total_turnover, 2),
-        "win_rate": round(win_rate, 1),
-        "total_bets": total_bets,
-        "upcoming_count": upcoming,
-        "last_update": now.strftime("%H:%M:%S")
+    # 1. Inicjalizacja bazowa
+    stats = {
+        "total_profit": 0.0,
+        "total_bets": 0,
+        "win_rate": 0.0,
+        "yield": 0.0,
+        "roi": 0.0,
+        "turnover": 0.0,
+        "profit_24h": 0.0,
+        "upcoming_count": 0,
+        "last_update": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "current_bankroll": STARTING_BANKROLL
     }
 
-    with open('stats.json', 'w', encoding='utf-8') as f:
-        json.dump(web_data, f, indent=4)
+    # 2. Liczenie kuponów "w grze"
+    if os.path.exists(COUPONS_FILE):
+        try:
+            with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+                coupons = json.load(f)
+                stats["upcoming_count"] = len(coupons)
+        except Exception as e:
+            print(f"⚠️ Błąd odczytu coupons.json: {e}")
 
-    # Raport Telegram
-    diff = total_bets - old_total_bets
-    report = [
-        "📊 *DASHBOARD STATYSTYK*",
-        "━━━━━━━━━━━━━━━",
-        f"💰 *Zysk Total:* `{total_profit:.2f} PLN`",
-        f"📈 *Yield:* `{yield_val:.2f}%` | *ROI:* `{roi_val:.2f}%`",
-        f"🔄 *Obrót:* `{total_turnover:.2f} PLN`",
-        f"🕒 *W grze (12h):* `{upcoming} typów`",
-        f"🎯 *Skuteczność:* `{win_rate:.1f}%` ({wins}/{total_bets})",
-        f"🔥 *Ostatnie:* {''.join(series_icons[-10:])}",
-        "━━━━━━━━━━━━━━━"
-    ]
+    # 3. Przetwarzanie historii (Zysk i Statystyki)
+    if os.path.exists(HISTORY_FILE):
+        try:
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                history = json.load(f)
+            
+            if history and isinstance(history, list):
+                total_profit = 0.0
+                turnover = 0.0
+                wins = 0
+                now = datetime.now(timezone.utc)
+                yesterday = now - timedelta(days=1)
+                p_24h = 0.0
 
-    if diff > 0:
-        report.append(f"📝 *NOWE ({diff}):*")
-        report.extend(processed_matches[-diff:])
-    else:
-        report.append("📝 *OSTATNIE WYNIKI:*")
-        report.extend(processed_matches[-5:])
+                for m in history:
+                    profit = float(m.get('profit', 0))
+                    stake = float(m.get('stake', 0))
+                    
+                    total_profit += profit
+                    turnover += stake
+                    if profit > 0:
+                        wins += 1
+                    
+                    # Logika 24h z obsługą stref czasowych
+                    try:
+                        m_time_str = m.get('time', '').replace("Z", "+00:00")
+                        m_time = datetime.fromisoformat(m_time_str)
+                        if m_time > yesterday:
+                            p_24h += profit
+                    except:
+                        continue
 
-    return (diff > 0), "\n".join(report)
+                stats["total_profit"] = round(total_profit, 2)
+                stats["total_bets"] = len(history)
+                stats["turnover"] = round(turnover, 2)
+                stats["win_rate"] = round((wins / len(history) * 100), 1) if history else 0
+                stats["yield"] = round((total_profit / turnover * 100), 1) if turnover > 0 else 0
+                stats["roi"] = round((total_profit / STARTING_BANKROLL * 100), 1)
+                stats["current_bankroll"] = round(STARTING_BANKROLL + total_profit, 2)
+                stats["profit_24h"] = round(p_24h, 2)
+
+        except Exception as e:
+            print(f"❌ Krytyczny błąd w history.json: {e}")
+
+    # 4. Zapis z wymuszeniem odświeżenia
+    try:
+        with open(STATS_FILE, "w", encoding="utf-8") as f:
+            json.dump(stats, f, indent=4)
+        print(f"✅ Statystyki zapisane o {stats['last_update']}")
+        print(f"📈 Profit: {stats['total_profit']} | Mecze: {stats['total_bets']}")
+    except Exception as e:
+        print(f"🚫 Nie można zapisać stats.json! Sprawdź uprawnienia: {e}")
 
 if __name__ == "__main__":
-    should_send, text = generate_stats()
-    if should_send and TOKEN and CHAT_STATS:
-        requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", 
-                     json={"chat_id": CHAT_STATS, "text": text, "parse_mode": "Markdown"})
+    generate_stats()
