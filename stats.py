@@ -10,6 +10,13 @@ def generate_stats():
             
         with open('history.json', 'r', encoding='utf-8') as f:
             history = json.load(f)
+            
+        # --- NOWE: Pobieranie aktualnego salda pod Challenge ---
+        current_bankroll = 100.0
+        if os.path.exists('bankroll.json'):
+            with open('bankroll.json', 'r') as f:
+                br_data = json.load(f)
+                current_bankroll = br_data.get("balance", 100.0)
     except Exception as e:
         return f"❌ Błąd krytyczny: {e}"
 
@@ -72,15 +79,20 @@ def generate_stats():
     total_bets = wins + losses
     yield_val = (total_profit / total_turnover * 100) if total_turnover > 0 else 0
     win_rate = (wins / total_bets * 100) if total_bets > 0 else 0
+    
+    # Obliczanie następnej stawki (Twoje 5% kuli śnieżnej)
+    next_stake = current_bankroll * 0.05
 
     report = [
-        "📊 *OFICJALNE STATYSTYKI*",
+        "📊 *CHALLENGE 100 PLN: STATYSTYKI*",
+        "━━━━━━━━━━━━━━━",
+        f"🏦 *AKTUALNY BANKROLL:* `{current_bankroll:.2f} PLN`",
+        f"❄️ *Następna stawka (5%):* `{next_stake:.2f} PLN`",
         "━━━━━━━━━━━━━━━",
         f"💰 *Zysk 24h:* `{profit_24h:+.2f} PLN`",
         f"💎 *Zysk całkowity:* `{total_profit:.2f} PLN`",
         f"📈 *Yield:* `{yield_val:.2f}%`",
         f"🎯 *Skuteczność:* `{win_rate:.1f}%` ({wins}/{total_bets})",
-        f"🔄 *Obrót:* `{total_turnover:.2f} PLN`",
         "━━━━━━━━━━━━━━━",
         "📝 *OSTATNIE ROZLICZENIA:*",
     ]
@@ -94,28 +106,3 @@ def generate_stats():
     report.append(f"🕒 _Aktualizacja: {datetime.now(timezone.utc).strftime('%H:%M:%S')} UTC_")
 
     return "\n".join(report)
-
-if __name__ == "__main__":
-    # --- KLUCZOWA ZMIANA ---
-    token = os.getenv("T_TOKEN")
-    # Skrypt najpierw próbuje wysłać na kanał wyników, jeśli go nie ma - na główny
-    chat_id = os.getenv("T_CHAT_RESULTS") or os.getenv("T_CHAT")
-    
-    report_text = generate_stats()
-    print(report_text)
-    
-    if token and chat_id:
-        url = f"https://api.telegram.org/bot{token}/sendMessage"
-        payload = {
-            "chat_id": chat_id,
-            "text": report_text,
-            "parse_mode": "Markdown"
-        }
-        try:
-            r = requests.post(url, json=payload, timeout=10)
-            if r.status_code != 200:
-                print(f"❌ Błąd Telegram API: {r.text}")
-            else:
-                print(f"✅ Statystyki wysłane do: {chat_id}")
-        except Exception as e:
-            print(f"❌ Wyjątek przy wysyłce: {e}")
