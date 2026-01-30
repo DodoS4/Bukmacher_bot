@@ -3,9 +3,17 @@ import os
 import requests
 from datetime import datetime, timedelta, timezone
 
-# --- KONFIGURACJA ---
-TOKEN = os.getenv("T_TOKEN")
-CHAT_STATS = os.getenv("T_CHAT_STATS")
+# ================= PANCERNA KONFIGURACJA =================
+def get_env_safe(name):
+    """Pobiera zmienną i usuwa zbędne spacje."""
+    val = os.environ.get(name) or os.getenv(name)
+    return str(val).strip() if val and len(str(val).strip()) > 0 else None
+
+# Próbujemy pobrać token i ID czatu z różnych możliwych nazw
+TOKEN = get_env_safe("T_TOKEN")
+# Szukamy pod T_CHAT_STATS, T_CHAT lub TELEGRAM_CHAT_ID dla maksymalnej pewności
+CHAT_STATS = get_env_safe("T_CHAT_STATS") or get_env_safe("T_CHAT") or get_env_safe("TELEGRAM_CHAT_ID")
+
 STARTING_BANKROLL = 5000.0
 
 def get_upcoming_count():
@@ -22,6 +30,7 @@ def get_upcoming_count():
             coupons = json.load(f)
             if isinstance(coupons, list):
                 for coupon in coupons:
+                    # Filtrujemy ligi, których nie chcemy w statystykach (np. NBA)
                     if "basketball_nba" in str(coupon.get('sport', '')).lower():
                         continue
                     time_str = coupon.get('time')
@@ -41,7 +50,7 @@ def generate_stats():
     
     if not os.path.exists('history.json'):
         print("❌ Błąd: Plik history.json nie istnieje!")
-        return None, "❌ Brak history.json"
+        return False, "❌ Brak history.json"
         
     try:
         with open('history.json', 'r', encoding='utf-8') as f:
@@ -49,7 +58,7 @@ def generate_stats():
             print(f"📂 Wczytano {len(history)} wpisów z history.json")
     except Exception as e:
         print(f"❌ Błąd odczytu history: {e}")
-        return None, f"❌ Błąd odczytu history: {e}"
+        return False, f"❌ Błąd odczytu history: {e}"
 
     old_total_bets = 0
     if os.path.exists('stats.json'):
@@ -60,12 +69,11 @@ def generate_stats():
 
     total_profit, total_turnover, profit_24h = 0.0, 0.0, 0.0
     wins, losses = 0, 0
-    processed_matches, series_icons = [], []
+    series_icons = []
     now = datetime.now(timezone.utc)
     yesterday = now - timedelta(days=1)
 
     for bet in history:
-        # Debugowanie filtrów
         if "basketball_nba" in str(bet.get('sport', '')).lower(): 
             continue
         if str(bet.get('status', '')).upper() == "VOID": 
@@ -89,10 +97,8 @@ def generate_stats():
                     if dt_obj > yesterday:
                         profit_24h += prof
                 except: pass
-
-            processed_matches.append(f"{icon} {bet.get('home')}-{bet.get('away')} | `{prof:+.2f} PLN`")
         except Exception as e:
-            print(f"⚠️ Pominąłem mecz z powodu błędu danych: {e}")
+            print(f"⚠️ Błąd danych meczu: {e}")
 
     total_bets = wins + losses
     upcoming = get_upcoming_count()
@@ -118,27 +124,39 @@ def generate_stats():
     diff = total_bets - old_total_bets
     print(f"📈 Nowych rozliczonych meczów: {diff}")
 
+    # Tworzenie raportu tekstowego
     report = [
-        "📊 *DASHBOARD STATYSTYK*",
-        f"💰 *Zysk Total:* `{total_profit:.2f} PLN`",
-        f"🎯 *Skuteczność:* `{web_data['win_rate']}%` ({wins}/{total_bets})",
-        f"🕒 *W grze:* `{upcoming}`",
-        f"🔥 *Ostatnie:* {''.join(series_icons[-10:])}"
+        "📊 <b>DASHBOARD STATYSTYK</b>",
+        f"━━━━━━━━━━━━━━━",
+        f"💰 <b>Zysk Total:</b> <code>{total_profit:.2f} PLN</code>",
+        f"📅 <b>Ostatnie 24h:</b> <code>{profit_24h:+.2f} PLN</code>",
+        f"🎯 <b>Skuteczność:</b> <code>{web_data['win_rate']}%</code> ({wins}/{total_bets})",
+        f"📈 <b>Yield:</b> <code>{web_data['yield']}%</code>",
+        f"🕒 <b>W grze:</b> <code>{upcoming}</code>",
+        f"━━━━━━━━━━━━━━━",
+        f"🔥 <b>Ostatnie:</b> {''.join(series_icons[-10:])}"
     ]
 
     return (diff > 0), "\n".join(report)
 
 if __name__ == "__main__":
-    print(f"🔑 Sprawdzam klucze: TOKEN={'OK' if TOKEN else 'BRAK'}, CHAT={'OK' if CHAT_STATS else 'BRAK'}")
+    print(f"🔑 Diagnostyka kluczy: TOKEN={'OK' if TOKEN else 'BRAK'}, CHAT={'OK' if CHAT_STATS else 'BRAK'}")
+    
     should_send, text = generate_stats()
     
     if TOKEN and CHAT_STATS:
-        print("📤 Próbuję wysłać raport na Telegram...")
-        res = requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", 
-                     json={"chat_id": CHAT_STATS, "text": text, "parse_mode": "Markdown"})
-        if res.status_code == 200:
-            print("✅ Raport wysłany pomyślnie!")
-        else:
-            print(f"❌ Błąd Telegrama: {res.status_code} - {res.text}")
+        print("📤 Wysyłanie raportu na Telegram...")
+        try:
+            res = requests.post(
+                f"https://api.telegram.org/bot{TOKEN}/sendMessage", 
+                json={"chat_id": CHAT_STATS, "text": text, "parse_mode": "HTML"},
+                timeout=15
+            )
+            if res.status_code == 200:
+                print("✅ Raport wysłany pomyślnie!")
+            else:
+                print(f"❌ Błąd Telegrama: {res.status_code} - {res.text}")
+        except Exception as e:
+            print(f"❌ Błąd połączenia: {e}")
     else:
-        print("⚠️ Pominąłem wysyłkę Telegram (brak kluczy w os.getenv)")
+        print("⚠️ Pominąłem wysyłkę Telegram (brak kluczy)")
