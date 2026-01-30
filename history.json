@@ -2850,5 +2850,33 @@
         "status": "LOSS",
         "score": "85:79",
         "time": "2026-01-29T19:30:00Z"
+    },
+    {
+        "id": "1b3e0f12d958b8303e85fe8d1ce9b860",
+        "home": "Pittsburgh Penguins",
+        "away": "Chicago Blackhawks",
+        "sport": "icehockey_nhl",
+        "outcome": "Chicago Blackhawks",
+        "odds": 4.0,
+        "stake": 420.0,
+        "stake_gross": 477.27,
+        "profit": -420.0,
+        "status": "LOSS",
+        "score": "6:2",
+        "time": "2026-01-30T00:00:00Z"
+    },
+    {
+        "id": "e9e1ef8d7fbfcf163e9ee8f74c6f12bc",
+        "home": "Tampa Bay Lightning",
+        "away": "Winnipeg Jets",
+        "sport": "icehockey_nhl",
+        "outcome": "Winnipeg Jets",
+        "odds": 3.73,
+        "stake": 420.0,
+        "stake_gross": 477.27,
+        "profit": -420.0,
+        "status": "LOSS",
+        "score": "4:1",
+        "time": "2026-01-30T00:00:00Z"
     }
 ]

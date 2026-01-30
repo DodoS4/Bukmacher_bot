@@ -10,26 +10,6 @@
         "time": "2026-01-27T00:00:00Z"
     },
     {
-        "id": "1b3e0f12d958b8303e85fe8d1ce9b860",
-        "home": "Pittsburgh Penguins",
-        "away": "Chicago Blackhawks",
-        "outcome": "Chicago Blackhawks",
-        "odds": 4.0,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-30T00:00:00Z"
-    },
-    {
-        "id": "e9e1ef8d7fbfcf163e9ee8f74c6f12bc",
-        "home": "Tampa Bay Lightning",
-        "away": "Winnipeg Jets",
-        "outcome": "Winnipeg Jets",
-        "odds": 3.73,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-30T00:00:00Z"
-    },
-    {
         "id": "4b8ad8ba32b83ee86502e11f2ef80636",
         "home": "Zag\u0142\u0119bie Lubin",
         "away": "GKS Katowice",
@@ -355,6 +335,106 @@
         "away": "FC Lausanne-Sport",
         "outcome": "FC Winterthur",
         "odds": 4.5,
+        "stake": 350.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-01-31T17:00:00Z"
+    },
+    {
+        "id": "b3c2ff07a6d24ca61f13c268a535c317",
+        "home": "Wolverhampton Wanderers",
+        "away": "Bournemouth",
+        "outcome": "Wolverhampton Wanderers",
+        "odds": 3.3,
+        "stake": 175.0,
+        "sport": "soccer_epl",
+        "time": "2026-01-31T15:00:00Z"
+    },
+    {
+        "id": "8a2f061fef3092d9cb56453b1378f5d4",
+        "home": "Cagliari",
+        "away": "Hellas Verona",
+        "outcome": "Cagliari",
+        "odds": 2.3,
+        "stake": 350.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-01-31T19:45:00Z"
+    },
+    {
+        "id": "cfc22e4738639bde4c31507fa6e312c6",
+        "home": "CA Osasuna",
+        "away": "Villarreal",
+        "outcome": "CA Osasuna",
+        "odds": 3.0,
+        "stake": 350.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-01-31T15:15:00Z"
+    },
+    {
+        "id": "37a5035bea0ee6fcfef52b906bc5367f",
+        "home": "Paris FC",
+        "away": "Marseille",
+        "outcome": "Paris FC",
+        "odds": 4.2,
+        "stake": 175.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-31T16:00:00Z"
+    },
+    {
+        "id": "a8c768b910446b7b952e7483cb384351",
+        "home": "Lorient",
+        "away": "Nantes",
+        "outcome": "Nantes",
+        "odds": 4.8,
+        "stake": 175.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-01-31T18:00:00Z"
+    },
+    {
+        "id": "aa3d772d9aa8460f7b7cea4190f7cb3b",
+        "home": "Santa Clara",
+        "away": "Estoril",
+        "outcome": "Estoril",
+        "odds": 3.55,
+        "stake": 350.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-31T15:30:00Z"
+    },
+    {
+        "id": "b8c529224c3614fc5d8fff529e125ec5",
+        "home": "Rio Ave FC",
+        "away": "Arouca",
+        "outcome": "Arouca",
+        "odds": 3.0,
+        "stake": 350.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-31T18:00:00Z"
+    },
+    {
+        "id": "c1fbd9c01b1bb1eb61ce0e9ba64f429c",
+        "home": "Alverca",
+        "away": "CF Estrela",
+        "outcome": "Alverca",
+        "odds": 2.18,
+        "stake": 350.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-01-31T20:30:00Z"
+    },
+    {
+        "id": "24216ede15ce47e095a2ffb2d529b6fe",
+        "home": "Atromitos Athens",
+        "away": "OFI Crete",
+        "outcome": "Atromitos Athens",
+        "odds": 1.99,
+        "stake": 350.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-01-31T16:00:00Z"
+    },
+    {
+        "id": "9438581c8397a47e8896dcad5fedd8f3",
+        "home": "Servette",
+        "away": "FC Sion",
+        "outcome": "FC Sion",
+        "odds": 3.32,
         "stake": 350.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-01-31T17:00:00Z"

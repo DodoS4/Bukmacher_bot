@@ -1,11 +1,12 @@
 {
-    "total_profit": 6056.6,
-    "profit_24h": -1542.8,
-    "yield": 11.02,
-    "roi": 121.13,
-    "turnover": 54950.0,
-    "win_rate": 45.2,
-    "total_bets": 197,
-    "upcoming_count": 8,
-    "last_update": "07:27:57"
+    "total_profit": 3444.56,
+    "total_bets": 226,
+    "win_rate": 43.4,
+    "yield": 5.5,
+    "roi": 68.9,
+    "turnover": 62065.0,
+    "profit_24h": -2382.8,
+    "upcoming_count": 44,
+    "last_update": "2026-01-30 07:38:34",
+    "current_bankroll": 8444.56
 }
