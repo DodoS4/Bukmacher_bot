@@ -38,7 +38,7 @@ SPORTS_CONFIG = {
     "tennis_wta_australian_open": "🎾"
 }
 
-# ================= POZOSTAŁA KONFIGURACJA =================
+# ================= KONFIGURACJA API I TELEGRAM =================
 API_KEYS = []
 if os.getenv("ODDS_KEY"): API_KEYS.append(os.getenv("ODDS_KEY"))
 for i in range(2, 11):
@@ -46,8 +46,8 @@ for i in range(2, 11):
     if key and len(key) > 10: API_KEYS.append(key)
 
 TELEGRAM_TOKEN = os.getenv("T_TOKEN")
-TELEGRAM_CHAT = os.getenv("T_CHAT")
-TELEGRAM_RESULTS = os.getenv("T_CHAT_RESULTS") # Drugie konto/kanał
+TELEGRAM_CHAT = os.getenv("T_CHAT")           # Tu lecą TYPY
+TELEGRAM_RESULTS = os.getenv("T_CHAT_RESULTS") # Tu lecą WYNIKI
 
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
@@ -55,6 +55,29 @@ KEY_STATE_FILE = "key_index.txt"
 BASE_STAKE = 350
 
 # ================= FUNKCJE POMOCNICZE =================
+
+def send_telegram(message, mode="HTML", is_stats=False):
+    """
+    Wysyła wiadomość na odpowiedni kanał.
+    is_stats=False -> T_CHAT (Typy)
+    is_stats=True  -> T_CHAT_RESULTS (Wyniki)
+    """
+    if not TELEGRAM_TOKEN: return
+    
+    # Wybór celu
+    target_chat = TELEGRAM_RESULTS if is_stats and TELEGRAM_RESULTS else TELEGRAM_CHAT
+    
+    if not target_chat: return
+
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    try: 
+        requests.post(url, json={
+            "chat_id": target_chat, 
+            "text": message, 
+            "parse_mode": mode
+        }, timeout=10)
+    except Exception as e:
+        print(f"⚠️ Błąd wysyłki do {target_chat}: {e}")
 
 def get_current_key_idx():
     if os.path.exists(KEY_STATE_FILE):
@@ -89,23 +112,6 @@ def get_smart_stake(league_key):
         final_stake *= 1.2
         
     return round(final_stake, 2), threshold
-
-def send_telegram(message, mode="HTML"):
-    if not TELEGRAM_TOKEN: return
-    
-    # Wysyłka na oba czaty
-    chats = [c for c in [TELEGRAM_CHAT, TELEGRAM_RESULTS] if c]
-    
-    for chat_id in chats:
-        url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-        try: 
-            requests.post(url, json={
-                "chat_id": chat_id, 
-                "text": message, 
-                "parse_mode": mode
-            }, timeout=10)
-        except: 
-            print(f"⚠️ Błąd wysyłki do {chat_id}")
 
 def load_existing_data():
     if os.path.exists(COUPONS_FILE):
@@ -202,10 +208,10 @@ def main():
                        f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
                        f"━━━━━━━━━━━━━━━")
                 
-                # WYSYŁKA (na oba czaty jednocześnie)
-                send_telegram(msg)
+                # WYSYŁKA TYPU (na główne konto)
+                send_telegram(msg, is_stats=False)
                 
-                # ZAPIS NATYCHMIASTOWY (zapobiega duplikatom)
+                # ZAPIS NATYCHMIASTOWY
                 all_coupons.append({
                     "id": event['id'], "home": event['home_team'], "away": event['away_team'],
                     "outcome": best_choice, "odds": best_odds, "stake": current_stake,
@@ -218,14 +224,17 @@ def main():
 
     save_current_key_idx(current_key_idx)
     
-    # Wywołanie statystyk na koniec skanowania
+    # RAPORTOWANIE WYNIKÓW (na konto RESULTS)
     try:
-        generate_stats() 
-        print("📊 Statystyki zaktualizowane.")
+        # Zakładamy, że funkcja generate_stats() zwraca tekst raportu
+        raport_tekst = generate_stats() 
+        if raport_tekst:
+            send_telegram(raport_tekst, is_stats=True)
+            print("📊 Statystyki wysłane na kanał wyników.")
     except Exception as e:
         print(f"⚠️ Błąd generowania statystyk: {e}")
     
-    print(f"✅ KONIEC SKANOWANIA. Aktywne w systemie: {len(all_coupons)}")
+    print(f"✅ KONIEC SKANOWANIA. Aktywne: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
