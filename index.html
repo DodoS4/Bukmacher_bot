@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Betting PRO - Dashboard</title>
+    <title>AI Betting PRO - Challenge 100 PLN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -12,6 +12,7 @@
         .stat-card { transition: transform 0.2s; border: 1px solid #f1f5f9; }
         .stat-card:hover { transform: translateY(-2px); }
         .chart-container { position: relative; height: 300px; width: 100%; }
+        .bankroll-gradient { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); }
     </style>
 </head>
 <body class="p-2 md:p-8">
@@ -20,32 +21,44 @@
         <div class="flex justify-between items-center mb-6 border-b pb-4">
             <div>
                 <h1 class="text-2xl font-bold italic tracking-tight text-slate-800">AI BETTING <span class="text-blue-600">PRO</span></h1>
-                <p id="last-update" class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Inicjalizacja...</p>
+                <p id="last-update" class="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Challenge: Kula Śnieżna 5%</p>
             </div>
-            <span id="refresh-timer" class="text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-100 px-3 py-1 rounded-full">REF: 300s</span>
+            <div class="flex items-center gap-2">
+                <span id="refresh-timer" class="text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-100 px-3 py-1 rounded-full">REF: 300s</span>
+            </div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
+        <div class="grid grid-cols-2 md:grid-cols-7 gap-3 mb-6">
+            <div class="stat-card bankroll-gradient p-4 rounded-xl shadow-md text-center border-b-4 border-blue-900">
+                <p class="text-[9px] text-blue-100 uppercase font-black mb-1">Bankroll (Kula)</p>
+                <p id="current-bankroll" class="text-lg font-black text-white italic">100.00 PLN</p>
+            </div>
+
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
                 <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
             </div>
+
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-blue-500">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-500">Zysk Total</p>
                 <p id="total-profit" class="text-lg font-black text-blue-600 italic">0.00 PLN</p>
             </div>
+
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-purple-500">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500">ROI %</p>
                 <p id="roi-val" class="text-lg font-black text-purple-600">+0%</p>
             </div>
+
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-gray-400">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-gray-500">Obrót</p>
                 <p id="turnover-val" class="text-lg font-black text-gray-700">0 PLN</p>
             </div>
+
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center border-b-2 border-b-blue-400">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-400 italic">W grze (12h)</p>
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-400 italic">W grze</p>
                 <p id="upcoming-val-card" class="text-lg font-black text-blue-500">0</p>
             </div>
+
             <div class="stat-card bg-white p-4 rounded-xl shadow-sm text-center">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-orange-500">Yield %</p>
                 <p id="yield-val" class="text-lg font-black text-orange-500">0%</p>
@@ -54,12 +67,12 @@
 
         <div class="bg-white p-3 rounded-xl shadow-sm border mb-6 text-center">
              <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Statystyki Typów (Liczba / Skuteczność)</p>
-             <p id="total-bets" class="text-md font-bold text-gray-800">0 / 0%</p>
+             <p id="total-bets" class="text-md font-bold text-gray-800">0 / 0% WR</p>
         </div>
 
         <div class="bg-white p-6 rounded-xl shadow-sm border mb-8">
             <h3 class="font-bold mb-6 text-[11px] text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                <i class="fas fa-chart-line text-blue-500"></i> Wykres Progresji Zysku
+                <i class="fas fa-chart-line text-blue-500"></i> Progresja Kuli Śnieżnej
             </h3>
             <div class="chart-container">
                 <canvas id="profitChart"></canvas>
@@ -75,27 +88,44 @@
 
         async function loadData() {
             try {
+                // Pobieranie statystyk ogólnych
                 const sRes = await fetch('stats.json?v=' + Date.now());
                 const s = await sRes.json();
                 
-                document.getElementById('total-profit').innerText = s.total_profit.toLocaleString() + ' PLN';
-                document.getElementById('today-profit').innerText = (s.profit_24h >= 0 ? '+' : '') + s.profit_24h.toFixed(2) + ' PLN';
-                document.getElementById('today-profit').className = `text-lg font-black italic ${s.profit_24h >= 0 ? 'text-green-500' : 'text-red-500'}`;
-                document.getElementById('roi-val').innerText = (s.roi >= 0 ? '+' : '') + s.roi + '%';
-                document.getElementById('turnover-val').innerText = s.turnover.toLocaleString() + ' PLN';
-                document.getElementById('yield-val').innerText = s.yield + '%';
-                document.getElementById('total-bets').innerText = `${s.total_bets} typów / ${s.win_rate}% WR`;
-                document.getElementById('last-update').innerText = 'Sync: ' + s.last_update;
+                // Aktualizacja UI
+                document.getElementById('total-profit').innerText = (s.total_profit || 0).toLocaleString() + ' PLN';
+                document.getElementById('today-profit').innerText = ((s.profit_24h || 0) >= 0 ? '+' : '') + (s.profit_24h || 0).toFixed(2) + ' PLN';
+                document.getElementById('today-profit').className = `text-lg font-black italic ${(s.profit_24h || 0) >= 0 ? 'text-green-500' : 'text-red-500'}`;
+                document.getElementById('roi-val').innerText = ((s.roi || 0) >= 0 ? '+' : '') + (s.roi || 0) + '%';
+                document.getElementById('turnover-val').innerText = (s.turnover || 0).toLocaleString() + ' PLN';
+                document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
+                document.getElementById('total-bets').innerText = `${s.total_bets || 0} typów / ${s.win_rate || 0}% WR`;
+                document.getElementById('last-update').innerText = 'Sync: ' + (s.last_update || 'Teraz');
                 document.getElementById('upcoming-val-card').innerText = s.upcoming_count || 0;
+                
+                // Wyświetlanie bankrolla z pliku (jeśli Twoje stats.json go zawiera)
+                // Jeśli nie, domyślnie startuje od 100 + zysk totalny
+                const br = s.current_bankroll || (100 + (s.total_profit || 0));
+                document.getElementById('current-bankroll').innerText = br.toFixed(2) + ' PLN';
 
+                // Pobieranie historii
                 const hRes = await fetch('history.json?v=' + Date.now());
                 const history = await hRes.json();
-                const filtered = history.filter(m => !m.sport.toLowerCase().includes('basketball_nba'));
-                render(filtered);
-            } catch (e) { console.error(e); }
+                
+                // Filtrujemy tylko nowe mecze (z dzisiejszą datą lub po resecie)
+                // Jeśli chcesz widzieć tylko NOWY challenge, upewnij się, że history.json na serwerze jest wyczyszczony.
+                render(history);
+            } catch (e) { 
+                console.log("Czekam na pierwsze dane..."); 
+            }
         }
 
         function render(data) {
+            if(!data || data.length === 0) {
+                document.getElementById('history-groups').innerHTML = '<p class="text-center text-gray-400 text-xs py-10">Czekam na pierwsze rozliczone mecze w Challenge 100 PLN...</p>';
+                return;
+            }
+
             const sorted = data.sort((a, b) => new Date(a.time) - new Date(b.time));
             const labels = [], values = [], leagues = {};
             let sum = 0;
@@ -112,45 +142,25 @@
                 leagues[lName].matches.push(m);
             });
 
+            // Wykres
             if(profitChart) profitChart.destroy();
-            profitChart = new Chart(document.getElementById('profitChart').getContext('2d'), {
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            profitChart = new Chart(ctx, {
                 type: 'line',
-                data: { labels, datasets: [{ data: values, borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.1)', fill: true, tension: 0.3, pointRadius: 0 }] },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
-
-            const container = document.getElementById('history-groups');
-            container.innerHTML = '<h3 class="font-bold text-[10px] uppercase tracking-widest text-gray-400 mb-4 px-2 italic">Rozliczenia Ligi</h3>';
-            Object.entries(leagues).sort((a,b) => b[1].profit - a[1].profit).forEach(([name, d], i) => {
-                const id = `g-${i}`;
-                container.innerHTML += `
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                        <button onclick="document.getElementById('${id}').classList.toggle('hidden')" class="w-full flex justify-between p-4 text-[10px] font-black uppercase tracking-wider">
-                            <span>${name}</span>
-                            <span class="${d.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${d.profit >= 0 ? '+' : ''}${d.profit.toFixed(2)} PLN</span>
-                        </button>
-                        <div id="${id}" class="hidden border-t bg-gray-50/50 p-2 space-y-1">
-                            ${d.matches.reverse().map(m => {
-                                const profitValue = parseFloat(m.profit || 0);
-                                const statusLabel = profitValue >= 0 ? 'Wygrana:' : 'Strata:';
-                                return `
-                                <div class="flex flex-col md:flex-row md:justify-between p-3 bg-white rounded border border-gray-100 text-[10px] gap-1">
-                                    <span class="text-gray-700 font-medium">${m.home} - ${m.away}</span>
-                                    <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
-                                        <span class="text-gray-400">Stawka: <span class="text-gray-600 font-bold">${m.stake} PLN</span></span>
-                                        <span class="${profitValue >= 0 ? 'text-green-500' : 'text-red-500'} font-bold">
-                                            ${statusLabel} ${profitValue >= 0 ? '+' : ''}${profitValue.toFixed(2)} PLN
-                                        </span>
-                                    </div>
-                                </div>`;
-                            }).join('')}
-                        </div>
-                    </div>`;
-            });
-        }
-
-        setInterval(() => { countdown--; document.getElementById('refresh-timer').innerText = `REF: ${countdown}s`; if(countdown<=0) { loadData(); countdown=300; } }, 1000);
-        loadData();
-    </script>
-</body>
-</html>
+                data: { 
+                    labels, 
+                    datasets: [{ 
+                        label: 'Zysk skumulowany',
+                        data: values, 
+                        borderColor: '#2563eb', 
+                        backgroundColor: 'rgba(37, 99, 235, 0.1)', 
+                        fill: true, 
+                        tension: 0.3, 
+                        pointRadius: 2 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: false
