@@ -1,15 +1,5 @@
 [
     {
-        "id": "40c02a07bc44ff52fe319ce9b7bf1594",
-        "home": "Columbus Blue Jackets",
-        "away": "Los Angeles Kings",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.7,
-        "stake": 300.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-27T00:00:00Z"
-    },
-    {
         "id": "873b8840ffe16c1c0c43afd26f36a9e5",
         "home": "AS Monaco",
         "away": "Virtus Segafredo Bologna",
@@ -688,5 +678,15 @@
         "stake": 350.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-02-01T19:00:00Z"
+    },
+    {
+        "id": "2a83052380ad26b3621d17cad9c5b0a1",
+        "home": "Athletic Bilbao",
+        "away": "Real Sociedad",
+        "outcome": "Real Sociedad",
+        "odds": 3.6,
+        "stake": 350.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-01T20:00:00Z"
     }
 ]

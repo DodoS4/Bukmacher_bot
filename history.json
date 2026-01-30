@@ -2882,5 +2882,18 @@
         "status": "LOSS",
         "score": "79:62",
         "time": "2026-01-29T17:45:00Z"
+    },
+    {
+        "id": "40c02a07bc44ff52fe319ce9b7bf1594",
+        "home": "Columbus Blue Jackets",
+        "away": "Los Angeles Kings",
+        "sport": "icehockey_nhl",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.7,
+        "stake": 300.0,
+        "profit": 0.0,
+        "status": "VOID",
+        "score": "PPD",
+        "time": "2026-01-27T00:00:00Z"
     }
 ]
