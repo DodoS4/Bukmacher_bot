@@ -2,8 +2,8 @@
     "balance": 100.0,
     "upcoming_count": 80,
     "total_profit": 0.0,
-    "roi": "0.0%",
-    "turnover": 0,
+    "roi": "0%",
+    "turnover": 0.0,
     "in_game_amount": 401.0,
     "groups": {
         "GERMANY BUNDESLIGA": {
@@ -13,101 +13,101 @@
                     "outcome": "1. FC K\u00f6ln",
                     "odds": 2.1,
                     "stake": 5.0,
-                    "profit": 5.5
+                    "profit": 4.24
                 },
                 {
                     "teams": "Augsburg - FC St. Pauli",
                     "outcome": "Augsburg",
                     "odds": 2.06,
                     "stake": 5.0,
-                    "profit": 5.3
+                    "profit": 4.06
                 },
                 {
                     "teams": "Werder Bremen - Borussia Monchengladbach",
                     "outcome": "Werder Bremen",
                     "odds": 2.54,
                     "stake": 5.0,
-                    "profit": 7.7
+                    "profit": 6.18
                 },
                 {
                     "teams": "TSG Hoffenheim - Union Berlin",
                     "outcome": "TSG Hoffenheim",
                     "odds": 1.85,
                     "stake": 5.0,
-                    "profit": 4.25
+                    "profit": 3.14
                 },
                 {
                     "teams": "Eintracht Frankfurt - Bayer Leverkusen",
                     "outcome": "Bayer Leverkusen",
                     "odds": 2.25,
                     "stake": 5.0,
-                    "profit": 6.25
+                    "profit": 4.9
                 },
                 {
                     "teams": "VfB Stuttgart - SC Freiburg",
                     "outcome": "VfB Stuttgart",
                     "odds": 1.71,
                     "stake": 5.0,
-                    "profit": 3.55
+                    "profit": 2.52
                 },
                 {
                     "teams": "Union Berlin - Eintracht Frankfurt",
                     "outcome": "Eintracht Frankfurt",
                     "odds": 3.2,
                     "stake": 5.0,
-                    "profit": 11.0
+                    "profit": 9.08
                 },
                 {
                     "teams": "1. FC Heidenheim - Hamburger SV",
                     "outcome": "1. FC Heidenheim",
                     "odds": 2.7,
                     "stake": 5.0,
-                    "profit": 8.5
+                    "profit": 6.88
                 },
                 {
                     "teams": "FSV Mainz 05 - Augsburg",
                     "outcome": "Augsburg",
                     "odds": 3.5,
                     "stake": 5.0,
-                    "profit": 12.5
+                    "profit": 10.4
                 },
                 {
                     "teams": "VfL Wolfsburg - Borussia Dortmund",
                     "outcome": "Borussia Dortmund",
                     "odds": 1.73,
                     "stake": 5.0,
-                    "profit": 3.65
+                    "profit": 2.61
                 },
                 {
                     "teams": "FC St. Pauli - VfB Stuttgart",
                     "outcome": "VfB Stuttgart",
                     "odds": 1.85,
                     "stake": 5.0,
-                    "profit": 4.25
+                    "profit": 3.14
                 },
                 {
                     "teams": "SC Freiburg - Werder Bremen",
                     "outcome": "SC Freiburg",
                     "odds": 1.75,
                     "stake": 5.0,
-                    "profit": 3.75
+                    "profit": 2.7
                 },
                 {
                     "teams": "Borussia Monchengladbach - Bayer Leverkusen",
                     "outcome": "Bayer Leverkusen",
                     "odds": 2.2,
                     "stake": 5.0,
-                    "profit": 6.0
+                    "profit": 4.68
                 },
                 {
                     "teams": "1. FC K\u00f6ln - RB Leipzig",
                     "outcome": "1. FC K\u00f6ln",
                     "odds": 3.1,
                     "stake": 5.0,
-                    "profit": 10.5
+                    "profit": 8.64
                 }
             ],
-            "total_potential_profit": 92.7
+            "total_potential_profit": 73.17
         },
         "FRANCE LIGUE ONE": {
             "matches": [
@@ -116,101 +116,101 @@
                     "outcome": "Marseille",
                     "odds": 1.85,
                     "stake": 5.0,
-                    "profit": 4.25
+                    "profit": 3.14
                 },
                 {
                     "teams": "Lorient - Nantes",
                     "outcome": "Lorient",
                     "odds": 1.83,
                     "stake": 5.0,
-                    "profit": 4.15
+                    "profit": 3.05
                 },
                 {
                     "teams": "AS Monaco - Rennes",
                     "outcome": "AS Monaco",
                     "odds": 1.95,
                     "stake": 5.0,
-                    "profit": 4.75
+                    "profit": 3.58
                 },
                 {
                     "teams": "Lyon - Lille",
                     "outcome": "Lyon",
                     "odds": 1.91,
                     "stake": 5.0,
-                    "profit": 4.55
+                    "profit": 3.4
                 },
                 {
                     "teams": "Angers - Metz",
                     "outcome": "Angers",
                     "odds": 2.1,
                     "stake": 5.0,
-                    "profit": 5.5
+                    "profit": 4.24
                 },
                 {
                     "teams": "Toulouse - Auxerre",
                     "outcome": "Toulouse",
                     "odds": 1.73,
                     "stake": 5.0,
-                    "profit": 3.65
+                    "profit": 2.61
                 },
                 {
                     "teams": "Nice - Brest",
                     "outcome": "Brest",
                     "odds": 3.3,
                     "stake": 5.0,
-                    "profit": 11.5
+                    "profit": 9.52
                 },
                 {
                     "teams": "Metz - Lille",
                     "outcome": "Lille",
                     "odds": 1.7,
                     "stake": 5.0,
-                    "profit": 3.5
+                    "profit": 2.48
                 },
                 {
                     "teams": "RC Lens - Rennes",
                     "outcome": "RC Lens",
                     "odds": 1.75,
                     "stake": 5.0,
-                    "profit": 3.75
+                    "profit": 2.7
                 },
                 {
                     "teams": "Brest - Lorient",
                     "outcome": "Brest",
                     "odds": 2.2,
                     "stake": 5.0,
-                    "profit": 6.0
+                    "profit": 4.68
                 },
                 {
                     "teams": "Nice - AS Monaco",
                     "outcome": "AS Monaco",
                     "odds": 2.1,
                     "stake": 5.0,
-                    "profit": 5.5
+                    "profit": 4.24
                 },
                 {
                     "teams": "Angers - Toulouse",
                     "outcome": "Angers",
                     "odds": 3.3,
                     "stake": 5.0,
-                    "profit": 11.5
+                    "profit": 9.52
                 },
                 {
                     "teams": "Auxerre - Paris FC",
                     "outcome": "Auxerre",
                     "odds": 2.5,
                     "stake": 5.0,
-                    "profit": 7.5
+                    "profit": 6.0
                 },
                 {
                     "teams": "Le Havre - Strasbourg",
                     "outcome": "Le Havre",
                     "odds": 3.5,
                     "stake": 5.0,
-                    "profit": 12.5
+                    "profit": 10.4
                 }
             ],
-            "total_potential_profit": 88.6
+            "total_potential_profit": 69.56
         },
         "ITALY SERIE A": {
             "matches": [
@@ -219,94 +219,94 @@
                     "outcome": "Sassuolo",
                     "odds": 2.76,
                     "stake": 5.0,
-                    "profit": 8.8
+                    "profit": 7.14
                 },
                 {
                     "teams": "Lazio - Genoa",
                     "outcome": "Lazio",
                     "odds": 2.05,
                     "stake": 5.0,
-                    "profit": 5.25
+                    "profit": 4.02
                 },
                 {
                     "teams": "Napoli - Fiorentina",
                     "outcome": "Napoli",
                     "odds": 1.75,
                     "stake": 5.0,
-                    "profit": 3.75
+                    "profit": 2.7
                 },
                 {
                     "teams": "Cagliari - Hellas Verona",
                     "outcome": "Cagliari",
                     "odds": 2.15,
                     "stake": 5.0,
-                    "profit": 5.75
+                    "profit": 4.46
                 },
                 {
                     "teams": "Torino - Lecce",
                     "outcome": "Torino",
                     "odds": 1.91,
                     "stake": 5.0,
-                    "profit": 4.55
+                    "profit": 3.4
                 },
                 {
                     "teams": "Como - Atalanta BC",
                     "outcome": "Atalanta BC",
                     "odds": 3.0,
                     "stake": 5.0,
-                    "profit": 10.0
+                    "profit": 8.2
                 },
                 {
                     "teams": "Udinese - AS Roma",
                     "outcome": "AS Roma",
                     "odds": 1.95,
                     "stake": 5.0,
-                    "profit": 4.75
+                    "profit": 3.58
                 },
                 {
                     "teams": "Bologna - AC Milan",
                     "outcome": "AC Milan",
                     "odds": 2.14,
                     "stake": 5.0,
-                    "profit": 5.7
+                    "profit": 4.42
                 },
                 {
                     "teams": "Hellas Verona - Pisa",
                     "outcome": "Hellas Verona",
                     "odds": 2.1,
                     "stake": 5.0,
-                    "profit": 5.5
+                    "profit": 4.24
                 },
                 {
                     "teams": "Genoa - Napoli",
                     "outcome": "Napoli",
                     "odds": 1.83,
                     "stake": 5.0,
-                    "profit": 4.15
+                    "profit": 3.05
                 },
                 {
                     "teams": "Fiorentina - Torino",
                     "outcome": "Fiorentina",
                     "odds": 1.85,
                     "stake": 5.0,
-                    "profit": 4.25
+                    "profit": 3.14
                 },
                 {
                     "teams": "AC Milan - Como",
                     "outcome": "AC Milan",
                     "odds": 1.98,
                     "stake": 5.0,
-                    "profit": 4.9
+                    "profit": 3.71
                 },
                 {
                     "teams": "Lecce - Udinese",
                     "outcome": "Lecce",
                     "odds": 2.9,
                     "stake": 5.0,
-                    "profit": 9.5
+                    "profit": 7.76
                 }
             ],
-            "total_potential_profit": 76.85000000000001
+            "total_potential_profit": 59.82
         },
         "POLAND EKSTRAKLASA": {
             "matches": [
@@ -315,66 +315,66 @@
                     "outcome": "Arka Gdynia",
                     "odds": 4.7,
                     "stake": 5.0,
-                    "profit": 18.5
+                    "profit": 15.68
                 },
                 {
                     "teams": "G\u00f3rnik Zabrze - Piast Gliwice",
                     "outcome": "G\u00f3rnik Zabrze",
                     "odds": 2.26,
                     "stake": 5.0,
-                    "profit": 6.3
+                    "profit": 4.94
                 },
                 {
                     "teams": "Widzew \u0141\u00f3d\u017a - Jagiellonia Bia\u0142ystok",
                     "outcome": "Widzew \u0141\u00f3d\u017a",
                     "odds": 2.7,
                     "stake": 5.0,
-                    "profit": 8.5
+                    "profit": 6.88
                 },
                 {
                     "teams": "Lech Pozna\u0144 - Lechia Gda\u0144sk",
                     "outcome": "Lech Pozna\u0144",
                     "odds": 1.9,
                     "stake": 5.0,
-                    "profit": 4.5
+                    "profit": 3.36
                 },
                 {
                     "teams": "Zag\u0142\u0119bie Lubin - GKS Katowice",
                     "outcome": "GKS Katowice",
                     "odds": 3.11,
                     "stake": 5.0,
-                    "profit": 10.55
+                    "profit": 8.68
                 },
                 {
                     "teams": "Motor Lublin - Pogo\u0144 Szczecin",
                     "outcome": "Motor Lublin",
                     "odds": 2.78,
                     "stake": 5.0,
-                    "profit": 8.9
+                    "profit": 7.23
                 },
                 {
                     "teams": "Wis\u0142a P\u0142ock - Rak\u00f3w Cz\u0119stochowa",
                     "outcome": "Rak\u00f3w Cz\u0119stochowa",
                     "odds": 2.07,
                     "stake": 5.0,
-                    "profit": 5.35
+                    "profit": 4.11
                 },
                 {
                     "teams": "Legia Warszawa - Korona Kielce",
                     "outcome": "Legia Warszawa",
                     "odds": 1.83,
                     "stake": 5.0,
-                    "profit": 4.15
+                    "profit": 3.05
                 },
                 {
                     "teams": "Nieciecza - Cracovia Krak\u00f3w",
                     "outcome": "Cracovia Krak\u00f3w",
                     "odds": 2.29,
                     "stake": 5.0,
-                    "profit": 6.45
+                    "profit": 5.08
                 }
             ],
-            "total_potential_profit": 73.2
+            "total_potential_profit": 59.00999999999999
         },
         "SPAIN LA LIGA": {
             "matches": [
@@ -383,87 +383,87 @@
                     "outcome": "Oviedo",
                     "odds": 2.9,
                     "stake": 5.0,
-                    "profit": 9.5
+                    "profit": 7.76
                 },
                 {
                     "teams": "Espanyol - Alav\u00e9s",
                     "outcome": "Espanyol",
                     "odds": 1.95,
                     "stake": 5.0,
-                    "profit": 4.75
+                    "profit": 3.58
                 },
                 {
                     "teams": "CA Osasuna - Villarreal",
                     "outcome": "CA Osasuna",
                     "odds": 2.8,
                     "stake": 5.0,
-                    "profit": 9.0
+                    "profit": 7.32
                 },
                 {
                     "teams": "Real Betis - Valencia",
                     "outcome": "Real Betis",
                     "odds": 1.85,
                     "stake": 5.0,
-                    "profit": 4.25
+                    "profit": 3.14
                 },
                 {
                     "teams": "Getafe - Celta Vigo",
                     "outcome": "Celta Vigo",
                     "odds": 2.75,
                     "stake": 5.0,
-                    "profit": 8.75
+                    "profit": 7.1
                 },
                 {
                     "teams": "Athletic Bilbao - Real Sociedad",
                     "outcome": "Athletic Bilbao",
                     "odds": 2.2,
                     "stake": 5.0,
-                    "profit": 6.0
+                    "profit": 4.68
                 },
                 {
                     "teams": "Mallorca - Sevilla",
                     "outcome": "Mallorca",
                     "odds": 2.3,
                     "stake": 5.0,
-                    "profit": 6.5
+                    "profit": 5.12
                 },
                 {
                     "teams": "Celta Vigo - CA Osasuna",
                     "outcome": "Celta Vigo",
                     "odds": 1.95,
                     "stake": 5.0,
-                    "profit": 4.75
+                    "profit": 3.58
                 },
                 {
                     "teams": "Rayo Vallecano - Oviedo",
                     "outcome": "Rayo Vallecano",
                     "odds": 1.7,
                     "stake": 5.0,
-                    "profit": 3.5
+                    "profit": 2.48
                 },
                 {
                     "teams": "Sevilla - Girona",
                     "outcome": "Sevilla",
                     "odds": 1.95,
                     "stake": 5.0,
-                    "profit": 4.75
+                    "profit": 3.58
                 },
                 {
                     "teams": "Alav\u00e9s - Getafe",
                     "outcome": "Alav\u00e9s",
                     "odds": 2.25,
                     "stake": 5.0,
-                    "profit": 6.25
+                    "profit": 4.9
                 },
                 {
                     "teams": "Villarreal - Espanyol",
                     "outcome": "Villarreal",
                     "odds": 1.75,
                     "stake": 5.0,
-                    "profit": 3.75
+                    "profit": 2.7
                 }
             ],
-            "total_potential_profit": 71.75
+            "total_potential_profit": 55.93999999999999
         },
         "SWEDEN ALLSVENSKAN": {
             "matches": [
@@ -472,99 +472,99 @@
                     "outcome": "Almtuna IS",
                     "odds": 2.76,
                     "stake": 5.0,
-                    "profit": 8.8
+                    "profit": 7.14
                 },
                 {
                     "teams": "IF Troja-Ljungby - BIK Karlskoga",
                     "outcome": "IF Troja-Ljungby",
                     "odds": 3.09,
                     "stake": 5.0,
-                    "profit": 10.45
+                    "profit": 8.6
                 },
                 {
                     "teams": "IF Bj\u00f6rkl\u00f6ven - Mora IK",
                     "outcome": "Mora IK",
                     "odds": 3.09,
                     "stake": 5.0,
-                    "profit": 10.45
+                    "profit": 8.6
                 },
                 {
                     "teams": "IK Oskarshamn - \u00d6stersunds IK",
                     "outcome": "\u00d6stersunds IK",
                     "odds": 2.35,
                     "stake": 5.0,
-                    "profit": 6.75
+                    "profit": 5.34
                 },
                 {
                     "teams": "V\u00e4ster\u00e5s IK - Kalmar HC",
                     "outcome": "V\u00e4ster\u00e5s IK",
                     "odds": 3.2,
                     "stake": 5.0,
-                    "profit": 11.0
+                    "profit": 9.08
                 },
                 {
                     "teams": "Nybro Vikings IF - S\u00f6dert\u00e4lje SK",
                     "outcome": "Nybro Vikings IF",
                     "odds": 2.11,
                     "stake": 5.0,
-                    "profit": 5.55
+                    "profit": 4.28
                 }
             ],
-            "total_potential_profit": 53.0
+            "total_potential_profit": 43.04
         },
-        "NBA": {
+        "BASKETBALL NBA": {
             "matches": [
                 {
                     "teams": "New Orleans Pelicans - Memphis Grizzlies",
                     "outcome": "Memphis Grizzlies",
                     "odds": 2.1,
                     "stake": 5.0,
-                    "profit": 5.5
+                    "profit": 4.24
                 },
                 {
                     "teams": "New York Knicks - Portland Trail Blazers",
                     "outcome": "Portland Trail Blazers",
                     "odds": 3.3,
                     "stake": 5.0,
-                    "profit": 11.5
+                    "profit": 9.52
                 },
                 {
                     "teams": "Orlando Magic - Toronto Raptors",
                     "outcome": "Orlando Magic",
                     "odds": 1.8,
                     "stake": 5.0,
-                    "profit": 4.0
+                    "profit": 2.92
                 },
                 {
                     "teams": "Phoenix Suns - Cleveland Cavaliers",
                     "outcome": "Phoenix Suns",
                     "odds": 2.6,
                     "stake": 5.0,
-                    "profit": 8.0
+                    "profit": 6.44
                 },
                 {
                     "teams": "Denver Nuggets - Los Angeles Clippers",
                     "outcome": "Denver Nuggets",
                     "odds": 2.9,
                     "stake": 5.0,
-                    "profit": 9.5
+                    "profit": 7.76
                 },
                 {
                     "teams": "Utah Jazz - Brooklyn Nets",
                     "outcome": "Brooklyn Nets",
                     "odds": 2.1,
                     "stake": 5.0,
-                    "profit": 5.5
+                    "profit": 4.24
                 },
                 {
                     "teams": "Golden State Warriors - Detroit Pistons",
                     "outcome": "Detroit Pistons",
                     "odds": 1.91,
                     "stake": 5.0,
-                    "profit": 4.55
+                    "profit": 3.4
                 }
             ],
-            "total_potential_profit": 48.55
+            "total_potential_profit": 38.52
         },
         "PORTUGAL PRIMEIRA LIGA": {
             "matches": [
@@ -573,24 +573,24 @@
                     "outcome": "Vit\u00f3ria SC",
                     "odds": 2.0,
                     "stake": 5.0,
-                    "profit": 5.0
+                    "profit": 3.8
                 },
                 {
                     "teams": "Santa Clara - Estoril",
                     "outcome": "Santa Clara",
                     "odds": 2.4,
                     "stake": 5.0,
-                    "profit": 7.0
+                    "profit": 5.56
                 },
                 {
                     "teams": "Alverca - CF Estrela",
                     "outcome": "CF Estrela",
                     "odds": 4.1,
                     "stake": 5.0,
-                    "profit": 15.5
+                    "profit": 13.04
                 }
             ],
-            "total_potential_profit": 27.5
+            "total_potential_profit": 22.4
         },
         "NHL": {
             "matches": [
@@ -599,10 +599,10 @@
                     "outcome": "Chicago Blackhawks",
                     "odds": 3.0,
                     "stake": 6.0,
-                    "profit": 12.0
+                    "profit": 9.84
                 }
             ],
-            "total_potential_profit": 12.0
+            "total_potential_profit": 9.84
         },
         "AMERICANFOOTBALL NFL": {
             "matches": [
@@ -611,11 +611,11 @@
                     "outcome": "New England Patriots",
                     "odds": 2.75,
                     "stake": 5.0,
-                    "profit": 8.75
+                    "profit": 7.1
                 }
             ],
-            "total_potential_profit": 8.75
+            "total_potential_profit": 7.1
         }
     },
-    "last_update": "30.01.2026 10:34:27"
+    "last_update": "10:41:41"
 }
