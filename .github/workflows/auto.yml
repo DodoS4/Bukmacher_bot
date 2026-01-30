@@ -2,7 +2,7 @@ name: Betting Bot Professional Dawid
 
 on:
   schedule:
-    # Uruchomienie: 07:00, 11:00, 15:00, 19:00 UTC (dostosuj do potrzeb)
+    # Uruchomienie: 07:00, 11:00, 15:00, 19:00 UTC
     - cron: '0 7,11,15,19 * * *'
   workflow_dispatch: 
 
@@ -49,12 +49,14 @@ jobs:
           ODDS_KEY_9: ${{ secrets.ODDS_KEY_9 }}
           ODDS_KEY_10: ${{ secrets.ODDS_KEY_10 }}
         run: |
-          # 1. Rozliczamy stare mecze i aktualizujemy history.json
+          # 1. Rozliczamy stare mecze i aktualizujemy bankroll.json
           python settle.py
           
-          # 2. Szukamy nowych typów i wysyłamy statystyki na koniec
-          # Ten skrypt wyśle TYPY na T_CHAT i STATYSTYKI na T_CHAT_RESULTS
+          # 2. Szukamy nowych typów (zapisuje do coupons.json)
           python start.py
+          
+          # 3. AKTUALIZACJA STATYSTYK (Naprawia wyświetlanie 0 na stronie)
+          python stats.py
 
       - name: Commit and Push Changes
         run: |
@@ -63,7 +65,7 @@ jobs:
           
           git fetch origin main
           
-          # Lista plików, które bot modyfikuje i które muszą zostać zapamiętane
+          # Lista plików do zapamiętania (dodano stats.json dla pewności)
           FILES_TO_ADD="history.json coupons.json bankroll.json key_index.txt stats.json index.html"
           
           for file in $FILES_TO_ADD; do
@@ -76,10 +78,10 @@ jobs:
           # Sprawdzenie czy są zmiany do wypchnięcia
           if ! git diff --cached --quiet; then
             git commit -m "Bot Auto-Update: Results, Bets & Stats [skip ci]"
-            # Rebase zapobiega błędom, gdybyś w międzyczasie coś zmienił w repo
+            # Rebase zapobiega błędom, gdybyś coś zmienił ręcznie w repo
             git pull --rebase -X theirs origin main
             git push origin main
-            echo "🚀 Dane zostały zapisane w repozytorium."
+            echo "🚀 Dane zostały zapisane w repozytorium i przesłane na stronę."
           else
             echo "ℹ️ Brak zmian w danych, skip push."
           fi
