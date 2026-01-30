@@ -3,45 +3,47 @@ import json
 import requests
 from datetime import datetime, timezone
 
-# --- KONFIGURACJA ---
+# --- KONFIGURACJA PLIKÓW ---
 COUPONS_FILE = "coupons.json"
 BANKROLL_FILE = "bankroll.json"
 KEY_INDEX_FILE = "key_index.txt"
 
-# Pobieranie listy kluczy API z sekretów GitHub
+# Pobieranie kluczy z Sekretów GitHub (obsługa do 10 kluczy)
 API_KEYS = [os.getenv(f"ODDS_KEY_{i}") for i in range(1, 11) if os.getenv(f"ODDS_KEY_{i}")]
 if not API_KEYS:
-    # Backup, jeśli masz tylko jeden klucz pod główną nazwą
     API_KEYS = [os.getenv("ODDS_KEY")]
 
 def get_current_key():
-    """Zwraca aktualny klucz API na podstawie rotacji."""
+    """Rotacja kluczy API, aby uniknąć limitów."""
     idx = 0
     if os.path.exists(KEY_INDEX_FILE):
         with open(KEY_INDEX_FILE, "r") as f:
-            try: idx = int(f.read().strip())
-            except: idx = 0
+            try:
+                idx = int(f.read().strip())
+            except:
+                idx = 0
     
-    # Rotacja: jeśli index wykroczy poza listę, wraca do 0
-    if idx >= len(API_KEYS): idx = 0
+    current_key = API_KEYS[idx % len(API_KEYS)]
     
-    # Zapisz następny index dla kolejnego uruchomienia
+    # Zapisz indeks dla następnego uruchomienia
     with open(KEY_INDEX_FILE, "w") as f:
         f.write(str((idx + 1) % len(API_KEYS)))
         
-    return API_KEYS[idx]
+    return current_key
 
 def get_stake():
-    """Oblicza stawkę 5% z aktualnego bankrolla."""
+    """Pobiera saldo i liczy stawkę 5% pod Challenge."""
     balance = 100.0
     if os.path.exists(BANKROLL_FILE):
-        with open(BANKROLL_FILE, "r") as f:
-            data = json.load(f)
-            balance = data.get("balance", 100.0)
+        try:
+            with open(BANKROLL_FILE, "r") as f:
+                data = json.load(f)
+                balance = float(data.get("balance", 100.0))
+        except:
+            balance = 100.0
     
-    # Twoja strategia: 5% bankrolla
-    stake = balance * 0.05
-    return round(stake, 2), balance
+    stake = round(balance * 0.05, 2)
+    return stake, balance
 
 def send_telegram(message):
     token = os.getenv("T_TOKEN")
@@ -49,85 +51,110 @@ def send_telegram(message):
     if token and chat_id:
         url = f"https://api.telegram.org/bot{token}/sendMessage"
         payload = {"chat_id": chat_id, "text": message, "parse_mode": "Markdown"}
-        requests.post(url, json=payload)
+        try:
+            requests.post(url, json=payload, timeout=10)
+        except Exception as e:
+            print(f"⚠️ Błąd wysyłki Telegram: {e}")
 
 def get_bets():
     api_key = get_current_key()
-    stake, current_balance = get_stake()
+    stake, balance = get_stake()
     
-    # Wybieramy sporty (możesz dodać więcej)
-    sports = ["soccer_poland_ekstraklasa", "icehockey_nhl", "soccer_spain_la_liga", "soccer_germany_bundesliga"]
+    # ROZSZERZONA LISTA SPORTÓW (USA + HOKEJ + EUROPA)
+    sports = [
+        "icehockey_nhl", "icehockey_sweden_allsvenskan", "icehockey_sweden_shl",
+        "icehockey_finland_liiga", "icehockey_germany_del", "basketball_nba",
+        "americanfootball_nfl", "baseball_mlb", "basketball_ncaa",
+        "soccer_poland_ekstraklasa", "soccer_uefa_champs_league",
+        "soccer_england_league_one", "soccer_spain_la_liga",
+        "soccer_germany_bundesliga", "soccer_italy_serie_a",
+        "soccer_france_ligue_one", "soccer_netherlands_ere_divisie"
+    ]
     
     new_coupons = []
     
-    print(f"🚀 Start sesji. Bankroll: {current_balance} PLN | Stawka (5%): {stake} PLN")
+    print(f"\n{'='*40}")
+    print(f"🔍 DEBUG MODE: CHALLENGE 100 PLN")
+    print(f"🏦 Bankroll: {balance} PLN | Stawka 5%: {stake} PLN")
+    print(f"📈 Zakres kursów: 1.65 - 3.50")
+    print(f"{'='*40}\n")
 
     for sport in sports:
+        print(f"📡 Sprawdzam: {sport}...")
         url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds/"
         params = {
-            "apiKey": api_key,
-            "regions": "eu",
-            "markets": "h2h",
-            "oddsFormat": "decimal"
+            "apiKey": api_key, "regions": "eu", "markets": "h2h", "oddsFormat": "decimal"
         }
         
         try:
-            resp = requests.get(url, params=params)
-            if resp.status_code != 200: continue
+            resp = requests.get(url, params=params, timeout=15)
+            if resp.status_code != 200:
+                print(f"  ❌ Błąd API: {resp.status_code}")
+                continue
             
             matches = resp.json()
             for match in matches:
-                # Prosta logika AI: szukamy faworyta z kursem 1.50 - 2.20
+                home = match.get('home_team')
+                away = match.get('away_team')
+                
                 for bookmaker in match.get('bookmakers', []):
-                    if bookmaker['key'] == 'pinnacle' or bookmaker['key'] == 'unibet': # Główne rynki
+                    if bookmaker['key'] in ['unibet', 'pinnacle', 'williamhill', 'betfair_ex']:
                         market = bookmaker['markets'][0]
                         for outcome in market['outcomes']:
                             price = outcome['price']
                             
-                            if 1.60 <= price <= 2.10:
+                            # --- NOWA LOGIKA KURSU DO 3.50 ---
+                            if 1.65 <= price <= 3.50:
+                                coupon_id = f"{match['id']}_{outcome['name']}"
+                                
                                 coupon = {
                                     "id": match['id'],
+                                    "unique_id": coupon_id,
                                     "sport": sport,
-                                    "home": match['home_team'],
-                                    "away": match['away_team'],
+                                    "home": home,
+                                    "away": away,
                                     "outcome": outcome['name'],
                                     "odds": price,
                                     "stake": stake,
                                     "time": match['commence_time']
                                 }
                                 
-                                # Sprawdź czy już nie mamy tego meczu
-                                if not any(c['id'] == coupon['id'] for c in new_coupons):
+                                if not any(c.get('id') == match['id'] for c in new_coupons):
                                     new_coupons.append(coupon)
+                                    print(f"  ✅ TYP: {home}-{away} | {outcome['name']} @ {price}")
                                     
                                     msg = (
-                                        f"🎯 *NOWY TYP (5% Kuli)*\n"
-                                        f"⚽ Mecz: {match['home_team']} - {match['away_team']}\n"
-                                        f"✅ Typ: {outcome['name']}\n"
+                                        f"🎯 *NOWY TYP (Challenge 5%)*\n"
+                                        f"🏟 Liga: {sport.upper()}\n"
+                                        f"⚽ Mecz: {home} - {away}\n"
+                                        f"✅ Typ: *{outcome['name']}*\n"
                                         f"📈 Kurs: `{price}`\n"
                                         f"💰 Stawka: `{stake} PLN`"
                                     )
                                     send_telegram(msg)
-                                    print(f"✅ Dodano: {match['home_team']} vs {match['away_team']}")
                                     break
+                        break 
         except Exception as e:
-            print(f"❌ Błąd przy pobieraniu {sport}: {e}")
+            print(f"  💥 Błąd {sport}: {e}")
 
-    # Zapis do coupons.json (nadpisujemy lub dopisujemy)
+    # --- ZAPIS I SYNCHRONIZACJA ---
     existing_coupons = []
     if os.path.exists(COUPONS_FILE):
-        with open(COUPONS_FILE, "r") as f:
-            try: existing_coupons = json.load(f)
-            except: existing_coupons = []
+        try:
+            with open(COUPONS_FILE, "r") as f:
+                existing_coupons = json.load(f)
+        except: pass
     
-    # Dodaj tylko unikalne ID
-    ids = [c['id'] for c in existing_coupons]
+    current_ids = [c.get('id') for c in existing_coupons]
     for nc in new_coupons:
-        if nc['id'] not in ids:
+        if nc['id'] not in current_ids:
             existing_coupons.append(nc)
 
     with open(COUPONS_FILE, "w") as f:
         json.dump(existing_coupons, f, indent=4)
+
+    print(f"\n✅ ZAKOŃCZONO: Dodano {len(new_coupons)} nowych typów.")
+    print(f"📦 Razem w grze: {len(existing_coupons)}")
 
 if __name__ == "__main__":
     get_bets()
