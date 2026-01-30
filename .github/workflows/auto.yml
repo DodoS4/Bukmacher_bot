@@ -1,7 +1,71 @@
-      - name: Run Debug Test
+name: DEBUG-TEST-TELEGRAM
+
+on:
+  workflow_dispatch: # Pozwala na ręczne uruchomienie przyciskiem "Run workflow"
+
+jobs:
+  debug-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Test Script
         env:
+          # Tu wstrzykujemy sekrety do systemu
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
           ODDS_KEY: ${{ secrets.ODDS_KEY }}
         run: |
-          python test_debug.py
+          # Tworzymy skrypt testowy bezpośrednio w locie
+          echo '
+          import os
+          import requests
+
+          def run_debug():
+              print("--- DIAGNOSTYKA START ---")
+              
+              token = os.environ.get("T_TOKEN")
+              chat = os.environ.get("T_CHAT")
+              api = os.environ.get("ODDS_KEY")
+
+              print(f"1. ODDS_KEY: {"✅ OK" if api else "❌ BRAK"}")
+              print(f"2. T_TOKEN: {"✅ OK" if token else "❌ BRAK"}")
+              print(f"3. T_CHAT:  {"✅ OK" if chat else "❌ BRAK"}")
+
+              if not token or not chat:
+                  print("\n❗ BŁĄD: GitHub nie przekazuje sekretów. Sprawdź Settings -> Secrets.")
+                  return
+
+              print("\n📡 Próba połączenia z API Telegram...")
+              test_url = f"https://api.telegram.org/bot{token}/getMe"
+              try:
+                  res = requests.get(test_url, timeout=10).json()
+                  if res.get("ok"):
+                      print(f"✅ Połączono z botem: @{res['"result"']['"username"']}")
+                      
+                      print("📤 Wysyłanie wiadomości testowej...")
+                      msg_url = f"https://api.telegram.org/bot{token}/sendMessage"
+                      msg_res = requests.post(msg_url, json={
+                          "chat_id": chat,
+                          "text": "🤖 TEST: Bot Dawida nawiązał połączenie z GitHubem!"
+                      }).json()
+                      
+                      if msg_res.get("ok"):
+                          print("🎉 SUKCES! Wiadomość powinna być na Twoim telefonie.")
+                      else:
+                          print(f"❌ Telegram odrzucił wiadomość: {msg_res}")
+                  else:
+                      print(f"❌ Błąd Tokena: {res}")
+              except Exception as e:
+                  print(f"❌ Błąd sieciowy: {e}")
+
+          run_debug()
+          ' > final_test.py
+          
+          python final_test.py
