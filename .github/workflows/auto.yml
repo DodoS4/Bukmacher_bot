@@ -1,8 +1,8 @@
-Name: Betting Bot Professional Dawid
+name: Betting Bot Professional Dawid
 
 on:
   schedule:
-    # Przywrócone stare godziny: 07:00, 11:00, 15:00, 19:00 UTC
+    # Przywrócone godziny sprawdzania: 07:00, 11:00, 15:00, 19:00 UTC
     - cron: '0 7,11,15,19 * * *'
   workflow_dispatch: 
 
@@ -31,13 +31,16 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests python-dateutil
+          pip install requests
 
       - name: Run Betting Logic
         env:
+          # Dane do Telegrama
           T_TOKEN: "${{ secrets.T_TOKEN }}"
           T_CHAT: "${{ secrets.T_CHAT }}"
           T_CHAT_RESULTS: "${{ secrets.T_CHAT_RESULTS }}"
+          
+          # Pula 10 kluczy API
           ODDS_KEY: "${{ secrets.ODDS_KEY }}"
           ODDS_KEY_2: "${{ secrets.ODDS_KEY_2 }}"
           ODDS_KEY_3: "${{ secrets.ODDS_KEY_3 }}"
@@ -49,12 +52,14 @@ jobs:
           ODDS_KEY_9: "${{ secrets.ODDS_KEY_9 }}"
           ODDS_KEY_10: "${{ secrets.ODDS_KEY_10 }}"
         run: |
-          # KLUCZOWA KOLEJNOŚĆ DLA SYNCHRONIZACJI WWW:
-          # 1. Rozliczamy wyniki (aktualizacja history.json)
+          # 1. ROZLICZANIE (Czyści stare mecze i dopisuje wyniki do history.json)
           python settle.py
-          # 2. Generujemy statystyki (aktualizacja stats.json dla WWW)
+          
+          # 2. AKTUALIZACJA STATYSTYK (Przetwarza history.json na stats.json dla WWW)
+          # Robimy to TUTAJ, aby strona była gotowa przed nowymi typami
           python stats.py
-          # 3. Szukamy nowych typów (wysyłka na Telegram)
+          
+          # 3. SZUKANIE NOWYCH TYPÓW (Wysyła alerty na Telegram)
           python start.py
 
       - name: Commit and Push Changes
@@ -62,13 +67,14 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
+          # Dodajemy wszystkie pliki baz danych, aby strona i bot były spójne
           git add history.json coupons.json key_index.txt stats.json
           
           if ! git diff --cached --quiet; then
-            git commit -m "📊 Synchro: Results -> Stats -> New Bets [skip ci]"
+            git commit -m "📊 Synchro WWW & Telegram: Results -> Stats -> New Bets [skip ci]"
             git pull --rebase -X theirs origin main
             git push origin main
-            echo "🚀 Dane wysłane do repozytorium."
+            echo "✅ Dane zsynchronizowane i wysłane na GitHub Pages."
           else
-            echo "ℹ️ Brak zmian do zapisu."
+            echo "ℹ️ Brak nowych zmian do zapisu."
           fi
