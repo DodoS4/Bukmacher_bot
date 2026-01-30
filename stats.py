@@ -16,20 +16,16 @@ def generate_stats():
     if not history:
         return "ℹ️ Brak danych w historii do wygenerowania statystyk."
 
-    # Inicjalizacja liczników
     total_profit = 0.0
     total_turnover = 0.0
     profit_24h = 0.0
     wins, losses, voids = 0, 0, 0
     last_matches_list = []
     
-    # Czas do obliczeń 24h (UTC dla GitHub Actions)
     now = datetime.now(timezone.utc)
     yesterday = now - timedelta(days=1)
 
-    # Procesujemy historię od najnowszych
     for bet in reversed(history):
-        # Sprawdzamy status
         status = str(bet.get('status', '')).upper()
         if status == "VOID":
             voids += 1
@@ -39,7 +35,6 @@ def generate_stats():
             profit = float(bet.get('profit', 0))
             stake = float(bet.get('stake', 0))
             
-            # 1. Statystyki ogólne
             total_profit += profit
             total_turnover += stake
             
@@ -52,11 +47,9 @@ def generate_stats():
             else:
                 icon = "⚪"
 
-            # 2. Obliczanie zysku z ostatnich 24h
             bet_date_str = bet.get('time') or bet.get('date')
             if bet_date_str:
                 try:
-                    # Elastyczne parsowanie daty (ISO lub format standardowy)
                     if "T" in bet_date_str:
                         bet_date = datetime.fromisoformat(bet_date_str.replace("Z", "+00:00"))
                     else:
@@ -67,7 +60,6 @@ def generate_stats():
                 except:
                     pass
 
-            # 3. Lista 5 ostatnich rozliczeń (do raportu Telegram)
             if len(last_matches_list) < 5:
                 home = bet.get('home') or bet.get('home_team') or "???"
                 away = bet.get('away') or bet.get('away_team') or "???"
@@ -81,7 +73,6 @@ def generate_stats():
     yield_val = (total_profit / total_turnover * 100) if total_turnover > 0 else 0
     win_rate = (wins / total_bets * 100) if total_bets > 0 else 0
 
-    # Budowanie raportu Markdown
     report = [
         "📊 *OFICJALNE STATYSTYKI*",
         "━━━━━━━━━━━━━━━",
@@ -105,13 +96,12 @@ def generate_stats():
     return "\n".join(report)
 
 if __name__ == "__main__":
-    # Ten blok wykonuje się, gdy GitHub odpala stats.py bezpośrednio
+    # --- KLUCZOWA ZMIANA ---
     token = os.getenv("T_TOKEN")
-    chat_id = os.getenv("T_CHAT")
+    # Skrypt najpierw próbuje wysłać na kanał wyników, jeśli go nie ma - na główny
+    chat_id = os.getenv("T_CHAT_RESULTS") or os.getenv("T_CHAT")
     
     report_text = generate_stats()
-    
-    # Wyświetl w logach GitHub Actions (ułatwia debugowanie)
     print(report_text)
     
     if token and chat_id:
@@ -125,5 +115,7 @@ if __name__ == "__main__":
             r = requests.post(url, json=payload, timeout=10)
             if r.status_code != 200:
                 print(f"❌ Błąd Telegram API: {r.text}")
+            else:
+                print(f"✅ Statystyki wysłane do: {chat_id}")
         except Exception as e:
             print(f"❌ Wyjątek przy wysyłce: {e}")
