@@ -2947,5 +2947,18 @@
         "status": "LOSS",
         "score": "1:2",
         "time": "2026-01-30T18:00:00Z"
+    },
+    {
+        "id": "873b8840ffe16c1c0c43afd26f36a9e5",
+        "home": "AS Monaco",
+        "away": "Virtus Segafredo Bologna",
+        "sport": "basketball_euroleague",
+        "outcome": "Virtus Segafredo Bologna",
+        "odds": 5.0,
+        "stake": 350.0,
+        "profit": 1400.0,
+        "status": "WIN",
+        "score": "82:84",
+        "time": "2026-01-30T18:30:00Z"
     }
 ]
