@@ -37,42 +37,42 @@ SPORTS_CONFIG = {
     "tennis_wta_australian_open": "🎾"
 }
 
-# ================= PANCERNA KONFIGURACJA KLUCZY =================
-def get_env_safe(name):
-    """Pobiera zmienną i usuwa zbędne spacje."""
-    val = os.environ.get(name) or os.getenv(name)
-    return str(val).strip() if val else None
-
-# Klucze API
-API_KEYS = []
-main_key = get_env_safe("ODDS_KEY")
-if main_key: API_KEYS.append(main_key)
-for i in range(2, 11):
-    k = get_env_safe(f"ODDS_KEY_{i}")
-    if k and len(k) > 10: API_KEYS.append(k)
-
-# Telegram - Poprawka
-TELEGRAM_TOKEN = get_env_safe("T_TOKEN")
-TELEGRAM_CHAT = get_env_safe("T_CHAT")
-
+# Pliki bazy danych
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
 BASE_STAKE = 350
 
-# ================= FUNKCJE POMOCNICZE =================
+# ================= PANCERNE POBIERANIE KLUCZY =================
+def get_env_safe(name):
+    """Pobiera zmienną środowiskową i czyści ją ze spacji."""
+    val = os.environ.get(name) or os.getenv(name)
+    return str(val).strip() if val and len(str(val).strip()) > 0 else None
 
+def get_all_api_keys():
+    keys = []
+    main_key = get_env_safe("ODDS_KEY")
+    if main_key: keys.append(main_key)
+    for i in range(2, 11):
+        k = get_env_safe(f"ODDS_KEY_{i}")
+        if k: keys.append(k)
+    return keys
+
+# ================= OBSŁUGA TELEGRAMA =================
 def send_telegram(message, mode="HTML"):
-    """Wysyła wiadomość z pełną diagnostyką błędów."""
-    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT:
-        print(f"⚠️ POMINIĘTO TELEGRAM: TOKEN={bool(TELEGRAM_TOKEN)}, CHAT={bool(TELEGRAM_CHAT)}")
+    token = get_env_safe("T_TOKEN")
+    chat = get_env_safe("T_CHAT")
+
+    if not token or not chat:
+        print(f"⚠️ POMINIĘTO TELEGRAM: TOKEN={bool(token)}, CHAT={bool(chat)}")
         return
 
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
     payload = {
-        "chat_id": TELEGRAM_CHAT, 
+        "chat_id": chat, 
         "text": message, 
-        "parse_mode": mode
+        "parse_mode": mode,
+        "disable_web_page_preview": True
     }
     
     try: 
@@ -84,11 +84,13 @@ def send_telegram(message, mode="HTML"):
     except Exception as e:
         print(f"❌ Błąd połączenia z Telegram: {e}")
 
-def get_current_key_idx():
+# ================= LOGIKA ZAKŁADÓW =================
+def get_current_key_idx(num_keys):
+    if num_keys == 0: return 0
     if os.path.exists(KEY_STATE_FILE):
         try:
             with open(KEY_STATE_FILE, "r") as f:
-                return int(f.read().strip()) % len(API_KEYS)
+                return int(f.read().strip()) % num_keys
         except: return 0
     return 0
 
@@ -97,7 +99,7 @@ def save_current_key_idx(idx):
         f.write(str(idx))
 
 def get_smart_stake(league_key):
-    """Automatyczne dobieranie stawki."""
+    """Dobieranie stawki na podstawie historycznych zysków ligi."""
     current_multiplier = 1.0
     threshold = 1.03
     history_profit = 0
@@ -110,45 +112,43 @@ def get_smart_stake(league_key):
             history_profit = league_profit
             
             if league_profit <= -700:
-                current_multiplier = 0.5
-                threshold = 1.07
+                current_multiplier, threshold = 0.5, 1.07
             elif league_profit <= -300:
-                current_multiplier = 0.8
-                threshold = 1.05
+                current_multiplier, threshold = 0.8, 1.05
             elif league_profit >= 1000:
                 current_multiplier = 1.5
         except: pass
     
     final_stake = BASE_STAKE * current_multiplier
+    # Twoja złota zasada dla NHL
     if "nhl" in league_key.lower():
         final_stake *= 1.2 if history_profit > 0 else 1.1
 
     return round(final_stake, 2), threshold
 
-def load_existing_data():
-    if os.path.exists(COUPONS_FILE):
-        try:
-            with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except: return []
-    return []
-
-# ================= GŁÓWNA LOGIKA =================
-
 def main():
     print(f"🚀 START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # Diagnostyka na starcie
-    print(f"🔑 STATUS: API_KEYS={len(API_KEYS)}, TOKEN={bool(TELEGRAM_TOKEN)}, CHAT={bool(TELEGRAM_CHAT)}")
+    api_keys = get_all_api_keys()
+    token = get_env_safe("T_TOKEN")
+    chat = get_env_safe("T_CHAT")
     
-    if not API_KEYS:
-        print("❌ Błąd: Brak kluczy API!")
+    print(f"🔑 STATUS: KEYS={len(api_keys)}, T_TOKEN={bool(token)}, T_CHAT={bool(chat)}")
+    
+    if not api_keys:
+        print("❌ Błąd: Brak kluczy Odds API!")
         return
 
-    current_key_idx = get_current_key_idx()
-    all_coupons = load_existing_data()
-    already_sent_ids = [c['id'] for c in all_coupons]
+    current_key_idx = get_current_key_idx(len(api_keys))
     
+    if os.path.exists(COUPONS_FILE):
+        try:
+            with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+                all_coupons = json.load(f)
+        except: all_coupons = []
+    else: all_coupons = []
+    
+    already_sent_ids = [c['id'] for c in all_coupons]
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
 
@@ -157,9 +157,9 @@ def main():
         print(f"📡 SKANOWANIE: {league.upper()}")
         
         data = None
-        attempts = 0
-        while attempts < len(API_KEYS):
-            active_key = API_KEYS[current_key_idx]
+        # Próba pobrania danych przy użyciu dostępnych kluczy
+        for _ in range(len(api_keys)):
+            active_key = api_keys[current_key_idx]
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
             params = {"apiKey": active_key, "regions": "eu", "markets": "h2h"}
             try:
@@ -168,12 +168,10 @@ def main():
                     data = resp.json()
                     break
                 elif resp.status_code in [401, 429]:
-                    current_key_idx = (current_key_idx + 1) % len(API_KEYS)
-                    attempts += 1
+                    current_key_idx = (current_key_idx + 1) % len(api_keys)
                 else: break
             except:
-                current_key_idx = (current_key_idx + 1) % len(API_KEYS)
-                attempts += 1
+                current_key_idx = (current_key_idx + 1) % len(api_keys)
 
         if not data: continue
 
@@ -197,8 +195,7 @@ def main():
             for name, prices in market_prices.items():
                 if name.lower() == "draw": continue
                 
-                max_p = max(prices)
-                avg_p = sum(prices) / len(prices)
+                max_p, avg_p = max(prices), (sum(prices) / len(prices))
                 curr_val = max_p / avg_p
                 
                 req_val = base_threshold
@@ -210,10 +207,10 @@ def main():
 
             if best_choice:
                 date_str = m_time.strftime('%d.%m | %H:%M')
-                l_header = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
+                l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
                 s_icon = "🏒" if "icehockey" in league else "⚽"
                 
-                msg = (f"{s_icon} {flag_emoji} <b>{l_header}</b>\n"
+                msg = (f"{s_icon} {flag_emoji} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
                        f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
                        f"⏰ Start: {date_str}\n\n"
@@ -235,7 +232,7 @@ def main():
     save_current_key_idx(current_key_idx)
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
-    print(f"✅ KONIEC SKANOWANIA. Aktywne: {len(all_coupons)}")
+    print(f"✅ KONIEC. Aktywne kupony: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
