@@ -1,12 +1,10 @@
 {
-    "total_profit": 3444.56,
-    "total_bets": 226,
-    "win_rate": 43.4,
-    "yield": 5.5,
-    "roi": 68.9,
+    "balance": 100.0,
+    "upcoming_count": 80,
+    "total_profit": 0.0,
+    "roi": "0.0%",
+    "yield": "0.0%",
     "turnover": 62065.0,
-    "profit_24h": -2382.8,
-    "upcoming_count": 44,
-    "last_update": "2026-01-30 07:44:38",
-    "current_bankroll": 8444.56
+    "in_game_amount": 401.0,
+    "last_update": "Fri Jan 30 10:24:52 UTC 2026"
 }
