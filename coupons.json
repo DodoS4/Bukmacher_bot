@@ -738,5 +738,15 @@
         "stake": 350.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-01-31T17:00:00Z"
+    },
+    {
+        "id": "99d22e675353e1af5bf9d6c9579b8a26",
+        "home": "FC Volendam",
+        "away": "Go Ahead Eagles",
+        "outcome": "FC Volendam",
+        "odds": 3.1,
+        "stake": 350.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-01T19:00:00Z"
     }
 ]
