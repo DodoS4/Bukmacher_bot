@@ -728,5 +728,15 @@
         "stake": 350.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-01-31T17:00:00Z"
+    },
+    {
+        "id": "9438581c8397a47e8896dcad5fedd8f3",
+        "home": "Servette",
+        "away": "FC Sion",
+        "outcome": "FC Sion",
+        "odds": 3.35,
+        "stake": 350.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-01-31T17:00:00Z"
     }
 ]
