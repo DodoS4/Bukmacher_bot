@@ -558,5 +558,15 @@
         "stake": 700.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-01T23:40:00Z"
+    },
+    {
+        "id": "05a93860cd8fd3e539cbc9eae89ed0ac",
+        "home": "Gil Vicente",
+        "away": "Famalic\u00e3o",
+        "outcome": "Gil Vicente",
+        "odds": 2.82,
+        "stake": 350.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-01T15:30:00Z"
     }
 ]
