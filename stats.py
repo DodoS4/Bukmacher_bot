@@ -12,16 +12,24 @@ CHAT_TARGET = get_env_safe("T_CHAT_RESULTS") or get_env_safe("T_CHAT")
 STARTING_BANKROLL = 5000.0
 
 def generate_stats():
+    # Pobieranie historii
     if not os.path.exists('history.json'): return False, "❌ Brak danych."
     try:
         with open('history.json', 'r', encoding='utf-8') as f:
             history = json.load(f)
     except: return False, "❌ Błąd pliku."
 
+    # Pobieranie aktywnych kuponów (aby wyczyścić UNDEFINED na stronie)
+    active_coupons = []
+    if os.path.exists('coupons.json'):
+        try:
+            with open('coupons.json', 'r', encoding='utf-8') as f:
+                active_coupons = json.load(f)
+        except: pass
+
     total_profit, turnover = 0.0, 0.0
     wins, losses = 0, 0
     chart_data = []
-    
     profit_24h = 0.0
     now = datetime.now(timezone.utc)
     yesterday = now - timedelta(days=1)
@@ -29,14 +37,11 @@ def generate_stats():
     for bet in history:
         prof = float(bet.get('profit', 0))
         stk = float(bet.get('stake', 0))
-        
         total_profit += prof
         turnover += stk
         chart_data.append(round(total_profit, 2))
-        
         if prof > 0: wins += 1
         elif prof < 0: losses += 1
-
         b_time = bet.get('time') or bet.get('date')
         if b_time:
             try:
@@ -48,7 +53,19 @@ def generate_stats():
     yield_val = round((total_profit/turnover*100) if turnover > 0 else 0, 2)
     bankroll_now = STARTING_BANKROLL + total_profit
     
-    # Zapis do stats.json (dla Dashboardu WWW - zostawiamy go w tle)
+    # --- POPRAWKA DLA DASHBOARDU WWW ---
+    # Przygotowujemy listę aktywnych kuponów bez błędów "undefined"
+    clean_active = []
+    for c in active_coupons:
+        clean_active.append({
+            "home": c.get('home', '???'),
+            "away": c.get('away', '???'),
+            "outcome": c.get('outcome', 'Czekam...'), # Zamiast undefined
+            "odds": c.get('odds', '0.00'),            # Zamiast undefined
+            "time": c.get('time', ''),
+            "sport": c.get('sport', '')
+        })
+
     web_stats = {
         "zysk_total": round(total_profit, 2),
         "zysk_24h": round(profit_24h, 2),
@@ -58,12 +75,14 @@ def generate_stats():
         "obrot": round(turnover, 2),
         "total_bets_count": len(history),
         "wykres": chart_data,
+        "active_bets": clean_active, # Przesyłamy "czyste" aktywne typy
         "last_sync": datetime.now(timezone.utc).strftime("%H:%M:%S")
     }
+    
     with open('stats.json', 'w', encoding='utf-8') as f:
         json.dump(web_stats, f, indent=4)
 
-    # Budowanie raportu tekstowego
+    # Budowanie raportu Telegram
     msg = [
         "📊 <b>STATYSTYKI</b>",
         "━━━━━━━━━━━━━━━",
@@ -83,7 +102,6 @@ def generate_stats():
         msg.append(f"{icon} {bet.get('home')} - {bet.get('away')} | {score} | {'+' if p > 0 else ''}{p:.2f}")
 
     msg.append("━━━━━━━━━━━━━━━")
-
     return True, "\n".join(msg)
 
 if __name__ == "__main__":
