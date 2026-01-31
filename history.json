@@ -3350,5 +3350,31 @@
         "status": "LOSS",
         "score": "0:5",
         "time": "2026-01-31T18:00:00Z"
+    },
+    {
+        "id": "4b2d954fd75a3b54458b3ea3f62f2e49",
+        "home": "Lech Pozna\u0144",
+        "away": "Lechia Gda\u0144sk",
+        "sport": "soccer_poland_ekstraklasa",
+        "outcome": "Lechia Gda\u0144sk",
+        "odds": 3.95,
+        "stake": 350.0,
+        "profit": 1032.5,
+        "status": "WIN",
+        "score": "1:3",
+        "time": "2026-01-31T19:15:00Z"
+    },
+    {
+        "id": "6d7111f336acec3656d9011c6a09d2aa",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC Lugano",
+        "sport": "soccer_switzerland_superleague",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 3.5,
+        "stake": 350.0,
+        "profit": -350.0,
+        "status": "LOSS",
+        "score": "1:1",
+        "time": "2026-01-31T19:30:00Z"
     }
 ]

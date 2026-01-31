@@ -10,26 +10,6 @@
         "time": "2026-01-30T19:30:00Z"
     },
     {
-        "id": "4b2d954fd75a3b54458b3ea3f62f2e49",
-        "home": "Lech Pozna\u0144",
-        "away": "Lechia Gda\u0144sk",
-        "outcome": "Lechia Gda\u0144sk",
-        "odds": 3.95,
-        "stake": 350.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-01-31T19:15:00Z"
-    },
-    {
-        "id": "6d7111f336acec3656d9011c6a09d2aa",
-        "home": "Grasshopper Z\u00fcrich",
-        "away": "FC Lugano",
-        "outcome": "Grasshopper Z\u00fcrich",
-        "odds": 3.5,
-        "stake": 350.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-01-31T19:30:00Z"
-    },
-    {
         "id": "34115607b8423bb49924870b192a4af6",
         "home": "Torino",
         "away": "Lecce",
