@@ -3246,5 +3246,44 @@
         "status": "WIN",
         "score": "1:3",
         "time": "2026-01-31T16:30:00Z"
+    },
+    {
+        "id": "4eb2f2cca6e6f500dd3618ecbf243582",
+        "home": "Napoli",
+        "away": "Fiorentina",
+        "sport": "soccer_italy_serie_a",
+        "outcome": "Napoli",
+        "odds": 1.85,
+        "stake": 350.0,
+        "profit": 297.5,
+        "status": "WIN",
+        "score": "2:1",
+        "time": "2026-01-31T17:00:00Z"
+    },
+    {
+        "id": "261e849fdaa8ead74569e9d72b581c91",
+        "home": "FC Winterthur",
+        "away": "FC Lausanne-Sport",
+        "sport": "soccer_switzerland_superleague",
+        "outcome": "FC Winterthur",
+        "odds": 4.4,
+        "stake": 350.0,
+        "profit": 1190.0,
+        "status": "WIN",
+        "score": "2:1",
+        "time": "2026-01-31T17:00:00Z"
+    },
+    {
+        "id": "9438581c8397a47e8896dcad5fedd8f3",
+        "home": "Servette",
+        "away": "FC Sion",
+        "sport": "soccer_switzerland_superleague",
+        "outcome": "FC Sion",
+        "odds": 3.35,
+        "stake": 350.0,
+        "profit": -350.0,
+        "status": "LOSS",
+        "score": "3:3",
+        "time": "2026-01-31T17:00:00Z"
     }
 ]

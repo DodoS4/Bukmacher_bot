@@ -40,16 +40,6 @@
         "time": "2026-01-31T19:15:00Z"
     },
     {
-        "id": "4eb2f2cca6e6f500dd3618ecbf243582",
-        "home": "Napoli",
-        "away": "Fiorentina",
-        "outcome": "Napoli",
-        "odds": 1.85,
-        "stake": 350.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-01-31T17:00:00Z"
-    },
-    {
         "id": "6d7111f336acec3656d9011c6a09d2aa",
         "home": "Grasshopper Z\u00fcrich",
         "away": "FC Lugano",
@@ -358,26 +348,6 @@
         "stake": 350.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-02-01T15:45:00Z"
-    },
-    {
-        "id": "261e849fdaa8ead74569e9d72b581c91",
-        "home": "FC Winterthur",
-        "away": "FC Lausanne-Sport",
-        "outcome": "FC Winterthur",
-        "odds": 4.4,
-        "stake": 350.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-01-31T17:00:00Z"
-    },
-    {
-        "id": "9438581c8397a47e8896dcad5fedd8f3",
-        "home": "Servette",
-        "away": "FC Sion",
-        "outcome": "FC Sion",
-        "odds": 3.35,
-        "stake": 350.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-01-31T17:00:00Z"
     },
     {
         "id": "99d22e675353e1af5bf9d6c9579b8a26",
