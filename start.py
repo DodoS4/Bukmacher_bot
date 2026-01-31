@@ -55,7 +55,12 @@ def send_telegram(message):
     chat = get_secret("T_CHAT")
     if not token or not chat: return
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {"chat_id": chat, "text": message, "parse_mode": "HTML", "disable_web_page_preview": True}
+    payload = {
+        "chat_id": chat, 
+        "text": message, 
+        "parse_mode": "HTML", 
+        "disable_web_page_preview": True
+    }
     try: requests.post(url, json=payload, timeout=15)
     except: pass
 
@@ -67,7 +72,6 @@ def get_smart_stake(league_key):
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
             raw_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
-            # Uwzględnienie wypłaty w stawkowaniu
             effective_profit = raw_profit * (1 - VYPLATA_PERCENT)
             
             if effective_profit <= -700:
@@ -84,15 +88,14 @@ def get_smart_stake(league_key):
     return round(final_stake, 2), round(threshold, 3)
 
 def main():
-    print(f"✨ Betting Bot Professional Dawid / run-bot")
-    print(f"🚀 START BOT PRO: {datetime.now().strftime('%H:%M:%S')}")
+    print(f"✨ Betting Bot Professional Dawid")
+    print(f"🚀 START: {datetime.now().strftime('%H:%M:%S')}")
     
     api_keys = []
-    k1 = get_secret("ODDS_KEY")
-    if k1: api_keys.append(k1)
-    for i in range(2, 11):
-        ki = get_secret(f"ODDS_KEY_{i}")
-        if ki: api_keys.append(ki)
+    for i in range(1, 11):
+        key_name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
+        val = get_secret(key_name)
+        if val: api_keys.append(val)
     
     if not api_keys: return
 
@@ -115,8 +118,7 @@ def main():
 
     for league, flag in SPORTS_CONFIG.items():
         stake, threshold = get_smart_stake(league)
-        # Przywrócenie Twojego stylu logowania
-        print(f"📡 Skan: {league} (Stawka: {stake}, Próg: {threshold})")
+        print(f"📡 Skan: {league} (Stawka: {stake})")
         
         data = None
         for _ in range(len(api_keys)):
@@ -136,6 +138,10 @@ def main():
         for event in data:
             if event['id'] in already_sent: continue
             
+            try:
+                m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00")).astimezone(timezone(timedelta(hours=1)))
+            except: m_time = now
+
             prices = {}
             for bookie in event.get('bookmakers', []):
                 for market in bookie.get('markets', []):
@@ -154,26 +160,29 @@ def main():
                         max_val, best_odd, best_name = val, m_p, name
 
             if best_name:
+                league_display = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
                 search_query = event['home_team'].split()[0]
                 random_v = random.randint(1000, 9999)
                 superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&v={random_v}"
 
-                msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{league.upper()}</b>\n"
+                # IDENTYCZNY FORMAT WIADOMOŚCI
+                msg = (f"{flag} {flag} {league_display}\n"
                        f"━━━━━━━━━━━━━━━\n"
-                       f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n\n"
+                       f"🏟 {event['home_team']} vs {event['away_team']}\n"
+                       f"⏰ Start: {m_time.strftime('%d.%m | %H:%M')}\n\n"
                        f"✅ Typ: <b>{best_name}</b>\n"
                        f"📈 Kurs: <b>{best_odd}</b>\n"
                        f"💰 Stawka: <b>{stake} PLN</b>\n"
-                       f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n\n"
-                       f"🔗 <a href='{superbet_link}'>👉 OTWÓRZ W SUPERBET 👈</a>\n"
-                       f"━━━━━━━━━━━━━━━")
+                       f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
+                       f"━━━━━━━━━━━━━━━\n\n"
+                       f"🔗 <a href='{superbet_link}'>👉 OTWÓRZ W SUPERBET 👈</a>")
                 
                 send_telegram(msg)
-                all_coupons.append({"id": event['id'], "sport": league, "profit": 0}) # uproszczone dla przykładu
+                all_coupons.append({"id": event['id'], "home": event['home_team'], "away": event['away_team'], "sport": league, "time": event['commence_time']})
                 already_sent.append(event['id'])
 
-    print(f"✅ Koniec. Aktywne: {len(all_coupons)}")
     with open(KEY_STATE_FILE, "w") as f: f.write(str(idx))
+    with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(all_coupons, f, indent=4)
 
 if __name__ == "__main__":
     main()
