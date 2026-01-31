@@ -10,26 +10,6 @@
         "time": "2026-01-30T19:30:00Z"
     },
     {
-        "id": "8729ab6a380ab2eb6c7983b74b0d96ed",
-        "home": "FC Zwolle",
-        "away": "SC Telstar",
-        "outcome": "SC Telstar",
-        "odds": 3.05,
-        "stake": 350.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-01-31T17:45:00Z"
-    },
-    {
-        "id": "041b5802be27fac414c479bb96ff800f",
-        "home": "Volos FC",
-        "away": "AEL",
-        "outcome": "Volos FC",
-        "odds": 2.16,
-        "stake": 280.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-01-31T18:00:00Z"
-    },
-    {
         "id": "4b2d954fd75a3b54458b3ea3f62f2e49",
         "home": "Lech Pozna\u0144",
         "away": "Lechia Gda\u0144sk",
@@ -68,16 +48,6 @@
         "stake": 350.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-02-01T11:15:00Z"
-    },
-    {
-        "id": "b8c529224c3614fc5d8fff529e125ec5",
-        "home": "Rio Ave FC",
-        "away": "Arouca",
-        "outcome": "Rio Ave FC",
-        "odds": 2.7,
-        "stake": 280.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-01-31T18:00:00Z"
     },
     {
         "id": "c1fbd9c01b1bb1eb61ce0e9ba64f429c",
@@ -448,5 +418,15 @@
         "stake": 325.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-02-02T18:00:00Z"
+    },
+    {
+        "id": "49a7c3868f127dea5a06fccbd074ef70",
+        "home": "Udinese",
+        "away": "AS Roma",
+        "outcome": "AS Roma",
+        "odds": 1.99,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-02T19:45:00Z"
     }
 ]

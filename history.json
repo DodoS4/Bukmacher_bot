@@ -3248,6 +3248,32 @@
         "time": "2026-01-31T16:30:00Z"
     },
     {
+        "id": "8729ab6a380ab2eb6c7983b74b0d96ed",
+        "home": "FC Zwolle",
+        "away": "SC Telstar",
+        "sport": "soccer_netherlands_eredivisie",
+        "outcome": "SC Telstar",
+        "odds": 3.05,
+        "stake": 350.0,
+        "profit": -350.0,
+        "status": "LOSS",
+        "score": "4:1",
+        "time": "2026-01-31T17:45:00Z"
+    },
+    {
+        "id": "041b5802be27fac414c479bb96ff800f",
+        "home": "Volos FC",
+        "away": "AEL",
+        "sport": "soccer_greece_super_league",
+        "outcome": "Volos FC",
+        "odds": 2.16,
+        "stake": 280.0,
+        "profit": -280.0,
+        "status": "LOSS",
+        "score": "0:2",
+        "time": "2026-01-31T18:00:00Z"
+    },
+    {
         "id": "4eb2f2cca6e6f500dd3618ecbf243582",
         "home": "Napoli",
         "away": "Fiorentina",
@@ -3259,6 +3285,19 @@
         "status": "WIN",
         "score": "2:1",
         "time": "2026-01-31T17:00:00Z"
+    },
+    {
+        "id": "b8c529224c3614fc5d8fff529e125ec5",
+        "home": "Rio Ave FC",
+        "away": "Arouca",
+        "sport": "soccer_portugal_primeira_liga",
+        "outcome": "Rio Ave FC",
+        "odds": 2.7,
+        "stake": 280.0,
+        "profit": -280.0,
+        "status": "LOSS",
+        "score": "0:3",
+        "time": "2026-01-31T18:00:00Z"
     },
     {
         "id": "261e849fdaa8ead74569e9d72b581c91",
