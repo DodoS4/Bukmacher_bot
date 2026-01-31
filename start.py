@@ -5,7 +5,11 @@ import time
 import random
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG =================
+# ================= KONFIGURACJA =================
+BASE_STAKE = 250        # Twoja stawka bazowa
+VYPLATA_PERCENT = 0.00  # <--- TUTAJ WPISUJESZ WYPŁATĘ (np. 0.75 to wypłata 75% zysku)
+# ===============================================
+
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
@@ -25,7 +29,7 @@ SPORTS_CONFIG = {
     "soccer_france_ligue_one": "🇫🇷",
     "soccer_portugal_primeira_liga": "🇵🇹",
     "soccer_netherlands_eredivisie": "🇳🇱",
-    "soccer_turkey_super_lig": "🇹🇷",
+    "soccer_turkey_super_lig": "Т🇷",
     "soccer_belgium_first_division_a": "🇧🇪",
     "soccer_austria_bundesliga": "🇦🇹",
     "soccer_denmark_superliga": "🇩🇰",
@@ -41,7 +45,6 @@ SPORTS_CONFIG = {
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
-BASE_STAKE = 250
 
 # ================= POMOCNICZE =================
 def get_secret(name):
@@ -60,39 +63,42 @@ def send_telegram(message, mode="HTML"):
         "chat_id": chat, 
         "text": message, 
         "parse_mode": mode, 
-        "disable_web_page_preview": True # To zapobiega pokazywaniu błędnych podglądów Safari
+        "disable_web_page_preview": True 
     }
     try:
         requests.post(url, json=payload, timeout=15)
     except: pass
 
-# ================= LOGIKA STAWEK I VALUE =================
+# ================= LOGIKA STAWEK I VALUE (Z WYPŁATĄ) =================
 def get_smart_stake(league_key):
     current_multiplier = 1.0
     threshold = 1.035 
-    history_profit = 0
-
+    
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
-            league_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
-            history_profit = league_profit
             
-            if league_profit <= -700:
+            # Liczymy realny zysk dla ligi
+            raw_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
+            
+            # UWZGLĘDNIAMY WYPŁATĘ: Bot widzi tylko to, co zostawiłeś w obrocie
+            effective_profit = raw_profit * (1 - VYPLATA_PERCENT)
+            
+            if effective_profit <= -700:
                 current_multiplier, threshold = 0.5, 1.08
-            elif league_profit >= 3000:
+            elif effective_profit >= 3000:
                 current_multiplier = 1.6
-            elif league_profit >= 1000:
+            elif effective_profit >= 1000:
                 current_multiplier = 1.3
         except: pass
     
     final_stake = BASE_STAKE * current_multiplier
     
+    # Bonus hokejowy (lekko zredukowany dla bezpieczeństwa przy wypłatach)
     if "icehockey" in league_key.lower():
         threshold -= 0.01 
-        if history_profit > 0:
-            final_stake *= 1.25 
+        final_stake *= 1.20 
             
     return round(final_stake, 2), round(threshold, 3)
 
@@ -177,11 +183,6 @@ def main():
 
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
-                
-                # --- OSTATECZNA NAPRAWA DLA iOS ---
-                # 1. /wyszukiwanie zamiast /szukaj
-                # 2. Tylko pierwsze słowo nazwy (Nieciecza, Cracovia itp.)
-                # 3. Dodanie losowej wartości &v= aby odświeżyć link w iPhone
                 search_query = event['home_team'].split()[0]
                 random_v = random.randint(1000, 9999)
                 superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&v={random_v}"
