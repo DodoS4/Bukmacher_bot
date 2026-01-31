@@ -3324,5 +3324,31 @@
         "status": "LOSS",
         "score": "3:3",
         "time": "2026-01-31T17:00:00Z"
+    },
+    {
+        "id": "12eb7e5579087927a26a35783f072333",
+        "home": "Philadelphia Flyers",
+        "away": "Los Angeles Kings",
+        "sport": "icehockey_nhl",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.65,
+        "stake": 546.0,
+        "profit": 900.9,
+        "status": "WIN",
+        "score": "2:3",
+        "time": "2026-01-31T17:30:00Z"
+    },
+    {
+        "id": "b668bc7749f63ae984b898b07a6dfcf5",
+        "home": "Detroit Red Wings",
+        "away": "Colorado Avalanche",
+        "sport": "icehockey_nhl",
+        "outcome": "Detroit Red Wings",
+        "odds": 3.15,
+        "stake": 546.0,
+        "profit": -546.0,
+        "status": "LOSS",
+        "score": "0:5",
+        "time": "2026-01-31T18:00:00Z"
     }
 ]
