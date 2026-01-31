@@ -64,7 +64,7 @@
         "home": "Edmonton Oilers",
         "away": "Minnesota Wild",
         "outcome": "Minnesota Wild",
-        "odds": 2.71,
+        "odds": 2.7,
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-01T03:10:00Z"
@@ -203,8 +203,8 @@
         "id": "521c3a1d3b15f330bdb115a71ed6e9f9",
         "home": "Excelsior",
         "away": "Ajax",
-        "outcome": "Excelsior",
-        "odds": 4.5,
+        "outcome": "Ajax",
+        "odds": 1.81,
         "stake": 325.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-02-01T11:15:00Z"
