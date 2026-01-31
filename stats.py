@@ -22,11 +22,15 @@ def generate_stats():
     wins, losses = 0, 0
     league_map = {}
     chart_data = []
+    
+    # Obliczanie zysku 24h
+    profit_24h = 0.0
+    now = datetime.now(timezone.utc)
+    yesterday = now - timedelta(days=1)
 
     for bet in history:
         prof = float(bet.get('profit', 0))
         stk = float(bet.get('stake', 0))
-        # Normalizacja nazwy ligi
         raw_league = bet.get('sport', 'INNE').upper().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace('_', ' ')
         
         total_profit += prof
@@ -36,25 +40,37 @@ def generate_stats():
         if prof > 0: wins += 1
         elif prof < 0: losses += 1
 
+        # Zysk 24h
+        b_time = bet.get('time')
+        if b_time:
+            try:
+                dt_obj = datetime.fromisoformat(b_time.replace("Z", "+00:00"))
+                if dt_obj > yesterday: profit_24h += prof
+            except: pass
+
         if raw_league not in league_map:
             league_map[raw_league] = {'profit': 0.0, 'bets': 0}
         league_map[raw_league]['profit'] += prof
         league_map[raw_league]['bets'] += 1
 
-    # Sortowanie lig
+    # Obliczenia końcowe
+    win_rate = round((wins/len(history)*100) if len(history) > 0 else 0, 1)
+    yield_val = round((total_profit/turnover*100) if turnover > 0 else 0, 2)
+    # ROI = (Zysk / Kapitał Początkowy) * 100
+    roi_val = round((total_profit / STARTING_BANKROLL) * 100, 2)
+
+    # Sortowanie lig do raportu
     sorted_leagues = sorted(league_map.items(), key=lambda x: x[1]['profit'], reverse=True)
-    
     top_leagues = sorted_leagues[:3]
     bottom_leagues = sorted_leagues[-3:]
 
-    win_rate = round((wins/len(history)*100) if len(history) > 0 else 0, 1)
-    yield_val = round((total_profit/turnover*100) if turnover > 0 else 0, 2)
-
-    # Zapis do stats.json
+    # Zapis do stats.json - DODANO KLUCZE ROI I ZYSK_24H
     web_stats = {
         "zysk_total": round(total_profit, 2),
+        "zysk_24h": round(profit_24h, 2),
         "skutecznosc": win_rate,
         "yield": yield_val,
+        "roi": roi_val, # To naprawi wyświetlanie na stronie
         "obrot": round(turnover, 2),
         "total_bets_count": len(history),
         "wykres": chart_data,
@@ -64,26 +80,25 @@ def generate_stats():
     with open('stats.json', 'w', encoding='utf-8') as f:
         json.dump(web_stats, f, indent=4)
 
-    # Budowanie raportu na Telegram
+    # Raport na Telegram
     msg = [
         "📊 <b>RAPORT ANALITYCZNY LIG</b>",
         f"━━━━━━━━━━━━━━━",
-        f"💰 Zysk: <b>{total_profit:.2f} PLN</b>",
-        f"📈 Yield: <b>{yield_val}%</b>",
+        f"💰 Zysk Total: <b>{total_profit:.2f} PLN</b>",
+        f"📈 ROI: <b>{roi_val}%</b> | Yield: <b>{yield_val}%</b>",
         f"━━━━━━━━━━━━━━━",
-        "✅ <b>NAJLEPSZE LIGI:</b>"
+        "✅ <b>TOP LIGI:</b>"
     ]
     
     for name, data in top_leagues:
         if data['profit'] > 0:
-            msg.append(f"• {name}: <b>+{data['profit']:.2f}</b> ({data['bets']} typów)")
+            msg.append(f"• {name}: <b>+{data['profit']:.2f}</b>")
 
-    msg.append("\n❌ <b>NAJSŁABSZE LIGI:</b>")
+    msg.append("\n❌ <b>BOTTOM LIGI (DO OBSERWACJI):</b>")
     for name, data in bottom_leagues:
         if data['profit'] < 0:
-            msg.append(f"• {name}: <b>{data['profit']:.2f}</b> ({data['bets']} typów)")
+            msg.append(f"• {name}: <b>{data['profit']:.2f}</b>")
 
-    msg.append(f"━━━━━━━━━━━━━━━")
     return True, "\n".join(msg)
 
 if __name__ == "__main__":
