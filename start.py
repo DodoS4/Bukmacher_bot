@@ -2,45 +2,23 @@ import os
 import requests
 import json
 import time
-import random
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 
 # ================= PANEL STEROWANIA =================
 BASE_STAKE = 25         # Stawka bazowa pod bankroll 500 PLN
-VYPLATA_PERCENT = 0.0   # 0.0 oznacza budowanie kuli śnieżnej
+VYPLATA_PERCENT = 0.0   # Budujemy kulę śnieżną
 # ====================================================
 
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
-    "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
-    "icehockey_finland_liiga": "🇫🇮",
-    "icehockey_germany_del": "🇩🇪",
-    "icehockey_czech_extraliga": "🇨🇿",
-    "icehockey_switzerland_nla": "🇨🇭",
-    "icehockey_austria_liga": "🇦🇹",
-    "icehockey_denmark_metal_ligaen": "🇩🇰",
-    "icehockey_norway_eliteserien": "🇳🇴",
-    "icehockey_slovakia_extraliga": "🇸🇰",
     "soccer_epl": "⚽",
     "soccer_germany_bundesliga": "🇩🇪",
     "soccer_italy_serie_a": "🇮🇹", 
     "soccer_spain_la_liga": "🇪🇸",
     "soccer_poland_ekstraklasa": "🇵🇱",
     "soccer_france_ligue_one": "🇫🇷",
-    "soccer_portugal_primeira_liga": "🇵🇹",
-    "soccer_netherlands_eredivisie": "🇳🇱",
-    "soccer_turkey_super_lig": "🇹🇷",
-    "soccer_belgium_first_division_a": "🇧🇪",
-    "soccer_austria_bundesliga": "🇦🇹",
-    "soccer_denmark_superliga": "🇩🇰",
-    "soccer_greece_super_league": "🇬🇷",
-    "soccer_switzerland_superleague": "🇨🇭",
-    "soccer_scotland_premier_league": "🏴",
-    "soccer_efl_championship": "🏴",
-    "basketball_euroleague": "🏀",
-    "tennis_atp_australian_open": "🎾",
-    "tennis_wta_australian_open": "🎾"
+    "basketball_euroleague": "🏀"
 }
 
 HISTORY_FILE = "history.json"
@@ -57,17 +35,11 @@ def send_telegram(message):
     if not token or not chat: return
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     
-    # Dodajemy przycisk "ZROBIONE", abyś wiedział co postawiłeś
-    reply_markup = {
-        "inline_keyboard": [[{"text": "ZROBIONE ✅", "callback_data": "done"}]]
-    }
-    
     payload = {
         "chat_id": chat, 
         "text": message, 
         "parse_mode": "HTML", 
-        "disable_web_page_preview": True,
-        "reply_markup": reply_markup
+        "disable_web_page_preview": True  # Wyłączony podgląd, żeby link był czytelniejszy
     }
     try: requests.post(url, json=payload, timeout=15)
     except: pass
@@ -80,15 +52,12 @@ def get_smart_stake(league_key):
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
             raw_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
-            effective_profit = raw_profit * (1 - VYPLATA_PERCENT)
-            
-            if effective_profit <= -700:
+            if raw_profit <= -700:
                 current_multiplier, threshold = 0.5, 1.08
-            elif effective_profit >= 3000:
-                current_multiplier = 1.6
-            elif effective_profit >= 1000:
+            elif raw_profit >= 1000:
                 current_multiplier = 1.3
         except: pass
+    
     final_stake = BASE_STAKE * current_multiplier
     if "icehockey" in league_key.lower():
         threshold -= 0.01 
@@ -120,13 +89,12 @@ def main():
         except: pass
     
     already_sent = [c['id'] for c in all_coupons]
-    initial_count = len(already_sent)
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=72)
 
     for league, flag in SPORTS_CONFIG.items():
         stake, threshold = get_smart_stake(league)
-        print(f"📡 Skan: {league.ljust(35)} | Stawka: {stake}")
+        print(f"📡 Skan: {league} | Stawka: {stake}")
         
         data = None
         for _ in range(len(api_keys)):
@@ -150,53 +118,42 @@ def main():
                 m_time = m_time_utc.astimezone(timezone(timedelta(hours=1)))
             except: continue
 
-            prices = {}
-            for bookie in event.get('bookmakers', []):
-                for market in bookie.get('markets', []):
-                    if market['key'] == 'h2h':
-                        for out in market['outcomes']:
-                            if out['name'] not in prices: prices[out['name']] = []
-                            prices[out['name']].append(out['price'])
+            prices = {out['name']: out['price'] for b in event.get('bookmakers', []) for m in b.get('markets', []) if m['key']=='h2h' for out in m['outcomes']}
 
             best_name, best_odd, max_val = None, 0, 0
-            for name, p_list in prices.items():
-                if name.lower() == "draw": continue
-                m_p, a_p = max(p_list), sum(p_list)/len(p_list)
-                val = m_p / a_p
-                if 1.80 <= m_p <= 4.50 and val > threshold:
-                    if val > max_val:
-                        max_val, best_odd, best_name = val, m_p, name
+            if len(prices) >= 2:
+                avg_odd = sum(prices.values()) / len(prices)
+                for name, price in prices.items():
+                    if name.lower() == "draw": continue
+                    val = price / avg_odd
+                    if 1.80 <= price <= 4.50 and val > threshold:
+                        if val > max_val: max_val, best_odd, best_name = val, price, name
 
             if best_name:
-                league_display = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
+                # --- NAPRAWA LINKÓW ---
+                # Czyścimy nazwę gospodarza, bierzemy tylko pierwszy człon (np. "Real" zamiast "Real Madrid")
+                raw_home = event['home_team'].replace("FC", "").replace("United", "").replace("BC", "").strip()
+                search_word = raw_home.split()[0]
                 
-                # POPRAWIONE LINKI SUPERBET
-                clean_home = event['home_team'].replace("FC", "").replace("United", "").replace("HC", "").strip()
-                search_term = clean_home.split()[0]
-                encoded_query = urllib.parse.quote(search_term)
-                superbet_link = f"https://superbet.pl/wyszukiwanie?query={encoded_query}"
+                # Kodowanie URL
+                encoded_search = urllib.parse.quote(search_word)
+                superbet_link = f"https://superbet.pl/wyszukiwanie?query={encoded_search}"
 
-                msg = (f"{flag} {flag} {league_display}\n"
+                league_display = league.upper().replace("SOCCER_", "").replace("_", " ")
+                msg = (f"{flag} <b>{league_display}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
-                       f"🏟 {event['home_team']} vs {event['away_team']}\n"
+                       f"🏟 {event['home_team']} - {event['away_team']}\n"
                        f"⏰ Start: {m_time.strftime('%d.%m | %H:%M')}\n\n"
-                       f"✅ Typ: <b>{best_name}</b>\n"
+                       f"🎯 Typ: <b>{best_name}</b>\n"
                        f"📈 Kurs: <b>{best_odd}</b>\n"
                        f"💰 Stawka: <b>{stake} PLN</b>\n"
                        f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
                        f"━━━━━━━━━━━━━━━\n\n"
-                       f"🔗 <a href='{superbet_link}'>👉 OTWÓRZ W SUPERBET 👈</a>")
+                       f"🔗 <a href='{superbet_link}'>👉 POSTAW W SUPERBET 👈</a>")
                 
                 send_telegram(msg)
-                all_coupons.append({
-                    "id": event['id'], "home": event['home_team'], "away": event['away_team'], 
-                    "outcome": best_name, "odds": best_odd, "stake": stake,
-                    "sport": league, "time": event['commence_time']
-                })
+                all_coupons.append({"id": event['id'], "home": event['home_team'], "away": event['away_team'], "outcome": best_name, "odds": best_odd, "stake": stake, "sport": league, "time": event['commence_time']})
                 already_sent.append(event['id'])
-
-    new_found = len(all_coupons) - initial_count
-    print(f"\n{'='*40}\n📊 PODSUMOWANIE: Nowych {new_found}, Aktywnych {len(all_coupons)}\n{'='*40}")
 
     with open(KEY_STATE_FILE, "w") as f: f.write(str(idx))
     with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(all_coupons, f, indent=4)
