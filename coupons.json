@@ -368,5 +368,411 @@
         "stake": 325.0,
         "sport": "soccer_italy_serie_a",
         "time": "2026-02-02T19:45:00Z"
+    },
+    {
+        "id": "8ca6a2f0fb6436b92bf3745d4ba81c54",
+        "home": "Burnley",
+        "away": "West Ham United",
+        "sport": "soccer_epl",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "5b5fa92a38c5a46da05ac81d003f6f1e",
+        "home": "Everton",
+        "away": "Bournemouth",
+        "sport": "soccer_epl",
+        "time": "2026-02-10T19:30:00Z"
+    },
+    {
+        "id": "7dbe188ba5a5b8a16e8d293c2afe1274",
+        "home": "Tottenham Hotspur",
+        "away": "Newcastle United",
+        "sport": "soccer_epl",
+        "time": "2026-02-10T19:30:00Z"
+    },
+    {
+        "id": "e52ffec43cce1bd9cea0f0ef8e9a0b7b",
+        "home": "West Ham United",
+        "away": "Manchester United",
+        "sport": "soccer_epl",
+        "time": "2026-02-10T20:15:00Z"
+    },
+    {
+        "id": "6eb455fd4d99ec4ccae4ec842f2f34fb",
+        "home": "Aston Villa",
+        "away": "Brighton and Hove Albion",
+        "sport": "soccer_epl",
+        "time": "2026-02-11T19:30:00Z"
+    },
+    {
+        "id": "1fff9348b53ea8e4ef4b5dcfe291e508",
+        "home": "Union Berlin",
+        "away": "Eintracht Frankfurt",
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-06T19:30:00Z"
+    },
+    {
+        "id": "a12aa3c1df6158825b5f8c714fe686c0",
+        "home": "1. FC Heidenheim",
+        "away": "Hamburger SV",
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "a30bf74fc995a556100c95334d881e3a",
+        "home": "FSV Mainz 05",
+        "away": "Augsburg",
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "6bf2b7cb404b378f8ed4c1641d5940a1",
+        "home": "VfL Wolfsburg",
+        "away": "Borussia Dortmund",
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "866ac1b75dbdd947624fa60d28982d74",
+        "home": "FC St. Pauli",
+        "away": "VfB Stuttgart",
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "32a244cb341547ac81e9f20672cb0184",
+        "home": "SC Freiburg",
+        "away": "Werder Bremen",
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "44e038b462710b4c65afa8e0399479f4",
+        "home": "Borussia Monchengladbach",
+        "away": "Bayer Leverkusen",
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T17:30:00Z"
+    },
+    {
+        "id": "5589fa9d8d767a0fbb17e8bb533d13ea",
+        "home": "1. FC K\u00f6ln",
+        "away": "RB Leipzig",
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-08T14:30:00Z"
+    },
+    {
+        "id": "ed80343c6ecb8c7da091ab4508a5870e",
+        "home": "Bologna",
+        "away": "AC Milan",
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "e74e33aab7625d15231dca45cab2fec3",
+        "home": "Hellas Verona",
+        "away": "Pisa",
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-06T19:45:00Z"
+    },
+    {
+        "id": "9e0f5cab00d1f21496136ef857386de8",
+        "home": "Genoa",
+        "away": "Napoli",
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-07T17:00:00Z"
+    },
+    {
+        "id": "2e80035301b91b842c2dbbf9e3fecdcb",
+        "home": "Fiorentina",
+        "away": "Torino",
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-07T19:45:00Z"
+    },
+    {
+        "id": "2163a19ef12c28e59f662f1eb4b335fb",
+        "home": "AC Milan",
+        "away": "Como",
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-08T14:00:00Z"
+    },
+    {
+        "id": "dca70a16af51be2b8f808e2a96433d1c",
+        "home": "Lecce",
+        "away": "Udinese",
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-08T14:00:00Z"
+    },
+    {
+        "id": "ed325af055d0f156976702933501330f",
+        "home": "Sevilla",
+        "away": "Girona",
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-07T17:30:00Z"
+    },
+    {
+        "id": "c42908f4abe3cb7c798346cdf1fc74fd",
+        "home": "Piast Gliwice",
+        "away": "Lech Pozna\u0144",
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "86d981b5773fa1b4c946bf143a3e5837",
+        "home": "CF Estrela",
+        "away": "Santa Clara",
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-07T15:30:00Z"
+    },
+    {
+        "id": "f84bc94e39259bded69b13625f77804b",
+        "home": "Arouca",
+        "away": "Vit\u00f3ria SC",
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-07T20:30:00Z"
+    },
+    {
+        "id": "11b4da8ee591e118ac814a9e0ca75e71",
+        "home": "NAC Breda",
+        "away": "Excelsior",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-06T19:00:00Z"
+    },
+    {
+        "id": "37bc914d0ad99869334ab3f929061f61",
+        "home": "FC Zwolle",
+        "away": "FC Volendam",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-07T17:45:00Z"
+    },
+    {
+        "id": "16c5df5b0b6c2fbf3d7e5456c934869d",
+        "home": "Fortuna Sittard",
+        "away": "Sparta Rotterdam",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-07T20:00:00Z"
+    },
+    {
+        "id": "a4afc664ca381246c46f4333c4e91049",
+        "home": "FC Utrecht",
+        "away": "Feyenoord",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-08T11:15:00Z"
+    },
+    {
+        "id": "d65968c20cfda0b2232a55507dca3e03",
+        "home": "AZ Alkmaar",
+        "away": "Ajax",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-08T13:30:00Z"
+    },
+    {
+        "id": "c426c8dd6791c1daad13b634cd8b37a3",
+        "home": "Go Ahead Eagles",
+        "away": "SC Telstar",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-08T13:30:00Z"
+    },
+    {
+        "id": "d2b3fc564651f90a7412053fca98e1e2",
+        "home": "Groningen",
+        "away": "PSV Eindhoven",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-08T15:45:00Z"
+    },
+    {
+        "id": "5a7b74f247be320e8c6f3e179b731055",
+        "home": "Go Ahead Eagles",
+        "away": "Heerenveen",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-11T17:45:00Z"
+    },
+    {
+        "id": "91b562ed91c9a6e57f5cef8545155724",
+        "home": "NEC Nijmegen",
+        "away": "FC Utrecht",
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-11T20:00:00Z"
+    },
+    {
+        "id": "6662ac66b320a0366fd03469cfa694e8",
+        "home": "RB Salzburg",
+        "away": "Austria Wien",
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-06T19:30:00Z"
+    },
+    {
+        "id": "37bde103ad3835595543226b80fa159a",
+        "home": "Rapid Wien",
+        "away": "Hartberg",
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-07T16:00:00Z"
+    },
+    {
+        "id": "9d350d4f897d0e687004a6d64499721c",
+        "home": "Rheindorf Altach",
+        "away": "FC Blau-Wei\u00df Linz",
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-08T13:30:00Z"
+    },
+    {
+        "id": "18455c3bc5cea4de6a38f2781cfcc6de",
+        "home": "Wolfsberger AC",
+        "away": "Grazer AK",
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-08T13:30:00Z"
+    },
+    {
+        "id": "fe06c4615a37caa223915de2c24f6664",
+        "home": "Sturm Graz",
+        "away": "Ried",
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-08T16:00:00Z"
+    },
+    {
+        "id": "65d8494f15618a48278efbc9bf00249e",
+        "home": "FC Nordsjaelland",
+        "away": "SonderjyskE",
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-08T13:00:00Z"
+    },
+    {
+        "id": "af00899e4e71e97745f36d40c13b1820",
+        "home": "Silkeborg IF",
+        "away": "Viborg FF",
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-08T13:00:00Z"
+    },
+    {
+        "id": "02dc2079c2202be310f268f2aa53e79e",
+        "home": "FC Midtjylland",
+        "away": "FC Copenhagen",
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-08T15:00:00Z"
+    },
+    {
+        "id": "af70d254c81f7a697ec6bc875ae32a10",
+        "home": "Brondby IF",
+        "away": "Randers FC",
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-08T17:00:00Z"
+    },
+    {
+        "id": "fbecc11f0945f124f4641d55949b05ed",
+        "home": "Vejle Boldklub",
+        "away": "FC Fredericia",
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-09T18:00:00Z"
+    },
+    {
+        "id": "5cf3d6e00bcb51e08861aea03df9a228",
+        "home": "AEL",
+        "away": "Panetolikos Agrinio",
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "66eac62935381272d62f627dd3657114",
+        "home": "Asteras Tripolis",
+        "away": "Volos FC",
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-07T16:00:00Z"
+    },
+    {
+        "id": "beae739b7166c8f8563f3e6c774a3fbf",
+        "home": "AE Kifisia FC",
+        "away": "Atromitos Athens",
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-07T18:00:00Z"
+    },
+    {
+        "id": "8b566f665f95c10a55213291c9e767d1",
+        "home": "OFI Crete",
+        "away": "Levadiakos",
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-08T15:00:00Z"
+    },
+    {
+        "id": "4d7aeafd70fe0c48a9733841b80d5217",
+        "home": "Aris Thessaloniki",
+        "away": "PAOK Thessaloniki",
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-08T17:00:00Z"
+    },
+    {
+        "id": "f52c2aa89cec7bc436b95851950b4086",
+        "home": "Olympiakos Piraeus",
+        "away": "Panathinaikos",
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-08T19:00:00Z"
+    },
+    {
+        "id": "bf3cec19ae589773c01f75055a7d30cb",
+        "home": "Dubai Basketball",
+        "away": "Olympiacos",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T16:00:00Z"
+    },
+    {
+        "id": "680e06addd76104de1f0a51893434e32",
+        "home": "Anadolu Efes",
+        "away": "Valencia Basket",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T17:30:00Z"
+    },
+    {
+        "id": "4965186c819843c2b365e2c88ae857d5",
+        "home": "\u017dalgiris",
+        "away": "AS Monaco",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T18:00:00Z"
+    },
+    {
+        "id": "0984f58399853ae15893624f832ef205",
+        "home": "KK Crvena zvezda",
+        "away": "Hapoel Tel Aviv",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:00:00Z"
+    },
+    {
+        "id": "3d9e794d7b69e176e3af38063052a8d1",
+        "home": "Maccabi Tel Aviv",
+        "away": "KK Partizan NIS",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:05:00Z"
+    },
+    {
+        "id": "f28bb4c8588342441b2c1a825669ba1d",
+        "home": "Panathinaikos",
+        "away": "Real Madrid",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:15:00Z"
+    },
+    {
+        "id": "bb997a9c909b9654a8ccddea8fdf1cf9",
+        "home": "FC Barcelona B\u00e0squet",
+        "away": "Fenerbahce SK",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "e1481836943e2fac71da846dda1a2e1b",
+        "home": "FC Bayern M\u00fcnchen",
+        "away": "Paris Basketball",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "9c493d8453051719c226d4ed7fded3e5",
+        "home": "Pallacanestro Olimpia Milano",
+        "away": "Saski Baskonia",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "ee7b7d0c5180c17057d2dd17bc8cf0de",
+        "home": "Virtus Segafredo Bologna",
+        "away": "ASVEL Lyon Villeurbanne",
+        "sport": "basketball_euroleague",
+        "time": "2026-02-04T19:30:00Z"
     }
 ]
