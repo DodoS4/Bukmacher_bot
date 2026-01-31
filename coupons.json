@@ -1,1 +1,202 @@
-[]
+[
+    {
+        "id": "9c612b05e7fc0b581b689380f7405f35",
+        "home": "Aston Villa",
+        "away": "Brentford",
+        "outcome": "Brentford",
+        "odds": 3.53,
+        "stake": 12.5,
+        "sport": "soccer_epl",
+        "time": "2026-02-01T14:00:00Z"
+    },
+    {
+        "id": "d2436eec6993a6e21f00887163987e87",
+        "home": "Nottingham Forest",
+        "away": "Crystal Palace",
+        "outcome": "Crystal Palace",
+        "odds": 4.1,
+        "stake": 12.5,
+        "sport": "soccer_epl",
+        "time": "2026-02-01T14:00:00Z"
+    },
+    {
+        "id": "35393f9e56c3102f7134f40c9eb47f94",
+        "home": "Como",
+        "away": "Atalanta BC",
+        "outcome": "Atalanta BC",
+        "odds": 3.35,
+        "stake": 32.5,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-01T14:00:00Z"
+    },
+    {
+        "id": "ed80343c6ecb8c7da091ab4508a5870e",
+        "home": "Bologna",
+        "away": "AC Milan",
+        "outcome": "Bologna",
+        "odds": 3.4,
+        "stake": 32.5,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "b676acd01af1ef72f58cfdd42e29ab25",
+        "home": "Real Betis",
+        "away": "Valencia",
+        "outcome": "Valencia",
+        "odds": 4.5,
+        "stake": 12.5,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-01T15:15:00Z"
+    },
+    {
+        "id": "2a83052380ad26b3621d17cad9c5b0a1",
+        "home": "Athletic Bilbao",
+        "away": "Real Sociedad",
+        "outcome": "Real Sociedad",
+        "odds": 3.65,
+        "stake": 12.5,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-01T20:00:00Z"
+    },
+    {
+        "id": "fd5f816250823f7ff851c74998d534f0",
+        "home": "Mallorca",
+        "away": "Sevilla",
+        "outcome": "Sevilla",
+        "odds": 3.2,
+        "stake": 12.5,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-02T20:00:00Z"
+    },
+    {
+        "id": "4a69144cd15cae894c234f550c66f140",
+        "home": "Wis\u0142a P\u0142ock",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 3.85,
+        "stake": 32.5,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-01T13:45:00Z"
+    },
+    {
+        "id": "bf157542a9d24d33de2328877193a89a",
+        "home": "Nieciecza",
+        "away": "Cracovia Krak\u00f3w",
+        "outcome": "Nieciecza",
+        "odds": 3.45,
+        "stake": 32.5,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-02T18:00:00Z"
+    },
+    {
+        "id": "95490d0dabe793fb049fad344509e567",
+        "home": "Lyon",
+        "away": "Lille",
+        "outcome": "Lille",
+        "odds": 3.65,
+        "stake": 12.5,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-02-01T14:00:00Z"
+    },
+    {
+        "id": "bb713faa9839004d50ad2dd674259e56",
+        "home": "Angers",
+        "away": "Metz",
+        "outcome": "Metz",
+        "odds": 3.65,
+        "stake": 12.5,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-02-01T16:15:00Z"
+    },
+    {
+        "id": "5c05936762502e92ffc8315765d2dcf9",
+        "home": "Nice",
+        "away": "Brest",
+        "outcome": "Brest",
+        "odds": 3.6,
+        "stake": 12.5,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-02-01T16:15:00Z"
+    },
+    {
+        "id": "bf3cec19ae589773c01f75055a7d30cb",
+        "home": "Dubai Basketball",
+        "away": "Olympiacos",
+        "outcome": "Dubai Basketball",
+        "odds": 2.55,
+        "stake": 25.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T16:00:00Z"
+    },
+    {
+        "id": "680e06addd76104de1f0a51893434e32",
+        "home": "Anadolu Efes",
+        "away": "Valencia Basket",
+        "outcome": "Anadolu Efes",
+        "odds": 2.12,
+        "stake": 25.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T17:30:00Z"
+    },
+    {
+        "id": "0984f58399853ae15893624f832ef205",
+        "home": "KK Crvena zvezda",
+        "away": "Hapoel Tel Aviv",
+        "outcome": "Hapoel Tel Aviv",
+        "odds": 2.05,
+        "stake": 25.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:00:00Z"
+    },
+    {
+        "id": "3d9e794d7b69e176e3af38063052a8d1",
+        "home": "Maccabi Tel Aviv",
+        "away": "KK Partizan NIS",
+        "outcome": "KK Partizan NIS",
+        "odds": 3.2,
+        "stake": 25.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:05:00Z"
+    },
+    {
+        "id": "f28bb4c8588342441b2c1a825669ba1d",
+        "home": "Panathinaikos",
+        "away": "Real Madrid",
+        "outcome": "Real Madrid",
+        "odds": 2.56,
+        "stake": 25.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:15:00Z"
+    },
+    {
+        "id": "bb997a9c909b9654a8ccddea8fdf1cf9",
+        "home": "FC Barcelona B\u00e0squet",
+        "away": "Fenerbahce SK",
+        "outcome": "Fenerbahce SK",
+        "odds": 2.38,
+        "stake": 25.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "e1481836943e2fac71da846dda1a2e1b",
+        "home": "FC Bayern M\u00fcnchen",
+        "away": "Paris Basketball",
+        "outcome": "Paris Basketball",
+        "odds": 2.75,
+        "stake": 25.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "9c493d8453051719c226d4ed7fded3e5",
+        "home": "Pallacanestro Olimpia Milano",
+        "away": "Saski Baskonia",
+        "outcome": "Saski Baskonia",
+        "odds": 3.8,
+        "stake": 25.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:30:00Z"
+    }
+]
