@@ -3376,5 +3376,31 @@
         "status": "LOSS",
         "score": "1:1",
         "time": "2026-01-31T19:30:00Z"
+    },
+    {
+        "id": "0a989e0e588a7fa9fcdd1ab09ff07faf",
+        "home": "Sparta Rotterdam",
+        "away": "Groningen",
+        "sport": "soccer_netherlands_eredivisie",
+        "outcome": "Sparta Rotterdam",
+        "odds": 2.8,
+        "stake": 350.0,
+        "profit": 630.0,
+        "status": "WIN",
+        "score": "2:0",
+        "time": "2026-01-31T20:00:00Z"
+    },
+    {
+        "id": "8a2f061fef3092d9cb56453b1378f5d4",
+        "home": "Cagliari",
+        "away": "Hellas Verona",
+        "sport": "soccer_italy_serie_a",
+        "outcome": "Cagliari",
+        "odds": 2.36,
+        "stake": 350.0,
+        "profit": 476.0,
+        "status": "WIN",
+        "score": "4:0",
+        "time": "2026-01-31T19:45:00Z"
     }
 ]

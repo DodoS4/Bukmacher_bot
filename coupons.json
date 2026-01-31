@@ -40,16 +40,6 @@
         "time": "2026-01-31T20:30:00Z"
     },
     {
-        "id": "0a989e0e588a7fa9fcdd1ab09ff07faf",
-        "home": "Sparta Rotterdam",
-        "away": "Groningen",
-        "outcome": "Sparta Rotterdam",
-        "odds": 2.8,
-        "stake": 350.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-01-31T20:00:00Z"
-    },
-    {
         "id": "521c3a1d3b15f330bdb115a71ed6e9f9",
         "home": "Excelsior",
         "away": "Ajax",
@@ -228,16 +218,6 @@
         "stake": 546.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-01T03:00:00Z"
-    },
-    {
-        "id": "8a2f061fef3092d9cb56453b1378f5d4",
-        "home": "Cagliari",
-        "away": "Hellas Verona",
-        "outcome": "Cagliari",
-        "odds": 2.36,
-        "stake": 350.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-01-31T19:45:00Z"
     },
     {
         "id": "d5add1b42d967331cd06e5e3eca15831",
