@@ -20,10 +20,8 @@ def generate_stats():
 
     total_profit, turnover = 0.0, 0.0
     wins, losses = 0, 0
-    league_map = {}
     chart_data = []
     
-    # Obliczanie zysku 24h
     profit_24h = 0.0
     now = datetime.now(timezone.utc)
     yesterday = now - timedelta(days=1)
@@ -31,7 +29,6 @@ def generate_stats():
     for bet in history:
         prof = float(bet.get('profit', 0))
         stk = float(bet.get('stake', 0))
-        raw_league = bet.get('sport', 'INNE').upper().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace('_', ' ')
         
         total_profit += prof
         turnover += stk
@@ -40,68 +37,57 @@ def generate_stats():
         if prof > 0: wins += 1
         elif prof < 0: losses += 1
 
-        # Zysk 24h
-        b_time = bet.get('time')
+        b_time = bet.get('time') or bet.get('date')
         if b_time:
             try:
                 dt_obj = datetime.fromisoformat(b_time.replace("Z", "+00:00"))
                 if dt_obj > yesterday: profit_24h += prof
             except: pass
 
-        if raw_league not in league_map:
-            league_map[raw_league] = {'profit': 0.0, 'bets': 0}
-        league_map[raw_league]['profit'] += prof
-        league_map[raw_league]['bets'] += 1
-
-    # Obliczenia końcowe
     win_rate = round((wins/len(history)*100) if len(history) > 0 else 0, 1)
     yield_val = round((total_profit/turnover*100) if turnover > 0 else 0, 2)
-    # ROI = (Zysk / Kapitał Początkowy) * 100
-    roi_val = round((total_profit / STARTING_BANKROLL) * 100, 2)
-
-    # Sortowanie lig do raportu
-    sorted_leagues = sorted(league_map.items(), key=lambda x: x[1]['profit'], reverse=True)
-    top_leagues = sorted_leagues[:3]
-    bottom_leagues = sorted_leagues[-3:]
-
-    # Zapis do stats.json - DODANO KLUCZE ROI I ZYSK_24H
+    bankroll_now = STARTING_BANKROLL + total_profit
+    
+    # Zapis do stats.json (dla Dashboardu WWW - zostawiamy go w tle)
     web_stats = {
         "zysk_total": round(total_profit, 2),
         "zysk_24h": round(profit_24h, 2),
         "skutecznosc": win_rate,
         "yield": yield_val,
-        "roi": roi_val, # To naprawi wyświetlanie na stronie
+        "roi": round((total_profit/STARTING_BANKROLL)*100, 2),
         "obrot": round(turnover, 2),
         "total_bets_count": len(history),
         "wykres": chart_data,
-        "last_sync": datetime.now().strftime("%H:%M:%S")
+        "last_sync": datetime.now(timezone.utc).strftime("%H:%M:%S")
     }
-    
     with open('stats.json', 'w', encoding='utf-8') as f:
         json.dump(web_stats, f, indent=4)
 
-    # Raport na Telegram
+    # Budowanie raportu tekstowego
     msg = [
-        "📊 <b>RAPORT ANALITYCZNY LIG</b>",
-        f"━━━━━━━━━━━━━━━",
+        "📊 <b>STATYSTYKI</b>",
+        "━━━━━━━━━━━━━━━",
+        f"🏦 BANKROLL: <b>{bankroll_now:.2f} PLN</b>",
         f"💰 Zysk Total: <b>{total_profit:.2f} PLN</b>",
-        f"📈 ROI: <b>{roi_val}%</b> | Yield: <b>{yield_val}%</b>",
-        f"━━━━━━━━━━━━━━━",
-        "✅ <b>TOP LIGI:</b>"
+        f"📅 Ostatnie 24h: <b>{'+' if profit_24h > 0 else ''}{profit_24h:.2f} PLN</b>",
+        f"🎯 Skuteczność: <b>{win_rate}%</b>",
+        f"📈 Yield: <b>{yield_val}%</b>",
+        "━━━━━━━━━━━━━━━",
+        "📝 <b>OSTATNIE WYNIKI:</b>"
     ]
-    
-    for name, data in top_leagues:
-        if data['profit'] > 0:
-            msg.append(f"• {name}: <b>+{data['profit']:.2f}</b>")
 
-    msg.append("\n❌ <b>BOTTOM LIGI (DO OBSERWACJI):</b>")
-    for name, data in bottom_leagues:
-        if data['profit'] < 0:
-            msg.append(f"• {name}: <b>{data['profit']:.2f}</b>")
+    for bet in history[-10:]:
+        p = float(bet.get('profit', 0))
+        icon = "✅" if p > 0 else ("❌" if p < 0 else "⚠️")
+        score = bet.get('score', '?-?')
+        msg.append(f"{icon} {bet.get('home')} - {bet.get('away')} | {score} | {'+' if p > 0 else ''}{p:.2f}")
+
+    msg.append("━━━━━━━━━━━━━━━")
 
     return True, "\n".join(msg)
 
 if __name__ == "__main__":
     success, text = generate_stats()
     if success and TOKEN and CHAT_TARGET:
-        requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", json={"chat_id": CHAT_TARGET, "text": text, "parse_mode": "HTML"})
+        requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", 
+                      json={"chat_id": CHAT_TARGET, "text": text, "parse_mode": "HTML"})
