@@ -150,16 +150,6 @@
         "time": "2026-01-31T14:00:00Z"
     },
     {
-        "id": "3fe24e297bc3de61d3cda6fc3cf73ce7",
-        "home": "Oviedo",
-        "away": "Girona",
-        "outcome": "Oviedo",
-        "odds": 2.9,
-        "stake": 280.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-01-31T13:00:00Z"
-    },
-    {
         "id": "34115607b8423bb49924870b192a4af6",
         "home": "Torino",
         "away": "Lecce",
@@ -568,5 +558,35 @@
         "stake": 350.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-02-01T15:30:00Z"
+    },
+    {
+        "id": "bfd9fac946f89678ef1664f4b24b8695",
+        "home": "Carolina Hurricanes",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 3.72,
+        "stake": 700.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T20:00:00Z"
+    },
+    {
+        "id": "e9422729e63a1abde63521d91e9e5787",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.86,
+        "stake": 700.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-02T02:30:00Z"
+    },
+    {
+        "id": "0de14d148111d6f682e3f12044a27906",
+        "home": "Getafe",
+        "away": "Celta Vigo",
+        "outcome": "Celta Vigo",
+        "odds": 3.0,
+        "stake": 350.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-01T17:30:00Z"
     }
 ]

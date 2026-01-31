@@ -3077,5 +3077,18 @@
         "status": "WIN",
         "score": "1:0",
         "time": "2026-01-30T19:30:00Z"
+    },
+    {
+        "id": "3fe24e297bc3de61d3cda6fc3cf73ce7",
+        "home": "Oviedo",
+        "away": "Girona",
+        "sport": "soccer_spain_la_liga",
+        "outcome": "Oviedo",
+        "odds": 2.9,
+        "stake": 280.0,
+        "profit": 532.0,
+        "status": "WIN",
+        "score": "1:0",
+        "time": "2026-01-31T13:00:00Z"
     }
 ]
