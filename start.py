@@ -2,6 +2,7 @@ import os
 import requests
 import json
 import time
+import random
 from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA LIG =================
@@ -55,8 +56,12 @@ def send_telegram(message, mode="HTML"):
         return
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    # disable_web_page_preview=True jest kluczowe, by linki były czyste
-    payload = {"chat_id": chat, "text": message, "parse_mode": mode, "disable_web_page_preview": True}
+    payload = {
+        "chat_id": chat, 
+        "text": message, 
+        "parse_mode": mode, 
+        "disable_web_page_preview": True # To zapobiega pokazywaniu błędnych podglądów Safari
+    }
     try:
         requests.post(url, json=payload, timeout=15)
     except: pass
@@ -173,12 +178,13 @@ def main():
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
                 
-                # --- KLUCZOWA POPRAWKA DLA iOS ---
-                # 1. Zmiana /szukaj na /wyszukiwanie
-                # 2. Branie tylko pierwszego słowa nazwy gospodarza (brak błędów w URL)
-                # 3. Dodanie unikalnego parametru na końcu, by linki w Telegramie zmieniały kolor
+                # --- OSTATECZNA NAPRAWA DLA iOS ---
+                # 1. /wyszukiwanie zamiast /szukaj
+                # 2. Tylko pierwsze słowo nazwy (Nieciecza, Cracovia itp.)
+                # 3. Dodanie losowej wartości &v= aby odświeżyć link w iPhone
                 search_query = event['home_team'].split()[0]
-                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&click_id={event['id']}"
+                random_v = random.randint(1000, 9999)
+                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&v={random_v}"
 
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
