@@ -182,6 +182,11 @@ def main():
 
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
+                
+                # LINK SUPERBET (Używamy ID zdarzenia, aby link był unikalny i zmieniał kolor)
+                search_term = event['home_team'].replace(" ", "%20")
+                superbet_link = f"https://superbet.pl/szukaj?query={search_term}&id={event['id']}"
+
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
                        f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
@@ -189,7 +194,8 @@ def main():
                        f"✅ Typ: <b>{best_name}</b>\n"
                        f"📈 Kurs: <b>{best_odd}</b>\n"
                        f"💰 Stawka: <b>{stake} PLN</b>\n"
-                       f"📊 Value: <b>+{round((val-1)*100, 1)}%</b>\n"
+                       f"📊 Value: <b>+{round((val-1)*100, 1)}%</b>\n\n"
+                       f"🔗 <a href='{superbet_link}'>👉 OTWÓRZ W SUPERBET 👈</a>\n"
                        f"━━━━━━━━━━━━━━━")
                 
                 send_telegram(msg)
