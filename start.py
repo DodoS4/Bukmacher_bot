@@ -114,7 +114,10 @@ def main():
         except: pass
     
     already_sent = [c['id'] for c in all_coupons]
+    
+    # --- FILTR CZASU: 3 DOBY ---
     now = datetime.now(timezone.utc)
+    max_future = now + timedelta(hours=72)
 
     for league, flag in SPORTS_CONFIG.items():
         stake, threshold = get_smart_stake(league)
@@ -138,9 +141,17 @@ def main():
         for event in data:
             if event['id'] in already_sent: continue
             
+            # --- WERYFIKACJA DATY MECZU ---
             try:
-                m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00")).astimezone(timezone(timedelta(hours=1)))
-            except: m_time = now
+                m_time_utc = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
+                # Jeśli mecz jest w przeszłości LUB dalej niż za 72h -> POMIŃ
+                if not (now < m_time_utc < max_future):
+                    continue
+                
+                # Konwersja na czas lokalny dla wiadomości Telegram
+                m_time = m_time_utc.astimezone(timezone(timedelta(hours=1)))
+            except: 
+                continue
 
             prices = {}
             for bookie in event.get('bookmakers', []):
@@ -178,7 +189,13 @@ def main():
                        f"🔗 <a href='{superbet_link}'>👉 OTWÓRZ W SUPERBET 👈</a>")
                 
                 send_telegram(msg)
-                all_coupons.append({"id": event['id'], "home": event['home_team'], "away": event['away_team'], "sport": league, "time": event['commence_time']})
+                all_coupons.append({
+                    "id": event['id'], 
+                    "home": event['home_team'], 
+                    "away": event['away_team'], 
+                    "sport": league, 
+                    "time": event['commence_time']
+                })
                 already_sent.append(event['id'])
 
     with open(KEY_STATE_FILE, "w") as f: f.write(str(idx))
