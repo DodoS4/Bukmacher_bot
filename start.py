@@ -62,9 +62,8 @@ def send_telegram(message, mode="HTML"):
 
 # ================= LOGIKA STAWEK I VALUE =================
 def get_smart_stake(league_key):
-    """Agresywne dobieranie stawki dla dochodowych lig hokejowych."""
     current_multiplier = 1.0
-    threshold = 1.035 # Standard: 3.5%
+    threshold = 1.035 
     history_profit = 0
 
     if os.path.exists(HISTORY_FILE):
@@ -74,10 +73,8 @@ def get_smart_stake(league_key):
             league_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
             history_profit = league_profit
             
-            # Hamulec dla strat
             if league_profit <= -700:
                 current_multiplier, threshold = 0.5, 1.08
-            # Boost dla maszynek do zarabiania (NHL, Sweden)
             elif league_profit >= 3000:
                 current_multiplier = 1.6
             elif league_profit >= 1000:
@@ -86,11 +83,10 @@ def get_smart_stake(league_key):
     
     final_stake = BASE_STAKE * current_multiplier
     
-    # SPECJALNE TRAKTOWANIE HOKEJA
     if "icehockey" in league_key.lower():
-        threshold -= 0.01 # Niższy próg wejścia (więcej typów)
+        threshold -= 0.01 
         if history_profit > 0:
-            final_stake *= 1.25 # Dodatkowe 25% kapitału na zyskowny hokej
+            final_stake *= 1.25 
             
     return round(final_stake, 2), round(threshold, 3)
 
@@ -109,7 +105,6 @@ def main():
     api_keys = get_all_keys()
     if not api_keys: return
 
-    # Rotacja kluczy
     if os.path.exists(KEY_STATE_FILE):
         try:
             with open(KEY_STATE_FILE, "r") as f:
@@ -117,7 +112,6 @@ def main():
         except: idx = 0
     else: idx = 0
 
-    # Ładowanie bazy
     all_coupons = []
     if os.path.exists(COUPONS_FILE):
         try:
@@ -157,7 +151,6 @@ def main():
                 if not (now < m_time < max_future): continue 
             except: continue
 
-            # Wyciąganie kursów
             prices = {}
             for bookie in event.get('bookmakers', []):
                 for market in bookie.get('markets', []):
@@ -174,7 +167,7 @@ def main():
                 val = m_p / a_p
                 
                 req = threshold
-                if m_p >= 2.5: req += 0.02 # Wyższy próg dla ryzykownych kursów
+                if m_p >= 2.5: req += 0.02 
                 
                 if 1.80 <= m_p <= 4.50 and val > req:
                     if val > max_val:
@@ -183,10 +176,10 @@ def main():
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
                 
-                # POPRAWIONY LINK SUPERBET
-                # Bierzemy tylko pierwsze słowo nazwy gospodarzy, by wyszukiwarka Superbet zadziałała bezbłędnie
+                # POPRAWIONY LINK DLA iOS I APLIKACJI SUPERBET
+                # Pobieramy pierwsze słowo nazwy gospodarzy, by wyszukiwarka działała stabilnie
                 search_query = event['home_team'].split()[0]
-                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&id={event['id']}"
+                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}"
 
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
@@ -195,7 +188,7 @@ def main():
                        f"✅ Typ: <b>{best_name}</b>\n"
                        f"📈 Kurs: <b>{best_odd}</b>\n"
                        f"💰 Stawka: <b>{stake} PLN</b>\n"
-                       f"📊 Value: <b>+{round((val-1)*100, 1)}%</b>\n\n"
+                       f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n\n"
                        f"🔗 <a href='{superbet_link}'>👉 OTWÓRZ W SUPERBET 👈</a>\n"
                        f"━━━━━━━━━━━━━━━")
                 
