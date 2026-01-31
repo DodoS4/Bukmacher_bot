@@ -3402,5 +3402,17 @@
         "status": "WIN",
         "score": "4:0",
         "time": "2026-01-31T19:45:00Z"
+    },
+    {
+        "id": "c1fbd9c01b1bb1eb61ce0e9ba64f429c",
+        "home": "Alverca",
+        "away": "CF Estrela",
+        "sport": "soccer_portugal_primeira_liga",
+        "outcome": "CF Estrela",
+        "odds": 4.2,
+        "stake": 280.0,
+        "profit": -280.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]

@@ -30,16 +30,6 @@
         "time": "2026-02-01T11:15:00Z"
     },
     {
-        "id": "c1fbd9c01b1bb1eb61ce0e9ba64f429c",
-        "home": "Alverca",
-        "away": "CF Estrela",
-        "outcome": "CF Estrela",
-        "odds": 4.2,
-        "stake": 280.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-01-31T20:30:00Z"
-    },
-    {
         "id": "521c3a1d3b15f330bdb115a71ed6e9f9",
         "home": "Excelsior",
         "away": "Ajax",
