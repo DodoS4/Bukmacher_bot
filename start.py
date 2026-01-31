@@ -55,6 +55,7 @@ def send_telegram(message, mode="HTML"):
         return
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
+    # disable_web_page_preview=True jest kluczowe, by linki były czyste
     payload = {"chat_id": chat, "text": message, "parse_mode": mode, "disable_web_page_preview": True}
     try:
         requests.post(url, json=payload, timeout=15)
@@ -125,7 +126,6 @@ def main():
 
     for league, flag in SPORTS_CONFIG.items():
         stake, threshold = get_smart_stake(league)
-        print(f"📡 Skan: {league} (Stawka: {stake}, Próg: {threshold})")
         
         data = None
         for _ in range(len(api_keys)):
@@ -162,13 +162,10 @@ def main():
             best_name, best_odd, max_val = None, 0, 0
             for name, p_list in prices.items():
                 if name.lower() == "draw": continue
-                
                 m_p, a_p = max(p_list), sum(p_list)/len(p_list)
                 val = m_p / a_p
-                
                 req = threshold
                 if m_p >= 2.5: req += 0.02 
-                
                 if 1.80 <= m_p <= 4.50 and val > req:
                     if val > max_val:
                         max_val, best_odd, best_name = val, m_p, name
@@ -176,10 +173,12 @@ def main():
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
                 
-                # POPRAWIONY LINK DLA iOS I APLIKACJI SUPERBET
-                # Pobieramy pierwsze słowo nazwy gospodarzy, by wyszukiwarka działała stabilnie
+                # --- KLUCZOWA POPRAWKA DLA iOS ---
+                # 1. Zmiana /szukaj na /wyszukiwanie
+                # 2. Branie tylko pierwszego słowa nazwy gospodarza (brak błędów w URL)
+                # 3. Dodanie unikalnego parametru na końcu, by linki w Telegramie zmieniały kolor
                 search_query = event['home_team'].split()[0]
-                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}"
+                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&click_id={event['id']}"
 
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
@@ -203,7 +202,6 @@ def main():
     with open(KEY_STATE_FILE, "w") as f: f.write(str(idx))
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
-    print(f"✅ Koniec. Aktywne: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
