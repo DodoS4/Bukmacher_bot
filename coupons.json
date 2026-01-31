@@ -10,26 +10,6 @@
         "time": "2026-01-30T19:30:00Z"
     },
     {
-        "id": "eb9023bc5dbbd91cfa83cffc01a5a5e6",
-        "home": "Vit\u00f3ria SC",
-        "away": "Moreirense FC",
-        "outcome": "Vit\u00f3ria SC",
-        "odds": 2.16,
-        "stake": 280.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-01-30T20:45:00Z"
-    },
-    {
-        "id": "319e80424eef17c8f60948b718ed1e33",
-        "home": "Chicago Blackhawks",
-        "away": "Columbus Blue Jackets",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.28,
-        "stake": 420.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-01-31T01:30:00Z"
-    },
-    {
         "id": "591aedf1e2b3d1740c1009312fd8ccf4",
         "home": "Augsburg",
         "away": "FC St. Pauli",
@@ -568,5 +548,15 @@
         "stake": 350.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-02-01T20:00:00Z"
+    },
+    {
+        "id": "34dbd8b5d92f6b5c91590bf9dfd418db",
+        "home": "Tampa Bay Lightning",
+        "away": "Boston Bruins",
+        "outcome": "Tampa Bay Lightning",
+        "odds": 1.88,
+        "stake": 700.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T23:40:00Z"
     }
 ]

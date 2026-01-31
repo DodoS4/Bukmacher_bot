@@ -3014,6 +3014,19 @@
         "time": "2026-01-30T20:00:00Z"
     },
     {
+        "id": "eb9023bc5dbbd91cfa83cffc01a5a5e6",
+        "home": "Vit\u00f3ria SC",
+        "away": "Moreirense FC",
+        "sport": "soccer_portugal_primeira_liga",
+        "outcome": "Vit\u00f3ria SC",
+        "odds": 2.16,
+        "stake": 280.0,
+        "profit": 324.8,
+        "status": "WIN",
+        "score": "1:0",
+        "time": "2026-01-30T20:45:00Z"
+    },
+    {
         "id": "f1b5fa013ebb49815d98fe0596fce560",
         "home": "ASVEL Lyon Villeurbanne",
         "away": "Panathinaikos",
@@ -3025,6 +3038,19 @@
         "status": "LOSS",
         "score": "78:79",
         "time": "2026-01-30T19:45:00Z"
+    },
+    {
+        "id": "319e80424eef17c8f60948b718ed1e33",
+        "home": "Chicago Blackhawks",
+        "away": "Columbus Blue Jackets",
+        "sport": "icehockey_nhl",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.28,
+        "stake": 420.0,
+        "profit": 537.6,
+        "status": "WIN",
+        "score": "2:4",
+        "time": "2026-01-31T01:30:00Z"
     },
     {
         "id": "098818bd0974f099c22a332bac1920dc",
