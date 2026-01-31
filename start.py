@@ -183,9 +183,10 @@ def main():
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
                 
-                # LINK SUPERBET (Używamy ID zdarzenia, aby link był unikalny i zmieniał kolor)
-                search_term = event['home_team'].replace(" ", "%20")
-                superbet_link = f"https://superbet.pl/szukaj?query={search_term}&id={event['id']}"
+                # POPRAWIONY LINK SUPERBET
+                # Bierzemy tylko pierwsze słowo nazwy gospodarzy, by wyszukiwarka Superbet zadziałała bezbłędnie
+                search_query = event['home_team'].split()[0]
+                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&id={event['id']}"
 
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
