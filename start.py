@@ -2,7 +2,6 @@ import os
 import requests
 import json
 import time
-import random
 from datetime import datetime, timedelta, timezone
 
 # ================= KONFIGURACJA LIG =================
@@ -51,17 +50,10 @@ def get_secret(name):
 def send_telegram(message, mode="HTML"):
     token = get_secret("T_TOKEN")
     chat = get_secret("T_CHAT")
-    if not token or not chat:
-        print(f"⚠️ Telegram SKIP: Token={bool(token)}, Chat={bool(chat)}")
-        return
+    if not token or not chat: return
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {
-        "chat_id": chat, 
-        "text": message, 
-        "parse_mode": mode, 
-        "disable_web_page_preview": True # To zapobiega pokazywaniu błędnych podglądów Safari
-    }
+    payload = {"chat_id": chat, "text": message, "parse_mode": mode}
     try:
         requests.post(url, json=payload, timeout=15)
     except: pass
@@ -88,7 +80,6 @@ def get_smart_stake(league_key):
         except: pass
     
     final_stake = BASE_STAKE * current_multiplier
-    
     if "icehockey" in league_key.lower():
         threshold -= 0.01 
         if history_profit > 0:
@@ -131,8 +122,8 @@ def main():
 
     for league, flag in SPORTS_CONFIG.items():
         stake, threshold = get_smart_stake(league)
-        
         data = None
+        
         for _ in range(len(api_keys)):
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
             params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h"}
@@ -141,9 +132,7 @@ def main():
                 if resp.status_code == 200:
                     data = resp.json()
                     break
-                elif resp.status_code in [401, 429]:
-                    idx = (idx + 1) % len(api_keys)
-                else: break
+                idx = (idx + 1) % len(api_keys)
             except:
                 idx = (idx + 1) % len(api_keys)
 
@@ -154,6 +143,7 @@ def main():
             try:
                 m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
                 if not (now < m_time < max_future): continue 
+                m_display = m_time.astimezone(timezone(timedelta(hours=1)))
             except: continue
 
             prices = {}
@@ -178,23 +168,14 @@ def main():
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
                 
-                # --- OSTATECZNA NAPRAWA DLA iOS ---
-                # 1. /wyszukiwanie zamiast /szukaj
-                # 2. Tylko pierwsze słowo nazwy (Nieciecza, Cracovia itp.)
-                # 3. Dodanie losowej wartości &v= aby odświeżyć link w iPhone
-                search_query = event['home_team'].split()[0]
-                random_v = random.randint(1000, 9999)
-                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&v={random_v}"
-
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
                        f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
-                       f"⏰ Start: {m_time.strftime('%d.%m | %H:%M')}\n\n"
+                       f"⏰ Start: {m_display.strftime('%d.%m | %H:%M')}\n\n"
                        f"✅ Typ: <b>{best_name}</b>\n"
                        f"📈 Kurs: <b>{best_odd}</b>\n"
                        f"💰 Stawka: <b>{stake} PLN</b>\n"
-                       f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n\n"
-                       f"🔗 <a href='{superbet_link}'>👉 OTWÓRZ W SUPERBET 👈</a>\n"
+                       f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
                        f"━━━━━━━━━━━━━━━")
                 
                 send_telegram(msg)
