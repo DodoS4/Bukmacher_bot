@@ -3,9 +3,22 @@ import json
 import requests
 from datetime import datetime, timezone, timedelta
 
-# --- KONFIGURACJA PLIKÓW ---
+# --- KONFIGURACJA ---
 COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
+
+def get_secret(name):
+    val = os.environ.get(name) or os.getenv(name)
+    return str(val).strip() if val else None
+
+def send_telegram(message):
+    token = get_secret("T_TOKEN")
+    chat = get_secret("T_CHAT")
+    if not token or not chat: return
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    payload = {"chat_id": chat, "text": message, "parse_mode": "HTML"}
+    try: requests.post(url, json=payload, timeout=15)
+    except: pass
 
 def get_all_api_keys():
     keys = []
@@ -25,6 +38,45 @@ def get_match_results(sport, keys):
         except: continue
     return None
 
+def generate_report(history):
+    """Tworzy i wysyła raport statystyk na Telegram."""
+    total_profit = sum(m.get('profit', 0) for m in history)
+    # Kapitał początkowy ustawiony tak, by zgadzał się z Twoim ostatnim screenem (13789.06 - 8789.06 = 5000)
+    base_capital = 5000 
+    bankroll = base_capital + total_profit
+    
+    wins = sum(1 for m in history if m.get('status') == 'WIN')
+    losses = sum(1 for m in history if m.get('status') == 'LOSS')
+    total_matches = wins + losses
+    
+    accuracy = (wins / total_matches * 100) if total_matches > 0 else 0
+    total_staked = sum(m.get('stake', 0) for m in history if m.get('status') in ['WIN', 'LOSS'])
+    yield_val = (total_profit / total_staked * 100) if total_staked > 0 else 0
+
+    now = datetime.now(timezone.utc)
+    last_24h_profit = sum(m.get('profit', 0) for m in history if (now - datetime.fromisoformat(m['time'].replace("Z", "+00:00"))) < timedelta(hours=24))
+
+    report = [
+        "📊 <b>STATYSTYKI</b>",
+        "━━━━━━━━━━━━━━━",
+        f"🏦 <b>BANKROLL:</b> {round(bankroll, 2)} PLN",
+        f"💰 Zysk Total: {round(total_profit, 2)} PLN",
+        f"📅 Ostatnie 24h: {'+' if last_24h_profit >=0 else ''}{round(last_24h_profit, 2)} PLN",
+        f"🎯 Skuteczność: {round(accuracy, 1)}%",
+        f"📈 Yield: {round(yield_val, 2)}%",
+        "━━━━━━━━━━━━━━━",
+        "📝 <b>OSTATNIE WYNIKI:</b>"
+    ]
+
+    for m in reversed(history[-10:]):
+        status = "✅" if m['status'] == 'WIN' else "❌" if m['status'] == 'LOSS' else "⚠️"
+        score = f" | {m.get('score', '?-?')}"
+        profit = f"{'+' if m.get('profit', 0) > 0 else ''}{m.get('profit', 0.0)}"
+        report.append(f"{status} {m['home']} - {m['away']} | {score} | {profit}")
+
+    report.append("━━━━━━━━━━━━━━━")
+    send_telegram("\n".join(report))
+
 def settle_matches():
     api_keys = get_all_api_keys()
     if not os.path.exists(COUPONS_FILE): return
@@ -43,14 +95,12 @@ def settle_matches():
     results_map = {}
     sports_to_check = list(set(c['sport'] for c in active_coupons))
 
-    # Pobieranie wyników w tle
     for sport in sports_to_check:
         res = get_match_results(sport, api_keys)
         if res:
             for match in res: results_map[match['id']] = match
 
-    print(f"\n🔔 RAPORT ROZLICZEŃ ({now_utc.strftime('%H:%M')})")
-    print("=" * 50)
+    print(f"🔔 SPRAWDZANIE ({now_utc.strftime('%H:%M')})")
 
     for coupon in active_coupons:
         match_data = results_map.get(coupon['id'])
@@ -58,7 +108,6 @@ def settle_matches():
             m_time = datetime.fromisoformat(coupon['time'].replace("Z", "+00:00"))
         except: m_time = now_utc
 
-        # 1. MECZ ZAKOŃCZONY
         if match_data and match_data.get('completed'):
             h_score, a_score = 0, 0
             for s in match_data.get('scores', []):
@@ -80,29 +129,24 @@ def settle_matches():
                 "time": coupon['time']
             })
             new_settlements += 1
-            icon = "✅ WIN " if won else "❌ LOSS"
-            print(f"{icon} | {coupon['home']} - {coupon['away']} | {h_score}:{a_score} | {profit} PLN")
+            print(f"Rozliczono: {coupon['home']} - {coupon['away']}")
         
-        # 2. MECZ PRZEŁOŻONY (VOID)
         elif (now_utc - m_time) > timedelta(hours=72):
             history.append({
                 "id": coupon['id'], "home": coupon['home'], "away": coupon['away'],
                 "sport": coupon['sport'], "profit": 0.0, "status": "VOID", "time": coupon['time']
             })
             new_settlements += 1
-            print(f"⚠️ VOID | {coupon['home']} - {coupon['away']} | Zwrot (72h) | 0.00 PLN")
-        
-        # 3. POZOSTAŁE (W TOKU)
+            print(f"VOID: {coupon['home']}")
         else:
             remaining_coupons.append(coupon)
 
     if new_settlements > 0:
         with open(HISTORY_FILE, "w", encoding="utf-8") as f: json.dump(history, f, indent=4)
         with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(remaining_coupons, f, indent=4)
-        print("=" * 50)
-        print(f"✨ Gotowe! Rozliczono: {new_settlements}")
+        generate_report(history) # Automatyczne statystyki po zmianach
     else:
-        print("ℹ️ Brak nowych rozliczeń.")
+        print("Brak nowych wyników.")
 
 if __name__ == "__main__":
     settle_matches()
