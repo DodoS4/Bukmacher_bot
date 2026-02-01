@@ -22,7 +22,7 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
         
-        .league-icon { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 10px; }
+        .league-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 10px; flex-shrink: 0; }
     </style>
 </head>
 <body class="p-2 md:p-6">
@@ -30,8 +30,8 @@
     <div class="max-w-6xl mx-auto">
         <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
             <div>
-                <h1 class="text-xl font-black italic tracking-tighter text-slate-800 uppercase italic">AI BETTING <span class="text-blue-600 font-black">PRO</span></h1>
-                <p id="last-update" class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 font-bold italic">Sync: --:--:--</p>
+                <h1 class="text-xl font-black italic tracking-tighter text-slate-800 uppercase">AI BETTING <span class="text-blue-600">PRO</span></h1>
+                <p id="last-update" class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 font-bold italic font-black">Sync: --:--:--</p>
             </div>
             <div class="flex items-center gap-2">
                 <span id="refresh-timer" class="text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg shadow-blue-100">REF: 300s</span>
@@ -56,7 +56,7 @@
                 <p id="turnover-val" class="text-lg font-black text-slate-700">0</p>
             </div>
             <div class="stat-card bg-yellow-50 p-4 rounded-2xl shadow-sm border border-yellow-100">
-                <p class="text-[9px] text-yellow-600 uppercase font-black mb-1 italic">W grze</p>
+                <p class="text-[9px] text-yellow-600 uppercase font-black mb-1 italic font-black">W grze</p>
                 <p id="upcoming-val" class="text-lg font-black text-yellow-700">0</p>
             </div>
             <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
@@ -65,7 +65,7 @@
             </div>
             <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 italic">Kupony</p>
-                <p id="total-bets-count" class="text-lg font-black text-slate-800 italic">0</p>
+                <p id="total-bets-count" class="text-lg font-black text-slate-800 italic font-black">0</p>
             </div>
         </div>
 
@@ -81,27 +81,27 @@
                 </div>
 
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-black mb-4 text-[11px] text-amber-500 uppercase tracking-widest flex items-center justify-between">
+                    <h3 class="font-black mb-4 text-[11px] text-amber-500 uppercase tracking-widest flex items-center justify-between italic">
                         <span><i class="fas fa-bolt mr-2"></i> Aktywne Typy</span>
-                        <span id="active-count-badge" class="bg-amber-100 text-amber-600 px-2 py-0.5 rounded text-[9px]">0</span>
+                        <span id="active-count-badge" class="bg-amber-100 text-amber-600 px-2 py-0.5 rounded text-[9px] font-black">0</span>
                     </h3>
                     <div id="active-bets-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                 </div>
 
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-black mb-4 text-[11px] text-green-500 uppercase tracking-widest flex items-center">
+                    <h3 class="font-black mb-4 text-[11px] text-green-500 uppercase tracking-widest flex items-center italic">
                         <i class="fas fa-history mr-2"></i> Ostatnie 10 rozliczeń
                     </h3>
-                    <div id="recent-results-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 italic"></div>
+                    <div id="recent-results-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                 </div>
             </div>
 
             <div class="lg:col-span-1">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-6">
-                    <h3 class="font-black mb-4 text-[11px] text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
-                        <i class="fas fa-trophy text-blue-600"></i> Rozliczenia Ligi
+                    <h3 class="font-black mb-4 text-[11px] text-slate-400 uppercase tracking-widest flex items-center gap-2 italic font-black">
+                        <i class="fas fa-trophy text-blue-600 font-black"></i> Rozliczenia Ligi
                     </h3>
-                    <p id="total-bets-info" class="text-[9px] text-gray-400 font-bold mb-4 uppercase italic">Wczytywanie...</p>
+                    <p id="total-bets-info" class="text-[9px] text-gray-400 font-bold mb-4 uppercase italic font-black">Wczytywanie...</p>
                     <div id="history-groups" class="space-y-3 overflow-y-auto max-h-[800px] pr-1"></div>
                 </div>
             </div>
@@ -112,14 +112,29 @@
         let profitChart = null;
         let countdown = 300;
 
-        // Funkcja przypisująca ikony do lig
+        // MAPOWANIE DYSCYPLIN I IKON
         function getLeagueIcon(name) {
             const n = name.toLowerCase();
-            if (n.includes('nhl')) return { icon: 'fa-hockey-puck', color: 'bg-slate-800 text-white' };
-            if (n.includes('nba')) return { icon: 'fa-basketball-ball', color: 'bg-orange-500 text-white' };
-            if (n.includes('laliga') || n.includes('spain') || n.includes('premier')) return { icon: 'fa-futbol', color: 'bg-green-600 text-white' };
-            if (n.includes('tennis') || n.includes('atp')) return { icon: 'fa-table-tennis-paddle-ball', color: 'bg-lime-400 text-black' };
-            return { icon: 'fa-star', color: 'bg-blue-100 text-blue-600' };
+            if (n.includes('nhl') || n.includes('hockey')) 
+                return { icon: 'fa-hockey-puck', color: 'bg-slate-900 text-white' };
+            if (n.includes('nba') || n.includes('basketball')) 
+                return { icon: 'fa-basketball-ball', color: 'bg-orange-500 text-white' };
+            if (n.includes('soccer') || n.includes('futbol') || n.includes('premier') || n.includes('laliga') || n.includes('league') || n.includes('bundesliga')) 
+                return { icon: 'fa-futbol', color: 'bg-green-600 text-white' };
+            if (n.includes('tennis') || n.includes('atp') || n.includes('wta')) 
+                return { icon: 'fa-table-tennis-paddle-ball', color: 'bg-lime-400 text-black' };
+            if (n.includes('mlb') || n.includes('baseball')) 
+                return { icon: 'fa-baseball-ball', color: 'bg-red-600 text-white' };
+            if (n.includes('volleyball')) 
+                return { icon: 'fa-volleyball-ball', color: 'bg-yellow-400 text-black' };
+            if (n.includes('esports') || n.includes('csgo') || n.includes('league of legends') || n.includes('dota')) 
+                return { icon: 'fa-gamepad', color: 'bg-purple-600 text-white' };
+            if (n.includes('mma') || n.includes('ufc') || n.includes('boxing')) 
+                return { icon: 'fa-hand-fist', color: 'bg-zinc-800 text-white' };
+            if (n.includes('american') || n.includes('nfl')) 
+                return { icon: 'fa-football-ball', color: 'bg-amber-800 text-white' };
+            
+            return { icon: 'fa-trophy', color: 'bg-blue-100 text-blue-600' };
         }
 
         async function loadData() {
@@ -147,29 +162,27 @@
                 document.getElementById('total-bets-info').innerText = `${history.length} TYPÓW / ${s.skutecznosc || 0}% WR`;
                 
                 renderHistory(history, s.wykres || []);
-            } catch (e) { console.error("Błąd ładowania danych:", e); }
+            } catch (e) { console.error("Data error:", e); }
         }
 
         function renderActive(coupons) {
             const container = document.getElementById('active-bets-container');
             if(!coupons || coupons.length === 0) {
-                container.innerHTML = '<p class="text-center col-span-2 text-gray-300 text-[10px] py-4 uppercase font-black italic italic">Brak oczekujących</p>';
+                container.innerHTML = '<p class="text-center col-span-2 text-gray-300 text-[10px] py-4 uppercase font-black italic">Brak aktywnych</p>';
                 return;
             }
             container.innerHTML = coupons.map(c => {
-                const league = c.sport ? c.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA';
-                const meta = getLeagueIcon(league);
+                const lName = c.sport ? c.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA';
+                const meta = getLeagueIcon(lName);
                 return `
-                <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm">
-                    <div class="flex justify-between items-center mb-1">
-                        <div class="flex items-center gap-1.5">
-                            <div class="league-icon ${meta.color}"><i class="fas ${meta.icon}"></i></div>
-                            <span class="text-[7px] font-black text-gray-400 uppercase tracking-tighter">${league}</span>
-                        </div>
+                <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm italic">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="league-icon ${meta.color} shadow-sm"><i class="fas ${meta.icon}"></i></div>
+                        <span class="text-[7px] font-black text-gray-400 uppercase tracking-tighter">${lName}</span>
                     </div>
-                    <p class="text-[10px] font-bold text-slate-700 leading-tight mb-2">${c.home} - ${c.away}</p>
-                    <div class="flex justify-between items-end border-t pt-2">
-                        <span class="text-[9px] font-black text-blue-600 uppercase italic">${c.outcome}</span>
+                    <p class="text-[10px] font-black text-slate-700 leading-tight mb-2">${c.home} - ${c.away}</p>
+                    <div class="flex justify-between items-end border-t border-dashed pt-2">
+                        <span class="text-[9px] font-black text-blue-600 uppercase italic">TYP: ${c.outcome}</span>
                         <span class="text-[9px] font-black text-slate-800 italic uppercase">@${c.odds}</span>
                     </div>
                 </div>`;
@@ -200,15 +213,15 @@
             const last10 = [...data].reverse().slice(0, 10);
             recentContainer.innerHTML = last10.map(m => {
                 const isWin = m.status === 'WIN';
-                const league = m.sport ? m.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA';
-                const meta = getLeagueIcon(league);
+                const lName = m.sport ? m.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA';
+                const meta = getLeagueIcon(lName);
                 return `
-                <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'}">
+                <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'} italic font-black">
                     <div class="flex items-center gap-3 overflow-hidden">
-                        <div class="league-icon ${meta.color} shrink-0"><i class="fas ${meta.icon}"></i></div>
+                        <div class="league-icon ${meta.color}"><i class="fas ${meta.icon}"></i></div>
                         <div class="overflow-hidden">
-                            <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5">@${m.odds} | ${m.score || '?-?'}</p>
-                            <p class="text-[9px] font-bold leading-tight text-slate-700 truncate">${m.home} - ${m.away}</p>
+                            <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5 italic">@${m.odds} | ${m.score || '?-?'}</p>
+                            <p class="text-[9px] font-black leading-tight text-slate-700 truncate italic">${m.home} - ${m.away}</p>
                         </div>
                     </div>
                     <div class="text-right min-w-[60px]">
@@ -233,24 +246,24 @@
                 return `
                 <div class="mb-2">
                     <div onclick="const el=document.getElementById('l-details-${idx}'); el.classList.toggle('hidden')" 
-                         class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm cursor-pointer hover:bg-gray-100 transition-all active:scale-95">
+                         class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm cursor-pointer hover:bg-gray-100 transition-all font-black">
                         <span class="text-[9px] font-black uppercase text-slate-600 flex items-center gap-2 italic">
-                            <div class="league-icon ${meta.color} text-[8px]"><i class="fas ${meta.icon}"></i></div>
+                            <div class="league-icon ${meta.color} text-[8px] shadow-xs"><i class="fas ${meta.icon}"></i></div>
                             ${name} (${d.count})
                         </span>
                         <span class="text-[10px] font-black ${isPos ? 'text-green-600' : 'text-red-600'}">${isPos ? '+' : ''}${d.profit.toFixed(2)}</span>
                     </div>
                     <div id="l-details-${idx}" class="hidden mt-1 ml-2 space-y-1 border-l-2 border-gray-100 pl-2">
                         ${d.matches.reverse().map(m => `
-                            <div class="text-[8px] p-2 bg-white/50 rounded-lg flex flex-col gap-1 border-b border-gray-50 italic italic">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-slate-800 font-black uppercase truncate pr-2">${m.home} ${m.score || 'vs'} ${m.away}</span>
-                                    <span class="font-black ${m.status === 'WIN' ? 'text-green-500' : 'text-red-500'} shrink-0">@${m.odds}</span>
+                            <div class="text-[8px] p-2 bg-white/50 rounded-lg flex flex-col gap-1 italic border-b border-gray-50 italic">
+                                <div class="flex justify-between items-center font-black">
+                                    <span class="text-slate-800 uppercase truncate pr-2">${m.home} ${m.score || 'vs'} ${m.away}</span>
+                                    <span class="font-black ${m.status === 'WIN' ? 'text-green-500' : 'text-red-500'}">@${m.odds}</span>
                                 </div>
-                                <div class="flex justify-between items-center text-[7px]">
-                                    <span class="text-gray-400 font-bold italic">TYP: ${m.outcome || 'ML'}</span>
-                                    <span class="font-black ${m.status === 'WIN' ? 'text-green-600' : 'text-red-600'}">
-                                        ${m.status === 'WIN' ? 'WYGRANA' : 'PRZEGRANA'} (${m.profit >= 0 ? '+' : ''}${parseFloat(m.profit).toFixed(2)})
+                                <div class="flex justify-between items-center text-[7px] font-black">
+                                    <span class="text-gray-400 font-black">TYP: ${m.outcome || 'ML'}</span>
+                                    <span class="${m.status === 'WIN' ? 'text-green-600' : 'text-red-600'}">
+                                        ${m.status === 'WIN' ? 'WIN' : 'LOSS'} (${m.profit >= 0 ? '+' : ''}${parseFloat(m.profit).toFixed(2)})
                                     </span>
                                 </div>
                             </div>
