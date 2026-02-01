@@ -4,10 +4,10 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG (POPRAWIONE 404) =================
+# ================= KONFIGURACJA LIG (NAPRAWIONA) =================
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
-    "icehockey_sweden_allsvenskan": "🇸🇪",        # Naprawiono ze screena
+    "icehockey_sweden_allsvenskan": "🇸🇪",        # Naprawiono
     "icehockey_finland_liiga": "🇫🇮",
     "icehockey_germany_del": "🇩🇪",
     "icehockey_czech_extraliga": "🇨🇿",
@@ -24,7 +24,7 @@ SPORTS_CONFIG = {
     "soccer_france_ligue_one": "🇫🇷",
     "soccer_portugal_primeira_liga": "🇵🇹",
     "soccer_netherlands_eredivisie": "🇳🇱",
-    "soccer_turkey_super_league": "🇹🇷",          # Naprawiono ze screena
+    "soccer_turkey_super_league": "🇹🇷",          # Naprawiono
     "soccer_belgium_first_division_a": "🇧🇪",
     "soccer_austria_bundesliga": "🇦🇹",
     "soccer_denmark_superliga": "🇩🇰",
@@ -40,6 +40,7 @@ SPORTS_CONFIG = {
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
+STATS_JSON_FILE = "stats.json"
 BASE_STAKE = 250
 
 # ================= POMOCNICZE =================
@@ -57,13 +58,12 @@ def send_telegram(message, mode="HTML"):
     except: pass
 
 def get_smart_stake(league_key):
-    current_multiplier, threshold, history_profit = 1.0, 1.035, 0
+    current_multiplier, threshold = 1.0, 1.035
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
             league_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
-            history_profit = league_profit
             if league_profit <= -700: current_multiplier, threshold = 0.5, 1.08
             elif league_profit >= 3000: current_multiplier = 1.6
             elif league_profit >= 1000: current_multiplier = 1.3
@@ -71,26 +71,48 @@ def get_smart_stake(league_key):
     final_stake = BASE_STAKE * current_multiplier
     if "icehockey" in league_key.lower():
         threshold -= 0.01 
-        if history_profit > 0: final_stake *= 1.25 
     return round(final_stake, 2), round(threshold, 3)
 
 def get_all_keys():
     keys = []
     for i in range(1, 11):
-        # Sprawdza obie wersje zapisu klucza w GitHub Secrets
         name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
         name_alt = f"ODDS_KEY{i}"
         val = get_secret(name) or get_secret(name_alt)
         if val: keys.append(val)
     return keys
 
+# ================= STATYSTYKI (NAPRAWIONE) =================
+def update_web_stats(history, active_count):
+    # Naprawa błędu ValueError: Invalid isoformat string: ''
+    now = datetime.now(timezone.utc)
+    profit_total = sum(float(m.get('profit', 0)) for m in history)
+    profit_24h = 0
+    
+    for m in history:
+        t_str = m.get('time')
+        if not t_str: continue # Ignorowanie pustych dat
+        try:
+            m_time = datetime.fromisoformat(t_str.replace("Z", "+00:00"))
+            if now - m_time < timedelta(hours=24):
+                profit_24h += float(m.get('profit', 0))
+        except: continue
+
+    stats_data = {
+        "bankroll": round(5000 + profit_total, 2),
+        "zysk_total": round(profit_total, 2),
+        "zysk_24h": round(profit_24h, 2),
+        "last_sync": now.strftime("%d.%m.%Y %H:%M"),
+        "upcoming_val": active_count
+    }
+    with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
+        json.dump(stats_data, f, indent=4)
+
 # ================= MAIN =================
 def main():
     print(f"🚀 --- START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
     api_keys = get_all_keys()
-    if not api_keys: 
-        print("❌ BŁĄD: Brak kluczy API!")
-        return
+    if not api_keys: return
 
     try:
         if os.path.exists(KEY_STATE_FILE):
@@ -107,7 +129,6 @@ def main():
     already_sent = [c['id'] for c in all_coupons]
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
-    new_bets_count = 0
 
     for league, flag in SPORTS_CONFIG.items():
         print(f"\n🔍 Skanowanie: {flag} {league.upper()}...")
@@ -129,24 +150,17 @@ def main():
                     idx = (idx + 1) % len(api_keys)
                 else:
                     print(f"Błąd {resp.status_code}")
-                    break # Dla 404 nie rotujemy, tylko przerywamy ligę
-            except Exception as e:
-                print(f"Błąd połączenia: {e}")
+                    break 
+            except:
                 idx = (idx + 1) % len(api_keys)
 
-        if not data:
-            print(f"  ⚠️ Pomiń ligę: Brak danych z API.")
-            continue
+        if not data: continue
 
-        print(f"  📈 Znaleziono {len(data)} meczów w API.")
-        
         for event in data:
             if event['id'] in already_sent: continue
-            
             try:
                 m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
                 if not (now < m_time < max_future): continue 
-                m_display = m_time.astimezone(timezone(timedelta(hours=1)))
             except: continue
 
             prices = {}
@@ -160,32 +174,15 @@ def main():
             best_name, best_odd, max_val = None, 0, 0
             for name, p_list in prices.items():
                 if name.lower() == "draw": continue
-                m_p = max(p_list)
-                a_p = sum(p_list)/len(p_list)
+                m_p, a_p = max(p_list), sum(p_list)/len(p_list)
                 val = m_p / a_p
-                
-                req = threshold
-                if m_p >= 2.5: req += 0.02 
-                
-                if 1.80 <= m_p <= 4.50:
-                    if val > req:
-                        if val > max_val:
-                            max_val, best_odd, best_name = val, m_p, name
+                if 1.80 <= m_p <= 4.50 and val > threshold:
+                    if val > max_val: max_val, best_odd, best_name = val, m_p, name
 
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
-                print(f"  🎯 TYP! {event['home_team']} - {best_name} @{best_odd}")
-                
-                msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
-                       f"━━━━━━━━━━━━━━━\n"
-                       f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
-                       f"⏰ Start: {m_display.strftime('%d.%m | %H:%M')}\n\n"
-                       f"✅ Typ: <b>{best_name}</b>\n"
-                       f"📈 Kurs: <b>{best_odd}</b>\n"
-                       f"💰 Stawka: <b>{stake} PLN</b>\n"
-                       f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
-                       f"━━━━━━━━━━━━━━━")
-                
+                msg = (f"{flag} <b>{l_name}</b>\n🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
+                       f"✅ Typ: <b>{best_name}</b> @ <b>{best_odd}</b>\n💰 Stawka: <b>{stake} PLN</b>")
                 send_telegram(msg)
                 all_coupons.append({
                     "id": event['id'], "home": event['home_team'], "away": event['away_team'],
@@ -193,13 +190,13 @@ def main():
                     "sport": league, "time": event['commence_time']
                 })
                 already_sent.append(event['id'])
-                new_bets_count += 1
 
     with open(KEY_STATE_FILE, "w") as f: f.write(str(idx))
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(all_coupons, f, indent=4)
+    with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(all_coupons, f, indent=4)
     
-    print(f"\n✅ KONIEC. Wysłano nowych typów: {new_bets_count}")
+    if os.path.exists(HISTORY_FILE):
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f: history = json.load(f)
+        update_web_stats(history, len(all_coupons))
 
 if __name__ == "__main__":
     main()
