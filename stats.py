@@ -1,34 +1,23 @@
 import json
 import os
-import requests
 from datetime import datetime, timedelta, timezone
 
 HISTORY_FILE = "history.json"
-
-def get_secret(name):
-    val = os.environ.get(name) or os.getenv(name)
-    return str(val).strip() if val else None
-
-def send_telegram(message):
-    token = get_secret("T_TOKEN")
-    chat = get_secret("T_CHAT")
-    if not token or not chat: return
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {"chat_id": chat, "text": message, "parse_mode": "HTML"}
-    try: requests.post(url, json=payload, timeout=15)
-    except: pass
+STATS_JSON_FILE = "stats.json" # Plik dla Twojej strony WWW
 
 def generate_stats():
-    if not os.path.exists(HISTORY_FILE): return
+    if not os.path.exists(HISTORY_FILE): 
+        print("ℹ️ Brak pliku historii do przetworzenia.")
+        return
 
     with open(HISTORY_FILE, "r", encoding="utf-8") as f:
         history = json.load(f)
-    if not history: return
+    if not history: 
+        print("ℹ️ Historia jest pusta.")
+        return
 
     # --- OBLICZENIA ---
     total_profit = sum(m.get('profit', 0) for m in history)
-    # Startowałeś z 5000 PLN zysku + 5000 bazy (według Twojego raportu 13789.06)
-    # Dostosuj tę liczbę poniżej, aby bankroll się zgadzał:
     base_capital = 5000 
     bankroll = base_capital + total_profit
     
@@ -50,29 +39,23 @@ def generate_stats():
                 last_24h_profit += m.get('profit', 0)
         except: continue
 
-    # --- BUDOWANIE RAPORTU ---
-    report = [
-        "📊 <b>STATYSTYKI</b>",
-        "━━━━━━━━━━━━━━━",
-        f"🏦 <b>BANKROLL:</b> {round(bankroll, 2)} PLN",
-        f"💰 Zysk Total: {round(total_profit, 2)} PLN",
-        f"📅 Ostatnie 24h: {'+' if last_24h_profit >=0 else ''}{round(last_24h_profit, 2)} PLN",
-        f"🎯 Skuteczność: {round(accuracy, 1)}%",
-        f"📈 Yield: {round(yield_val, 2)}%",
-        "━━━━━━━━━━━━━━━",
-        "📝 <b>OSTATNIE WYNIKI:</b>"
-    ]
+    # --- PRZYGOTOWANIE DANYCH POD WWW (stats.json) ---
+    stats_data = {
+        "bankroll": round(bankroll, 2),
+        "total_profit": round(total_profit, 2),
+        "last_24h": round(last_24h_profit, 2),
+        "accuracy": round(accuracy, 1),
+        "yield": round(yield_val, 2),
+        "total_matches": total_matches,
+        "last_update": datetime.now().strftime("%d.%m.%Y %H:%M"),
+        "history_preview": history[-10:] # Ostatnie 10 meczów dla tabeli na stronie
+    }
 
-    # Ostatnie 10 meczów
-    for m in reversed(history[-10:]):
-        status = "✅" if m['status'] == 'WIN' else "❌" if m['status'] == 'LOSS' else "⚠️"
-        score = f" | {m.get('score', '?-?')}"
-        profit = f"{'+' if m.get('profit', 0) > 0 else ''}{m.get('profit', 0.0)}"
-        report.append(f"{status} {m['home']} - {m['away']} | {score} | {profit}")
-
-    report.append("━━━━━━━━━━━━━━━")
+    # Zapisujemy do pliku, który GitHub Pages wykorzystuje do wyświetlania statystyk
+    with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
+        json.dump(stats_data, f, indent=4)
     
-    send_telegram("\n".join(report))
+    print(f"✅ Statystyki zaktualizowane w {STATS_JSON_FILE}. (Telegram uciszony)")
 
 if __name__ == "__main__":
     generate_stats()
