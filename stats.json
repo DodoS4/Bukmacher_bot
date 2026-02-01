@@ -1,6 +1,6 @@
 {
     "zysk_total": 11957.96,
-    "zysk_24h": 7332.5,
+    "zysk_24h": 6794.9,
     "skutecznosc": 44.8,
     "yield": 15.59,
     "roi": 239.16,
@@ -277,5 +277,5 @@
         11957.96
     ],
     "active_bets": [],
-    "last_sync": "23:33:53"
+    "last_sync": "04:38:01"
 }
