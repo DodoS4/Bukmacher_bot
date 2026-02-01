@@ -21,12 +21,10 @@ def get_match_results(sport, keys):
         try:
             resp = requests.get(url, params=params, timeout=15)
             if resp.status_code == 200: return resp.json()
-            continue
         except: continue
     return None
 
 def settle_matches():
-    print(f"🚀 ROZPOCZĘTO ROZLICZANIE")
     api_keys = get_all_api_keys()
     if not os.path.exists(COUPONS_FILE): return
     with open(COUPONS_FILE, "r", encoding="utf-8") as f: active_coupons = json.load(f)
@@ -44,11 +42,15 @@ def settle_matches():
     results_map = {}
     sports_to_check = list(set(c['sport'] for c in active_coupons))
 
+    # Pobieranie wyników po cichu
     for sport in sports_to_check:
-        print(f"📡 Pobieram wyniki: {sport}")
         res = get_match_results(sport, api_keys)
         if res:
             for match in res: results_map[match['id']] = match
+
+    # Rozliczanie z widocznym Debugiem
+    print(f"\n🔔 RAPORT ROZLICZEŃ ({now_utc.strftime('%H:%M')})")
+    print("=" * 50)
 
     for coupon in active_coupons:
         match_data = results_map.get(coupon['id'])
@@ -56,6 +58,7 @@ def settle_matches():
             m_time = datetime.fromisoformat(coupon['time'].replace("Z", "+00:00"))
         except: m_time = now_utc
 
+        # 1. MECZ ROZLICZONY (WIN/LOSS)
         if match_data and match_data.get('completed'):
             h_score, a_score = 0, 0
             for s in match_data.get('scores', []):
@@ -73,23 +76,33 @@ def settle_matches():
             history.append({
                 "id": coupon['id'], "home": coupon['home'], "away": coupon['away'],
                 "sport": coupon['sport'], "outcome": pick, "odds": odds, "stake": stake,
-                "profit": profit, "status": "WIN" if won else "LOSS", "score": f"{h_score}:{a_score}"
+                "profit": profit, "status": "WIN" if won else "LOSS", "score": f"{h_score}:{a_score}",
+                "time": coupon['time']
             })
             new_settlements += 1
-            print(f"{'💰' if won else '❌'} {coupon['home']} - {coupon['away']} ({h_score}:{a_score}) | {profit} PLN")
+            icon = "✅ WIN " if won else "❌ LOSS"
+            print(f"{icon} | {coupon['home']} - {coupon['away']} | {h_score}:{a_score} | {profit} PLN")
         
+        # 2. MECZ PRZEŁOŻONY / VOID (PO 72H)
         elif (now_utc - m_time) > timedelta(hours=72):
             history.append({
                 "id": coupon['id'], "home": coupon['home'], "away": coupon['away'],
-                "sport": coupon['sport'], "profit": 0.0, "status": "VOID"
+                "sport": coupon['sport'], "profit": 0.0, "status": "VOID", "time": coupon['time']
             })
             new_settlements += 1
-            print(f"⚠️ VOID: {coupon['home']}")
+            print(f"⚠️ VOID | {coupon['home']} - {coupon['away']} | Przełożony > 72h | 0.00 PLN")
+        
+        # 3. MECZ NADAL CZEKA
         else:
             remaining_coupons.append(coupon)
 
     if new_settlements > 0:
         with open(HISTORY_FILE, "w", encoding="utf-8") as f: json.dump(history, f, indent=4)
         with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(remaining_coupons, f, indent=4)
+        print("=" * 50)
+        print(f"✨ Zakończono! Rozliczono pozycji: {new_settlements}")
+    else:
+        print("ℹ️ Brak nowych rozliczeń.")
 
-if __name__ == "__main__": settle_matches()
+if __name__ == "__main__":
+    settle_matches()
