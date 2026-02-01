@@ -288,5 +288,15 @@
         "stake": 250.0,
         "sport": "basketball_euroleague",
         "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "49a7c3868f127dea5a06fccbd074ef70",
+        "home": "Udinese",
+        "away": "AS Roma",
+        "outcome": "AS Roma",
+        "odds": 1.99,
+        "stake": 455.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-02T19:45:00Z"
     }
 ]
