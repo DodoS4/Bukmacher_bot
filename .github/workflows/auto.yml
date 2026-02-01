@@ -52,14 +52,10 @@ jobs:
           ODDS_KEY_9: "${{ secrets.ODDS_KEY_9 }}"
           ODDS_KEY_10: "${{ secrets.ODDS_KEY_10 }}"
         run: |
-          # 1. ROZLICZANIE (Czyści stare mecze i dopisuje wyniki do history.json)
+          # 1. ROZLICZANIE (Czyści mecze, wysyła raport Results i aktualizuje stats.json)
           python settle.py
           
-          # 2. AKTUALIZACJA STATYSTYK (Przetwarza history.json na stats.json dla WWW)
-          # Robimy to TUTAJ, aby strona była gotowa przed nowymi typami
-          python stats.py
-          
-          # 3. SZUKANIE NOWYCH TYPÓW (Wysyła alerty na Telegram)
+          # 2. SZUKANIE NOWYCH TYPÓW (Wysyła alerty na główny Telegram)
           python start.py
 
       - name: Commit and Push Changes
@@ -67,14 +63,14 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Dodajemy wszystkie pliki baz danych, aby strona i bot były spójne
+          # Dodajemy pliki bazy danych
           git add history.json coupons.json key_index.txt stats.json
           
           if ! git diff --cached --quiet; then
-            git commit -m "📊 Synchro WWW & Telegram: Results -> Stats -> New Bets [skip ci]"
+            git commit -m "📊 Synchro: Results & New Bets [skip ci]"
             git pull --rebase -X theirs origin main
             git push origin main
-            echo "✅ Dane zsynchronizowane i wysłane na GitHub Pages."
+            echo "✅ Dane zsynchronizowane i wysłane na GitHub."
           else
             echo "ℹ️ Brak nowych zmian do zapisu."
           fi
