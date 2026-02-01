@@ -268,5 +268,25 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-03T03:00:00Z"
+    },
+    {
+        "id": "c2b25c4fa8506ba013f1de715353a6c1",
+        "home": "Florida Panthers",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.73,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-03T00:00:00Z"
+    },
+    {
+        "id": "b382f70534e344a53cb8e2b91c2fea0c",
+        "home": "Washington Capitals",
+        "away": "New York Islanders",
+        "outcome": "New York Islanders",
+        "odds": 2.77,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-03T00:00:00Z"
     }
 ]
