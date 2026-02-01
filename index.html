@@ -22,7 +22,7 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
         
-        .league-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 6px; font-size: 10px; flex-shrink: 0; }
+        .flag-box { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
     </style>
 </head>
 <body class="p-2 md:p-6">
@@ -31,10 +31,10 @@
         <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
             <div>
                 <h1 class="text-xl font-black italic tracking-tighter text-slate-800 uppercase">AI BETTING <span class="text-blue-600">PRO</span></h1>
-                <p id="last-update" class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 font-bold italic font-black">Sync: --:--:--</p>
+                <p id="last-update" class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 font-bold italic font-black text-slate-400">Sync: --:--:--</p>
             </div>
             <div class="flex items-center gap-2">
-                <span id="refresh-timer" class="text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg shadow-blue-100">REF: 300s</span>
+                <span id="refresh-timer" class="text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg shadow-blue-100 uppercase italic">REF: 300s</span>
             </div>
         </div>
 
@@ -44,11 +44,11 @@
                 <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
             </div>
             <div class="stat-card bg-white p-4 rounded-2xl shadow-sm border-b-4 border-b-blue-600">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-600">Zysk Total</p>
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-600 font-black">Zysk Total</p>
                 <p id="total-profit" class="text-lg font-black text-blue-600 italic">0.00 PLN</p>
             </div>
             <div class="stat-card bg-white p-4 rounded-2xl shadow-sm border-b-4 border-b-purple-500">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500">Bankroll</p>
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500 font-black">Bankroll</p>
                 <p id="roi-val" class="text-lg font-black text-purple-600">0.00 PLN</p>
             </div>
             <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
@@ -98,10 +98,10 @@
 
             <div class="lg:col-span-1">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-6">
-                    <h3 class="font-black mb-4 text-[11px] text-slate-400 uppercase tracking-widest flex items-center gap-2 italic font-black">
-                        <i class="fas fa-trophy text-blue-600 font-black"></i> Rozliczenia Ligi
+                    <h3 class="font-black mb-4 text-[11px] text-slate-400 uppercase tracking-widest flex items-center gap-2 italic font-black text-slate-800">
+                        <i class="fas fa-globe text-blue-600 font-black"></i> Rozliczenia Ligi
                     </h3>
-                    <p id="total-bets-info" class="text-[9px] text-gray-400 font-bold mb-4 uppercase italic font-black">Wczytywanie...</p>
+                    <p id="total-bets-info" class="text-[9px] text-gray-400 font-bold mb-4 uppercase italic font-black text-slate-400">Wczytywanie...</p>
                     <div id="history-groups" class="space-y-3 overflow-y-auto max-h-[800px] pr-1"></div>
                 </div>
             </div>
@@ -112,29 +112,29 @@
         let profitChart = null;
         let countdown = 300;
 
-        // MAPOWANIE DYSCYPLIN I IKON
-        function getLeagueIcon(name) {
+        // MAPOWANIE FLAG PAŃSTW NA PODSTAWIE NAZW LIG
+        function getLeagueFlag(name) {
             const n = name.toLowerCase();
-            if (n.includes('nhl') || n.includes('hockey')) 
-                return { icon: 'fa-hockey-puck', color: 'bg-slate-900 text-white' };
-            if (n.includes('nba') || n.includes('basketball')) 
-                return { icon: 'fa-basketball-ball', color: 'bg-orange-500 text-white' };
-            if (n.includes('soccer') || n.includes('futbol') || n.includes('premier') || n.includes('laliga') || n.includes('league') || n.includes('bundesliga')) 
-                return { icon: 'fa-futbol', color: 'bg-green-600 text-white' };
-            if (n.includes('tennis') || n.includes('atp') || n.includes('wta')) 
-                return { icon: 'fa-table-tennis-paddle-ball', color: 'bg-lime-400 text-black' };
-            if (n.includes('mlb') || n.includes('baseball')) 
-                return { icon: 'fa-baseball-ball', color: 'bg-red-600 text-white' };
-            if (n.includes('volleyball')) 
-                return { icon: 'fa-volleyball-ball', color: 'bg-yellow-400 text-black' };
-            if (n.includes('esports') || n.includes('csgo') || n.includes('league of legends') || n.includes('dota')) 
-                return { icon: 'fa-gamepad', color: 'bg-purple-600 text-white' };
-            if (n.includes('mma') || n.includes('ufc') || n.includes('boxing')) 
-                return { icon: 'fa-hand-fist', color: 'bg-zinc-800 text-white' };
-            if (n.includes('american') || n.includes('nfl')) 
-                return { icon: 'fa-football-ball', color: 'bg-amber-800 text-white' };
+            // USA / Kanada
+            if (n.includes('nba') || n.includes('nhl') || n.includes('mlb') || n.includes('nfl') || n.includes('usa') || n.includes('american')) return '🇺🇸';
+            // Piłka nożna - Europa
+            if (n.includes('premier') || n.includes('england')) return '🇬🇧';
+            if (n.includes('laliga') || n.includes('spain')) return '🇪🇸';
+            if (n.includes('bundesliga') || n.includes('germany')) return '🇩🇪';
+            if (n.includes('serie a') || n.includes('italy')) return '🇮🇹';
+            if (n.includes('ligue 1') || n.includes('france')) return '🇫🇷';
+            if (n.includes('ekstraklasa') || n.includes('poland')) return '🇵🇱';
+            // Inne kraje
+            if (n.includes('hockey russia') || n.includes('khl')) return '🇷🇺';
+            if (n.includes('sweden') || n.includes('shl')) return '🇸🇪';
+            if (n.includes('finland') || n.includes('liiga')) return '🇫🇮';
+            if (n.includes('czech')) return '🇨🇿';
+            // Międzynarodowe / E-sport
+            if (n.includes('champion') || n.includes('europa league')) return '🇪🇺';
+            if (n.includes('atp') || n.includes('wta') || n.includes('tennis')) return '🎾';
+            if (n.includes('esport') || n.includes('csgo') || n.includes('league')) return '🎮';
             
-            return { icon: 'fa-trophy', color: 'bg-blue-100 text-blue-600' };
+            return '🏳️'; // Domyślna flaga
         }
 
         async function loadData() {
@@ -162,7 +162,7 @@
                 document.getElementById('total-bets-info').innerText = `${history.length} TYPÓW / ${s.skutecznosc || 0}% WR`;
                 
                 renderHistory(history, s.wykres || []);
-            } catch (e) { console.error("Data error:", e); }
+            } catch (e) { console.error("Błąd ładowania:", e); }
         }
 
         function renderActive(coupons) {
@@ -173,11 +173,11 @@
             }
             container.innerHTML = coupons.map(c => {
                 const lName = c.sport ? c.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA';
-                const meta = getLeagueIcon(lName);
+                const flag = getLeagueFlag(lName);
                 return `
-                <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm italic">
+                <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm italic font-black">
                     <div class="flex items-center gap-2 mb-2">
-                        <div class="league-icon ${meta.color} shadow-sm"><i class="fas ${meta.icon}"></i></div>
+                        <div class="flag-box">${flag}</div>
                         <span class="text-[7px] font-black text-gray-400 uppercase tracking-tighter">${lName}</span>
                     </div>
                     <p class="text-[10px] font-black text-slate-700 leading-tight mb-2">${c.home} - ${c.away}</p>
@@ -214,11 +214,11 @@
             recentContainer.innerHTML = last10.map(m => {
                 const isWin = m.status === 'WIN';
                 const lName = m.sport ? m.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA';
-                const meta = getLeagueIcon(lName);
+                const flag = getLeagueFlag(lName);
                 return `
                 <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'} italic font-black">
                     <div class="flex items-center gap-3 overflow-hidden">
-                        <div class="league-icon ${meta.color}"><i class="fas ${meta.icon}"></i></div>
+                        <div class="flag-box">${flag}</div>
                         <div class="overflow-hidden">
                             <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5 italic">@${m.odds} | ${m.score || '?-?'}</p>
                             <p class="text-[9px] font-black leading-tight text-slate-700 truncate italic">${m.home} - ${m.away}</p>
@@ -242,13 +242,13 @@
             const historyContainer = document.getElementById('history-groups');
             historyContainer.innerHTML = Object.entries(leagues).sort((a,b) => b[1].profit - a[1].profit).map(([name, d], idx) => {
                 const isPos = d.profit >= 0;
-                const meta = getLeagueIcon(name);
+                const flag = getLeagueFlag(name);
                 return `
                 <div class="mb-2">
                     <div onclick="const el=document.getElementById('l-details-${idx}'); el.classList.toggle('hidden')" 
                          class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm cursor-pointer hover:bg-gray-100 transition-all font-black">
                         <span class="text-[9px] font-black uppercase text-slate-600 flex items-center gap-2 italic">
-                            <div class="league-icon ${meta.color} text-[8px] shadow-xs"><i class="fas ${meta.icon}"></i></div>
+                            <div class="flag-box">${flag}</div>
                             ${name} (${d.count})
                         </span>
                         <span class="text-[10px] font-black ${isPos ? 'text-green-600' : 'text-red-600'}">${isPos ? '+' : ''}${d.profit.toFixed(2)}</span>
