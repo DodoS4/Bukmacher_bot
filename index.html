@@ -21,6 +21,9 @@
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        
+        /* Styl dla rozwiniętej listy */
+        .league-details { transition: all 0.3s ease-in-out; }
     </style>
 </head>
 <body class="p-2 md:p-6">
@@ -99,7 +102,7 @@
                     <h3 class="font-black mb-4 text-[11px] text-slate-400 uppercase tracking-widest flex items-center gap-2">
                         <i class="fas fa-trophy text-blue-600"></i> ROZLICZENIA LIGI
                     </h3>
-                    <p id="total-bets-info" class="text-[9px] text-gray-400 font-bold mb-4 uppercase">Wczytywanie...</p>
+                    <p id="total-bets-info" class="text-[9px] text-gray-400 font-bold mb-4 uppercase italic">Wczytywanie...</p>
                     <div id="history-groups" class="space-y-3 overflow-y-auto max-h-[800px] pr-1"></div>
                 </div>
             </div>
@@ -112,17 +115,13 @@
 
         async function loadData() {
             try {
-                // Fetch stats.json with Cache Busting
                 const sRes = await fetch('stats.json?v=' + Date.now());
                 const s = await sRes.json();
                 
                 document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').innerText = (s.zysk_24h >= 0 ? '+' : '') + (s.zysk_24h || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black italic ${s.zysk_24h >= 0 ? 'text-green-600' : 'text-red-600'}`;
-                
-                // Używamy pola 'roi' ze stats.json do wyświetlenia bankrollu (jak ustalone w settle.py)
                 document.getElementById('roi-val').innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
-                
                 document.getElementById('turnover-val').innerText = s.obrot || 0;
                 document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
                 document.getElementById('last-update').innerText = 'Sync: ' + (s.last_sync || '--:--');
@@ -130,18 +129,16 @@
                 document.getElementById('upcoming-val').innerText = s.upcoming_val || 0;
                 document.getElementById('active-count-badge').innerText = s.upcoming_val || 0;
 
-                // Fetch coupons.json
                 const cRes = await fetch('coupons.json?v=' + Date.now());
                 const coupons = await cRes.json();
                 renderActive(coupons);
 
-                // Fetch history.json
                 const hRes = await fetch('history.json?v=' + Date.now());
                 const history = await hRes.json();
                 document.getElementById('total-bets-info').innerText = `${history.length} TYPÓW / ${s.skutecznosc || 0}% WR`;
                 
                 renderHistory(history, s.wykres || []);
-            } catch (e) { console.error("Błąd wczytywania danych:", e); }
+            } catch (e) { console.error("Błąd wczytywania:", e); }
         }
 
         function renderActive(coupons) {
@@ -151,7 +148,7 @@
                 return;
             }
             container.innerHTML = coupons.map(c => {
-                const league = c.sport ? c.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA LIGA';
+                const league = c.sport ? c.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA';
                 return `
                 <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm">
                     <div class="flex justify-between text-[7px] font-black text-gray-400 mb-1 uppercase tracking-tighter">
@@ -167,7 +164,6 @@
         }
 
         function renderHistory(data, chartPoints) {
-            // Chart logic
             if(profitChart) profitChart.destroy();
             const ctx = document.getElementById('profitChart').getContext('2d');
             profitChart = new Chart(ctx, {
@@ -184,15 +180,9 @@
                         pointRadius: 0 
                     }] 
                 },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } },
-                    scales: { x: { display: false } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false } } }
             });
 
-            // Last 10 Results
             const recentContainer = document.getElementById('recent-results-container');
             const last10 = [...data].reverse().slice(0, 10);
             recentContainer.innerHTML = last10.map(m => {
@@ -209,30 +199,40 @@
                 </div>`;
             }).join('');
 
-            // League Stats
             const leagues = {};
             data.forEach(m => {
                 let lName = m.sport ? m.sport.toUpperCase().replace('ICEHOCKEY_', '').replace('SOCCER_', '').replace(/_/g, ' ') : 'INNA';
-                if (!leagues[lName]) leagues[lName] = { profit: 0, count: 0 };
+                if (!leagues[lName]) leagues[lName] = { profit: 0, count: 0, matches: [] };
                 leagues[lName].profit += parseFloat(m.profit);
                 leagues[lName].count++;
+                leagues[lName].matches.push(m);
             });
 
             const historyContainer = document.getElementById('history-groups');
-            historyContainer.innerHTML = Object.entries(leagues).sort((a,b) => b[1].profit - a[1].profit).map(([name, d]) => `
-                <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm mb-2">
-                    <span class="text-[9px] font-black uppercase text-slate-600">${name} (${d.count})</span>
-                    <span class="text-[10px] font-black ${d.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${d.profit >= 0 ? '+' : ''}${d.profit.toFixed(2)}</span>
-                </div>
-            `).join('');
+            historyContainer.innerHTML = Object.entries(leagues).sort((a,b) => b[1].profit - a[1].profit).map(([name, d], idx) => {
+                const isPos = d.profit >= 0;
+                return `
+                <div class="mb-2">
+                    <div onclick="const el=document.getElementById('l-details-${idx}'); el.classList.toggle('hidden')" 
+                         class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm cursor-pointer hover:bg-gray-100 transition-all active:scale-95">
+                        <span class="text-[9px] font-black uppercase text-slate-600 flex items-center gap-2">
+                            <i class="fas fa-chevron-down text-[7px] text-gray-300"></i> ${name} (${d.count})
+                        </span>
+                        <span class="text-[10px] font-black ${isPos ? 'text-green-600' : 'text-red-600'}">${isPos ? '+' : ''}${d.profit.toFixed(2)}</span>
+                    </div>
+                    <div id="l-details-${idx}" class="hidden mt-1 ml-2 space-y-1 border-l-2 border-gray-100 pl-2">
+                        ${d.matches.reverse().map(m => `
+                            <div class="text-[8px] p-2 bg-white/50 rounded-lg flex justify-between items-center italic">
+                                <span class="text-gray-500 font-bold truncate pr-2">${m.home} - ${m.away}</span>
+                                <span class="font-black ${m.status === 'WIN' ? 'text-green-500' : 'text-red-500'} shrink-0">${m.status === 'WIN' ? '+' : ''}${parseFloat(m.profit).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>`;
+            }).join('');
         }
 
-        setInterval(() => { 
-            countdown--; 
-            document.getElementById('refresh-timer').innerText = `REF: ${countdown}s`; 
-            if(countdown <= 0) { loadData(); countdown = 300; } 
-        }, 1000);
-
+        setInterval(() => { countdown--; document.getElementById('refresh-timer').innerText = `REF: ${countdown}s`; if(countdown <= 0) { loadData(); countdown = 300; } }, 1000);
         loadData();
     </script>
 </body>
