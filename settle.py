@@ -8,7 +8,6 @@ COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 STATS_JSON_FILE = "stats.json"
 
-# --- MAPOWANIE LIG (NAPRAWA BŁĘDÓW 404) ---
 LEAGUE_MAP = {
     "icehockey_sweden_hockeyallsvenskan": "icehockey_sweden_allsvenskan",
     "icehockey_finland_liiga": "icehockey_finland_liiga",
@@ -59,21 +58,28 @@ def get_api_scores(sport):
             current_key_index = (current_key_index + 1) % len(API_KEYS)
     return []
 
-def update_web_stats(history, bankroll, total_profit, active_count):
-    """Aktualizuje stats.json, naprawia wykres i obrót."""
+def update_web_stats(bankroll_from_main, total_profit_from_main, active_count):
+    """Główna funkcja naprawcza dla statystyk i wykresu."""
     now = datetime.now(timezone.utc)
+    history = []
+    
+    # KROK 1: Wymuś odczyt historii, aby obrót nie był zerem
+    if os.path.exists(HISTORY_FILE):
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            history = json.load(f)
+
     profit_24h = 0
     total_turnover = 0
     temp_bankroll = 5000.0
-    graph_data = [5000.0] # Punkt startowy dla wykresu!
+    graph_data = [5000.0] 
 
-    # Sortowanie chronologiczne
+    # KROK 2: Przelicz wszystko chronologicznie
     history_sorted = sorted(history, key=lambda x: x.get('time', ''))
 
     for m in history_sorted:
         profit = float(m.get('profit', 0))
-        # NAPRAWA OBROTU: Jeśli nie ma 'stake', bierzemy 250 (Twoja stawka)
-        stake = float(m.get('stake', 250)) 
+        # Szukamy stawki w kuponie, jeśli brak - standard 250 PLN
+        stake = float(m.get('stake') or m.get('stawka') or 250)
         
         total_turnover += stake
         temp_bankroll += profit
@@ -87,35 +93,35 @@ def update_web_stats(history, bankroll, total_profit, active_count):
                     profit_24h += profit
             except: continue
 
+    # KROK 3: Przygotuj dane dla Dashboardu
     stats_data = {
-        "bankroll": round(temp_bankroll, 2), # Dynamiczny bankroll
-        "zysk_total": round(total_profit, 2),
+        "bankroll": round(temp_bankroll, 2),
+        "zysk_total": round(temp_bankroll - 5000.0, 2),
         "zysk_24h": round(profit_24h, 2),
         "obrot": round(total_turnover, 2),
-        "yield": round((total_profit / total_turnover * 100), 2) if total_turnover > 0 else 0,
+        "yield": round(((temp_bankroll - 5000.0) / total_turnover * 100), 2) if total_turnover > 0 else 0,
         "last_sync": now.strftime("%d.%m.%Y %H:%M"),
         "upcoming_val": active_count,
-        "history_graph": graph_data[-100:] # Ostatnie 100 punktów dla płynności
+        "history_graph": graph_data[-100:] 
     }
+    
     with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(stats_data, f, indent=4)
+    print(f"--- STATS UPDATED: Obrót: {total_turnover} PLN, Punkty: {len(graph_data)} ---")
 
 def settle_matches():
     try:
-        history = []
         if os.path.exists(HISTORY_FILE):
             with open(HISTORY_FILE, "r", encoding="utf-8") as f: history = json.load(f)
+        else: history = []
         
         if not os.path.exists(COUPONS_FILE): return
         with open(COUPONS_FILE, "r", encoding="utf-8") as f: active_coupons = json.load(f)
-    except Exception as e:
-        print(f"Błąd plików: {e}")
-        return
+    except: return
 
-    still_active, updated, settled_count = [], False, 0
+    still_active, updated = [], False
     now = datetime.now(timezone.utc)
-    print(f"\n--- SPRAWDZANIE WYNIKÓW: {now.strftime('%H:%M:%S')} ---")
-
+    
     sports_to_check = list(set(c['sport'] for c in active_coupons))
     for sport in sports_to_check:
         scores_data = get_api_scores(sport)
@@ -138,29 +144,14 @@ def settle_matches():
                     profit = (stake * odds - stake) if is_win else -stake
 
                     status_icon = "✅ <b>ZYSK</b>" if is_win else "❌ <b>STRATA</b>"
-                    sport_emoji = "🏒" if "ice" in sport.lower() else "⚽"
-                    msg = (f"{status_icon}\n"
-                           f"━━━━━━━━━━━━━━━\n"
-                           f"{sport_emoji} {coupon['home']} <b>{h_score}:{a_score}</b> {coupon['away']}\n"
-                           f"🎯 Typ: <b>{coupon['outcome']}</b> (@{odds})\n"
-                           f"💰 Profit: <b>{profit:+.2f} PLN</b>\n"
-                           f"━━━━━━━━━━━━━━━")
+                    msg = (f"{status_icon}\n{coupon['home']} {h_score}:{a_score} {coupon['away']}\n"
+                           f"Typ: {coupon['outcome']} (@{odds})\nProfit: {profit:+.2f} PLN")
                     send_telegram_result(msg)
 
-                    print(f"{'✅' if is_win else '❌'}: {coupon['home']} - {coupon['away']} ({h_score}:{a_score})")
                     history.append({**coupon, "status": "WIN" if is_win else "LOSS", "score": f"{h_score}:{a_score}", "profit": round(profit, 2), "time": now.isoformat()})
-                    updated = True; settled_count += 1
+                    updated = True
                 except: still_active.append(coupon)
             else:
-                # Automatyczny VOID po 48h
-                st_str = coupon.get('commence_time') or coupon.get('time')
-                if st_str:
-                    try:
-                        st = datetime.fromisoformat(st_str.replace("Z", "+00:00"))
-                        if (now - st) > timedelta(hours=48):
-                            history.append({**coupon, "status": "VOID", "score": "CANCEL", "profit": 0.0, "time": now.isoformat()})
-                            updated = True; settled_count += 1; continue
-                    except: pass
                 still_active.append(coupon)
 
     if updated:
@@ -168,7 +159,7 @@ def settle_matches():
         with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(still_active, f, indent=4)
 
     total_profit = sum(float(m.get('profit', 0)) for m in history)
-    update_web_stats(history, 5000 + total_profit, total_profit, len(still_active))
+    update_web_stats(5000 + total_profit, total_profit, len(still_active))
 
 if __name__ == "__main__":
     settle_matches()
