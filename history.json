@@ -3298,5 +3298,13 @@
         "status": "WIN",
         "score": "1:0",
         "time": "2026-01-31T13:00:00Z"
+    },
+    {
+        "id": "40c02a07bc44ff52fe319ce9b7bf1594",
+        "home": "Columbus Blue Jackets",
+        "away": "Los Angeles Kings",
+        "sport": "icehockey_nhl",
+        "profit": 0.0,
+        "status": "VOID"
     }
 ]
