@@ -53,7 +53,7 @@
             </div>
             <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Obrót</p>
-                <p id="turnover-val" class="text-lg font-black text-slate-700">0</p>
+                <p id="turnover-val" class="text-lg font-black text-slate-700">0.00 PLN</p>
             </div>
             <div class="stat-card bg-yellow-50 p-4 rounded-2xl shadow-sm border border-yellow-100">
                 <p class="text-[9px] text-yellow-600 uppercase font-black mb-1 italic font-black">W grze</p>
@@ -114,22 +114,18 @@
 
         function getLeagueFlag(name) {
             const n = name.toLowerCase();
-            if (n.includes('nhl') || n.includes('usa')) return '🇺🇸';
-            if (n.includes('premier') || n.includes('england') || n.includes('epl')) return '🇬🇧';
-            if (n.includes('laliga') || n.includes('spain')) return '🇪🇸';
-            if (n.includes('bundesliga') || n.includes('germany')) return '🇩🇪';
-            if (n.includes('serie') || n.includes('italy')) return '🇮🇹';
-            if (n.includes('ligue') || n.includes('france')) return '🇫🇷';
-            if (n.includes('ekstraklasa') || n.includes('poland')) return '🇵🇱';
-            if (n.includes('switzerland') || n.includes('swiss')) return '🇨🇭';
-            if (n.includes('netherlands') || n.includes('dutch')) return '🇳🇱';
-            if (n.includes('portugal')) return '🇵🇹';
+            if (n.includes('nhl') || n.includes('usa') || n.includes('mammoth')) return '🇺🇸';
+            if (n.includes('premier') || n.includes('england')) return '🇬🇧';
+            if (n.includes('spain') || n.includes('betis')) return '🇪🇸';
+            if (n.includes('germany') || n.includes('del')) return '🇩🇪';
+            if (n.includes('italy')) return '🇮🇹';
+            if (n.includes('poland') || n.includes('warszawa') || n.includes('płock')) return '🇵🇱';
+            if (n.includes('switzerland') || n.includes('basel') || n.includes('luzern')) return '🇨🇭';
+            if (n.includes('netherlands') || n.includes('heracles') || n.includes('heerenveen')) return '🇳🇱';
+            if (n.includes('portugal') || n.includes('vicente')) return '🇵🇹';
             if (n.includes('sweden') || n.includes('allsvenskan')) return '🇸🇪';
-            if (n.includes('turkey')) return '🇹🇷';
             if (n.includes('finland')) return '🇫🇮';
-            if (n.includes('austria')) return '🇦🇹';
-            if (n.includes('denmark')) return '🇩🇰';
-            if (n.includes('greece')) return '🇬🇷';
+            if (n.includes('turkey') || n.includes('fenerbahce')) return '🇹🇷';
             return '🏳️'; 
         }
 
@@ -139,27 +135,27 @@
                 const sRes = await fetch('stats.json?v=' + ts);
                 const s = await sRes.json();
                 
+                // Kluczowe poprawki mapowania danych z stats.json
                 document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').innerText = (s.zysk_24h >= 0 ? '+' : '') + (s.zysk_24h || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black italic ${s.zysk_24h >= 0 ? 'text-green-600' : 'text-red-600'}`;
                 document.getElementById('roi-val').innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
-                document.getElementById('turnover-val').innerText = (s.obrot || 0).toFixed(2) + ' PLN';
+                document.getElementById('turnover-val').innerText = (s.obrot || 0).toFixed(2) + ' PLN'; // Naprawiony obrót
                 document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
                 document.getElementById('last-update').innerText = 'Sync: ' + (s.last_sync || '--:--');
                 document.getElementById('upcoming-val').innerText = s.upcoming_val || 0;
                 document.getElementById('active-count-badge').innerText = s.upcoming_val || 0;
 
-                const cRes = await fetch('coupons.json?v=' + ts);
-                const coupons = await cRes.json();
-                renderActive(coupons);
-
                 const hRes = await fetch('history.json?v=' + ts);
                 const history = await hRes.json();
                 document.getElementById('total-bets-count').innerText = history.length;
                 document.getElementById('total-bets-info').innerText = `${history.length} ROZLICZONYCH TYPÓW`;
+
+                const cRes = await fetch('coupons.json?v=' + ts);
+                const coupons = await cRes.json();
                 
-                // Używamy history_graph z settle.py
-                renderHistory(history, s.history_graph || []);
+                renderActive(coupons);
+                renderHistory(history, s.history_graph || []); // Naprawiony wykres
             } catch (e) { console.error("Sync error:", e); }
         }
 
@@ -175,7 +171,7 @@
                 <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm italic font-black">
                     <div class="flex justify-between items-start mb-2">
                         <div class="flex items-center gap-2">
-                            <div class="flag-box">${getLeagueFlag(lName)}</div>
+                            <div class="flag-box">${getLeagueFlag(lName + ' ' + c.home)}</div>
                             <span class="text-[7px] font-black text-gray-400 uppercase tracking-tighter">${lName}</span>
                         </div>
                     </div>
@@ -192,21 +188,21 @@
             if(profitChart) profitChart.destroy();
             const ctx = document.getElementById('profitChart').getContext('2d');
             
-            // Jeśli brak punktów, dodaj punkt startowy 5000
-            const finalChartPoints = chartPoints.length > 0 ? chartPoints : [5000];
+            // Punkt startowy wykresu to zawsze 5000 PLN
+            const finalPoints = chartPoints.length > 0 ? chartPoints : [5000];
             
             profitChart = new Chart(ctx, {
                 type: 'line',
                 data: { 
-                    labels: finalChartPoints.map((_, i) => i + 1), 
+                    labels: finalPoints.map((_, i) => i + 1), 
                     datasets: [{ 
-                        data: finalChartPoints, 
+                        data: finalPoints, 
                         borderColor: '#2563eb', 
                         borderWidth: 3, 
                         backgroundColor: 'rgba(37, 99, 235, 0.05)', 
                         fill: true, 
                         tension: 0.4, 
-                        pointRadius: 2 
+                        pointRadius: 1 
                     }] 
                 },
                 options: { 
@@ -215,7 +211,10 @@
                     plugins: { legend: { display: false } }, 
                     scales: { 
                         x: { display: false },
-                        y: { ticks: { font: { size: 9, weight: 'bold' } } }
+                        y: { 
+                            beginAtZero: false,
+                            ticks: { font: { size: 9, weight: 'bold' } } 
+                        } 
                     } 
                 }
             });
@@ -228,7 +227,7 @@
                 return `
                 <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'} italic font-black">
                     <div class="flex items-center gap-3 overflow-hidden">
-                        <div class="flag-box">${getLeagueFlag(lName)}</div>
+                        <div class="flag-box">${getLeagueFlag(lName + ' ' + m.home)}</div>
                         <div class="overflow-hidden">
                             <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5 italic font-black">@${m.odds} | ${m.score || '?-?'}</p>
                             <p class="text-[9px] font-black text-slate-700 truncate italic">${m.home} - ${m.away}</p>
