@@ -1,5 +1,15 @@
 [
     {
+        "id": "49a7c3868f127dea5a06fccbd074ef70",
+        "home": "Udinese",
+        "away": "AS Roma",
+        "outcome": "AS Roma",
+        "odds": 2.0,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-02T19:45:00Z"
+    },
+    {
         "id": "bf3cec19ae589773c01f75055a7d30cb",
         "home": "Dubai Basketball",
         "away": "Olympiacos",
@@ -38,6 +48,16 @@
         "stake": 250.0,
         "sport": "basketball_euroleague",
         "time": "2026-02-03T19:05:00Z"
+    },
+    {
+        "id": "f28bb4c8588342441b2c1a825669ba1d",
+        "home": "Panathinaikos",
+        "away": "Real Madrid",
+        "outcome": "Real Madrid",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:15:00Z"
     },
     {
         "id": "fa75df489faad9e44198009ff254ac44",
@@ -120,16 +140,6 @@
         "time": "2026-02-03T02:00:00Z"
     },
     {
-        "id": "49a7c3868f127dea5a06fccbd074ef70",
-        "home": "Udinese",
-        "away": "AS Roma",
-        "outcome": "AS Roma",
-        "odds": 2.0,
-        "stake": 325.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-02-02T19:45:00Z"
-    },
-    {
         "id": "bfd9fac946f89678ef1664f4b24b8695",
         "home": "Carolina Hurricanes",
         "away": "Los Angeles Kings",
@@ -164,7 +174,7 @@
         "home": "Washington Capitals",
         "away": "New York Islanders",
         "outcome": "New York Islanders",
-        "odds": 2.8,
+        "odds": 2.85,
         "stake": 125.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-03T00:00:00Z"
@@ -213,11 +223,21 @@
         "id": "9a23b81ffd2d9a53ab3bd6608e7edaeb",
         "home": "Calgary Flames",
         "away": "Toronto Maple Leafs",
-        "outcome": "Toronto Maple Leafs",
-        "odds": 2.4,
+        "outcome": "Calgary Flames",
+        "odds": 2.68,
         "stake": 125.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-03T03:00:00Z"
+    },
+    {
+        "id": "c42908f4abe3cb7c798346cdf1fc74fd",
+        "home": "Piast Gliwice",
+        "away": "Lech Pozna\u0144",
+        "outcome": "Lech Pozna\u0144",
+        "odds": 2.76,
+        "stake": 400.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-03T19:30:00Z"
     },
     {
         "id": "0984f58399853ae15893624f832ef205",
@@ -225,18 +245,38 @@
         "away": "Hapoel Tel Aviv",
         "outcome": "Hapoel Tel Aviv",
         "odds": 2.1,
-        "stake": 250.0,
+        "stake": 125.0,
         "sport": "basketball_euroleague",
         "time": "2026-02-03T19:00:00Z"
     },
     {
-        "id": "f28bb4c8588342441b2c1a825669ba1d",
-        "home": "Panathinaikos",
-        "away": "Real Madrid",
-        "outcome": "Real Madrid",
-        "odds": 2.5,
-        "stake": 250.0,
+        "id": "bb997a9c909b9654a8ccddea8fdf1cf9",
+        "home": "FC Barcelona B\u00e0squet",
+        "away": "Fenerbahce SK",
+        "outcome": "Fenerbahce SK",
+        "odds": 2.53,
+        "stake": 125.0,
         "sport": "basketball_euroleague",
-        "time": "2026-02-03T19:15:00Z"
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "e1481836943e2fac71da846dda1a2e1b",
+        "home": "FC Bayern M\u00fcnchen",
+        "away": "Paris Basketball",
+        "outcome": "Paris Basketball",
+        "odds": 2.92,
+        "stake": 125.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "9c493d8453051719c226d4ed7fded3e5",
+        "home": "Pallacanestro Olimpia Milano",
+        "away": "Saski Baskonia",
+        "outcome": "Saski Baskonia",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:30:00Z"
     }
 ]
