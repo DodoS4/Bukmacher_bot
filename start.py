@@ -4,10 +4,10 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG (NAPRAWIONE 404) =================
+# ================= KONFIGURACJA LIG =================
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
-    "icehockey_sweden_allsvenskan": "🇸🇪",        # Naprawiono
+    "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
     "icehockey_finland_liiga": "🇫🇮",
     "icehockey_germany_del": "🇩🇪",
     "icehockey_czech_extraliga": "🇨🇿",
@@ -24,7 +24,7 @@ SPORTS_CONFIG = {
     "soccer_france_ligue_one": "🇫🇷",
     "soccer_portugal_primeira_liga": "🇵🇹",
     "soccer_netherlands_eredivisie": "🇳🇱",
-    "soccer_turkey_super_league": "🇹🇷",          # Naprawiono
+    "soccer_turkey_super_lig": "🇹🇷",
     "soccer_belgium_first_division_a": "🇧🇪",
     "soccer_austria_bundesliga": "🇦🇹",
     "soccer_denmark_superliga": "🇩🇰",
@@ -40,7 +40,6 @@ SPORTS_CONFIG = {
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
-STATS_JSON_FILE = "stats.json"
 BASE_STAKE = 250
 
 # ================= POMOCNICZE =================
@@ -57,6 +56,7 @@ def send_telegram(message, mode="HTML"):
     try: requests.post(url, json=payload, timeout=15)
     except: pass
 
+# ================= LOGIKA STAWEK I VALUE =================
 def get_smart_stake(league_key):
     current_multiplier, threshold, history_profit = 1.0, 1.035, 0
     if os.path.exists(HISTORY_FILE):
@@ -79,33 +79,9 @@ def get_all_keys():
     keys = []
     for i in range(1, 11):
         name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
-        name_alt = f"ODDS_KEY{i}"
-        val = get_secret(name) or get_secret(name_alt)
+        val = get_secret(name)
         if val: keys.append(val)
     return keys
-
-def update_web_stats(history, active_count):
-    # NAPRAWA BŁĘDU ISOFORMAT ZE SCREENA
-    now = datetime.now(timezone.utc)
-    profit_total = sum(float(m.get('profit', 0)) for m in history)
-    profit_24h = 0
-    for m in history:
-        t_str = m.get('time')
-        if not t_str: continue 
-        try:
-            m_time = datetime.fromisoformat(t_str.replace("Z", "+00:00"))
-            if now - m_time < timedelta(hours=24):
-                profit_24h += float(m.get('profit', 0))
-        except: continue
-    stats_data = {
-        "bankroll": round(5000 + profit_total, 2),
-        "zysk_total": round(profit_total, 2),
-        "zysk_24h": round(profit_24h, 2),
-        "last_sync": now.strftime("%d.%m.%Y %H:%M"),
-        "upcoming_val": active_count
-    }
-    with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
-        json.dump(stats_data, f, indent=4)
 
 # ================= MAIN =================
 def main():
@@ -116,9 +92,7 @@ def main():
         return
 
     try:
-        if os.path.exists(KEY_STATE_FILE):
-            with open(KEY_STATE_FILE, "r") as f: idx = int(f.read().strip()) % len(api_keys)
-        else: idx = 0
+        with open(KEY_STATE_FILE, "r") as f: idx = int(f.read().strip()) % len(api_keys)
     except: idx = 0
 
     all_coupons = []
@@ -137,6 +111,7 @@ def main():
         stake, threshold = get_smart_stake(league)
         data = None
         
+        # Próba pobrania danych (z obsługą rotacji kluczy)
         for _ in range(len(api_keys)):
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
             params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h"}
@@ -147,14 +122,11 @@ def main():
                     data = resp.json()
                     print("OK!")
                     break
-                elif resp.status_code in [401, 429]:
-                    print(f"Błąd {resp.status_code} (Rotacja...)")
-                    idx = (idx + 1) % len(api_keys)
                 else:
                     print(f"Błąd {resp.status_code}")
-                    break 
-            except Exception as e:
-                print(f"Błąd: {e}")
+                    idx = (idx + 1) % len(api_keys)
+            except:
+                print("Timeout")
                 idx = (idx + 1) % len(api_keys)
 
         if not data:
@@ -165,12 +137,15 @@ def main():
         
         for event in data:
             if event['id'] in already_sent: continue
+            
             try:
                 m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
-                if not (now < m_time < max_future): continue 
+                if not (now < m_time < max_future):
+                    continue 
                 m_display = m_time.astimezone(timezone(timedelta(hours=1)))
             except: continue
 
+            # Wyciąganie kursów
             prices = {}
             for bookie in event.get('bookmakers', []):
                 for market in bookie.get('markets', []):
@@ -185,12 +160,15 @@ def main():
                 m_p, a_p = max(p_list), sum(p_list)/len(p_list)
                 val = m_p / a_p
                 
+                # Warunki wejścia
                 req = threshold
                 if m_p >= 2.5: req += 0.02 
                 
                 if 1.80 <= m_p <= 4.50:
                     if val > req:
-                        if val > max_val: max_val, best_odd, best_name = val, m_p, name
+                        if val > max_val:
+                            max_val, best_odd, best_name = val, m_p, name
+                    # Logowanie "bliskich" trafień do konsoli (opcjonalne)
                     elif val > (req - 0.02):
                         print(f"  ℹ️ {event['home_team']} - {name}: Value {round(val,3)} (Wymagane: {req}) - ODRZUCONO")
 
@@ -221,12 +199,6 @@ def main():
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
     
-    if os.path.exists(HISTORY_FILE):
-        try:
-            with open(HISTORY_FILE, "r", encoding="utf-8") as f: history = json.load(f)
-            update_web_stats(history, len(all_coupons))
-        except: pass
-
     print(f"\n✅ KONIEC. Wysłano nowych typów: {new_bets_count}")
     print(f"📊 Wszystkie aktywne kupony: {len(all_coupons)}")
 
