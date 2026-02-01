@@ -21,9 +21,8 @@ def get_secret(name):
     return str(val).strip() if val else None
 
 def send_telegram_result(message):
-    """Wysyła wynik meczu na Telegram."""
+    """Wysyła sformatowany wynik na Telegram."""
     token = get_secret("T_TOKEN")
-    # Używa dedykowanego kanału dla wyników lub głównego
     chat = get_secret("T_CHAT_RESULTS") or get_secret("T_CHAT")
     if not token or not chat: return
     url = f"https://api.telegram.org/bot{token}/sendMessage"
@@ -62,29 +61,49 @@ def get_api_scores(sport):
     return []
 
 def update_web_stats(history, bankroll, total_profit, active_count):
+    """Aktualizuje stats.json, naprawia wykres i obrót."""
     now = datetime.now(timezone.utc)
     profit_24h = 0
-    for m in history:
+    total_turnover = 0
+    graph_data = []
+    temp_bankroll = 5000.0
+
+    # Sortowanie historii według czasu, aby wykres szedł chronologicznie
+    history_sorted = sorted(history, key=lambda x: x.get('time', ''))
+
+    for m in history_sorted:
+        profit = float(m.get('profit', 0))
+        stake = float(m.get('stake', 0))
+        total_turnover += stake
+        temp_bankroll += profit
+        graph_data.append(round(temp_bankroll, 2))
+        
         t_str = m.get('time')
-        if not t_str or t_str == "": continue 
-        try:
-            m_time = datetime.fromisoformat(t_str.replace("Z", "+00:00"))
-            if now - m_time < timedelta(hours=24):
-                profit_24h += float(m.get('profit', 0))
-        except: continue
+        if t_str:
+            try:
+                m_time = datetime.fromisoformat(t_str.replace("Z", "+00:00"))
+                if now - m_time < timedelta(hours=24):
+                    profit_24h += profit
+            except: continue
+
     stats_data = {
         "bankroll": round(bankroll, 2),
         "zysk_total": round(total_profit, 2),
         "zysk_24h": round(profit_24h, 2),
+        "obrot": round(total_turnover, 2),
+        "yield": round((total_profit / total_turnover * 100), 2) if total_turnover > 0 else 0,
         "last_sync": now.strftime("%d.%m.%Y %H:%M"),
-        "upcoming_val": active_count
+        "upcoming_val": active_count,
+        "history_graph": graph_data[-30:]  # Ostatnie 30 punktów dla wykresu
     }
     with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(stats_data, f, indent=4)
 
 def settle_matches():
     try:
-        with open(HISTORY_FILE, "r", encoding="utf-8") as f: history = json.load(f)
+        if os.path.exists(HISTORY_FILE):
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f: history = json.load(f)
+        else: history = []
         with open(COUPONS_FILE, "r", encoding="utf-8") as f: active_coupons = json.load(f)
     except: return
 
@@ -109,16 +128,17 @@ def settle_matches():
                     winner = match['home_team'] if h_score > a_score else (match['away_team'] if a_score > h_score else "DRAW")
                     is_win = (coupon['outcome'].lower() in winner.lower()) if coupon['outcome'] != "DRAW" else (winner == "DRAW")
                     
-                    stake = float(coupon.get('stake', 100))
-                    profit = (stake * float(coupon['odds']) - stake) if is_win else -stake
+                    stake = float(coupon.get('stake', 250))
+                    odds = float(coupon['odds'])
+                    profit = (stake * odds - stake) if is_win else -stake
 
-                    # --- POWIADOMIENIE TELEGRAM ---
+                    # POWIADOMIENIE TELEGRAM
                     status_icon = "✅ <b>ZYSK</b>" if is_win else "❌ <b>STRATA</b>"
                     sport_emoji = "🏒" if "ice" in sport.lower() else "⚽"
                     msg = (f"{status_icon}\n"
                            f"━━━━━━━━━━━━━━━\n"
                            f"{sport_emoji} {coupon['home']} <b>{h_score}:{a_score}</b> {coupon['away']}\n"
-                           f"🎯 Typ: <b>{coupon['outcome']}</b> (@{coupon['odds']})\n"
+                           f"🎯 Typ: <b>{coupon['outcome']}</b> (@{odds})\n"
                            f"💰 Profit: <b>{profit:+.2f} PLN</b>\n"
                            f"━━━━━━━━━━━━━━━")
                     send_telegram_result(msg)
@@ -128,13 +148,14 @@ def settle_matches():
                     updated = True; settled_count += 1
                 except: still_active.append(coupon)
             else:
-                st_str = coupon.get('commence_time') or coupon.get('date')
+                # Automatyczny VOID (zwrot) po 48h
+                st_str = coupon.get('commence_time') or coupon.get('time')
                 if st_str:
                     try:
                         st = datetime.fromisoformat(st_str.replace("Z", "+00:00"))
                         if (now - st) > timedelta(hours=48):
                             print(f"🔄 ZWROT: {coupon['home']} - {coupon['away']}")
-                            history.append({**coupon, "status": "VOID", "score": "CANCEL", "profit": 0.00, "time": now.isoformat()})
+                            history.append({**coupon, "status": "VOID", "score": "CANCEL", "profit": 0.0, "time": now.isoformat()})
                             updated = True; settled_count += 1; continue
                     except: pass
                 still_active.append(coupon)
