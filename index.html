@@ -17,7 +17,7 @@
         .loss-border { border-left: 4px solid #ef4444; }
         .pending-border { border-left: 4px solid #f59e0b; }
         
-        #active-bets-container { max-height: 500px; overflow-y: auto; padding-right: 8px; }
+        #active-bets-container, #recent-results-container { max-height: 500px; overflow-y: auto; padding-right: 8px; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
@@ -112,16 +112,22 @@
         let profitChart = null;
         let countdown = 300;
 
+        // NAPRAWIONA FUNKCJA FLAG
         function getLeagueFlag(name) {
             const n = name.toLowerCase();
-            if (n.includes('nba') || n.includes('nhl') || n.includes('mlb') || n.includes('nfl') || n.includes('usa') || n.includes('american')) return '🇺🇸';
+            if (n.includes('nba') || n.includes('nhl') || n.includes('mlb') || n.includes('nfl') || n.includes('usa')) return '🇺🇸';
             if (n.includes('premier') || n.includes('england') || n.includes('epl')) return '🇬🇧';
-            if (n.includes('laliga') || n.includes('spain') || n.includes('segunda')) return '🇪🇸';
-            if (n.includes('bundesliga') || n.includes('germany')) return '🇩🇪';
-            if (n.includes('serie a') || n.includes('italy') || n.includes('serie b')) return '🇮🇹';
+            if (n.includes('laliga') || n.includes('spain') || n.includes('oviedo')) return '🇪🇸';
+            if (n.includes('bundesliga') || n.includes('germany') || n.includes('köln') || n.includes('wolfsburg')) return '🇩🇪';
+            if (n.includes('serie') || n.includes('italy') || n.includes('napoli') || n.includes('pisa')) return '🇮🇹';
             if (n.includes('ligue') || n.includes('france')) return '🇫🇷';
-            if (n.includes('ekstraklasa') || n.includes('poland')) return '🇵🇱';
-            if (n.includes('champion') || n.includes('europa league') || n.includes('uefa')) return '🇪🇺';
+            if (n.includes('ekstraklasa') || n.includes('poland') || n.includes('lech poznań')) return '🇵🇱';
+            if (n.includes('switzerland') || n.includes('swiss') || n.includes('grasshopper') || n.includes('lugano')) return '🇨🇭';
+            if (n.includes('netherlands') || n.includes('dutch') || n.includes('zwolle') || n.includes('alkmaar') || n.includes('nijmegen')) return '🇳🇱';
+            if (n.includes('portugal') || n.includes('primeira')) return '🇵🇹';
+            if (n.includes('sweden') || n.includes('allsvenskan')) return '🇸🇪';
+            if (n.includes('greece') || n.includes('volos')) return '🇬🇷';
+            if (n.includes('euroleague') || n.includes('uefa') || n.includes('champion')) return '🇪🇺';
             return '🏳️'; 
         }
 
@@ -164,7 +170,7 @@
                 <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm italic font-black">
                     <div class="flex justify-between items-start mb-2">
                         <div class="flex items-center gap-2">
-                            <div class="flag-box">${getLeagueFlag(lName)}</div>
+                            <div class="flag-box">${getLeagueFlag(lName + ' ' + c.home)}</div>
                             <span class="text-[7px] font-black text-gray-400 uppercase tracking-tighter">${lName}</span>
                         </div>
                         <span class="text-[8px] font-black text-blue-500 uppercase italic">${c.date || '01.02 | 12:00'}</span>
@@ -206,7 +212,7 @@
                 return `
                 <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'} italic font-black">
                     <div class="flex items-center gap-3 overflow-hidden">
-                        <div class="flag-box">${getLeagueFlag(lName)}</div>
+                        <div class="flag-box">${getLeagueFlag(lName + ' ' + m.home)}</div>
                         <div class="overflow-hidden">
                             <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5 italic font-black">@${m.odds} | ${m.score || '?-?'}</p>
                             <p class="text-[9px] font-black text-slate-700 truncate italic">${m.home} - ${m.away}</p>
