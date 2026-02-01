@@ -51,101 +51,101 @@ def send_telegram(message, mode="HTML"):
     token = get_secret("T_TOKEN")
     chat = get_secret("T_CHAT")
     if not token or not chat: return
-
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     payload = {"chat_id": chat, "text": message, "parse_mode": mode}
-    try:
-        requests.post(url, json=payload, timeout=15)
+    try: requests.post(url, json=payload, timeout=15)
     except: pass
 
 # ================= LOGIKA STAWEK I VALUE =================
 def get_smart_stake(league_key):
-    current_multiplier = 1.0
-    threshold = 1.035 
-    history_profit = 0
-
+    current_multiplier, threshold, history_profit = 1.0, 1.035, 0
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
             league_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
             history_profit = league_profit
-            
-            if league_profit <= -700:
-                current_multiplier, threshold = 0.5, 1.08
-            elif league_profit >= 3000:
-                current_multiplier = 1.6
-            elif league_profit >= 1000:
-                current_multiplier = 1.3
+            if league_profit <= -700: current_multiplier, threshold = 0.5, 1.08
+            elif league_profit >= 3000: current_multiplier = 1.6
+            elif league_profit >= 1000: current_multiplier = 1.3
         except: pass
-    
     final_stake = BASE_STAKE * current_multiplier
     if "icehockey" in league_key.lower():
         threshold -= 0.01 
-        if history_profit > 0:
-            final_stake *= 1.25 
-            
+        if history_profit > 0: final_stake *= 1.25 
     return round(final_stake, 2), round(threshold, 3)
 
 def get_all_keys():
     keys = []
-    k1 = get_secret("ODDS_KEY")
-    if k1: keys.append(k1)
-    for i in range(2, 11):
-        ki = get_secret(f"ODDS_KEY_{i}")
-        if ki: keys.append(ki)
+    for i in range(1, 11):
+        name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
+        val = get_secret(name)
+        if val: keys.append(val)
     return keys
 
 # ================= MAIN =================
 def main():
-    print(f"🚀 START BOT PRO: {datetime.now().strftime('%H:%M:%S')}")
+    print(f"🚀 --- START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
     api_keys = get_all_keys()
-    if not api_keys: return
+    if not api_keys: 
+        print("❌ BŁĄD: Brak kluczy API!")
+        return
 
-    if os.path.exists(KEY_STATE_FILE):
-        try:
-            with open(KEY_STATE_FILE, "r") as f:
-                idx = int(f.read().strip()) % len(api_keys)
-        except: idx = 0
-    else: idx = 0
+    try:
+        with open(KEY_STATE_FILE, "r") as f: idx = int(f.read().strip()) % len(api_keys)
+    except: idx = 0
 
     all_coupons = []
     if os.path.exists(COUPONS_FILE):
         try:
-            with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-                all_coupons = json.load(f)
+            with open(COUPONS_FILE, "r", encoding="utf-8") as f: all_coupons = json.load(f)
         except: pass
     
     already_sent = [c['id'] for c in all_coupons]
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
+    new_bets_count = 0
 
     for league, flag in SPORTS_CONFIG.items():
+        print(f"\n🔍 Skanowanie: {flag} {league.upper()}...")
         stake, threshold = get_smart_stake(league)
         data = None
         
+        # Próba pobrania danych (z obsługą rotacji kluczy)
         for _ in range(len(api_keys)):
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
             params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h"}
             try:
+                print(f"  📡 Klucz API #{idx+1}...", end=" ")
                 resp = requests.get(url, params=params, timeout=15)
                 if resp.status_code == 200:
                     data = resp.json()
+                    print("OK!")
                     break
-                idx = (idx + 1) % len(api_keys)
+                else:
+                    print(f"Błąd {resp.status_code}")
+                    idx = (idx + 1) % len(api_keys)
             except:
+                print("Timeout")
                 idx = (idx + 1) % len(api_keys)
 
-        if not data: continue
+        if not data:
+            print(f"  ⚠️ Pomiń ligę: Brak danych z API.")
+            continue
 
+        print(f"  📈 Znaleziono {len(data)} meczów w API.")
+        
         for event in data:
             if event['id'] in already_sent: continue
+            
             try:
                 m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
-                if not (now < m_time < max_future): continue 
+                if not (now < m_time < max_future):
+                    continue 
                 m_display = m_time.astimezone(timezone(timedelta(hours=1)))
             except: continue
 
+            # Wyciąganie kursów
             prices = {}
             for bookie in event.get('bookmakers', []):
                 for market in bookie.get('markets', []):
@@ -159,14 +159,22 @@ def main():
                 if name.lower() == "draw": continue
                 m_p, a_p = max(p_list), sum(p_list)/len(p_list)
                 val = m_p / a_p
+                
+                # Warunki wejścia
                 req = threshold
                 if m_p >= 2.5: req += 0.02 
-                if 1.80 <= m_p <= 4.50 and val > req:
-                    if val > max_val:
-                        max_val, best_odd, best_name = val, m_p, name
+                
+                if 1.80 <= m_p <= 4.50:
+                    if val > req:
+                        if val > max_val:
+                            max_val, best_odd, best_name = val, m_p, name
+                    # Logowanie "bliskich" trafień do konsoli (opcjonalne)
+                    elif val > (req - 0.02):
+                        print(f"  ℹ️ {event['home_team']} - {name}: Value {round(val,3)} (Wymagane: {req}) - ODRZUCONO")
 
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
+                print(f"  🎯 TYP! {event['home_team']} - {best_name} @{best_odd} (Value: {round(max_val,3)})")
                 
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
@@ -185,10 +193,14 @@ def main():
                     "sport": league, "time": event['commence_time']
                 })
                 already_sent.append(event['id'])
+                new_bets_count += 1
 
     with open(KEY_STATE_FILE, "w") as f: f.write(str(idx))
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
+    
+    print(f"\n✅ KONIEC. Wysłano nowych typów: {new_bets_count}")
+    print(f"📊 Wszystkie aktywne kupony: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
