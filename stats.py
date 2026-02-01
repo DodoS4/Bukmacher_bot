@@ -3,126 +3,64 @@ import os
 import requests
 from datetime import datetime, timedelta, timezone
 
-# ================= ODCZYT Z SECRETS =================
+# ================= KONFIGURACJA =================
 TOKEN = os.getenv("T_TOKEN")
 CHAT_ID = os.getenv("T_CHAT_RESULTS")
 STARTING_BANKROLL = 5000.0
 
 def generate_stats():
-    filename = 'history.json'
-    
-    if not os.path.exists(filename):
-        print("❌ Brak history.json")
-        return
+    # 1. Ładowanie i weryfikacja danych
+    if not os.path.exists('history.json'):
+        return print("❌ Brak history.json")
 
     try:
-        with open(filename, 'r', encoding='utf-8') as f:
-            content = f.read().strip()
-            if not content:
-                print("ℹ️ Plik history.json jest pusty.")
-                return
-            history = json.loads(content)
-            
-        # Zabezpieczenie przed błędem "string indices must be integers"
-        if isinstance(history, str):
-            history = json.loads(history)
-            
+        with open('history.json', 'r', encoding='utf-8') as f:
+            history = json.load(f)
         if not isinstance(history, list):
-            print("❌ Dane w history.json nie są listą!")
-            return
-            
+            history = json.loads(history) # Obsługa błędnie zapisanego JSONa jako string
     except Exception as e:
-        print(f"❌ Błąd krytyczny JSON: {e}")
-        return
+        return print(f"❌ Błąd JSON: {e}")
 
-    if not history:
-        print("ℹ️ Historia jest pusta.")
-        return
-
-    # --- LOGIKA OBLICZEŃ ---
-    total_profit = 0.0
-    total_turnover = 0.0
-    wins = 0
+    # 2. Obliczenia statystyk
+    total_profit = sum(float(b.get('profit', 0)) for b in history)
+    total_stake = sum(float(b.get('stake', 0)) for b in history)
+    wins = sum(1 for b in history if float(b.get('profit', 0)) > 0)
     
+    # Obliczanie progresji zysku dla wykresu (skumulowany zysk krok po kroku)
+    skumulowany_zysk = 0
+    punkty_wykresu = [0.0]
+    for b in sorted(history, key=lambda x: x.get('time', '')):
+        skumulowany_zysk += float(b.get('profit', 0))
+        punkty_wykresu.append(round(skumulowany_zysk, 2))
+
+    # Obliczanie zysku 24h
     now = datetime.now(timezone.utc)
     yesterday = now - timedelta(days=1)
-    profit_24h = 0.0
+    profit_24h = sum(float(b.get('profit', 0)) for b in history 
+                    if datetime.fromisoformat(b.get('time', '').replace("Z", "+00:00")) > yesterday)
 
-    for bet in history:
-        # Dodatkowe sprawdzenie czy 'bet' jest słownikiem
-        if not isinstance(bet, dict):
-            continue
-            
-        prof = float(bet.get('profit', 0))
-        stk = float(bet.get('stake', 0))
-        
-        total_profit += prof
-        total_turnover += stk
-        if prof > 0:
-            wins += 1
-            
-        # Zysk 24h
-        try:
-            b_time_str = bet.get('time', '')
-            if b_time_str:
-                b_time = datetime.fromisoformat(b_time_str.replace("Z", "+00:00"))
-                if b_time > yesterday:
-                    profit_24h += prof
-        except:
-            pass
+    # 3. Przygotowanie stats.json dla Twojego HTML
+    # Używamy nazw kluczy, których szuka Twój JavaScript (linia 102-113 w HTML)
+    web_data = {
+        "zysk_total": round(total_profit, 2),
+        "zysk_24h": round(profit_24h, 2),
+        "roi": round((total_profit / STARTING_BANKROLL * 100), 2),
+        "obrot": round(total_stake, 2),
+        "yield": round((total_profit / total_stake * 100), 2) if total_stake > 0 else 0,
+        "total_bets_count": len(history),
+        "skutecznosc": round((wins / len(history) * 100), 1) if history else 0,
+        "wykres": punkty_wykresu,
+        "last_sync": datetime.now().strftime("%H:%M:%S")
+    }
 
-    # Wskaźniki
-    current_bankroll = STARTING_BANKROLL + total_profit
-    win_rate = (wins / len(history) * 100) if history else 0
-    yield_val = (total_profit / total_turnover * 100) if total_turnover > 0 else 0
+    with open('stats.json', 'w', encoding='utf-8') as f:
+        json.dump(web_data, f, indent=4)
+    print("✅ Plik stats.json został zaktualizowany.")
 
-    # --- LISTA WYNIKÓW (Ostatnie 10) ---
-    results_list = []
-    # Pobieramy ostatnie 10 elementów, upewniając się, że to słowniki
-    last_10 = [b for b in history if isinstance(b, dict)][-10:]
-    
-    for bet in last_10:
-        icon = "✅" if float(bet.get('profit', 0)) > 0 else "❌"
-        home = bet.get('home', '???')
-        away = bet.get('away', '???')
-        score = bet.get('score', '0:0')
-        p = float(bet.get('profit', 0))
-        results_list.append(f"{icon} {home} - {away} | {score} | {p:+.2f}")
-
-    # --- FORMATOWANIE WIADOMOŚCI ---
-    report = [
-        "📊 <b>STATYSTYKI</b>",
-        "━━━━━━━━━━━━━━━",
-        f"🏦 <b>BANKROLL:</b> <code>{current_bankroll:.2f} PLN</code>",
-        f"💰 <b>Zysk Total:</b> <code>{total_profit:.2f} PLN</code>",
-        f"📅 <b>Ostatnie 24h:</b> <code>{profit_24h:+.2f} PLN</code>",
-        f"🎯 <b>Skuteczność:</b> <code>{win_rate:.1f}%</code>",
-        f"📈 <b>Yield:</b> <code>{yield_val:.2f}%</code>",
-        "━━━━━━━━━━━━━━━",
-        "📝 <b>OSTATNIE WYNIKI:</b>",
-        "\n".join(results_list) if results_list else "Brak wyników",
-        "━━━━━━━━━━━━━━━"
-    ]
-
-    full_message = "\n".join(report)
-
-    # --- WYSYŁKA ---
+    # 4. Opcjonalna wysyłka raportu na Telegram
     if TOKEN and CHAT_ID:
-        url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
-        try:
-            resp = requests.post(url, json={
-                "chat_id": CHAT_ID,
-                "text": full_message,
-                "parse_mode": "HTML"
-            }, timeout=10)
-            if resp.status_code == 200:
-                print("✅ Raport wysłany pomyślnie!")
-            else:
-                print(f"❌ Błąd Telegrama: {resp.text}")
-        except Exception as e:
-            print(f"❌ Błąd połączenia: {e}")
-    else:
-        print("❌ Brak TOKEN lub CHAT_ID w Secrets!")
+        # Tutaj możesz dodać kod wysyłający sformatowany raport tekstowy na kanał wyników
+        pass
 
 if __name__ == "__main__":
     generate_stats()
