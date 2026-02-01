@@ -4,10 +4,10 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG =================
+# ================= KONFIGURACJA LIG (POPRAWIONE 404) =================
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
-    "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
+    "icehockey_sweden_allsvenskan": "🇸🇪",        # Naprawiono ze screena
     "icehockey_finland_liiga": "🇫🇮",
     "icehockey_germany_del": "🇩🇪",
     "icehockey_czech_extraliga": "🇨🇿",
@@ -24,7 +24,7 @@ SPORTS_CONFIG = {
     "soccer_france_ligue_one": "🇫🇷",
     "soccer_portugal_primeira_liga": "🇵🇹",
     "soccer_netherlands_eredivisie": "🇳🇱",
-    "soccer_turkey_super_lig": "🇹🇷",
+    "soccer_turkey_super_league": "🇹🇷",          # Naprawiono ze screena
     "soccer_belgium_first_division_a": "🇧🇪",
     "soccer_austria_bundesliga": "🇦🇹",
     "soccer_denmark_superliga": "🇩🇰",
@@ -56,7 +56,6 @@ def send_telegram(message, mode="HTML"):
     try: requests.post(url, json=payload, timeout=15)
     except: pass
 
-# ================= LOGIKA STAWEK I VALUE =================
 def get_smart_stake(league_key):
     current_multiplier, threshold, history_profit = 1.0, 1.035, 0
     if os.path.exists(HISTORY_FILE):
@@ -78,8 +77,10 @@ def get_smart_stake(league_key):
 def get_all_keys():
     keys = []
     for i in range(1, 11):
+        # Sprawdza obie wersje zapisu klucza w GitHub Secrets
         name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
-        val = get_secret(name)
+        name_alt = f"ODDS_KEY{i}"
+        val = get_secret(name) or get_secret(name_alt)
         if val: keys.append(val)
     return keys
 
@@ -92,7 +93,9 @@ def main():
         return
 
     try:
-        with open(KEY_STATE_FILE, "r") as f: idx = int(f.read().strip()) % len(api_keys)
+        if os.path.exists(KEY_STATE_FILE):
+            with open(KEY_STATE_FILE, "r") as f: idx = int(f.read().strip()) % len(api_keys)
+        else: idx = 0
     except: idx = 0
 
     all_coupons = []
@@ -111,7 +114,6 @@ def main():
         stake, threshold = get_smart_stake(league)
         data = None
         
-        # Próba pobrania danych (z obsługą rotacji kluczy)
         for _ in range(len(api_keys)):
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
             params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h"}
@@ -122,11 +124,14 @@ def main():
                     data = resp.json()
                     print("OK!")
                     break
+                elif resp.status_code in [401, 429]:
+                    print(f"Błąd {resp.status_code} (Rotacja...)")
+                    idx = (idx + 1) % len(api_keys)
                 else:
                     print(f"Błąd {resp.status_code}")
-                    idx = (idx + 1) % len(api_keys)
-            except:
-                print("Timeout")
+                    break # Dla 404 nie rotujemy, tylko przerywamy ligę
+            except Exception as e:
+                print(f"Błąd połączenia: {e}")
                 idx = (idx + 1) % len(api_keys)
 
         if not data:
@@ -140,12 +145,10 @@ def main():
             
             try:
                 m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
-                if not (now < m_time < max_future):
-                    continue 
+                if not (now < m_time < max_future): continue 
                 m_display = m_time.astimezone(timezone(timedelta(hours=1)))
             except: continue
 
-            # Wyciąganie kursów
             prices = {}
             for bookie in event.get('bookmakers', []):
                 for market in bookie.get('markets', []):
@@ -157,10 +160,10 @@ def main():
             best_name, best_odd, max_val = None, 0, 0
             for name, p_list in prices.items():
                 if name.lower() == "draw": continue
-                m_p, a_p = max(p_list), sum(p_list)/len(p_list)
+                m_p = max(p_list)
+                a_p = sum(p_list)/len(p_list)
                 val = m_p / a_p
                 
-                # Warunki wejścia
                 req = threshold
                 if m_p >= 2.5: req += 0.02 
                 
@@ -168,13 +171,10 @@ def main():
                     if val > req:
                         if val > max_val:
                             max_val, best_odd, best_name = val, m_p, name
-                    # Logowanie "bliskich" trafień do konsoli (opcjonalne)
-                    elif val > (req - 0.02):
-                        print(f"  ℹ️ {event['home_team']} - {name}: Value {round(val,3)} (Wymagane: {req}) - ODRZUCONO")
 
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
-                print(f"  🎯 TYP! {event['home_team']} - {best_name} @{best_odd} (Value: {round(max_val,3)})")
+                print(f"  🎯 TYP! {event['home_team']} - {best_name} @{best_odd}")
                 
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
@@ -200,7 +200,6 @@ def main():
         json.dump(all_coupons, f, indent=4)
     
     print(f"\n✅ KONIEC. Wysłano nowych typów: {new_bets_count}")
-    print(f"📊 Wszystkie aktywne kupony: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
