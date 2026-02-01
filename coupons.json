@@ -198,5 +198,15 @@
         "stake": 250.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-01T15:30:00Z"
+    },
+    {
+        "id": "2a83052380ad26b3621d17cad9c5b0a1",
+        "home": "Athletic Bilbao",
+        "away": "Real Sociedad",
+        "outcome": "Real Sociedad",
+        "odds": 3.8,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-01T20:00:00Z"
     }
 ]
