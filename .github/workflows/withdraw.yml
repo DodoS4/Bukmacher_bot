@@ -1,4 +1,4 @@
-name: Manual Withdrawal
+name: Wypłata pieniędzy 
 
 on:
   workflow_dispatch:
