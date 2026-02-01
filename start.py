@@ -1,6 +1,3 @@
-Dodaj funkcję vyplata do mojego kodu
-
-
 import os
 import requests
 import json
