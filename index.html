@@ -9,19 +9,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { background-color: #f3f4f6; color: #111827; font-family: 'Inter', sans-serif; }
-        .stat-card { transition: transform 0.2s; border: 1px solid #e5e7eb; }
+        body { background-color: #f3f4f6; color: #111827; font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
+        .stat-card { transition: transform 0.2s; border: 1px solid #e5e7eb; background: white; border-radius: 1.25rem; padding: 1.5rem; shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
         .stat-card:hover { transform: translateY(-2px); }
-        .chart-container { position: relative; height: 280px; width: 100%; }
+        .chart-container { position: relative; height: 300px; width: 100%; }
         .win-border { border-left: 4px solid #10b981; }
         .loss-border { border-left: 4px solid #ef4444; }
         .pending-border { border-left: 4px solid #f59e0b; }
-        
-        #active-bets-container, #recent-results-container { max-height: 500px; overflow-y: auto; padding-right: 8px; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
-        
         .flag-box { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
     </style>
 </head>
@@ -31,7 +28,7 @@
         <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
             <div>
                 <h1 class="text-xl font-black italic tracking-tighter text-slate-800 uppercase">AI BETTING <span class="text-blue-600 font-black">PRO</span></h1>
-                <p id="last-update" class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 font-bold italic font-black">Sync: --:--:--</p>
+                <p id="last-update" class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 font-bold italic font-black">Sync: --:--</p>
             </div>
             <div class="flex items-center gap-2">
                 <span id="refresh-timer" class="text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg shadow-blue-100 uppercase italic">REF: 300s</span>
@@ -39,33 +36,33 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6 text-center">
-            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
+            <div class="stat-card">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
                 <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm border-b-4 border-b-blue-600">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-600 font-black">Zysk Total</p>
+            <div class="stat-card !border-b-4 !border-b-blue-600">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-600">Zysk Total</p>
                 <p id="total-profit" class="text-lg font-black text-blue-600 italic">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm border-b-4 border-b-purple-500">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500 font-black">Bankroll</p>
+            <div class="stat-card !border-b-4 !border-b-purple-500">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500">Bankroll</p>
                 <p id="roi-val" class="text-lg font-black text-purple-600">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
+            <div class="stat-card">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Obrót</p>
-                <p id="turnover-val" class="text-lg font-black text-slate-700">0.00 PLN</p>
+                <p id="turnover-display" class="text-lg font-black text-slate-700">0.00 PLN</p>
             </div>
-            <div class="stat-card bg-yellow-50 p-4 rounded-2xl shadow-sm border border-yellow-100">
-                <p class="text-[9px] text-yellow-600 uppercase font-black mb-1 italic font-black">W grze</p>
+            <div class="stat-card !bg-yellow-50 !border-yellow-100">
+                <p class="text-[9px] text-yellow-600 uppercase font-black mb-1 italic">W grze</p>
                 <p id="upcoming-val" class="text-lg font-black text-yellow-700">0</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-orange-500 font-black">Yield</p>
+            <div class="stat-card">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-orange-500">Yield</p>
                 <p id="yield-val" class="text-lg font-black text-orange-600">0%</p>
             </div>
-            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
+            <div class="stat-card">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1 italic">Kupony</p>
-                <p id="total-bets-count" class="text-lg font-black text-slate-800 italic font-black">0</p>
+                <p id="total-bets-count" class="text-lg font-black text-slate-800 italic">0</p>
             </div>
         </div>
 
@@ -87,22 +84,14 @@
                     </h3>
                     <div id="active-bets-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                 </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-black mb-4 text-[11px] text-green-500 uppercase tracking-widest flex items-center italic">
-                        <i class="fas fa-history mr-2"></i> Ostatnie 10 rozliczeń
-                    </h3>
-                    <div id="recent-results-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
-                </div>
             </div>
 
             <div class="lg:col-span-1">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-6">
-                    <h3 class="font-black mb-4 text-[11px] text-slate-800 uppercase tracking-widest flex items-center gap-2 italic font-black">
-                        <i class="fas fa-globe text-blue-600"></i> Rozliczenia Ligi
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
+                    <h3 class="font-black mb-4 text-[11px] text-green-500 uppercase tracking-widest flex items-center italic">
+                        <i class="fas fa-history mr-2"></i> Ostatnie wyniki
                     </h3>
-                    <p id="total-bets-info" class="text-[9px] text-gray-400 font-bold mb-4 uppercase italic font-black">Wczytywanie...</p>
-                    <div id="history-groups" class="space-y-3 overflow-y-auto max-h-[800px] pr-1"></div>
+                    <div id="recent-results-container" class="space-y-3"></div>
                 </div>
             </div>
         </div>
@@ -114,18 +103,12 @@
 
         function getLeagueFlag(name) {
             const n = name.toLowerCase();
-            if (n.includes('nhl') || n.includes('usa') || n.includes('mammoth')) return '🇺🇸';
+            if (n.includes('nhl') || n.includes('usa')) return '🇺🇸';
             if (n.includes('premier') || n.includes('england')) return '🇬🇧';
-            if (n.includes('spain') || n.includes('betis')) return '🇪🇸';
+            if (n.includes('spain') || n.includes('laliga')) return '🇪🇸';
             if (n.includes('germany') || n.includes('del')) return '🇩🇪';
-            if (n.includes('italy')) return '🇮🇹';
-            if (n.includes('poland') || n.includes('warszawa') || n.includes('płock')) return '🇵🇱';
-            if (n.includes('switzerland') || n.includes('basel') || n.includes('luzern')) return '🇨🇭';
-            if (n.includes('netherlands') || n.includes('heracles') || n.includes('heerenveen')) return '🇳🇱';
-            if (n.includes('portugal') || n.includes('vicente')) return '🇵🇹';
-            if (n.includes('sweden') || n.includes('allsvenskan')) return '🇸🇪';
-            if (n.includes('finland')) return '🇫🇮';
-            if (n.includes('turkey') || n.includes('fenerbahce')) return '🇹🇷';
+            if (n.includes('poland') || n.includes('ekstraklasa')) return '🇵🇱';
+            if (n.includes('turkey')) return '🇹🇷';
             return '🏳️'; 
         }
 
@@ -135,12 +118,15 @@
                 const sRes = await fetch('stats.json?v=' + ts);
                 const s = await sRes.json();
                 
-                // Kluczowe poprawki mapowania danych z stats.json
+                // MAPOWANIE DANYCH
                 document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').innerText = (s.zysk_24h >= 0 ? '+' : '') + (s.zysk_24h || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black italic ${s.zysk_24h >= 0 ? 'text-green-600' : 'text-red-600'}`;
                 document.getElementById('roi-val').innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
-                document.getElementById('turnover-val').innerText = (s.obrot || 0).toFixed(2) + ' PLN'; // Naprawiony obrót
+                
+                // NAPRAWA OBROTU
+                document.getElementById('turnover-display').innerText = (s.obrot || 0).toFixed(2) + ' PLN';
+                
                 document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
                 document.getElementById('last-update').innerText = 'Sync: ' + (s.last_sync || '--:--');
                 document.getElementById('upcoming-val').innerText = s.upcoming_val || 0;
@@ -149,14 +135,45 @@
                 const hRes = await fetch('history.json?v=' + ts);
                 const history = await hRes.json();
                 document.getElementById('total-bets-count').innerText = history.length;
-                document.getElementById('total-bets-info').innerText = `${history.length} ROZLICZONYCH TYPÓW`;
 
                 const cRes = await fetch('coupons.json?v=' + ts);
                 const coupons = await cRes.json();
                 
                 renderActive(coupons);
-                renderHistory(history, s.history_graph || []); // Naprawiony wykres
+                renderChart(s.history_graph || []); // NAPRAWA WYKRESU
+                renderRecent(history);
             } catch (e) { console.error("Sync error:", e); }
+        }
+
+        function renderChart(points) {
+            if(profitChart) profitChart.destroy();
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            const dataPoints = points.length > 0 ? points : [5000]; // Start od 5000 jeśli pusto
+            
+            profitChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dataPoints.map((_, i) => i + 1),
+                    datasets: [{
+                        data: dataPoints,
+                        borderColor: '#2563eb',
+                        borderWidth: 3,
+                        backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { 
+                        x: { display: false },
+                        y: { ticks: { font: { size: 10, weight: 'bold' } } }
+                    }
+                }
+            });
         }
 
         function renderActive(coupons) {
@@ -165,117 +182,31 @@
                 container.innerHTML = '<p class="text-center col-span-2 text-gray-300 text-[10px] py-4 uppercase font-black italic">Brak aktywnych</p>';
                 return;
             }
-            container.innerHTML = coupons.map(c => {
-                const lName = c.sport ? c.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA';
-                return `
-                <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm italic font-black">
-                    <div class="flex justify-between items-start mb-2">
-                        <div class="flex items-center gap-2">
-                            <div class="flag-box">${getLeagueFlag(lName + ' ' + c.home)}</div>
-                            <span class="text-[7px] font-black text-gray-400 uppercase tracking-tighter">${lName}</span>
-                        </div>
+            container.innerHTML = coupons.map(c => `
+                <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border italic font-black">
+                    <div class="flex justify-between items-start mb-1">
+                        <span class="text-[7px] text-gray-400 uppercase">${c.sport || 'BET'}</span>
+                        <span class="text-[8px] text-blue-500 italic">@${c.odds}</span>
                     </div>
-                    <p class="text-[10px] font-black text-slate-700 leading-tight mb-2 italic">${c.home} - ${c.away}</p>
-                    <div class="flex justify-between items-end border-t border-dashed pt-2">
-                        <span class="text-[9px] font-black text-blue-600 uppercase italic">TYP: ${c.outcome}</span>
-                        <span class="text-[9px] font-black text-slate-800 italic uppercase">@${c.odds}</span>
-                    </div>
-                </div>`;
-            }).join('');
+                    <p class="text-[10px] text-slate-700 truncate">${c.home} - ${c.away}</p>
+                    <p class="text-[9px] text-blue-600 uppercase mt-1">TYP: ${c.outcome}</p>
+                </div>
+            `).join('');
         }
 
-        function renderHistory(data, chartPoints) {
-            if(profitChart) profitChart.destroy();
-            const ctx = document.getElementById('profitChart').getContext('2d');
-            
-            // Punkt startowy wykresu to zawsze 5000 PLN
-            const finalPoints = chartPoints.length > 0 ? chartPoints : [5000];
-            
-            profitChart = new Chart(ctx, {
-                type: 'line',
-                data: { 
-                    labels: finalPoints.map((_, i) => i + 1), 
-                    datasets: [{ 
-                        data: finalPoints, 
-                        borderColor: '#2563eb', 
-                        borderWidth: 3, 
-                        backgroundColor: 'rgba(37, 99, 235, 0.05)', 
-                        fill: true, 
-                        tension: 0.4, 
-                        pointRadius: 1 
-                    }] 
-                },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } }, 
-                    scales: { 
-                        x: { display: false },
-                        y: { 
-                            beginAtZero: false,
-                            ticks: { font: { size: 9, weight: 'bold' } } 
-                        } 
-                    } 
-                }
-            });
-
-            const recentContainer = document.getElementById('recent-results-container');
-            const last10 = [...data].reverse().slice(0, 10);
-            recentContainer.innerHTML = last10.map(m => {
+        function renderRecent(history) {
+            const container = document.getElementById('recent-results-container');
+            const last = [...history].reverse().slice(0, 8);
+            container.innerHTML = last.map(m => {
                 const isWin = m.status === 'WIN';
-                const lName = m.sport ? m.sport.toUpperCase().replace(/_/g, ' ') : 'INNA';
                 return `
                 <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'} italic font-black">
-                    <div class="flex items-center gap-3 overflow-hidden">
-                        <div class="flag-box">${getLeagueFlag(lName + ' ' + m.home)}</div>
-                        <div class="overflow-hidden">
-                            <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5 italic font-black">@${m.odds} | ${m.score || '?-?'}</p>
-                            <p class="text-[9px] font-black text-slate-700 truncate italic">${m.home} - ${m.away}</p>
-                        </div>
+                    <div class="overflow-hidden">
+                        <p class="text-[7px] text-gray-400 uppercase">@${m.odds} | ${m.score || '?-?'}</p>
+                        <p class="text-[9px] text-slate-700 truncate">${m.home} - ${m.away}</p>
                     </div>
-                    <div class="text-right min-w-[60px]">
-                        <p class="text-[10px] font-black ${isWin ? 'text-green-600' : 'text-red-600'}">${isWin ? '+' : ''}${parseFloat(m.profit).toFixed(2)}</p>
-                    </div>
-                </div>`;
-            }).join('');
-
-            const leagues = {};
-            data.forEach(m => {
-                let lName = m.sport ? m.sport.toUpperCase().replace('ICEHOCKEY_', '').replace('SOCCER_', '').replace(/_/g, ' ') : 'INNA';
-                if (!leagues[lName]) leagues[lName] = { profit: 0, count: 0, matches: [] };
-                leagues[lName].profit += parseFloat(m.profit);
-                leagues[lName].count++;
-                leagues[lName].matches.push(m);
-            });
-
-            const historyContainer = document.getElementById('history-groups');
-            historyContainer.innerHTML = Object.entries(leagues).sort((a,b) => b[1].profit - a[1].profit).map(([name, d], idx) => {
-                const isPos = d.profit >= 0;
-                return `
-                <div class="mb-2">
-                    <div onclick="const el=document.getElementById('l-details-${idx}'); el.classList.toggle('hidden')" 
-                         class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center cursor-pointer font-black shadow-sm active:scale-95 transition-all">
-                        <span class="text-[9px] font-black uppercase text-slate-600 flex items-center gap-2 italic">
-                            <div class="flag-box">${getLeagueFlag(name)}</div>
-                            ${name} (${d.count})
-                        </span>
-                        <span class="text-[10px] font-black ${isPos ? 'text-green-600' : 'text-red-600'}">${isPos ? '+' : ''}${d.profit.toFixed(2)}</span>
-                    </div>
-                    <div id="l-details-${idx}" class="hidden mt-1 ml-2 space-y-1 border-l-2 border-gray-100 pl-2">
-                        ${d.matches.reverse().map(m => `
-                            <div class="text-[8px] p-2 bg-white/50 rounded-lg flex flex-col gap-1 italic border-b border-gray-50 italic">
-                                <div class="flex justify-between items-center font-black">
-                                    <span class="text-slate-800 uppercase truncate pr-2 italic">${m.home} ${m.score || 'vs'} ${m.away}</span>
-                                    <span class="font-black ${m.status === 'WIN' ? 'text-green-500' : 'text-red-500'}">@${m.odds}</span>
-                                </div>
-                                <div class="flex justify-between items-center text-[7px] font-black">
-                                    <span class="text-gray-400 font-black uppercase">TYP: ${m.outcome || 'ML'}</span>
-                                    <span class="${m.status === 'WIN' ? 'text-green-600' : 'text-red-600'} uppercase">
-                                        ${m.status === 'WIN' ? 'WIN' : 'LOSS'} (${m.profit.toFixed(2)})
-                                    </span>
-                                </div>
-                            </div>
-                        `).join('')}
+                    <div class="text-right">
+                        <p class="text-[10px] ${isWin ? 'text-green-600' : 'text-red-600'}">${isWin ? '+' : ''}${parseFloat(m.profit).toFixed(2)}</p>
                     </div>
                 </div>`;
             }).join('');
