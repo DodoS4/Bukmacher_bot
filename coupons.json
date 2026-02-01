@@ -318,5 +318,15 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-02-01T19:00:00Z"
+    },
+    {
+        "id": "bf3cec19ae589773c01f75055a7d30cb",
+        "home": "Dubai Basketball",
+        "away": "Olympiacos",
+        "outcome": "Dubai Basketball",
+        "odds": 2.64,
+        "stake": 250.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T16:00:00Z"
     }
 ]
