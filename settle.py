@@ -3,6 +3,7 @@ import json
 import requests
 from datetime import datetime, timezone, timedelta
 
+# --- KONFIGURACJA PLIKÓW ---
 COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 
@@ -42,13 +43,12 @@ def settle_matches():
     results_map = {}
     sports_to_check = list(set(c['sport'] for c in active_coupons))
 
-    # Pobieranie wyników po cichu
+    # Pobieranie wyników w tle
     for sport in sports_to_check:
         res = get_match_results(sport, api_keys)
         if res:
             for match in res: results_map[match['id']] = match
 
-    # Rozliczanie z widocznym Debugiem
     print(f"\n🔔 RAPORT ROZLICZEŃ ({now_utc.strftime('%H:%M')})")
     print("=" * 50)
 
@@ -58,7 +58,7 @@ def settle_matches():
             m_time = datetime.fromisoformat(coupon['time'].replace("Z", "+00:00"))
         except: m_time = now_utc
 
-        # 1. MECZ ROZLICZONY (WIN/LOSS)
+        # 1. MECZ ZAKOŃCZONY
         if match_data and match_data.get('completed'):
             h_score, a_score = 0, 0
             for s in match_data.get('scores', []):
@@ -83,16 +83,16 @@ def settle_matches():
             icon = "✅ WIN " if won else "❌ LOSS"
             print(f"{icon} | {coupon['home']} - {coupon['away']} | {h_score}:{a_score} | {profit} PLN")
         
-        # 2. MECZ PRZEŁOŻONY / VOID (PO 72H)
+        # 2. MECZ PRZEŁOŻONY (VOID)
         elif (now_utc - m_time) > timedelta(hours=72):
             history.append({
                 "id": coupon['id'], "home": coupon['home'], "away": coupon['away'],
                 "sport": coupon['sport'], "profit": 0.0, "status": "VOID", "time": coupon['time']
             })
             new_settlements += 1
-            print(f"⚠️ VOID | {coupon['home']} - {coupon['away']} | Przełożony > 72h | 0.00 PLN")
+            print(f"⚠️ VOID | {coupon['home']} - {coupon['away']} | Zwrot (72h) | 0.00 PLN")
         
-        # 3. MECZ NADAL CZEKA
+        # 3. POZOSTAŁE (W TOKU)
         else:
             remaining_coupons.append(coupon)
 
@@ -100,7 +100,7 @@ def settle_matches():
         with open(HISTORY_FILE, "w", encoding="utf-8") as f: json.dump(history, f, indent=4)
         with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(remaining_coupons, f, indent=4)
         print("=" * 50)
-        print(f"✨ Zakończono! Rozliczono pozycji: {new_settlements}")
+        print(f"✨ Gotowe! Rozliczono: {new_settlements}")
     else:
         print("ℹ️ Brak nowych rozliczeń.")
 
