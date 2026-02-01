@@ -8,8 +8,7 @@ COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 STATS_JSON_FILE = "stats.json"
 
-# --- MAPOWANIE LIG (NAPRAWA BŁĘDÓW 404) ---
-# Jeśli API zwraca 404, skrypt użyje poprawnej nazwy z tej listy
+# --- MAPOWANIE LIG (NAPRAWA BŁĘDÓW 404 ZE SCREENA) ---
 LEAGUE_MAP = {
     "icehockey_sweden_hockeyallsvenskan": "icehockey_sweden_allsvenskan",
     "icehockey_finland_liiga": "icehockey_finland_liiga",
@@ -22,7 +21,7 @@ def get_api_keys():
     first = os.getenv('ODDS_KEY')
     if first: keys.append(first.strip())
     for i in range(2, 11):
-        k = os.getenv(f'ODDS_KEY{i}')
+        k = os.getenv(f'ODDS_KEY_{i}') or os.getenv(f'ODDS_KEY{i}')
         if k: keys.append(k.strip())
     return keys
 
@@ -33,32 +32,30 @@ def get_api_scores(sport):
     global current_key_index
     if not API_KEYS: return []
     
-    # Naprawa nazwy ligi przed wysłaniem zapytania
-    sport_api = LEAGUE_MAP.get(sport, sport)
+    # Naprawa nazwy ligi (małe litery + mapowanie)
+    sport_api = LEAGUE_MAP.get(sport.lower(), sport.lower())
     
     for _ in range(len(API_KEYS)):
         api_key = API_KEYS[current_key_index]
         url = f"https://api.the-odds-api.com/v4/sports/{sport_api}/scores/?apiKey={api_key}&daysFrom=3"
         try:
             response = requests.get(url, timeout=10)
-            if response.status_code == 200:
-                return response.json()
+            if response.status_code == 200: return response.json()
             elif response.status_code in [401, 429]:
                 current_key_index = (current_key_index + 1) % len(API_KEYS)
                 continue
-            else:
-                return []
+            else: return []
         except:
             current_key_index = (current_key_index + 1) % len(API_KEYS)
     return []
 
 def update_web_stats(history, bankroll, total_profit, active_count):
-    # Obliczanie zysku 24h z zabezpieczeniem przed pustymi datami (BŁĄD Z LOGÓW)
     now = datetime.now(timezone.utc)
     profit_24h = 0
+    # ZABEZPIECZENIE PRZED BŁĘDEM ZE SCREENA:
     for m in history:
         t_str = m.get('time')
-        if not t_str: continue # Skip pustych dat
+        if not t_str or t_str == "": continue # Pomiń puste ciągi
         try:
             m_time = datetime.fromisoformat(t_str.replace("Z", "+00:00"))
             if now - m_time < timedelta(hours=24):
@@ -69,7 +66,7 @@ def update_web_stats(history, bankroll, total_profit, active_count):
         "bankroll": round(bankroll, 2),
         "zysk_total": round(total_profit, 2),
         "zysk_24h": round(profit_24h, 2),
-        "last_sync": datetime.now().strftime("%d.%m.%Y %H:%M"),
+        "last_sync": now.strftime("%d.%m.%Y %H:%M"),
         "upcoming_val": active_count
     }
     with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
@@ -89,9 +86,8 @@ def settle_matches():
 
     for sport in sports_to_check:
         scores_data = get_api_scores(sport)
-        
         for coupon in [c for c in active_coupons if c['sport'] == sport]:
-            # Elastyczne dopasowanie i sprawdzanie wyników
+            # Szukanie meczu po nazwie (fuzzy)
             match = next((s for s in scores_data if 
                           (coupon['home'].lower() in s['home_team'].lower()) and 
                           (s.get('completed') or s.get('scores'))), None)
@@ -110,11 +106,10 @@ def settle_matches():
 
                     print(f"{'✅ ZYSK' if is_win else '❌ STRATA'}: {coupon['home']} {h_score}:{a_score} | {profit:+.2f} PLN")
                     history.append({**coupon, "status": "WIN" if is_win else "LOSS", "score": f"{h_score}:{a_score}", "profit": round(profit, 2), "time": now.isoformat()})
-                    updated = True
-                    settled_count += 1
+                    updated = True; settled_count += 1
                 except: still_active.append(coupon)
             else:
-                # Automatyczny VOID po 48h
+                # Automatyczny VOID (zwrot) po 48h
                 st_str = coupon.get('commence_time') or coupon.get('date')
                 if st_str:
                     try:
@@ -132,7 +127,7 @@ def settle_matches():
 
     total_profit = sum(float(m.get('profit', 0)) for m in history)
     update_web_stats(history, 5000 + total_profit, total_profit, len(still_active))
-    print(f"--- ZAKOŃCZONO: Rozliczono {settled_count} ---")
+    print(f"--- ZAKOŃCZONO: Rozliczono {settled_count} ---\n")
 
 if __name__ == "__main__":
     settle_matches()
