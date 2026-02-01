@@ -112,49 +112,54 @@
         let profitChart = null;
         let countdown = 300;
 
-        // NAPRAWIONA FUNKCJA FLAG
         function getLeagueFlag(name) {
             const n = name.toLowerCase();
-            if (n.includes('nba') || n.includes('nhl') || n.includes('mlb') || n.includes('nfl') || n.includes('usa')) return '🇺🇸';
+            if (n.includes('nhl') || n.includes('usa')) return '🇺🇸';
             if (n.includes('premier') || n.includes('england') || n.includes('epl')) return '🇬🇧';
-            if (n.includes('laliga') || n.includes('spain') || n.includes('oviedo')) return '🇪🇸';
-            if (n.includes('bundesliga') || n.includes('germany') || n.includes('köln') || n.includes('wolfsburg')) return '🇩🇪';
-            if (n.includes('serie') || n.includes('italy') || n.includes('napoli') || n.includes('pisa')) return '🇮🇹';
+            if (n.includes('laliga') || n.includes('spain')) return '🇪🇸';
+            if (n.includes('bundesliga') || n.includes('germany')) return '🇩🇪';
+            if (n.includes('serie') || n.includes('italy')) return '🇮🇹';
             if (n.includes('ligue') || n.includes('france')) return '🇫🇷';
-            if (n.includes('ekstraklasa') || n.includes('poland') || n.includes('lech poznań')) return '🇵🇱';
-            if (n.includes('switzerland') || n.includes('swiss') || n.includes('grasshopper') || n.includes('lugano')) return '🇨🇭';
-            if (n.includes('netherlands') || n.includes('dutch') || n.includes('zwolle') || n.includes('alkmaar') || n.includes('nijmegen')) return '🇳🇱';
-            if (n.includes('portugal') || n.includes('primeira')) return '🇵🇹';
+            if (n.includes('ekstraklasa') || n.includes('poland')) return '🇵🇱';
+            if (n.includes('switzerland') || n.includes('swiss')) return '🇨🇭';
+            if (n.includes('netherlands') || n.includes('dutch')) return '🇳🇱';
+            if (n.includes('portugal')) return '🇵🇹';
             if (n.includes('sweden') || n.includes('allsvenskan')) return '🇸🇪';
-            if (n.includes('greece') || n.includes('volos')) return '🇬🇷';
-            if (n.includes('euroleague') || n.includes('uefa') || n.includes('champion')) return '🇪🇺';
+            if (n.includes('turkey')) return '🇹🇷';
+            if (n.includes('finland')) return '🇫🇮';
+            if (n.includes('austria')) return '🇦🇹';
+            if (n.includes('denmark')) return '🇩🇰';
+            if (n.includes('greece')) return '🇬🇷';
             return '🏳️'; 
         }
 
         async function loadData() {
             try {
-                const sRes = await fetch('stats.json?v=' + Date.now());
+                const ts = Date.now();
+                const sRes = await fetch('stats.json?v=' + ts);
                 const s = await sRes.json();
                 
                 document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').innerText = (s.zysk_24h >= 0 ? '+' : '') + (s.zysk_24h || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').className = `text-lg font-black italic ${s.zysk_24h >= 0 ? 'text-green-600' : 'text-red-600'}`;
                 document.getElementById('roi-val').innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
-                document.getElementById('turnover-val').innerText = s.obrot || 0;
+                document.getElementById('turnover-val').innerText = (s.obrot || 0).toFixed(2) + ' PLN';
                 document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
                 document.getElementById('last-update').innerText = 'Sync: ' + (s.last_sync || '--:--');
-                document.getElementById('total-bets-count').innerText = s.total_bets_count || 0;
                 document.getElementById('upcoming-val').innerText = s.upcoming_val || 0;
                 document.getElementById('active-count-badge').innerText = s.upcoming_val || 0;
 
-                const cRes = await fetch('coupons.json?v=' + Date.now());
+                const cRes = await fetch('coupons.json?v=' + ts);
                 const coupons = await cRes.json();
                 renderActive(coupons);
 
-                const hRes = await fetch('history.json?v=' + Date.now());
+                const hRes = await fetch('history.json?v=' + ts);
                 const history = await hRes.json();
-                document.getElementById('total-bets-info').innerText = `${history.length} TYPÓW / ${s.skutecznosc || 0}% WR`;
-                renderHistory(history, s.wykres || []);
+                document.getElementById('total-bets-count').innerText = history.length;
+                document.getElementById('total-bets-info').innerText = `${history.length} ROZLICZONYCH TYPÓW`;
+                
+                // Używamy history_graph z settle.py
+                renderHistory(history, s.history_graph || []);
             } catch (e) { console.error("Sync error:", e); }
         }
 
@@ -170,10 +175,9 @@
                 <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm italic font-black">
                     <div class="flex justify-between items-start mb-2">
                         <div class="flex items-center gap-2">
-                            <div class="flag-box">${getLeagueFlag(lName + ' ' + c.home)}</div>
+                            <div class="flag-box">${getLeagueFlag(lName)}</div>
                             <span class="text-[7px] font-black text-gray-400 uppercase tracking-tighter">${lName}</span>
                         </div>
-                        <span class="text-[8px] font-black text-blue-500 uppercase italic">${c.date || '01.02 | 12:00'}</span>
                     </div>
                     <p class="text-[10px] font-black text-slate-700 leading-tight mb-2 italic">${c.home} - ${c.away}</p>
                     <div class="flex justify-between items-end border-t border-dashed pt-2">
@@ -187,21 +191,33 @@
         function renderHistory(data, chartPoints) {
             if(profitChart) profitChart.destroy();
             const ctx = document.getElementById('profitChart').getContext('2d');
+            
+            // Jeśli brak punktów, dodaj punkt startowy 5000
+            const finalChartPoints = chartPoints.length > 0 ? chartPoints : [5000];
+            
             profitChart = new Chart(ctx, {
                 type: 'line',
                 data: { 
-                    labels: chartPoints.map((_, i) => i + 1), 
+                    labels: finalChartPoints.map((_, i) => i + 1), 
                     datasets: [{ 
-                        data: chartPoints, 
+                        data: finalChartPoints, 
                         borderColor: '#2563eb', 
                         borderWidth: 3, 
                         backgroundColor: 'rgba(37, 99, 235, 0.05)', 
                         fill: true, 
                         tension: 0.4, 
-                        pointRadius: 0 
+                        pointRadius: 2 
                     }] 
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false } } }
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } }, 
+                    scales: { 
+                        x: { display: false },
+                        y: { ticks: { font: { size: 9, weight: 'bold' } } }
+                    } 
+                }
             });
 
             const recentContainer = document.getElementById('recent-results-container');
@@ -212,7 +228,7 @@
                 return `
                 <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'} italic font-black">
                     <div class="flex items-center gap-3 overflow-hidden">
-                        <div class="flag-box">${getLeagueFlag(lName + ' ' + m.home)}</div>
+                        <div class="flag-box">${getLeagueFlag(lName)}</div>
                         <div class="overflow-hidden">
                             <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5 italic font-black">@${m.odds} | ${m.score || '?-?'}</p>
                             <p class="text-[9px] font-black text-slate-700 truncate italic">${m.home} - ${m.away}</p>
