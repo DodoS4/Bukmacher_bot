@@ -1,93 +1,70 @@
 import json
 import os
-import requests
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 
-def get_env_safe(name):
-    val = os.environ.get(name) or os.getenv(name)
-    return str(val).strip() if val and len(str(val).strip()) > 0 else None
-
-TOKEN = get_env_safe("T_TOKEN")
-CHAT_TARGET = get_env_safe("T_CHAT_RESULTS") or get_env_safe("T_CHAT")
-STARTING_BANKROLL = 5000.0
+HISTORY_FILE = "history.json"
+COUPONS_FILE = "coupons.json"
 
 def generate_stats():
-    if not os.path.exists('history.json'): return False, "❌ Brak danych."
-    try:
-        with open('history.json', 'r', encoding='utf-8') as f:
-            history = json.load(f)
-    except: return False, "❌ Błąd pliku."
+    if not os.path.exists(HISTORY_FILE):
+        print("❌ Brak pliku historii.")
+        return
 
-    total_profit, turnover = 0.0, 0.0
-    wins, losses = 0, 0
-    chart_data = []
+    with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+        history = json.load(f)
     
-    profit_24h = 0.0
-    now = datetime.now(timezone.utc)
-    yesterday = now - timedelta(days=1)
+    if not history:
+        print("ℹ️ Historia jest pusta.")
+        return
 
-    for bet in history:
-        prof = float(bet.get('profit', 0))
-        stk = float(bet.get('stake', 0))
-        
-        total_profit += prof
-        turnover += stk
-        chart_data.append(round(total_profit, 2))
-        
-        if prof > 0: wins += 1
-        elif prof < 0: losses += 1
-
-        b_time = bet.get('time') or bet.get('date')
-        if b_time:
-            try:
-                dt_obj = datetime.fromisoformat(b_time.replace("Z", "+00:00"))
-                if dt_obj > yesterday: profit_24h += prof
-            except: pass
-
-    win_rate = round((wins/len(history)*100) if len(history) > 0 else 0, 1)
-    yield_val = round((total_profit/turnover*100) if turnover > 0 else 0, 2)
-    bankroll_now = STARTING_BANKROLL + total_profit
+    # --- OBLICZENIA ---
+    total_profit = sum(m.get('profit', 0) for m in history)
+    bankroll = 5000 + total_profit # Założyłem bazowe 5000, zmień jeśli startowałeś z inną kwotą
     
-    # Zapis do stats.json (dla Dashboardu WWW - zostawiamy go w tle)
-    web_stats = {
-        "zysk_total": round(total_profit, 2),
-        "zysk_24h": round(profit_24h, 2),
-        "skutecznosc": win_rate,
-        "yield": yield_val,
-        "roi": round((total_profit/STARTING_BANKROLL)*100, 2),
-        "obrot": round(turnover, 2),
-        "total_bets_count": len(history),
-        "wykres": chart_data,
-        "last_sync": datetime.now(timezone.utc).strftime("%H:%M:%S")
-    }
-    with open('stats.json', 'w', encoding='utf-8') as f:
-        json.dump(web_stats, f, indent=4)
+    wins = sum(1 for m in history if m.get('status') == 'WIN')
+    losses = sum(1 for m in history if m.get('status') == 'LOSS')
+    total_matches = wins + losses
+    
+    accuracy = (wins / total_matches * 100) if total_matches > 0 else 0
+    total_staked = sum(m.get('stake', 0) for m in history if m.get('status') in ['WIN', 'LOSS'])
+    yield_val = (total_profit / total_staked * 100) if total_staked > 0 else 0
 
-    # Budowanie raportu tekstowego
-    msg = [
-        "📊 <b>STATYSTYKI</b>",
-        "━━━━━━━━━━━━━━━",
-        f"🏦 BANKROLL: <b>{bankroll_now:.2f} PLN</b>",
-        f"💰 Zysk Total: <b>{total_profit:.2f} PLN</b>",
-        f"📅 Ostatnie 24h: <b>{'+' if profit_24h > 0 else ''}{profit_24h:.2f} PLN</b>",
-        f"🎯 Skuteczność: <b>{win_rate}%</b>",
-        f"📈 Yield: <b>{yield_val}%</b>",
-        "━━━━━━━━━━━━━━━",
-        "📝 <b>OSTATNIE WYNIKI:</b>"
-    ]
+    # Zysk z ostatnich 24h
+    now = datetime.now()
+    last_24h_profit = 0
+    for m in history:
+        try:
+            m_time = datetime.fromisoformat(m['time'].replace("Z", "+00:00")).replace(tzinfo=None)
+            if now - m_time < timedelta(hours=24):
+                last_24h_profit += m.get('profit', 0)
+        except: continue
 
-    for bet in history[-10:]:
-        p = float(bet.get('profit', 0))
-        icon = "✅" if p > 0 else ("❌" if p < 0 else "⚠️")
-        score = bet.get('score', '?-?')
-        msg.append(f"{icon} {bet.get('home')} - {bet.get('away')} | {score} | {'+' if p > 0 else ''}{p:.2f}")
+    # --- BUDOWANIE RAPORTU ---
+    report = []
+    report.append("📊 <b>STATYSTYKI SYSTEMU</b>")
+    report.append("━━━━━━━━━━━━━━━")
+    report.append(f"🏦 <b>BANKROLL:</b> {round(bankroll, 2)} PLN")
+    report.append(f"💰 Zysk Total: {round(total_profit, 2)} PLN")
+    report.append(f"📅 Ostatnie 24h: {'+' if last_24h_profit >=0 else ''}{round(last_24h_profit, 2)} PLN")
+    report.append(f"🎯 Skuteczność: {round(accuracy, 1)}%")
+    report.append(f"📈 Yield: {round(yield_val, 2)}%")
+    report.append("━━━━━━━━━━━━━━━")
+    report.append("📝 <b>OSTATNIE WYNIKI:</b>")
 
-    msg.append("━━━━━━━━━━━━━━━")
+    # Ostatnie 10 meczów
+    for m in reversed(history[-10:]):
+        status = "✅" if m['status'] == 'WIN' else "❌" if m['status'] == 'LOSS' else "⚠️"
+        score = f" | {m['score']}" if 'score' in m else ""
+        profit = f"{'+' if m['profit'] > 0 else ''}{m['profit']}"
+        report.append(f"{status} {m['home']} - {m['away']}{score} | {profit}")
 
-    return True, "\n".join(msg)
+    report.append("━━━━━━━━━━━━━━━")
+    
+    final_msg = "\n".join(report)
+    print(final_msg)
+    
+    # Jeśli chcesz wysyłać to na Telegram automatycznie, odkomentuj poniższe:
+    # send_telegram(final_msg)
 
 if __name__ == "__main__":
-    success, text = generate_stats()
-    if success and TOKEN and CHAT_TARGET:
-        requests.post(f"https://api.telegram.org/bot{TOKEN}/sendMessage", 
-                      json={"chat_id": CHAT_TARGET, "text": text, "parse_mode": "HTML"})
+    generate_stats()
