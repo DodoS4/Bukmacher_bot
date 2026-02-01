@@ -1,8 +1,8 @@
 {
     "zysk_total": 5172.16,
     "zysk_24h": 0.0,
-    "yield": 8.9,
-    "roi": 103.4,
+    "yield": 8.86,
+    "roi": 103.44,
     "obrot": 58355.0,
     "skutecznosc": 44.2,
     "total_bets_count": 217,
@@ -226,5 +226,5 @@
         4340.56,
         5172.16
     ],
-    "last_sync": "09:34:23"
+    "last_sync": "09:36:23"
 }
