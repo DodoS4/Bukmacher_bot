@@ -1,1 +1,182 @@
-[]
+[
+    {
+        "id": "bfd9fac946f89678ef1664f4b24b8695",
+        "home": "Carolina Hurricanes",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 3.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T20:00:00Z"
+    },
+    {
+        "id": "34dbd8b5d92f6b5c91590bf9dfd418db",
+        "home": "Tampa Bay Lightning",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 3.94,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T23:40:00Z"
+    },
+    {
+        "id": "e9422729e63a1abde63521d91e9e5787",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.72,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-02T02:30:00Z"
+    },
+    {
+        "id": "34115607b8423bb49924870b192a4af6",
+        "home": "Torino",
+        "away": "Lecce",
+        "outcome": "Lecce",
+        "odds": 4.5,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-01T11:30:00Z"
+    },
+    {
+        "id": "35393f9e56c3102f7134f40c9eb47f94",
+        "home": "Como",
+        "away": "Atalanta BC",
+        "outcome": "Como",
+        "odds": 2.44,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-01T14:00:00Z"
+    },
+    {
+        "id": "a74907ed2ca7629e6eee63fbc9973c2c",
+        "home": "Motor Lublin",
+        "away": "Pogo\u0144 Szczecin",
+        "outcome": "Motor Lublin",
+        "odds": 2.82,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-01T11:15:00Z"
+    },
+    {
+        "id": "4a69144cd15cae894c234f550c66f140",
+        "home": "Wis\u0142a P\u0142ock",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 3.85,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-01T13:45:00Z"
+    },
+    {
+        "id": "19627b4e94bbf549a41e077b0bc229fe",
+        "home": "Legia Warszawa",
+        "away": "Korona Kielce",
+        "outcome": "Legia Warszawa",
+        "odds": 1.9,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-01T16:30:00Z"
+    },
+    {
+        "id": "bf157542a9d24d33de2328877193a89a",
+        "home": "Nieciecza",
+        "away": "Cracovia Krak\u00f3w",
+        "outcome": "Nieciecza",
+        "odds": 3.45,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-02T18:00:00Z"
+    },
+    {
+        "id": "05a93860cd8fd3e539cbc9eae89ed0ac",
+        "home": "Gil Vicente",
+        "away": "Famalic\u00e3o",
+        "outcome": "Famalic\u00e3o",
+        "odds": 2.86,
+        "stake": 250.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-01T15:30:00Z"
+    },
+    {
+        "id": "521c3a1d3b15f330bdb115a71ed6e9f9",
+        "home": "Excelsior",
+        "away": "Ajax",
+        "outcome": "Excelsior",
+        "odds": 4.5,
+        "stake": 325.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-01T11:15:00Z"
+    },
+    {
+        "id": "c24a3e3956d00a73cfe6523f8fb422f1",
+        "home": "Heracles Almelo",
+        "away": "Fortuna Sittard",
+        "outcome": "Heracles Almelo",
+        "odds": 2.43,
+        "stake": 325.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-01T13:30:00Z"
+    },
+    {
+        "id": "bacf0ed1069a732381c7920293645f14",
+        "home": "Heerenveen",
+        "away": "FC Utrecht",
+        "outcome": "FC Utrecht",
+        "odds": 4.2,
+        "stake": 325.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-01T15:45:00Z"
+    },
+    {
+        "id": "99d22e675353e1af5bf9d6c9579b8a26",
+        "home": "FC Volendam",
+        "away": "Go Ahead Eagles",
+        "outcome": "FC Volendam",
+        "odds": 3.15,
+        "stake": 325.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-01T19:00:00Z"
+    },
+    {
+        "id": "cb5032b14aded4e09d4d6d497110828d",
+        "home": "AEK Athens",
+        "away": "Olympiakos Piraeus",
+        "outcome": "Olympiakos Piraeus",
+        "odds": 3.24,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-01T19:00:00Z"
+    },
+    {
+        "id": "42b08dd61425825964dc1d6d553178b1",
+        "home": "FC Luzern",
+        "away": "FC St Gallen",
+        "outcome": "FC St Gallen",
+        "odds": 2.86,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-01T13:00:00Z"
+    },
+    {
+        "id": "d5add1b42d967331cd06e5e3eca15831",
+        "home": "BSC Young Boys",
+        "away": "FC Zurich",
+        "outcome": "FC Zurich",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-01T15:30:00Z"
+    },
+    {
+        "id": "c2e5888b8978726b02fb6af5b4bc861e",
+        "home": "FC Basel",
+        "away": "FC Thun",
+        "outcome": "FC Basel",
+        "odds": 2.32,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-01T15:30:00Z"
+    }
+]
