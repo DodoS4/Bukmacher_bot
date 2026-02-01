@@ -3,186 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Betting PRO - Dashboard</title>
+    <title>DEBUG - AI Betting PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { background-color: #f3f4f6; color: #111827; font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
-        .stat-card { background: white; border-radius: 1.25rem; padding: 1.5rem; border: 1px solid #e5e7eb; transition: transform 0.2s; }
-        .stat-card:hover { transform: translateY(-2px); }
-        .chart-container { position: relative; height: 320px; width: 100%; }
-        .win-border { border-left: 4px solid #10b981; }
-        .loss-border { border-left: 4px solid #ef4444; }
+        body { background: #0f172a; color: white; font-family: sans-serif; }
+        .stat-box { background: #1e293b; padding: 15px; border-radius: 10px; border-bottom: 3px solid #3b82f6; }
+        #debug-console { background: #000; color: #0f0; padding: 10px; font-family: monospace; font-size: 10px; border-radius: 5px; margin-top: 20px; max-height: 150px; overflow-y: auto; }
     </style>
 </head>
-<body class="p-2 md:p-6">
+<body class="p-4">
 
-    <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-            <div>
-                <h1 class="text-xl font-black italic tracking-tighter text-slate-800 uppercase">AI BETTING <span class="text-blue-600">PRO</span></h1>
-                <p id="last-update" class="text-[9px] text-gray-400 uppercase font-black tracking-widest mt-0.5">Sync: --:--</p>
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-xl font-bold mb-4">SYSTEM DIAGNOSTIC v2.0</h1>
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="stat-box">
+                <p class="text-xs text-gray-400">OBRÓT (TEST)</p>
+                <p id="test-obrot" class="text-xl font-bold text-yellow-400">0.00 PLN</p>
             </div>
-            <div class="flex items-center gap-2">
-                <span id="refresh-timer" class="text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg uppercase italic">REF: 300s</span>
+            <div class="stat-box">
+                <p class="text-xs text-gray-400">BANKROLL</p>
+                <p id="test-bankroll" class="text-xl font-bold text-green-400">0.00 PLN</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6 text-center">
-            <div class="stat-card">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
-                <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
-            </div>
-            <div class="stat-card !border-b-4 !border-b-blue-600">
-                <p class="text-[9px] text-blue-600 uppercase font-black mb-1">Zysk Total</p>
-                <p id="total-profit" class="text-lg font-black text-blue-600 italic">0.00 PLN</p>
-            </div>
-            <div class="stat-card !border-b-4 !border-b-purple-500">
-                <p class="text-[9px] text-purple-500 uppercase font-black mb-1">Bankroll</p>
-                <p id="bankroll-val" class="text-lg font-black text-purple-600">0.00 PLN</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-slate-500">Obrót</p>
-                <p id="obrot-val" class="text-lg font-black text-slate-700 italic">0.00 PLN</p>
-            </div>
-            <div class="stat-card !bg-yellow-50 !border-yellow-100">
-                <p class="text-[9px] text-yellow-600 uppercase font-black mb-1 italic">W grze</p>
-                <p id="upcoming-val" class="text-lg font-black text-yellow-700">0</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[9px] text-orange-500 uppercase font-black mb-1">Yield</p>
-                <p id="yield-val" class="text-lg font-black text-orange-600">0%</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 italic">Kupony</p>
-                <p id="total-bets-count" class="text-lg font-black text-slate-800 italic">0</p>
-            </div>
+        <div class="bg-white rounded-xl p-4 mb-4" style="height: 250px;">
+            <canvas id="diagChart"></canvas>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 space-y-6">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-black mb-6 text-[11px] text-slate-400 uppercase tracking-widest italic">
-                        <i class="fas fa-chart-line text-blue-600 mr-2"></i> Progresja Zysku
-                    </h3>
-                    <div class="chart-container">
-                        <canvas id="profitChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-1">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-black mb-4 text-[11px] text-green-500 uppercase tracking-widest italic">
-                        <i class="fas fa-history mr-2"></i> Ostatnie wyniki
-                    </h3>
-                    <div id="recent-results-container" class="space-y-3 max-h-[400px] overflow-y-auto pr-2">
-                        </div>
-                </div>
-            </div>
-        </div>
+        <p class="text-xs font-bold text-red-500 mb-1 uppercase">Logi systemowe:</p>
+        <div id="debug-console">Inicjalizacja systemu...</div>
     </div>
 
     <script>
-        let profitChart = null;
-        let countdown = 300;
+        const consoleLog = (msg, color = "#0f0") => {
+            const div = document.getElementById('debug-console');
+            div.innerHTML += `<div style="color: ${color}">[${new Date().toLocaleTimeString()}] ${msg}</div>`;
+            div.scrollTop = div.scrollHeight;
+        };
 
-        async function loadData() {
+        async function startDiag() {
             try {
-                const ts = Date.now();
-                // Pobieranie statystyk głównych
-                const sRes = await fetch('stats.json?v=' + ts);
-                const s = await sRes.json();
+                consoleLog("Pobieranie pliku stats.json...");
+                // Dodajemy unikalny kod na końcu, żeby OSZUKAĆ CACHE
+                const r = await fetch('stats.json?nocache=' + Math.random());
                 
-                // MAPOWANIE DANYCH Z PLIKU STATS.JSON
-                document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
-                document.getElementById('today-profit').innerText = (s.zysk_24h || 0).toFixed(2) + ' PLN';
-                document.getElementById('today-profit').className = `text-lg font-black italic ${(s.zysk_24h >= 0) ? 'text-green-600' : 'text-red-600'}`;
-                document.getElementById('bankroll-val').innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
+                if (!r.ok) throw new Error("Błąd HTTP: " + r.status);
                 
-                // NAPRAWA OBROTU: Bot wysyła s.obrot
-                document.getElementById('obrot-val').innerText = (s.obrot || 0).toFixed(2) + ' PLN';
-                
-                document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
-                document.getElementById('last-update').innerText = 'Sync: ' + (s.last_sync || '--:--');
-                document.getElementById('upcoming-val').innerText = s.upcoming_val || 0;
+                const data = await r.json();
+                consoleLog("Dane pobrane pomyślnie!");
 
-                // Pobieranie historii kuponów
-                const hRes = await fetch('history.json?v=' + ts);
-                const history = await hRes.json();
-                document.getElementById('total-bets-count').innerText = history.length;
+                // WYŚWIETLANIE DANYCH
+                const obrot = data.obrot || data.total_turnover || 0;
+                const br = data.bankroll || 0;
+                const points = data.history_graph || [];
 
-                // NAPRAWA WYKRESU: Bot wysyła s.history_graph
-                renderChart(s.history_graph || []);
-                renderRecent(history);
-            } catch (e) { 
-                console.error("Błąd synchronizacji danych:", e); 
+                document.getElementById('test-obrot').innerText = obrot.toFixed(2) + " PLN";
+                document.getElementById('test-bankroll').innerText = br.toFixed(2) + " PLN";
+
+                consoleLog(`Wartość obrotu w pliku: ${obrot}`);
+                consoleLog(`Liczba punktów wykresu: ${points.length}`);
+
+                // RYSOWANIE WYKRESU
+                const ctx = document.getElementById('diagChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: points.map((_, i) => i),
+                        datasets: [{
+                            label: 'Bankroll',
+                            data: points,
+                            borderColor: '#3b82f6',
+                            tension: 0.1,
+                            fill: false
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+
+            } catch (e) {
+                consoleLog("BŁĄD: " + e.message, "#f00");
+                consoleLog("Upewnij się, że plik stats.json istnieje w tym samym folderze!", "#f00");
             }
         }
 
-        function renderChart(points) {
-            if(profitChart) profitChart.destroy();
-            const ctx = document.getElementById('profitChart').getContext('2d');
-            
-            // Jeśli puste, startujemy od 5000
-            const dataPoints = points.length > 0 ? points : [5000];
-            
-            profitChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dataPoints.map((_, i) => i + 1),
-                    datasets: [{
-                        data: dataPoints,
-                        borderColor: '#2563eb',
-                        borderWidth: 3,
-                        backgroundColor: 'rgba(37, 99, 235, 0.05)',
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#2563eb'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { 
-                        y: { ticks: { font: { weight: 'bold' } } },
-                        x: { display: false }
-                    }
-                }
-            });
-        }
-
-        function renderRecent(history) {
-            const container = document.getElementById('recent-results-container');
-            const last = [...history].reverse().slice(0, 10);
-            if (last.length === 0) {
-                container.innerHTML = '<p class="text-center text-gray-400 text-[10px] py-4">Brak rozliczonych kuponów</p>';
-                return;
-            }
-            container.innerHTML = last.map(m => `
-                <div class="p-3 bg-white rounded-xl border border-gray-100 ${m.status === 'WIN' ? 'win-border' : 'loss-border'} italic font-black text-[10px]">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-gray-400 uppercase">@${m.odds}</span>
-                        <span class="${m.status === 'WIN' ? 'text-green-600' : 'text-red-600'}">${m.profit > 0 ? '+' : ''}${m.profit.toFixed(2)} PLN</span>
-                    </div>
-                    <p class="text-slate-700 truncate">${m.home} - ${m.away}</p>
-                </div>
-            `).join('');
-        }
-
-        // Timer odświeżania
-        setInterval(() => { 
-            countdown--; 
-            document.getElementById('refresh-timer').innerText = `REF: ${countdown}s`; 
-            if(countdown <= 0) { loadData(); countdown = 300; } 
-        }, 1000);
-
-        // Pierwsze ładowanie
-        loadData();
+        startDiag();
     </script>
 </body>
 </html>
