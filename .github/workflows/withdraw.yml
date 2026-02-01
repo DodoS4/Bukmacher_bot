@@ -1,0 +1,28 @@
+name: Manual Withdrawal
+
+on:
+  workflow_dispatch:
+    inputs:
+      amount:
+        description: 'Kwota do wypłaty (np. 500)'
+        required: true
+        default: '0'
+
+jobs:
+  withdraw:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Run Withdrawal
+        run: |
+          # Ten skrypt dopisze kwotę do history.json
+          python -c "import withdraw; withdraw.add_withdrawal(${{ github.event.inputs.amount }})"
+          
+      - name: Commit and Push
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git add history.json
+          git commit -m "💸 Wypłata: ${{ github.event.inputs.amount }} PLN"
+          git push
