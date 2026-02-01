@@ -1,13 +1,13 @@
 {
     "bankroll": 13789.06,
     "zysk_total": 8789.06,
-    "zysk_24h": 1809.5,
+    "zysk_24h": 2089.5,
     "roi": 13789.0,
     "yield": 15.18,
     "obrot": 257,
-    "upcoming_val": 29,
+    "upcoming_val": 32,
     "total_bets_count": 257,
-    "last_sync": "01.02.2026 14:45",
+    "last_sync": "01.02.2026 15:17",
     "wykres": [
         0.0,
         247.2,
