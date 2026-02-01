@@ -2,14 +2,10 @@ import os
 import requests
 import json
 import time
-import random
 from datetime import datetime, timedelta, timezone
+from stats import generate_stats
 
-# ================= PANEL STEROWANIA =================
-BASE_STAKE = 250        # Twoja stawka bazowa
-VYPLATA_PERCENT = 0.00  # <--- Zmień na np. 0.75 kiedy zrobisz wypłatę
-# ====================================================
-
+# ================= KONFIGURACJA LIG (POPRAWIONE NAZWY API) =================
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
@@ -42,175 +38,191 @@ SPORTS_CONFIG = {
     "tennis_wta_australian_open": "🎾"
 }
 
+# ================= POZOSTAŁA KONFIGURACJA =================
+API_KEYS = []
+if os.getenv("ODDS_KEY"): API_KEYS.append(os.getenv("ODDS_KEY"))
+for i in range(2, 11):
+    key = os.getenv(f"ODDS_KEY_{i}")
+    if key and len(key) > 10: API_KEYS.append(key)
+
+TELEGRAM_TOKEN = os.getenv("T_TOKEN")
+TELEGRAM_CHAT = os.getenv("T_CHAT")
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
+BASE_STAKE = 350
 
-def get_secret(name):
-    val = os.environ.get(name) or os.getenv(name)
-    return str(val).strip() if val else None
+# ================= FUNKCJE POMOCNICZE =================
 
-def send_telegram(message):
-    token = get_secret("T_TOKEN")
-    chat = get_secret("T_CHAT")
-    if not token or not chat: return
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {
-        "chat_id": chat, 
-        "text": message, 
-        "parse_mode": "HTML", 
-        "disable_web_page_preview": True
-    }
-    try: requests.post(url, json=payload, timeout=15)
-    except: pass
+def get_current_key_idx():
+    if os.path.exists(KEY_STATE_FILE):
+        try:
+            with open(KEY_STATE_FILE, "r") as f:
+                return int(f.read().strip()) % len(API_KEYS)
+        except: return 0
+    return 0
+
+def save_current_key_idx(idx):
+    with open(KEY_STATE_FILE, "w") as f:
+        f.write(str(idx))
 
 def get_smart_stake(league_key):
+    """Automatyczne dobieranie stawki w zależności od historii zysków/strat i ligi."""
     current_multiplier = 1.0
-    threshold = 1.035 
+    threshold = 1.03
+    history_profit = 0
+
+    # Pobierz historię
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
-            raw_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
-            effective_profit = raw_profit * (1 - VYPLATA_PERCENT)
-            
-            if effective_profit <= -700:
-                current_multiplier, threshold = 0.5, 1.08
-            elif effective_profit >= 3000:
-                current_multiplier = 1.6
-            elif effective_profit >= 1000:
-                current_multiplier = 1.3
+            league_profit = sum(m.get('profit', 0) for m in history if m.get('sport') == league_key)
+            history_profit = league_profit
+            # Skala stawki w zależności od strat
+            if league_profit <= -700:
+                current_multiplier = 0.5
+                threshold = 1.07
+            elif league_profit <= -300:
+                current_multiplier = 0.8
+                threshold = 1.05
+            elif league_profit >= 500:
+                current_multiplier = 1.3  # większa stawka przy dobrym wyniku
+            elif league_profit >= 1000:
+                current_multiplier = 1.5  # bonus przy dużym zysku
         except: pass
+    
     final_stake = BASE_STAKE * current_multiplier
-    if "icehockey" in league_key.lower():
-        threshold -= 0.01 
-        final_stake *= 1.25 
-    return round(final_stake, 2), round(threshold, 3)
 
-def main():
-    print(f"✨ Betting Bot Professional Dawid")
-    print(f"🚀 START: {datetime.now().strftime('%H:%M:%S')}")
-    
-    api_keys = []
-    for i in range(1, 11):
-        key_name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
-        val = get_secret(key_name)
-        if val: api_keys.append(val)
-    
-    if not api_keys:
-        print("❌ Brak kluczy API!")
-        return
+    # Bonus dla NHL
+    if "nhl" in league_key.lower():
+        if history_profit > 0:
+            final_stake *= 1.2  # zwiększenie stawki jeśli NHL przynosi zysk
+        else:
+            final_stake *= 1.1  # lekkie zwiększenie dla NHL nawet przy stracie
 
-    if os.path.exists(KEY_STATE_FILE):
-        try:
-            with open(KEY_STATE_FILE, "r") as f:
-                idx = int(f.read().strip()) % len(api_keys)
-        except: idx = 0
-    else: idx = 0
+    return round(final_stake, 2), threshold
 
-    all_coupons = []
+def send_telegram(message, mode="HTML"):
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT: return
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    try: 
+        requests.post(url, json={
+            "chat_id": TELEGRAM_CHAT, 
+            "text": message, 
+            "parse_mode": mode
+        }, timeout=10)
+    except: pass
+
+def load_existing_data():
     if os.path.exists(COUPONS_FILE):
         try:
             with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-                all_coupons = json.load(f)
-        except: pass
-    
-    already_sent = [c['id'] for c in all_coupons]
-    initial_count = len(already_sent)
+                return json.load(f)
+        except: return []
+    return []
+
+# ================= GŁÓWNA LOGIKA =================
+
+def main():
+    print(f"🚀 START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    if not API_KEYS:
+        print("❌ Błąd: Brak kluczy API!")
+        return
+
+    current_key_idx = get_current_key_idx()
+    all_coupons = load_existing_data()
+    already_sent_ids = [c['id'] for c in all_coupons]
     
     now = datetime.now(timezone.utc)
-    max_future = now + timedelta(hours=72) # FILTR 3 DOBY
+    max_future = now + timedelta(hours=48)
 
-    for league, flag in SPORTS_CONFIG.items():
-        stake, threshold = get_smart_stake(league)
-        print(f"📡 Skan: {league.ljust(35)} | Stawka: {stake}")
+    for league, flag_emoji in SPORTS_CONFIG.items():
+        current_stake, base_threshold = get_smart_stake(league)
+        print(f"📡 SKANOWANIE: {league.upper()} (Threshold: {base_threshold})")
         
         data = None
-        for _ in range(len(api_keys)):
+        attempts = 0
+        while attempts < len(API_KEYS):
+            active_key = API_KEYS[current_key_idx]
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
-            params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h"}
+            params = {"apiKey": active_key, "regions": "eu", "markets": "h2h"}
             try:
                 resp = requests.get(url, params=params, timeout=15)
                 if resp.status_code == 200:
                     data = resp.json()
                     break
-                idx = (idx + 1) % len(api_keys)
+                elif resp.status_code in [401, 429]:
+                    current_key_idx = (current_key_idx + 1) % len(API_KEYS)
+                    attempts += 1
+                else: break
             except:
-                idx = (idx + 1) % len(api_keys)
+                current_key_idx = (current_key_idx + 1) % len(API_KEYS)
+                attempts += 1
 
         if not data: continue
 
         for event in data:
-            if event['id'] in already_sent: continue
+            if event['id'] in already_sent_ids: continue
             
             try:
-                m_time_utc = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
-                if not (now < m_time_utc < max_future):
-                    continue
-                m_time = m_time_utc.astimezone(timezone(timedelta(hours=1)))
-            except:
-                continue
+                m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
+                if m_time > max_future or m_time < now: continue 
+            except: continue
 
-            prices = {}
-            for bookie in event.get('bookmakers', []):
-                for market in bookie.get('markets', []):
+            market_prices = {} 
+            for bookie in event['bookmakers']:
+                for market in bookie['markets']:
                     if market['key'] == 'h2h':
                         for out in market['outcomes']:
-                            if out['name'] not in prices: prices[out['name']] = []
-                            prices[out['name']].append(out['price'])
+                            if out['name'] not in market_prices: market_prices[out['name']] = []
+                            market_prices[out['name']].append(out['price'])
 
-            best_name, best_odd, max_val = None, 0, 0
-            for name, p_list in prices.items():
+            best_choice, best_odds, max_val = None, 0, 0
+            for name, prices in market_prices.items():
                 if name.lower() == "draw": continue
-                m_p, a_p = max(p_list), sum(p_list)/len(p_list)
-                val = m_p / a_p
-                if 1.80 <= m_p <= 4.50 and val > threshold:
-                    if val > max_val:
-                        max_val, best_odd, best_name = val, m_p, name
+                
+                max_p = max(prices)
+                avg_p = sum(prices) / len(prices)
+                curr_val = max_p / avg_p
+                
+                req_val = base_threshold
+                if max_p >= 2.2: req_val += 0.03
+                if max_p >= 3.2: req_val += 0.04
+                
+                if 1.85 <= max_p <= 5.0 and curr_val > req_val:
+                    if curr_val > max_val:
+                        max_val, best_odds, best_choice = curr_val, max_p, name
 
-            if best_name:
-                league_display = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
-                search_query = event['home_team'].split()[0]
-                random_v = random.randint(1000, 9999)
-                superbet_link = f"https://superbet.pl/wyszukiwanie?query={search_query}&v={random_v}"
-
-                # IDENTYCZNY FORMAT WIADOMOŚCI TELEGRAM
-                msg = (f"{flag} {flag} {league_display}\n"
+            if best_choice:
+                date_str = m_time.strftime('%d.%m | %H:%M')
+                l_header = league.replace("soccer_", "").replace("icehockey_", "").replace("_", " ").upper()
+                s_icon = "🏒" if "icehockey" in league else "⚽"
+                
+                msg = (f"{s_icon} {flag_emoji} <b>{l_header}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
-                       f"🏟 {event['home_team']} vs {event['away_team']}\n"
-                       f"⏰ Start: {m_time.strftime('%d.%m | %H:%M')}\n\n"
-                       f"✅ Typ: <b>{best_name}</b>\n"
-                       f"📈 Kurs: <b>{best_odd}</b>\n"
-                       f"💰 Stawka: <b>{stake} PLN</b>\n"
+                       f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
+                       f"⏰ Start: {date_str}\n\n"
+                       f"✅ Typ: <b>{best_choice}</b>\n"
+                       f"📈 Kurs: <b>{best_odds}</b>\n"
+                       f"💰 Stawka: <b>{current_stake} PLN</b>\n"
                        f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
-                       f"━━━━━━━━━━━━━━━\n\n"
-                       f"🔗 <a href='{superbet_link}'>👉 OTWÓRZ W SUPERBET 👈</a>")
+                       f"━━━━━━━━━━━━━━━")
                 
                 send_telegram(msg)
                 
-                # ZAPIS KOMPLETNYCH DANYCH DLA SETTLE I STATS
                 all_coupons.append({
-                    "id": event['id'], 
-                    "home": event['home_team'], 
-                    "away": event['away_team'], 
-                    "outcome": best_name,
-                    "odds": best_odd,
-                    "stake": stake,
-                    "sport": league, 
-                    "time": event['commence_time']
+                    "id": event['id'], "home": event['home_team'], "away": event['away_team'],
+                    "outcome": best_choice, "odds": best_odds, "stake": current_stake,
+                    "sport": league, "time": event['commence_time']
                 })
-                already_sent.append(event['id'])
+                already_sent_ids.append(event['id'])
 
-    # SEKCJA DEBUG W LOGACH
-    new_found = len(all_coupons) - initial_count
-    print(f"\n{'='*40}")
-    print(f"📊 PODSUMOWANIE SKANOWANIA")
-    print(f"✅ Nowych okazji wysłanych: {new_found}")
-    print(f"📂 Wszystkich aktywnych w coupons.json: {len(all_coupons)}")
-    print(f"{'='*40}\n")
-
-    with open(KEY_STATE_FILE, "w") as f: f.write(str(idx))
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(all_coupons, f, indent=4)
+    save_current_key_idx(current_key_idx)
+    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
+        json.dump(all_coupons, f, indent=4)
+    
+    print(f"✅ KONIEC SKANOWANIA. Aktywne: {len(all_coupons)}")
 
 if __name__ == "__main__":
     main()
