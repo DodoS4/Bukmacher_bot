@@ -208,5 +208,65 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-02-01T20:00:00Z"
+    },
+    {
+        "id": "370c2e3a4c49d4537472fa9bc565d3be",
+        "home": "Pittsburgh Penguins",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 2.82,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-03T00:00:00Z"
+    },
+    {
+        "id": "c651f17277642c30861a49ffa039d32b",
+        "home": "Minnesota Wild",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Minnesota Wild",
+        "odds": 2.06,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-03T00:30:00Z"
+    },
+    {
+        "id": "afd1cf4f1ae7574fddbd8982be4bcd5d",
+        "home": "Nashville Predators",
+        "away": "St Louis Blues",
+        "outcome": "Nashville Predators",
+        "odds": 2.15,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-03T01:00:00Z"
+    },
+    {
+        "id": "bce3723c900da967791ac5b5ba57d1f4",
+        "home": "Dallas Stars",
+        "away": "Winnipeg Jets",
+        "outcome": "Dallas Stars",
+        "odds": 2.1,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-03T01:30:00Z"
+    },
+    {
+        "id": "efa2a0ed1f485bc3b8bb681d2b02e947",
+        "home": "Colorado Avalanche",
+        "away": "Detroit Red Wings",
+        "outcome": "Detroit Red Wings",
+        "odds": 4.35,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-03T02:00:00Z"
+    },
+    {
+        "id": "9a23b81ffd2d9a53ab3bd6608e7edaeb",
+        "home": "Calgary Flames",
+        "away": "Toronto Maple Leafs",
+        "outcome": "Calgary Flames",
+        "odds": 2.96,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-03T03:00:00Z"
     }
 ]
