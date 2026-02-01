@@ -23,7 +23,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6">
             <div class="stat-card">
                 <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
-                <p id="today-profit" class="text-lg font-black italic text-red-600">0.00 PLN</p>
+                <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
             </div>
             <div class="stat-card !border-b-4 !border-b-blue-600">
                 <p class="text-[9px] text-blue-600 uppercase font-black mb-1">Zysk Total</p>
@@ -52,7 +52,7 @@
         </div>
 
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-            <h3 class="font-black mb-6 text-[11px] text-slate-400 uppercase tracking-widest italic">Progresja Zysku</h3>
+            <h3 class="font-black mb-6 text-[11px] text-slate-400 uppercase tracking-widest italic text-center">Progresja Zysku</h3>
             <div class="chart-container"><canvas id="profitChart"></canvas></div>
         </div>
     </div>
@@ -67,12 +67,12 @@
                 const sRes = await fetch('stats.json?v=' + ts);
                 const s = await sRes.json();
                 
-                // POPRAWKI MAPOWANIA - MUSZĄ BYĆ IDENTYCZNE JAK W PLIKU JSON
+                // POPRAWKI NAZW DANYCH
                 document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
                 document.getElementById('today-profit').innerText = (s.zysk_24h || 0).toFixed(2) + ' PLN';
                 document.getElementById('bankroll-val').innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
                 
-                // TUTAJ: bot wysyła "obrot", strona musi to czytać z s.obrot
+                // TUTAJ POPRAWIONO: 'obrot' zamiast 'turnover'
                 document.getElementById('obrot-val').innerText = (s.obrot || 0).toFixed(2) + ' PLN';
                 
                 document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
@@ -82,7 +82,7 @@
                 const history = await hRes.json();
                 document.getElementById('total-bets-count').innerText = history.length;
 
-                // WYKRES: szukamy tablicy "history_graph"
+                // TUTAJ POPRAWIONO: 'history_graph' zamiast 'wykres'
                 renderChart(s.history_graph || []);
             } catch (e) { console.error("Sync error:", e); }
         }
@@ -91,19 +91,19 @@
             if(profitChart) profitChart.destroy();
             const ctx = document.getElementById('profitChart').getContext('2d');
             
-            // Jeśli puste, startujemy od 5000
-            const dataPoints = points.length > 1 ? points : [5000, ...points];
+            // Wymuszamy start od 5000, żeby zawsze była linia
+            const dataPoints = points.length > 0 ? [5000, ...points] : [5000];
             
             profitChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: dataPoints.map((_, i) => i + 1),
+                    labels: dataPoints.map((_, i) => i),
                     datasets: [{
                         data: dataPoints,
                         borderColor: '#2563eb',
                         borderWidth: 3,
-                        tension: 0.4,
-                        pointRadius: 3,
+                        tension: 0.3,
+                        pointRadius: 2,
                         fill: true,
                         backgroundColor: 'rgba(37, 99, 235, 0.05)'
                     }]
