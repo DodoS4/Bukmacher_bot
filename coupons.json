@@ -328,5 +328,25 @@
         "stake": 250.0,
         "sport": "basketball_euroleague",
         "time": "2026-02-03T16:00:00Z"
+    },
+    {
+        "id": "680e06addd76104de1f0a51893434e32",
+        "home": "Anadolu Efes",
+        "away": "Valencia Basket",
+        "outcome": "Anadolu Efes",
+        "odds": 2.12,
+        "stake": 250.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T17:30:00Z"
+    },
+    {
+        "id": "4965186c819843c2b365e2c88ae857d5",
+        "home": "\u017dalgiris",
+        "away": "AS Monaco",
+        "outcome": "AS Monaco",
+        "odds": 1.99,
+        "stake": 250.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T18:00:00Z"
     }
 ]
