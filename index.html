@@ -21,9 +21,6 @@
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
-        
-        /* Styl dla rozwiniętej listy */
-        .league-details { transition: all 0.3s ease-in-out; }
     </style>
 </head>
 <body class="p-2 md:p-6">
@@ -138,7 +135,7 @@
                 document.getElementById('total-bets-info').innerText = `${history.length} TYPÓW / ${s.skutecznosc || 0}% WR`;
                 
                 renderHistory(history, s.wykres || []);
-            } catch (e) { console.error("Błąd wczytywania:", e); }
+            } catch (e) { console.error("Błąd ładowania danych:", e); }
         }
 
         function renderActive(coupons) {
@@ -164,6 +161,7 @@
         }
 
         function renderHistory(data, chartPoints) {
+            // WYKRES
             if(profitChart) profitChart.destroy();
             const ctx = document.getElementById('profitChart').getContext('2d');
             profitChart = new Chart(ctx, {
@@ -183,6 +181,7 @@
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false } } }
             });
 
+            // RECENT RESULTS
             const recentContainer = document.getElementById('recent-results-container');
             const last10 = [...data].reverse().slice(0, 10);
             recentContainer.innerHTML = last10.map(m => {
@@ -199,6 +198,7 @@
                 </div>`;
             }).join('');
 
+            // GRUPOWANIE PO LIDZE
             const leagues = {};
             data.forEach(m => {
                 let lName = m.sport ? m.sport.toUpperCase().replace('ICEHOCKEY_', '').replace('SOCCER_', '').replace(/_/g, ' ') : 'INNA';
@@ -222,9 +222,17 @@
                     </div>
                     <div id="l-details-${idx}" class="hidden mt-1 ml-2 space-y-1 border-l-2 border-gray-100 pl-2">
                         ${d.matches.reverse().map(m => `
-                            <div class="text-[8px] p-2 bg-white/50 rounded-lg flex justify-between items-center italic">
-                                <span class="text-gray-500 font-bold truncate pr-2">${m.home} - ${m.away}</span>
-                                <span class="font-black ${m.status === 'WIN' ? 'text-green-500' : 'text-red-500'} shrink-0">${m.status === 'WIN' ? '+' : ''}${parseFloat(m.profit).toFixed(2)}</span>
+                            <div class="text-[8px] p-2 bg-white/50 rounded-lg flex flex-col gap-1 border-b border-gray-50 italic">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-slate-800 font-black uppercase truncate pr-2">${m.home} ${m.score || 'vs'} ${m.away}</span>
+                                    <span class="font-black ${m.status === 'WIN' ? 'text-green-500' : 'text-red-500'} shrink-0">@${m.odds}</span>
+                                </div>
+                                <div class="flex justify-between items-center text-[7px]">
+                                    <span class="text-gray-400 font-bold">TYP: ${m.outcome || 'ML'}</span>
+                                    <span class="font-black ${m.status === 'WIN' ? 'text-green-600' : 'text-red-600'}">
+                                        ${m.status === 'WIN' ? 'WYGRANA' : 'PRZEGRANA'} (${m.profit >= 0 ? '+' : ''}${parseFloat(m.profit).toFixed(2)})
+                                    </span>
+                                </div>
                             </div>
                         `).join('')}
                     </div>
@@ -232,7 +240,12 @@
             }).join('');
         }
 
-        setInterval(() => { countdown--; document.getElementById('refresh-timer').innerText = `REF: ${countdown}s`; if(countdown <= 0) { loadData(); countdown = 300; } }, 1000);
+        setInterval(() => { 
+            countdown--; 
+            document.getElementById('refresh-timer').innerText = `REF: ${countdown}s`; 
+            if(countdown <= 0) { loadData(); countdown = 300; } 
+        }, 1000);
+
         loadData();
     </script>
 </body>
