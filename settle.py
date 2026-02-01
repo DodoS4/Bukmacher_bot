@@ -13,14 +13,28 @@ def get_secret(name):
 
 def send_telegram_results(message):
     token = get_secret("T_TOKEN")
-    # Szuka specjalnego ID dla wyników, jeśli nie ma - bierze domyślny
-    chat = get_secret("T_CHAT_RESULTS") or get_secret("T_CHAT")
-    if not token or not chat: return
+    results_chat = get_secret("T_CHAT_RESULTS")
+    
+    # --- LOGIKA WYBORU CZATU + DIAGNOSTYKA ---
+    if results_chat:
+        print(f"✅ Znaleziono T_CHAT_RESULTS. Wysyłam raport na: {results_chat[:5]}***")
+        chat = results_chat
+    else:
+        print("⚠️ T_CHAT_RESULTS nie jest ustawiony w env! Wysyłam na domyślny T_CHAT...")
+        chat = get_secret("T_CHAT")
+
+    if not token or not chat:
+        print("❌ Błąd: Brak Tokena lub Chat ID.")
+        return
     
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     payload = {"chat_id": chat, "text": message, "parse_mode": "HTML"}
-    try: requests.post(url, json=payload, timeout=15)
-    except: pass
+    try: 
+        resp = requests.post(url, json=payload, timeout=15)
+        if resp.status_code != 200:
+            print(f"❌ Telegram API Error: {resp.text}")
+    except Exception as e: 
+        print(f"❌ Wyjątek podczas wysyłki: {e}")
 
 def get_all_api_keys():
     keys = []
@@ -142,7 +156,7 @@ def settle_matches():
         with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(remaining_coupons, f, indent=4)
         generate_report(history)
     else:
-        print("Brak nowych wyników do wysłania.")
+        print("ℹ️ Brak nowych wyników do wysłania.")
 
 if __name__ == "__main__":
     settle_matches()
