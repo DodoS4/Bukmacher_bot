@@ -21,7 +21,6 @@ def get_secret(name):
     return str(val).strip() if val else None
 
 def send_telegram_result(message):
-    """Wysyła sformatowany wynik na Telegram."""
     token = get_secret("T_TOKEN")
     chat = get_secret("T_CHAT_RESULTS") or get_secret("T_CHAT")
     if not token or not chat: return
@@ -65,15 +64,17 @@ def update_web_stats(history, bankroll, total_profit, active_count):
     now = datetime.now(timezone.utc)
     profit_24h = 0
     total_turnover = 0
-    graph_data = []
     temp_bankroll = 5000.0
+    graph_data = [5000.0] # Punkt startowy dla wykresu!
 
-    # Sortowanie historii według czasu, aby wykres szedł chronologicznie
+    # Sortowanie chronologiczne
     history_sorted = sorted(history, key=lambda x: x.get('time', ''))
 
     for m in history_sorted:
         profit = float(m.get('profit', 0))
-        stake = float(m.get('stake', 0))
+        # NAPRAWA OBROTU: Jeśli nie ma 'stake', bierzemy 250 (Twoja stawka)
+        stake = float(m.get('stake', 250)) 
+        
         total_turnover += stake
         temp_bankroll += profit
         graph_data.append(round(temp_bankroll, 2))
@@ -87,29 +88,33 @@ def update_web_stats(history, bankroll, total_profit, active_count):
             except: continue
 
     stats_data = {
-        "bankroll": round(bankroll, 2),
+        "bankroll": round(temp_bankroll, 2), # Dynamiczny bankroll
         "zysk_total": round(total_profit, 2),
         "zysk_24h": round(profit_24h, 2),
         "obrot": round(total_turnover, 2),
         "yield": round((total_profit / total_turnover * 100), 2) if total_turnover > 0 else 0,
         "last_sync": now.strftime("%d.%m.%Y %H:%M"),
         "upcoming_val": active_count,
-        "history_graph": graph_data[-30:]  # Ostatnie 30 punktów dla wykresu
+        "history_graph": graph_data[-100:] # Ostatnie 100 punktów dla płynności
     }
     with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(stats_data, f, indent=4)
 
 def settle_matches():
     try:
+        history = []
         if os.path.exists(HISTORY_FILE):
             with open(HISTORY_FILE, "r", encoding="utf-8") as f: history = json.load(f)
-        else: history = []
+        
+        if not os.path.exists(COUPONS_FILE): return
         with open(COUPONS_FILE, "r", encoding="utf-8") as f: active_coupons = json.load(f)
-    except: return
+    except Exception as e:
+        print(f"Błąd plików: {e}")
+        return
 
     still_active, updated, settled_count = [], False, 0
     now = datetime.now(timezone.utc)
-    print(f"\n--- RAPORT ROZLICZEŃ: {now.strftime('%H:%M:%S')} ---")
+    print(f"\n--- SPRAWDZANIE WYNIKÓW: {now.strftime('%H:%M:%S')} ---")
 
     sports_to_check = list(set(c['sport'] for c in active_coupons))
     for sport in sports_to_check:
@@ -132,7 +137,6 @@ def settle_matches():
                     odds = float(coupon['odds'])
                     profit = (stake * odds - stake) if is_win else -stake
 
-                    # POWIADOMIENIE TELEGRAM
                     status_icon = "✅ <b>ZYSK</b>" if is_win else "❌ <b>STRATA</b>"
                     sport_emoji = "🏒" if "ice" in sport.lower() else "⚽"
                     msg = (f"{status_icon}\n"
@@ -143,18 +147,17 @@ def settle_matches():
                            f"━━━━━━━━━━━━━━━")
                     send_telegram_result(msg)
 
-                    print(f"{'✅ ZYSK' if is_win else '❌ STRATA'}: {coupon['home']} {h_score}:{a_score} | {profit:+.2f} PLN")
+                    print(f"{'✅' if is_win else '❌'}: {coupon['home']} - {coupon['away']} ({h_score}:{a_score})")
                     history.append({**coupon, "status": "WIN" if is_win else "LOSS", "score": f"{h_score}:{a_score}", "profit": round(profit, 2), "time": now.isoformat()})
                     updated = True; settled_count += 1
                 except: still_active.append(coupon)
             else:
-                # Automatyczny VOID (zwrot) po 48h
+                # Automatyczny VOID po 48h
                 st_str = coupon.get('commence_time') or coupon.get('time')
                 if st_str:
                     try:
                         st = datetime.fromisoformat(st_str.replace("Z", "+00:00"))
                         if (now - st) > timedelta(hours=48):
-                            print(f"🔄 ZWROT: {coupon['home']} - {coupon['away']}")
                             history.append({**coupon, "status": "VOID", "score": "CANCEL", "profit": 0.0, "time": now.isoformat()})
                             updated = True; settled_count += 1; continue
                     except: pass
@@ -166,7 +169,6 @@ def settle_matches():
 
     total_profit = sum(float(m.get('profit', 0)) for m in history)
     update_web_stats(history, 5000 + total_profit, total_profit, len(still_active))
-    print(f"--- ZAKOŃCZONO: Rozliczono {settled_count} ---\n")
 
 if __name__ == "__main__":
     settle_matches()
