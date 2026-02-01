@@ -1,93 +1,239 @@
-<script>
-    let profitChart = null;
-    let countdown = 300;
-
-    async function loadData() {
-        try {
-            // Dodajemy znacznik czasu, aby uniknąć czytania starej wersji z pamięci przeglądarki
-            const response = await fetch('stats.json?v=' + Date.now());
-            const s = await response.json();
-            
-            console.log("Dane wczytane:", s); // Pomocnicze logowanie w konsoli
-
-            // MAPOWANIE DANYCH (Musi być identyczne jak w stats.json)
-            document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
-            document.getElementById('today-profit').innerText = (s.zysk_24h || 0).toFixed(2) + ' PLN';
-            
-            // Fioletowa karta (Bankroll)
-            const bankrollEl = document.getElementById('roi-val');
-            if (bankrollEl) bankrollEl.innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
-
-            document.getElementById('turnover-val').innerText = s.obrot || 0;
-            document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
-            document.getElementById('upcoming-val').innerText = s.upcoming_val || 0;
-            document.getElementById('total-bets-count').innerText = s.total_bets_count || 0;
-            document.getElementById('last-update').innerText = 'Sync: ' + (s.last_sync || '--:--');
-
-            // Wczytywanie historii dla wykresu i listy
-            const hRes = await fetch('history.json?v=' + Date.now());
-            const history = await hRes.json();
-            
-            renderHistory(history, s.wykres || []);
-        } catch (e) { 
-            console.error("Błąd ładowania danych:", e); 
-        }
-    }
-
-    function renderHistory(data, chartPoints) {
-        // Wykres
-        const ctx = document.getElementById('profitChart').getContext('2d');
-        if(profitChart) profitChart.destroy();
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Betting PRO - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { background-color: #f3f4f6; color: #111827; font-family: 'Inter', sans-serif; }
+        .stat-card { transition: transform 0.2s; border: 1px solid #e5e7eb; }
+        .stat-card:hover { transform: translateY(-2px); }
+        .chart-container { position: relative; height: 280px; width: 100%; }
+        .win-border { border-left: 4px solid #10b981; }
+        .loss-border { border-left: 4px solid #ef4444; }
+        .pending-border { border-left: 4px solid #f59e0b; }
         
-        profitChart = new Chart(ctx, {
-            type: 'line',
-            data: { 
-                labels: chartPoints.map((_, i) => i), 
-                datasets: [{ 
-                    data: chartPoints, 
-                    borderColor: '#2563eb', 
-                    borderWidth: 2, 
-                    fill: true,
-                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
-                    tension: 0.4,
-                    pointRadius: 0
-                }] 
-            },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: false } }
-            }
-        });
+        #active-bets-container { max-height: 500px; overflow-y: auto; padding-right: 8px; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+    </style>
+</head>
+<body class="p-2 md:p-6">
 
-        // Lista ostatnich rozliczeń
-        const recentContainer = document.getElementById('recent-results-container');
-        if (recentContainer) {
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div>
+                <h1 class="text-xl font-black italic tracking-tighter text-slate-800 uppercase">AI BETTING <span class="text-blue-600">PRO</span></h1>
+                <p id="last-update" class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 font-bold italic">Sync: --:--:--</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span id="refresh-timer" class="text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg shadow-blue-100">REF: 300s</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6 text-center">
+            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
+                <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
+            </div>
+            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm border-b-4 border-b-blue-600">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-600">Zysk Total</p>
+                <p id="total-profit" class="text-lg font-black text-blue-600 italic">0.00 PLN</p>
+            </div>
+            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm border-b-4 border-b-purple-500">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500">Bankroll</p>
+                <p id="roi-val" class="text-lg font-black text-purple-600">0.00 PLN</p>
+            </div>
+            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Obrót</p>
+                <p id="turnover-val" class="text-lg font-black text-slate-700">0</p>
+            </div>
+            <div class="stat-card bg-yellow-50 p-4 rounded-2xl shadow-sm border border-yellow-100">
+                <p class="text-[9px] text-yellow-600 uppercase font-black mb-1 italic">W grze</p>
+                <p id="upcoming-val" class="text-lg font-black text-yellow-700">0</p>
+            </div>
+            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-orange-500">Yield</p>
+                <p id="yield-val" class="text-lg font-black text-orange-600">0%</p>
+            </div>
+            <div class="stat-card bg-white p-4 rounded-2xl shadow-sm">
+                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 italic">Kupony</p>
+                <p id="total-bets-count" class="text-lg font-black text-slate-800 italic">0</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="font-black mb-6 text-[11px] text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
+                        <i class="fas fa-chart-line text-blue-600"></i> Progresja Zysku
+                    </h3>
+                    <div class="chart-container">
+                        <canvas id="profitChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="font-black mb-4 text-[11px] text-amber-500 uppercase tracking-widest flex items-center justify-between">
+                        <span><i class="fas fa-fire mr-2"></i> Aktywne Typy (Oczekujące)</span>
+                        <span id="active-count-badge" class="bg-amber-100 text-amber-600 px-2 py-0.5 rounded text-[9px]">0</span>
+                    </h3>
+                    <div id="active-bets-container" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="font-black mb-4 text-[11px] text-green-500 uppercase tracking-widest flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i> Ostatnie 10 rozliczeń
+                    </h3>
+                    <div id="recent-results-container" class="grid grid-cols-1 md:grid-cols-2 gap-3 italic"></div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-1">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-6">
+                    <h3 class="font-black mb-4 text-[11px] text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <i class="fas fa-trophy text-blue-600"></i> ROZLICZENIA LIGI
+                    </h3>
+                    <p id="total-bets-info" class="text-[9px] text-gray-400 font-bold mb-4 uppercase">Wczytywanie...</p>
+                    <div id="history-groups" class="space-y-3 overflow-y-auto max-h-[800px] pr-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let profitChart = null;
+        let countdown = 300;
+
+        async function loadData() {
+            try {
+                // Fetch stats.json with Cache Busting
+                const sRes = await fetch('stats.json?v=' + Date.now());
+                const s = await sRes.json();
+                
+                document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
+                document.getElementById('today-profit').innerText = (s.zysk_24h >= 0 ? '+' : '') + (s.zysk_24h || 0).toFixed(2) + ' PLN';
+                document.getElementById('today-profit').className = `text-lg font-black italic ${s.zysk_24h >= 0 ? 'text-green-600' : 'text-red-600'}`;
+                
+                // Używamy pola 'roi' ze stats.json do wyświetlenia bankrollu (jak ustalone w settle.py)
+                document.getElementById('roi-val').innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
+                
+                document.getElementById('turnover-val').innerText = s.obrot || 0;
+                document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
+                document.getElementById('last-update').innerText = 'Sync: ' + (s.last_sync || '--:--');
+                document.getElementById('total-bets-count').innerText = s.total_bets_count || 0;
+                document.getElementById('upcoming-val').innerText = s.upcoming_val || 0;
+                document.getElementById('active-count-badge').innerText = s.upcoming_val || 0;
+
+                // Fetch coupons.json
+                const cRes = await fetch('coupons.json?v=' + Date.now());
+                const coupons = await cRes.json();
+                renderActive(coupons);
+
+                // Fetch history.json
+                const hRes = await fetch('history.json?v=' + Date.now());
+                const history = await hRes.json();
+                document.getElementById('total-bets-info').innerText = `${history.length} TYPÓW / ${s.skutecznosc || 0}% WR`;
+                
+                renderHistory(history, s.wykres || []);
+            } catch (e) { console.error("Błąd wczytywania danych:", e); }
+        }
+
+        function renderActive(coupons) {
+            const container = document.getElementById('active-bets-container');
+            if(!coupons || coupons.length === 0) {
+                container.innerHTML = '<p class="text-center col-span-2 text-gray-300 text-[10px] py-4 uppercase font-black italic">Brak oczekujących</p>';
+                return;
+            }
+            container.innerHTML = coupons.map(c => {
+                const league = c.sport ? c.sport.toUpperCase().replace('SOCCER_', '').replace('ICEHOCKEY_', '').replace(/_/g, ' ') : 'INNA LIGA';
+                return `
+                <div class="bg-white p-3 rounded-xl border border-gray-100 pending-border shadow-sm">
+                    <div class="flex justify-between text-[7px] font-black text-gray-400 mb-1 uppercase tracking-tighter">
+                        <span>${league}</span>
+                    </div>
+                    <p class="text-[10px] font-bold text-slate-700 leading-tight mb-2">${c.home} - ${c.away}</p>
+                    <div class="flex justify-between items-end border-t pt-2">
+                        <span class="text-[9px] font-black text-blue-600 uppercase italic">${c.outcome}</span>
+                        <span class="text-[9px] font-black text-slate-800 italic uppercase">@${c.odds}</span>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderHistory(data, chartPoints) {
+            // Chart logic
+            if(profitChart) profitChart.destroy();
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            profitChart = new Chart(ctx, {
+                type: 'line',
+                data: { 
+                    labels: chartPoints.map((_, i) => i + 1), 
+                    datasets: [{ 
+                        data: chartPoints, 
+                        borderColor: '#2563eb', 
+                        borderWidth: 3, 
+                        backgroundColor: 'rgba(37, 99, 235, 0.05)', 
+                        fill: true, 
+                        tension: 0.4, 
+                        pointRadius: 0 
+                    }] 
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } },
+                    scales: { x: { display: false } }
+                }
+            });
+
+            // Last 10 Results
+            const recentContainer = document.getElementById('recent-results-container');
             const last10 = [...data].reverse().slice(0, 10);
-            recentContainer.innerHTML = last10.map(m => `
-                <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${m.status === 'WIN' ? 'win-border' : 'loss-border'}">
-                    <div>
-                        <p class="text-[7px] text-gray-400 font-bold uppercase">@${m.odds} | ${m.score || '?-?'}</p>
-                        <p class="text-[9px] font-bold text-slate-700">${m.home} - ${m.away}</p>
+            recentContainer.innerHTML = last10.map(m => {
+                const isWin = m.status === 'WIN';
+                return `
+                <div class="flex justify-between items-center p-3 bg-white rounded-xl border border-gray-100 shadow-sm ${isWin ? 'win-border' : 'loss-border'}">
+                    <div class="overflow-hidden">
+                        <p class="text-[7px] text-gray-400 font-bold uppercase mb-0.5">@${m.odds} | ${m.score || '?-?'}</p>
+                        <p class="text-[9px] font-bold leading-tight text-slate-700 truncate">${m.home} - ${m.away}</p>
                     </div>
-                    <div class="text-right">
-                        <p class="text-[10px] font-black ${m.profit > 0 ? 'text-green-600' : 'text-red-600'}">
-                            ${m.profit > 0 ? '+' : ''}${m.profit.toFixed(2)}
-                        </p>
+                    <div class="text-right min-w-[60px]">
+                        <p class="text-[10px] font-black ${isWin ? 'text-green-600' : 'text-red-600'}">${isWin ? '+' : ''}${parseFloat(m.profit).toFixed(2)}</p>
                     </div>
+                </div>`;
+            }).join('');
+
+            // League Stats
+            const leagues = {};
+            data.forEach(m => {
+                let lName = m.sport ? m.sport.toUpperCase().replace('ICEHOCKEY_', '').replace('SOCCER_', '').replace(/_/g, ' ') : 'INNA';
+                if (!leagues[lName]) leagues[lName] = { profit: 0, count: 0 };
+                leagues[lName].profit += parseFloat(m.profit);
+                leagues[lName].count++;
+            });
+
+            const historyContainer = document.getElementById('history-groups');
+            historyContainer.innerHTML = Object.entries(leagues).sort((a,b) => b[1].profit - a[1].profit).map(([name, d]) => `
+                <div class="bg-gray-50 p-3 rounded-xl border border-gray-100 flex justify-between items-center shadow-sm mb-2">
+                    <span class="text-[9px] font-black uppercase text-slate-600">${name} (${d.count})</span>
+                    <span class="text-[10px] font-black ${d.profit >= 0 ? 'text-green-600' : 'text-red-600'}">${d.profit >= 0 ? '+' : ''}${d.profit.toFixed(2)}</span>
                 </div>
             `).join('');
         }
-    }
 
-    // Odświeżanie licznika
-    setInterval(() => { 
-        countdown--; 
-        document.getElementById('refresh-timer').innerText = `REF: ${countdown}s`; 
-        if(countdown <= 0) { loadData(); countdown = 300; } 
-    }, 1000);
+        setInterval(() => { 
+            countdown--; 
+            document.getElementById('refresh-timer').innerText = `REF: ${countdown}s`; 
+            if(countdown <= 0) { loadData(); countdown = 300; } 
+        }, 1000);
 
-    // Pierwsze wczytanie
-    loadData();
-</script>
+        loadData();
+    </script>
+</body>
+</html>
