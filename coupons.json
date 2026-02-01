@@ -40,14 +40,14 @@
         "time": "2026-02-02T17:00:00Z"
     },
     {
-        "id": "cb5032b14aded4e09d4d6d497110828d",
-        "home": "AEK Athens",
-        "away": "Olympiakos Piraeus",
-        "outcome": "Olympiakos Piraeus",
-        "odds": 3.3,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-02-01T19:00:00Z"
+        "id": "bf157542a9d24d33de2328877193a89a",
+        "home": "Nieciecza",
+        "away": "Cracovia Krak\u00f3w",
+        "outcome": "Nieciecza",
+        "odds": 3.55,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-02T18:00:00Z"
     },
     {
         "id": "bf3cec19ae589773c01f75055a7d30cb",
@@ -120,26 +120,6 @@
         "time": "2026-02-03T02:00:00Z"
     },
     {
-        "id": "bf157542a9d24d33de2328877193a89a",
-        "home": "Nieciecza",
-        "away": "Cracovia Krak\u00f3w",
-        "outcome": "Nieciecza",
-        "odds": 3.55,
-        "stake": 325.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-02-02T18:00:00Z"
-    },
-    {
-        "id": "99d22e675353e1af5bf9d6c9579b8a26",
-        "home": "FC Volendam",
-        "away": "Go Ahead Eagles",
-        "outcome": "FC Volendam",
-        "odds": 3.2,
-        "stake": 250.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-02-01T19:00:00Z"
-    },
-    {
         "id": "bfd9fac946f89678ef1664f4b24b8695",
         "home": "Carolina Hurricanes",
         "away": "Los Angeles Kings",
@@ -204,7 +184,7 @@
         "home": "Chicago Blackhawks",
         "away": "San Jose Sharks",
         "outcome": "San Jose Sharks",
-        "odds": 2.5,
+        "odds": 2.49,
         "stake": 125.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-03T01:30:00Z"
@@ -228,5 +208,25 @@
         "stake": 125.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-03T03:00:00Z"
+    },
+    {
+        "id": "0984f58399853ae15893624f832ef205",
+        "home": "KK Crvena zvezda",
+        "away": "Hapoel Tel Aviv",
+        "outcome": "Hapoel Tel Aviv",
+        "odds": 2.1,
+        "stake": 250.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:00:00Z"
+    },
+    {
+        "id": "3d9e794d7b69e176e3af38063052a8d1",
+        "home": "Maccabi Tel Aviv",
+        "away": "KK Partizan NIS",
+        "outcome": "KK Partizan NIS",
+        "odds": 3.44,
+        "stake": 250.0,
+        "sport": "basketball_euroleague",
+        "time": "2026-02-03T19:05:00Z"
     }
 ]
