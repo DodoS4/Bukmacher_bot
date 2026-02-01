@@ -9,79 +9,32 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { background-color: #f3f4f6; color: #111827; font-family: 'Inter', sans-serif; letter-spacing: -0.01em; }
-        .stat-card { transition: transform 0.2s; border: 1px solid #e5e7eb; background: white; border-radius: 1.25rem; padding: 1.5rem; }
-        .stat-card:hover { transform: translateY(-2px); }
+        body { background-color: #f3f4f6; color: #111827; font-family: 'Inter', sans-serif; }
+        .stat-card { background: white; border-radius: 1.25rem; padding: 1.5rem; border: 1px solid #e5e7eb; }
         .chart-container { position: relative; height: 320px; width: 100%; }
-        .win-border { border-left: 4px solid #10b981; }
-        .loss-border { border-left: 4px solid #ef4444; }
-        .flag-box { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
     </style>
 </head>
 <body class="p-2 md:p-6">
 
     <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-            <div>
-                <h1 class="text-xl font-black italic tracking-tighter text-slate-800 uppercase">AI BETTING <span class="text-blue-600 font-black">PRO</span></h1>
-                <p id="last-update" class="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5 font-bold italic">Sync: --:--</p>
-            </div>
-            <div class="flex items-center gap-2">
-                <span id="refresh-timer" class="text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg shadow-lg uppercase italic">REF: 300s</span>
-            </div>
+        <div class="flex justify-between items-center mb-6 bg-white p-4 rounded-2xl shadow-sm">
+            <h1 class="text-xl font-black italic tracking-tighter uppercase">AI BETTING <span class="text-blue-600">PRO</span></h1>
+            <span id="refresh-timer" class="text-[10px] font-black bg-blue-600 text-white px-3 py-1.5 rounded-lg">REF: 300s</span>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-6 text-center">
-            <div class="stat-card">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Zysk 24h</p>
-                <p id="today-profit" class="text-lg font-black italic">0.00 PLN</p>
-            </div>
-            <div class="stat-card !border-b-4 !border-b-blue-600">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-blue-600">Zysk Total</p>
-                <p id="total-profit" class="text-lg font-black text-blue-600 italic">0.00 PLN</p>
-            </div>
-            <div class="stat-card !border-b-4 !border-b-purple-500">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-purple-500">Bankroll</p>
-                <p id="bankroll-val" class="text-lg font-black text-purple-600">0.00 PLN</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1">Obrót</p>
-                <p id="turnover-val" class="text-lg font-black text-slate-700">0.00 PLN</p>
-            </div>
-            <div class="stat-card !bg-yellow-50 !border-yellow-100">
-                <p class="text-[9px] text-yellow-600 uppercase font-black mb-1 italic">W grze</p>
-                <p id="upcoming-val" class="text-lg font-black text-yellow-700">0</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 text-orange-500">Yield</p>
-                <p id="yield-val" class="text-lg font-black text-orange-600">0%</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[9px] text-gray-400 uppercase font-black mb-1 italic">Kupony</p>
-                <p id="total-bets-count" class="text-lg font-black text-slate-800 italic">0</p>
-            </div>
+            <div class="stat-card"><p class="text-[9px] text-gray-400 uppercase font-black">Zysk 24h</p><p id="today-profit" class="text-lg font-black italic">0.00 PLN</p></div>
+            <div class="stat-card !border-b-4 !border-b-blue-600"><p class="text-[9px] text-blue-600 uppercase font-black">Zysk Total</p><p id="total-profit" class="text-lg font-black italic">0.00 PLN</p></div>
+            <div class="stat-card !border-b-4 !border-b-purple-500"><p class="text-[9px] text-purple-500 uppercase font-black">Bankroll</p><p id="bankroll-val" class="text-lg font-black italic">0.00 PLN</p></div>
+            <div class="stat-card"><p class="text-[9px] text-gray-400 uppercase font-black">Obrót</p><p id="turnover-val" class="text-lg font-black italic">0.00 PLN</p></div>
+            <div class="stat-card !bg-yellow-50"><p class="text-[9px] text-yellow-600 uppercase font-black italic">W grze</p><p id="upcoming-val" class="text-lg font-black italic">0</p></div>
+            <div class="stat-card"><p class="text-[9px] text-orange-500 uppercase font-black">Yield</p><p id="yield-val" class="text-lg font-black italic">0%</p></div>
+            <div class="stat-card"><p class="text-[9px] text-gray-400 uppercase font-black italic">Kupony</p><p id="total-bets-count" class="text-lg font-black italic">0</p></div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-black mb-6 text-[11px] text-slate-400 uppercase tracking-widest flex items-center gap-2 italic">
-                        <i class="fas fa-chart-line text-blue-600"></i> Progresja Zysku
-                    </h3>
-                    <div class="chart-container">
-                        <canvas id="profitChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:col-span-1">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h3 class="font-black mb-4 text-[11px] text-green-500 uppercase tracking-widest flex items-center italic">
-                        <i class="fas fa-history mr-2"></i> Ostatnie wyniki
-                    </h3>
-                    <div id="recent-results-container" class="space-y-3 max-h-[400px] overflow-y-auto pr-2"></div>
-                </div>
-            </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+            <h3 class="font-black mb-6 text-[11px] text-slate-400 uppercase tracking-widest italic">Progresja Zysku</h3>
+            <div class="chart-container"><canvas id="profitChart"></canvas></div>
         </div>
     </div>
 
@@ -95,34 +48,29 @@
                 const sRes = await fetch('stats.json?v=' + ts);
                 const s = await sRes.json();
                 
-                // POPRAWNE MAPOWANIE Z TWOICH LOGÓW
+                // POPRAWKI NAZW ZMIENNYCH
                 document.getElementById('total-profit').innerText = (s.zysk_total || 0).toFixed(2) + ' PLN';
-                document.getElementById('today-profit').innerText = (s.zysk_24h >= 0 ? '+' : '') + (s.zysk_24h || 0).toFixed(2) + ' PLN';
-                document.getElementById('today-profit').className = `text-lg font-black italic ${s.zysk_24h >= 0 ? 'text-green-600' : 'text-red-600'}`;
+                document.getElementById('today-profit').innerText = (s.zysk_24h || 0).toFixed(2) + ' PLN';
                 document.getElementById('bankroll-val').innerText = (s.bankroll || 0).toFixed(2) + ' PLN';
                 
-                // NAPRAWA OBROTU - Twoje logi mają pole "obrot"
+                // TUTAJ BYŁ BŁĄD - teraz jest 'obrot' zamiast 'turnover'
                 document.getElementById('turnover-val').innerText = (s.obrot || 0).toFixed(2) + ' PLN';
                 
                 document.getElementById('yield-val').innerText = (s.yield || 0) + '%';
-                document.getElementById('last-update').innerText = 'Sync: ' + (s.last_sync || '--:--');
                 document.getElementById('upcoming-val').innerText = s.upcoming_val || 0;
 
                 const hRes = await fetch('history.json?v=' + ts);
                 const history = await hRes.json();
                 document.getElementById('total-bets-count').innerText = history.length;
 
-                // NAPRAWA WYKRESU - Szukamy "history_graph"
+                // TUTAJ BYŁ BŁĄD - teraz jest 'history_graph' zamiast 'wykres'
                 renderChart(s.history_graph || []);
-                renderRecent(history);
             } catch (e) { console.error("Sync error:", e); }
         }
 
         function renderChart(points) {
             if(profitChart) profitChart.destroy();
             const ctx = document.getElementById('profitChart').getContext('2d');
-            
-            // Jeśli puste, pokazujemy punkt startowy 5000
             const dataPoints = points.length > 0 ? points : [5000];
             
             profitChart = new Chart(ctx, {
@@ -133,40 +81,14 @@
                         data: dataPoints,
                         borderColor: '#2563eb',
                         borderWidth: 3,
-                        backgroundColor: 'rgba(37, 99, 235, 0.05)',
-                        fill: true,
                         tension: 0.4,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#2563eb'
+                        pointRadius: 4,
+                        fill: true,
+                        backgroundColor: 'rgba(37, 99, 235, 0.05)'
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { 
-                        y: { 
-                            beginAtZero: false,
-                            ticks: { font: { weight: 'bold' } }
-                        },
-                        x: { display: false }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
-        }
-
-        function renderRecent(history) {
-            const container = document.getElementById('recent-results-container');
-            const last = [...history].reverse().slice(0, 10);
-            container.innerHTML = last.map(m => `
-                <div class="p-3 bg-white rounded-xl border border-gray-100 ${m.status === 'WIN' ? 'win-border' : 'loss-border'} italic font-black text-[10px]">
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-400 uppercase">@${m.odds}</span>
-                        <span class="${m.status === 'WIN' ? 'text-green-600' : 'text-red-600'}">${m.profit.toFixed(2)} PLN</span>
-                    </div>
-                    <p class="text-slate-700 truncate">${m.home} - ${m.away}</p>
-                </div>
-            `).join('');
         }
 
         setInterval(() => { 
