@@ -20,11 +20,7 @@ def send_telegram_results(message):
         return
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {
-        "chat_id": chat,
-        "text": message,
-        "parse_mode": "HTML"
-    }
+    payload = {"chat_id": chat, "text": message, "parse_mode": "HTML"}
     try:
         requests.post(url, json=payload, timeout=15)
     except:
@@ -42,10 +38,7 @@ def get_all_api_keys():
 def get_match_results(sport, keys):
     for key in keys:
         url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores/"
-        params = {
-            "apiKey": key,
-            "daysFrom": 5
-        }
+        params = {"apiKey": key, "daysFrom": 3} # NHL/Soccer wyniki są dostępne szybko
         try:
             r = requests.get(url, params=params, timeout=15)
             if r.status_code == 200:
@@ -57,21 +50,19 @@ def get_match_results(sport, keys):
 # ================= RAPORT / DASHBOARD =================
 def generate_report(history, remaining_count):
     now = datetime.now(timezone.utc)
-    
-    # DYNAMICZNA BAZA: Próbujemy pobrać bankroll ze stats.json jako punkt startowy
     base_capital = 1000.0
+    
     if os.path.exists(STATS_JSON_FILE):
         try:
             with open(STATS_JSON_FILE, "r") as f:
                 current_stats = json.load(f)
-                # Jeśli robiliśmy reset, bierzemy kwotę która tam jest
                 if not any(m.get("status") != "ARCHIVED" for m in history):
                     base_capital = current_stats.get("bankroll", 1000.0)
         except:
             pass
 
-    total_profit_new = 0.0      # Tylko nowe mecze (nie archiwalne)
-    current_offset = 0.0        # Wszystkie nowe ruchy (mecze + wypłaty)
+    total_profit_new = 0.0
+    current_offset = 0.0
     total_staked_new = 0.0
     profit_24h = 0.0
     graph_data = [base_capital]
@@ -79,7 +70,6 @@ def generate_report(history, remaining_count):
     history_sorted = sorted(history, key=lambda x: x.get("time", ""))
 
     for m in history_sorted:
-        # Pomijamy archiwalne w obliczeniach finansowych "nowego etapu"
         if m.get("status") == "ARCHIVED":
             continue
             
@@ -119,28 +109,24 @@ def generate_report(history, remaining_count):
     with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(stats, f, indent=4)
 
-    # Celność: Tylko nowe mecze, pomijamy ARCHIVED i FINANCE
-    new_matches = [m for m in history if m.get("status") in ["WIN", "LOSS"]]
-    wins = sum(1 for m in new_matches if m.get("status") == "WIN")
-    total = len(new_matches)
+    active_history = [m for m in history if m.get("status") in ["WIN", "LOSS"]]
+    wins = sum(1 for m in active_history if m.get("status") == "WIN")
+    total = len(active_history)
     accuracy = (wins / total * 100) if total > 0 else 0
 
     msg = [
         "🔄 <b>SYSTEM RESTARTED</b>" if total == 0 else "📊 <b>DASHBOARD UPDATED</b>",
         f"🏦 Bankroll: <b>{round(bankroll,2)} PLN</b>",
         f"💰 Nowy Zysk: {round(total_profit_new,2)} PLN",
-        f"📅 Ostatnie 24h: {round(profit_24h,2)} PLN",
         f"📈 Yield: {round(yield_val,2)}% | Celność: {round(accuracy,1)}%",
         "━━━━━━━━━━━━━━━",
         "📝 <b>OSTATNIE (NOWE):</b>"
     ]
 
-    # Pokazujemy tylko 5 ostatnich, które nie są archiwalne
     recent_active = [m for m in history if m.get("status") != "ARCHIVED"][-5:]
     for m in reversed(recent_active):
         if m.get("sport") == "FINANCE":
-            icon = "🏦"
-            name = "OPERACJA FINANSOWA"
+            icon, name = "🏦", "OPERACJA FINANSOWA"
         else:
             icon = "✅" if m.get("status") == "WIN" else "❌" if m.get("status") == "LOSS" else "⚪"
             name = f"{m.get('home')} - {m.get('away')}"
@@ -158,7 +144,6 @@ def settle_matches():
         active_coupons = json.load(f)
 
     if not active_coupons:
-        # Nawet jak nie ma kuponów, odświeżamy raport (ważne po resecie)
         if os.path.exists(HISTORY_FILE):
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
@@ -171,7 +156,7 @@ def settle_matches():
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
         except:
-            history = []
+            pass
 
     history_ids = {h.get("id") for h in history if h.get("id")}
     results_map = {}
@@ -194,34 +179,48 @@ def settle_matches():
         match = results_map.get(cid)
         if match and match.get("completed"):
             scores = {s["name"]: int(s.get("score", 0)) for s in match.get("scores", [])}
-            home = match.get("home_team")
-            away = match.get("away_team")
-            hs = scores.get(home, 0)
-            as_ = scores.get(away, 0)
+            home, away = match.get("home_team"), match.get("away_team")
+            hs, as_ = scores.get(home, 0), scores.get(away, 0)
+            total_score = hs + as_
 
             status = "LOSS"
-            profit = -float(c.get("stake", 0))
+            stake = float(c.get("stake", 0))
+            
+            # --- LOGIKA ROZLICZANIA ---
+            market_type = c.get("market_type", "h2h")
+            outcome = c.get("outcome", "")
 
-            if hs == as_:
-                status = "VOID"
+            if market_type == "h2h":
+                if hs == as_:
+                    status = "VOID"
+                elif (outcome == home and hs > as_) or (outcome == away and as_ > hs):
+                    status = "WIN"
+            
+            elif market_type == "totals":
+                try:
+                    # outcome to np. "Over 5.5" lub "Under 2.5"
+                    parts = outcome.split()
+                    condition = parts[0] # Over / Under
+                    line = float(parts[1]) # 5.5
+                    
+                    if condition == "Over" and total_score > line:
+                        status = "WIN"
+                    elif condition == "Under" and total_score < line:
+                        status = "WIN"
+                    elif total_score == line: # Bardzo rzadkie, ale możliwe przy liniach całkowitych
+                        status = "VOID"
+                except:
+                    status = "LOSS"
+
+            # Obliczanie profitu
+            if status == "WIN":
+                profit = round(stake * float(c.get("odds", 0)) - stake, 2)
+            elif status == "VOID":
                 profit = 0.0
             else:
-                if c.get("outcome") == home and hs > as_:
-                    status = "WIN"
-                elif c.get("outcome") == away and as_ > hs:
-                    status = "WIN"
+                profit = -stake
 
-                if status == "WIN":
-                    stake = float(c.get("stake", 0))
-                    odds = float(c.get("odds", 0))
-                    profit = round(stake * odds - stake, 2)
-
-            history.append({
-                **c,
-                "profit": round(profit, 2),
-                "status": status,
-                "score": f"{hs}:{as_}"
-            })
+            history.append({**c, "profit": profit, "status": status, "score": f"{hs}:{as_}"})
             history_ids.add(cid)
             new_settlements += 1
         else:
