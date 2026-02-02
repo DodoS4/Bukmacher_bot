@@ -27,7 +27,13 @@ jobs:
         run: |
           python - <<EOF
           import withdraw
-          amount = float("${{ github.event.inputs.amount }}")
+
+          try:
+              amount = float("${{ github.event.inputs.amount }}")
+          except ValueError:
+              print("❌ Błędna kwota")
+              exit(0)
+
           if amount > 0:
               withdraw.add_withdraw(amount)
           else:
@@ -38,6 +44,11 @@ jobs:
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add history.json
-          git diff --cached --quiet || git commit -m "💸 Wypłata: ${{ github.event.inputs.amount }} PLN"
-          git push
+
+          if git diff --quiet history.json; then
+            echo "ℹ️ Brak zmian w history.json – pomijam commit"
+          else
+            git add history.json
+            git commit -m "💸 Wypłata: ${{ github.event.inputs.amount }} PLN"
+            git push
+          fi
