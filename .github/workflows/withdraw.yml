@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      ✅ - name: Install dependencies
+      - name: Install dependencies
         run: |
           pip install requests
 
@@ -35,7 +35,7 @@ jobs:
           try:
               amount = float("${{ github.event.inputs.amount }}")
           except ValueError:
-              print("❌ Błędna kwota")
+              print("❌ Nieprawidłowa kwota")
               exit(0)
 
           if amount > 0:
