@@ -11,7 +11,6 @@ def send_telegram(message):
     chat = os.getenv("T_CHAT")
 
     if not token or not chat:
-        print("⚠️ Brak danych Telegram (T_TOKEN / T_CHAT)")
         return
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
@@ -24,7 +23,7 @@ def send_telegram(message):
     try:
         requests.post(url, json=payload, timeout=10)
     except Exception as e:
-        print("⚠️ Błąd wysyłania Telegram:", e)
+        print("Telegram error:", e)
 
 
 def add_withdraw(amount, note="Wypłata pieniędzy"):
@@ -43,7 +42,7 @@ def add_withdraw(amount, note="Wypłata pieniędzy"):
         "outcome": "WITHDRAW",
         "odds": 1.0,
         "stake": 0,
-        "profit": -float(amount),   # odejmuje od bankrolla
+        "profit": -float(amount),
         "status": "WITHDRAW",
         "score": "0:0",
         "time": datetime.now(timezone.utc).isoformat(),
@@ -67,5 +66,4 @@ def add_withdraw(amount, note="Wypłata pieniędzy"):
 
 
 if __name__ == "__main__":
-    # test lokalny
     add_withdraw(1000)
