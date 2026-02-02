@@ -1,4 +1,4 @@
-name: Wypłata pieniędzy 
+name: Wypłata pieniędzy 💸
 
 on:
   workflow_dispatch:
@@ -11,18 +11,33 @@ on:
 jobs:
   withdraw:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
-      
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: Run Withdrawal
+        env:
+          T_TOKEN: ${{ secrets.T_TOKEN }}
+          T_CHAT: ${{ secrets.T_CHAT }}
         run: |
-          # Ten skrypt dopisze kwotę do history.json
-          python -c "import withdraw; withdraw.add_withdrawal(${{ github.event.inputs.amount }})"
-          
+          python - <<EOF
+          import withdraw
+          amount = float("${{ github.event.inputs.amount }}")
+          if amount > 0:
+              withdraw.add_withdraw(amount)
+          else:
+              print("⚠️ Kwota 0 – brak wypłaty")
+          EOF
+
       - name: Commit and Push
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add history.json
-          git commit -m "💸 Wypłata: ${{ github.event.inputs.amount }} PLN"
+          git diff --cached --quiet || git commit -m "💸 Wypłata: ${{ github.event.inputs.amount }} PLN"
           git push
