@@ -3488,5 +3488,44 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "1:2"
+    },
+    {
+        "id": "34dbd8b5d92f6b5c91590bf9dfd418db",
+        "home": "Tampa Bay Lightning",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 4.25,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-01T23:40:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "6:5"
+    },
+    {
+        "id": "e9422729e63a1abde63521d91e9e5787",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.7,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-02T02:40:00Z",
+        "profit": 850.0,
+        "status": "WIN",
+        "score": "4:3"
+    },
+    {
+        "id": "2a83052380ad26b3621d17cad9c5b0a1",
+        "home": "Athletic Bilbao",
+        "away": "Real Sociedad",
+        "outcome": "Real Sociedad",
+        "odds": 3.8,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-01T20:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]

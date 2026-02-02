@@ -1,25 +1,5 @@
 [
     {
-        "id": "34dbd8b5d92f6b5c91590bf9dfd418db",
-        "home": "Tampa Bay Lightning",
-        "away": "Boston Bruins",
-        "outcome": "Boston Bruins",
-        "odds": 4.25,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-01T23:40:00Z"
-    },
-    {
-        "id": "e9422729e63a1abde63521d91e9e5787",
-        "home": "Anaheim Ducks",
-        "away": "Vegas Golden Knights",
-        "outcome": "Anaheim Ducks",
-        "odds": 2.7,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-02T02:40:00Z"
-    },
-    {
         "id": "49a7c3868f127dea5a06fccbd074ef70",
         "home": "Udinese",
         "away": "AS Roma",
@@ -48,16 +28,6 @@
         "stake": 325.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-02-02T18:00:00Z"
-    },
-    {
-        "id": "2a83052380ad26b3621d17cad9c5b0a1",
-        "home": "Athletic Bilbao",
-        "away": "Real Sociedad",
-        "outcome": "Real Sociedad",
-        "odds": 3.8,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-02-01T20:00:00Z"
     },
     {
         "id": "c2b25c4fa8506ba013f1de715353a6c1",
