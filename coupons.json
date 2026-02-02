@@ -1,1 +1,266 @@
-[]
+[
+    {
+        "id": "c2b25c4fa8506ba013f1de715353a6c1",
+        "home": "Florida Panthers",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.6,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T00:00:00Z"
+    },
+    {
+        "id": "b382f70534e344a53cb8e2b91c2fea0c",
+        "home": "Washington Capitals",
+        "away": "New York Islanders",
+        "outcome": "New York Islanders",
+        "odds": 2.88,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T00:00:00Z"
+    },
+    {
+        "id": "370c2e3a4c49d4537472fa9bc565d3be",
+        "home": "Pittsburgh Penguins",
+        "away": "Ottawa Senators",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 2.62,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T00:00:00Z"
+    },
+    {
+        "id": "c651f17277642c30861a49ffa039d32b",
+        "home": "Minnesota Wild",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.88,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T00:30:00Z"
+    },
+    {
+        "id": "afd1cf4f1ae7574fddbd8982be4bcd5d",
+        "home": "Nashville Predators",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 2.95,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T01:00:00Z"
+    },
+    {
+        "id": "78700b0248383f97ff2d6e7d5438bbf8",
+        "home": "Chicago Blackhawks",
+        "away": "San Jose Sharks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 2.56,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T01:30:00Z"
+    },
+    {
+        "id": "bce3723c900da967791ac5b5ba57d1f4",
+        "home": "Dallas Stars",
+        "away": "Winnipeg Jets",
+        "outcome": "Winnipeg Jets",
+        "odds": 3.2,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T01:30:00Z"
+    },
+    {
+        "id": "efa2a0ed1f485bc3b8bb681d2b02e947",
+        "home": "Colorado Avalanche",
+        "away": "Detroit Red Wings",
+        "outcome": "Detroit Red Wings",
+        "odds": 3.7,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T02:00:00Z"
+    },
+    {
+        "id": "9df41843a5603a8e7a7fe70cb73688b8",
+        "home": "Utah Mammoth",
+        "away": "Vancouver Canucks",
+        "outcome": "Vancouver Canucks",
+        "odds": 3.3,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T02:30:00Z"
+    },
+    {
+        "id": "9a23b81ffd2d9a53ab3bd6608e7edaeb",
+        "home": "Calgary Flames",
+        "away": "Toronto Maple Leafs",
+        "outcome": "Calgary Flames",
+        "odds": 2.7,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-03T03:00:00Z"
+    },
+    {
+        "id": "4b1461349175d22e1f9cd7a7a8bfadb3",
+        "home": "Carolina Hurricanes",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 3.96,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-04T00:00:00Z"
+    },
+    {
+        "id": "cf03b42718cf1e18c00a8c177a64dbef",
+        "home": "New Jersey Devils",
+        "away": "Columbus Blue Jackets",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.85,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-04T00:00:00Z"
+    },
+    {
+        "id": "1e51a4f1c3ad98f1d314fac3c643bd26",
+        "home": "Philadelphia Flyers",
+        "away": "Washington Capitals",
+        "outcome": "Washington Capitals",
+        "odds": 2.66,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-04T00:00:00Z"
+    },
+    {
+        "id": "48fc82e33091a7f9f95b25316e970281",
+        "home": "Tampa Bay Lightning",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 4.0,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-04T00:30:00Z"
+    },
+    {
+        "id": "b54ef86f5afd8b14ed63f87b8286c927",
+        "home": "New York Islanders",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 2.85,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-04T00:30:00Z"
+    },
+    {
+        "id": "46c362015b5961e245c9dae7ff71c522",
+        "home": "Edmonton Oilers",
+        "away": "Toronto Maple Leafs",
+        "outcome": "Toronto Maple Leafs",
+        "odds": 3.57,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-04T01:30:00Z"
+    },
+    {
+        "id": "cfcc28e0e3d0f2f69d73478862b011eb",
+        "home": "Anaheim Ducks",
+        "away": "Seattle Kraken",
+        "outcome": "Seattle Kraken",
+        "odds": 2.85,
+        "stake": 20.0,
+        "sport": "icehockey_nhl",
+        "market_type": "h2h",
+        "time": "2026-02-04T03:00:00Z"
+    },
+    {
+        "id": "5d2c6ee96eacb9c4bcac89213bcaf304",
+        "home": "Sunderland",
+        "away": "Burnley",
+        "outcome": "Over 2.5",
+        "odds": 2.14,
+        "stake": 20.0,
+        "sport": "soccer_epl",
+        "market_type": "totals",
+        "time": "2026-02-02T20:00:00Z"
+    },
+    {
+        "id": "49a7c3868f127dea5a06fccbd074ef70",
+        "home": "Udinese",
+        "away": "AS Roma",
+        "outcome": "Over 2.5",
+        "odds": 2.5,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "market_type": "totals",
+        "time": "2026-02-02T19:45:00Z"
+    },
+    {
+        "id": "ed80343c6ecb8c7da091ab4508a5870e",
+        "home": "Bologna",
+        "away": "AC Milan",
+        "outcome": "Bologna",
+        "odds": 3.65,
+        "stake": 20.0,
+        "sport": "soccer_italy_serie_a",
+        "market_type": "h2h",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "fd5f816250823f7ff851c74998d534f0",
+        "home": "Mallorca",
+        "away": "Sevilla",
+        "outcome": "Sevilla",
+        "odds": 3.0,
+        "stake": 20.0,
+        "sport": "soccer_spain_la_liga",
+        "market_type": "h2h",
+        "time": "2026-02-02T20:00:00Z"
+    },
+    {
+        "id": "c42908f4abe3cb7c798346cdf1fc74fd",
+        "home": "Piast Gliwice",
+        "away": "Lech Pozna\u0144",
+        "outcome": "Piast Gliwice",
+        "odds": 2.88,
+        "stake": 20.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "market_type": "h2h",
+        "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "84b1871f3fb8b90e80a07d2cacc77d6e",
+        "home": "AVS Futebol SAD",
+        "away": "Braga",
+        "outcome": "Under 2.5",
+        "odds": 2.05,
+        "stake": 20.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "market_type": "totals",
+        "time": "2026-02-02T18:45:00Z"
+    },
+    {
+        "id": "50c3500abef52742c96b8d9abea18129",
+        "home": "Casa Pia",
+        "away": "FC Porto",
+        "outcome": "Under 2.5",
+        "odds": 2.16,
+        "stake": 20.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "market_type": "totals",
+        "time": "2026-02-02T20:45:00Z"
+    }
+]
