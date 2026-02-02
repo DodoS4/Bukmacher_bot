@@ -3,8 +3,8 @@
     "zysk_total": 0.0,
     "zysk_24h": 0.0,
     "obrot": 0.0,
-    "yield": 0.0,
-    "last_sync": "02.02.2026 17:44",
+    "yield": 0,
+    "last_sync": "02.02.2026 17:53",
     "upcoming_val": 0,
     "history_graph": [
         1000.0
