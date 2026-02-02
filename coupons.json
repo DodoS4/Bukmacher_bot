@@ -250,5 +250,15 @@
         "time": "2026-02-03T19:30:00Z",
         "bookmaker": "William Hill",
         "status": "pending"
+    },
+    {
+        "id": "fd5f816250823f7ff851c74998d534f0",
+        "home": "Mallorca",
+        "away": "Sevilla",
+        "outcome": "Sevilla",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-02T20:00:00Z"
     }
 ]
