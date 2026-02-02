@@ -2,35 +2,31 @@ import os
 import requests
 import json
 from datetime import datetime, timedelta, timezone
-from urllib.parse import quote_plus
 
 # ================= KONFIGURACJA LIG =================
 SPORTS_CONFIG = {
-    "icehockey_nhl": "🏒",
-    "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
-    "icehockey_finland_liiga": "🇫🇮",
-    "icehockey_germany_del": "🇩🇪",
-    "icehockey_czech_extraliga": "🇨🇿",
-    "icehockey_switzerland_nla": "🇨🇭",
-    "icehockey_austria_liga": "🇦🇹",
-    "icehockey_denmark_metal_ligaen": "🇩🇰",
-    "icehockey_norway_eliteserien": "🇳🇴",
-    "icehockey_slovakia_extraliga": "🇸🇰",
-
-    "soccer_epl": "⚽",
-    "soccer_germany_bundesliga": "🇩🇪",
-    "soccer_italy_serie_a": "🇮🇹",
-    "soccer_spain_la_liga": "🇪🇸",
-    "soccer_poland_ekstraklasa": "🇵🇱",
-    "soccer_france_ligue_one": "🇫🇷",
-    "soccer_portugal_primeira_liga": "🇵🇹",
-    "soccer_netherlands_eredivisie": "🇳🇱",
-    "soccer_austria_bundesliga": "🇦🇹",
-    "soccer_denmark_superliga": "🇩🇰",
-    "soccer_greece_super_league": "🇬🇷",
-    "soccer_switzerland_superleague": "🇨🇭",
-
-    "basketball_euroleague": "🏀"
+    "icehockey_nhl": "🏒 NHL",
+    "icehockey_sweden_hockeyallsvenskan": "🇸🇪 HockeyAllsvenskan",
+    "icehockey_finland_liiga": "🇫🇮 Liiga",
+    "icehockey_germany_del": "🇩🇪 DEL",
+    "icehockey_czech_extraliga": "🇨🇿 Extraliga",
+    "icehockey_switzerland_nla": "🇨🇭 NLA",
+    "icehockey_austria_liga": "🇦🇹 ICEHL",
+    "icehockey_denmark_metal_ligaen": "🇩🇰 Metal Ligaen",
+    "icehockey_norway_eliteserien": "🇳🇴 Eliteserien",
+    "icehockey_slovakia_extraliga": "🇸🇰 Extraliga",
+    "soccer_epl": "🏴 Premier League",
+    "soccer_germany_bundesliga": "🇩🇪 Bundesliga",
+    "soccer_italy_serie_a": "🇮🇹 Serie A",
+    "soccer_spain_la_liga": "🇪🇸 La Liga",
+    "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
+    "soccer_france_ligue_one": "🇫🇷 Ligue 1",
+    "soccer_portugal_primeira_liga": "🇵🇹 Primeira Liga",
+    "soccer_netherlands_eredivisie": "🇳🇱 Eredivisie",
+    "soccer_austria_bundesliga": "🇦🇹 Bundesliga",
+    "soccer_denmark_superliga": "🇩🇰 Superliga",
+    "soccer_greece_super_league": "🇬🇷 Super League",
+    "soccer_switzerland_superleague": "🇨🇭 Super League",
 }
 
 HISTORY_FILE = "history.json"
@@ -38,9 +34,15 @@ COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
 BASE_STAKE = 250
 
+# ================= LICZNIKI LOGÓW =================
+sent_count = 0
+sent_stake_sum = 0.0
+sent_potential_return = 0.0
+scanned_leagues = 0
+
 # ================= POMOCNICZE =================
 def get_secret(name):
-    val = os.environ.get(name) or os.getenv(name)
+    val = os.environ.get(name)
     return str(val).strip() if val else None
 
 def send_telegram(message, mode="HTML"):
@@ -55,33 +57,25 @@ def send_telegram(message, mode="HTML"):
     except:
         pass
 
-# ================= LINKI DO BUKMACHERÓW =================
-def build_bookie_links(home_team, away_team, best_bookie=None):
-    query = quote_plus(f"{home_team} {away_team}")
+def get_all_keys():
+    keys = []
+    for i in range(1, 11):
+        name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
+        val = get_secret(name)
+        if val:
+            keys.append(val)
+    return keys
 
-    bookies = {
-        "STS": f"https://www.sts.pl/search?q={query}",
-        "Fortuna": f"https://www.efortuna.pl/search?phrase={query}",
-        "Betclic": f"https://www.betclic.pl/search?q={query}",
-    }
-
-    lines = []
-    for name, url in bookies.items():
-        label = f"⭐ {name}" if name == best_bookie else name
-        lines.append(f"🔗 {label}: {url}")
-
-    return "\n".join(lines)
-
-# ================= STAWKA / VALUE =================
 def get_smart_stake(league_key):
-    multiplier, threshold, profit = 1.0, 1.035, 0
+    multiplier = 1.0
+    threshold = 1.035
+    profit = 0
 
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
             profit = sum(m.get("profit", 0) for m in history if m.get("sport") == league_key)
-
             if profit <= -700:
                 multiplier, threshold = 0.5, 1.08
             elif profit >= 3000:
@@ -99,18 +93,12 @@ def get_smart_stake(league_key):
 
     return round(stake, 2), round(threshold, 3)
 
-def get_all_keys():
-    keys = []
-    for i in range(1, 11):
-        name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
-        val = get_secret(name)
-        if val:
-            keys.append(val)
-    return keys
-
 # ================= MAIN =================
 def main():
-    print(f"🚀 START BOT: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    global sent_count, sent_stake_sum, sent_potential_return, scanned_leagues
+
+    print(f"\n🚀 --- START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
+
     api_keys = get_all_keys()
     if not api_keys:
         print("❌ Brak kluczy API")
@@ -134,8 +122,10 @@ def main():
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
 
-    for league, flag in SPORTS_CONFIG.items():
-        print(f"\n🔍 {flag} {league.upper()}")
+    for league, label in SPORTS_CONFIG.items():
+        scanned_leagues += 1
+        print(f"\n🔍 Skanowanie: {label}")
+
         stake, threshold = get_smart_stake(league)
         data = None
 
@@ -163,55 +153,37 @@ def main():
                 m_time = datetime.fromisoformat(event["commence_time"].replace("Z", "+00:00"))
                 if not (now < m_time < max_future):
                     continue
-                m_local = m_time.astimezone(timezone(timedelta(hours=1)))
             except:
                 continue
 
             prices = {}
-            bookies_map = {}
+            for b in event.get("bookmakers", []):
+                for m in b.get("markets", []):
+                    if m["key"] == "h2h":
+                        for o in m["outcomes"]:
+                            prices.setdefault(o["name"], []).append(o["price"])
 
-            for bookie in event.get("bookmakers", []):
-                for market in bookie.get("markets", []):
-                    if market["key"] == "h2h":
-                        for out in market["outcomes"]:
-                            prices.setdefault(out["name"], []).append(out["price"])
-                            bookies_map.setdefault(out["name"], {})[out["price"]] = bookie["title"]
-
-            best_name, best_odd, best_val, best_bookie = None, 0, 0, None
-
-            for name, odds in prices.items():
+            best_name, best_odd, best_val = None, 0, 0
+            for name, plist in prices.items():
                 if name.lower() == "draw":
                     continue
+                max_p = max(plist)
+                avg_p = sum(plist) / len(plist)
+                val = max_p / avg_p
+                req = threshold + (0.02 if max_p >= 2.5 else 0)
 
-                max_odd = max(odds)
-                avg_odd = sum(odds) / len(odds)
-                value = max_odd / avg_odd
-
-                req = threshold + (0.02 if max_odd >= 2.5 else 0)
-
-                if 1.8 <= max_odd <= 4.5 and value > req and value > best_val:
-                    best_name = name
-                    best_odd = max_odd
-                    best_val = value
-                    best_bookie = bookies_map[name][max_odd]
+                if 1.8 <= max_p <= 4.5 and val > req and val > best_val:
+                    best_val, best_name, best_odd = val, name, max_p
 
             if best_name:
-                links = build_bookie_links(
-                    event["home_team"],
-                    event["away_team"],
-                    best_bookie
-                )
-
                 msg = (
-                    f"{flag} <b>{league.replace('_', ' ').upper()}</b>\n"
-                    f"━━━━━━━━━━━━━━━\n"
-                    f"🏟 <b>{event['home_team']}</b> vs <b>{event['away_team']}</b>\n"
-                    f"⏰ {m_local.strftime('%d.%m | %H:%M')}\n\n"
+                    f"<b>{label}</b>\n"
+                    f"🏟 {event['home_team']} vs {event['away_team']}\n"
+                    f"⏰ {m_time.astimezone(timezone(timedelta(hours=1))).strftime('%d.%m %H:%M')}\n\n"
                     f"✅ Typ: <b>{best_name}</b>\n"
                     f"📈 Kurs: <b>{best_odd}</b>\n"
-                    f"🏦 Najlepszy: <b>{best_bookie}</b>\n"
-                    f"💰 Stawka: <b>{stake} PLN</b>\n\n"
-                    f"{links}"
+                    f"💰 Stawka: <b>{stake} PLN</b>\n"
+                    f"📊 Value: <b>+{round((best_val-1)*100,1)}%</b>"
                 )
 
                 send_telegram(msg)
@@ -224,12 +196,13 @@ def main():
                     "odds": best_odd,
                     "stake": stake,
                     "sport": league,
-                    "time": event["commence_time"],
-                    "bookmaker": best_bookie,
-                    "status": "pending"
+                    "time": event["commence_time"]
                 })
 
                 sent_ids.add(event["id"])
+                sent_count += 1
+                sent_stake_sum += stake
+                sent_potential_return += stake * best_odd
 
     with open(KEY_STATE_FILE, "w") as f:
         f.write(str(idx))
@@ -237,7 +210,13 @@ def main():
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(coupons, f, indent=4)
 
-    print("✅ KONIEC SKANU")
+    print("\n📤 WYSYŁANIE TYPÓW")
+    print("━━━━━━━━━━━━━━━━")
+    print(f"📊 Ligi przeskanowane: {scanned_leagues}")
+    print(f"🎯 Nowe typy: {sent_count}")
+    print(f"💰 Łączna stawka: {round(sent_stake_sum,2)} PLN")
+    print(f"📈 Potencjalny zwrot (brutto): {round(sent_potential_return,2)} PLN")
+    print(f"📊 Aktywne kupony: {len(coupons)}")
 
 if __name__ == "__main__":
     main()
