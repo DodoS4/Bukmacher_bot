@@ -260,5 +260,15 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-02-02T20:00:00Z"
+    },
+    {
+        "id": "cf03b42718cf1e18c00a8c177a64dbef",
+        "home": "New Jersey Devils",
+        "away": "Columbus Blue Jackets",
+        "outcome": "New Jersey Devils",
+        "odds": 2.3,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-04T00:00:00Z"
     }
 ]
