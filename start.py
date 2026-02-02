@@ -44,10 +44,12 @@ def send_telegram(message, mode="HTML"):
     chat = get_secret("T_CHAT")
     if not token or not chat:
         return
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {"chat_id": chat, "text": message, "parse_mode": mode}
     try:
-        requests.post(url, json=payload, timeout=15)
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat, "text": message, "parse_mode": mode},
+            timeout=15
+        )
     except:
         pass
 
@@ -103,47 +105,48 @@ def odd_allowed(sport, market, odd):
 
 # ================= MAIN =================
 def main():
+    print(f"\n🚀 --- START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---\n")
+
     api_keys = get_all_keys()
     if not api_keys:
+        print("❌ Brak kluczy API")
         return
 
-    try:
-        with open(KEY_STATE_FILE, "r") as f:
-            idx = int(f.read().strip()) % len(api_keys)
-    except:
-        idx = 0
+    idx = int(open(KEY_STATE_FILE).read().strip()) if os.path.exists(KEY_STATE_FILE) else 0
+    idx %= len(api_keys)
 
-    coupons = []
-    if os.path.exists(COUPONS_FILE):
-        try:
-            with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-                coupons = json.load(f)
-        except:
-            pass
-
+    coupons = json.load(open(COUPONS_FILE)) if os.path.exists(COUPONS_FILE) else []
     sent_ids = {c["id"] for c in coupons}
+
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
 
+    scanned = 0
+    new_tips = 0
+    total_stake = 0
+
     for league, label in SPORTS_CONFIG.items():
+        print(f"🔍 Skanowanie: {label}")
         stake, threshold = get_smart_stake(league)
+
+        scanned += 1
         data = None
 
         for _ in range(len(api_keys)):
-            url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
-            params = {
-                "apiKey": api_keys[idx],
-                "regions": "eu",
-                "markets": "h2h,totals,btts"
-            }
             try:
-                r = requests.get(url, params=params, timeout=15)
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/odds/",
+                    params={"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h,totals,btts"},
+                    timeout=15
+                )
                 if r.status_code == 200:
                     data = r.json()
                     break
                 idx = (idx + 1) % len(api_keys)
             except:
                 idx = (idx + 1) % len(api_keys)
+
+        candidates = 0
 
         if not data:
             continue
@@ -161,32 +164,28 @@ def main():
 
             for b in event.get("bookmakers", []):
                 for m in b.get("markets", []):
-                    market = m["key"]
-
                     for o in m.get("outcomes", []):
-                        odd = o["price"]
-                        name = o["name"]
-
-                        if not odd_allowed(league, market, odd):
+                        if not odd_allowed(league, m["key"], o["price"]):
                             continue
 
-                        msg = (
+                        candidates += 1
+                        new_tips += 1
+                        total_stake += stake
+
+                        send_telegram(
                             f"<b>{label}</b>\n"
-                            f"🏟 {event['home_team']} vs {event['away_team']}\n"
-                            f"⏰ {m_time.astimezone(timezone(timedelta(hours=1))).strftime('%d.%m %H:%M')}\n\n"
-                            f"✅ Typ: <b>{name}</b>\n"
-                            f"📈 Kurs: <b>{odd}</b>\n"
+                            f"🏒 {event['home_team']} vs {event['away_team']}\n"
+                            f"✅ Typ: <b>{o['name']}</b>\n"
+                            f"📈 Kurs: <b>{o['price']}</b>\n"
                             f"💰 Stawka: <b>{stake} PLN</b>"
                         )
-
-                        send_telegram(msg)
 
                         coupons.append({
                             "id": event["id"],
                             "home": event["home_team"],
                             "away": event["away_team"],
-                            "outcome": name,
-                            "odds": odd,
+                            "outcome": o["name"],
+                            "odds": o["price"],
                             "stake": stake,
                             "sport": league,
                             "time": event["commence_time"]
@@ -195,11 +194,28 @@ def main():
                         sent_ids.add(event["id"])
                         break
 
-    with open(KEY_STATE_FILE, "w") as f:
-        f.write(str(idx))
+        print(f"📊 {label} | ✅ kandydaci: {candidates}\n")
 
-    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-        json.dump(coupons, f, indent=4)
+    print("📤 WYSYŁANIE TYPÓW")
+    print("━━━━━━━━━━━━━━━━")
+    print(f"📊 Ligi przeskanowane: {scanned}")
+    print(f"🎯 Nowe typy: {new_tips}")
+    print(f"💰 Łączna stawka: {total_stake} PLN")
+    print(f"📊 Aktywne kupony: {len(coupons)}\n")
+
+    # ===== DEBUG ROZLICZEŃ =====
+    if os.path.exists(HISTORY_FILE):
+        print("📊 ROZLICZONE MECZE (ostatnie)\n")
+        history = json.load(open(HISTORY_FILE, "r", encoding="utf-8"))
+        for h in history[-5:]:
+            if h.get("status") in ["WIN", "LOSS"]:
+                emoji = "✅🔥" if h["profit"] > 0 else "❌"
+                print(f"{h['home']} vs {h['away']} — {h['outcome']} {emoji}")
+                print(f"💰 {h['profit']} PLN\n")
+
+    json.dump(coupons, open(COUPONS_FILE, "w", encoding="utf-8"), indent=4)
+    open(KEY_STATE_FILE, "w").write(str(idx))
+
 
 if __name__ == "__main__":
     main()
