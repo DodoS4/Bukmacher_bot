@@ -2,13 +2,13 @@ name: Betting Bot Professional Dawid
 
 on:
   schedule:
-    # Sprawdzanie: 07:00, 11:00, 15:00, 19:00 UTC
+    # Uruchamia się co 4 godziny, aby sprawdzić wyniki i nowe mecze
     - cron: '0 7,11,15,19 * * *'
   workflow_dispatch: 
 
 concurrency:
   group: betting-bot
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   run-bot:
@@ -26,7 +26,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
 
       - name: Install dependencies
         run: |
@@ -49,10 +48,9 @@ jobs:
           ODDS_KEY_9: "${{ secrets.ODDS_KEY_9 }}"
           ODDS_KEY_10: "${{ secrets.ODDS_KEY_10 }}"
         run: |
-          # 1. ROZLICZANIE (Aktualizuje history.json i generuje stats.json)
+          # 1. Rozliczanie zakończonych meczów
           python settle.py
-          
-          # 2. SZUKANIE NOWYCH TYPÓW
+          # 2. Szukanie nowych typów NHL i piłki
           python start.py
 
       - name: Commit and Push Changes
@@ -60,19 +58,15 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Pobranie ewentualnych zmian z serwera
-          git fetch origin main
-          
-          # Dodanie plików baz danych i statystyk
+          # Dodanie kluczowych plików bazy danych
           git add history.json coupons.json key_index.txt stats.json
           
-          # Sprawdzenie czy są zmiany do zakommitowania
+          # Sprawdzenie czy są zmiany do zapisu
           if ! git diff --cached --quiet; then
-            git commit -m "📊 Synchro: Results & Stats Update [skip ci]"
-            # Używamy -X ours, aby w razie konfliktu zachować pliki wygenerowane przez bota w tym kroku
-            git pull --rebase -X ours origin main
+            git commit -m "📊 Sync: Results & Stats [skip ci]"
+            # Wypchnięcie zmian bezpośrednio, bez zbędnych pulli
             git push origin main
-            echo "✅ Dane pomyślnie zapisane w repozytorium."
+            echo "✅ Dane zapisane pomyślnie."
           else
-            echo "ℹ️ Brak nowych zmian w danych."
+            echo "ℹ️ Brak nowych danych do zapisu."
           fi
