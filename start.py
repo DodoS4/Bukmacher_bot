@@ -32,7 +32,7 @@ SPORTS_CONFIG = {
 HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
-BASE_STAKE = 250
+BASE_STAKE = 20
 
 # ================= LICZNIKI LOGÓW =================
 sent_count = 0
