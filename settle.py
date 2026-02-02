@@ -38,7 +38,7 @@ def get_all_api_keys():
 def get_match_results(sport, keys):
     for key in keys:
         url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores/"
-        params = {"apiKey": key, "daysFrom": 3} # NHL/Soccer wyniki są dostępne szybko
+        params = {"apiKey": key, "daysFrom": 3}
         try:
             r = requests.get(url, params=params, timeout=15)
             if r.status_code == 200:
@@ -186,7 +186,6 @@ def settle_matches():
             status = "LOSS"
             stake = float(c.get("stake", 0))
             
-            # --- LOGIKA ROZLICZANIA ---
             market_type = c.get("market_type", "h2h")
             outcome = c.get("outcome", "")
 
@@ -198,23 +197,23 @@ def settle_matches():
             
             elif market_type == "totals":
                 try:
-                    # outcome to np. "Over 5.5" lub "Under 2.5"
                     parts = outcome.split()
-                    condition = parts[0] # Over / Under
-                    line = float(parts[1]) # 5.5
+                    condition = parts[0] 
+                    line = float(parts[1])
                     
                     if condition == "Over" and total_score > line:
                         status = "WIN"
                     elif condition == "Under" and total_score < line:
                         status = "WIN"
-                    elif total_score == line: # Bardzo rzadkie, ale możliwe przy liniach całkowitych
+                    elif total_score == line:
                         status = "VOID"
                 except:
                     status = "LOSS"
 
-            # Obliczanie profitu
+            # --- OBLICZANIE PROFITU Z PODATKIEM 12% ---
             if status == "WIN":
-                profit = round(stake * float(c.get("odds", 0)) - stake, 2)
+                # (Stawka * 0.88) * Kurs - Stawka
+                profit = round((stake * 0.88) * float(c.get("odds", 0)) - stake, 2)
             elif status == "VOID":
                 profit = 0.0
             else:
