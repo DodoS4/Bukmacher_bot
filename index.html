@@ -138,9 +138,9 @@ function renderStats(){
     document.getElementById('br').innerText=STATS.bankroll.toFixed(2) + ' PLN';
     document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2) + ' PLN';
     
-    // SUMOWANIE WYPŁAT
+    // SUMOWANIE WYPŁAT (filtrowanie ARCHIVED)
     const totalWithdraw = HISTORY
-        .filter(m => m.sport === "FINANCE" || m.type === "WITHDRAW")
+        .filter(m => (m.sport === "FINANCE" || m.type === "WITHDRAW") && m.status !== "ARCHIVED")
         .reduce((sum, m) => sum + Math.abs(m.profit), 0);
     document.getElementById('withdraw').innerText = totalWithdraw.toFixed(2) + ' PLN';
 
@@ -151,15 +151,15 @@ function renderStats(){
     document.getElementById('yield').innerText=STATS.yield+'%';
     document.getElementById('active-stat').innerText=UPCOMING.length;
     
-    // Liczba kuponów bez wypłat
-    const onlyMatches = HISTORY.filter(m => m.sport !== "FINANCE");
+    // Liczba kuponów bez wypłat i bez archiwalnych
+    const onlyMatches = HISTORY.filter(m => m.sport !== "FINANCE" && m.status !== "ARCHIVED");
     document.getElementById('count').innerText=onlyMatches.length;
     
     document.getElementById('sync').innerText='SYNC: '+STATS.last_sync;
 }
 
 function renderMatches() {
-    const onlyMatches = HISTORY.filter(m => m.sport !== "FINANCE");
+    const onlyMatches = HISTORY.filter(m => m.sport !== "FINANCE" && m.status !== "ARCHIVED");
     document.getElementById('recent-list').innerHTML = [...onlyMatches].reverse().slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
         const dateStr = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
@@ -203,7 +203,7 @@ function renderMatches() {
 
 function renderLeagues(){
     const map = {};
-    const onlyMatches = HISTORY.filter(m => m.sport !== "FINANCE");
+    const onlyMatches = HISTORY.filter(m => m.sport !== "FINANCE" && m.status !== "ARCHIVED");
     onlyMatches.forEach(m => {
         if(!map[m.sport]) map[m.sport] = { p:0, matches:[] };
         map[m.sport].p += m.profit;
