@@ -83,7 +83,7 @@
     </div>
 
     <div class="card-pro">
-        <h3 class="text-[10px] font-black uppercase text-slate-400 mb-8 italic tracking-widest text-center">Analiza wg lig (Kliknij aby rozwinąć)</h3>
+        <h3 class="text-[10px] font-black uppercase text-slate-400 mb-8 italic tracking-widest text-center">Analiza wg lig</h3>
         <div id="leagues-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 </div>
@@ -141,7 +141,7 @@ function renderStats(){
 }
 
 function renderMatches() {
-    // ROZLICZENIA
+    // ROZLICZENIA - PEŁNA DATA
     document.getElementById('recent-list').innerHTML = [...HISTORY].reverse().slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
         const dateStr = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
@@ -152,7 +152,7 @@ function renderMatches() {
                 <img src="https://flagcdn.com/w40/${getFlag(m.sport)}.png" class="flag-icon">
                 <div class="truncate">
                     <p class="text-[7px] font-bold text-slate-300 uppercase">
-                        <span class="text-slate-400">${dateStr}</span> | ${timePart = timeStr} | ${m.score || '@'+m.odds}
+                        <span class="text-slate-400">${dateStr}</span> | ${timeStr} | ${m.score || '@'+m.odds}
                     </p>
                     <p class="text-[10px] font-black text-slate-700 truncate uppercase tracking-tighter">${m.home} - ${m.away}</p>
                 </div>
@@ -163,7 +163,7 @@ function renderMatches() {
         </div>`;
     }).join('');
 
-    // NADCHODZĄCE
+    // NADCHODZĄCE - PEŁNA DATA
     document.getElementById('upcoming-list').innerHTML = [...UPCOMING].slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
         const dateStr = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
@@ -234,7 +234,8 @@ function renderChart(){
             const d = new Date(HISTORY[i].time);
             const step = Math.ceil(totalPoints / 8); 
             if (i % step === 0 || i === totalPoints - 1) {
-                return `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
+                // TUTAJ KRÓTKI FORMAT DLA WYKRESU
+                return `${d.getDate()}.${d.getMonth()+1}`;
             }
         }
         return '';
@@ -256,14 +257,18 @@ function renderChart(){
             }]
         },
         options: {
-            responsive: true, maintainAspectRatio: false,
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: { 
                 x: { 
-                    ticks: { maxRotation: 0, autoSkip: false, font: { size: 8, weight: 'bold' }, color: '#94a3b8' },
+                    ticks: { maxRotation: 0, autoSkip: false, font: { size: 9, weight: 'bold' }, color: '#94a3b8' },
                     grid: { display: false }
                 }, 
-                y: { grid: { color: '#f1f5f9' }, ticks: { font: { weight: 'bold', size: 9 }, color: '#94a3b8' }}
+                y: { 
+                    grid: { color: '#f1f5f9' },
+                    ticks: { font: { weight: 'bold', size: 9 }, color: '#94a3b8' }
+                }
             }
         }
     });
