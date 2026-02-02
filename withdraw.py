@@ -1,7 +1,7 @@
 import json
 import os
-import requests
 from datetime import datetime, timezone
+from urllib import request, parse
 
 HISTORY_FILE = "history.json"
 
@@ -10,16 +10,19 @@ def send_telegram(message):
     chat = os.getenv("T_CHAT")
     if not token or not chat:
         return
+
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {
+    data = parse.urlencode({
         "chat_id": chat,
         "text": message,
         "parse_mode": "HTML"
-    }
+    }).encode()
+
     try:
-        requests.post(url, json=payload, timeout=10)
-    except:
-        pass
+        req = request.Request(url, data=data)
+        request.urlopen(req, timeout=10)
+    except Exception as e:
+        print("⚠️ Telegram error:", e)
 
 def add_withdraw(amount, note="Wypłata"):
     if not os.path.exists(HISTORY_FILE):
@@ -37,9 +40,9 @@ def add_withdraw(amount, note="Wypłata"):
         "outcome": "WITHDRAW",
         "odds": 1.0,
         "stake": 0,
-        "profit": -float(amount),   # ❗ odejmuje od bankrolla
+        "profit": -float(amount),
         "status": "WITHDRAW",
-        "score": "0:0",
+        "score": "—",
         "time": datetime.now(timezone.utc).isoformat(),
         "type": "WITHDRAW"
     }
@@ -51,16 +54,13 @@ def add_withdraw(amount, note="Wypłata"):
 
     msg = (
         "🏦 <b>WYPŁATA ZAREJESTROWANA</b>\n\n"
-        f"💸 Kwota: <b>-{amount} PLN</b>\n"
+        f"💸 Kwota: <b>-{amount:.2f} PLN</b>\n"
         f"🕒 Data: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
         "📊 Bankroll został zaktualizowany"
     )
 
     send_telegram(msg)
-
     print(f"✅ Zarejestrowano wypłatę: -{amount} PLN")
 
 if __name__ == "__main__":
-    # 👇 ZMIEŃ KWOTĘ PRZED URUCHOMIENIEM
-    amount_to_withdraw = 1000
-    add_withdraw(amount_to_withdraw)
+    add_withdraw(1000)
