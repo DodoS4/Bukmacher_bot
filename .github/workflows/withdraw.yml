@@ -20,6 +20,10 @@ jobs:
         with:
           python-version: '3.11'
 
+      ✅ - name: Install dependencies
+        run: |
+          pip install requests
+
       - name: Run Withdrawal
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
@@ -46,7 +50,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
 
           if git diff --quiet history.json; then
-            echo "ℹ️ Brak zmian w history.json – pomijam commit"
+            echo "ℹ️ Brak zmian – pomijam commit"
           else
             git add history.json
             git commit -m "💸 Wypłata: ${{ github.event.inputs.amount }} PLN"
