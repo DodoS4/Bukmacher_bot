@@ -5,7 +5,7 @@
 <title>AI Betting PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdn.tailwindcss.com"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 body { background:#f8fafc; font-family: Inter, system-ui; }
 .card { background:white; border-radius:1.25rem; border:1px solid #e2e8f0; }
@@ -16,10 +16,31 @@ body { background:#f8fafc; font-family: Inter, system-ui; }
 <div class="max-w-7xl mx-auto">
 
 <!-- HEADER -->
-<div class="card p-5 mb-8 flex justify-between">
+<div class="card p-5 mb-6 flex justify-between items-center">
   <div>
-    <h1 class="text-2xl font-black italic">AI BETTING <span class="text-blue-600">PRO</span></h1>
-    <p id="sync" class="text-xs text-slate-400 font-bold">Sync…</p>
+    <h1 class="text-2xl font-black italic tracking-tight">
+      AI BETTING <span class="text-blue-600">PRO</span>
+    </h1>
+    <p id="sync" class="text-xs text-slate-400 font-bold">Sync: —</p>
+  </div>
+</div>
+
+<!-- GLOBALNE STATY -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
+  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Bankroll</p><p id="bankroll" class="text-xl font-black">0</p></div>
+  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Zysk total</p><p id="profitTotal" class="text-xl font-black text-blue-600">0</p></div>
+  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Zysk 24h</p><p id="profit24" class="text-xl font-black">0</p></div>
+  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Yield</p><p id="yield" class="text-xl font-black">0%</p></div>
+  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Obrót</p><p id="turnover" class="text-xl font-black">0</p></div>
+  <div class="card p-4 bg-amber-50"><p class="text-[10px] uppercase font-black text-amber-600">W grze</p><p id="active" class="text-xl font-black text-amber-700">0</p></div>
+  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Mecze</p><p id="totalMatches" class="text-xl font-black">0</p></div>
+</div>
+
+<!-- WYKRES -->
+<div class="card p-6 mb-8">
+  <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Progresja bankrolla</h3>
+  <div class="h-[320px]">
+    <canvas id="bankrollChart"></canvas>
   </div>
 </div>
 
@@ -41,95 +62,93 @@ body { background:#f8fafc; font-family: Inter, system-ui; }
 </div>
 
 <script>
-let HISTORY = [];
+let HISTORY=[], chart=null;
+const ICONS={icehockey:"🏒",soccer:"⚽",basketball:"🏀",tennis:"🎾"};
 
-const ICONS = {
-  icehockey: "🏒",
-  soccer: "⚽",
-  basketball: "🏀",
-  tennis: "🎾"
-};
-
-function iconFor(league){
-  for (let k in ICONS) if (league.includes(k)) return ICONS[k];
-  return "🎯";
-}
+const iconFor=l=>Object.keys(ICONS).find(k=>l.includes(k))?ICONS[Object.keys(ICONS).find(k=>l.includes(k))]:"🎯";
 
 async function load(){
   const t='?'+Date.now();
-  const h=await fetch('history.json'+t).then(r=>r.json());
-  const s=await fetch('stats.json'+t).then(r=>r.json());
-  HISTORY=h;
-  document.getElementById('sync').innerText="Sync: "+(s.last_sync||'now');
+  const stats=await fetch('stats.json'+t).then(r=>r.json());
+  HISTORY=await fetch('history.json'+t).then(r=>r.json());
+
+  document.getElementById('sync').innerText='Sync: '+(stats.last_sync||'—');
+  bankrollStart=stats.bankroll-stats.zysk_total;
+
+  document.getElementById('bankroll').innerText=stats.bankroll.toFixed(2)+' PLN';
+  document.getElementById('profitTotal').innerText=stats.zysk_total.toFixed(2)+' PLN';
+  document.getElementById('profit24').innerText=(stats.zysk_24h>=0?'+':'')+stats.zysk_24h.toFixed(2)+' PLN';
+  document.getElementById('profit24').className='text-xl font-black '+(stats.zysk_24h>=0?'text-green-600':'text-red-600');
+  document.getElementById('yield').innerText=stats.yield+'%';
+  document.getElementById('turnover').innerText=stats.obrot.toFixed(2)+' PLN';
+  document.getElementById('active').innerText=stats.upcoming_val;
+  document.getElementById('totalMatches').innerText=HISTORY.length;
+
+  renderChart(bankrollStart);
   renderRecent();
   renderLeagues();
 }
 
+function renderChart(start){
+  let sum=start;
+  const data=HISTORY.map(m=>sum+=m.profit);
+
+  if(chart) chart.destroy();
+  chart=new Chart(document.getElementById('bankrollChart'),{
+    type:'line',
+    data:{labels:data.map((_,i)=>i+1),
+      datasets:[{
+        data,
+        borderWidth:3,
+        borderColor:'#2563eb',
+        tension:.4,
+        fill:true,
+        backgroundColor:'rgba(37,99,235,.1)',
+        pointRadius:0
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{display:false},y:{ticks:{font:{weight:'bold'}}}}
+    }
+  });
+}
+
 function renderRecent(){
-  const el=document.getElementById('recent');
-  el.innerHTML=[...HISTORY].reverse().slice(0,10).map(m=>{
+  document.getElementById('recent').innerHTML=[...HISTORY].reverse().slice(0,10).map(m=>{
     const d=new Date(m.time);
-    return `
-    <div class="flex justify-between text-xs p-3 rounded-lg ${m.profit>=0?'bg-green-50':'bg-red-50'}">
-      <div>
-        <b>${m.home} – ${m.away}</b><br>
-        <span class="text-slate-400">
-          ${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)}
-          | stawka ${m.stake} | @${m.odds}
-        </span>
-      </div>
-      <b class="${m.profit>=0?'text-green-600':'text-red-600'}">
-        ${m.profit>=0?'+':''}${m.profit}
-      </b>
+    return `<div class="p-3 rounded-lg ${m.profit>=0?'bg-green-50':'bg-red-50'} text-xs flex justify-between">
+      <div><b>${m.home} – ${m.away}</b><br>
+      <span class="text-slate-400">${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)} | stawka ${m.stake} | @${m.odds}</span></div>
+      <b class="${m.profit>=0?'text-green-600':'text-red-600'}">${m.profit>=0?'+':''}${m.profit}</b>
     </div>`;
   }).join('');
 }
 
 function renderLeagues(){
   const map={};
-  HISTORY.forEach(m=>{
-    if(!map[m.sport]) map[m.sport]={profit:0,list:[]};
-    map[m.sport].profit+=m.profit;
-    map[m.sport].list.push(m);
-  });
-
-  const el=document.getElementById('leagues');
-  el.innerHTML=Object.entries(map)
-    .sort((a,b)=>b[1].profit-a[1].profit)
-    .map(([k,v])=>`
-    <div onclick="openLeague('${k}')"
-      class="cursor-pointer p-4 rounded-xl bg-slate-50 hover:shadow">
-      <div class="flex justify-between">
-        <span>${iconFor(k)}</span>
-        <b class="${v.profit>=0?'text-green-600':'text-red-600'}">
-          ${v.profit.toFixed(2)} PLN
-        </b>
-      </div>
-      <p class="text-[10px] font-bold uppercase text-slate-500 mt-1">
-        ${k.replaceAll('_',' ')} (${v.list.length})
-      </p>
-    </div>
-  `).join('');
+  HISTORY.forEach(m=>{if(!map[m.sport])map[m.sport]={profit:0,list:[]};map[m.sport].profit+=m.profit;map[m.sport].list.push(m);});
+  document.getElementById('leagues').innerHTML=Object.entries(map).sort((a,b)=>b[1].profit-a[1].profit).map(([k,v])=>`
+    <div onclick="openLeague('${k}')" class="cursor-pointer p-4 rounded-xl bg-slate-50 hover:shadow">
+      <div class="flex justify-between"><span>${iconFor(k)}</span>
+      <b class="${v.profit>=0?'text-green-600':'text-red-600'}">${v.profit.toFixed(2)} PLN</b></div>
+      <p class="text-[10px] font-bold uppercase text-slate-500 mt-1">${k.replaceAll('_',' ')} (${v.list.length})</p>
+    </div>`).join('');
 }
 
 function openLeague(key){
   const list=HISTORY.filter(m=>m.sport===key);
   document.getElementById('leagueDetails').classList.remove('hidden');
-  document.getElementById('leagueDetails').innerHTML=`
-  <div class="card p-6 mt-6">
+  document.getElementById('leagueDetails').innerHTML=`<div class="card p-6 mt-6">
     <h3 class="font-black mb-4">${key.replaceAll('_',' ')}</h3>
     ${list.map(m=>{
       const d=new Date(m.time);
-      return `
-      <div class="border-b py-2 text-xs">
+      return `<div class="border-b py-2 text-xs">
         <div class="flex justify-between">
-          <span>
-            ${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)}
-            | <b class="text-green-600">${m.winner||'-'}</b>
-          </span>
-          <b class="${m.profit>=0?'text-green-600':'text-red-600'}">
-            ${m.profit>=0?'+':''}${m.profit}
-          </b>
+          <span>${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)} | <b class="text-green-600">${m.winner||'-'}</b></span>
+          <b class="${m.profit>=0?'text-green-600':'text-red-600'}">${m.profit>=0?'+':''}${m.profit}</b>
         </div>
         <div class="flex justify-between text-slate-500">
           <span>${m.home} – ${m.away}</span>
