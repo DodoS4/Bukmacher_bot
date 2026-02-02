@@ -2,169 +2,166 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Betting PRO Dashboard</title>
-
+<title>AI Betting PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-body { background:#f8fafc; font-family:Inter,system-ui }
-.card { background:white; border-radius:1.5rem; padding:1.5rem; border:1px solid #e5e7eb }
+body { background:#f8fafc; font-family: Inter, system-ui; }
+.card { background:white; border-radius:1.25rem; padding:1rem; border:1px solid #e5e7eb; }
+.league-card:hover { transform: translateY(-2px); }
 </style>
 </head>
 
-<body class="p-6">
+<body class="p-4 md:p-8">
+
 <div class="max-w-7xl mx-auto space-y-8">
 
-<!-- HEADER -->
+<!-- =================== HEADER =================== -->
 <div class="flex justify-between items-center card">
   <div>
-    <h1 class="text-2xl font-black italic">AI BETTING <span class="text-blue-600">PRO</span></h1>
-    <p id="sync" class="text-[10px] text-slate-400 font-bold uppercase">Sync...</p>
+    <h1 class="text-2xl font-black uppercase italic">AI BETTING <span class="text-blue-600">PRO</span></h1>
+    <p id="sync" class="text-xs text-slate-400 font-bold">Sync: --</p>
   </div>
-  <div class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-black">
-    LIVE
+  <div class="text-xs font-black bg-blue-600 text-white px-4 py-2 rounded-xl">LIVE</div>
+</div>
+
+<!-- =================== GLOBAL STATS =================== -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+  <div class="card"><p class="text-xs text-slate-400 font-bold">Bankroll</p><p id="bankroll" class="text-xl font-black"></p></div>
+  <div class="card"><p class="text-xs text-slate-400 font-bold">Zysk Total</p><p id="profit-total" class="text-xl font-black text-blue-600"></p></div>
+  <div class="card"><p class="text-xs text-slate-400 font-bold">Zysk 24h</p><p id="profit-24h" class="text-xl font-black"></p></div>
+  <div class="card"><p class="text-xs text-slate-400 font-bold">Yield</p><p id="yield" class="text-xl font-black"></p></div>
+  <div class="card"><p class="text-xs text-slate-400 font-bold">W grze</p><p id="active" class="text-xl font-black"></p></div>
+  <div class="card"><p class="text-xs text-slate-400 font-bold">Kupony</p><p id="total" class="text-xl font-black"></p></div>
+</div>
+
+<!-- =================== CHART =================== -->
+<div class="card">
+  <h3 class="text-xs font-black text-slate-400 mb-2 uppercase">📈 Progresja Bankrolla</h3>
+  <div class="h-64"><canvas id="chart"></canvas></div>
+</div>
+
+<!-- =================== LEAGUE TILES =================== -->
+<div>
+  <h3 class="font-black mb-4">🏆 Ligi</h3>
+  <div id="leagues" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+</div>
+
+<!-- =================== DRILL DOWN =================== -->
+<div id="league-details" class="card hidden">
+  <div class="flex justify-between items-center mb-4">
+    <h3 id="league-title" class="font-black text-lg"></h3>
+    <button onclick="closeLeague()" class="text-xs font-bold text-red-500">Zamknij ✖</button>
   </div>
-</div>
-
-<!-- STATS -->
-<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Zysk 24h</p><p id="p24" class="text-xl font-black">0</p></div>
-  <div class="card ring-2 ring-blue-200"><p class="text-[10px] uppercase text-blue-600 font-black">Zysk total</p><p id="pt" class="text-xl font-black text-blue-600">0</p></div>
-  <div class="card ring-2 ring-purple-200"><p class="text-[10px] uppercase text-purple-600 font-black">Bankroll</p><p id="br" class="text-xl font-black text-purple-600">0</p></div>
-  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Obrót</p><p id="turn" class="text-xl font-black">0</p></div>
-  <div class="card bg-amber-50"><p class="text-[10px] uppercase text-amber-600 font-black">W grze</p><p id="active" class="text-xl font-black text-amber-700">0</p></div>
-  <div class="card"><p class="text-[10px] uppercase text-orange-500 font-black">Yield</p><p id="yield" class="text-xl font-black text-orange-600">0%</p></div>
-  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Kupony</p><p id="count" class="text-xl font-black">0</p></div>
-</div>
-
-<!-- CHART -->
-<div class="card">
-  <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Progresja bankrolla</h3>
-  <div class="h-[300px]">
-    <canvas id="chart"></canvas>
-  </div>
-</div>
-
-<!-- RECENT MATCHES -->
-<div class="card">
-<h3 class="text-xs font-black uppercase text-slate-400 mb-4">Ostatnie mecze</h3>
-
-<div class="overflow-x-auto">
-<table class="w-full text-xs">
-<thead>
-<tr class="border-b uppercase text-slate-400 font-black">
-<th class="text-left py-2">Data</th>
-<th class="text-left">Mecz</th>
-<th>Stawka</th>
-<th>Kurs</th>
-<th>Wynik</th>
-<th class="text-right">Profit</th>
-</tr>
-</thead>
-<tbody id="recent"></tbody>
-</table>
-</div>
-</div>
-
-<!-- LEAGUES -->
-<div class="card">
-<h3 class="text-xs font-black uppercase text-slate-400 mb-4">Wyniki wg lig</h3>
-<div id="leagues" class="space-y-3"></div>
+  <div id="league-summary" class="mb-4 text-sm font-bold"></div>
+  <div id="league-matches" class="space-y-3"></div>
 </div>
 
 </div>
 
 <script>
-let STATS={}, HISTORY=[], chart=null;
+const LEAGUE_NAMES = {
+  "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
+  "soccer_germany_bundesliga": "🇩🇪 Bundesliga",
+  "soccer_spain_la_liga": "🇪🇸 La Liga",
+  "soccer_italy_serie_a": "🇮🇹 Serie A",
+  "soccer_epl": "🏴 Premier League",
+  "icehockey_nhl": "🏒 NHL",
+  "basketball_euroleague": "🏀 Euroliga"
+};
 
-function iconFor(l){
-  if(l.includes('icehockey')) return '🏒';
-  if(l.includes('soccer')) return '⚽';
-  if(l.includes('basketball')) return '🏀';
-  if(l.includes('tennis')) return '🎾';
-  return '🎯';
+let history = [];
+let chart;
+
+async function loadData() {
+  const t = '?t=' + Date.now();
+  const stats = await fetch('stats.json'+t).then(r=>r.json());
+  history = await fetch('history.json'+t).then(r=>r.json());
+
+  document.getElementById('bankroll').innerText = stats.bankroll.toFixed(2)+' PLN';
+  document.getElementById('profit-total').innerText = stats.zysk_total.toFixed(2)+' PLN';
+  document.getElementById('profit-24h').innerText = stats.zysk_24h.toFixed(2)+' PLN';
+  document.getElementById('yield').innerText = stats.yield+'%';
+  document.getElementById('active').innerText = stats.upcoming_val;
+  document.getElementById('total').innerText = history.length;
+  document.getElementById('sync').innerText = 'Sync: '+stats.last_sync;
+
+  buildChart(stats.history_graph || []);
+  buildLeagues();
 }
 
-async function load(){
-  const t='?'+Date.now();
-  STATS=await (await fetch('stats.json'+t)).json();
-  HISTORY=await (await fetch('history.json'+t)).json();
-  renderStats(); renderChart(); renderRecent(); renderLeagues();
-}
-
-function renderStats(){
-  document.getElementById('br').innerText=STATS.bankroll.toFixed(2)+' PLN';
-  document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2)+' PLN';
-  document.getElementById('p24').innerText=STATS.zysk_24h.toFixed(2)+' PLN';
-  document.getElementById('turn').innerText=STATS.obrot.toFixed(2)+' PLN';
-  document.getElementById('yield').innerText=STATS.yield+'%';
-  document.getElementById('active').innerText=STATS.upcoming_val;
-  document.getElementById('count').innerText=HISTORY.length;
-  document.getElementById('sync').innerText='Sync: '+STATS.last_sync;
-}
-
-function renderChart(){
+function buildChart(data){
   if(chart) chart.destroy();
-  chart=new Chart(document.getElementById('chart'),{
+  chart = new Chart(document.getElementById('chart'),{
     type:'line',
-    data:{labels:STATS.history_graph.map((_,i)=>i),
-      datasets:[{data:STATS.history_graph,borderWidth:3,tension:.4}]},
-    options:{plugins:{legend:{display:false}},responsive:true}
+    data:{labels:data.map((_,i)=>i),
+      datasets:[{data, borderWidth:3, borderColor:'#2563eb', fill:false, tension:0.3}]
+    },
+    options:{plugins:{legend:{display:false}}, scales:{x:{display:false}}}
   });
 }
 
-function renderRecent(){
-  document.getElementById('recent').innerHTML=
-  [...HISTORY].reverse().slice(0,12).map(m=>{
-    const d=new Date(m.time);
-    return `
-<tr class="border-b hover:bg-slate-50">
-<td class="py-2">${d.toLocaleDateString()}<br><span class="text-[10px] text-slate-400">${d.toLocaleTimeString().slice(0,5)}</span></td>
-<td><b>${m.home} – ${m.away}</b><br><span class="text-green-600 text-[10px] font-black">${m.winner||''}</span></td>
-<td class="text-center">${m.stake}</td>
-<td class="text-center">@${m.odds}</td>
-<td class="text-center">${m.status==='WIN'?'✅':'❌'}</td>
-<td class="text-right font-black ${m.profit>=0?'text-green-600':'text-red-600'}">
-${m.profit>=0?'+':''}${m.profit}
-</td>
-</tr>`;
-  }).join('');
-}
+function buildLeagues(){
+  const container = document.getElementById('leagues');
+  container.innerHTML='';
+  const grouped = {};
 
-function renderLeagues(){
-  const map={};
-  HISTORY.forEach(m=>{
-    if(!map[m.sport]) map[m.sport]={p:0,l:[]};
-    map[m.sport].p+=m.profit; map[m.sport].l.push(m);
+  history.forEach(m=>{
+    grouped[m.sport] = grouped[m.sport] || [];
+    grouped[m.sport].push(m);
   });
 
-  document.getElementById('leagues').innerHTML=
-  Object.entries(map).sort((a,b)=>b[1].p-a[1].p).map(([l,d],i)=>`
-<div class="border rounded-xl">
-<div onclick="document.getElementById('lg${i}').classList.toggle('hidden')"
-class="cursor-pointer flex justify-between p-4 bg-slate-50 hover:bg-slate-100">
-<b>${iconFor(l)} ${l.replaceAll('_',' ')}</b>
-<b class="${d.p>=0?'text-green-600':'text-red-600'}">${d.p>=0?'+':''}${d.p.toFixed(2)} PLN</b>
-</div>
-<div id="lg${i}" class="hidden px-4">
-${d.l.map(m=>{
-const d2=new Date(m.time);
-return `<div class="py-2 border-b text-xs flex justify-between">
-<div>
-<b>${m.home} – ${m.away}</b><br>
-<span class="text-[10px] text-slate-400">${d2.toLocaleDateString()} ${d2.toLocaleTimeString().slice(0,5)} | stawka ${m.stake} | @${m.odds}</span><br>
-<span class="text-green-600 font-black">${m.winner||''}</span>
-</div>
-<b class="${m.profit>=0?'text-green-600':'text-red-600'}">${m.profit>=0?'+':''}${m.profit}</b>
-</div>`;
-}).join('')}
-</div>
-</div>`).join('');
+  Object.entries(grouped).forEach(([league, items])=>{
+    const profit = items.reduce((a,b)=>a+b.profit,0);
+    const wins = items.filter(i=>i.profit>0).length;
+
+    container.innerHTML += `
+      <div onclick="openLeague('${league}')" class="card league-card cursor-pointer transition">
+        <p class="font-black">${LEAGUE_NAMES[league] || league}</p>
+        <p class="text-sm ${profit>=0?'text-green-600':'text-red-600'} font-bold">${profit.toFixed(2)} PLN</p>
+        <p class="text-xs text-slate-400">${wins}/${items.length} WIN</p>
+      </div>`;
+  });
 }
 
-load();
+function openLeague(league){
+  const items = history.filter(h=>h.sport===league);
+  const profit = items.reduce((a,b)=>a+b.profit,0);
+
+  document.getElementById('league-title').innerText = LEAGUE_NAMES[league] || league;
+  document.getElementById('league-summary').innerText =
+    `Bilans: ${profit.toFixed(2)} PLN | Mecze: ${items.length}`;
+
+  document.getElementById('league-matches').innerHTML = items
+    .sort((a,b)=>new Date(b.time)-new Date(a.time))
+    .map(m=>{
+      const d = new Date(m.time);
+      return `
+      <div class="p-3 rounded-xl border ${m.profit>0?'bg-green-50 border-green-300':'bg-red-50 border-red-300'}">
+        <div class="flex justify-between font-bold text-sm">
+          <span>${m.home} – ${m.away}</span>
+          <span class="${m.profit>0?'text-green-600':'text-red-600'}">${m.profit.toFixed(2)} PLN</span>
+        </div>
+        <div class="text-xs text-slate-500 mt-1">
+          🕒 ${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)} |
+          🎯 ${m.outcome} |
+          💰 ${m.stake} PLN @${m.odds} |
+          🏁 ${m.score || ''}
+        </div>
+      </div>`;
+    }).join('');
+
+  document.getElementById('league-details').classList.remove('hidden');
+}
+
+function closeLeague(){
+  document.getElementById('league-details').classList.add('hidden');
+}
+
+loadData();
 </script>
+
 </body>
 </html>
