@@ -57,40 +57,59 @@ def get_match_results(sport, keys):
 # ================= RAPORT / DASHBOARD =================
 def generate_report(history, remaining_count):
     now = datetime.now(timezone.utc)
-    base_capital = 5000.0
+    
+    # DYNAMICZNA BAZA: Próbujemy pobrać bankroll ze stats.json jako punkt startowy
+    base_capital = 1000.0
+    if os.path.exists(STATS_JSON_FILE):
+        try:
+            with open(STATS_JSON_FILE, "r") as f:
+                current_stats = json.load(f)
+                # Jeśli robiliśmy reset, bierzemy kwotę która tam jest
+                if not any(m.get("status") != "ARCHIVED" for m in history):
+                    base_capital = current_stats.get("bankroll", 1000.0)
+        except:
+            pass
 
-    total_profit = 0.0
-    total_staked = 0.0
+    total_profit_new = 0.0      # Tylko nowe mecze (nie archiwalne)
+    current_offset = 0.0        # Wszystkie nowe ruchy (mecze + wypłaty)
+    total_staked_new = 0.0
     profit_24h = 0.0
     graph_data = [base_capital]
 
     history_sorted = sorted(history, key=lambda x: x.get("time", ""))
 
     for m in history_sorted:
+        # Pomijamy archiwalne w obliczeniach finansowych "nowego etapu"
+        if m.get("status") == "ARCHIVED":
+            continue
+            
         profit = float(m.get("profit", 0))
         stake = float(m.get("stake", 0))
+        is_finance = m.get("sport") == "FINANCE"
 
-        total_profit += profit
-        total_staked += stake
-        graph_data.append(round(base_capital + total_profit, 2))
+        current_offset += profit
+        graph_data.append(round(base_capital + current_offset, 2))
 
-        t = m.get("time")
-        if t:
-            try:
-                mt = datetime.fromisoformat(t.replace("Z", "+00:00"))
-                if now - mt < timedelta(hours=24):
-                    profit_24h += profit
-            except:
-                pass
+        if not is_finance:
+            total_profit_new += profit
+            total_staked_new += stake
+            t = m.get("time")
+            if t:
+                try:
+                    mt = datetime.fromisoformat(t.replace("Z", "+00:00"))
+                    if now - mt < timedelta(hours=24):
+                        profit_24h += profit
+                except:
+                    pass
 
-    bankroll = base_capital + total_profit
-    yield_val = (total_profit / total_staked * 100) if total_staked > 0 else 0
+    bankroll = base_capital + current_offset
+    yield_val = (total_profit_new / total_staked_new * 100) if total_staked_new > 0 else 0
 
     stats = {
         "bankroll": round(bankroll, 2),
-        "zysk_total": round(total_profit, 2),
+        "zysk_total": round(total_profit_new, 2),
         "zysk_24h": round(profit_24h, 2),
-        "obrot": round(total_staked, 2),
+        "obrot": round(total_staked_new, 2),
         "yield": round(yield_val, 2),
         "last_sync": now.strftime("%d.%m.%Y %H:%M"),
         "upcoming_val": remaining_count,
@@ -100,23 +119,32 @@ def generate_report(history, remaining_count):
     with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(stats, f, indent=4)
 
-    wins = sum(1 for m in history if m.get("status") == "WIN")
-    total = sum(1 for m in history if m.get("status") in ["WIN", "LOSS"])
+    # Celność: Tylko nowe mecze, pomijamy ARCHIVED i FINANCE
+    new_matches = [m for m in history if m.get("status") in ["WIN", "LOSS"]]
+    wins = sum(1 for m in new_matches if m.get("status") == "WIN")
+    total = len(new_matches)
     accuracy = (wins / total * 100) if total > 0 else 0
 
     msg = [
-        "📊 <b>DASHBOARD UPDATED</b>",
+        "🔄 <b>SYSTEM RESTARTED</b>" if total == 0 else "📊 <b>DASHBOARD UPDATED</b>",
         f"🏦 Bankroll: <b>{round(bankroll,2)} PLN</b>",
-        f"💰 Zysk Total: {round(total_profit,2)} PLN",
+        f"💰 Nowy Zysk: {round(total_profit_new,2)} PLN",
         f"📅 Ostatnie 24h: {round(profit_24h,2)} PLN",
         f"📈 Yield: {round(yield_val,2)}% | Celność: {round(accuracy,1)}%",
         "━━━━━━━━━━━━━━━",
-        "📝 <b>OSTATNIE:</b>"
+        "📝 <b>OSTATNIE (NOWE):</b>"
     ]
 
-    for m in reversed(history[-5:]):
-        icon = "✅" if m.get("status") == "WIN" else "❌" if m.get("status") == "LOSS" else "⚪"
-        msg.append(f"{icon} {m.get('home')} - {m.get('away')} ({m.get('profit')} PLN)")
+    # Pokazujemy tylko 5 ostatnich, które nie są archiwalne
+    recent_active = [m for m in history if m.get("status") != "ARCHIVED"][-5:]
+    for m in reversed(recent_active):
+        if m.get("sport") == "FINANCE":
+            icon = "🏦"
+            name = "OPERACJA FINANSOWA"
+        else:
+            icon = "✅" if m.get("status") == "WIN" else "❌" if m.get("status") == "LOSS" else "⚪"
+            name = f"{m.get('home')} - {m.get('away')}"
+        msg.append(f"{icon} {name} ({m.get('profit')} PLN)")
 
     send_telegram_results("\n".join(msg))
 
@@ -130,6 +158,11 @@ def settle_matches():
         active_coupons = json.load(f)
 
     if not active_coupons:
+        # Nawet jak nie ma kuponów, odświeżamy raport (ważne po resecie)
+        if os.path.exists(HISTORY_FILE):
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                history = json.load(f)
+            generate_report(history, 0)
         return
 
     history = []
@@ -140,15 +173,12 @@ def settle_matches():
         except:
             history = []
 
-    # 🔒 BLOKADA DUPLIKATÓW
     history_ids = {h.get("id") for h in history if h.get("id")}
-
     results_map = {}
     remaining = []
     new_settlements = 0
 
     sports = list(set(c["sport"] for c in active_coupons))
-
     for sport in sports:
         res = get_match_results(sport, api_keys)
         if res:
@@ -158,15 +188,12 @@ def settle_matches():
 
     for c in active_coupons:
         cid = c.get("id")
-
         if cid in history_ids:
             continue
 
         match = results_map.get(cid)
-
         if match and match.get("completed"):
             scores = {s["name"]: int(s.get("score", 0)) for s in match.get("scores", [])}
-
             home = match.get("home_team")
             away = match.get("away_team")
             hs = scores.get(home, 0)
@@ -195,7 +222,6 @@ def settle_matches():
                 "status": status,
                 "score": f"{hs}:{as_}"
             })
-
             history_ids.add(cid)
             new_settlements += 1
         else:
@@ -204,12 +230,10 @@ def settle_matches():
     if new_settlements > 0:
         with open(HISTORY_FILE, "w", encoding="utf-8") as f:
             json.dump(history, f, indent=4)
-
         with open(COUPONS_FILE, "w", encoding="utf-8") as f:
             json.dump(remaining, f, indent=4)
 
     generate_report(history, len(remaining))
 
-# ================= ENTRY =================
 if __name__ == "__main__":
     settle_matches()
