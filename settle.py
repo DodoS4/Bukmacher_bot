@@ -3,11 +3,12 @@ import json
 import requests
 from datetime import datetime, timezone, timedelta
 
-# --- KONFIGURACJA PLIKÓW ---
+# ================= KONFIGURACJA =================
 COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 STATS_JSON_FILE = "stats.json"
 
+# ================= POMOCNICZE =================
 def get_secret(name):
     val = os.environ.get(name) or os.getenv(name)
     return str(val).strip() if val else None
@@ -15,65 +16,77 @@ def get_secret(name):
 def send_telegram_results(message):
     token = get_secret("T_TOKEN")
     chat = get_secret("T_CHAT_RESULTS") or get_secret("T_CHAT")
-    if not token or not chat: return
+    if not token or not chat:
+        return
+
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {"chat_id": chat, "text": message, "parse_mode": "HTML"}
-    try: requests.post(url, json=payload, timeout=15)
-    except: pass
+    payload = {
+        "chat_id": chat,
+        "text": message,
+        "parse_mode": "HTML"
+    }
+    try:
+        requests.post(url, json=payload, timeout=15)
+    except:
+        pass
 
 def get_all_api_keys():
     keys = []
     for i in range(1, 11):
-        key_name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
-        val = os.getenv(key_name)
-        if val: keys.append(val)
+        name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
+        val = os.getenv(name)
+        if val:
+            keys.append(val)
     return keys
 
 def get_match_results(sport, keys):
     for key in keys:
         url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores/"
-        params = {"apiKey": key, "daysFrom": 3}
+        params = {
+            "apiKey": key,
+            "daysFrom": 5
+        }
         try:
-            resp = requests.get(url, params=params, timeout=15)
-            if resp.status_code == 200: return resp.json()
-        except: continue
+            r = requests.get(url, params=params, timeout=15)
+            if r.status_code == 200:
+                return r.json()
+        except:
+            continue
     return None
 
+# ================= RAPORT / DASHBOARD =================
 def generate_report(history, remaining_count):
     now = datetime.now(timezone.utc)
     base_capital = 5000.0
-    
-    # 1. BEZPIECZNE OBLICZENIA (Naprawa błędu 'time')
+
     total_profit = 0.0
     total_staked = 0.0
     profit_24h = 0.0
     graph_data = [base_capital]
-    
-    # Sortujemy historię, by wykres szedł chronologicznie
-    history_sorted = sorted(history, key=lambda x: x.get('time', ''))
+
+    history_sorted = sorted(history, key=lambda x: x.get("time", ""))
 
     for m in history_sorted:
-        p = float(m.get('profit', 0))
-        s = float(m.get('stake') or m.get('stawka') or 250)
-        
-        total_profit += p
-        total_staked += s
+        profit = float(m.get("profit", 0))
+        stake = float(m.get("stake", 0))
+
+        total_profit += profit
+        total_staked += stake
         graph_data.append(round(base_capital + total_profit, 2))
-        
-        # Bezpieczne sprawdzanie czasu 24h
-        t_str = m.get('time')
-        if t_str:
+
+        t = m.get("time")
+        if t:
             try:
-                m_time = datetime.fromisoformat(t_str.replace("Z", "+00:00"))
-                if (now - m_time) < timedelta(hours=24):
-                    profit_24h += p
-            except: continue
+                mt = datetime.fromisoformat(t.replace("Z", "+00:00"))
+                if now - mt < timedelta(hours=24):
+                    profit_24h += profit
+            except:
+                pass
 
     bankroll = base_capital + total_profit
     yield_val = (total_profit / total_staked * 100) if total_staked > 0 else 0
-    
-    # 2. AKTUALIZACJA STATS.JSON DLA DASHBOARDU
-    stats_data = {
+
+    stats = {
         "bankroll": round(bankroll, 2),
         "zysk_total": round(total_profit, 2),
         "zysk_24h": round(profit_24h, 2),
@@ -83,75 +96,120 @@ def generate_report(history, remaining_count):
         "upcoming_val": remaining_count,
         "history_graph": graph_data[-100:]
     }
+
     with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
-        json.dump(stats_data, f, indent=4)
+        json.dump(stats, f, indent=4)
 
-    # 3. RAPORT TELEGRAM
-    wins = sum(1 for m in history if m.get('status') == 'WIN')
-    total_matches = sum(1 for m in history if m.get('status') in ['WIN', 'LOSS'])
-    accuracy = (wins / total_matches * 100) if total_matches > 0 else 0
+    wins = sum(1 for m in history if m.get("status") == "WIN")
+    total = sum(1 for m in history if m.get("status") in ["WIN", "LOSS"])
+    accuracy = (wins / total * 100) if total > 0 else 0
 
-    report = [
+    msg = [
         "📊 <b>DASHBOARD UPDATED</b>",
-        f"🏦 <b>BANKROLL:</b> {round(bankroll, 2)} PLN",
-        f"💰 Zysk Total: {round(total_profit, 2)} PLN",
-        f"📅 Ostatnie 24h: {round(profit_24h, 2)} PLN",
-        f"📈 Yield: {round(yield_val, 2)}% | Celność: {round(accuracy, 1)}%",
+        f"🏦 Bankroll: <b>{round(bankroll,2)} PLN</b>",
+        f"💰 Zysk Total: {round(total_profit,2)} PLN",
+        f"📅 Ostatnie 24h: {round(profit_24h,2)} PLN",
+        f"📈 Yield: {round(yield_val,2)}% | Celność: {round(accuracy,1)}%",
         "━━━━━━━━━━━━━━━",
         "📝 <b>OSTATNIE:</b>"
     ]
+
     for m in reversed(history[-5:]):
-        status = "✅" if m.get('status') == 'WIN' else "❌"
-        report.append(f"{status} {m.get('home')} - {m.get('away')} ({m.get('profit')} PLN)")
+        icon = "✅" if m.get("status") == "WIN" else "❌" if m.get("status") == "LOSS" else "⚪"
+        msg.append(f"{icon} {m.get('home')} - {m.get('away')} ({m.get('profit')} PLN)")
 
-    send_telegram_results("\n".join(report))
+    send_telegram_results("\n".join(msg))
 
+# ================= SETTLEMENT =================
 def settle_matches():
     api_keys = get_all_api_keys()
-    if not os.path.exists(COUPONS_FILE): return
-    with open(COUPONS_FILE, "r", encoding="utf-8") as f: active_coupons = json.load(f)
-    if not active_coupons: return
+    if not api_keys or not os.path.exists(COUPONS_FILE):
+        return
+
+    with open(COUPONS_FILE, "r", encoding="utf-8") as f:
+        active_coupons = json.load(f)
+
+    if not active_coupons:
+        return
 
     history = []
     if os.path.exists(HISTORY_FILE):
         try:
-            with open(HISTORY_FILE, "r", encoding="utf-8") as f: history = json.load(f)
-        except: pass
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                history = json.load(f)
+        except:
+            history = []
 
-    remaining_coupons, new_settlements = [], 0
+    # 🔒 BLOKADA DUPLIKATÓW
+    history_ids = {h.get("id") for h in history if h.get("id")}
+
     results_map = {}
-    sports_to_check = list(set(c['sport'] for c in active_coupons))
+    remaining = []
+    new_settlements = 0
 
-    for sport in sports_to_check:
+    sports = list(set(c["sport"] for c in active_coupons))
+
+    for sport in sports:
         res = get_match_results(sport, api_keys)
         if res:
-            for match in res: results_map[match['id']] = match
+            for m in res:
+                if m.get("id"):
+                    results_map[m["id"]] = m
 
-    for coupon in active_coupons:
-        match_data = results_map.get(coupon['id'])
-        if match_data and match_data.get('completed'):
-            # Logika sprawdzania wyniku (uproszczona)
-            scores = {s['name']: int(s['score']) for s in match_data.get('scores', [])}
-            h_score = scores.get(match_data['home_team'], 0)
-            a_score = scores.get(match_data['away_team'], 0)
-            
-            won = False
-            if coupon['outcome'] == match_data['home_team'] and h_score > a_score: won = True
-            elif coupon['outcome'] == match_data['away_team'] and a_score > h_score: won = True
+    for c in active_coupons:
+        cid = c.get("id")
 
-            profit = round((float(coupon['stake']) * float(coupon['odds'])) - float(coupon['stake']) if won else -float(coupon['stake']), 2)
-            
-            history.append({**coupon, "profit": profit, "status": "WIN" if won else "LOSS", "score": f"{h_score}:{a_score}"})
+        if cid in history_ids:
+            continue
+
+        match = results_map.get(cid)
+
+        if match and match.get("completed"):
+            scores = {s["name"]: int(s.get("score", 0)) for s in match.get("scores", [])}
+
+            home = match.get("home_team")
+            away = match.get("away_team")
+            hs = scores.get(home, 0)
+            as_ = scores.get(away, 0)
+
+            status = "LOSS"
+            profit = -float(c.get("stake", 0))
+
+            if hs == as_:
+                status = "VOID"
+                profit = 0.0
+            else:
+                if c.get("outcome") == home and hs > as_:
+                    status = "WIN"
+                elif c.get("outcome") == away and as_ > hs:
+                    status = "WIN"
+
+                if status == "WIN":
+                    stake = float(c.get("stake", 0))
+                    odds = float(c.get("odds", 0))
+                    profit = round(stake * odds - stake, 2)
+
+            history.append({
+                **c,
+                "profit": round(profit, 2),
+                "status": status,
+                "score": f"{hs}:{as_}"
+            })
+
+            history_ids.add(cid)
             new_settlements += 1
         else:
-            remaining_coupons.append(coupon)
+            remaining.append(c)
 
     if new_settlements > 0:
-        with open(HISTORY_FILE, "w", encoding="utf-8") as f: json.dump(history, f, indent=4)
-        with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(remaining_coupons, f, indent=4)
-    
-    # Zawsze generuj statystyki, by Dashboard był aktualny
-    generate_report(history, len(remaining_coupons))
+        with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+            json.dump(history, f, indent=4)
 
+        with open(COUPONS_FILE, "w", encoding="utf-8") as f:
+            json.dump(remaining, f, indent=4)
+
+    generate_report(history, len(remaining))
+
+# ================= ENTRY =================
 if __name__ == "__main__":
     settle_matches()
