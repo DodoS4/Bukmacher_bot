@@ -1,0 +1,21 @@
+name: 🔄 Miękki Reset Finansów ( start od 1000zl )
+
+on:
+  workflow_dispatch:
+
+jobs:
+  reset:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Soft Reset
+        run: python soft_reset.py
+      - name: Commit & Push
+        run: |
+          git config --global user.name "Reset Bot"
+          git config --global user.email "actions@github.com"
+          git add history.json stats.json
+          git commit -m "🔄 Miękki reset finansów"
+          git push
