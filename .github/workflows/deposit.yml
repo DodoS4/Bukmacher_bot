@@ -1,0 +1,33 @@
+name: 💰 Wpłata pieniędzy 
+
+on:
+  workflow_dispatch:
+    inputs:
+      amount:
+        description: 'Kwota wpłaty (PLN)'
+        required: true
+        default: '500'
+
+jobs:
+  deposit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Run Deposit Script
+        run: python deposit.py ${{ github.event.inputs.amount }}
+
+      - name: Commit & Push changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add stats.json history.json
+          git commit -m "💰 Deposit: ${{ github.event.inputs.amount }} PLN" || echo "No changes to commit"
+          git push
