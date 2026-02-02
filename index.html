@@ -143,12 +143,14 @@ function renderStats(){
 function renderMatches() {
     document.getElementById('recent-list').innerHTML = [...HISTORY].reverse().slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
+        const dateStr = `${d.getDate()}.${d.getMonth()+1}`;
+        const timeStr = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
         return `
         <div class="match-item">
             <div class="flex items-center gap-3 overflow-hidden">
                 <img src="https://flagcdn.com/w40/${getFlag(m.sport)}.png" class="flag-icon">
                 <div class="truncate">
-                    <p class="text-[7px] font-bold text-slate-300 uppercase">${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')} | ${m.score || '@'+m.odds}</p>
+                    <p class="text-[7px] font-bold text-slate-300 uppercase">${dateStr} ${timeStr} | ${m.score || '@'+m.odds}</p>
                     <p class="text-[10px] font-black text-slate-700 truncate uppercase tracking-tighter">${m.home} - ${m.away}</p>
                 </div>
             </div>
@@ -160,12 +162,14 @@ function renderMatches() {
 
     document.getElementById('upcoming-list').innerHTML = [...UPCOMING].slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
+        const dateStr = `${d.getDate()}.${d.getMonth()+1}`;
+        const timeStr = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
         return `
         <div class="match-item">
             <div class="flex items-center gap-3 overflow-hidden">
                 <img src="https://flagcdn.com/w40/${getFlag(m.sport)}.png" class="flag-icon">
                 <div class="truncate">
-                    <p class="text-[7px] font-bold text-amber-500 uppercase italic">${d.getDate()}.${d.getMonth()+1} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}</p>
+                    <p class="text-[7px] font-bold text-amber-500 uppercase italic">${dateStr} ${timeStr}</p>
                     <p class="text-[10px] font-black text-slate-700 truncate uppercase tracking-tighter">${m.home} - ${m.away}</p>
                 </div>
             </div>
@@ -223,7 +227,6 @@ function renderChart(){
     const labels = STATS.history_graph.map((_, i) => {
         if (HISTORY[i] && HISTORY[i].time) {
             const d = new Date(HISTORY[i].time);
-            // Wyświetlaj datę tylko dla co N-tego punktu, żeby nie zapchać osi za pół roku
             const step = Math.ceil(totalPoints / 8); 
             if (i % step === 0 || i === totalPoints - 1) {
                 return `${d.getDate()}.${d.getMonth()+1}`;
