@@ -1,15 +1,5 @@
 [
     {
-        "id": "bfd9fac946f89678ef1664f4b24b8695",
-        "home": "Carolina Hurricanes",
-        "away": "Los Angeles Kings",
-        "outcome": "Los Angeles Kings",
-        "odds": 3.8,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-01T20:10:00Z"
-    },
-    {
         "id": "34dbd8b5d92f6b5c91590bf9dfd418db",
         "home": "Tampa Bay Lightning",
         "away": "Boston Bruins",
