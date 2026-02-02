@@ -5,11 +5,13 @@ from datetime import datetime, timezone
 
 HISTORY_FILE = "history.json"
 
+
 def send_telegram(message):
     token = os.getenv("T_TOKEN")
     chat = os.getenv("T_CHAT")
+
     if not token or not chat:
-        print("⚠️ Brak danych Telegram")
+        print("⚠️ Brak danych Telegram (T_TOKEN / T_CHAT)")
         return
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
@@ -22,7 +24,8 @@ def send_telegram(message):
     try:
         requests.post(url, json=payload, timeout=10)
     except Exception as e:
-        print("⚠️ Błąd Telegram:", e)
+        print("⚠️ Błąd wysyłania Telegram:", e)
+
 
 def add_withdraw(amount, note="Wypłata pieniędzy"):
     if not os.path.exists(HISTORY_FILE):
@@ -49,4 +52,20 @@ def add_withdraw(amount, note="Wypłata pieniędzy"):
 
     history.append(entry)
 
-    with open(HISTOR
+    with open(HISTORY_FILE, "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=4, ensure_ascii=False)
+
+    msg = (
+        "🏦 <b>WYPŁATA PIENIĘDZY</b>\n\n"
+        f"💸 Kwota: <b>-{amount:.2f} PLN</b>\n"
+        f"🕒 Data: {datetime.now().strftime('%d.%m.%Y %H:%M')}\n\n"
+        "📊 Bankroll został zaktualizowany"
+    )
+
+    send_telegram(msg)
+    print(f"✅ Zarejestrowano wypłatę: -{amount:.2f} PLN")
+
+
+if __name__ == "__main__":
+    # test lokalny
+    add_withdraw(1000)
