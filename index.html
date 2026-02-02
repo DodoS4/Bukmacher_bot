@@ -141,16 +141,19 @@ function renderStats(){
 }
 
 function renderMatches() {
+    // ROZLICZENIA
     document.getElementById('recent-list').innerHTML = [...HISTORY].reverse().slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
-        const dateStr = `${d.getDate()}.${d.getMonth()+1}`;
-        const timeStr = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
+        const datePart = `${d.getDate()}.${d.getMonth()+1}`;
+        const timePart = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
         return `
         <div class="match-item">
             <div class="flex items-center gap-3 overflow-hidden">
                 <img src="https://flagcdn.com/w40/${getFlag(m.sport)}.png" class="flag-icon">
                 <div class="truncate">
-                    <p class="text-[7px] font-bold text-slate-300 uppercase">${dateStr} ${timeStr} | ${m.score || '@'+m.odds}</p>
+                    <p class="text-[7px] font-bold text-slate-300 uppercase">
+                        <span class="text-slate-400">${datePart}</span> | ${timePart} | ${m.score || '@'+m.odds}
+                    </p>
                     <p class="text-[10px] font-black text-slate-700 truncate uppercase tracking-tighter">${m.home} - ${m.away}</p>
                 </div>
             </div>
@@ -160,16 +163,19 @@ function renderMatches() {
         </div>`;
     }).join('');
 
+    // NADCHODZĄCE
     document.getElementById('upcoming-list').innerHTML = [...UPCOMING].slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
-        const dateStr = `${d.getDate()}.${d.getMonth()+1}`;
-        const timeStr = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
+        const datePart = `${d.getDate()}.${d.getMonth()+1}`;
+        const timePart = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
         return `
         <div class="match-item">
             <div class="flex items-center gap-3 overflow-hidden">
                 <img src="https://flagcdn.com/w40/${getFlag(m.sport)}.png" class="flag-icon">
                 <div class="truncate">
-                    <p class="text-[7px] font-bold text-amber-500 uppercase italic">${dateStr} ${timeStr}</p>
+                    <p class="text-[7px] font-bold text-amber-500 uppercase italic">
+                        <span class="font-black">${datePart}</span> | ${timePart}
+                    </p>
                     <p class="text-[10px] font-black text-slate-700 truncate uppercase tracking-tighter">${m.home} - ${m.away}</p>
                 </div>
             </div>
