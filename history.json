@@ -3569,5 +3569,15 @@
         "score": "0:0",
         "time": "2026-02-02T16:31:52.804647+00:00",
         "type": "WITHDRAW"
+    },
+    {
+        "home": "📥 DEPOZYT",
+        "away": "Wpłata własna",
+        "profit": 7000.0,
+        "stake": 0,
+        "odds": 0,
+        "sport": "FINANCE",
+        "status": "DEPOSIT",
+        "time": "2026-02-02T16:37:35.616776"
     }
 ]
