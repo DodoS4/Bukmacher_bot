@@ -13,7 +13,6 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
     body { background-color: #f6f8fb; color: #1e293b; font-family: 'Inter', sans-serif; }
     
-    /* Zaokrąglone karty ze zdjęć */
     .card-pro { 
         background: white; 
         border-radius: 2.5rem; 
@@ -36,16 +35,26 @@
     .stat-label { font-weight: 900; font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
     .stat-value { font-weight: 900; font-size: 1.5rem; font-style: italic; }
 
-    /* Układ "Ostatnie rozliczenia" ze zdjęcia */
-    .match-row {
-        background: white;
-        border-radius: 1.5rem;
-        padding: 1.25rem;
+    /* Mini wiersz meczu */
+    .mini-match {
+        background: #f8fafc;
+        border-radius: 1rem;
+        padding: 0.75rem 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border: 1px solid #f8fafc;
-        margin-bottom: 0.75rem;
+        border-left: 4px solid #cbd5e1;
+    }
+
+    /* Detale ligi - rozwijane */
+    .league-details {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+    .league-details.open {
+        max-height: 1000px;
+        margin-top: 1rem;
     }
 
     .border-blue-pro { border-bottom: 5px solid #2563eb; }
@@ -54,143 +63,177 @@
 </head>
 
 <body class="p-4 md:p-10">
-<div class="max-w-5xl mx-auto space-y-10">
+<div class="max-w-5xl mx-auto space-y-8">
 
-<div class="flex justify-between items-center bg-white p-6 rounded-[2rem] border border-slate-100">
-  <div>
-    <h1 class="text-3xl font-black italic tracking-tighter uppercase leading-none">AI BETTING <span class="text-blue-600">PRO</span></h1>
-    <p id="sync" class="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-widest">SYNC: ...</p>
-  </div>
-  <div id="refresh-badge" class="bg-blue-600 text-white px-5 py-2 rounded-2xl text-[10px] font-black italic shadow-lg shadow-blue-100 uppercase">
-    REF: 300S
-  </div>
-</div>
-
-<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-  <div class="stat-card"><span class="stat-label">Zysk 24h</span><span id="p24" class="stat-value">0</span></div>
-  <div class="stat-card border-blue-pro"><span class="stat-label text-blue-600">Zysk Total</span><span id="pt" class="stat-value text-blue-600">0</span></div>
-  <div class="stat-card border-purple-pro"><span class="stat-label text-purple-600">Bankroll</span><span id="br" class="stat-value text-purple-600">0</span></div>
-  <div class="stat-card"><span class="stat-label">Obrót</span><span id="turn" class="stat-value text-slate-700">0</span></div>
-  <div class="stat-card bg-amber-50/50"><span class="stat-label text-amber-600 italic">W grze</span><span id="active" class="stat-value text-amber-700">0</span></div>
-  <div class="stat-card"><span class="stat-label text-orange-500">Yield</span><span id="yield" class="stat-value text-orange-600">0%</span></div>
-  <div class="stat-card"><span class="stat-label">Kupony</span><span id="count" class="stat-value text-slate-800">0</span></div>
-</div>
-
-<div class="card-pro">
-  <div class="flex justify-between items-center mb-8">
-    <h3 class="text-xs font-black uppercase text-slate-400 italic tracking-widest">Wyres Progresji</h3>
-    <span class="text-[9px] bg-slate-100 text-slate-500 px-3 py-1 rounded-full font-black uppercase">Live Chart</span>
-  </div>
-  <div class="h-[350px]">
-    <canvas id="chart"></canvas>
-  </div>
-</div>
-
-<div class="card-pro">
-    <div class="flex items-center gap-3 mb-8 text-green-500">
-        <i class="fa-solid fa-rotate-left"></i>
-        <h3 class="text-xs font-black uppercase italic tracking-widest">Ostatnie 10 rozliczeń</h3>
+    <div class="flex justify-between items-center bg-white p-6 rounded-[2rem] border border-slate-100">
+      <div>
+        <h1 class="text-3xl font-black italic tracking-tighter uppercase leading-none">AI BETTING <span class="text-blue-600">PRO</span></h1>
+        <p id="sync" class="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-widest italic">SYNC: ...</p>
+      </div>
+      <div id="refresh-badge" class="bg-blue-600 text-white px-5 py-2 rounded-2xl text-[10px] font-black italic shadow-lg shadow-blue-100 uppercase">
+        REF: 300S
+      </div>
     </div>
-    <div id="recent" class="space-y-3"></div>
-</div>
 
-<div class="card-pro">
-    <h3 class="text-xs font-black uppercase text-slate-400 mb-8 italic tracking-widest text-center">Rozliczenia ligi</h3>
-    <div id="leagues" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-</div>
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+      <div class="stat-card"><span class="stat-label">Zysk 24h</span><span id="p24" class="stat-value">0</span></div>
+      <div class="stat-card border-blue-pro"><span class="stat-label text-blue-600">Zysk Total</span><span id="pt" class="stat-value text-blue-600">0</span></div>
+      <div class="stat-card border-purple-pro"><span class="stat-label text-purple-600">Bankroll</span><span id="br" class="stat-value text-purple-600">0</span></div>
+      <div class="stat-card"><span class="stat-label">Obrót</span><span id="turn" class="stat-value text-slate-700">0</span></div>
+      <div class="stat-card bg-amber-50/50"><span class="stat-label text-amber-600 italic">W grze</span><span id="active" class="stat-value text-amber-700">0</span></div>
+      <div class="stat-card"><span class="stat-label text-orange-500">Yield</span><span id="yield" class="stat-value text-orange-600">0%</span></div>
+      <div class="stat-card"><span class="stat-label">Kupony</span><span id="count" class="stat-value text-slate-800">0</span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 card-pro">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xs font-black uppercase text-slate-400 italic tracking-widest">Wykres Progresji</h3>
+                <span class="text-[9px] bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-black uppercase">Live</span>
+            </div>
+            <div class="h-[300px]">
+                <canvas id="chart"></canvas>
+            </div>
+        </div>
+
+        <div class="card-pro p-6">
+            <h3 class="text-[10px] font-black uppercase text-slate-400 mb-6 italic tracking-widest flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left"></i> Ostatnie 10
+            </h3>
+            <div id="recent-mini" class="space-y-2 overflow-y-auto max-h-[300px] pr-2">
+                </div>
+        </div>
+    </div>
+
+    <div class="card-pro">
+        <h3 class="text-xs font-black uppercase text-slate-400 mb-8 italic tracking-widest text-center flex justify-center items-center gap-3">
+            <i class="fa-solid fa-trophy text-amber-500"></i> Rozliczenia Ligi (Kliknij, aby zobaczyć mecze)
+        </h3>
+        <div id="leagues-container" class="space-y-4">
+            </div>
+    </div>
 
 </div>
 
 <script>
 let STATS={}, HISTORY=[], chart=null;
 
+function getIcon(sport) {
+    if(sport.includes('icehockey')) return '🏒';
+    if(sport.includes('soccer')) return '⚽';
+    if(sport.includes('basketball')) return '🏀';
+    return '🎯';
+}
+
 async function load(){
-  const t='?'+Date.now();
-  try {
-    STATS=await (await fetch('stats.json'+t)).json();
-    HISTORY=await (await fetch('history.json'+t)).json();
-    renderStats(); renderChart(); renderRecent(); renderLeagues();
-  } catch(e) { console.log("Błąd ładowania danych"); }
+    const t='?'+Date.now();
+    try {
+        const [sRes, hRes] = await Promise.all([fetch('stats.json'+t), fetch('history.json'+t)]);
+        STATS = await sRes.json();
+        HISTORY = await hRes.json();
+        renderStats(); renderChart(); renderRecentMini(); renderLeagues();
+    } catch(e) { console.error("Błąd danych"); }
 }
 
 function renderStats(){
-  document.getElementById('br').innerText=STATS.bankroll.toFixed(2)+' PLN';
-  document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2)+' PLN';
-  document.getElementById('p24').innerText=(STATS.zysk_24h > 0 ? '+' : '') + STATS.zysk_24h.toFixed(2) + ' PLN';
-  document.getElementById('p24').className = `stat-value ${STATS.zysk_24h >= 0 ? 'text-green-500' : 'text-red-500'}`;
-  document.getElementById('turn').innerText=STATS.obrot.toFixed(2) + ' PLN';
-  document.getElementById('yield').innerText=STATS.yield+'%';
-  document.getElementById('active').innerText=STATS.upcoming_val;
-  document.getElementById('count').innerText=HISTORY.length;
-  document.getElementById('sync').innerText='Sync: '+STATS.last_sync;
+    document.getElementById('br').innerText=STATS.bankroll.toFixed(2)+' PLN';
+    document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2)+' PLN';
+    document.getElementById('p24').innerText=(STATS.zysk_24h >= 0 ? '+' : '') + STATS.zysk_24h.toFixed(2);
+    document.getElementById('p24').className = `stat-value ${STATS.zysk_24h >= 0 ? 'text-green-500' : 'text-red-500'}`;
+    document.getElementById('turn').innerText=STATS.obrot.toFixed(0);
+    document.getElementById('yield').innerText=STATS.yield+'%';
+    document.getElementById('active').innerText=STATS.upcoming_val;
+    document.getElementById('count').innerText=HISTORY.length;
+    document.getElementById('sync').innerText='SYNC: '+STATS.last_sync;
 }
 
-function renderChart(){
-  if(chart) chart.destroy();
-  const ctx = document.getElementById('chart').getContext('2d');
-  const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-  gradient.addColorStop(0, 'rgba(37, 99, 235, 0.1)');
-  gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
-
-  chart=new Chart(ctx,{
-    type:'line',
-    data:{
-        labels:STATS.history_graph.map((_,i)=>i),
-        datasets:[{
-            data:STATS.history_graph,
-            borderColor:'#2563eb',
-            borderWidth:4,
-            tension:.4,
-            pointRadius:0,
-            fill: true,
-            backgroundColor: gradient
-        }]
-    },
-    options:{
-        plugins:{legend:{display:false}},
-        responsive:true,
-        maintainAspectRatio: false,
-        scales: { x: { display: false }, y: { grid: { color: '#f1f5f9' }, ticks: { font: { weight: 'bold' }}}}
-    }
-  });
-}
-
-function renderRecent(){
-  document.getElementById('recent').innerHTML=
-  [...HISTORY].reverse().slice(0,10).map(m=>{
-    return `
-    <div class="match-row border-l-4 ${m.status==='WIN'?'border-green-500':'border-red-500'}">
-        <div class="flex items-center gap-4">
-            <div class="text-lg">🏒</div>
-            <div>
-                <p class="text-[9px] font-bold text-slate-300 uppercase italic">@${m.odds} | ${m.score||'?-?'}</p>
-                <p class="text-[11px] font-black text-slate-700">${m.home} - ${m.away}</p>
+function renderRecentMini(){
+    const container = document.getElementById('recent-mini');
+    container.innerHTML = [...HISTORY].reverse().slice(0,10).map(m => `
+        <div class="mini-match ${m.status==='WIN'?'border-green-500':'border-red-500'}">
+            <div class="text-[10px] font-black text-slate-700 truncate mr-2">${m.home.split(' ')[0]} - ${m.away.split(' ')[0]}</div>
+            <div class="font-black text-[10px] ${m.profit>=0?'text-green-600':'text-red-600'} italic">
+                ${m.profit>=0?'+':''}${m.profit.toFixed(0)}
             </div>
         </div>
-        <span class="font-black text-sm italic ${m.profit>=0?'text-green-600':'text-red-600'}">
-            ${m.profit>=0?'+':''}${m.profit.toFixed(2)}
-        </span>
-    </div>`;
-  }).join('');
+    `).join('');
 }
 
 function renderLeagues(){
-  const map={};
-  HISTORY.forEach(m=>{
-    if(!map[m.sport]) map[m.sport]={p:0, c:0};
-    map[m.sport].p+=m.profit;
-    map[m.sport].c+=1;
-  });
+    const map = {};
+    HISTORY.forEach(m => {
+        if(!map[m.sport]) map[m.sport] = { p:0, matches:[] };
+        map[m.sport].p += m.profit;
+        map[m.sport].matches.push(m);
+    });
 
-  document.getElementById('leagues').innerHTML=
-  Object.entries(map).sort((a,b)=>b[1].p-a[1].p).map(([l,d])=>`
-    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex justify-between items-center">
-        <div>
-            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">${l.replaceAll('_',' ')}</p>
-            <p class="text-[10px] font-bold text-slate-500">${d.c} typów</p>
+    document.getElementById('leagues-container').innerHTML = Object.entries(map)
+    .sort((a,b) => b[1].p - a[1].p)
+    .map(([league, data], index) => `
+        <div class="border border-slate-100 rounded-[1.5rem] overflow-hidden">
+            <div onclick="toggleLeague(${index})" class="flex justify-between items-center p-5 bg-white hover:bg-slate-50 cursor-pointer transition-all">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">${getIcon(league)}</span>
+                    <div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">${league.replaceAll('_',' ')}</p>
+                        <p class="text-[9px] font-bold text-slate-400 italic">${data.matches.length} meczów</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="font-black italic ${data.p>=0?'text-green-600':'text-red-600'}">${data.p >= 0 ? '+' : ''}${data.p.toFixed(2)} PLN</p>
+                    <i class="fa-solid fa-chevron-down text-[10px] text-slate-300"></i>
+                </div>
+            </div>
+            <div id="league-box-${index}" class="league-details bg-slate-50/50 px-5">
+                <div class="py-4 space-y-2">
+                    ${data.matches.reverse().map(m => `
+                        <div class="flex justify-between items-center text-[10px] border-b border-slate-100 pb-2">
+                            <span class="font-bold text-slate-600">${m.home} - ${m.away} <span class="text-slate-400 ml-2">@${m.odds}</span></span>
+                            <span class="font-black ${m.profit>=0?'text-green-600':'text-red-600'}">${m.profit>=0?'+':''}${m.profit}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
         </div>
-        <b class="text-sm font-black italic ${d.p>=0?'text-green-600':'text-red-600'}">${d.p>=0?'+':''}${d.p.toFixed(2)}</b>
-    </div>`).join('');
+    `).join('');
+}
+
+function toggleLeague(id) {
+    const box = document.getElementById(`league-box-${id}`);
+    box.classList.toggle('open');
+}
+
+function renderChart(){
+    if(chart) chart.destroy();
+    const ctx = document.getElementById('chart').getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, 'rgba(37, 99, 235, 0.15)');
+    gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: STATS.history_graph.map((_,i)=>i),
+            datasets: [{
+                data: STATS.history_graph,
+                borderColor: '#2563eb',
+                borderWidth: 3,
+                tension: 0.4,
+                pointRadius: 0,
+                fill: true,
+                backgroundColor: gradient
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { display: false },
+                y: { grid: { color: '#f1f5f9' }, ticks: { font: { weight: 'bold', size: 10 }}}
+            }
+        }
+    });
 }
 
 load();
