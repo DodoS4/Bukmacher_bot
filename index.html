@@ -2,161 +2,166 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>AI Betting PRO</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Betting PRO Dashboard</title>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
-body { background:#f8fafc; font-family: Inter, system-ui; }
-.card { background:white; border-radius:1.25rem; border:1px solid #e2e8f0; }
+body { background:#f8fafc; font-family:Inter,system-ui }
+.card { background:white; border-radius:1.5rem; padding:1.5rem; border:1px solid #e5e7eb }
 </style>
 </head>
 
-<body class="p-4 md:p-8">
-<div class="max-w-7xl mx-auto">
+<body class="p-6">
+<div class="max-w-7xl mx-auto space-y-8">
 
 <!-- HEADER -->
-<div class="card p-5 mb-6 flex justify-between items-center">
+<div class="flex justify-between items-center card">
   <div>
-    <h1 class="text-2xl font-black italic tracking-tight">
-      AI BETTING <span class="text-blue-600">PRO</span>
-    </h1>
-    <p id="sync" class="text-xs text-slate-400 font-bold">Sync: —</p>
+    <h1 class="text-2xl font-black italic">AI BETTING <span class="text-blue-600">PRO</span></h1>
+    <p id="sync" class="text-[10px] text-slate-400 font-bold uppercase">Sync...</p>
+  </div>
+  <div class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-black">
+    LIVE
   </div>
 </div>
 
-<!-- GLOBALNE STATY -->
-<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
-  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Bankroll</p><p id="bankroll" class="text-xl font-black">0</p></div>
-  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Zysk total</p><p id="profitTotal" class="text-xl font-black text-blue-600">0</p></div>
-  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Zysk 24h</p><p id="profit24" class="text-xl font-black">0</p></div>
-  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Yield</p><p id="yield" class="text-xl font-black">0%</p></div>
-  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Obrót</p><p id="turnover" class="text-xl font-black">0</p></div>
-  <div class="card p-4 bg-amber-50"><p class="text-[10px] uppercase font-black text-amber-600">W grze</p><p id="active" class="text-xl font-black text-amber-700">0</p></div>
-  <div class="card p-4"><p class="text-[10px] uppercase font-black text-slate-400">Mecze</p><p id="totalMatches" class="text-xl font-black">0</p></div>
+<!-- STATS -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Zysk 24h</p><p id="p24" class="text-xl font-black">0</p></div>
+  <div class="card ring-2 ring-blue-200"><p class="text-[10px] uppercase text-blue-600 font-black">Zysk total</p><p id="pt" class="text-xl font-black text-blue-600">0</p></div>
+  <div class="card ring-2 ring-purple-200"><p class="text-[10px] uppercase text-purple-600 font-black">Bankroll</p><p id="br" class="text-xl font-black text-purple-600">0</p></div>
+  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Obrót</p><p id="turn" class="text-xl font-black">0</p></div>
+  <div class="card bg-amber-50"><p class="text-[10px] uppercase text-amber-600 font-black">W grze</p><p id="active" class="text-xl font-black text-amber-700">0</p></div>
+  <div class="card"><p class="text-[10px] uppercase text-orange-500 font-black">Yield</p><p id="yield" class="text-xl font-black text-orange-600">0%</p></div>
+  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Kupony</p><p id="count" class="text-xl font-black">0</p></div>
 </div>
 
-<!-- WYKRES -->
-<div class="card p-6 mb-8">
+<!-- CHART -->
+<div class="card">
   <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Progresja bankrolla</h3>
-  <div class="h-[320px]">
-    <canvas id="bankrollChart"></canvas>
+  <div class="h-[300px]">
+    <canvas id="chart"></canvas>
   </div>
 </div>
 
-<!-- OSTATNIE MECZE -->
-<div class="card p-6 mb-8">
-  <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Ostatnie mecze</h3>
-  <div id="recent" class="space-y-2"></div>
+<!-- RECENT MATCHES -->
+<div class="card">
+<h3 class="text-xs font-black uppercase text-slate-400 mb-4">Ostatnie mecze</h3>
+
+<div class="overflow-x-auto">
+<table class="w-full text-xs">
+<thead>
+<tr class="border-b uppercase text-slate-400 font-black">
+<th class="text-left py-2">Data</th>
+<th class="text-left">Mecz</th>
+<th>Stawka</th>
+<th>Kurs</th>
+<th>Wynik</th>
+<th class="text-right">Profit</th>
+</tr>
+</thead>
+<tbody id="recent"></tbody>
+</table>
+</div>
 </div>
 
-<!-- LIGI -->
-<div class="card p-6 mb-6">
-  <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Wyniki wg lig</h3>
-  <div id="leagues" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+<!-- LEAGUES -->
+<div class="card">
+<h3 class="text-xs font-black uppercase text-slate-400 mb-4">Wyniki wg lig</h3>
+<div id="leagues" class="space-y-3"></div>
 </div>
-
-<!-- SZCZEGÓŁY LIGI -->
-<div id="leagueDetails" class="hidden"></div>
 
 </div>
 
 <script>
-let HISTORY=[], chart=null;
-const ICONS={icehockey:"🏒",soccer:"⚽",basketball:"🏀",tennis:"🎾"};
+let STATS={}, HISTORY=[], chart=null;
 
-const iconFor=l=>Object.keys(ICONS).find(k=>l.includes(k))?ICONS[Object.keys(ICONS).find(k=>l.includes(k))]:"🎯";
+function iconFor(l){
+  if(l.includes('icehockey')) return '🏒';
+  if(l.includes('soccer')) return '⚽';
+  if(l.includes('basketball')) return '🏀';
+  if(l.includes('tennis')) return '🎾';
+  return '🎯';
+}
 
 async function load(){
   const t='?'+Date.now();
-  const stats=await fetch('stats.json'+t).then(r=>r.json());
-  HISTORY=await fetch('history.json'+t).then(r=>r.json());
-
-  document.getElementById('sync').innerText='Sync: '+(stats.last_sync||'—');
-  bankrollStart=stats.bankroll-stats.zysk_total;
-
-  document.getElementById('bankroll').innerText=stats.bankroll.toFixed(2)+' PLN';
-  document.getElementById('profitTotal').innerText=stats.zysk_total.toFixed(2)+' PLN';
-  document.getElementById('profit24').innerText=(stats.zysk_24h>=0?'+':'')+stats.zysk_24h.toFixed(2)+' PLN';
-  document.getElementById('profit24').className='text-xl font-black '+(stats.zysk_24h>=0?'text-green-600':'text-red-600');
-  document.getElementById('yield').innerText=stats.yield+'%';
-  document.getElementById('turnover').innerText=stats.obrot.toFixed(2)+' PLN';
-  document.getElementById('active').innerText=stats.upcoming_val;
-  document.getElementById('totalMatches').innerText=HISTORY.length;
-
-  renderChart(bankrollStart);
-  renderRecent();
-  renderLeagues();
+  STATS=await (await fetch('stats.json'+t)).json();
+  HISTORY=await (await fetch('history.json'+t)).json();
+  renderStats(); renderChart(); renderRecent(); renderLeagues();
 }
 
-function renderChart(start){
-  let sum=start;
-  const data=HISTORY.map(m=>sum+=m.profit);
+function renderStats(){
+  document.getElementById('br').innerText=STATS.bankroll.toFixed(2)+' PLN';
+  document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2)+' PLN';
+  document.getElementById('p24').innerText=STATS.zysk_24h.toFixed(2)+' PLN';
+  document.getElementById('turn').innerText=STATS.obrot.toFixed(2)+' PLN';
+  document.getElementById('yield').innerText=STATS.yield+'%';
+  document.getElementById('active').innerText=STATS.upcoming_val;
+  document.getElementById('count').innerText=HISTORY.length;
+  document.getElementById('sync').innerText='Sync: '+STATS.last_sync;
+}
 
+function renderChart(){
   if(chart) chart.destroy();
-  chart=new Chart(document.getElementById('bankrollChart'),{
+  chart=new Chart(document.getElementById('chart'),{
     type:'line',
-    data:{labels:data.map((_,i)=>i+1),
-      datasets:[{
-        data,
-        borderWidth:3,
-        borderColor:'#2563eb',
-        tension:.4,
-        fill:true,
-        backgroundColor:'rgba(37,99,235,.1)',
-        pointRadius:0
-      }]
-    },
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      plugins:{legend:{display:false}},
-      scales:{x:{display:false},y:{ticks:{font:{weight:'bold'}}}}
-    }
+    data:{labels:STATS.history_graph.map((_,i)=>i),
+      datasets:[{data:STATS.history_graph,borderWidth:3,tension:.4}]},
+    options:{plugins:{legend:{display:false}},responsive:true}
   });
 }
 
 function renderRecent(){
-  document.getElementById('recent').innerHTML=[...HISTORY].reverse().slice(0,10).map(m=>{
+  document.getElementById('recent').innerHTML=
+  [...HISTORY].reverse().slice(0,12).map(m=>{
     const d=new Date(m.time);
-    return `<div class="p-3 rounded-lg ${m.profit>=0?'bg-green-50':'bg-red-50'} text-xs flex justify-between">
-      <div><b>${m.home} – ${m.away}</b><br>
-      <span class="text-slate-400">${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)} | stawka ${m.stake} | @${m.odds}</span></div>
-      <b class="${m.profit>=0?'text-green-600':'text-red-600'}">${m.profit>=0?'+':''}${m.profit}</b>
-    </div>`;
+    return `
+<tr class="border-b hover:bg-slate-50">
+<td class="py-2">${d.toLocaleDateString()}<br><span class="text-[10px] text-slate-400">${d.toLocaleTimeString().slice(0,5)}</span></td>
+<td><b>${m.home} – ${m.away}</b><br><span class="text-green-600 text-[10px] font-black">${m.winner||''}</span></td>
+<td class="text-center">${m.stake}</td>
+<td class="text-center">@${m.odds}</td>
+<td class="text-center">${m.status==='WIN'?'✅':'❌'}</td>
+<td class="text-right font-black ${m.profit>=0?'text-green-600':'text-red-600'}">
+${m.profit>=0?'+':''}${m.profit}
+</td>
+</tr>`;
   }).join('');
 }
 
 function renderLeagues(){
   const map={};
-  HISTORY.forEach(m=>{if(!map[m.sport])map[m.sport]={profit:0,list:[]};map[m.sport].profit+=m.profit;map[m.sport].list.push(m);});
-  document.getElementById('leagues').innerHTML=Object.entries(map).sort((a,b)=>b[1].profit-a[1].profit).map(([k,v])=>`
-    <div onclick="openLeague('${k}')" class="cursor-pointer p-4 rounded-xl bg-slate-50 hover:shadow">
-      <div class="flex justify-between"><span>${iconFor(k)}</span>
-      <b class="${v.profit>=0?'text-green-600':'text-red-600'}">${v.profit.toFixed(2)} PLN</b></div>
-      <p class="text-[10px] font-bold uppercase text-slate-500 mt-1">${k.replaceAll('_',' ')} (${v.list.length})</p>
-    </div>`).join('');
-}
+  HISTORY.forEach(m=>{
+    if(!map[m.sport]) map[m.sport]={p:0,l:[]};
+    map[m.sport].p+=m.profit; map[m.sport].l.push(m);
+  });
 
-function openLeague(key){
-  const list=HISTORY.filter(m=>m.sport===key);
-  document.getElementById('leagueDetails').classList.remove('hidden');
-  document.getElementById('leagueDetails').innerHTML=`<div class="card p-6 mt-6">
-    <h3 class="font-black mb-4">${key.replaceAll('_',' ')}</h3>
-    ${list.map(m=>{
-      const d=new Date(m.time);
-      return `<div class="border-b py-2 text-xs">
-        <div class="flex justify-between">
-          <span>${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)} | <b class="text-green-600">${m.winner||'-'}</b></span>
-          <b class="${m.profit>=0?'text-green-600':'text-red-600'}">${m.profit>=0?'+':''}${m.profit}</b>
-        </div>
-        <div class="flex justify-between text-slate-500">
-          <span>${m.home} – ${m.away}</span>
-          <span>stawka ${m.stake} | @${m.odds}</span>
-        </div>
-      </div>`;
-    }).join('')}
-  </div>`;
+  document.getElementById('leagues').innerHTML=
+  Object.entries(map).sort((a,b)=>b[1].p-a[1].p).map(([l,d],i)=>`
+<div class="border rounded-xl">
+<div onclick="document.getElementById('lg${i}').classList.toggle('hidden')"
+class="cursor-pointer flex justify-between p-4 bg-slate-50 hover:bg-slate-100">
+<b>${iconFor(l)} ${l.replaceAll('_',' ')}</b>
+<b class="${d.p>=0?'text-green-600':'text-red-600'}">${d.p>=0?'+':''}${d.p.toFixed(2)} PLN</b>
+</div>
+<div id="lg${i}" class="hidden px-4">
+${d.l.map(m=>{
+const d2=new Date(m.time);
+return `<div class="py-2 border-b text-xs flex justify-between">
+<div>
+<b>${m.home} – ${m.away}</b><br>
+<span class="text-[10px] text-slate-400">${d2.toLocaleDateString()} ${d2.toLocaleTimeString().slice(0,5)} | stawka ${m.stake} | @${m.odds}</span><br>
+<span class="text-green-600 font-black">${m.winner||''}</span>
+</div>
+<b class="${m.profit>=0?'text-green-600':'text-red-600'}">${m.profit>=0?'+':''}${m.profit}</b>
+</div>`;
+}).join('')}
+</div>
+</div>`).join('');
 }
 
 load();
