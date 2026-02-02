@@ -51,10 +51,13 @@
       <div class="bg-blue-600 text-white px-5 py-2 rounded-2xl text-[10px] font-black italic uppercase tracking-widest">LIVE</div>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
       <div class="stat-card"><span class="stat-label">Zysk 24h</span><span id="p24" class="stat-value">0</span></div>
       <div class="stat-card border-b-4 border-blue-600"><span class="stat-label text-blue-600">Zysk Total</span><span id="pt" class="stat-value text-blue-600">0</span></div>
       <div class="stat-card border-b-4 border-purple-600"><span class="stat-label text-purple-600">Bankroll</span><span id="br" class="stat-value text-purple-600">0</span></div>
+      
+      <div class="stat-card border-b-4 border-emerald-500 bg-emerald-50/20"><span class="stat-label text-emerald-600">Wypłacono</span><span id="withdraw" class="stat-value text-emerald-600">0 PLN</span></div>
+      
       <div class="stat-card"><span class="stat-label">Obrót</span><span id="turn" class="stat-value text-slate-700">0</span></div>
       <div class="stat-card bg-amber-50/50"><span class="stat-label text-amber-600 italic">W grze</span><span id="active-stat" class="stat-value text-amber-700">0</span></div>
       <div class="stat-card"><span class="stat-label text-orange-500">Yield</span><span id="yield" class="stat-value text-orange-600">0%</span></div>
@@ -92,6 +95,7 @@
 let STATS={}, HISTORY=[], UPCOMING=[], chart=null;
 
 function getFlag(sport) {
+    if (!sport) return 'un';
     const s = sport.toLowerCase();
     const flags = {
         'us': ['nhl', 'nba', 'usa'],
@@ -130,9 +134,18 @@ async function load(){
 function renderStats(){
     document.getElementById('br').innerText=STATS.bankroll.toFixed(2) + ' PLN';
     document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2) + ' PLN';
+    
+    // OBLICZANIE SUMY WYPŁAT Z HISTORY.JSON
+    const totalWithdraw = HISTORY
+        .filter(m => (m.home && m.home.toLowerCase().includes('withdraw')) || (m.sport && m.sport.toLowerCase().includes('withdraw')))
+        .reduce((sum, m) => sum + Math.abs(m.profit), 0);
+    
+    document.getElementById('withdraw').innerText = totalWithdraw.toFixed(2) + ' PLN';
+
     const p24 = document.getElementById('p24');
     p24.innerText=(STATS.zysk_24h>=0?'+':'')+STATS.zysk_24h.toFixed(2) + ' PLN';
     p24.className = `stat-value ${STATS.zysk_24h>=0?'text-green-500':'text-red-500'}`;
+    
     document.getElementById('turn').innerText=STATS.obrot.toFixed(0) + ' PLN';
     document.getElementById('yield').innerText=STATS.yield+'%';
     document.getElementById('active-stat').innerText=UPCOMING.length;
@@ -141,8 +154,13 @@ function renderStats(){
 }
 
 function renderMatches() {
-    // ROZLICZENIA - PEŁNA DATA
-    document.getElementById('recent-list').innerHTML = [...HISTORY].reverse().slice(0,10).map(m => {
+    // FILTRUJEMY HISTORIĘ, ABY NIE POKAZYWAĆ "WITHDRAW" JAKO MECZU
+    const filteredHistory = HISTORY.filter(m => 
+        !(m.home && m.home.toLowerCase().includes('withdraw')) && 
+        !(m.sport && m.sport.toLowerCase().includes('withdraw'))
+    );
+
+    document.getElementById('recent-list').innerHTML = [...filteredHistory].reverse().slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
         const dateStr = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
         const timeStr = `${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`;
@@ -163,7 +181,6 @@ function renderMatches() {
         </div>`;
     }).join('');
 
-    // NADCHODZĄCE - PEŁNA DATA
     document.getElementById('upcoming-list').innerHTML = [...UPCOMING].slice(0,10).map(m => {
         const d = new Date(m.time || Date.now());
         const dateStr = `${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`;
@@ -186,7 +203,13 @@ function renderMatches() {
 
 function renderLeagues(){
     const map = {};
-    HISTORY.forEach(m => {
+    // TUTAJ TEŻ FILTRUJEMY, ŻEBY WYPŁATY NIE TWORZYŁY OSOBNEJ LIGI
+    const matchHistory = HISTORY.filter(m => 
+        !(m.home && m.home.toLowerCase().includes('withdraw')) && 
+        !(m.sport && m.sport.toLowerCase().includes('withdraw'))
+    );
+
+    matchHistory.forEach(m => {
         if(!map[m.sport]) map[m.sport] = { p:0, matches:[] };
         map[m.sport].p += m.profit;
         map[m.sport].matches.push(m);
@@ -234,7 +257,6 @@ function renderChart(){
             const d = new Date(HISTORY[i].time);
             const step = Math.ceil(totalPoints / 8); 
             if (i % step === 0 || i === totalPoints - 1) {
-                // TUTAJ KRÓTKI FORMAT DLA WYKRESU
                 return `${d.getDate()}.${d.getMonth()+1}`;
             }
         }
