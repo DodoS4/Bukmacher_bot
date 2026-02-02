@@ -1,253 +1,146 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <title>AI Betting PRO – Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>AI Betting PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        body {
-            background:#f8fafc;
-            font-family: Inter, system-ui, sans-serif;
-        }
-        .stat-card {
-            background:white;
-            border-radius:1.5rem;
-            padding:1.5rem;
-            border:1px solid #e2e8f0;
-        }
-    </style>
+<style>
+body { background:#f8fafc; font-family: Inter, system-ui; }
+.card { background:white; border-radius:1.25rem; border:1px solid #e2e8f0; }
+</style>
 </head>
 
 <body class="p-4 md:p-8">
+<div class="max-w-7xl mx-auto">
 
-<div class="max-w-6xl mx-auto">
-
-<!-- ================= HEADER ================= -->
-<div class="flex justify-between items-center mb-8 bg-white p-5 rounded-3xl border">
-    <div>
-        <h1 class="text-2xl font-black italic uppercase">
-            AI BETTING <span class="text-blue-600">PRO</span>
-        </h1>
-        <p id="sync-time" class="text-[10px] text-slate-400 font-bold uppercase">
-            Sync: oczekiwanie…
-        </p>
-    </div>
-    <div id="refresh-badge"
-         class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-black">
-        REF: 300s
-    </div>
+<!-- HEADER -->
+<div class="card p-5 mb-8 flex justify-between">
+  <div>
+    <h1 class="text-2xl font-black italic">AI BETTING <span class="text-blue-600">PRO</span></h1>
+    <p id="sync" class="text-xs text-slate-400 font-bold">Sync…</p>
+  </div>
 </div>
 
-<!-- ================= GLOBAL STATS ================= -->
-<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
-    <div class="stat-card">
-        <p class="text-xs text-slate-400 font-bold uppercase">Zysk 24h</p>
-        <p id="profit-24h" class="text-xl font-black">0.00</p>
-    </div>
-    <div class="stat-card border-blue-200">
-        <p class="text-xs text-blue-500 font-bold uppercase">Zysk Total</p>
-        <p id="profit-total" class="text-xl font-black text-blue-600">0.00</p>
-    </div>
-    <div class="stat-card border-purple-200">
-        <p class="text-xs text-purple-500 font-bold uppercase">Bankroll</p>
-        <p id="bankroll" class="text-xl font-black text-purple-600">0.00</p>
-    </div>
-    <div class="stat-card">
-        <p class="text-xs text-slate-400 font-bold uppercase">Obrót</p>
-        <p id="turnover" class="text-xl font-black">0.00</p>
-    </div>
-    <div class="stat-card bg-amber-50">
-        <p class="text-xs text-amber-600 font-bold uppercase">W grze</p>
-        <p id="active-bets" class="text-xl font-black">0</p>
-    </div>
-    <div class="stat-card">
-        <p class="text-xs text-orange-500 font-bold uppercase">Yield</p>
-        <p id="yield-val" class="text-xl font-black text-orange-600">0%</p>
-    </div>
-    <div class="stat-card">
-        <p class="text-xs text-slate-400 font-bold uppercase">Kupony</p>
-        <p id="total-bets" class="text-xl font-black">0</p>
-    </div>
+<!-- OSTATNIE MECZE -->
+<div class="card p-6 mb-8">
+  <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Ostatnie mecze</h3>
+  <div id="recent" class="space-y-2"></div>
 </div>
 
-<!-- ================= CHART + HISTORY ================= -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-    <div class="lg:col-span-2 bg-white p-6 rounded-3xl border">
-        <h3 class="text-xs font-black uppercase text-slate-400 mb-4">
-            Wykres progresji
-        </h3>
-        <div class="h-[300px]">
-            <canvas id="mainChart"></canvas>
-        </div>
-    </div>
-
-    <div class="bg-white p-6 rounded-3xl border">
-        <h3 class="text-xs font-black uppercase text-green-500 mb-4">
-            Ostatnie mecze
-        </h3>
-        <div id="history-list" class="space-y-3 max-h-[300px] overflow-y-auto"></div>
-    </div>
+<!-- LIGI -->
+<div class="card p-6 mb-6">
+  <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Wyniki wg lig</h3>
+  <div id="leagues" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
 </div>
 
-<!-- ================= LEAGUE SUMMARY ================= -->
-<div class="mt-10 bg-white p-6 rounded-3xl border">
-    <h3 class="text-xs font-black uppercase text-slate-400 mb-6">
-        Wyniki wg lig
-    </h3>
-    <div id="league-summary" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-</div>
-
-<!-- ================= LEAGUE DETAILS ================= -->
-<div id="league-details" class="mt-6 hidden"></div>
+<!-- SZCZEGÓŁY LIGI -->
+<div id="leagueDetails" class="hidden"></div>
 
 </div>
 
-<!-- ================= SCRIPT ================= -->
 <script>
-let myChart = null;
-let timer = 300;
 let HISTORY = [];
 
-/* ===== IKONY LIG ===== */
-const LEAGUE_ICONS = {
-    icehockey_nhl: "🏒🇺🇸",
-    icehockey_sweden_hockeyallsvenskan: "🏒🇸🇪",
-    soccer_epl: "⚽🏴",
-    soccer_spain_la_liga: "⚽🇪🇸",
-    soccer_poland_ekstraklasa: "⚽🇵🇱"
+const ICONS = {
+  icehockey: "🏒",
+  soccer: "⚽",
+  basketball: "🏀",
+  tennis: "🎾"
 };
 
-/* ===== FETCH ===== */
-async function fetchData() {
-    const t = "?t=" + Date.now();
-    const [s, h] = await Promise.all([
-        fetch("stats.json" + t).then(r => r.json()),
-        fetch("history.json" + t).then(r => r.json())
-    ]);
-
-    HISTORY = h;
-
-    document.getElementById("bankroll").innerText = s.bankroll.toFixed(2) + " PLN";
-    document.getElementById("profit-total").innerText = s.zysk_total.toFixed(2);
-    document.getElementById("profit-24h").innerText = s.zysk_24h.toFixed(2);
-    document.getElementById("turnover").innerText = s.obrot.toFixed(2);
-    document.getElementById("yield-val").innerText = s.yield + "%";
-    document.getElementById("active-bets").innerText = s.upcoming_val;
-    document.getElementById("total-bets").innerText = h.length;
-    document.getElementById("sync-time").innerText = "Sync: " + s.last_sync;
-
-    renderChart(s.history_graph || []);
-    renderHistory(h);
-    renderLeagueSummary(h);
+function iconFor(league){
+  for (let k in ICONS) if (league.includes(k)) return ICONS[k];
+  return "🎯";
 }
 
-/* ===== CHART ===== */
-function renderChart(data) {
-    if (myChart) myChart.destroy();
-    const ctx = document.getElementById("mainChart");
-    myChart = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: data.map((_, i) => i),
-            datasets: [{
-                data,
-                borderColor: "#2563eb",
-                borderWidth: 3,
-                tension: 0.4,
-                pointRadius: 0,
-                fill: true,
-                backgroundColor: "rgba(37,99,235,0.1)"
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: { legend: { display: false } }
-        }
-    });
+async function load(){
+  const t='?'+Date.now();
+  const h=await fetch('history.json'+t).then(r=>r.json());
+  const s=await fetch('stats.json'+t).then(r=>r.json());
+  HISTORY=h;
+  document.getElementById('sync').innerText="Sync: "+(s.last_sync||'now');
+  renderRecent();
+  renderLeagues();
 }
 
-/* ===== HISTORY ===== */
-function renderHistory(items) {
-    const c = document.getElementById("history-list");
-    c.innerHTML = [...items].reverse().slice(0,10).map(m => `
-        <div class="p-3 rounded-xl ${m.profit >= 0 ? 'bg-green-50' : 'bg-red-50'}">
-            <div class="flex justify-between text-xs font-bold">
-                <span>${m.home} - ${m.away}</span>
-                <span class="${m.profit >= 0 ? 'text-green-600' : 'text-red-600'}">
-                    ${m.profit >= 0 ? '+' : ''}${m.profit}
-                </span>
-            </div>
+function renderRecent(){
+  const el=document.getElementById('recent');
+  el.innerHTML=[...HISTORY].reverse().slice(0,10).map(m=>{
+    const d=new Date(m.time);
+    return `
+    <div class="flex justify-between text-xs p-3 rounded-lg ${m.profit>=0?'bg-green-50':'bg-red-50'}">
+      <div>
+        <b>${m.home} – ${m.away}</b><br>
+        <span class="text-slate-400">
+          ${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)}
+          | stawka ${m.stake} | @${m.odds}
+        </span>
+      </div>
+      <b class="${m.profit>=0?'text-green-600':'text-red-600'}">
+        ${m.profit>=0?'+':''}${m.profit}
+      </b>
+    </div>`;
+  }).join('');
+}
+
+function renderLeagues(){
+  const map={};
+  HISTORY.forEach(m=>{
+    if(!map[m.sport]) map[m.sport]={profit:0,list:[]};
+    map[m.sport].profit+=m.profit;
+    map[m.sport].list.push(m);
+  });
+
+  const el=document.getElementById('leagues');
+  el.innerHTML=Object.entries(map)
+    .sort((a,b)=>b[1].profit-a[1].profit)
+    .map(([k,v])=>`
+    <div onclick="openLeague('${k}')"
+      class="cursor-pointer p-4 rounded-xl bg-slate-50 hover:shadow">
+      <div class="flex justify-between">
+        <span>${iconFor(k)}</span>
+        <b class="${v.profit>=0?'text-green-600':'text-red-600'}">
+          ${v.profit.toFixed(2)} PLN
+        </b>
+      </div>
+      <p class="text-[10px] font-bold uppercase text-slate-500 mt-1">
+        ${k.replaceAll('_',' ')} (${v.list.length})
+      </p>
+    </div>
+  `).join('');
+}
+
+function openLeague(key){
+  const list=HISTORY.filter(m=>m.sport===key);
+  document.getElementById('leagueDetails').classList.remove('hidden');
+  document.getElementById('leagueDetails').innerHTML=`
+  <div class="card p-6 mt-6">
+    <h3 class="font-black mb-4">${key.replaceAll('_',' ')}</h3>
+    ${list.map(m=>{
+      const d=new Date(m.time);
+      return `
+      <div class="border-b py-2 text-xs">
+        <div class="flex justify-between">
+          <span>
+            ${d.toLocaleDateString()} ${d.toLocaleTimeString().slice(0,5)}
+            | <b class="text-green-600">${m.winner||'-'}</b>
+          </span>
+          <b class="${m.profit>=0?'text-green-600':'text-red-600'}">
+            ${m.profit>=0?'+':''}${m.profit}
+          </b>
         </div>
-    `).join("");
-}
-
-/* ===== LEAGUES ===== */
-function renderLeagueSummary(history) {
-    const map = {};
-    history.forEach(m => {
-        if (!map[m.sport]) map[m.sport] = {profit:0, list:[]};
-        map[m.sport].profit += m.profit;
-        map[m.sport].list.push(m);
-    });
-
-    const c = document.getElementById("league-summary");
-    c.innerHTML = Object.entries(map).map(([k,v]) => `
-        <div onclick="showLeague('${k}')"
-             class="cursor-pointer p-4 rounded-2xl bg-slate-50 hover:shadow">
-            <div class="flex justify-between">
-                <span>${LEAGUE_ICONS[k] || '🎯'}</span>
-                <span class="${v.profit>=0?'text-green-600':'text-red-600'} font-bold">
-                    ${v.profit.toFixed(2)} PLN
-                </span>
-            </div>
-            <p class="text-[10px] font-bold uppercase text-slate-500 mt-1">
-                ${k.replaceAll('_',' ')}
-            </p>
+        <div class="flex justify-between text-slate-500">
+          <span>${m.home} – ${m.away}</span>
+          <span>stawka ${m.stake} | @${m.odds}</span>
         </div>
-    `).join("");
+      </div>`;
+    }).join('')}
+  </div>`;
 }
 
-/* ===== DRILL DOWN ===== */
-function showLeague(key) {
-    const list = HISTORY.filter(m => m.sport === key);
-    const total = list.reduce((s,m)=>s+m.profit,0);
-    const wins = list.filter(m=>m.profit>0).length;
-
-    document.getElementById("league-details").classList.remove("hidden");
-    document.getElementById("league-details").innerHTML = `
-        <div class="bg-white p-6 rounded-3xl border">
-            <h4 class="font-black mb-2">${key.replaceAll('_',' ')}</h4>
-            <p class="text-xs mb-4">
-                ✅ ${wins} | ❌ ${list.length-wins} |
-                <b class="${total>=0?'text-green-600':'text-red-600'}">
-                    ${total.toFixed(2)} PLN
-                </b>
-            </p>
-            ${list.map(m=>`
-                <div class="flex justify-between text-xs border-b py-1">
-                    <span>${m.home} - ${m.away}</span>
-                    <span class="${m.profit>=0?'text-green-600':'text-red-600'}">
-                        ${m.profit>=0?'+':''}${m.profit}
-                    </span>
-                </div>
-            `).join("")}
-        </div>
-    `;
-}
-
-/* ===== TIMER ===== */
-setInterval(()=>{
-    timer--;
-    document.getElementById("refresh-badge").innerText = "REF: "+timer+"s";
-    if(timer<=0){ fetchData(); timer=300; }
-},1000);
-
-fetchData();
+load();
 </script>
-
 </body>
 </html>
