@@ -26,11 +26,10 @@
     .stat-label { font-weight: 900; font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
     .stat-value { font-weight: 900; font-size: 1.4rem; font-style: italic; }
 
-    /* Usunięto obramowania boczne (ikony statusu) */
     .match-item {
         background: #ffffff; border-radius: 1.25rem; padding: 0.75rem 1.25rem;
         display: flex; justify-content: space-between; align-items: center;
-        border: 1px solid #f1f5f9; /* Delikatne pełne obramowanie zamiast paska */
+        border: 1px solid #f1f5f9;
         box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
 
@@ -78,13 +77,13 @@
         </div>
 
         <div class="card-pro p-6">
-            <h3 class="text-[10px] font-black uppercase text-slate-400 mb-6 italic tracking-widest">Postęp Zysku</h3>
+            <h3 class="text-[10px] font-black uppercase text-slate-400 mb-6 italic tracking-widest">Historia Zysku</h3>
             <div class="h-[300px]"><canvas id="chart"></canvas></div>
         </div>
     </div>
 
     <div class="card-pro">
-        <h3 class="text-[10px] font-black uppercase text-slate-400 mb-8 italic tracking-widest text-center">Analiza wg lig</h3>
+        <h3 class="text-[10px] font-black uppercase text-slate-400 mb-8 italic tracking-widest text-center">Analiza wg lig (Kliknij aby rozwinąć)</h3>
         <div id="leagues-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
     </div>
 </div>
@@ -94,19 +93,24 @@ let STATS={}, HISTORY=[], UPCOMING=[], chart=null;
 
 function getFlag(sport) {
     const s = sport.toLowerCase();
-    if (s.includes('nhl') || s.includes('nba') || s.includes('usa')) return 'us';
-    if (s.includes('spain') || s.includes('la_liga') || s.includes('oviedo')) return 'es';
-    if (s.includes('germany') || s.includes('bundesliga') || s.includes('köln')) return 'de';
-    if (s.includes('italy') || s.includes('serie')) return 'it';
-    if (s.includes('poland') || s.includes('ekstraklasa') || s.includes('poznan')) return 'pl';
-    if (s.includes('france') || s.includes('ligue')) return 'fr';
-    if (s.includes('switzerland') || s.includes('swiss') || s.includes('lugano')) return 'ch';
-    if (s.includes('netherlands') || s.includes('eredivisie') || s.includes('alkmaar')) return 'nl';
-    if (s.includes('portugal') || s.includes('primeira')) return 'pt';
-    if (s.includes('england') || s.includes('epl') || s.includes('premier')) return 'gb';
-    if (s.includes('euroleague') || s.includes('europe')) return 'eu';
-    if (s.includes('sweden') || s.includes('allsvenskan')) return 'se';
-    if (s.includes('greece') || s.includes('super_league')) return 'gr';
+    const flags = {
+        'us': ['nhl', 'nba', 'usa'],
+        'es': ['spain', 'la_liga', 'oviedo'],
+        'de': ['germany', 'bundesliga', 'köln'],
+        'it': ['italy', 'serie'],
+        'pl': ['poland', 'ekstraklasa', 'poznan'],
+        'fr': ['france', 'ligue'],
+        'ch': ['switzerland', 'swiss', 'lugano', 'volos'],
+        'nl': ['netherlands', 'eredivisie', 'alkmaar'],
+        'pt': ['portugal', 'primeira'],
+        'gb': ['england', 'epl', 'premier'],
+        'eu': ['euroleague', 'europe'],
+        'se': ['sweden', 'allsvenskan'],
+        'gr': ['greece', 'super_league']
+    };
+    for (let code in flags) {
+        if (flags[code].some(key => s.includes(key))) return code;
+    }
     return 'un'; 
 }
 
@@ -126,8 +130,9 @@ async function load(){
 function renderStats(){
     document.getElementById('br').innerText=STATS.bankroll.toFixed(2) + ' PLN';
     document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2) + ' PLN';
-    document.getElementById('p24').innerText=(STATS.zysk_24h>=0?'+':'')+STATS.zysk_24h.toFixed(2) + ' PLN';
-    document.getElementById('p24').className = `stat-value ${STATS.zysk_24h>=0?'text-green-500':'text-red-500'}`;
+    const p24 = document.getElementById('p24');
+    p24.innerText=(STATS.zysk_24h>=0?'+':'')+STATS.zysk_24h.toFixed(2) + ' PLN';
+    p24.className = `stat-value ${STATS.zysk_24h>=0?'text-green-500':'text-red-500'}`;
     document.getElementById('turn').innerText=STATS.obrot.toFixed(0) + ' PLN';
     document.getElementById('yield').innerText=STATS.yield+'%';
     document.getElementById('active-stat').innerText=UPCOMING.length;
@@ -160,7 +165,7 @@ function renderMatches() {
             <div class="flex items-center gap-3 overflow-hidden">
                 <img src="https://flagcdn.com/w40/${getFlag(m.sport)}.png" class="flag-icon">
                 <div class="truncate">
-                    <p class="text-[7px] font-bold text-amber-500 uppercase italic">${d.toLocaleDateString()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}</p>
+                    <p class="text-[7px] font-bold text-amber-500 uppercase italic">${d.getDate()}.${d.getMonth()+1} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}</p>
                     <p class="text-[10px] font-black text-slate-700 truncate uppercase tracking-tighter">${m.home} - ${m.away}</p>
                 </div>
             </div>
@@ -186,7 +191,7 @@ function renderLeagues(){
                     <img src="https://flagcdn.com/w40/${getFlag(league)}.png" class="flag-icon">
                     <div>
                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">${league.replaceAll('_',' ')}</p>
-                        <p class="text-[8px] font-bold text-slate-300 italic uppercase">${data.matches.length} rozliczeń</p>
+                        <p class="text-[8px] font-bold text-slate-300 italic uppercase">${data.matches.length} typów</p>
                     </div>
                 </div>
                 <div class="text-right">
@@ -208,27 +213,54 @@ function renderLeagues(){
 }
 
 function toggleLeague(id) {
-    const box = document.getElementById(`league-box-${id}`);
-    box.classList.toggle('open');
+    document.getElementById(`league-box-${id}`).classList.toggle('open');
 }
 
 function renderChart(){
     if(chart) chart.destroy();
+    
+    const totalPoints = STATS.history_graph.length;
+    const labels = STATS.history_graph.map((_, i) => {
+        if (HISTORY[i] && HISTORY[i].time) {
+            const d = new Date(HISTORY[i].time);
+            // Wyświetlaj datę tylko dla co N-tego punktu, żeby nie zapchać osi za pół roku
+            const step = Math.ceil(totalPoints / 8); 
+            if (i % step === 0 || i === totalPoints - 1) {
+                return `${d.getDate()}.${d.getMonth()+1}`;
+            }
+        }
+        return '';
+    });
+
     const ctx = document.getElementById('chart').getContext('2d');
     chart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: STATS.history_graph.map((_,i)=>i),
+            labels: labels,
             datasets: [{
                 data: STATS.history_graph,
                 borderColor: '#2563eb',
-                borderWidth: 3, tension: 0.4, pointRadius: 0, fill: false
+                borderWidth: 2,
+                tension: 0.3,
+                pointRadius: totalPoints > 50 ? 0 : 2,
+                fill: true,
+                backgroundColor: 'rgba(37, 99, 235, 0.05)'
             }]
         },
         options: {
-            responsive: true, maintainAspectRatio: false,
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: { legend: { display: false } },
-            scales: { x: { display: false }, y: { ticks: { font: { weight: 'bold', size: 9, family: 'Inter' }}}}
+            scales: { 
+                x: { 
+                    ticks: { maxRotation: 0, autoSkip: false, font: { size: 9, weight: 'bold' }, color: '#94a3b8' },
+                    grid: { display: false }
+                }, 
+                y: { 
+                    grid: { color: '#f1f5f9' },
+                    ticks: { font: { weight: 'bold', size: 9 }, color: '#94a3b8' }
+                }
+            }
         }
     });
 }
