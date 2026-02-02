@@ -13,7 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -24,35 +27,26 @@ jobs:
         run: |
           pip install requests
 
-      - name: Run Withdrawal
+      - name: Run Withdrawal Script
         env:
           T_TOKEN: ${{ secrets.T_TOKEN }}
           T_CHAT: ${{ secrets.T_CHAT }}
         run: |
-          python - <<EOF
-          import withdraw
+          # Uruchamiamy skrypt i przekazujemy kwotę jako argument
+          python withdraw.py "${{ github.event.inputs.amount }}"
 
-          try:
-              amount = float("${{ github.event.inputs.amount }}")
-          except ValueError:
-              print("❌ Nieprawidłowa kwota")
-              exit(0)
-
-          if amount > 0:
-              withdraw.add_withdraw(amount)
-          else:
-              print("⚠️ Kwota 0 – brak wypłaty")
-          EOF
-
-      - name: Commit and Push
+      - name: Commit and Push changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
 
-          if git diff --quiet history.json; then
-            echo "ℹ️ Brak zmian – pomijam commit"
+          # Dodajemy oba kluczowe pliki do bazy zmian
+          git add history.json stats.json
+
+          # Sprawdzamy czy faktycznie coś się zmieniło przed wysłaniem
+          if git diff --staged --quiet; then
+            echo "ℹ️ Brak zmian w plikach JSON – pomijam aktualizację strony."
           else
-            git add history.json
-            git commit -m "💸 Wypłata: ${{ github.event.inputs.amount }} PLN"
+            git commit -m "💸 Rejestracja wypłaty: ${{ github.event.inputs.amount }} PLN"
             git push
           fi
