@@ -2,7 +2,7 @@ name: Betting Bot Professional Dawid
 
 on:
   schedule:
-    # Uruchamia się co 4 godziny, aby sprawdzić wyniki i nowe mecze
+    # Uruchomienia: 08:00, 12:00, 16:00, 20:00 czasu polskiego
     - cron: '0 7,11,15,19 * * *'
   workflow_dispatch: 
 
@@ -48,25 +48,19 @@ jobs:
           ODDS_KEY_9: "${{ secrets.ODDS_KEY_9 }}"
           ODDS_KEY_10: "${{ secrets.ODDS_KEY_10 }}"
         run: |
-          # 1. Rozliczanie zakończonych meczów
           python settle.py
-          # 2. Szukanie nowych typów NHL i piłki
           python start.py
 
       - name: Commit and Push Changes
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Dodanie kluczowych plików bazy danych
           git add history.json coupons.json key_index.txt stats.json
           
-          # Sprawdzenie czy są zmiany do zapisu
           if ! git diff --cached --quiet; then
-            git commit -m "📊 Sync: Results & Stats [skip ci]"
-            # Wypchnięcie zmian bezpośrednio, bez zbędnych pulli
+            git commit -m "📊 Synchro: Results & Stats [skip ci]"
             git push origin main
             echo "✅ Dane zapisane pomyślnie."
           else
-            echo "ℹ️ Brak nowych danych do zapisu."
+            echo "ℹ️ Brak nowych zmian."
           fi
