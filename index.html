@@ -2,198 +2,252 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <title>AI Betting PRO – Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Betting PRO - Dashboard</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { background-color: #f8fafc; color: #1e293b; font-family: 'Inter', sans-serif; }
-        .stat-card { background: white; border-radius: 1.5rem; padding: 1.5rem; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .chart-container { position: relative; height: 300px; width: 100%; }
+        body {
+            background:#f8fafc;
+            font-family: Inter, system-ui, sans-serif;
+        }
+        .stat-card {
+            background:white;
+            border-radius:1.5rem;
+            padding:1.5rem;
+            border:1px solid #e2e8f0;
+        }
     </style>
 </head>
+
 <body class="p-4 md:p-8">
 
-    <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-8 bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
-            <div>
-                <h1 class="text-2xl font-black italic tracking-tighter uppercase">AI BETTING <span class="text-blue-600">PRO</span></h1>
-                <p id="sync-time" class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Sync: Oczekiwanie...</p>
-            </div>
-            <div id="refresh-badge" class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-black shadow-lg shadow-blue-200 uppercase italic">
-                REF: 300s
-            </div>
-        </div>
+<div class="max-w-6xl mx-auto">
 
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
-            <div class="stat-card">
-                <p class="text-[10px] text-slate-400 font-black uppercase mb-1">Zysk 24h</p>
-                <p id="profit-24h" class="text-xl font-black italic">0.00</p>
-            </div>
-            <div class="stat-card ring-2 ring-blue-500/10 border-blue-100">
-                <p class="text-[10px] text-blue-500 font-black uppercase mb-1">Zysk Total</p>
-                <p id="profit-total" class="text-xl font-black italic text-blue-600">0.00</p>
-            </div>
-            <div class="stat-card ring-2 ring-purple-500/10 border-purple-100">
-                <p class="text-[10px] text-purple-500 font-black uppercase mb-1">Bankroll</p>
-                <p id="bankroll" class="text-xl font-black italic text-purple-600">0.00</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[10px] text-slate-400 font-black uppercase mb-1">Obrót</p>
-                <p id="turnover" class="text-xl font-black italic text-slate-700">0.00</p>
-            </div>
-            <div class="stat-card bg-amber-50 border-amber-100">
-                <p class="text-[10px] text-amber-600 font-black uppercase mb-1 italic">W grze</p>
-                <p id="active-bets" class="text-xl font-black italic text-amber-700">0</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[10px] text-orange-500 font-black uppercase mb-1">Yield</p>
-                <p id="yield" class="text-xl font-black italic text-orange-600">0%</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-[10px] text-slate-400 font-black uppercase mb-1 italic">Kupony</p>
-                <p id="total-bets" class="text-xl font-black italic text-slate-800">0</p>
-            </div>
-        </div>
+<!-- ================= HEADER ================= -->
+<div class="flex justify-between items-center mb-8 bg-white p-5 rounded-3xl border">
+    <div>
+        <h1 class="text-2xl font-black italic uppercase">
+            AI BETTING <span class="text-blue-600">PRO</span>
+        </h1>
+        <p id="sync-time" class="text-[10px] text-slate-400 font-bold uppercase">
+            Sync: oczekiwanie…
+        </p>
+    </div>
+    <div id="refresh-badge"
+         class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-black">
+        REF: 300s
+    </div>
+</div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-2 bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="font-black text-xs text-slate-400 uppercase tracking-widest italic">Wyres Progresji</h3>
-                    <span class="text-[10px] bg-slate-100 text-slate-500 px-3 py-1 rounded-full font-bold">LIVE CHART</span>
-                </div>
-                <div class="chart-container">
-                    <canvas id="mainChart"></canvas>
-                </div>
-            </div>
+<!-- ================= GLOBAL STATS ================= -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
+    <div class="stat-card">
+        <p class="text-xs text-slate-400 font-bold uppercase">Zysk 24h</p>
+        <p id="profit-24h" class="text-xl font-black">0.00</p>
+    </div>
+    <div class="stat-card border-blue-200">
+        <p class="text-xs text-blue-500 font-bold uppercase">Zysk Total</p>
+        <p id="profit-total" class="text-xl font-black text-blue-600">0.00</p>
+    </div>
+    <div class="stat-card border-purple-200">
+        <p class="text-xs text-purple-500 font-bold uppercase">Bankroll</p>
+        <p id="bankroll" class="text-xl font-black text-purple-600">0.00</p>
+    </div>
+    <div class="stat-card">
+        <p class="text-xs text-slate-400 font-bold uppercase">Obrót</p>
+        <p id="turnover" class="text-xl font-black">0.00</p>
+    </div>
+    <div class="stat-card bg-amber-50">
+        <p class="text-xs text-amber-600 font-bold uppercase">W grze</p>
+        <p id="active-bets" class="text-xl font-black">0</p>
+    </div>
+    <div class="stat-card">
+        <p class="text-xs text-orange-500 font-bold uppercase">Yield</p>
+        <p id="yield-val" class="text-xl font-black text-orange-600">0%</p>
+    </div>
+    <div class="stat-card">
+        <p class="text-xs text-slate-400 font-bold uppercase">Kupony</p>
+        <p id="total-bets" class="text-xl font-black">0</p>
+    </div>
+</div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                <h3 class="font-black text-xs text-green-500 uppercase tracking-widest italic mb-6">Ostatnie Wyniki</h3>
-                <div id="history-list" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-                    </div>
-            </div>
+<!-- ================= CHART + HISTORY ================= -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 bg-white p-6 rounded-3xl border">
+        <h3 class="text-xs font-black uppercase text-slate-400 mb-4">
+            Wykres progresji
+        </h3>
+        <div class="h-[300px]">
+            <canvas id="mainChart"></canvas>
         </div>
     </div>
 
-    <script>
-        let myChart = null;
-        let timer = 300;
+    <div class="bg-white p-6 rounded-3xl border">
+        <h3 class="text-xs font-black uppercase text-green-500 mb-4">
+            Ostatnie mecze
+        </h3>
+        <div id="history-list" class="space-y-3 max-h-[300px] overflow-y-auto"></div>
+    </div>
+</div>
 
-        async function fetchData() {
-            try {
-                // Zapobieganie cache przeglądarki
-                const cacheBuster = `?t=${Date.now()}`;
-                const [statsRes, historyRes] = await Promise.all([
-                    fetch('stats.json' + cacheBuster),
-                    fetch('history.json' + cacheBuster)
-                ]);
+<!-- ================= LEAGUE SUMMARY ================= -->
+<div class="mt-10 bg-white p-6 rounded-3xl border">
+    <h3 class="text-xs font-black uppercase text-slate-400 mb-6">
+        Wyniki wg lig
+    </h3>
+    <div id="league-summary" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+</div>
 
-                const s = await statsRes.json();
-                const h = await historyRes.json();
+<!-- ================= LEAGUE DETAILS ================= -->
+<div id="league-details" class="mt-6 hidden"></div>
 
-                // MAPOWANIE DANYCH (Fallback dla różnych wersji bota)
-                const bankroll = s.bankroll ?? 5000;
-                const totalProfit = s.zysk_total ?? s.total_profit ?? 0;
-                const profit24 = s.zysk_24h ?? 0;
-                const turnover = s.obrot ?? s.turnover ?? 0;
-                const yieldVal = s.yield ?? 0;
-                const active = s.upcoming_val ?? s.active_bets ?? 0;
-                const graph = s.history_graph ?? s.wykres ?? [];
+</div>
 
-                // AKTUALIZACJA UI
-                document.getElementById('bankroll').innerText = bankroll.toFixed(2) + ' PLN';
-                document.getElementById('profit-total').innerText = totalProfit.toFixed(2) + ' PLN';
-                document.getElementById('profit-24h').innerText = (profit24 > 0 ? '+' : '') + profit24.toFixed(2) + ' PLN';
-                document.getElementById('profit-24h').className = `text-xl font-black italic ${profit24 >= 0 ? 'text-green-500' : 'text-red-500'}`;
-                document.getElementById('turnover').innerText = turnover.toFixed(2) + ' PLN';
-                document.getElementById('yield').innerText = yieldVal + '%';
-                document.getElementById('active-bets').innerText = active;
-                document.getElementById('total-bets').innerText = h.length;
-                document.getElementById('sync-time').innerText = `Sync: ${s.last_sync || 'Teraz'}`;
+<!-- ================= SCRIPT ================= -->
+<script>
+let myChart = null;
+let timer = 300;
+let HISTORY = [];
 
-                updateChart(graph);
-                updateHistory(h);
-            } catch (err) {
-                console.error("Błąd pobierania danych:", err);
-            }
+/* ===== IKONY LIG ===== */
+const LEAGUE_ICONS = {
+    icehockey_nhl: "🏒🇺🇸",
+    icehockey_sweden_hockeyallsvenskan: "🏒🇸🇪",
+    soccer_epl: "⚽🏴",
+    soccer_spain_la_liga: "⚽🇪🇸",
+    soccer_poland_ekstraklasa: "⚽🇵🇱"
+};
+
+/* ===== FETCH ===== */
+async function fetchData() {
+    const t = "?t=" + Date.now();
+    const [s, h] = await Promise.all([
+        fetch("stats.json" + t).then(r => r.json()),
+        fetch("history.json" + t).then(r => r.json())
+    ]);
+
+    HISTORY = h;
+
+    document.getElementById("bankroll").innerText = s.bankroll.toFixed(2) + " PLN";
+    document.getElementById("profit-total").innerText = s.zysk_total.toFixed(2);
+    document.getElementById("profit-24h").innerText = s.zysk_24h.toFixed(2);
+    document.getElementById("turnover").innerText = s.obrot.toFixed(2);
+    document.getElementById("yield-val").innerText = s.yield + "%";
+    document.getElementById("active-bets").innerText = s.upcoming_val;
+    document.getElementById("total-bets").innerText = h.length;
+    document.getElementById("sync-time").innerText = "Sync: " + s.last_sync;
+
+    renderChart(s.history_graph || []);
+    renderHistory(h);
+    renderLeagueSummary(h);
+}
+
+/* ===== CHART ===== */
+function renderChart(data) {
+    if (myChart) myChart.destroy();
+    const ctx = document.getElementById("mainChart");
+    myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: data.map((_, i) => i),
+            datasets: [{
+                data,
+                borderColor: "#2563eb",
+                borderWidth: 3,
+                tension: 0.4,
+                pointRadius: 0,
+                fill: true,
+                backgroundColor: "rgba(37,99,235,0.1)"
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } }
         }
+    });
+}
 
-        function updateChart(points) {
-            if (myChart) myChart.destroy();
-            const ctx = document.getElementById('mainChart').getContext('2d');
-            
-            // Zapewnienie punktu startowego
-            const data = points.length > 0 ? points : [5000];
-            
-            myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map((_, i) => i),
-                    datasets: [{
-                        data: data,
-                        borderColor: '#2563eb',
-                        borderWidth: 4,
-                        pointRadius: 0,
-                        pointHoverRadius: 6,
-                        tension: 0.4,
-                        fill: true,
-                        backgroundColor: (context) => {
-                            const gradient = context.chart.ctx.createLinearGradient(0, 0, 0, 400);
-                            gradient.addColorStop(0, 'rgba(37, 99, 235, 0.1)');
-                            gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
-                            return gradient;
-                        }
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { display: false },
-                        y: { 
-                            grid: { color: '#f1f5f9' },
-                            ticks: { font: { weight: 'bold', size: 10 } }
-                        }
-                    }
-                }
-            });
-        }
+/* ===== HISTORY ===== */
+function renderHistory(items) {
+    const c = document.getElementById("history-list");
+    c.innerHTML = [...items].reverse().slice(0,10).map(m => `
+        <div class="p-3 rounded-xl ${m.profit >= 0 ? 'bg-green-50' : 'bg-red-50'}">
+            <div class="flex justify-between text-xs font-bold">
+                <span>${m.home} - ${m.away}</span>
+                <span class="${m.profit >= 0 ? 'text-green-600' : 'text-red-600'}">
+                    ${m.profit >= 0 ? '+' : ''}${m.profit}
+                </span>
+            </div>
+        </div>
+    `).join("");
+}
 
-        function updateHistory(items) {
-            const container = document.getElementById('history-list');
-            const recent = [...items].reverse().slice(0, 15);
-            
-            container.innerHTML = recent.map(item => `
-                <div class="p-4 rounded-2xl border-l-4 ${item.status === 'WIN' ? 'border-green-500 bg-green-50/30' : 'border-red-500 bg-red-50/30'}">
-                    <div class="flex justify-between items-start mb-1">
-                        <span class="text-[9px] font-black uppercase text-slate-400 tracking-tighter">${item.sport || 'BET'}</span>
-                        <span class="font-black text-xs ${item.profit >= 0 ? 'text-green-600' : 'text-red-600'}">
-                            ${item.profit >= 0 ? '+' : ''}${item.profit.toFixed(2)}
-                        </span>
-                    </div>
-                    <p class="text-[11px] font-bold text-slate-700 leading-tight">${item.home} - ${item.away}</p>
-                    <div class="flex justify-between mt-2">
-                        <span class="text-[10px] font-bold text-slate-400">@${item.odds}</span>
-                        <span class="text-[10px] font-black text-slate-500">${item.score || ''}</span>
-                    </div>
+/* ===== LEAGUES ===== */
+function renderLeagueSummary(history) {
+    const map = {};
+    history.forEach(m => {
+        if (!map[m.sport]) map[m.sport] = {profit:0, list:[]};
+        map[m.sport].profit += m.profit;
+        map[m.sport].list.push(m);
+    });
+
+    const c = document.getElementById("league-summary");
+    c.innerHTML = Object.entries(map).map(([k,v]) => `
+        <div onclick="showLeague('${k}')"
+             class="cursor-pointer p-4 rounded-2xl bg-slate-50 hover:shadow">
+            <div class="flex justify-between">
+                <span>${LEAGUE_ICONS[k] || '🎯'}</span>
+                <span class="${v.profit>=0?'text-green-600':'text-red-600'} font-bold">
+                    ${v.profit.toFixed(2)} PLN
+                </span>
+            </div>
+            <p class="text-[10px] font-bold uppercase text-slate-500 mt-1">
+                ${k.replaceAll('_',' ')}
+            </p>
+        </div>
+    `).join("");
+}
+
+/* ===== DRILL DOWN ===== */
+function showLeague(key) {
+    const list = HISTORY.filter(m => m.sport === key);
+    const total = list.reduce((s,m)=>s+m.profit,0);
+    const wins = list.filter(m=>m.profit>0).length;
+
+    document.getElementById("league-details").classList.remove("hidden");
+    document.getElementById("league-details").innerHTML = `
+        <div class="bg-white p-6 rounded-3xl border">
+            <h4 class="font-black mb-2">${key.replaceAll('_',' ')}</h4>
+            <p class="text-xs mb-4">
+                ✅ ${wins} | ❌ ${list.length-wins} |
+                <b class="${total>=0?'text-green-600':'text-red-600'}">
+                    ${total.toFixed(2)} PLN
+                </b>
+            </p>
+            ${list.map(m=>`
+                <div class="flex justify-between text-xs border-b py-1">
+                    <span>${m.home} - ${m.away}</span>
+                    <span class="${m.profit>=0?'text-green-600':'text-red-600'}">
+                        ${m.profit>=0?'+':''}${m.profit}
+                    </span>
                 </div>
-            `).join('');
-        }
+            `).join("")}
+        </div>
+    `;
+}
 
-        // Timer i autoodświeżanie
-        setInterval(() => {
-            timer--;
-            document.getElementById('refresh-badge').innerText = `REF: ${timer}s`;
-            if (timer <= 0) {
-                fetchData();
-                timer = 300;
-            }
-        }, 1000);
+/* ===== TIMER ===== */
+setInterval(()=>{
+    timer--;
+    document.getElementById("refresh-badge").innerText = "REF: "+timer+"s";
+    if(timer<=0){ fetchData(); timer=300; }
+},1000);
 
-        fetchData();
-    </script>
+fetchData();
+</script>
+
 </body>
 </html>
