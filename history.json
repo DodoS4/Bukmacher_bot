@@ -3528,18 +3528,5 @@
         "status": "LOSS",
         "score": "1:1"
     },
-    {
-        "id": "wd-1770038661",
-        "home": "🏦 WYPŁATA",
-        "away": "Wypłata pieniędzy",
-        "sport": "FINANCE",
-        "outcome": "WITHDRAW",
-        "odds": 1.0,
-        "stake": 0,
-        "profit": -8131.56,
-        "status": "WITHDRAW",
-        "score": "0:0",
-        "time": "2026-02-02T13:24:21.866901+00:00",
-        "type": "WITHDRAW"
-    }
+    
 ]
