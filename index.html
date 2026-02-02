@@ -7,71 +7,96 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
 <style>
-body { background:#f8fafc; font-family:Inter,system-ui }
-.card { background:white; border-radius:1.5rem; padding:1.5rem; border:1px solid #e5e7eb }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    body { background-color: #f6f8fb; color: #1e293b; font-family: 'Inter', sans-serif; }
+    
+    /* Zaokrąglone karty ze zdjęć */
+    .card-pro { 
+        background: white; 
+        border-radius: 2.5rem; 
+        padding: 2rem; 
+        border: 1px solid #eef2f7;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    }
+    
+    .stat-card { 
+        background: white; 
+        border-radius: 2rem; 
+        padding: 1.5rem; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center;
+        border: 1px solid #f1f5f9;
+    }
+
+    .stat-label { font-weight: 900; font-size: 0.65rem; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .stat-value { font-weight: 900; font-size: 1.5rem; font-style: italic; }
+
+    /* Układ "Ostatnie rozliczenia" ze zdjęcia */
+    .match-row {
+        background: white;
+        border-radius: 1.5rem;
+        padding: 1.25rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid #f8fafc;
+        margin-bottom: 0.75rem;
+    }
+
+    .border-blue-pro { border-bottom: 5px solid #2563eb; }
+    .border-purple-pro { border-bottom: 5px solid #a855f7; }
 </style>
 </head>
 
-<body class="p-6">
-<div class="max-w-7xl mx-auto space-y-8">
+<body class="p-4 md:p-10">
+<div class="max-w-5xl mx-auto space-y-10">
 
-<!-- HEADER -->
-<div class="flex justify-between items-center card">
+<div class="flex justify-between items-center bg-white p-6 rounded-[2rem] border border-slate-100">
   <div>
-    <h1 class="text-2xl font-black italic">AI BETTING <span class="text-blue-600">PRO</span></h1>
-    <p id="sync" class="text-[10px] text-slate-400 font-bold uppercase">Sync...</p>
+    <h1 class="text-3xl font-black italic tracking-tighter uppercase leading-none">AI BETTING <span class="text-blue-600">PRO</span></h1>
+    <p id="sync" class="text-[10px] text-slate-400 font-bold uppercase mt-1 tracking-widest">SYNC: ...</p>
   </div>
-  <div class="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-black">
-    LIVE
+  <div id="refresh-badge" class="bg-blue-600 text-white px-5 py-2 rounded-2xl text-[10px] font-black italic shadow-lg shadow-blue-100 uppercase">
+    REF: 300S
   </div>
 </div>
 
-<!-- STATS -->
 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Zysk 24h</p><p id="p24" class="text-xl font-black">0</p></div>
-  <div class="card ring-2 ring-blue-200"><p class="text-[10px] uppercase text-blue-600 font-black">Zysk total</p><p id="pt" class="text-xl font-black text-blue-600">0</p></div>
-  <div class="card ring-2 ring-purple-200"><p class="text-[10px] uppercase text-purple-600 font-black">Bankroll</p><p id="br" class="text-xl font-black text-purple-600">0</p></div>
-  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Obrót</p><p id="turn" class="text-xl font-black">0</p></div>
-  <div class="card bg-amber-50"><p class="text-[10px] uppercase text-amber-600 font-black">W grze</p><p id="active" class="text-xl font-black text-amber-700">0</p></div>
-  <div class="card"><p class="text-[10px] uppercase text-orange-500 font-black">Yield</p><p id="yield" class="text-xl font-black text-orange-600">0%</p></div>
-  <div class="card"><p class="text-[10px] uppercase text-slate-400 font-black">Kupony</p><p id="count" class="text-xl font-black">0</p></div>
+  <div class="stat-card"><span class="stat-label">Zysk 24h</span><span id="p24" class="stat-value">0</span></div>
+  <div class="stat-card border-blue-pro"><span class="stat-label text-blue-600">Zysk Total</span><span id="pt" class="stat-value text-blue-600">0</span></div>
+  <div class="stat-card border-purple-pro"><span class="stat-label text-purple-600">Bankroll</span><span id="br" class="stat-value text-purple-600">0</span></div>
+  <div class="stat-card"><span class="stat-label">Obrót</span><span id="turn" class="stat-value text-slate-700">0</span></div>
+  <div class="stat-card bg-amber-50/50"><span class="stat-label text-amber-600 italic">W grze</span><span id="active" class="stat-value text-amber-700">0</span></div>
+  <div class="stat-card"><span class="stat-label text-orange-500">Yield</span><span id="yield" class="stat-value text-orange-600">0%</span></div>
+  <div class="stat-card"><span class="stat-label">Kupony</span><span id="count" class="stat-value text-slate-800">0</span></div>
 </div>
 
-<!-- CHART -->
-<div class="card">
-  <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Progresja bankrolla</h3>
-  <div class="h-[300px]">
+<div class="card-pro">
+  <div class="flex justify-between items-center mb-8">
+    <h3 class="text-xs font-black uppercase text-slate-400 italic tracking-widest">Wyres Progresji</h3>
+    <span class="text-[9px] bg-slate-100 text-slate-500 px-3 py-1 rounded-full font-black uppercase">Live Chart</span>
+  </div>
+  <div class="h-[350px]">
     <canvas id="chart"></canvas>
   </div>
 </div>
 
-<!-- RECENT MATCHES -->
-<div class="card">
-<h3 class="text-xs font-black uppercase text-slate-400 mb-4">Ostatnie mecze</h3>
-
-<div class="overflow-x-auto">
-<table class="w-full text-xs">
-<thead>
-<tr class="border-b uppercase text-slate-400 font-black">
-<th class="text-left py-2">Data</th>
-<th class="text-left">Mecz</th>
-<th>Stawka</th>
-<th>Kurs</th>
-<th>Wynik</th>
-<th class="text-right">Profit</th>
-</tr>
-</thead>
-<tbody id="recent"></tbody>
-</table>
-</div>
+<div class="card-pro">
+    <div class="flex items-center gap-3 mb-8 text-green-500">
+        <i class="fa-solid fa-rotate-left"></i>
+        <h3 class="text-xs font-black uppercase italic tracking-widest">Ostatnie 10 rozliczeń</h3>
+    </div>
+    <div id="recent" class="space-y-3"></div>
 </div>
 
-<!-- LEAGUES -->
-<div class="card">
-<h3 class="text-xs font-black uppercase text-slate-400 mb-4">Wyniki wg lig</h3>
-<div id="leagues" class="space-y-3"></div>
+<div class="card-pro">
+    <h3 class="text-xs font-black uppercase text-slate-400 mb-8 italic tracking-widest text-center">Rozliczenia ligi</h3>
+    <div id="leagues" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 </div>
 
 </div>
@@ -79,26 +104,21 @@ body { background:#f8fafc; font-family:Inter,system-ui }
 <script>
 let STATS={}, HISTORY=[], chart=null;
 
-function iconFor(l){
-  if(l.includes('icehockey')) return '🏒';
-  if(l.includes('soccer')) return '⚽';
-  if(l.includes('basketball')) return '🏀';
-  if(l.includes('tennis')) return '🎾';
-  return '🎯';
-}
-
 async function load(){
   const t='?'+Date.now();
-  STATS=await (await fetch('stats.json'+t)).json();
-  HISTORY=await (await fetch('history.json'+t)).json();
-  renderStats(); renderChart(); renderRecent(); renderLeagues();
+  try {
+    STATS=await (await fetch('stats.json'+t)).json();
+    HISTORY=await (await fetch('history.json'+t)).json();
+    renderStats(); renderChart(); renderRecent(); renderLeagues();
+  } catch(e) { console.log("Błąd ładowania danych"); }
 }
 
 function renderStats(){
   document.getElementById('br').innerText=STATS.bankroll.toFixed(2)+' PLN';
   document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2)+' PLN';
-  document.getElementById('p24').innerText=STATS.zysk_24h.toFixed(2)+' PLN';
-  document.getElementById('turn').innerText=STATS.obrot.toFixed(2)+' PLN';
+  document.getElementById('p24').innerText=(STATS.zysk_24h > 0 ? '+' : '') + STATS.zysk_24h.toFixed(2) + ' PLN';
+  document.getElementById('p24').className = `stat-value ${STATS.zysk_24h >= 0 ? 'text-green-500' : 'text-red-500'}`;
+  document.getElementById('turn').innerText=STATS.obrot.toFixed(2) + ' PLN';
   document.getElementById('yield').innerText=STATS.yield+'%';
   document.getElementById('active').innerText=STATS.upcoming_val;
   document.getElementById('count').innerText=HISTORY.length;
@@ -107,64 +127,74 @@ function renderStats(){
 
 function renderChart(){
   if(chart) chart.destroy();
-  chart=new Chart(document.getElementById('chart'),{
+  const ctx = document.getElementById('chart').getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+  gradient.addColorStop(0, 'rgba(37, 99, 235, 0.1)');
+  gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');
+
+  chart=new Chart(ctx,{
     type:'line',
-    data:{labels:STATS.history_graph.map((_,i)=>i),
-      datasets:[{data:STATS.history_graph,borderWidth:3,tension:.4}]},
-    options:{plugins:{legend:{display:false}},responsive:true}
+    data:{
+        labels:STATS.history_graph.map((_,i)=>i),
+        datasets:[{
+            data:STATS.history_graph,
+            borderColor:'#2563eb',
+            borderWidth:4,
+            tension:.4,
+            pointRadius:0,
+            fill: true,
+            backgroundColor: gradient
+        }]
+    },
+    options:{
+        plugins:{legend:{display:false}},
+        responsive:true,
+        maintainAspectRatio: false,
+        scales: { x: { display: false }, y: { grid: { color: '#f1f5f9' }, ticks: { font: { weight: 'bold' }}}}
+    }
   });
 }
 
 function renderRecent(){
   document.getElementById('recent').innerHTML=
-  [...HISTORY].reverse().slice(0,12).map(m=>{
-    const d=new Date(m.time);
+  [...HISTORY].reverse().slice(0,10).map(m=>{
     return `
-<tr class="border-b hover:bg-slate-50">
-<td class="py-2">${d.toLocaleDateString()}<br><span class="text-[10px] text-slate-400">${d.toLocaleTimeString().slice(0,5)}</span></td>
-<td><b>${m.home} – ${m.away}</b><br><span class="text-green-600 text-[10px] font-black">${m.winner||''}</span></td>
-<td class="text-center">${m.stake}</td>
-<td class="text-center">@${m.odds}</td>
-<td class="text-center">${m.status==='WIN'?'✅':'❌'}</td>
-<td class="text-right font-black ${m.profit>=0?'text-green-600':'text-red-600'}">
-${m.profit>=0?'+':''}${m.profit}
-</td>
-</tr>`;
+    <div class="match-row border-l-4 ${m.status==='WIN'?'border-green-500':'border-red-500'}">
+        <div class="flex items-center gap-4">
+            <div class="text-lg">🏒</div>
+            <div>
+                <p class="text-[9px] font-bold text-slate-300 uppercase italic">@${m.odds} | ${m.score||'?-?'}</p>
+                <p class="text-[11px] font-black text-slate-700">${m.home} - ${m.away}</p>
+            </div>
+        </div>
+        <span class="font-black text-sm italic ${m.profit>=0?'text-green-600':'text-red-600'}">
+            ${m.profit>=0?'+':''}${m.profit.toFixed(2)}
+        </span>
+    </div>`;
   }).join('');
 }
 
 function renderLeagues(){
   const map={};
   HISTORY.forEach(m=>{
-    if(!map[m.sport]) map[m.sport]={p:0,l:[]};
-    map[m.sport].p+=m.profit; map[m.sport].l.push(m);
+    if(!map[m.sport]) map[m.sport]={p:0, c:0};
+    map[m.sport].p+=m.profit;
+    map[m.sport].c+=1;
   });
 
   document.getElementById('leagues').innerHTML=
-  Object.entries(map).sort((a,b)=>b[1].p-a[1].p).map(([l,d],i)=>`
-<div class="border rounded-xl">
-<div onclick="document.getElementById('lg${i}').classList.toggle('hidden')"
-class="cursor-pointer flex justify-between p-4 bg-slate-50 hover:bg-slate-100">
-<b>${iconFor(l)} ${l.replaceAll('_',' ')}</b>
-<b class="${d.p>=0?'text-green-600':'text-red-600'}">${d.p>=0?'+':''}${d.p.toFixed(2)} PLN</b>
-</div>
-<div id="lg${i}" class="hidden px-4">
-${d.l.map(m=>{
-const d2=new Date(m.time);
-return `<div class="py-2 border-b text-xs flex justify-between">
-<div>
-<b>${m.home} – ${m.away}</b><br>
-<span class="text-[10px] text-slate-400">${d2.toLocaleDateString()} ${d2.toLocaleTimeString().slice(0,5)} | stawka ${m.stake} | @${m.odds}</span><br>
-<span class="text-green-600 font-black">${m.winner||''}</span>
-</div>
-<b class="${m.profit>=0?'text-green-600':'text-red-600'}">${m.profit>=0?'+':''}${m.profit}</b>
-</div>`;
-}).join('')}
-</div>
-</div>`).join('');
+  Object.entries(map).sort((a,b)=>b[1].p-a[1].p).map(([l,d])=>`
+    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex justify-between items-center">
+        <div>
+            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">${l.replaceAll('_',' ')}</p>
+            <p class="text-[10px] font-bold text-slate-500">${d.c} typów</p>
+        </div>
+        <b class="text-sm font-black italic ${d.p>=0?'text-green-600':'text-red-600'}">${d.p>=0?'+':''}${d.p.toFixed(2)}</b>
+    </div>`).join('');
 }
 
 load();
+setInterval(load, 300000);
 </script>
 </body>
 </html>
