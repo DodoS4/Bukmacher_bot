@@ -34,12 +34,6 @@ COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
 BASE_STAKE = 250
 
-# ================= LICZNIKI LOGÓW =================
-sent_count = 0
-sent_stake_sum = 0.0
-sent_potential_return = 0.0
-scanned_leagues = 0
-
 # ================= POMOCNICZE =================
 def get_secret(name):
     val = os.environ.get(name)
@@ -93,15 +87,24 @@ def get_smart_stake(league_key):
 
     return round(stake, 2), round(threshold, 3)
 
+# ===== FILTR KURSÓW (BEZ ASIAN) =====
+def odd_allowed(sport, market, odd):
+    if "icehockey" in sport:
+        if market == "totals":
+            return 1.45 <= odd <= 2.30
+        if market == "h2h":
+            return 1.8 <= odd <= 3.6
+    if "soccer" in sport:
+        if market in ["totals", "btts"]:
+            return 1.65 <= odd <= 3.5
+        if market == "h2h":
+            return 1.9 <= odd <= 3.4
+    return False
+
 # ================= MAIN =================
 def main():
-    global sent_count, sent_stake_sum, sent_potential_return, scanned_leagues
-
-    print(f"\n🚀 --- START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---")
-
     api_keys = get_all_keys()
     if not api_keys:
-        print("❌ Brak kluczy API")
         return
 
     try:
@@ -123,22 +126,22 @@ def main():
     max_future = now + timedelta(hours=48)
 
     for league, label in SPORTS_CONFIG.items():
-        scanned_leagues += 1
-        print(f"\n🔍 Skanowanie: {label}")
-
         stake, threshold = get_smart_stake(league)
         data = None
 
         for _ in range(len(api_keys)):
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
-            params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h"}
+            params = {
+                "apiKey": api_keys[idx],
+                "regions": "eu",
+                "markets": "h2h,totals,btts"
+            }
             try:
-                resp = requests.get(url, params=params, timeout=15)
-                if resp.status_code == 200:
-                    data = resp.json()
+                r = requests.get(url, params=params, timeout=15)
+                if r.status_code == 200:
+                    data = r.json()
                     break
-                else:
-                    idx = (idx + 1) % len(api_keys)
+                idx = (idx + 1) % len(api_keys)
             except:
                 idx = (idx + 1) % len(api_keys)
 
@@ -156,67 +159,47 @@ def main():
             except:
                 continue
 
-            prices = {}
             for b in event.get("bookmakers", []):
                 for m in b.get("markets", []):
-                    if m["key"] == "h2h":
-                        for o in m["outcomes"]:
-                            prices.setdefault(o["name"], []).append(o["price"])
+                    market = m["key"]
 
-            best_name, best_odd, best_val = None, 0, 0
-            for name, plist in prices.items():
-                if name.lower() == "draw":
-                    continue
-                max_p = max(plist)
-                avg_p = sum(plist) / len(plist)
-                val = max_p / avg_p
-                req = threshold + (0.02 if max_p >= 2.5 else 0)
+                    for o in m.get("outcomes", []):
+                        odd = o["price"]
+                        name = o["name"]
 
-                if 1.8 <= max_p <= 4.5 and val > req and val > best_val:
-                    best_val, best_name, best_odd = val, name, max_p
+                        if not odd_allowed(league, market, odd):
+                            continue
 
-            if best_name:
-                msg = (
-                    f"<b>{label}</b>\n"
-                    f"🏟 {event['home_team']} vs {event['away_team']}\n"
-                    f"⏰ {m_time.astimezone(timezone(timedelta(hours=1))).strftime('%d.%m %H:%M')}\n\n"
-                    f"✅ Typ: <b>{best_name}</b>\n"
-                    f"📈 Kurs: <b>{best_odd}</b>\n"
-                    f"💰 Stawka: <b>{stake} PLN</b>\n"
-                    f"📊 Value: <b>+{round((best_val-1)*100,1)}%</b>"
-                )
+                        msg = (
+                            f"<b>{label}</b>\n"
+                            f"🏟 {event['home_team']} vs {event['away_team']}\n"
+                            f"⏰ {m_time.astimezone(timezone(timedelta(hours=1))).strftime('%d.%m %H:%M')}\n\n"
+                            f"✅ Typ: <b>{name}</b>\n"
+                            f"📈 Kurs: <b>{odd}</b>\n"
+                            f"💰 Stawka: <b>{stake} PLN</b>"
+                        )
 
-                send_telegram(msg)
+                        send_telegram(msg)
 
-                coupons.append({
-                    "id": event["id"],
-                    "home": event["home_team"],
-                    "away": event["away_team"],
-                    "outcome": best_name,
-                    "odds": best_odd,
-                    "stake": stake,
-                    "sport": league,
-                    "time": event["commence_time"]
-                })
+                        coupons.append({
+                            "id": event["id"],
+                            "home": event["home_team"],
+                            "away": event["away_team"],
+                            "outcome": name,
+                            "odds": odd,
+                            "stake": stake,
+                            "sport": league,
+                            "time": event["commence_time"]
+                        })
 
-                sent_ids.add(event["id"])
-                sent_count += 1
-                sent_stake_sum += stake
-                sent_potential_return += stake * best_odd
+                        sent_ids.add(event["id"])
+                        break
 
     with open(KEY_STATE_FILE, "w") as f:
         f.write(str(idx))
 
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(coupons, f, indent=4)
-
-    print("\n📤 WYSYŁANIE TYPÓW")
-    print("━━━━━━━━━━━━━━━━")
-    print(f"📊 Ligi przeskanowane: {scanned_leagues}")
-    print(f"🎯 Nowe typy: {sent_count}")
-    print(f"💰 Łączna stawka: {round(sent_stake_sum,2)} PLN")
-    print(f"📈 Potencjalny zwrot (brutto): {round(sent_potential_return,2)} PLN")
-    print(f"📊 Aktywne kupony: {len(coupons)}")
 
 if __name__ == "__main__":
     main()
