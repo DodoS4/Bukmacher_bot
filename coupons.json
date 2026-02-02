@@ -228,5 +228,285 @@
         "stake": 250.0,
         "sport": "basketball_euroleague",
         "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "19a5443c8ea8f228498d950cb51a24a4",
+        "home": "Detroit Pistons",
+        "away": "Denver Nuggets",
+        "outcome": "Denver Nuggets",
+        "odds": 2.98,
+        "stake": 125.0,
+        "sport": "basketball_nba",
+        "time": "2026-02-04T00:10:00Z"
+    },
+    {
+        "id": "d7298f49662cd0294dd3d64039dd455a",
+        "home": "Lamar Cardinals",
+        "away": "SE Louisiana Lions",
+        "outcome": "SE Louisiana Lions",
+        "odds": 3.23,
+        "stake": 250.0,
+        "sport": "basketball_ncaab",
+        "time": "2026-02-03T00:00:00Z"
+    },
+    {
+        "id": "86fc7d1a36abd3b2a2fbcd8951bc5d36",
+        "home": "Stephen F. Austin Lumberjacks",
+        "away": "McNeese Cowboys",
+        "outcome": "Stephen F. Austin Lumberjacks",
+        "odds": 2.2,
+        "stake": 250.0,
+        "sport": "basketball_ncaab",
+        "time": "2026-02-03T00:30:00Z"
+    },
+    {
+        "id": "b0d197acc52393cc4bb0eb9b8224b909",
+        "home": "Northwestern St Demons",
+        "away": "Nicholls St Colonels",
+        "outcome": "Northwestern St Demons",
+        "odds": 2.0,
+        "stake": 250.0,
+        "sport": "basketball_ncaab",
+        "time": "2026-02-03T00:30:00Z"
+    },
+    {
+        "id": "5e671dfbf08175ff23eb8a6a51568152",
+        "home": "Texas A&M-CC Islanders",
+        "away": "Incarnate Word Cardinals",
+        "outcome": "Incarnate Word Cardinals",
+        "odds": 3.23,
+        "stake": 250.0,
+        "sport": "basketball_ncaab",
+        "time": "2026-02-03T02:00:00Z"
+    },
+    {
+        "id": "2101b9ec9f45cf8916c207e3434a5156",
+        "home": "Cleveland Monsters",
+        "away": "Toronto Marlies",
+        "outcome": "Cleveland Monsters",
+        "odds": 2.4,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-04T00:00:00Z"
+    },
+    {
+        "id": "18d359b0d2b233c7a04895a9f9d10bd2",
+        "home": "Milwaukee Admirals",
+        "away": "Grand Rapids Griffins",
+        "outcome": "Milwaukee Admirals",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-04T01:00:00Z"
+    },
+    {
+        "id": "7425cf0ca9c577fda5a641da18a31dae",
+        "home": "Bakersfield Condors",
+        "away": "Calgary Wranglers",
+        "outcome": "Bakersfield Condors",
+        "odds": 2.05,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-04T02:30:00Z"
+    },
+    {
+        "id": "7851327dd31b211a0fed69df78ddd5eb",
+        "home": "Jukurit",
+        "away": "HIFK",
+        "outcome": "Jukurit",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-03T16:30:00Z"
+    },
+    {
+        "id": "cbe61561e883492ae54e90d38cd32392",
+        "home": "Lukko",
+        "away": "JYP",
+        "outcome": "Lukko",
+        "odds": 2.23,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-03T16:30:00Z"
+    },
+    {
+        "id": "9798629fbc81149b2989cb160bbd80e9",
+        "home": "KalPa",
+        "away": "TPS",
+        "outcome": "TPS",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-03T16:30:00Z"
+    },
+    {
+        "id": "04bbfde6b695e866b44b9e4659baabe2",
+        "home": "RoKi",
+        "away": "IPK",
+        "outcome": "IPK",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-03T16:30:00Z"
+    },
+    {
+        "id": "62f21fdc5de82342b91f8b44ca86e627",
+        "home": "Gimnasia La Plata",
+        "away": "Aldosivi Mar del Plata",
+        "outcome": "Aldosivi Mar del Plata",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_argentina_primera_division",
+        "time": "2026-02-02T20:30:00Z"
+    },
+    {
+        "id": "84c0cba80726b36e51542901418dc6e2",
+        "home": "CA Tigre BA",
+        "away": "Racing Club",
+        "outcome": "CA Tigre BA",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_argentina_primera_division",
+        "time": "2026-02-02T22:45:00Z"
+    },
+    {
+        "id": "c29e0a51aa2619891f335af18ff629a2",
+        "home": "Defensa y Justicia",
+        "away": "Estudiantes",
+        "outcome": "Defensa y Justicia",
+        "odds": 3.57,
+        "stake": 250.0,
+        "sport": "soccer_argentina_primera_division",
+        "time": "2026-02-02T22:45:00Z"
+    },
+    {
+        "id": "9e4dd755e4c3427ba2b9fc4d0d2bb845",
+        "home": "Union Santa Fe",
+        "away": "Gimnasia Mendoza",
+        "outcome": "Union Santa Fe",
+        "odds": 2.04,
+        "stake": 250.0,
+        "sport": "soccer_argentina_primera_division",
+        "time": "2026-02-03T01:00:00Z"
+    },
+    {
+        "id": "e1ab642a7c2458def892e893c46a6541",
+        "home": "Banfield",
+        "away": "Estudiantes de R\u00edo Cuarto",
+        "outcome": "Banfield",
+        "odds": 1.98,
+        "stake": 250.0,
+        "sport": "soccer_argentina_primera_division",
+        "time": "2026-02-03T22:00:00Z"
+    },
+    {
+        "id": "a2e7d0f98b83fd10a5e7384c62c1f969",
+        "home": "Instituto de C\u00f3rdoba",
+        "away": "Lanus",
+        "outcome": "Lanus",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "soccer_argentina_primera_division",
+        "time": "2026-02-04T00:15:00Z"
+    },
+    {
+        "id": "6f457ca42863c2489dc0091e6e2d4571",
+        "home": "Everton de Vi\u00f1a del Mar",
+        "away": "Union La Calera",
+        "outcome": "Union La Calera",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_chile_campeonato",
+        "time": "2026-02-02T21:00:00Z"
+    },
+    {
+        "id": "325af406a75a5f928a5389807b7cbfb1",
+        "home": "O'Higgins",
+        "away": "Deportes Concepci\u00f3n",
+        "outcome": "Deportes Concepci\u00f3n",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_chile_campeonato",
+        "time": "2026-02-02T23:30:00Z"
+    },
+    {
+        "id": "9bedb2ebf6edd703788449e2240c9695",
+        "home": "Hull City",
+        "away": "Watford",
+        "outcome": "Watford",
+        "odds": 3.35,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "ff58cd9650ac97b6c146cb1019e3152b",
+        "home": "Portsmouth",
+        "away": "Ipswich Town",
+        "outcome": "Ipswich Town",
+        "odds": 1.95,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "4f7f97d6f46b439bcfae88f522284e76",
+        "home": "Port Vale",
+        "away": "Wimbledon",
+        "outcome": "Wimbledon",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "soccer_england_league1",
+        "time": "2026-02-03T19:00:00Z"
+    },
+    {
+        "id": "251cefea0571a2a24828f1b21a17254c",
+        "home": "Barnsley",
+        "away": "Northampton Town",
+        "outcome": "Barnsley",
+        "odds": 1.84,
+        "stake": 250.0,
+        "sport": "soccer_england_league1",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "cfecb9ef595631bb971053182b578746",
+        "home": "Burton Albion",
+        "away": "Doncaster Rovers",
+        "outcome": "Doncaster Rovers",
+        "odds": 2.42,
+        "stake": 250.0,
+        "sport": "soccer_england_league1",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "879520a93aafd434e665d0424a7db070",
+        "home": "Bristol Rovers",
+        "away": "Walsall",
+        "outcome": "Walsall",
+        "odds": 2.82,
+        "stake": 250.0,
+        "sport": "soccer_england_league2",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "f316b2ce45f23c8434430a4aa658298e",
+        "home": "Notts County",
+        "away": "Gillingham",
+        "outcome": "Gillingham",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_england_league2",
+        "time": "2026-02-03T19:45:00Z"
+    },
+    {
+        "id": "f2139818baa8506b2a226cc814e79a66",
+        "home": "CD Mirand\u00e9s",
+        "away": "M\u00e1laga",
+        "outcome": "M\u00e1laga",
+        "odds": 2.54,
+        "stake": 250.0,
+        "sport": "soccer_spain_segunda_division",
+        "time": "2026-02-02T19:30:00Z"
     }
 ]
