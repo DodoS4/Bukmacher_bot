@@ -31,7 +31,8 @@ def get_all_api_keys():
 
 def get_match_results(sport, keys):
     for key in keys:
-        url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores/"
+        # POPRAWKA: Usunięto końcowy slash, aby uniknąć błędu 404
+        url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores"
         params = {"apiKey": key, "daysFrom": 3}
         try:
             resp = requests.get(url, params=params, timeout=15)
@@ -43,13 +44,11 @@ def generate_report(history, remaining_count):
     now = datetime.now(timezone.utc)
     base_capital = 5000.0
     
-    # 1. BEZPIECZNE OBLICZENIA (Naprawa błędu 'time')
     total_profit = 0.0
     total_staked = 0.0
     profit_24h = 0.0
     graph_data = [base_capital]
     
-    # Sortujemy historię, by wykres szedł chronologicznie
     history_sorted = sorted(history, key=lambda x: x.get('time', ''))
 
     for m in history_sorted:
@@ -60,7 +59,6 @@ def generate_report(history, remaining_count):
         total_staked += s
         graph_data.append(round(base_capital + total_profit, 2))
         
-        # Bezpieczne sprawdzanie czasu 24h
         t_str = m.get('time')
         if t_str:
             try:
@@ -72,7 +70,6 @@ def generate_report(history, remaining_count):
     bankroll = base_capital + total_profit
     yield_val = (total_profit / total_staked * 100) if total_staked > 0 else 0
     
-    # 2. AKTUALIZACJA STATS.JSON DLA DASHBOARDU
     stats_data = {
         "bankroll": round(bankroll, 2),
         "zysk_total": round(total_profit, 2),
@@ -86,7 +83,6 @@ def generate_report(history, remaining_count):
     with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
         json.dump(stats_data, f, indent=4)
 
-    # 3. RAPORT TELEGRAM
     wins = sum(1 for m in history if m.get('status') == 'WIN')
     total_matches = sum(1 for m in history if m.get('status') in ['WIN', 'LOSS'])
     accuracy = (wins / total_matches * 100) if total_matches > 0 else 0
@@ -120,6 +116,8 @@ def settle_matches():
 
     remaining_coupons, new_settlements = [], 0
     results_map = {}
+    
+    # Automatyczne pobieranie sportów z aktywnych kuponów (już z nowymi nazwami lig)
     sports_to_check = list(set(c['sport'] for c in active_coupons))
 
     for sport in sports_to_check:
@@ -130,7 +128,6 @@ def settle_matches():
     for coupon in active_coupons:
         match_data = results_map.get(coupon['id'])
         if match_data and match_data.get('completed'):
-            # Logika sprawdzania wyniku (uproszczona)
             scores = {s['name']: int(s['score']) for s in match_data.get('scores', [])}
             h_score = scores.get(match_data['home_team'], 0)
             a_score = scores.get(match_data['away_team'], 0)
@@ -150,7 +147,6 @@ def settle_matches():
         with open(HISTORY_FILE, "w", encoding="utf-8") as f: json.dump(history, f, indent=4)
         with open(COUPONS_FILE, "w", encoding="utf-8") as f: json.dump(remaining_coupons, f, indent=4)
     
-    # Zawsze generuj statystyki, by Dashboard był aktualny
     generate_report(history, len(remaining_coupons))
 
 if __name__ == "__main__":
