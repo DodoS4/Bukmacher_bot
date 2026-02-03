@@ -95,12 +95,12 @@ def odd_allowed(sport, market, odd):
         if market == "totals":
             return 1.45 <= odd <= 2.30
         if market == "h2h":
-            return 1.8 <= odd <= 3.6
+            return 1.8 <= odd <= 4.6
     if "soccer" in sport:
         if market in ["totals", "btts"]:
             return 1.65 <= odd <= 3.5
         if market == "h2h":
-            return 1.9 <= odd <= 3.4
+            return 1.9 <= odd <= 4.4
     return False
 
 # ================= MAIN =================
