@@ -3,7 +3,7 @@ import json
 import requests
 from datetime import datetime, timezone, timedelta
 
-# ================= GLOBAL =================
+# ================= CONFIG =================
 BASE_URL = "https://api.the-odds-api.com/v4"
 REGIONS = "eu"
 BOOKMAKERS = "bet365"
@@ -14,7 +14,7 @@ COUPONS_FILE = "coupons.json"
 
 # ================= LIGI (22) =================
 LEAGUES = {
-    # ⚽ PIŁKA
+    # ⚽ FOOTBALL
     "soccer_epl": "🏴 Premier League",
     "soccer_germany_bundesliga": "🇩🇪 Bundesliga",
     "soccer_italy_serie_a": "🇮🇹 Serie A",
@@ -28,7 +28,7 @@ LEAGUES = {
     "soccer_greece_super_league": "🇬🇷 Super League",
     "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
 
-    # 🏒 HOKEJ
+    # 🏒 HOCKEY
     "icehockey_nhl": "🏒 NHL",
     "icehockey_sweden_hockeyallsvenskan": "🇸🇪 HockeyAllsvenskan",
     "icehockey_finland_liiga": "🇫🇮 Liiga",
@@ -53,41 +53,41 @@ def get_api_keys():
 # ================= FETCH =================
 def fetch_odds(sport, keys):
     for key in keys:
-        url = f"{BASE_URL}/sports/{sport}/odds"
-        params = {
-            "apiKey": key,
-            "regions": REGIONS,
-            "markets": MARKETS,
-            "bookmakers": BOOKMAKERS,
-            "oddsFormat": ODDS_FORMAT
-        }
-
         try:
-            r = requests.get(url, params=params, timeout=15)
+            r = requests.get(
+                f"{BASE_URL}/sports/{sport}/odds",
+                params={
+                    "apiKey": key,
+                    "regions": REGIONS,
+                    "markets": MARKETS,
+                    "bookmakers": BOOKMAKERS,
+                    "oddsFormat": ODDS_FORMAT
+                },
+                timeout=15
+            )
 
             if r.status_code == 200:
                 return r.json()
 
-            else:
-                print(f"⚠️ API status {r.status_code} | {sport}")
+            print(f"⚠️ API {sport} status {r.status_code}")
 
         except Exception as e:
             print(f"❌ Request error {sport}: {e}")
 
     return []
 
-# ================= FILTRY =================
-def valid_pick(sport, market, outcome, odds, point=None):
+# ================= FILTER =================
+def is_valid_pick(sport, market, outcome, odds, point):
     if sport.startswith("soccer"):
         if market == "btts" and outcome == "Yes":
             return True
-        if market == "totals" and outcome == "Over" and point in [2.5, 3.5]:
+        if market == "totals" and outcome == "Over" and point in (2.5, 3.5):
             return True
         if market == "h2h" and odds >= 2.20:
             return True
 
     if sport.startswith("icehockey"):
-        if market == "totals" and outcome == "Over" and point in [4.5, 5.5]:
+        if market == "totals" and outcome == "Over" and point in (4.5, 5.5):
             return True
         if market == "h2h" and odds <= 2.40:
             return True
@@ -105,7 +105,7 @@ def main():
 
     coupons = []
     now = datetime.now(timezone.utc)
-    max_time = now + timedelta(hours=48)
+    future = now + timedelta(hours=48)
 
     for league, label in LEAGUES.items():
         print(f"🔍 Liga: {label}")
@@ -115,13 +115,46 @@ def main():
             print("❌ Brak danych")
             continue
 
-        for m in matches:
+        for match in matches:
             try:
-                start = datetime.fromisoformat(m["commence_time"].replace("Z", "+00:00"))
-                if not (now < start < max_time):
+                start = datetime.fromisoformat(
+                    match["commence_time"].replace("Z", "+00:00")
+                )
+                if not (now < start < future):
                     continue
             except:
                 continue
 
-            for b in m.get("bookmakers", []):
-                for market in
+            for bookmaker in match.get("bookmakers", []):
+                for market in bookmaker.get("markets", []):
+                    for outcome in market.get("outcomes", []):
+
+                        if not is_valid_pick(
+                            league,
+                            market["key"],
+                            outcome["name"],
+                            outcome["price"],
+                            outcome.get("point")
+                        ):
+                            continue
+
+                        coupons.append({
+                            "id": match["id"],
+                            "sport": league,
+                            "home": match["home_team"],
+                            "away": match["away_team"],
+                            "market": market["key"],
+                            "outcome": outcome["name"],
+                            "odds": outcome["price"],
+                            "stake": 100,
+                            "time": match["commence_time"]
+                        })
+
+    with open(COUPONS_FILE, "w", encoding="utf-8") as f:
+        json.dump(coupons, f, indent=4, ensure_ascii=False)
+
+    print(f"🏁 KONIEC | Wysłane typy: {len(coupons)}")
+
+# ================= ENTRY =================
+if __name__ == "__main__":
+    main()
