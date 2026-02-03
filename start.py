@@ -34,7 +34,7 @@ COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
 BASE_STAKE = 20
 
-# ================= LICZNIKI LOGÓW =================
+# ================= LICZNIKI DEBUG =================
 sent_count = 0
 sent_stake_sum = 0.0
 sent_potential_return = 0.0
@@ -68,17 +68,20 @@ def get_all_keys():
 
 def get_smart_stake(league_key):
     multiplier = 1.0
-    threshold = 1.035
+    threshold = 1.025  # 🔥 LUŹNIEJSZY THRESHOLD
     profit = 0
 
     if os.path.exists(HISTORY_FILE):
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 history = json.load(f)
-            # Uwzględniamy mecze niearchiwalne dla danej ligi
-            profit = sum(m.get("profit", 0) for m in history if m.get("sport") == league_key and m.get("status") != "ARCHIVED")
-            
-            if profit <= -300: # Dostosowane do bankrolla 1000
+            profit = sum(
+                m.get("profit", 0)
+                for m in history
+                if m.get("sport") == league_key and m.get("status") != "ARCHIVED"
+            )
+
+            if profit <= -300:
                 multiplier, threshold = 0.5, 1.08
             elif profit >= 1000:
                 multiplier = 1.5
@@ -122,7 +125,7 @@ def main():
 
     sent_ids = {c["id"] for c in coupons}
     now = datetime.now(timezone.utc)
-    max_future = now + timedelta(hours=48)
+    max_future = now + timedelta(hours=72)  # 🔥 więcej meczów
 
     for league, label in SPORTS_CONFIG.items():
         scanned_leagues += 1
@@ -131,19 +134,20 @@ def main():
         stake, threshold = get_smart_stake(league)
         data = None
 
-        # Pobieramy oba rynki: Zwycięzca i Under/Over
-        markets_to_fetch = "h2h,totals"
-
         for _ in range(len(api_keys)):
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
-            params = {"apiKey": api_keys[idx], "regions": "eu", "markets": markets_to_fetch, "oddsFormat": "decimal"}
+            params = {
+                "apiKey": api_keys[idx],
+                "regions": "eu",
+                "markets": "h2h,totals",
+                "oddsFormat": "decimal"
+            }
             try:
-                resp = requests.get(url, params=params, timeout=15)
-                if resp.status_code == 200:
-                    data = resp.json()
+                r = requests.get(url, params=params, timeout=15)
+                if r.status_code == 200:
+                    data = r.json()
                     break
-                else:
-                    idx = (idx + 1) % len(api_keys)
+                idx = (idx + 1) % len(api_keys)
             except:
                 idx = (idx + 1) % len(api_keys)
 
@@ -162,49 +166,41 @@ def main():
                 continue
 
             best_bet = None
-            max_value_found = 0
+            best_val = 0
 
-            for bookie in event.get("bookmakers", []):
-                for market in bookie.get("markets", []):
-                    
-                    # --- ANALIZA H2H ---
-                    if market["key"] == "h2h":
-                        prices = {o["name"]: o["price"] for o in market["outcomes"] if o["name"].lower() != "draw"}
-                        for name, price in prices.items():
-                            # Szacowanie value względem średniej rynkowej (uproszczone)
-                            avg_mock = 1.95 
-                            val = price / avg_mock
-                            
-                            if 1.80 <= price <= 4.0 and val > threshold:
-                                if val > max_value_found:
-                                    max_value_found = val
-                                    best_bet = {"name": name, "odd": price, "market": "h2h"}
+            for b in event.get("bookmakers", []):
+                for m in b.get("markets", []):
+                    # H2H
+                    if m["key"] == "h2h":
+                        for o in m["outcomes"]:
+                            if o["name"].lower() == "draw":
+                                continue
+                            price = o["price"]
+                            val = price / 1.95
+                            if 1.75 <= price <= 4.2 and val > threshold and val > best_val:
+                                best_val = val
+                                best_bet = (o["name"], price)
 
-                    # --- ANALIZA TOTALS ---
-                    elif market["key"] == "totals":
-                        for outcome in market["outcomes"]:
-                            line = outcome.get("point")
-                            name = f"{outcome['name']} {line}"
-                            price = outcome["price"]
-                            
-                            avg_mock = 1.92
-                            val = price / avg_mock
-                            
-                            # Tylko standardowe kursy dla totals (nie gramy ekstremów)
-                            if 1.70 <= price <= 2.50 and val > (threshold + 0.01):
-                                if val > max_value_found:
-                                    max_value_found = val
-                                    best_bet = {"name": name, "odd": price, "market": "totals"}
+                    # TOTALS
+                    if m["key"] == "totals":
+                        for o in m["outcomes"]:
+                            price = o["price"]
+                            name = f"{o['name']} {o.get('point')}"
+                            val = price / 1.92
+                            if 1.65 <= price <= 2.6 and val > threshold and val > best_val:
+                                best_val = val
+                                best_bet = (name, price)
 
             if best_bet:
+                name, odd = best_bet
                 msg = (
                     f"<b>{label}</b>\n"
                     f"🏟 {event['home_team']} vs {event['away_team']}\n"
                     f"⏰ {m_time.astimezone(timezone(timedelta(hours=1))).strftime('%d.%m %H:%M')}\n\n"
-                    f"✅ Typ: <b>{best_bet['name']}</b>\n"
-                    f"📈 Kurs: <b>{best_bet['odd']}</b>\n"
+                    f"✅ Typ: <b>{name}</b>\n"
+                    f"📈 Kurs: <b>{odd}</b>\n"
                     f"💰 Stawka: <b>{stake} PLN</b>\n"
-                    f"📊 Value: <b>+{round((max_value_found-1)*100,1)}%</b>"
+                    f"📊 Value: <b>+{round((best_val-1)*100,1)}%</b>"
                 )
 
                 send_telegram(msg)
@@ -213,18 +209,17 @@ def main():
                     "id": event["id"],
                     "home": event["home_team"],
                     "away": event["away_team"],
-                    "outcome": best_bet["name"],
-                    "odds": best_bet["odd"],
+                    "outcome": name,
+                    "odds": odd,
                     "stake": stake,
                     "sport": league,
-                    "market_type": best_bet["market"], # Dodane dla settle.py
                     "time": event["commence_time"]
                 })
 
                 sent_ids.add(event["id"])
                 sent_count += 1
                 sent_stake_sum += stake
-                sent_potential_return += stake * best_bet["odd"]
+                sent_potential_return += stake * odd
 
     with open(KEY_STATE_FILE, "w") as f:
         f.write(str(idx))
@@ -232,11 +227,11 @@ def main():
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(coupons, f, indent=4)
 
-    print("\n📤 PODSUMOWANIE SKANOWANIA")
-    print("━━━━━━━━━━━━━━━━")
+    print("\n📤 PODSUMOWANIE")
+    print("━━━━━━━━━━━━━━")
     print(f"📊 Ligi przeskanowane: {scanned_leagues}")
     print(f"🎯 Nowe typy: {sent_count}")
-    print(f"💰 Łączna stawka: {round(sent_stake_sum,2)} PLN")
+    print(f"💰 Stawka łącznie: {round(sent_stake_sum,2)} PLN")
     print(f"📈 Potencjalny zwrot: {round(sent_potential_return,2)} PLN")
     print(f"📊 Aktywne kupony: {len(coupons)}")
 
