@@ -270,5 +270,55 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-04T00:00:00Z"
+    },
+    {
+        "id": "bf3cec19ae589773c01f75055a7d30cb",
+        "sport": "basketball_euroleague",
+        "home": "Dubai Basketball",
+        "away": "Olympiacos",
+        "outcome": "Dubai Basketball",
+        "odds": 2.84,
+        "stake": 100.0,
+        "created_at": "2026-02-03T15:03:38.458242+00:00"
+    },
+    {
+        "id": "ee7b7d0c5180c17057d2dd17bc8cf0de",
+        "sport": "basketball_euroleague",
+        "home": "Virtus Segafredo Bologna",
+        "away": "ASVEL Lyon Villeurbanne",
+        "outcome": "ASVEL Lyon Villeurbanne",
+        "odds": 4.09,
+        "stake": 100.0,
+        "created_at": "2026-02-03T15:03:38.458271+00:00"
+    },
+    {
+        "id": "dac986a63ad2633b5a590095ce793ddb",
+        "sport": "basketball_euroleague",
+        "home": "ASVEL Lyon Villeurbanne",
+        "away": "Pallacanestro Olimpia Milano",
+        "outcome": "ASVEL Lyon Villeurbanne",
+        "odds": 2.2,
+        "stake": 100.0,
+        "created_at": "2026-02-03T15:03:38.458281+00:00"
+    },
+    {
+        "id": "37d3713cf048bf52c3a92fe8e6eac72a",
+        "sport": "basketball_euroleague",
+        "home": "KK Crvena zvezda",
+        "away": "Maccabi Tel Aviv",
+        "outcome": "Maccabi Tel Aviv",
+        "odds": 2.75,
+        "stake": 100.0,
+        "created_at": "2026-02-03T15:03:38.458288+00:00"
+    },
+    {
+        "id": "add5f7b76aa6faed229fce139fa0825e",
+        "sport": "basketball_euroleague",
+        "home": "Olympiacos",
+        "away": "Virtus Segafredo Bologna",
+        "outcome": "Virtus Segafredo Bologna",
+        "odds": 4.7,
+        "stake": 100.0,
+        "created_at": "2026-02-03T15:03:38.458294+00:00"
     }
 ]
