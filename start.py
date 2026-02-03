@@ -4,19 +4,17 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG (ZAKTUALIZOWANA) =================
+# ================= KONFIGURACJA LIG (ZAKTUALIZOWANA ZGODNIE Z API) =================
 SPORTS_CONFIG = {
+    # --- HOKEJ ---
     "icehockey_nhl": "🏒", 
     "icehockey_sweden_allsvenskan": "🇸🇪",
-    "icehockey_sweden_shl": "🇸🇪",
-    "icehockey_finland_liiga": "🇫🇮",
-    "icehockey_germany_del": "🇩🇪",
-    "icehockey_czech_extraliga": "🇨🇿",
-    "icehockey_switzerland_nla": "🇨🇭",
-    "icehockey_austria_liga": "🇦🇹",
-    "icehockey_denmark_metal_ligaen": "🇩🇰",
-    "icehockey_norway_eliteserien": "🇳🇴",
-    "icehockey_slovakia_extraliga": "🇸🇰",
+    "icehockey_sweden_hockey_league": "🇸🇪",
+    "icehockey_liiga": "🇫🇮",
+    "icehockey_ahl": "🇺🇸",
+    "icehockey_mestis": "🇫🇮",
+    
+    # --- PIŁKA NOŻNA ---
     "soccer_epl": "⚽",
     "soccer_germany_bundesliga": "🇩🇪",
     "soccer_italy_serie_a": "🇮🇹", 
@@ -25,17 +23,17 @@ SPORTS_CONFIG = {
     "soccer_france_ligue_one": "🇫🇷",
     "soccer_portugal_primeira_liga": "🇵🇹",
     "soccer_netherlands_eredivisie": "🇳🇱",
-    "soccer_turkey_super_lig": "🇹🇷",
-    "soccer_belgium_first_division_a": "🇧🇪",
+    "soccer_turkey_super_league": "🇹🇷",
+    "soccer_belgium_first_div": "🇧🇪",
     "soccer_austria_bundesliga": "🇦🇹",
     "soccer_denmark_superliga": "🇩🇰",
     "soccer_greece_super_league": "🇬🇷",
     "soccer_switzerland_superleague": "🇨🇭",
-    "soccer_scotland_premiership": "🏴",
-    "soccer_efl_championship": "🏴",
-    "basketball_euroleague": "🏀",
-    "tennis_atp_australian_open": "🎾",
-    "tennis_wta_australian_open": "🎾"
+    "soccer_spl": "🏴",
+    "soccer_efl_champ": "🏴",
+    "soccer_uefa_champs_league": "🇪🇺",
+    "soccer_uefa_europa_league": "🇪🇺",
+    "soccer_usa_mls": "🇺🇸"
 }
 
 HISTORY_FILE = "history.json"
@@ -111,9 +109,7 @@ def main():
         stake, threshold = get_smart_stake(league)
         data = None
         
-        # Próba pobrania danych (NAPRAWIONY URL I LOGIKA BŁĘDÓW)
         for _ in range(len(api_keys)):
-            # USUNIĘTO końcowy slash, który powodował 404
             url = f"https://api.the-odds-api.com/v4/sports/{league}/odds"
             params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h", "oddsFormat": "decimal"}
             
@@ -126,7 +122,6 @@ def main():
                     print("OK!")
                     break
                 elif resp.status_code == 404:
-                    # 404 często oznacza brak aktywnej oferty na tę ligę
                     print("Brak meczów (404)")
                     break 
                 elif resp.status_code == 429:
@@ -148,7 +143,6 @@ def main():
             if event['id'] in already_sent: continue
             
             try:
-                # Stabilniejszy parsing daty
                 m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
                 if not (now < m_time < max_future):
                     continue 
