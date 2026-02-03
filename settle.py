@@ -13,22 +13,21 @@ def get_secret(name):
     val = os.environ.get(name) or os.getenv(name)
     return str(val).strip() if val else None
 
+
 def send_telegram_results(message):
     token = get_secret("T_TOKEN")
     chat = get_secret("T_CHAT_RESULTS") or get_secret("T_CHAT")
     if not token or not chat:
         return
-
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {
-        "chat_id": chat,
-        "text": message,
-        "parse_mode": "HTML"
-    }
     try:
-        requests.post(url, json=payload, timeout=15)
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat, "text": message, "parse_mode": "HTML"},
+            timeout=15
+        )
     except:
         pass
+
 
 def get_all_api_keys():
     keys = []
@@ -39,22 +38,22 @@ def get_all_api_keys():
             keys.append(val)
     return keys
 
+
 def get_match_results(sport, keys):
     for key in keys:
-        url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores/"
-        params = {
-            "apiKey": key,
-            "daysFrom": 5
-        }
         try:
-            r = requests.get(url, params=params, timeout=15)
+            r = requests.get(
+                f"https://api.the-odds-api.com/v4/sports/{sport}/scores/",
+                params={"apiKey": key, "daysFrom": 5},
+                timeout=15
+            )
             if r.status_code == 200:
                 return r.json()
         except:
             continue
     return None
 
-# ================= RAPORT / DASHBOARD =================
+# ================= DASHBOARD =================
 def generate_report(history, remaining_count):
     now = datetime.now(timezone.utc)
     base_capital = 5000.0
@@ -74,14 +73,12 @@ def generate_report(history, remaining_count):
         total_staked += stake
         graph_data.append(round(base_capital + total_profit, 2))
 
-        t = m.get("time")
-        if t:
-            try:
-                mt = datetime.fromisoformat(t.replace("Z", "+00:00"))
-                if now - mt < timedelta(hours=24):
-                    profit_24h += profit
-            except:
-                pass
+        try:
+            mt = datetime.fromisoformat(m["time"].replace("Z", "+00:00"))
+            if now - mt < timedelta(hours=24):
+                profit_24h += profit
+        except:
+            pass
 
     bankroll = base_capital + total_profit
     yield_val = (total_profit / total_staked * 100) if total_staked > 0 else 0
@@ -103,113 +100,3 @@ def generate_report(history, remaining_count):
     wins = sum(1 for m in history if m.get("status") == "WIN")
     total = sum(1 for m in history if m.get("status") in ["WIN", "LOSS"])
     accuracy = (wins / total * 100) if total > 0 else 0
-
-    msg = [
-        "📊 <b>DASHBOARD UPDATED</b>",
-        f"🏦 Bankroll: <b>{round(bankroll,2)} PLN</b>",
-        f"💰 Zysk Total: {round(total_profit,2)} PLN",
-        f"📅 Ostatnie 24h: {round(profit_24h,2)} PLN",
-        f"📈 Yield: {round(yield_val,2)}% | Celność: {round(accuracy,1)}%",
-        "━━━━━━━━━━━━━━━",
-        "📝 <b>OSTATNIE:</b>"
-    ]
-
-    for m in reversed(history[-5:]):
-        icon = "✅" if m.get("status") == "WIN" else "❌" if m.get("status") == "LOSS" else "⚪"
-        msg.append(f"{icon} {m.get('home')} - {m.get('away')} ({m.get('profit')} PLN)")
-
-    send_telegram_results("\n".join(msg))
-
-# ================= SETTLEMENT =================
-def settle_matches():
-    api_keys = get_all_api_keys()
-    if not api_keys or not os.path.exists(COUPONS_FILE):
-        return
-
-    with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-        active_coupons = json.load(f)
-
-    if not active_coupons:
-        return
-
-    history = []
-    if os.path.exists(HISTORY_FILE):
-        try:
-            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                history = json.load(f)
-        except:
-            history = []
-
-    # 🔒 BLOKADA DUPLIKATÓW
-    history_ids = {h.get("id") for h in history if h.get("id")}
-
-    results_map = {}
-    remaining = []
-    new_settlements = 0
-
-    sports = list(set(c["sport"] for c in active_coupons))
-
-    for sport in sports:
-        res = get_match_results(sport, api_keys)
-        if res:
-            for m in res:
-                if m.get("id"):
-                    results_map[m["id"]] = m
-
-    for c in active_coupons:
-        cid = c.get("id")
-
-        if cid in history_ids:
-            continue
-
-        match = results_map.get(cid)
-
-        if match and match.get("completed"):
-            scores = {s["name"]: int(s.get("score", 0)) for s in match.get("scores", [])}
-
-            home = match.get("home_team")
-            away = match.get("away_team")
-            hs = scores.get(home, 0)
-            as_ = scores.get(away, 0)
-
-            status = "LOSS"
-            profit = -float(c.get("stake", 0))
-
-            if hs == as_:
-                status = "VOID"
-                profit = 0.0
-            else:
-                if c.get("outcome") == home and hs > as_:
-                    status = "WIN"
-                elif c.get("outcome") == away and as_ > hs:
-                    status = "WIN"
-
-                if status == "WIN":
-                    stake = float(c.get("stake", 0))
-                    odds = float(c.get("odds", 0))
-                    profit = round(stake * odds - stake, 2)
-
-            history.append({
-                **c,
-                "profit": round(profit, 2),
-                "status": status,
-                "score": f"{hs}:{as_}"
-            })
-
-            history_ids.add(cid)
-            new_settlements += 1
-        else:
-            remaining.append(c)
-
-    if new_settlements > 0:
-        with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-            json.dump(history, f, indent=4)
-
-        with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-            json.dump(remaining, f, indent=4)
-
-    generate_report(history, len(remaining))
-
-# ================= ENTRY =================
-if __name__ == "__main__":
-    settle_matches()
