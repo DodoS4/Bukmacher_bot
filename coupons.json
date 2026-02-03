@@ -97,5 +97,15 @@
         "sport": "soccer_poland_ekstraklasa",
         "market_type": "h2h",
         "time": "2026-02-03T19:30:00Z"
+    },
+    {
+        "id": "7d7620434ab5bc26c7dc3fd761204215",
+        "home": "Asteras Tripolis",
+        "away": "Olympiakos Piraeus",
+        "outcome": "Over 2.5",
+        "odds": 2.0,
+        "stake": 20.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-04T16:30:00Z"
     }
 ]
