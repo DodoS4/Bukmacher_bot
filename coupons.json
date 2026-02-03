@@ -318,5 +318,75 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-02-04T19:45:00Z"
+    },
+    {
+        "id": "804746bf43fd2ceb09baf31df4a2c4d7",
+        "home": "Bridgeport Islanders",
+        "away": "Providence Bruins",
+        "outcome": "Bridgeport Islanders",
+        "odds": 3.26,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-05T00:00:00Z"
+    },
+    {
+        "id": "bd045d6c4fc1866e3fab93ec094d0df7",
+        "home": "Laval Rocket",
+        "away": "Utica Comets",
+        "outcome": "Utica Comets",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-05T00:00:00Z"
+    },
+    {
+        "id": "5819b2249578655f527f53cfdaab114f",
+        "home": "Syracuse Crunch",
+        "away": "Springfield Thunderbirds",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-05T00:00:00Z"
+    },
+    {
+        "id": "cb5dcb03745c6d62d285662892789802",
+        "home": "Rochester Americans",
+        "away": "Belleville Senators",
+        "outcome": "Belleville Senators",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-05T00:05:00Z"
+    },
+    {
+        "id": "5dbbbd76022c3770c1bb06a460fc2d4f",
+        "home": "W-B/Scranton Penguins",
+        "away": "Hershey Bears",
+        "outcome": "W-B/Scranton Penguins",
+        "odds": 2.12,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-05T00:05:00Z"
+    },
+    {
+        "id": "eb1e26e707a82fe6c2cfcdd24dbe87dc",
+        "home": "San Jose Barracuda",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "Coachella Valley Firebirds",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-05T03:00:00Z"
+    },
+    {
+        "id": "fa925b5930cfcd94fcaeb54025f9ab94",
+        "home": "San Diego Gulls",
+        "away": "Henderson Silver Knights",
+        "outcome": "Henderson Silver Knights",
+        "odds": 2.84,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-05T03:00:00Z"
     }
 ]
