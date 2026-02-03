@@ -1,0 +1,28 @@
+name: Fix Old Coupons
+on:
+  workflow_dispatch: # Pozwala na ręczne uruchomienie
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Run fix script
+        run: python fix_coupons.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add coupons.json
+          git commit -m "Fix: Updated old league names in coupons.json" || echo "No changes to commit"
+          git push
