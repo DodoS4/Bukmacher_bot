@@ -4,11 +4,17 @@ import requests
 from datetime import datetime, timezone, timedelta
 
 # ================= KONFIGURACJA =================
+DEBUG = True
+
 COUPONS_FILE = "coupons.json"
 HISTORY_FILE = "history.json"
 STATS_JSON_FILE = "stats.json"
 
 # ================= POMOCNICZE =================
+def debug(msg):
+    if DEBUG:
+        print(msg)
+
 def get_secret(name):
     val = os.environ.get(name) or os.getenv(name)
     return str(val).strip() if val else None
@@ -16,19 +22,23 @@ def get_secret(name):
 def send_telegram_results(message):
     token = get_secret("T_TOKEN")
     chat = get_secret("T_CHAT_RESULTS") or get_secret("T_CHAT")
+
     if not token or not chat:
+        debug("❌ Brak Telegram token / chat_id")
         return
 
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {
-        "chat_id": chat,
-        "text": message,
-        "parse_mode": "HTML"
-    }
     try:
-        requests.post(url, json=payload, timeout=15)
-    except:
-        pass
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={
+                "chat_id": chat,
+                "text": message,
+                "parse_mode": "HTML"
+            },
+            timeout=15
+        )
+    except Exception as e:
+        debug(f"❌ Telegram error: {e}")
 
 def get_all_api_keys():
     keys = []
@@ -41,115 +51,52 @@ def get_all_api_keys():
 
 def get_match_results(sport, keys):
     for key in keys:
-        url = f"https://api.the-odds-api.com/v4/sports/{sport}/scores/"
-        params = {
-            "apiKey": key,
-            "daysFrom": 5
-        }
         try:
-            r = requests.get(url, params=params, timeout=15)
+            r = requests.get(
+                f"https://api.the-odds-api.com/v4/sports/{sport}/scores/",
+                params={"apiKey": key, "daysFrom": 5},
+                timeout=15
+            )
             if r.status_code == 200:
                 return r.json()
-        except:
-            continue
+        except Exception as e:
+            debug(f"❌ Scores API error: {e}")
     return None
-
-# ================= RAPORT / DASHBOARD =================
-def generate_report(history, remaining_count):
-    now = datetime.now(timezone.utc)
-    base_capital = 5000.0
-
-    total_profit = 0.0
-    total_staked = 0.0
-    profit_24h = 0.0
-    graph_data = [base_capital]
-
-    history_sorted = sorted(history, key=lambda x: x.get("time", ""))
-
-    for m in history_sorted:
-        profit = float(m.get("profit", 0))
-        stake = float(m.get("stake", 0))
-
-        total_profit += profit
-        total_staked += stake
-        graph_data.append(round(base_capital + total_profit, 2))
-
-        t = m.get("time")
-        if t:
-            try:
-                mt = datetime.fromisoformat(t.replace("Z", "+00:00"))
-                if now - mt < timedelta(hours=24):
-                    profit_24h += profit
-            except:
-                pass
-
-    bankroll = base_capital + total_profit
-    yield_val = (total_profit / total_staked * 100) if total_staked > 0 else 0
-
-    stats = {
-        "bankroll": round(bankroll, 2),
-        "zysk_total": round(total_profit, 2),
-        "zysk_24h": round(profit_24h, 2),
-        "obrot": round(total_staked, 2),
-        "yield": round(yield_val, 2),
-        "last_sync": now.strftime("%d.%m.%Y %H:%M"),
-        "upcoming_val": remaining_count,
-        "history_graph": graph_data[-100:]
-    }
-
-    with open(STATS_JSON_FILE, "w", encoding="utf-8") as f:
-        json.dump(stats, f, indent=4)
-
-    wins = sum(1 for m in history if m.get("status") == "WIN")
-    total = sum(1 for m in history if m.get("status") in ["WIN", "LOSS"])
-    accuracy = (wins / total * 100) if total > 0 else 0
-
-    msg = [
-        "📊 <b>DASHBOARD UPDATED</b>",
-        f"🏦 Bankroll: <b>{round(bankroll,2)} PLN</b>",
-        f"💰 Zysk Total: {round(total_profit,2)} PLN",
-        f"📅 Ostatnie 24h: {round(profit_24h,2)} PLN",
-        f"📈 Yield: {round(yield_val,2)}% | Celność: {round(accuracy,1)}%",
-        "━━━━━━━━━━━━━━━",
-        "📝 <b>OSTATNIE:</b>"
-    ]
-
-    for m in reversed(history[-5:]):
-        icon = "✅" if m.get("status") == "WIN" else "❌" if m.get("status") == "LOSS" else "⚪"
-        msg.append(f"{icon} {m.get('home')} - {m.get('away')} ({m.get('profit')} PLN)")
-
-    send_telegram_results("\n".join(msg))
 
 # ================= SETTLEMENT =================
 def settle_matches():
     api_keys = get_all_api_keys()
-    if not api_keys or not os.path.exists(COUPONS_FILE):
+    if not api_keys:
+        debug("❌ Brak kluczy API")
         return
 
-    with open(COUPONS_FILE, "r", encoding="utf-8") as f:
-        active_coupons = json.load(f)
+    if not os.path.exists(COUPONS_FILE):
+        debug("📭 Brak aktywnych kuponów")
+        return
 
+    active_coupons = json.load(open(COUPONS_FILE, "r", encoding="utf-8"))
     if not active_coupons:
+        debug("📭 Brak aktywnych kuponów")
         return
 
     history = []
     if os.path.exists(HISTORY_FILE):
-        try:
-            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                history = json.load(f)
-        except:
-            history = []
+        history = json.load(open(HISTORY_FILE, "r", encoding="utf-8"))
 
-    # 🔒 BLOKADA DUPLIKATÓW
-    history_ids = {h.get("id") for h in history if h.get("id")}
+    # 🔒 BLOKADA DUPLIKATÓW PO (ID + MARKET + OUTCOME)
+    history_keys = {
+        (h.get("id"), h.get("market"), h.get("outcome"))
+        for h in history
+    }
 
     results_map = {}
     remaining = []
     new_settlements = 0
 
-    sports = list(set(c["sport"] for c in active_coupons))
+    sports = list({c["sport"] for c in active_coupons})
 
     for sport in sports:
+        debug(f"📥 Pobieranie wyników: {sport}")
         res = get_match_results(sport, api_keys)
         if res:
             for m in res:
@@ -158,57 +105,112 @@ def settle_matches():
 
     for c in active_coupons:
         cid = c.get("id")
+        market = c.get("market")
+        outcome = c.get("outcome")
 
-        if cid in history_ids:
+        settle_key = (cid, market, outcome)
+
+        if settle_key in history_keys:
+            debug(f"🔁 Już rozliczony: {settle_key}")
             continue
 
         match = results_map.get(cid)
 
-        if match and match.get("completed"):
-            scores = {s["name"]: int(s.get("score", 0)) for s in match.get("scores", [])}
+        if not match:
+            debug(f"⏳ Brak wyniku meczu: {cid}")
+            remaining.append(c)
+            continue
 
-            home = match.get("home_team")
-            away = match.get("away_team")
-            hs = scores.get(home, 0)
-            as_ = scores.get(away, 0)
+        if not match.get("completed"):
+            debug(f"⏳ Mecz nieukończony: {cid}")
+            remaining.append(c)
+            continue
 
-            status = "LOSS"
-            profit = -float(c.get("stake", 0))
+        scores = {
+            s["name"]: int(s.get("score", 0))
+            for s in (match.get("scores") or [])
+        }
 
+        home = match.get("home_team")
+        away = match.get("away_team")
+        hs = scores.get(home, 0)
+        as_ = scores.get(away, 0)
+        total_goals = hs + as_
+
+        stake = float(c.get("stake", 0))
+        odds = float(c.get("odds", 0))
+
+        status = "LOSS"
+        profit = -stake
+        reason = "przegrany typ"
+
+        # ===== H2H =====
+        if market == "h2h":
             if hs == as_:
                 status = "VOID"
                 profit = 0.0
+                reason = "remis (VOID)"
+            elif outcome == home and hs > as_:
+                status = "WIN"
+                reason = "home win"
+            elif outcome == away and as_ > hs:
+                status = "WIN"
+                reason = "away win"
+
+        # ===== TOTALS =====
+        elif market == "totals":
+            try:
+                direction, line = outcome.split()
+                line = float(line)
+
+                if direction == "Over" and total_goals > line:
+                    status = "WIN"
+                    reason = f"over {line}"
+                elif direction == "Under" and total_goals < line:
+                    status = "WIN"
+                    reason = f"under {line}"
+                else:
+                    reason = f"total {total_goals} vs {line}"
+            except:
+                reason = "błędny format totals"
+
+        # ===== BTTS =====
+        elif market == "btts":
+            both = hs > 0 and as_ > 0
+            if outcome == "Yes" and both:
+                status = "WIN"
+                reason = "BTTS yes"
+            elif outcome == "No" and not both:
+                status = "WIN"
+                reason = "BTTS no"
             else:
-                if c.get("outcome") == home and hs > as_:
-                    status = "WIN"
-                elif c.get("outcome") == away and as_ > hs:
-                    status = "WIN"
+                reason = f"BTTS mismatch ({hs}:{as_})"
 
-                if status == "WIN":
-                    stake = float(c.get("stake", 0))
-                    odds = float(c.get("odds", 0))
-                    profit = round(stake * odds - stake, 2)
+        if status == "WIN":
+            profit = round(stake * odds - stake, 2)
 
-            history.append({
-                **c,
-                "profit": round(profit, 2),
-                "status": status,
-                "score": f"{hs}:{as_}"
-            })
+        debug(
+            f"🧾 {home} vs {away} | {market} | {outcome} "
+            f"=> {status} ({reason})"
+        )
 
-            history_ids.add(cid)
-            new_settlements += 1
-        else:
-            remaining.append(c)
+        history.append({
+            **c,
+            "status": status,
+            "profit": round(profit, 2),
+            "score": f"{hs}:{as_}"
+        })
+
+        history_keys.add(settle_key)
+        new_settlements += 1
 
     if new_settlements > 0:
-        with open(HISTORY_FILE, "w", encoding="utf-8") as f:
-            json.dump(history, f, indent=4)
+        json.dump(history, open(HISTORY_FILE, "w", encoding="utf-8"), indent=4)
+        json.dump(remaining, open(COUPONS_FILE, "w", encoding="utf-8"), indent=4)
 
-        with open(COUPONS_FILE, "w", encoding="utf-8") as f:
-            json.dump(remaining, f, indent=4)
-
-    generate_report(history, len(remaining))
+        debug(f"✅ Rozliczono: {new_settlements}")
+    else:
+        debug("ℹ️ Brak nowych rozliczeń")
 
 # ================= ENTRY =================
 if __name__ == "__main__":
