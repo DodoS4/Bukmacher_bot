@@ -238,5 +238,55 @@
         "stake": 250.0,
         "sport": "basketball_euroleague",
         "time": "2026-02-04T19:30:00Z"
+    },
+    {
+        "id": "cbc675b156f5d844eecfbcee66124b94",
+        "home": "AIK",
+        "away": "Nybro Vikings IF",
+        "outcome": "Nybro Vikings IF",
+        "odds": 3.4,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-04T18:00:00Z"
+    },
+    {
+        "id": "00322107f361bda37e07d14c14c34d24",
+        "home": "Mora IK",
+        "away": "Almtuna IS",
+        "outcome": "Almtuna IS",
+        "odds": 4.0,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-04T18:00:00Z"
+    },
+    {
+        "id": "cd88997b744b43f84f011c5abcd3a40f",
+        "home": "\u00d6stersunds IK",
+        "away": "IF Bj\u00f6rkl\u00f6ven",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 4.2,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-04T18:00:00Z"
+    },
+    {
+        "id": "f33fc0a9e190e9184e966f755b0d771d",
+        "home": "IK Oskarshamn",
+        "away": "Kalmar HC",
+        "outcome": "IK Oskarshamn",
+        "odds": 3.5,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-04T18:00:00Z"
+    },
+    {
+        "id": "cd29d246a59914a8cd9e0cdfe4c86c37",
+        "home": "S\u00f6dert\u00e4lje SK",
+        "away": "Vimmerby HC",
+        "outcome": "Vimmerby HC",
+        "odds": 4.2,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-04T18:00:00Z"
     }
 ]
