@@ -15,7 +15,6 @@ SPORTS_CONFIG = {
     "icehockey_sweden_hockeyallsvenskan": "🇸🇪 HockeyAllsvenskan",
 }
 
-HISTORY_FILE = "history.json"
 COUPONS_FILE = "coupons.json"
 KEY_STATE_FILE = "key_index.txt"
 
@@ -119,7 +118,7 @@ def main():
     idx %= len(api_keys)
 
     coupons = json.load(open(COUPONS_FILE)) if os.path.exists(COUPONS_FILE) else []
-    sent_ids = {c["bet_id"] for c in coupons}
+    sent_ids = {c["bet_id"] for c in coupons if c.get("bet_id")}
 
     now = datetime.now(timezone.utc)
     max_future = now + timedelta(hours=48)
@@ -141,5 +140,83 @@ def main():
                     },
                     timeout=15
                 )
+
+                # zapis aktualnego klucza
                 open(KEY_STATE_FILE, "w").write(str(idx))
-                if r.st
+
+                if r.status_code == 200:
+                    data = r.json()
+                    break
+                else:
+                    print(f"⚠️ API status {r.status_code}, zmiana klucza")
+
+            except Exception as e:
+                print("⚠️ API error:", e)
+
+            idx = (idx + 1) % len(api_keys)
+
+        if not data:
+            print("❌ Brak danych\n")
+            continue
+
+        for event in data:
+            if tips_sent >= MAX_TIPS_PER_RUN:
+                break
+
+            try:
+                m_time = datetime.fromisoformat(event["commence_time"].replace("Z", "+00:00"))
+                if not (now < m_time < max_future):
+                    continue
+            except:
+                continue
+
+            for b in event.get("bookmakers", []):
+                for m in b.get("markets", []):
+                    for o in m.get("outcomes", []):
+
+                        bet_id = f"{event['id']}|{m['key']}|{o['name']}"
+                        if bet_id in sent_ids:
+                            continue
+
+                        if not odd_allowed(league, m["key"], o):
+                            continue
+
+                        tips_sent += 1
+                        sent_ids.add(bet_id)
+
+                        msg = (
+                            f"<b>{label}</b>\n"
+                            f"{event['home_team']} vs {event['away_team']}\n"
+                            f"🎯 <b>{m['key'].upper()}</b>\n"
+                            f"✅ <b>{o['name']}</b>\n"
+                            f"📈 Kurs: <b>{o['price']}</b>\n"
+                            f"💰 Stawka: <b>{BASE_STAKE} PLN</b>"
+                        )
+
+                        print("✅ WYSŁANO:", bet_id)
+                        send_telegram(msg)
+
+                        coupons.append({
+                            "bet_id": bet_id,
+                            "event_id": event["id"],
+                            "home": event["home_team"],
+                            "away": event["away_team"],
+                            "market": m["key"],
+                            "outcome": o["name"],
+                            "odds": o["price"],
+                            "point": o.get("point"),
+                            "stake": BASE_STAKE,
+                            "sport": league,
+                            "time": event["commence_time"]
+                        })
+
+                        break
+
+        print()
+
+    json.dump(coupons, open(COUPONS_FILE, "w"), indent=4)
+    print(f"🏁 KONIEC | Wysłane typy: {tips_sent}\n")
+
+
+if __name__ == "__main__":
+    main()
