@@ -51,7 +51,7 @@ def get_match_results(sport, keys):
 def generate_report(history, remaining_count):
     now = datetime.now(timezone.utc)
     base_capital = 1000.0
-    
+
     if os.path.exists(STATS_JSON_FILE):
         try:
             with open(STATS_JSON_FILE, "r") as f:
@@ -72,7 +72,7 @@ def generate_report(history, remaining_count):
     for m in history_sorted:
         if m.get("status") == "ARCHIVED":
             continue
-            
+
         profit = float(m.get("profit", 0))
         stake = float(m.get("stake", 0))
         is_finance = m.get("sport") == "FINANCE"
@@ -115,22 +115,23 @@ def generate_report(history, remaining_count):
     accuracy = (wins / total * 100) if total > 0 else 0
 
     msg = [
-        "🔄 <b>SYSTEM RESTARTED</b>" if total == 0 else "📊 <b>DASHBOARD UPDATED</b>",
+        "📊 <b>DASHBOARD UPDATED</b>",
         f"🏦 Bankroll: <b>{round(bankroll,2)} PLN</b>",
-        f"💰 Nowy Zysk: {round(total_profit_new,2)} PLN",
+        f"💰 Zysk total: <b>{round(total_profit_new,2)} PLN</b>",
         f"📈 Yield: {round(yield_val,2)}% | Celność: {round(accuracy,1)}%",
+        f"🎟️ W grze: {remaining_count}",
         "━━━━━━━━━━━━━━━",
-        "📝 <b>OSTATNIE (NOWE):</b>"
+        "🧾 <b>OSTATNIE ROZLICZENIA:</b>"
     ]
 
-    recent_active = [m for m in history if m.get("status") != "ARCHIVED"][-5:]
-    for m in reversed(recent_active):
-        if m.get("sport") == "FINANCE":
-            icon, name = "🏦", "OPERACJA FINANSOWA"
-        else:
-            icon = "✅" if m.get("status") == "WIN" else "❌" if m.get("status") == "LOSS" else "⚪"
-            name = f"{m.get('home')} - {m.get('away')}"
-        msg.append(f"{icon} {name} ({m.get('profit')} PLN)")
+    recent = [m for m in history if m.get("status") in ["WIN", "LOSS", "VOID"]][-5:]
+    for m in reversed(recent):
+        icon = "✅" if m["status"] == "WIN" else "❌" if m["status"] == "LOSS" else "➖"
+        match = f"{m.get('home')} vs {m.get('away')}"
+        msg.append(
+            f"{icon} {match} — {m.get('outcome')} "
+            f"({m.get('score')} | {m.get('profit')} PLN)"
+        )
 
     send_telegram_results("\n".join(msg))
 
@@ -143,25 +144,17 @@ def settle_matches():
     with open(COUPONS_FILE, "r", encoding="utf-8") as f:
         active_coupons = json.load(f)
 
-    if not active_coupons:
-        if os.path.exists(HISTORY_FILE):
-            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                history = json.load(f)
-            generate_report(history, 0)
-        return
-
     history = []
     if os.path.exists(HISTORY_FILE):
-        try:
-            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
-                history = json.load(f)
-        except:
-            pass
+        with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+            history = json.load(f)
 
     history_ids = {h.get("id") for h in history if h.get("id")}
     results_map = {}
     remaining = []
     new_settlements = 0
+
+    print(f"\n🧮 ROZLICZANIE MECZÓW | Kupony w grze: {len(active_coupons)}")
 
     sports = list(set(c["sport"] for c in active_coupons))
     for sport in sports:
@@ -170,6 +163,8 @@ def settle_matches():
             for m in res:
                 if m.get("id"):
                     results_map[m["id"]] = m
+
+    debug_lines = []
 
     for c in active_coupons:
         cid = c.get("id")
@@ -185,7 +180,6 @@ def settle_matches():
 
             status = "LOSS"
             stake = float(c.get("stake", 0))
-            
             market_type = c.get("market_type", "h2h")
             outcome = c.get("outcome", "")
 
@@ -194,25 +188,21 @@ def settle_matches():
                     status = "VOID"
                 elif (outcome == home and hs > as_) or (outcome == away and as_ > hs):
                     status = "WIN"
-            
+
             elif market_type == "totals":
                 try:
-                    parts = outcome.split()
-                    condition = parts[0] 
-                    line = float(parts[1])
-                    
-                    if condition == "Over" and total_score > line:
+                    cond, line = outcome.split()
+                    line = float(line)
+                    if cond == "Over" and total_score > line:
                         status = "WIN"
-                    elif condition == "Under" and total_score < line:
+                    elif cond == "Under" and total_score < line:
                         status = "WIN"
                     elif total_score == line:
                         status = "VOID"
                 except:
                     status = "LOSS"
 
-            # --- OBLICZANIE PROFITU Z PODATKIEM 12% ---
             if status == "WIN":
-                # (Stawka * 0.88) * Kurs - Stawka
                 profit = round((stake * 0.88) * float(c.get("odds", 0)) - stake, 2)
             elif status == "VOID":
                 profit = 0.0
@@ -220,8 +210,13 @@ def settle_matches():
                 profit = -stake
 
             history.append({**c, "profit": profit, "status": status, "score": f"{hs}:{as_}"})
-            history_ids.add(cid)
             new_settlements += 1
+
+            emoji = "✅🔥" if status == "WIN" else "❌" if status == "LOSS" else "➖"
+            debug_lines.append(
+                f"🏒 {home} vs {away} — {outcome} {emoji} "
+                f"({hs}:{as_} | {profit} PLN)"
+            )
         else:
             remaining.append(c)
 
@@ -230,6 +225,11 @@ def settle_matches():
             json.dump(history, f, indent=4)
         with open(COUPONS_FILE, "w", encoding="utf-8") as f:
             json.dump(remaining, f, indent=4)
+
+        send_telegram_results(
+            "🧮 <b>DEBUG ROZLICZENIA</b>\n" +
+            "\n".join(debug_lines[:10])
+        )
 
     generate_report(history, len(remaining))
 
