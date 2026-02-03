@@ -8,10 +8,10 @@ HISTORY_FILE = "history.json"
 
 def make_deposit():
     try:
-        # Pobieranie kwoty z argumentu (z GitHub Actions)
+        # Pobieranie kwoty z argumentu (np. z GitHub Actions)
         amount = float(sys.argv[1])
     except:
-        print("Błąd: Nie podano poprawnej kwoty.")
+        print("❌ Błąd: Nie podano poprawnej kwoty.")
         return
 
     now = datetime.now()
@@ -24,13 +24,14 @@ def make_deposit():
             history = json.load(f)
 
     deposit_entry = {
+        "id": f"DEP-{int(now.timestamp())}",
         "home": "📥 DEPOZYT",
         "away": "Wpłata własna",
-        "profit": amount, # Kwota dodatnia
+        "profit": amount, 
         "stake": 0,
-        "odds": 0,
+        "odds": 1.0,
         "sport": "FINANCE",
-        "status": "DEPOSIT",
+        "status": "DEPOSIT", # Zmienione na DEPOSIT, aby settle.py mógł to odfiltrować
         "time": now.isoformat()
     }
     history.append(deposit_entry)
@@ -43,14 +44,18 @@ def make_deposit():
         with open(STATS_FILE, "r", encoding="utf-8") as f:
             stats = json.load(f)
         
-        # DODAJEMY do bankrolla
-        stats["bankroll"] = round(stats.get("bankroll", 0) + amount, 2)
+        # AKTUALIZACJA: Zwiększamy Bankroll, ale NIE ruszamy "zysk_total"
+        current_bankroll = stats.get("bankroll", 0)
+        stats["bankroll"] = round(current_bankroll + amount, 2)
         stats["last_sync"] = date_str
 
         with open(STATS_FILE, "w", encoding="utf-8") as f:
             json.dump(stats, f, indent=4, ensure_ascii=False)
-
-    print(f"✅ Wpłacono: {amount} PLN. Nowy bankroll: {stats['bankroll']} PLN")
+        
+        print(f"✅ Sukces: {amount} PLN dodane do Bankrolla.")
+        print(f"💰 Nowy bankroll: {stats['bankroll']} PLN (Zysk Total bez zmian).")
+    else:
+        print("⚠️ Uwaga: Plik stats.json nie istnieje, zaktualizowano tylko historię.")
 
 if __name__ == "__main__":
     make_deposit()
