@@ -1,168 +1,220 @@
 import os
-import json
-import time
 import requests
-from datetime import datetime, timezone
+import json
+from datetime import datetime, timedelta, timezone
 
-# ================== KONFIG ==================
-COUPONS_FILE = "coupons.json"
-KEY_INDEX_FILE = "key_index.txt"
-
-SPORTS = {
+# ================= KONFIGURACJA LIG =================
+SPORTS_CONFIG = {
     "icehockey_nhl": "🏒 NHL",
-    "icehockey_sweden_allsvenskan": "🇸🇪 HockeyAllsvenskan",
+    "icehockey_sweden_hockeyallsvenskan": "🇸🇪 HockeyAllsvenskan",
     "icehockey_finland_liiga": "🇫🇮 Liiga",
     "icehockey_germany_del": "🇩🇪 DEL",
-    "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa"
+    "icehockey_czech_extraliga": "🇨🇿 Extraliga",
+    "icehockey_switzerland_nla": "🇨🇭 NLA",
+    "icehockey_austria_liga": "🇦🇹 ICEHL",
+    "icehockey_denmark_metal_ligaen": "🇩🇰 Metal Ligaen",
+    "icehockey_norway_eliteserien": "🇳🇴 Eliteserien",
+    "icehockey_slovakia_extraliga": "🇸🇰 Extraliga",
+    "soccer_epl": "🏴 Premier League",
+    "soccer_germany_bundesliga": "🇩🇪 Bundesliga",
+    "soccer_italy_serie_a": "🇮🇹 Serie A",
+    "soccer_spain_la_liga": "🇪🇸 La Liga",
+    "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
+    "soccer_france_ligue_one": "🇫🇷 Ligue 1",
+    "soccer_portugal_primeira_liga": "🇵🇹 Primeira Liga",
+    "soccer_netherlands_eredivisie": "🇳🇱 Eredivisie",
+    "soccer_austria_bundesliga": "🇦🇹 Bundesliga",
+    "soccer_denmark_superliga": "🇩🇰 Superliga",
+    "soccer_greece_super_league": "🇬🇷 Super League",
+    "soccer_switzerland_superleague": "🇨🇭 Super League",
 }
 
-ALLOWED_MARKETS = {
-    "h2h",
-    "totals",
-    "btts",
-    "double_chance"
-}
+HISTORY_FILE = "history.json"
+COUPONS_FILE = "coupons.json"
+KEY_STATE_FILE = "key_index.txt"
+BASE_STAKE = 250
 
-MIN_ODDS = 1.40
-MAX_ODDS = 3.50
-MIN_VALUE = 2.0
-MIN_BOOKMAKERS = 2
-
-STAKE = 250
-
-# ================== POMOCNICZE ==================
+# ================= POMOCNICZE =================
 def get_secret(name):
-    return os.getenv(name)
+    val = os.environ.get(name)
+    return str(val).strip() if val else None
 
-def send_telegram(msg):
+def send_telegram(message, mode="HTML"):
     token = get_secret("T_TOKEN")
     chat = get_secret("T_CHAT")
     if not token or not chat:
         return
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    requests.post(url, json={"chat_id": chat, "text": msg})
+    try:
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage",
+            json={"chat_id": chat, "text": message, "parse_mode": mode},
+            timeout=15
+        )
+    except:
+        pass
 
-def load_keys():
+def get_all_keys():
     keys = []
     for i in range(1, 11):
-        k = os.getenv("ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}")
-        if k:
-            keys.append(k)
+        name = "ODDS_KEY" if i == 1 else f"ODDS_KEY_{i}"
+        val = get_secret(name)
+        if val:
+            keys.append(val)
     return keys
 
-def get_key_index():
-    if not os.path.exists(KEY_INDEX_FILE):
-        return 0
-    return int(open(KEY_INDEX_FILE).read().strip() or 0)
+def get_smart_stake(league_key):
+    multiplier = 1.0
+    threshold = 1.035
+    profit = 0
 
-def save_key_index(i):
-    with open(KEY_INDEX_FILE, "w") as f:
-        f.write(str(i))
+    if os.path.exists(HISTORY_FILE):
+        try:
+            with open(HISTORY_FILE, "r", encoding="utf-8") as f:
+                history = json.load(f)
+            profit = sum(m.get("profit", 0) for m in history if m.get("sport") == league_key)
+            if profit <= -700:
+                multiplier, threshold = 0.5, 1.08
+            elif profit >= 3000:
+                multiplier = 1.6
+            elif profit >= 1000:
+                multiplier = 1.3
+        except:
+            pass
 
-def fetch_odds(sport, key):
-    url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds/"
-    params = {
-        "apiKey": key,
-        "regions": "eu",
-        "markets": ",".join(ALLOWED_MARKETS),
-        "oddsFormat": "decimal"
-    }
-    r = requests.get(url, params=params, timeout=15)
-    return r.json() if r.status_code == 200 else []
+    stake = BASE_STAKE * multiplier
+    if "icehockey" in league_key:
+        threshold -= 0.01
+        if profit > 0:
+            stake *= 1.25
 
-# ================== START ==================
+    return round(stake, 2), round(threshold, 3)
+
+# ===== FILTR KURSÓW (BEZ ASIAN) =====
+def odd_allowed(sport, market, odd):
+    if "icehockey" in sport:
+        if market == "totals":
+            return 1.45 <= odd <= 2.30
+        if market == "h2h":
+            return 1.8 <= odd <= 3.6
+    if "soccer" in sport:
+        if market in ["totals", "btts"]:
+            return 1.65 <= odd <= 3.5
+        if market == "h2h":
+            return 1.9 <= odd <= 3.4
+    return False
+
+# ================= MAIN =================
 def main():
-    keys = load_keys()
-    key_i = get_key_index()
+    print(f"\n🚀 --- START BOT PRO: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} ---\n")
 
-    coupons = []
-    if os.path.exists(COUPONS_FILE):
-        coupons = json.load(open(COUPONS_FILE))
+    api_keys = get_all_keys()
+    if not api_keys:
+        print("❌ Brak kluczy API")
+        return
 
-    log = []
-    total_candidates = 0
+    idx = int(open(KEY_STATE_FILE).read().strip()) if os.path.exists(KEY_STATE_FILE) else 0
+    idx %= len(api_keys)
 
-    log.append(f"🚀 --- START BOT PRO: {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')} ---")
+    coupons = json.load(open(COUPONS_FILE)) if os.path.exists(COUPONS_FILE) else []
+    sent_ids = {c["id"] for c in coupons}
 
-    for sport, label in SPORTS.items():
-        key = keys[key_i % len(keys)]
-        key_i += 1
+    now = datetime.now(timezone.utc)
+    max_future = now + timedelta(hours=48)
 
-        events = fetch_odds(sport, key)
-        scanned = 0
-        accepted = 0
+    scanned = 0
+    new_tips = 0
+    total_stake = 0
 
-        for ev in events:
-            scanned += 1
-            if not ev.get("bookmakers") or len(ev["bookmakers"]) < MIN_BOOKMAKERS:
+    for league, label in SPORTS_CONFIG.items():
+        print(f"🔍 Skanowanie: {label}")
+        stake, threshold = get_smart_stake(league)
+
+        scanned += 1
+        data = None
+
+        for _ in range(len(api_keys)):
+            try:
+                r = requests.get(
+                    f"https://api.the-odds-api.com/v4/sports/{league}/odds/",
+                    params={"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h,totals,btts"},
+                    timeout=15
+                )
+                if r.status_code == 200:
+                    data = r.json()
+                    break
+                idx = (idx + 1) % len(api_keys)
+            except:
+                idx = (idx + 1) % len(api_keys)
+
+        candidates = 0
+
+        if not data:
+            continue
+
+        for event in data:
+            if event["id"] in sent_ids:
                 continue
 
-            for bm in ev["bookmakers"]:
-                for market in bm["markets"]:
-                    if market["key"] not in ALLOWED_MARKETS:
-                        continue
+            try:
+                m_time = datetime.fromisoformat(event["commence_time"].replace("Z", "+00:00"))
+                if not (now < m_time < max_future):
+                    continue
+            except:
+                continue
 
-                    for o in market["outcomes"]:
-                        odds = float(o.get("price", 0))
-                        if odds < MIN_ODDS or odds > MAX_ODDS:
+            for b in event.get("bookmakers", []):
+                for m in b.get("markets", []):
+                    for o in m.get("outcomes", []):
+                        if not odd_allowed(league, m["key"], o["price"]):
                             continue
 
-                        # --- RYNKI ---
-                        outcome = o["name"]
-                        market_key = market["key"]
+                        candidates += 1
+                        new_tips += 1
+                        total_stake += stake
 
-                        if market_key == "totals":
-                            line = float(o.get("point", 0))
-                            if line not in (4.5, 5.5):
-                                continue
-                            outcome = f"{outcome} {line}"
-
-                        if market_key == "btts" and outcome != "Yes":
-                            continue
-
-                        if market_key == "double_chance" and outcome not in ("1X", "X2"):
-                            continue
-
-                        value = 2.5  # uproszczone value (placeholder)
-                        if value < MIN_VALUE:
-                            continue
-
-                        coupon = {
-                            "id": ev["id"],
-                            "sport": sport,
-                            "league": label,
-                            "home": ev["home_team"],
-                            "away": ev["away_team"],
-                            "market_type": market_key,
-                            "outcome": outcome,
-                            "odds": odds,
-                            "stake": STAKE,
-                            "time": ev["commence_time"]
-                        }
-
-                        coupons.append(coupon)
-                        accepted += 1
-                        total_candidates += 1
-
-                        icon = "🏒" if "icehockey" in sport else "⚽"
-                        log.append(
-                            f"{icon} {ev['home_team']} vs {ev['away_team']} — {outcome} ✅🔥"
+                        send_telegram(
+                            f"<b>{label}</b>\n"
+                            f"🏒 {event['home_team']} vs {event['away_team']}\n"
+                            f"✅ Typ: <b>{o['name']}</b>\n"
+                            f"📈 Kurs: <b>{o['price']}</b>\n"
+                            f"💰 Stawka: <b>{stake} PLN</b>"
                         )
 
-        log.append(
-            f"📊 {label} | API: {key_i} | ✅ kandydaci: {accepted}"
-        )
+                        coupons.append({
+                            "id": event["id"],
+                            "home": event["home_team"],
+                            "away": event["away_team"],
+                            "outcome": o["name"],
+                            "odds": o["price"],
+                            "stake": stake,
+                            "sport": league,
+                            "time": event["commence_time"]
+                        })
 
-    save_key_index(key_i)
+                        sent_ids.add(event["id"])
+                        break
 
-    with open(COUPONS_FILE, "w") as f:
-        json.dump(coupons, f, indent=4)
+        print(f"📊 {label} | ✅ kandydaci: {candidates}\n")
 
-    log.append("━━━━━━━━━━━━━━━━")
-    log.append(f"🎯 Nowe typy: {total_candidates}")
-    log.append(f"💰 Łączna stawka: {total_candidates * STAKE} PLN")
+    print("📤 WYSYŁANIE TYPÓW")
+    print("━━━━━━━━━━━━━━━━")
+    print(f"📊 Ligi przeskanowane: {scanned}")
+    print(f"🎯 Nowe typy: {new_tips}")
+    print(f"💰 Łączna stawka: {total_stake} PLN")
+    print(f"📊 Aktywne kupony: {len(coupons)}\n")
 
-    send_telegram("\n".join(log))
+    # ===== DEBUG ROZLICZEŃ =====
+    if os.path.exists(HISTORY_FILE):
+        print("📊 ROZLICZONE MECZE (ostatnie)\n")
+        history = json.load(open(HISTORY_FILE, "r", encoding="utf-8"))
+        for h in history[-5:]:
+            if h.get("status") in ["WIN", "LOSS"]:
+                emoji = "✅🔥" if h["profit"] > 0 else "❌"
+                print(f"{h['home']} vs {h['away']} — {h['outcome']} {emoji}")
+                print(f"💰 {h['profit']} PLN\n")
+
+    json.dump(coupons, open(COUPONS_FILE, "w", encoding="utf-8"), indent=4)
+    open(KEY_STATE_FILE, "w").write(str(idx))
 
 
 if __name__ == "__main__":
