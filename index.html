@@ -102,17 +102,23 @@ function getFlag(sport) {
     const s = sport.toLowerCase();
     const flags = {
         'us': ['nhl', 'nba', 'usa'],
-        'es': ['spain', 'la_liga', 'oviedo'],
-        'de': ['germany', 'bundesliga', 'köln'],
+        'es': ['spain', 'la_liga'],
+        'de': ['germany', 'bundesliga', 'del'],
         'it': ['italy', 'serie'],
-        'pl': ['poland', 'ekstraklasa', 'poznan'],
+        'pl': ['poland', 'ekstraklasa'],
         'fr': ['france', 'ligue'],
-        'ch': ['switzerland', 'swiss', 'lugano', 'volos'],
-        'nl': ['netherlands', 'eredivisie', 'alkmaar'],
+        'ch': ['switzerland', 'swiss', 'nla'],
+        'nl': ['netherlands', 'eredivisie'],
         'pt': ['portugal', 'primeira'],
-        'gb': ['england', 'epl', 'premier'],
-        'eu': ['euroleague', 'europe'],
-        'se': ['sweden', 'allsvenskan'],
+        'gb': ['england', 'epl', 'championship'],
+        'eu': ['euroleague'],
+        'se': ['sweden', 'allsvenskan', 'shl'],
+        'fi': ['finland', 'liiga'],
+        'cz': ['czech', 'extraliga'],
+        'at': ['austria', 'bundesliga'],
+        'no': ['norway', 'eliteserien'],
+        'dk': ['denmark', 'superliga', 'metal'],
+        'sk': ['slovakia', 'extraliga'],
         'gr': ['greece', 'super_league']
     };
     for (let code in flags) {
@@ -138,7 +144,6 @@ function renderStats(){
     document.getElementById('br').innerText=STATS.bankroll.toFixed(2) + ' PLN';
     document.getElementById('pt').innerText=STATS.zysk_total.toFixed(2) + ' PLN';
     
-    // SUMOWANIE WYPŁAT (filtrowanie ARCHIVED)
     const totalWithdraw = HISTORY
         .filter(m => (m.sport === "FINANCE" || m.type === "WITHDRAW") && m.status !== "ARCHIVED")
         .reduce((sum, m) => sum + Math.abs(m.profit), 0);
@@ -151,7 +156,6 @@ function renderStats(){
     document.getElementById('yield').innerText=STATS.yield+'%';
     document.getElementById('active-stat').innerText=UPCOMING.length;
     
-    // Liczba kuponów bez wypłat i bez archiwalnych
     const onlyMatches = HISTORY.filter(m => m.sport !== "FINANCE" && m.status !== "ARCHIVED");
     document.getElementById('count').innerText=onlyMatches.length;
     
