@@ -6,15 +6,14 @@ from datetime import datetime, timezone, timedelta
 # ================= CONFIG =================
 BASE_URL = "https://api.the-odds-api.com/v4"
 REGIONS = "eu"
-BOOKMAKERS = "bet365"
 MARKETS = "h2h,totals,btts"
 ODDS_FORMAT = "decimal"
 
 COUPONS_FILE = "coupons.json"
 
-# ================= LIGI (22) =================
+# ================= LIGI (DOSTĘPNE NA PLANIE) =================
 LEAGUES = {
-    # ⚽ FOOTBALL
+    # ⚽ PIŁKA
     "soccer_epl": "🏴 Premier League",
     "soccer_germany_bundesliga": "🇩🇪 Bundesliga",
     "soccer_italy_serie_a": "🇮🇹 Serie A",
@@ -28,16 +27,8 @@ LEAGUES = {
     "soccer_greece_super_league": "🇬🇷 Super League",
     "soccer_poland_ekstraklasa": "🇵🇱 Ekstraklasa",
 
-    # 🏒 HOCKEY
-    "icehockey_nhl": "🏒 NHL",
-    "icehockey_sweden_hockeyallsvenskan": "🇸🇪 HockeyAllsvenskan",
-    "icehockey_finland_liiga": "🇫🇮 Liiga",
-    "icehockey_germany_del": "🇩🇪 DEL",
-    "icehockey_switzerland_nla": "🇨🇭 NLA",
-    "icehockey_czech_extraliga": "🇨🇿 Extraliga",
-    "icehockey_slovakia_extraliga": "🇸🇰 Extraliga",
-    "icehockey_denmark_metal_ligaen": "🇩🇰 Metal Ligaen",
-    "icehockey_norway_eliteserien": "🇳🇴 Eliteserien"
+    # 🏒 HOKEJ (TYLKO TEN DZIAŁA NA PLANIE)
+    "icehockey_nhl": "🏒 NHL"
 }
 
 # ================= API KEYS =================
@@ -60,7 +51,6 @@ def fetch_odds(sport, keys):
                     "apiKey": key,
                     "regions": REGIONS,
                     "markets": MARKETS,
-                    "bookmakers": BOOKMAKERS,
                     "oddsFormat": ODDS_FORMAT
                 },
                 timeout=15
@@ -86,7 +76,7 @@ def is_valid_pick(sport, market, outcome, odds, point):
         if market == "h2h" and odds >= 2.20:
             return True
 
-    if sport.startswith("icehockey"):
+    if sport == "icehockey_nhl":
         if market == "totals" and outcome == "Over" and point in (4.5, 5.5):
             return True
         if market == "h2h" and odds <= 2.40:
