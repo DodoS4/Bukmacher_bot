@@ -4,10 +4,11 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# ================= KONFIGURACJA LIG =================
+# ================= KONFIGURACJA LIG (ZAKTUALIZOWANA) =================
 SPORTS_CONFIG = {
     "icehockey_nhl": "🏒", 
-    "icehockey_sweden_hockeyallsvenskan": "🇸🇪",
+    "icehockey_sweden_allsvenskan": "🇸🇪",
+    "icehockey_sweden_shl": "🇸🇪",
     "icehockey_finland_liiga": "🇫🇮",
     "icehockey_germany_del": "🇩🇪",
     "icehockey_czech_extraliga": "🇨🇿",
@@ -30,7 +31,7 @@ SPORTS_CONFIG = {
     "soccer_denmark_superliga": "🇩🇰",
     "soccer_greece_super_league": "🇬🇷",
     "soccer_switzerland_superleague": "🇨🇭",
-    "soccer_scotland_premier_league": "🏴",
+    "soccer_scotland_premiership": "🏴",
     "soccer_efl_championship": "🏴",
     "basketball_euroleague": "🏀",
     "tennis_atp_australian_open": "🎾",
@@ -56,7 +57,6 @@ def send_telegram(message, mode="HTML"):
     try: requests.post(url, json=payload, timeout=15)
     except: pass
 
-# ================= LOGIKA STAWEK I VALUE =================
 def get_smart_stake(league_key):
     current_multiplier, threshold, history_profit = 1.0, 1.035, 0
     if os.path.exists(HISTORY_FILE):
@@ -111,41 +111,50 @@ def main():
         stake, threshold = get_smart_stake(league)
         data = None
         
-        # Próba pobrania danych (z obsługą rotacji kluczy)
+        # Próba pobrania danych (NAPRAWIONY URL I LOGIKA BŁĘDÓW)
         for _ in range(len(api_keys)):
-            url = f"https://api.the-odds-api.com/v4/sports/{league}/odds/"
-            params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h"}
+            # USUNIĘTO końcowy slash, który powodował 404
+            url = f"https://api.the-odds-api.com/v4/sports/{league}/odds"
+            params = {"apiKey": api_keys[idx], "regions": "eu", "markets": "h2h", "oddsFormat": "decimal"}
+            
             try:
                 print(f"  📡 Klucz API #{idx+1}...", end=" ")
                 resp = requests.get(url, params=params, timeout=15)
+                
                 if resp.status_code == 200:
                     data = resp.json()
                     print("OK!")
                     break
+                elif resp.status_code == 404:
+                    # 404 często oznacza brak aktywnej oferty na tę ligę
+                    print("Brak meczów (404)")
+                    break 
+                elif resp.status_code == 429:
+                    print("Limit klucza przekroczony (429)")
+                    idx = (idx + 1) % len(api_keys)
                 else:
                     print(f"Błąd {resp.status_code}")
                     idx = (idx + 1) % len(api_keys)
-            except:
-                print("Timeout")
+            except Exception as e:
+                print(f"Błąd połączenia: {e}")
                 idx = (idx + 1) % len(api_keys)
 
         if not data:
-            print(f"  ⚠️ Pomiń ligę: Brak danych z API.")
             continue
 
-        print(f"  📈 Znaleziono {len(data)} meczów w API.")
+        print(f"  📈 Znaleziono {len(data)} meczów.")
         
         for event in data:
             if event['id'] in already_sent: continue
             
             try:
+                # Stabilniejszy parsing daty
                 m_time = datetime.fromisoformat(event['commence_time'].replace("Z", "+00:00"))
                 if not (now < m_time < max_future):
                     continue 
                 m_display = m_time.astimezone(timezone(timedelta(hours=1)))
             except: continue
 
-            # Wyciąganie kursów
             prices = {}
             for bookie in event.get('bookmakers', []):
                 for market in bookie.get('markets', []):
@@ -156,11 +165,10 @@ def main():
 
             best_name, best_odd, max_val = None, 0, 0
             for name, p_list in prices.items():
-                if name.lower() == "draw": continue
+                if name.lower() == "draw" or len(p_list) < 3: continue
                 m_p, a_p = max(p_list), sum(p_list)/len(p_list)
                 val = m_p / a_p
                 
-                # Warunki wejścia
                 req = threshold
                 if m_p >= 2.5: req += 0.02 
                 
@@ -168,13 +176,10 @@ def main():
                     if val > req:
                         if val > max_val:
                             max_val, best_odd, best_name = val, m_p, name
-                    # Logowanie "bliskich" trafień do konsoli (opcjonalne)
-                    elif val > (req - 0.02):
-                        print(f"  ℹ️ {event['home_team']} - {name}: Value {round(val,3)} (Wymagane: {req}) - ODRZUCONO")
 
             if best_name:
                 l_name = league.upper().replace("SOCCER_", "").replace("ICEHOCKEY_", "").replace("_", " ")
-                print(f"  🎯 TYP! {event['home_team']} - {best_name} @{best_odd} (Value: {round(max_val,3)})")
+                print(f"  🎯 TYP! {event['home_team']} - {best_name} @{best_odd}")
                 
                 msg = (f"{'🏒' if 'ice' in league else '⚽'} {flag} <b>{l_name}</b>\n"
                        f"━━━━━━━━━━━━━━━\n"
@@ -199,8 +204,7 @@ def main():
     with open(COUPONS_FILE, "w", encoding="utf-8") as f:
         json.dump(all_coupons, f, indent=4)
     
-    print(f"\n✅ KONIEC. Wysłano nowych typów: {new_bets_count}")
-    print(f"📊 Wszystkie aktywne kupony: {len(all_coupons)}")
+    print(f"\n✅ KONIEC. Nowych typów: {new_bets_count}")
 
 if __name__ == "__main__":
     main()
