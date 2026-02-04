@@ -360,16 +360,6 @@
         "time": "2026-02-04T19:45:00Z"
     },
     {
-        "id": "9f2eca7c800803cd71181cb8bddb77b8",
-        "home": "Livingston",
-        "away": "Falkirk F.C.",
-        "outcome": "Livingston",
-        "odds": 4.4,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-02-04T19:45:00Z"
-    },
-    {
         "id": "11b4da8ee591e118ac814a9e0ca75e71",
         "home": "NAC Breda",
         "away": "Excelsior",
@@ -398,5 +388,125 @@
         "stake": 400.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-02-06T19:30:00Z"
+    },
+    {
+        "id": "11f813e1750ca89634b4065198dfe0fa",
+        "home": "AIK",
+        "away": "Kalmar HC",
+        "outcome": "Kalmar HC",
+        "odds": 2.0,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-06T18:00:00Z"
+    },
+    {
+        "id": "4895b5abcd6611f9be0f187af742c528",
+        "home": "Almtuna IS",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "S\u00f6dert\u00e4lje SK",
+        "odds": 2.22,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-06T18:00:00Z"
+    },
+    {
+        "id": "8ff984dbdfad495355cd883ad42bd35d",
+        "home": "BIK Karlskoga",
+        "away": "Mora IK",
+        "outcome": "Mora IK",
+        "odds": 4.1,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-06T18:00:00Z"
+    },
+    {
+        "id": "17bc207d1219872d6153edbc924f91fd",
+        "home": "IF Bj\u00f6rkl\u00f6ven",
+        "away": "Modo Hockey",
+        "outcome": "Modo Hockey",
+        "odds": 3.5,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-06T18:00:00Z"
+    },
+    {
+        "id": "246c6e5af54efd95c372e8777615964a",
+        "home": "IF Troja-Ljungby",
+        "away": "V\u00e4ster\u00e5s IK",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 2.65,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-06T18:00:00Z"
+    },
+    {
+        "id": "18f675bd628d87870faad910d91f9c70",
+        "home": "Vimmerby HC",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 2.2,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-06T18:00:00Z"
+    },
+    {
+        "id": "ca5ab4df6dcfe6eeda868379a9619819",
+        "home": "\u00d6stersunds IK",
+        "away": "Nybro Vikings IF",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 2.25,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-06T18:00:00Z"
+    },
+    {
+        "id": "109cd7529d215b9b72dbaac11d606974",
+        "home": "\u00c4ss\u00e4t",
+        "away": "Pelicans",
+        "outcome": "Pelicans",
+        "odds": 2.77,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-06T16:30:00Z"
+    },
+    {
+        "id": "18477172f6cb5f4bde8c69d4150f80f3",
+        "home": "Ilves",
+        "away": "KooKoo",
+        "outcome": "KooKoo",
+        "odds": 3.36,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-06T17:30:00Z"
+    },
+    {
+        "id": "e74e33aab7625d15231dca45cab2fec3",
+        "home": "Hellas Verona",
+        "away": "Pisa",
+        "outcome": "Hellas Verona",
+        "odds": 2.4,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-06T19:45:00Z"
+    },
+    {
+        "id": "369d63d5a5a88888b5168ac2e1ea343c",
+        "home": "Westerlo",
+        "away": "Sint Truiden",
+        "outcome": "Westerlo",
+        "odds": 2.66,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-06T19:45:00Z"
+    },
+    {
+        "id": "06530294733cafe78a570c27abfc0eae",
+        "home": "Charlton Athletic",
+        "away": "Queens Park Rangers",
+        "outcome": "Queens Park Rangers",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-06T20:01:00Z"
     }
 ]

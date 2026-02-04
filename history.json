@@ -3917,5 +3917,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:2"
+    },
+    {
+        "id": "9f2eca7c800803cd71181cb8bddb77b8",
+        "home": "Livingston",
+        "away": "Falkirk F.C.",
+        "outcome": "Livingston",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-02-04T19:45:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:2"
     }
 ]
