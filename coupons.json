@@ -408,5 +408,65 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-02-06T03:00:00Z"
+    },
+    {
+        "id": "ded1bfa18c416841425e9d39548c92f4",
+        "home": "Jukurit",
+        "away": "KalPa",
+        "outcome": "Jukurit",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-06T16:30:00Z"
+    },
+    {
+        "id": "18d042b82752d2ab8f0fff1111b2e858",
+        "home": "Lukko",
+        "away": "TPS",
+        "outcome": "TPS",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-06T16:30:00Z"
+    },
+    {
+        "id": "ff17d2e3a800e2ed89fd32982311336e",
+        "home": "Hermes",
+        "away": "Kiekko-Vantaa",
+        "outcome": "Hermes",
+        "odds": 2.47,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-06T16:30:00Z"
+    },
+    {
+        "id": "cf7369b1c874724d1499d7084e72633a",
+        "home": "Ketter\u00e4",
+        "away": "IPK",
+        "outcome": "IPK",
+        "odds": 2.4,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-06T16:30:00Z"
+    },
+    {
+        "id": "8d0518b647817da241f101829df62f18",
+        "home": "TUTO Hockey",
+        "away": "JoKP",
+        "outcome": "TUTO Hockey",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-06T16:30:00Z"
+    },
+    {
+        "id": "eaf979030c4dbee38e2ca7ab49aef004",
+        "home": "Korona Kielce",
+        "away": "Zag\u0142\u0119bie Lubin",
+        "outcome": "Korona Kielce",
+        "odds": 1.85,
+        "stake": 400.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-06T17:00:00Z"
     }
 ]
