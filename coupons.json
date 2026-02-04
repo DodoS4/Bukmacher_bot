@@ -328,5 +328,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-02-05T03:00:00Z"
+    },
+    {
+        "id": "7cea344f9d310c712e7e4b228284b179",
+        "home": "KooKoo",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-04T16:30:00Z"
     }
 ]
