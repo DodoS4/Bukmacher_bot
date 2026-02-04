@@ -368,5 +368,15 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-02-04T19:45:00Z"
+    },
+    {
+        "id": "11b4da8ee591e118ac814a9e0ca75e71",
+        "home": "NAC Breda",
+        "away": "Excelsior",
+        "outcome": "Excelsior",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-06T19:00:00Z"
     }
 ]
