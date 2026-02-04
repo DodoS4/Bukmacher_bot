@@ -378,5 +378,25 @@
         "stake": 250.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-02-06T19:00:00Z"
+    },
+    {
+        "id": "1fff9348b53ea8e4ef4b5dcfe291e508",
+        "home": "Union Berlin",
+        "away": "Eintracht Frankfurt",
+        "outcome": "Eintracht Frankfurt",
+        "odds": 3.65,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-06T19:30:00Z"
+    },
+    {
+        "id": "f499f7bc930b1a1d5c66d8a44cc97e16",
+        "home": "Lechia Gda\u0144sk",
+        "away": "Cracovia Krak\u00f3w",
+        "outcome": "Lechia Gda\u0144sk",
+        "odds": 2.32,
+        "stake": 400.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-06T19:30:00Z"
     }
 ]
