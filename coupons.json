@@ -338,5 +338,75 @@
         "stake": 250.0,
         "sport": "icehockey_liiga",
         "time": "2026-02-04T16:30:00Z"
+    },
+    {
+        "id": "c693346418362b1cf7ff17f2750419de",
+        "home": "Buffalo Sabres",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 2.84,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-06T00:00:00Z"
+    },
+    {
+        "id": "a6e77e05bc0505b5ccb098d77fbc87ec",
+        "home": "New York Rangers",
+        "away": "Carolina Hurricanes",
+        "outcome": "Carolina Hurricanes",
+        "odds": 1.89,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-06T00:00:00Z"
+    },
+    {
+        "id": "86fca7ece2fa447cf3abdc17fa3ba00b",
+        "home": "Washington Capitals",
+        "away": "Nashville Predators",
+        "outcome": "Washington Capitals",
+        "odds": 2.09,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-06T00:00:00Z"
+    },
+    {
+        "id": "0c4ccb63b10ab04ed22a6eecf8b1ddab",
+        "home": "New Jersey Devils",
+        "away": "New York Islanders",
+        "outcome": "New York Islanders",
+        "odds": 2.63,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-06T00:00:00Z"
+    },
+    {
+        "id": "41d6427ebcfa34801afa660130baef33",
+        "home": "Philadelphia Flyers",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 2.4,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-06T00:00:00Z"
+    },
+    {
+        "id": "551b4215f6501a4f4b7784f175eca7e1",
+        "home": "Tampa Bay Lightning",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 3.39,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-06T00:30:00Z"
+    },
+    {
+        "id": "43142c0e02c9b04c483bedd40528ddab",
+        "home": "Vegas Golden Knights",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 3.33,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-02-06T03:00:00Z"
     }
 ]
