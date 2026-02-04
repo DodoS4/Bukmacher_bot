@@ -119,13 +119,11 @@ def main():
             with open(COUPONS_FILE, "r", encoding="utf-8") as f:
                 all_coupons = json.load(f)
 
-            # 🔒 AUTOMATYCZNE CZYSZCZENIE DUPLIKATÓW W PLIKU
             all_coupons = list({c['id']: c for c in all_coupons}.values())
 
         except:
             pass
 
-    # 🔒 TERAZ KLUCZOWA POPRAWKA (set zamiast listy)
     already_sent = set(c['id'] for c in all_coupons)
 
     now = datetime.now(timezone.utc)
@@ -175,7 +173,6 @@ def main():
 
         for event in data:
 
-            # 🔒 PODWÓJNE ZABEZPIECZENIE ANTY-DUPLIKAT
             if event['id'] in already_sent:
                 continue
 
@@ -196,23 +193,26 @@ def main():
                         for out in market['outcomes']:
                             prices.setdefault(out['name'], []).append(out['price'])
 
-            best_name, best_odd, max_val = None, 0, 0
+            best_name, best_odd, best_edge = None, 0, 0
 
             for name, p_list in prices.items():
                 if name.lower() == "draw" or len(p_list) < 3:
                     continue
 
-                m_p = max(p_list)
-                a_p = sum(p_list) / len(p_list)
-                val = m_p / a_p
+                max_odd = max(p_list)
 
-                req = threshold
-                if m_p >= 2.5:
-                    req += 0.02
+                market_probs = [1/x for x in p_list]
+                fair_prob = sum(market_probs) / len(market_probs)
 
-                if 1.80 <= m_p <= 4.50 and val > req:
-                    if val > max_val:
-                        max_val, best_odd, best_name = val, m_p, name
+                your_prob = 1 / max_odd
+
+                edge = (fair_prob - your_prob) / your_prob
+
+                if 1.80 <= max_odd <= 4.50 and edge > (threshold - 1):
+                    if edge > best_edge:
+                        best_edge = edge
+                        best_odd = max_odd
+                        best_name = name
 
             if best_name:
 
@@ -231,7 +231,7 @@ def main():
                     f"✅ Typ: <b>{best_name}</b>\n"
                     f"📈 Kurs: <b>{best_odd}</b>\n"
                     f"💰 Stawka: <b>{stake} PLN</b>\n"
-                    f"📊 Value: <b>+{round((max_val-1)*100, 1)}%</b>\n"
+                    f"📊 Value: <b>+{round(best_edge*100, 1)}%</b>\n"
                     f"━━━━━━━━━━━━━━━"
                 )
 
