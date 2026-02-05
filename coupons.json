@@ -788,5 +788,15 @@
         "stake": 250.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-02-07T19:45:00Z"
+    },
+    {
+        "id": "4638ea1f28a3f054d0b98f657ae2fa58",
+        "home": "Brest",
+        "away": "Lorient",
+        "outcome": "Lorient",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-02-07T18:00:00Z"
     }
 ]
