@@ -458,5 +458,165 @@
         "stake": 250.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-02-07T11:30:00Z"
+    },
+    {
+        "id": "5064501681485a3db4abd297a0e775f4",
+        "home": "Fulham",
+        "away": "Everton",
+        "outcome": "Everton",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_epl",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "a12aa3c1df6158825b5f8c714fe686c0",
+        "home": "1. FC Heidenheim",
+        "away": "Hamburger SV",
+        "outcome": "1. FC Heidenheim",
+        "odds": 2.98,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "a30bf74fc995a556100c95334d881e3a",
+        "home": "FSV Mainz 05",
+        "away": "Augsburg",
+        "outcome": "Augsburg",
+        "odds": 3.8,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "6bf2b7cb404b378f8ed4c1641d5940a1",
+        "home": "VfL Wolfsburg",
+        "away": "Borussia Dortmund",
+        "outcome": "Borussia Dortmund",
+        "odds": 1.81,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "866ac1b75dbdd947624fa60d28982d74",
+        "home": "FC St. Pauli",
+        "away": "VfB Stuttgart",
+        "outcome": "VfB Stuttgart",
+        "odds": 1.92,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "e1a7a60b12f8c6c07da7c3dbd0cbe1ff",
+        "home": "Arka Gdynia",
+        "away": "Legia Warszawa",
+        "outcome": "Arka Gdynia",
+        "odds": 4.0,
+        "stake": 400.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-07T13:45:00Z"
+    },
+    {
+        "id": "86d981b5773fa1b4c946bf143a3e5837",
+        "home": "CF Estrela",
+        "away": "Santa Clara",
+        "outcome": "Santa Clara",
+        "odds": 2.44,
+        "stake": 250.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-07T15:30:00Z"
+    },
+    {
+        "id": "70866a4a7eb9f9c6501c9ff43443684a",
+        "home": "Moreirense FC",
+        "away": "Gil Vicente",
+        "outcome": "Moreirense FC",
+        "odds": 3.5,
+        "stake": 250.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-07T15:30:00Z"
+    },
+    {
+        "id": "e8913ce12bc5230700c5563996572af7",
+        "home": "SV Zulte-Waregem",
+        "away": "Dender",
+        "outcome": "Dender",
+        "odds": 3.45,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "a0a9f44032d844ef6b69ce828c50fe93",
+        "home": "Norwich City",
+        "away": "Blackburn Rovers",
+        "outcome": "Blackburn Rovers",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T12:31:00Z"
+    },
+    {
+        "id": "2f5f10108f1a3011a1ff4084dc4e076b",
+        "home": "Derby County",
+        "away": "Ipswich Town",
+        "outcome": "Derby County",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T12:31:00Z"
+    },
+    {
+        "id": "f0337cc8e148f6aadd90a7b6ff48427a",
+        "home": "Southampton",
+        "away": "Watford",
+        "outcome": "Watford",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T12:31:00Z"
+    },
+    {
+        "id": "59b4314c3f0cd891d1f9a3c68d585f2d",
+        "home": "Hull City",
+        "away": "Bristol City",
+        "outcome": "Bristol City",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T15:01:00Z"
+    },
+    {
+        "id": "f2e4ea7ccc6880a5576bb16ceea84f9a",
+        "home": "Wrexham AFC",
+        "away": "Millwall",
+        "outcome": "Wrexham AFC",
+        "odds": 2.68,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T15:01:00Z"
+    },
+    {
+        "id": "65515171e9166a2c1869af3c32f8772e",
+        "home": "Preston North End",
+        "away": "Portsmouth",
+        "outcome": "Portsmouth",
+        "odds": 3.35,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T15:01:00Z"
+    },
+    {
+        "id": "9d34df61f23d1e3c4ad4d9547f2b2ac0",
+        "home": "West Bromwich Albion",
+        "away": "Stoke City",
+        "outcome": "Stoke City",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T15:01:00Z"
     }
 ]
