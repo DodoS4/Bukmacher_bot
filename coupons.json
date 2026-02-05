@@ -618,5 +618,125 @@
         "stake": 250.0,
         "sport": "soccer_efl_champ",
         "time": "2026-02-07T15:01:00Z"
+    },
+    {
+        "id": "32a244cb341547ac81e9f20672cb0184",
+        "home": "SC Freiburg",
+        "away": "Werder Bremen",
+        "outcome": "SC Freiburg",
+        "odds": 1.89,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T14:30:00Z"
+    },
+    {
+        "id": "44e038b462710b4c65afa8e0399479f4",
+        "home": "Borussia Monchengladbach",
+        "away": "Bayer Leverkusen",
+        "outcome": "Borussia Monchengladbach",
+        "odds": 3.55,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-07T17:30:00Z"
+    },
+    {
+        "id": "9e0f5cab00d1f21496136ef857386de8",
+        "home": "Genoa",
+        "away": "Napoli",
+        "outcome": "Napoli",
+        "odds": 2.04,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-07T17:00:00Z"
+    },
+    {
+        "id": "e69553c6b08a257da44564c70b7424b3",
+        "home": "Jagiellonia Bia\u0142ystok",
+        "away": "Motor Lublin",
+        "outcome": "Motor Lublin",
+        "odds": 4.5,
+        "stake": 400.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-07T16:30:00Z"
+    },
+    {
+        "id": "97360cf96a220c8bbad0fb98b67994bf",
+        "home": "G\u00f3rnik Zabrze",
+        "away": "Lech Pozna\u0144",
+        "outcome": "G\u00f3rnik Zabrze",
+        "odds": 2.35,
+        "stake": 400.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-07T19:15:00Z"
+    },
+    {
+        "id": "195da2d50b40bdd09e585d2f55fe276c",
+        "home": "FC Twente Enschede",
+        "away": "Heerenveen",
+        "outcome": "FC Twente Enschede",
+        "odds": 1.8,
+        "stake": 250.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-07T19:00:00Z"
+    },
+    {
+        "id": "da9a62eb53624c1439006ec0c5795082",
+        "home": "Samsunspor",
+        "away": "Trabzonspor",
+        "outcome": "Trabzonspor",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-07T17:00:00Z"
+    },
+    {
+        "id": "12e06e97982707b2d03d1de585b5ca8e",
+        "home": "Charleroi",
+        "away": "Cercle Brugge KSV",
+        "outcome": "Cercle Brugge KSV",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-07T17:15:00Z"
+    },
+    {
+        "id": "37bde103ad3835595543226b80fa159a",
+        "home": "Rapid Wien",
+        "away": "Hartberg",
+        "outcome": "Hartberg",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-07T16:00:00Z"
+    },
+    {
+        "id": "beae739b7166c8f8563f3e6c774a3fbf",
+        "home": "AE Kifisia FC",
+        "away": "Atromitos Athens",
+        "outcome": "Atromitos Athens",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-07T18:00:00Z"
+    },
+    {
+        "id": "6b8ef479926896c163fc83dbf4b62030",
+        "home": "FC Sion",
+        "away": "FC Luzern",
+        "outcome": "FC Luzern",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-07T17:00:00Z"
+    },
+    {
+        "id": "a5d8855d0803816988651a81ba96c23b",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "BSC Young Boys",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 3.34,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-07T19:30:00Z"
     }
 ]
