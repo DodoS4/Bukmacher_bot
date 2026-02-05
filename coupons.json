@@ -70,56 +70,6 @@
         "time": "2026-02-06T03:00:00Z"
     },
     {
-        "id": "64839c58f6c23dfd115f0548f698e3f7",
-        "home": "Djurg\u00e5rdens IF",
-        "away": "F\u00e4rjestad BK",
-        "outcome": "Djurg\u00e5rdens IF",
-        "odds": 3.25,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-05T18:00:00Z"
-    },
-    {
-        "id": "dc28b1cda106cced12ece14e518be41b",
-        "home": "V\u00e4xj\u00f6 Lakers",
-        "away": "Fr\u00f6lunda HC",
-        "outcome": "V\u00e4xj\u00f6 Lakers",
-        "odds": 2.46,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-05T18:00:00Z"
-    },
-    {
-        "id": "7347fc7b1bec67c3a9f1e4052127ceed",
-        "home": "HV71",
-        "away": "Skellefte\u00e5 AIK",
-        "outcome": "HV71",
-        "odds": 3.55,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-05T18:00:00Z"
-    },
-    {
-        "id": "37a138d0ad3a4dc1ba00f0345970d648",
-        "home": "Timr\u00e5 IK",
-        "away": "Link\u00f6ping HC",
-        "outcome": "Link\u00f6ping HC",
-        "odds": 3.45,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-05T18:00:00Z"
-    },
-    {
-        "id": "a3c5d1c78e74313f1afea8d12bc6a315",
-        "home": "Malm\u00f6 Redhawks",
-        "away": "R\u00f6gle BK",
-        "outcome": "Malm\u00f6 Redhawks",
-        "odds": 2.54,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-05T18:00:00Z"
-    },
-    {
         "id": "d6f9dd0ae7f15045feec85865dc18b72",
         "home": "JYP",
         "away": "HPK",
@@ -440,16 +390,6 @@
         "time": "2026-02-06T16:30:00Z"
     },
     {
-        "id": "7e33b02e909d5f6cc701133c0d7ab0f2",
-        "home": "Lule\u00e5 HF",
-        "away": "\u00d6rebro HK",
-        "outcome": "\u00d6rebro HK",
-        "odds": 4.4,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-05T18:00:00Z"
-    },
-    {
         "id": "0c4773c674aea8d1462c7352f13844a4",
         "home": "Fatih Karag\u00fcmr\u00fck",
         "away": "Antalyaspor",
@@ -738,5 +678,115 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-07T19:30:00Z"
+    },
+    {
+        "id": "ac847e59546383df3ace1487f143fabd",
+        "home": "Djurg\u00e5rdens IF",
+        "away": "Link\u00f6ping HC",
+        "outcome": "Link\u00f6ping HC",
+        "odds": 2.99,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-02-07T14:15:00Z"
+    },
+    {
+        "id": "2f3cdeea2a0bd1e96fe273e584e0d5d6",
+        "home": "Lule\u00e5 HF",
+        "away": "Fr\u00f6lunda HC",
+        "outcome": "Fr\u00f6lunda HC",
+        "odds": 2.99,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-02-07T14:15:00Z"
+    },
+    {
+        "id": "45aad9b27c1073de0bf3ce5bf5697b19",
+        "home": "Malm\u00f6 Redhawks",
+        "away": "HV71",
+        "outcome": "HV71",
+        "odds": 3.47,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-02-07T14:15:00Z"
+    },
+    {
+        "id": "f8014e1195e72efb6a667c87dcc96967",
+        "home": "Leksands IF",
+        "away": "Timr\u00e5 IK",
+        "outcome": "Leksands IF",
+        "odds": 2.99,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-02-07T14:15:00Z"
+    },
+    {
+        "id": "6ec97e73a3495ccbf9dee36ebd00cf7d",
+        "home": "Bryn\u00e4s IF",
+        "away": "F\u00e4rjestad BK",
+        "outcome": "F\u00e4rjestad BK",
+        "odds": 3.19,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-02-07T17:00:00Z"
+    },
+    {
+        "id": "7b195e1d942a47d2b40fa913daa5a042",
+        "home": "R\u00f6gle BK",
+        "away": "V\u00e4xj\u00f6 Lakers",
+        "outcome": "R\u00f6gle BK",
+        "odds": 2.2,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-02-07T17:00:00Z"
+    },
+    {
+        "id": "2e80035301b91b842c2dbbf9e3fecdcb",
+        "home": "Fiorentina",
+        "away": "Torino",
+        "outcome": "Fiorentina",
+        "odds": 1.81,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-07T19:45:00Z"
+    },
+    {
+        "id": "4e75893ed5380ba5820423e0f811af7c",
+        "home": "Celta Vigo",
+        "away": "CA Osasuna",
+        "outcome": "CA Osasuna",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-06T20:00:00Z"
+    },
+    {
+        "id": "f84bc94e39259bded69b13625f77804b",
+        "home": "Arouca",
+        "away": "Vit\u00f3ria SC",
+        "outcome": "Arouca",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-07T20:30:00Z"
+    },
+    {
+        "id": "16c5df5b0b6c2fbf3d7e5456c934869d",
+        "home": "Fortuna Sittard",
+        "away": "Sparta Rotterdam",
+        "outcome": "Fortuna Sittard",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-07T20:00:00Z"
+    },
+    {
+        "id": "d4f2ba940ec47385f1139659cc8590e5",
+        "home": "Gent",
+        "away": "Leuven",
+        "outcome": "Leuven",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-07T19:45:00Z"
     }
 ]
