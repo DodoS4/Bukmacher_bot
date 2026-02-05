@@ -1,85 +1,5 @@
 [
     {
-        "id": "b645d8f2bf24381915f025a9a19b5b7b",
-        "home": "Florida Panthers",
-        "away": "Boston Bruins",
-        "outcome": "Boston Bruins",
-        "odds": 3.14,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-05T00:00:00Z"
-    },
-    {
-        "id": "c8f0431266305adc845e1866002b813f",
-        "home": "Columbus Blue Jackets",
-        "away": "Chicago Blackhawks",
-        "outcome": "Chicago Blackhawks",
-        "odds": 3.15,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-05T00:00:00Z"
-    },
-    {
-        "id": "79c648b4c10b1dcb684d8125c13f1666",
-        "home": "Winnipeg Jets",
-        "away": "Montr\u00e9al Canadiens",
-        "outcome": "Winnipeg Jets",
-        "odds": 2.6,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-05T00:00:00Z"
-    },
-    {
-        "id": "2cd3399f994c2c384e7eae7a06259742",
-        "home": "Nashville Predators",
-        "away": "Minnesota Wild",
-        "outcome": "Nashville Predators",
-        "odds": 2.8,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-05T01:00:00Z"
-    },
-    {
-        "id": "3be70dd1f34377a170618de9766a2ba7",
-        "home": "Utah Mammoth",
-        "away": "Detroit Red Wings",
-        "outcome": "Detroit Red Wings",
-        "odds": 2.9,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-05T02:00:00Z"
-    },
-    {
-        "id": "3162c0ad159e798addf8f2d907cae7d2",
-        "home": "Dallas Stars",
-        "away": "St Louis Blues",
-        "outcome": "St Louis Blues",
-        "odds": 3.9,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-05T02:30:00Z"
-    },
-    {
-        "id": "93d38704ebcb69e06e1ca84ff670183d",
-        "home": "Calgary Flames",
-        "away": "Edmonton Oilers",
-        "outcome": "Calgary Flames",
-        "odds": 2.9,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-05T03:00:00Z"
-    },
-    {
-        "id": "ddbc767687ee6b93f9a19e0011d7e541",
-        "home": "Los Angeles Kings",
-        "away": "Seattle Kraken",
-        "outcome": "Seattle Kraken",
-        "odds": 3.55,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-02-05T03:00:00Z"
-    },
-    {
         "id": "c693346418362b1cf7ff17f2750419de",
         "home": "Buffalo Sabres",
         "away": "Pittsburgh Penguins",
@@ -508,5 +428,15 @@
         "stake": 250.0,
         "sport": "soccer_efl_champ",
         "time": "2026-02-06T20:01:00Z"
+    },
+    {
+        "id": "591d3b70a8bf12aa7bbb62f1b274b783",
+        "home": "HIFK",
+        "away": "K\u00e4rp\u00e4t",
+        "outcome": "K\u00e4rp\u00e4t",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-06T16:30:00Z"
     }
 ]
