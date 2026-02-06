@@ -1038,5 +1038,125 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-08T15:30:00Z"
+    },
+    {
+        "id": "9c1de28e334ca541aec69870da7fa321",
+        "home": "JYP",
+        "away": "HIFK",
+        "outcome": "HIFK",
+        "odds": 2.66,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "eb58af874c540fb1e05d1a7a30798bf5",
+        "home": "HPK",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 2.74,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "a3f83bfacf5dcdaa16f237e13dc681b3",
+        "home": "K\u00e4rp\u00e4t",
+        "away": "Ilves",
+        "outcome": "K\u00e4rp\u00e4t",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "a730690c61796a2ba244b507509625ac",
+        "home": "KooKoo",
+        "away": "Lukko",
+        "outcome": "Lukko",
+        "odds": 2.68,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "efacef1d839d4786967f99b8aebd67b4",
+        "home": "Pelicans",
+        "away": "TPS",
+        "outcome": "TPS",
+        "odds": 2.75,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-07T15:00:00Z"
+    },
+    {
+        "id": "422322b6d6a2368862d450e43e67d671",
+        "home": "GKS Katowice",
+        "away": "Widzew \u0141\u00f3d\u017a",
+        "outcome": "Widzew \u0141\u00f3d\u017a",
+        "odds": 2.9,
+        "stake": 400.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-08T16:30:00Z"
+    },
+    {
+        "id": "ce0423fe1b1fde4d1f697d3b734a8e8c",
+        "home": "Le Havre",
+        "away": "Strasbourg",
+        "outcome": "Le Havre",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-02-08T16:15:00Z"
+    },
+    {
+        "id": "d2b3fc564651f90a7412053fca98e1e2",
+        "home": "Groningen",
+        "away": "PSV Eindhoven",
+        "outcome": "Groningen",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-08T15:45:00Z"
+    },
+    {
+        "id": "5978ac1a4c57443fea6071c86e528f12",
+        "home": "KV Mechelen",
+        "away": "Royal Antwerp",
+        "outcome": "Royal Antwerp",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-08T18:15:00Z"
+    },
+    {
+        "id": "fe06c4615a37caa223915de2c24f6664",
+        "home": "Sturm Graz",
+        "away": "Ried",
+        "outcome": "Ried",
+        "odds": 3.85,
+        "stake": 250.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-08T16:00:00Z"
+    },
+    {
+        "id": "af70d254c81f7a697ec6bc875ae32a10",
+        "home": "Brondby IF",
+        "away": "Randers FC",
+        "outcome": "Randers FC",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-08T17:00:00Z"
+    },
+    {
+        "id": "4d7aeafd70fe0c48a9733841b80d5217",
+        "home": "Aris Thessaloniki",
+        "away": "PAOK Thessaloniki",
+        "outcome": "Aris Thessaloniki",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-08T17:00:00Z"
     }
 ]
