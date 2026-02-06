@@ -868,5 +868,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-02-07T03:00:00Z"
+    },
+    {
+        "id": "a4afc664ca381246c46f4333c4e91049",
+        "home": "FC Utrecht",
+        "away": "Feyenoord",
+        "outcome": "FC Utrecht",
+        "odds": 3.35,
+        "stake": 250.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-08T11:15:00Z"
     }
 ]
