@@ -1128,5 +1128,15 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-02-08T13:00:00Z"
+    },
+    {
+        "id": "69e9d562b78223c461bc86e5dc606c6b",
+        "home": "Toronto Marlies",
+        "away": "Springfield Thunderbirds",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-07T21:00:00Z"
     }
 ]
