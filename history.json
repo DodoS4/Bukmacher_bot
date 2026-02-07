@@ -4398,5 +4398,57 @@
         "profit": 437.5,
         "status": "WIN",
         "score": "1:2"
+    },
+    {
+        "id": "0c4773c674aea8d1462c7352f13844a4",
+        "home": "Fatih Karag\u00fcmr\u00fck",
+        "away": "Antalyaspor",
+        "outcome": "Antalyaspor",
+        "odds": 3.4,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-07T11:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:0"
+    },
+    {
+        "id": "a0a9f44032d844ef6b69ce828c50fe93",
+        "home": "Norwich City",
+        "away": "Blackburn Rovers",
+        "outcome": "Blackburn Rovers",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T12:31:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:0"
+    },
+    {
+        "id": "2f5f10108f1a3011a1ff4084dc4e076b",
+        "home": "Derby County",
+        "away": "Ipswich Town",
+        "outcome": "Derby County",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T12:31:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:2"
+    },
+    {
+        "id": "f0337cc8e148f6aadd90a7b6ff48427a",
+        "home": "Southampton",
+        "away": "Watford",
+        "outcome": "Watford",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-07T12:31:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:0"
     }
 ]
