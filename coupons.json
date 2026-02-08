@@ -320,16 +320,6 @@
         "time": "2026-02-07T03:00:00Z"
     },
     {
-        "id": "a4afc664ca381246c46f4333c4e91049",
-        "home": "FC Utrecht",
-        "away": "Feyenoord",
-        "outcome": "FC Utrecht",
-        "odds": 3.35,
-        "stake": 250.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-02-08T11:15:00Z"
-    },
-    {
         "id": "5589fa9d8d767a0fbb17e8bb533d13ea",
         "home": "1. FC K\u00f6ln",
         "away": "RB Leipzig",
@@ -370,16 +360,6 @@
         "time": "2026-02-08T15:30:00Z"
     },
     {
-        "id": "d65968c20cfda0b2232a55507dca3e03",
-        "home": "AZ Alkmaar",
-        "away": "Ajax",
-        "outcome": "Ajax",
-        "odds": 3.1,
-        "stake": 250.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-02-08T13:30:00Z"
-    },
-    {
         "id": "c426c8dd6791c1daad13b634cd8b37a3",
         "home": "Go Ahead Eagles",
         "away": "SC Telstar",
@@ -400,56 +380,6 @@
         "time": "2026-02-08T14:00:00Z"
     },
     {
-        "id": "d2fac8d34f61a7601d8eb2a893ff9f4c",
-        "home": "Genk",
-        "away": "Anderlecht",
-        "outcome": "Anderlecht",
-        "odds": 4.0,
-        "stake": 250.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-02-08T12:30:00Z"
-    },
-    {
-        "id": "9d350d4f897d0e687004a6d64499721c",
-        "home": "Rheindorf Altach",
-        "away": "FC Blau-Wei\u00df Linz",
-        "outcome": "FC Blau-Wei\u00df Linz",
-        "odds": 4.5,
-        "stake": 250.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-02-08T13:30:00Z"
-    },
-    {
-        "id": "18455c3bc5cea4de6a38f2781cfcc6de",
-        "home": "Wolfsberger AC",
-        "away": "Grazer AK",
-        "outcome": "Grazer AK",
-        "odds": 4.25,
-        "stake": 250.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-02-08T13:30:00Z"
-    },
-    {
-        "id": "65d8494f15618a48278efbc9bf00249e",
-        "home": "FC Nordsjaelland",
-        "away": "SonderjyskE",
-        "outcome": "SonderjyskE",
-        "odds": 4.5,
-        "stake": 250.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-02-08T13:00:00Z"
-    },
-    {
-        "id": "af00899e4e71e97745f36d40c13b1820",
-        "home": "Silkeborg IF",
-        "away": "Viborg FF",
-        "outcome": "Silkeborg IF",
-        "odds": 2.9,
-        "stake": 250.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-02-08T13:00:00Z"
-    },
-    {
         "id": "02dc2079c2202be310f268f2aa53e79e",
         "home": "FC Midtjylland",
         "away": "FC Copenhagen",
@@ -468,16 +398,6 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-02-08T15:00:00Z"
-    },
-    {
-        "id": "557abf28f9f0f291f350308192ecc991",
-        "home": "Servette",
-        "away": "FC Thun",
-        "outcome": "FC Thun",
-        "odds": 2.9,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-02-08T13:00:00Z"
     },
     {
         "id": "3c9951cea890c8e25289a3002756a1d9",
@@ -708,16 +628,6 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-02-07T17:30:00Z"
-    },
-    {
-        "id": "a5bb85142adf2a041fd0c7d703c4fb86",
-        "home": "Alav\u00e9s",
-        "away": "Getafe",
-        "outcome": "Getafe",
-        "odds": 4.0,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-02-08T13:00:00Z"
     },
     {
         "id": "69e9d562b78223c461bc86e5dc606c6b",
