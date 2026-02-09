@@ -678,5 +678,15 @@
         "stake": 250.0,
         "sport": "soccer_epl",
         "time": "2026-02-10T20:15:00Z"
+    },
+    {
+        "id": "957230489ae530962091d4415cd2d638",
+        "home": "FC Luzern",
+        "away": "Grasshopper Z\u00fcrich",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-10T19:30:00Z"
     }
 ]
