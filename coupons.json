@@ -370,16 +370,6 @@
         "time": "2026-02-07T15:00:00Z"
     },
     {
-        "id": "5978ac1a4c57443fea6071c86e528f12",
-        "home": "KV Mechelen",
-        "away": "Royal Antwerp",
-        "outcome": "Royal Antwerp",
-        "odds": 2.9,
-        "stake": 250.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-02-08T18:15:00Z"
-    },
-    {
         "id": "97da377a961f1309d9dc617c4034082e",
         "home": "Utica Comets",
         "away": "Rochester Americans",
@@ -618,5 +608,65 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-02-10T16:30:00Z"
+    },
+    {
+        "id": "5b5fa92a38c5a46da05ac81d003f6f1e",
+        "home": "Everton",
+        "away": "Bournemouth",
+        "outcome": "Bournemouth",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-02-10T19:30:00Z"
+    },
+    {
+        "id": "7dbe188ba5a5b8a16e8d293c2afe1274",
+        "home": "Tottenham Hotspur",
+        "away": "Newcastle United",
+        "outcome": "Tottenham Hotspur",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-02-10T19:30:00Z"
+    },
+    {
+        "id": "1ffae320395267eedc28d335de7c1993",
+        "home": "Hearts",
+        "away": "Hibernian",
+        "outcome": "Hearts",
+        "odds": 1.9,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-02-10T20:00:00Z"
+    },
+    {
+        "id": "157ae42e1d6e941d0c254ee64d8021d0",
+        "home": "Leicester City",
+        "away": "Southampton",
+        "outcome": "Leicester City",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-10T19:45:00Z"
+    },
+    {
+        "id": "ed05fc642f7f7a4ed8746a43c67c342b",
+        "home": "Oxford United",
+        "away": "Norwich City",
+        "outcome": "Oxford United",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-10T19:45:00Z"
+    },
+    {
+        "id": "0efdcd4820f207aef1d6787ef76fc79f",
+        "home": "Birmingham City",
+        "away": "West Bromwich Albion",
+        "outcome": "West Bromwich Albion",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-10T20:00:00Z"
     }
 ]

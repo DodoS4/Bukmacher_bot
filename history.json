@@ -5295,5 +5295,18 @@
         "profit": 368.75,
         "status": "WIN",
         "score": "1:0"
+    },
+    {
+        "id": "5978ac1a4c57443fea6071c86e528f12",
+        "home": "KV Mechelen",
+        "away": "Royal Antwerp",
+        "outcome": "Royal Antwerp",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-08T18:15:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:0"
     }
 ]
