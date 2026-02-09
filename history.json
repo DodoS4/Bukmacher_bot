@@ -5308,5 +5308,57 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "d621cf19b2d83d3471bc221813ea7929",
+        "home": "Kayserispor",
+        "away": "Kocaelispor",
+        "outcome": "Kayserispor",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-09T14:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:2"
+    },
+    {
+        "id": "838bcf67d554229caf87099012dd1460",
+        "home": "Piast Gliwice",
+        "away": "Wis\u0142a P\u0142ock",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 3.65,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-09T18:00:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "1:0"
+    },
+    {
+        "id": "464d0e12f98888a60b1061ad58a3b1c7",
+        "home": "Gazi\u015fehir Gaziantep",
+        "away": "Kasimpasa SK",
+        "outcome": "Kasimpasa SK",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-09T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "fbecc11f0945f124f4641d55949b05ed",
+        "home": "Vejle Boldklub",
+        "away": "FC Fredericia",
+        "outcome": "FC Fredericia",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-09T18:00:00Z",
+        "profit": 775.0,
+        "status": "WIN",
+        "score": "2:3"
     }
 ]
