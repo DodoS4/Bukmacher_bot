@@ -470,36 +470,6 @@
         "time": "2026-02-07T21:00:00Z"
     },
     {
-        "id": "ba78e31e56381be4167ed3048c67a594",
-        "home": "IK Oskarshamn",
-        "away": "IF Troja-Ljungby",
-        "outcome": "IF Troja-Ljungby",
-        "odds": 4.15,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-02-09T18:00:00Z"
-    },
-    {
-        "id": "912d6cd02abc2085e3f8e09255fe6d42",
-        "home": "FC Porto",
-        "away": "Sporting Lisbon",
-        "outcome": "Sporting Lisbon",
-        "odds": 3.6,
-        "stake": 250.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-02-09T20:45:00Z"
-    },
-    {
-        "id": "f4a5022a42fe6598c94208acce5b56ce",
-        "home": "Sheffield United",
-        "away": "Middlesbrough",
-        "outcome": "Middlesbrough",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-09T20:01:00Z"
-    },
-    {
         "id": "b909636ebad2996db91c9e1f725636bb",
         "home": "AIK",
         "away": "Modo Hockey",

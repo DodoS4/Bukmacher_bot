@@ -5360,5 +5360,44 @@
         "profit": 775.0,
         "status": "WIN",
         "score": "2:3"
+    },
+    {
+        "id": "ba78e31e56381be4167ed3048c67a594",
+        "home": "IK Oskarshamn",
+        "away": "IF Troja-Ljungby",
+        "outcome": "IF Troja-Ljungby",
+        "odds": 4.15,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-02-09T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "912d6cd02abc2085e3f8e09255fe6d42",
+        "home": "FC Porto",
+        "away": "Sporting Lisbon",
+        "outcome": "Sporting Lisbon",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-09T20:45:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "f4a5022a42fe6598c94208acce5b56ce",
+        "home": "Sheffield United",
+        "away": "Middlesbrough",
+        "outcome": "Middlesbrough",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-09T20:01:00Z",
+        "profit": 281.25,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]
