@@ -638,5 +638,35 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-12T19:30:00Z"
+    },
+    {
+        "id": "cc50b1295cdb1e2ca9193fe81cb16059",
+        "home": "KeuPa HT",
+        "away": "Hermes",
+        "outcome": "KeuPa HT",
+        "odds": 3.06,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-12T16:00:00Z"
+    },
+    {
+        "id": "7267b0ba0f0bf02b9db4db719020d339",
+        "home": "FC Zurich",
+        "away": "FC Winterthur",
+        "outcome": "FC Winterthur",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-11T19:30:00Z"
+    },
+    {
+        "id": "dc976f0d2c7174166b261de8e75631ba",
+        "home": "FC Sion",
+        "away": "FC Basel",
+        "outcome": "FC Basel",
+        "odds": 2.72,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-12T19:30:00Z"
     }
 ]
