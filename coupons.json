@@ -540,16 +540,6 @@
         "time": "2026-02-11T19:30:00Z"
     },
     {
-        "id": "5a7b74f247be320e8c6f3e179b731055",
-        "home": "Go Ahead Eagles",
-        "away": "Heerenveen",
-        "outcome": "Go Ahead Eagles",
-        "odds": 2.78,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-02-11T17:45:00Z"
-    },
-    {
         "id": "a65574e627a8993c47e8f4341c6d3efc",
         "home": "FC St Gallen",
         "away": "BSC Young Boys",
@@ -668,5 +658,95 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-12T19:30:00Z"
+    },
+    {
+        "id": "c01fb544bb8a1d195f880413cf11de2c",
+        "home": "HIFK",
+        "away": "Lukko",
+        "outcome": "HIFK",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-13T16:30:00Z"
+    },
+    {
+        "id": "84f0b9dac48e536d1fe3cd4dc7425b19",
+        "home": "KooKoo",
+        "away": "HPK",
+        "outcome": "HPK",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-13T16:30:00Z"
+    },
+    {
+        "id": "ee43a99559faf5a5f660cca4e469390f",
+        "home": "Tappara",
+        "away": "Ilves",
+        "outcome": "Tappara",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-13T16:30:00Z"
+    },
+    {
+        "id": "3dfd550851350a219a7e08af785750c4",
+        "home": "Pelicans",
+        "away": "JYP",
+        "outcome": "Pelicans",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-13T16:30:00Z"
+    },
+    {
+        "id": "87b446297b9dac09d9d65fbbac0ae2a6",
+        "home": "K\u00e4rp\u00e4t",
+        "away": "KalPa",
+        "outcome": "K\u00e4rp\u00e4t",
+        "odds": 2.63,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-13T17:30:00Z"
+    },
+    {
+        "id": "80d6d21728497bfb29abceccb805bf8b",
+        "home": "Radomiak Radom",
+        "away": "Korona Kielce",
+        "outcome": "Korona Kielce",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-13T17:00:00Z"
+    },
+    {
+        "id": "3c40b0a397f5ea2f36a1aba2fcbab177",
+        "home": "GKS Katowice",
+        "away": "Legia Warszawa",
+        "outcome": "GKS Katowice",
+        "odds": 3.2,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-13T19:30:00Z"
+    },
+    {
+        "id": "3783fee2518860662ab80b078e7d624a",
+        "home": "Antalyaspor",
+        "away": "Samsunspor",
+        "outcome": "Antalyaspor",
+        "odds": 3.99,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-13T17:00:00Z"
+    },
+    {
+        "id": "5c1c65055d1917c0ccf1d599e76da733",
+        "home": "KV Mechelen",
+        "away": "Genk",
+        "outcome": "KV Mechelen",
+        "odds": 3.47,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-13T19:45:00Z"
     }
 ]

@@ -5555,5 +5555,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "4:3"
+    },
+    {
+        "id": "5a7b74f247be320e8c6f3e179b731055",
+        "home": "Go Ahead Eagles",
+        "away": "Heerenveen",
+        "outcome": "Go Ahead Eagles",
+        "odds": 2.78,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-11T17:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:3"
     }
 ]
