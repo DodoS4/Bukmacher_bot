@@ -768,5 +768,15 @@
         "stake": 125.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-02-13T20:45:00Z"
+    },
+    {
+        "id": "62ebc000bbef9da6e3306ed19ae9afd3",
+        "home": "Genclerbirligi SK",
+        "away": "\u00c7aykur Rizespor",
+        "outcome": "\u00c7aykur Rizespor",
+        "odds": 3.02,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-14T11:30:00Z"
     }
 ]
