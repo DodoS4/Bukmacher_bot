@@ -530,36 +530,6 @@
         "time": "2026-02-11T16:30:00Z"
     },
     {
-        "id": "6eb455fd4d99ec4ccae4ec842f2f34fb",
-        "home": "Aston Villa",
-        "away": "Brighton and Hove Albion",
-        "outcome": "Brighton and Hove Albion",
-        "odds": 4.01,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-02-11T19:30:00Z"
-    },
-    {
-        "id": "a65574e627a8993c47e8f4341c6d3efc",
-        "home": "FC St Gallen",
-        "away": "BSC Young Boys",
-        "outcome": "BSC Young Boys",
-        "odds": 2.88,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-02-11T19:30:00Z"
-    },
-    {
-        "id": "e97f9ea12765b3ac2aadc2f6598bf423",
-        "home": "FC Lugano",
-        "away": "Servette",
-        "outcome": "Servette",
-        "odds": 3.43,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-02-11T19:30:00Z"
-    },
-    {
         "id": "519870244e5f58ef5820a9361d1250ce",
         "home": "Dundee United",
         "away": "Aberdeen",
@@ -568,56 +538,6 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-02-11T19:45:00Z"
-    },
-    {
-        "id": "35f8853b0c35528bdce95e27faa81d71",
-        "home": "Falkirk F.C.",
-        "away": "Dundee FC",
-        "outcome": "Falkirk F.C.",
-        "odds": 1.8,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-02-11T19:45:00Z"
-    },
-    {
-        "id": "fd6f09ca4d7ddbf077cd8ed6eac4f550",
-        "home": "Kilmarnock",
-        "away": "St Mirren",
-        "outcome": "Kilmarnock",
-        "odds": 3.0,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-02-11T19:45:00Z"
-    },
-    {
-        "id": "3e750d50ca4094502a77d802a5f71921",
-        "home": "Motherwell",
-        "away": "Rangers",
-        "outcome": "Motherwell",
-        "odds": 3.55,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-02-11T20:00:00Z"
-    },
-    {
-        "id": "673b979382fbe4340c975d82bc8366ba",
-        "home": "Charlton Athletic",
-        "away": "Stoke City",
-        "outcome": "Stoke City",
-        "odds": 2.9,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-11T19:45:00Z"
-    },
-    {
-        "id": "34bd80d2295adf2b26ae146f65f226be",
-        "home": "Sunderland",
-        "away": "Liverpool",
-        "outcome": "Liverpool",
-        "odds": 1.8,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-02-11T20:15:00Z"
     },
     {
         "id": "edfd296ee1c3941d1c5f008a01064b97",
@@ -638,16 +558,6 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-02-12T16:00:00Z"
-    },
-    {
-        "id": "7267b0ba0f0bf02b9db4db719020d339",
-        "home": "FC Zurich",
-        "away": "FC Winterthur",
-        "outcome": "FC Winterthur",
-        "odds": 4.4,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-02-11T19:30:00Z"
     },
     {
         "id": "dc976f0d2c7174166b261de8e75631ba",
@@ -748,5 +658,115 @@
         "stake": 250.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-02-13T19:45:00Z"
+    },
+    {
+        "id": "774d4fd5ef03cbaa4e6efca81ea04c3d",
+        "home": "Jukurit",
+        "away": "Kiekko-Espoo",
+        "outcome": "Jukurit",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-02-13T16:30:00Z"
+    },
+    {
+        "id": "318f0b206e14eb0034f61aa2aaa8bfa2",
+        "home": "Grand Rapids Griffins",
+        "away": "Texas Stars",
+        "outcome": "Texas Stars",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-14T00:00:00Z"
+    },
+    {
+        "id": "52279d863b18285d79cc629c94968503",
+        "home": "Laval Rocket",
+        "away": "Hershey Bears",
+        "outcome": "Hershey Bears",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-14T00:00:00Z"
+    },
+    {
+        "id": "7f32fcef147c795b4054764cbccdf05c",
+        "home": "Iowa Wild",
+        "away": "Springfield Thunderbirds",
+        "outcome": "Iowa Wild",
+        "odds": 2.48,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-14T01:00:00Z"
+    },
+    {
+        "id": "8f1eba0bfbd9de74c1554b25c00723cc",
+        "home": "Bakersfield Condors",
+        "away": "San Diego Gulls",
+        "outcome": "San Diego Gulls",
+        "odds": 2.49,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-14T03:00:00Z"
+    },
+    {
+        "id": "c2fdcee07ac998dde6354dc703afbba5",
+        "home": "Coachella Valley Firebirds",
+        "away": "Tucson Roadrunners",
+        "outcome": "Tucson Roadrunners",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-02-14T03:00:00Z"
+    },
+    {
+        "id": "96b93cb02d6b5b0ddf0463a6b17bdb1c",
+        "home": "IPK",
+        "away": "Pyry",
+        "outcome": "Pyry",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-13T16:30:00Z"
+    },
+    {
+        "id": "efbc4b8b75096f530220d25a658c3668",
+        "home": "Ketter\u00e4",
+        "away": "TUTO Hockey",
+        "outcome": "TUTO Hockey",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-13T16:30:00Z"
+    },
+    {
+        "id": "9f80e57810a8507bba07e0f5912df797",
+        "home": "Kiekko-Vantaa",
+        "away": "RoKi",
+        "outcome": "RoKi",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-13T16:30:00Z"
+    },
+    {
+        "id": "c520accddd186a9c4e35f07e316dfe49",
+        "home": "Elche CF",
+        "away": "CA Osasuna",
+        "outcome": "CA Osasuna",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-13T20:00:00Z"
+    },
+    {
+        "id": "007792d8e4d0f9dfec45e2d0f2ab8b11",
+        "home": "Tondela",
+        "away": "Alverca",
+        "outcome": "Alverca",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-13T20:45:00Z"
     }
 ]
