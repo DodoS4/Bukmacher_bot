@@ -948,5 +948,125 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-02-14T15:00:00Z"
+    },
+    {
+        "id": "a4a58d7ec8acd4186e9f7356d5f3f2b3",
+        "home": "Lazio",
+        "away": "Atalanta BC",
+        "outcome": "Lazio",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-14T17:00:00Z"
+    },
+    {
+        "id": "19e715ad4a9b60c42b6d3eec90dddfdd",
+        "home": "Inter Milan",
+        "away": "Juventus",
+        "outcome": "Juventus",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-14T19:45:00Z"
+    },
+    {
+        "id": "d12a72bdf185d250bac4f827fc470d36",
+        "home": "Sevilla",
+        "away": "Alav\u00e9s",
+        "outcome": "Alav\u00e9s",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-14T17:30:00Z"
+    },
+    {
+        "id": "084f68b8593507c5b27658aaa04a4eac",
+        "home": "Zag\u0142\u0119bie Lubin",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Zag\u0142\u0119bie Lubin",
+        "odds": 3.8,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-14T16:30:00Z"
+    },
+    {
+        "id": "7fc93391701b60721cd6586144587bac",
+        "home": "Wis\u0142a P\u0142ock",
+        "away": "Widzew \u0141\u00f3d\u017a",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 2.81,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-14T19:15:00Z"
+    },
+    {
+        "id": "f1d5edf2aa7a350478589e3222ea867e",
+        "home": "Excelsior",
+        "away": "AZ Alkmaar",
+        "outcome": "Excelsior",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-14T17:45:00Z"
+    },
+    {
+        "id": "0525b5a218d2c514e7d74b4f981226a1",
+        "home": "Trabzonspor",
+        "away": "Fenerbahce",
+        "outcome": "Trabzonspor",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-14T17:00:00Z"
+    },
+    {
+        "id": "295b10b471d5607da19a1f7ae182bf8f",
+        "home": "Charleroi",
+        "away": "Gent",
+        "outcome": "Charleroi",
+        "odds": 2.28,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-14T17:15:00Z"
+    },
+    {
+        "id": "21e03a3536370094311239984efefdd3",
+        "home": "WSG Tirol",
+        "away": "Sturm Graz",
+        "outcome": "WSG Tirol",
+        "odds": 3.37,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-14T16:00:00Z"
+    },
+    {
+        "id": "9df4a7b3c08ceb1c8ac0fe62fefdc965",
+        "home": "FC Copenhagen",
+        "away": "FC Nordsjaelland",
+        "outcome": "FC Nordsjaelland",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-14T16:00:00Z"
+    },
+    {
+        "id": "e0c3a5fc32869c49cc65d4187b995f6a",
+        "home": "Volos FC",
+        "away": "Aris Thessaloniki",
+        "outcome": "Volos FC",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-14T18:00:00Z"
+    },
+    {
+        "id": "171881c02aa6358a98a9c4a9c3a87a46",
+        "home": "Queens Park Rangers",
+        "away": "Blackburn Rovers",
+        "outcome": "Blackburn Rovers",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-14T15:00:00Z"
     }
 ]
