@@ -778,5 +778,175 @@
         "stake": 250.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-02-14T11:30:00Z"
+    },
+    {
+        "id": "b7b537fc62572829b1de31f22a3ac11f",
+        "home": "Eintracht Frankfurt",
+        "away": "Borussia Monchengladbach",
+        "outcome": "Borussia Monchengladbach",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-14T14:30:00Z"
+    },
+    {
+        "id": "c7832eaf06ab73105b79f55d3cf99bb5",
+        "home": "Hamburger SV",
+        "away": "Union Berlin",
+        "outcome": "Union Berlin",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-14T14:30:00Z"
+    },
+    {
+        "id": "adac2e38c3d33aa5e38bdae85d55c53e",
+        "home": "Como",
+        "away": "Fiorentina",
+        "outcome": "Como",
+        "odds": 1.83,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-14T14:00:00Z"
+    },
+    {
+        "id": "8208dd3ed6a779b719a2bf7893b2832c",
+        "home": "Espanyol",
+        "away": "Celta Vigo",
+        "outcome": "Espanyol",
+        "odds": 2.58,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-14T13:00:00Z"
+    },
+    {
+        "id": "05e0face40ccf9207a78ee7e87009625",
+        "home": "Getafe",
+        "away": "Villarreal",
+        "outcome": "Getafe",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-14T15:15:00Z"
+    },
+    {
+        "id": "f9607a9f72b03d7f3f7fc2e9210156f6",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Jagiellonia Bia\u0142ystok",
+        "outcome": "Cracovia Krak\u00f3w",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-14T13:45:00Z"
+    },
+    {
+        "id": "1195e60deb613a87483ba31430f60038",
+        "home": "Casa Pia",
+        "away": "Arouca",
+        "outcome": "Casa Pia",
+        "odds": 2.92,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-14T15:30:00Z"
+    },
+    {
+        "id": "54968c62829560d4a82554ca92f6a224",
+        "home": "Heracles Almelo",
+        "away": "NAC Breda",
+        "outcome": "NAC Breda",
+        "odds": 2.75,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-14T15:30:00Z"
+    },
+    {
+        "id": "476df815b14000715634c3c87819ed10",
+        "home": "Alanyaspor",
+        "away": "Torku Konyaspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-14T14:00:00Z"
+    },
+    {
+        "id": "0aa51eea06367a1dd37b75b405fdee2c",
+        "home": "Leuven",
+        "away": "Dender",
+        "outcome": "Dender",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-14T15:00:00Z"
+    },
+    {
+        "id": "35e48b306bea7d886121608256898398",
+        "home": "Panetolikos Agrinio",
+        "away": "Asteras Tripolis",
+        "outcome": "Panetolikos Agrinio",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-14T15:00:00Z"
+    },
+    {
+        "id": "1ad28fc4aa2354122c835edc6858ca1f",
+        "home": "Dundee FC",
+        "away": "Livingston",
+        "outcome": "Livingston",
+        "odds": 3.85,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-02-14T15:00:00Z"
+    },
+    {
+        "id": "c4850356c86e3af44db236f03fb33397",
+        "home": "Falkirk F.C.",
+        "away": "Dundee United",
+        "outcome": "Dundee United",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-02-14T15:00:00Z"
+    },
+    {
+        "id": "c6dbb6730103373bdde68c5b5927f24d",
+        "home": "Hibernian",
+        "away": "St Mirren",
+        "outcome": "St Mirren",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-02-14T15:00:00Z"
+    },
+    {
+        "id": "fe55a8956bc8cd1fa2d03327d14e23fb",
+        "home": "Derby County",
+        "away": "Swansea City",
+        "outcome": "Derby County",
+        "odds": 2.36,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-14T15:00:00Z"
+    },
+    {
+        "id": "3444256a730c76b2a1492e00825404eb",
+        "home": "Portsmouth",
+        "away": "Sheffield United",
+        "outcome": "Portsmouth",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-14T15:00:00Z"
+    },
+    {
+        "id": "42621d633f9c6fb12ea752280de62e38",
+        "home": "Preston North End",
+        "away": "Watford",
+        "outcome": "Preston North End",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-14T15:00:00Z"
     }
 ]
