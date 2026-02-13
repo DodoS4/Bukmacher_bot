@@ -5685,5 +5685,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "3:0"
+    },
+    {
+        "id": "edfd296ee1c3941d1c5f008a01064b97",
+        "home": "FC Thun",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 3.97,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-12T19:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "5:1"
+    },
+    {
+        "id": "dc976f0d2c7174166b261de8e75631ba",
+        "home": "FC Sion",
+        "away": "FC Basel",
+        "outcome": "FC Basel",
+        "odds": 2.72,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-12T19:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:0"
     }
 ]
