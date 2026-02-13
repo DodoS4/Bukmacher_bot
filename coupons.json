@@ -1238,5 +1238,45 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-14T17:00:00Z"
+    },
+    {
+        "id": "5a16e02af0972172c53e8888aebdd48a",
+        "home": "Udinese",
+        "away": "Sassuolo",
+        "outcome": "Udinese",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-15T11:30:00Z"
+    },
+    {
+        "id": "a1ac280c060668cebfb07e4b65200b4a",
+        "home": "Motor Lublin",
+        "away": "Lechia Gda\u0144sk",
+        "outcome": "Lechia Gda\u0144sk",
+        "odds": 2.78,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-15T11:15:00Z"
+    },
+    {
+        "id": "0606791672dc62d68969551b6ce224d6",
+        "home": "Groningen",
+        "away": "FC Utrecht",
+        "outcome": "FC Utrecht",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-02-14T20:00:00Z"
+    },
+    {
+        "id": "3f8395e0106a8babefc0201ae6824c44",
+        "home": "Kocaelispor",
+        "away": "Gazi\u015fehir Gaziantep",
+        "outcome": "Kocaelispor",
+        "odds": 1.98,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-15T11:30:00Z"
     }
 ]
