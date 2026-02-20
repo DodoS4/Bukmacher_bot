@@ -5711,5 +5711,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "6642fb52aad2039b8b59d2fcf38fe484",
+        "home": "\u00c7aykur Rizespor",
+        "away": "Kocaelispor",
+        "outcome": "Kocaelispor",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-20T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:0"
     }
 ]
