@@ -2168,5 +2168,195 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-02-21T15:00:00Z"
+    },
+    {
+        "id": "f1f34bdcacc75d053d0953f2bb019506",
+        "home": "Hermes",
+        "away": "RoKi",
+        "outcome": "RoKi",
+        "odds": 2.75,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-21T15:00:00Z"
+    },
+    {
+        "id": "c21cb9378b312bc477b7b0667a351199",
+        "home": "JoKP",
+        "away": "IPK",
+        "outcome": "JoKP",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-21T15:00:00Z"
+    },
+    {
+        "id": "5ed56d7682b2edb901548e2e28c3c49d",
+        "home": "Kiekko-Vantaa",
+        "away": "Ketter\u00e4",
+        "outcome": "Ketter\u00e4",
+        "odds": 3.17,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-21T15:00:00Z"
+    },
+    {
+        "id": "d6226376264cb3256607f33c9fa0a947",
+        "home": "Pyry",
+        "away": "TUTO Hockey",
+        "outcome": "TUTO Hockey",
+        "odds": 2.28,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-02-21T15:00:00Z"
+    },
+    {
+        "id": "9da0932d1255c3f7d4156ec7730ffa75",
+        "home": "Sunderland",
+        "away": "Fulham",
+        "outcome": "Fulham",
+        "odds": 2.86,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-02-22T14:00:00Z"
+    },
+    {
+        "id": "55754da4f841e3997e766dd7ff5eafe2",
+        "home": "Nottingham Forest",
+        "away": "Liverpool",
+        "outcome": "Nottingham Forest",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-02-22T14:00:00Z"
+    },
+    {
+        "id": "8c1d506c08f740edce7fe50153c9658c",
+        "home": "SC Freiburg",
+        "away": "Borussia Monchengladbach",
+        "outcome": "Borussia Monchengladbach",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-02-22T14:30:00Z"
+    },
+    {
+        "id": "945ceafe73da002fa0f144dc1e45730b",
+        "home": "Atalanta BC",
+        "away": "Napoli",
+        "outcome": "Atalanta BC",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-22T14:00:00Z"
+    },
+    {
+        "id": "c7be8a213c6ec0a7de9334770652a868",
+        "home": "Getafe",
+        "away": "Sevilla",
+        "outcome": "Sevilla",
+        "odds": 3.7,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-02-22T13:00:00Z"
+    },
+    {
+        "id": "dfbd330358026cb918b694a003b0e78a",
+        "home": "Jagiellonia Bia\u0142ystok",
+        "away": "Radomiak Radom",
+        "outcome": "Radomiak Radom",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-22T13:45:00Z"
+    },
+    {
+        "id": "ad9041db2d23857e328d4103051c8a50",
+        "home": "Auxerre",
+        "away": "Rennes",
+        "outcome": "Auxerre",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-02-22T14:00:00Z"
+    },
+    {
+        "id": "a02e0523dfada2c30d84adec51a5bfa1",
+        "home": "CF Estrela",
+        "away": "Tondela",
+        "outcome": "Tondela",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-02-20T20:45:00Z"
+    },
+    {
+        "id": "6d3e8ceebcfbca74f4f91073cbc97e30",
+        "home": "Gazi\u015fehir Gaziantep",
+        "away": "Trabzonspor",
+        "outcome": "Gazi\u015fehir Gaziantep",
+        "odds": 3.8,
+        "stake": 250.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-02-22T13:00:00Z"
+    },
+    {
+        "id": "971c63a4bf1964b57c86ff9b0c93c42e",
+        "home": "RAAL La Louvi\u00e8re",
+        "away": "KV Mechelen",
+        "outcome": "KV Mechelen",
+        "odds": 3.4,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-02-22T15:00:00Z"
+    },
+    {
+        "id": "78192bbb3c3e8ef28f08a84e8ace05b7",
+        "home": "WSG Tirol",
+        "away": "Ried",
+        "outcome": "WSG Tirol",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-02-22T13:30:00Z"
+    },
+    {
+        "id": "e22b8dee2506aadb3bb35f878e1290c8",
+        "home": "OFI Crete",
+        "away": "Panathinaikos",
+        "outcome": "OFI Crete",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-22T14:00:00Z"
+    },
+    {
+        "id": "ed3b8d81a8395937266ea55e0b6f2a51",
+        "home": "Panserraikos FC",
+        "away": "Volos FC",
+        "outcome": "Volos FC",
+        "odds": 1.84,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-02-22T14:00:00Z"
+    },
+    {
+        "id": "7e682c2fc88433e90517249f7bc9add5",
+        "home": "FC Lugano",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-22T15:30:00Z"
+    },
+    {
+        "id": "2626fdbe85d7ae0051cb08997d1faa86",
+        "home": "Swansea City",
+        "away": "Bristol City",
+        "outcome": "Bristol City",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-21T12:30:00Z"
     }
 ]
