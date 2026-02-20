@@ -2138,5 +2138,35 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-02-22T03:30:00Z"
+    },
+    {
+        "id": "d1aaa8dcce6e511af9c79c1b0c780ca3",
+        "home": "Genoa",
+        "away": "Torino",
+        "outcome": "Torino",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-02-22T11:30:00Z"
+    },
+    {
+        "id": "23c78378aaee3a8bca44d7732ed09b8c",
+        "home": "Arka Gdynia",
+        "away": "GKS Katowice",
+        "outcome": "Arka Gdynia",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-22T11:15:00Z"
+    },
+    {
+        "id": "8bec9a318800aac283e4b128932a8136",
+        "home": "Wrexham AFC",
+        "away": "Ipswich Town",
+        "outcome": "Wrexham AFC",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-21T15:00:00Z"
     }
 ]
