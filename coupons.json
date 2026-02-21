@@ -1790,26 +1790,6 @@
         "time": "2026-02-21T20:00:00Z"
     },
     {
-        "id": "12cd08cddc455871b8661c1a3bb5ae4a",
-        "home": "Ey\u00fcpspor",
-        "away": "Genclerbirligi SK",
-        "outcome": "Genclerbirligi SK",
-        "odds": 2.54,
-        "stake": 250.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-02-21T10:30:00Z"
-    },
-    {
-        "id": "4495d7967621ff92c1f225e56d9bce66",
-        "home": "Alanyaspor",
-        "away": "Basaksehir",
-        "outcome": "Alanyaspor",
-        "odds": 3.0,
-        "stake": 250.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-02-21T13:00:00Z"
-    },
-    {
         "id": "f618124ff5ccba3d95948c331adb5980",
         "home": "Kayserispor",
         "away": "Antalyaspor",
@@ -1860,16 +1840,6 @@
         "time": "2026-02-21T16:00:00Z"
     },
     {
-        "id": "3370fc01f3d9ca750a500da5a0712bbc",
-        "home": "OB Odense BK",
-        "away": "FC Copenhagen",
-        "outcome": "OB Odense BK",
-        "odds": 4.4,
-        "stake": 250.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-02-21T13:00:00Z"
-    },
-    {
         "id": "609fa53724c48bac5c52868f4924bd79",
         "home": "Asteras Tripolis",
         "away": "Atromitos Athens",
@@ -1918,36 +1888,6 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-02-21T19:30:00Z"
-    },
-    {
-        "id": "9852fa75585f0c448c9f743e81e40996",
-        "home": "West Bromwich Albion",
-        "away": "Coventry City",
-        "outcome": "West Bromwich Albion",
-        "odds": 3.7,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-21T12:30:00Z"
-    },
-    {
-        "id": "6bccf10104e1c38f4c7803ab2587b415",
-        "home": "Hull City",
-        "away": "Queens Park Rangers",
-        "outcome": "Queens Park Rangers",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-21T12:30:00Z"
-    },
-    {
-        "id": "61e8a932532a69ed54882177ba6ec60f",
-        "home": "Stoke City",
-        "away": "Leicester City",
-        "outcome": "Leicester City",
-        "odds": 3.75,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-21T12:30:00Z"
     },
     {
         "id": "e6e5fa2bd300b45eb15275dced6be070",
@@ -2280,16 +2220,6 @@
         "time": "2026-02-22T15:30:00Z"
     },
     {
-        "id": "2626fdbe85d7ae0051cb08997d1faa86",
-        "home": "Swansea City",
-        "away": "Bristol City",
-        "outcome": "Bristol City",
-        "odds": 3.65,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-21T12:30:00Z"
-    },
-    {
         "id": "785fc35a610e4866ede7353ef50dbfb8",
         "home": "FC St. Pauli",
         "away": "Werder Bremen",
@@ -2448,5 +2378,25 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-02-21T15:00:00Z"
+    },
+    {
+        "id": "5a0b91c834ffef608f8a6fcaa6c7ac15",
+        "home": "RC Lens",
+        "away": "AS Monaco",
+        "outcome": "AS Monaco",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-02-21T16:00:00Z"
+    },
+    {
+        "id": "b79b2875b6c2520d557f18cf5912f411",
+        "home": "LA Galaxy",
+        "away": "New York City FC",
+        "outcome": "New York City FC",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-02-23T00:00:00Z"
     }
 ]
