@@ -2438,5 +2438,15 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-02-22T15:30:00Z"
+    },
+    {
+        "id": "a362d547518c9de893cc0d343e08352d",
+        "home": "Norwich City",
+        "away": "Birmingham City",
+        "outcome": "Birmingham City",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-02-21T15:00:00Z"
     }
 ]
