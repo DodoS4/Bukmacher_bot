@@ -1280,81 +1280,11 @@
         "time": "2026-02-15T11:30:00Z"
     },
     {
-        "id": "b857b4fbd48255c27a89120ea0dddfa7",
-        "home": "V\u00e4ster\u00e5s IK",
-        "away": "AIK",
-        "outcome": "AIK",
-        "odds": 2.35,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-02-21T17:00:00Z"
-    },
-    {
-        "id": "662d7b3af0c59dd0f1a211b850686bbb",
-        "home": "Lule\u00e5 HF",
-        "away": "Bryn\u00e4s IF",
-        "outcome": "Bryn\u00e4s IF",
-        "odds": 3.0,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-21T14:15:00Z"
-    },
-    {
-        "id": "235a50e14e65180baf25af3bac2b060d",
-        "home": "HV71",
-        "away": "Fr\u00f6lunda HC",
-        "outcome": "HV71",
-        "odds": 3.15,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-21T14:15:00Z"
-    },
-    {
-        "id": "bc07118991dd0b1ffd8464b81440dff3",
-        "home": "Link\u00f6ping HC",
-        "away": "R\u00f6gle BK",
-        "outcome": "Link\u00f6ping HC",
-        "odds": 3.05,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-21T14:15:00Z"
-    },
-    {
-        "id": "8a353e521c91890f019742ef1ed5968f",
-        "home": "V\u00e4xj\u00f6 Lakers",
-        "away": "Malm\u00f6 Redhawks",
-        "outcome": "Malm\u00f6 Redhawks",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-21T14:15:00Z"
-    },
-    {
-        "id": "ffbe778f9d33ab472aa9e62bd9a64c9d",
-        "home": "Timr\u00e5 IK",
-        "away": "Djurg\u00e5rdens IF",
-        "outcome": "Djurg\u00e5rdens IF",
-        "odds": 4.0,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-21T17:00:00Z"
-    },
-    {
         "id": "9f952cfb25dd4c3bafd3e14483d6f125",
         "home": "Skellefte\u00e5 AIK",
         "away": "F\u00e4rjestad BK",
         "outcome": "F\u00e4rjestad BK",
         "odds": 3.6,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-02-21T17:00:00Z"
-    },
-    {
-        "id": "4ae1b0672089709617b19a23317bdf64",
-        "home": "Leksands IF",
-        "away": "\u00d6rebro HK",
-        "outcome": "Leksands IF",
-        "odds": 2.6,
         "stake": 125.0,
         "sport": "icehockey_sweden_hockey_league",
         "time": "2026-02-21T17:00:00Z"
@@ -1640,26 +1570,6 @@
         "time": "2026-02-22T02:05:00Z"
     },
     {
-        "id": "121455e2f00d446f83bf2939263ff388",
-        "home": "Aston Villa",
-        "away": "Leeds United",
-        "outcome": "Aston Villa",
-        "odds": 1.91,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-02-21T15:00:00Z"
-    },
-    {
-        "id": "f38e853e6d4accab249a51501f2806ef",
-        "home": "Brentford",
-        "away": "Brighton and Hove Albion",
-        "outcome": "Brighton and Hove Albion",
-        "odds": 3.78,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-02-21T15:00:00Z"
-    },
-    {
         "id": "13c335daab252110beaa73f1dbf3ae1f",
         "home": "West Ham United",
         "away": "Bournemouth",
@@ -1668,36 +1578,6 @@
         "stake": 250.0,
         "sport": "soccer_epl",
         "time": "2026-02-21T17:30:00Z"
-    },
-    {
-        "id": "24218df1523d0e4f1d04c1a0c83625db",
-        "home": "1. FC K\u00f6ln",
-        "away": "TSG Hoffenheim",
-        "outcome": "1. FC K\u00f6ln",
-        "odds": 3.55,
-        "stake": 250.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-02-21T14:30:00Z"
-    },
-    {
-        "id": "8fd26b3e8f957f563b639a0215f3014c",
-        "home": "VfL Wolfsburg",
-        "away": "Augsburg",
-        "outcome": "Augsburg",
-        "odds": 3.9,
-        "stake": 250.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-02-21T14:30:00Z"
-    },
-    {
-        "id": "f2e43bd491e3c658d6e503b9df8c2134",
-        "home": "Union Berlin",
-        "away": "Bayer Leverkusen",
-        "outcome": "Union Berlin",
-        "odds": 3.15,
-        "stake": 250.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-02-21T14:30:00Z"
     },
     {
         "id": "b525bfb94a7e90857cc26c2c77d4b3c2",
@@ -1740,26 +1620,6 @@
         "time": "2026-02-21T19:45:00Z"
     },
     {
-        "id": "bec8ac5dbb8413877b1b707f10d3552e",
-        "home": "Real Betis",
-        "away": "Rayo Vallecano",
-        "outcome": "Real Betis",
-        "odds": 1.98,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-02-21T15:15:00Z"
-    },
-    {
-        "id": "6bfe5fb616b07d922fe9352a061bad2c",
-        "home": "G\u00f3rnik Zabrze",
-        "away": "Pogo\u0144 Szczecin",
-        "outcome": "Pogo\u0144 Szczecin",
-        "odds": 4.0,
-        "stake": 250.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-02-21T16:45:00Z"
-    },
-    {
         "id": "c347a4944285c846c09f5ae28bec04ff",
         "home": "Toulouse",
         "away": "Paris FC",
@@ -1768,16 +1628,6 @@
         "stake": 250.0,
         "sport": "soccer_france_ligue_one",
         "time": "2026-02-21T18:00:00Z"
-    },
-    {
-        "id": "43b658b46f4272ee9b905412a8782883",
-        "home": "Arouca",
-        "away": "Nacional",
-        "outcome": "Nacional",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-02-21T15:30:00Z"
     },
     {
         "id": "8943eb30d8685e607650115b4b680f9a",
@@ -1798,66 +1648,6 @@
         "stake": 250.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-02-22T10:30:00Z"
-    },
-    {
-        "id": "a67a161f205f923066316d9a5b9fd815",
-        "home": "Dender",
-        "away": "Sint Truiden",
-        "outcome": "Dender",
-        "odds": 3.7,
-        "stake": 250.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-02-21T15:00:00Z"
-    },
-    {
-        "id": "324524f56aee48037a9919a34f19b989",
-        "home": "Rheindorf Altach",
-        "away": "Austria Wien",
-        "outcome": "Rheindorf Altach",
-        "odds": 3.16,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-02-21T16:00:00Z"
-    },
-    {
-        "id": "2a9c0bdd60731441cb8f716ebc4dc188",
-        "home": "Hartberg",
-        "away": "Grazer AK",
-        "outcome": "Grazer AK",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-02-21T16:00:00Z"
-    },
-    {
-        "id": "08d39c65305a692c0d723fabcf0437d5",
-        "home": "Rapid Wien",
-        "away": "Wolfsberger AC",
-        "outcome": "Wolfsberger AC",
-        "odds": 3.85,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-02-21T16:00:00Z"
-    },
-    {
-        "id": "609fa53724c48bac5c52868f4924bd79",
-        "home": "Asteras Tripolis",
-        "away": "Atromitos Athens",
-        "outcome": "Asteras Tripolis",
-        "odds": 2.52,
-        "stake": 250.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-02-21T15:00:00Z"
-    },
-    {
-        "id": "9ba81d5d11be74aadf3486414a67e670",
-        "home": "Servette",
-        "away": "FC St Gallen",
-        "outcome": "FC St Gallen",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-02-21T17:00:00Z"
     },
     {
         "id": "535d0b0aec8772f1dacc6d559aab5311",
@@ -1888,26 +1678,6 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-02-21T19:30:00Z"
-    },
-    {
-        "id": "e6e5fa2bd300b45eb15275dced6be070",
-        "home": "Watford",
-        "away": "Derby County",
-        "outcome": "Watford",
-        "odds": 2.32,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-21T15:00:00Z"
-    },
-    {
-        "id": "0e614ccc26dc018cd4d1c6d22b92ba07",
-        "home": "Millwall",
-        "away": "Portsmouth",
-        "outcome": "Portsmouth",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-21T15:00:00Z"
     },
     {
         "id": "1f4f8a3c3e3dd3c1481ecb3816c5cc5d",
@@ -2038,16 +1808,6 @@
         "stake": 250.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-02-22T11:15:00Z"
-    },
-    {
-        "id": "8bec9a318800aac283e4b128932a8136",
-        "home": "Wrexham AFC",
-        "away": "Ipswich Town",
-        "outcome": "Wrexham AFC",
-        "odds": 3.45,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-21T15:00:00Z"
     },
     {
         "id": "f1f34bdcacc75d053d0953f2bb019506",
@@ -2350,16 +2110,6 @@
         "time": "2026-02-22T19:45:00Z"
     },
     {
-        "id": "418a6e292f6b4dcd9821e68f0383267c",
-        "home": "Alverca",
-        "away": "Santa Clara",
-        "outcome": "Alverca",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-02-21T15:30:00Z"
-    },
-    {
         "id": "f41c5877909adbbf4e695974dd073f56",
         "home": "FC Luzern",
         "away": "FC Basel",
@@ -2370,26 +2120,6 @@
         "time": "2026-02-22T15:30:00Z"
     },
     {
-        "id": "a362d547518c9de893cc0d343e08352d",
-        "home": "Norwich City",
-        "away": "Birmingham City",
-        "outcome": "Birmingham City",
-        "odds": 2.8,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-02-21T15:00:00Z"
-    },
-    {
-        "id": "5a0b91c834ffef608f8a6fcaa6c7ac15",
-        "home": "RC Lens",
-        "away": "AS Monaco",
-        "outcome": "AS Monaco",
-        "odds": 4.5,
-        "stake": 250.0,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-02-21T16:00:00Z"
-    },
-    {
         "id": "b79b2875b6c2520d557f18cf5912f411",
         "home": "LA Galaxy",
         "away": "New York City FC",
@@ -2398,5 +2128,45 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-02-23T00:00:00Z"
+    },
+    {
+        "id": "902f3cb32a91c17391ab419b8deff1ee",
+        "home": "Legia Warszawa",
+        "away": "Wis\u0142a P\u0142ock",
+        "outcome": "Legia Warszawa",
+        "odds": 1.86,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-21T19:30:00Z"
+    },
+    {
+        "id": "574e33510068a13448f37f62366e419f",
+        "home": "Lechia Gda\u0144sk",
+        "away": "Zag\u0142\u0119bie Lubin",
+        "outcome": "Lechia Gda\u0144sk",
+        "odds": 1.83,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-02-23T18:00:00Z"
+    },
+    {
+        "id": "4a2e588953d4dee6734a02c767d8f61d",
+        "home": "Brondby IF",
+        "away": "SonderjyskE",
+        "outcome": "SonderjyskE",
+        "odds": 3.8,
+        "stake": 250.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-02-23T18:00:00Z"
+    },
+    {
+        "id": "92695c2bfd2f1649eed92af5f7c0c2f5",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC Zurich",
+        "outcome": "FC Zurich",
+        "odds": 2.9,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-02-21T19:30:00Z"
     }
 ]
