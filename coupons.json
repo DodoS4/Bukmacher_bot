@@ -2078,5 +2078,605 @@
         "stake": 250.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-02-23T18:00:00Z"
+    },
+    {
+        "id": "b85cf17bd29020a10f7e09fda4373873",
+        "home": "Pittsburgh Penguins",
+        "away": "Vegas Golden Knights",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 3.15,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-01T18:10:00Z"
+    },
+    {
+        "id": "fa6e485cd6752fa58febd28f7669b3ac",
+        "home": "San Jose Sharks",
+        "away": "Winnipeg Jets",
+        "outcome": "San Jose Sharks",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-01T21:10:00Z"
+    },
+    {
+        "id": "19fcd1880111c921beab913961a5907f",
+        "home": "Minnesota Wild",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 4.5,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-01T22:10:00Z"
+    },
+    {
+        "id": "c7bf0abeacc10a2effa03615ccf9b982",
+        "home": "New York Islanders",
+        "away": "Florida Panthers",
+        "outcome": "New York Islanders",
+        "odds": 2.87,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-01T23:40:00Z"
+    },
+    {
+        "id": "9a8dc4a6be1bafc3a9d2fb190e62a27a",
+        "home": "Anaheim Ducks",
+        "away": "Calgary Flames",
+        "outcome": "Calgary Flames",
+        "odds": 3.35,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-02T01:10:00Z"
+    },
+    {
+        "id": "1ba56c8f2a75b10e817a2226420ed2de",
+        "home": "Almtuna IS",
+        "away": "V\u00e4ster\u00e5s IK",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 2.85,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-03-01T13:00:00Z"
+    },
+    {
+        "id": "df8d2418a8f3c7a7f1468d8a13e84203",
+        "home": "Modo Hockey",
+        "away": "BIK Karlskoga",
+        "outcome": "Modo Hockey",
+        "odds": 2.35,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-03-01T13:00:00Z"
+    },
+    {
+        "id": "53cc5f538f15ef8636baaac241e0cf44",
+        "home": "S\u00f6dert\u00e4lje SK",
+        "away": "\u00d6stersunds IK",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 4.35,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-03-01T13:00:00Z"
+    },
+    {
+        "id": "c81379ea2ec6ef61b315628da1748580",
+        "home": "Vimmerby HC",
+        "away": "AIK",
+        "outcome": "AIK",
+        "odds": 2.3,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-03-01T15:30:00Z"
+    },
+    {
+        "id": "d2982f3d32bb667ec0e63ea21a7647c3",
+        "home": "Calgary Wranglers",
+        "away": "Abbotsford Canucks",
+        "outcome": "Abbotsford Canucks",
+        "odds": 2.73,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-01T20:00:00Z"
+    },
+    {
+        "id": "51c84a88c532d56af31b13f0ff2b8f6f",
+        "home": "Providence Bruins",
+        "away": "Bridgeport Islanders",
+        "outcome": "Bridgeport Islanders",
+        "odds": 3.94,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-01T20:05:00Z"
+    },
+    {
+        "id": "657e2a214fdef3b98621484103a0fca9",
+        "home": "Lehigh Valley Phantoms",
+        "away": "Hartford Wolf Pack",
+        "outcome": "Hartford Wolf Pack",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-01T20:05:00Z"
+    },
+    {
+        "id": "f47568c7eaf4b7550482bff82a9dd3e7",
+        "home": "Toronto Marlies",
+        "away": "Chicago Wolves",
+        "outcome": "Toronto Marlies",
+        "odds": 2.49,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-01T21:00:00Z"
+    },
+    {
+        "id": "4827c5dc0b4de7410b3700dad874b7a7",
+        "home": "Milwaukee Admirals",
+        "away": "Manitoba Moose",
+        "outcome": "Milwaukee Admirals",
+        "odds": 2.54,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-01T21:00:00Z"
+    },
+    {
+        "id": "62039ac400f8b79c1bbd091c62a3cf74",
+        "home": "Syracuse Crunch",
+        "away": "Rochester Americans",
+        "outcome": "Rochester Americans",
+        "odds": 3.38,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-01T21:00:00Z"
+    },
+    {
+        "id": "d5f20ea4c835b3f76436cccb2c8c9b4d",
+        "home": "Ontario Reign",
+        "away": "Bakersfield Condors",
+        "outcome": "Bakersfield Condors",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-01T23:00:00Z"
+    },
+    {
+        "id": "ccd1fbe350b7f1dcc29a5626eee2498d",
+        "home": "Henderson Silver Knights",
+        "away": "Colorado Eagles",
+        "outcome": "Colorado Eagles",
+        "odds": 2.12,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-02T01:00:00Z"
+    },
+    {
+        "id": "221160ed941cbaa7db8f519671736d32",
+        "home": "San Jose Barracuda",
+        "away": "Tucson Roadrunners",
+        "outcome": "San Jose Barracuda",
+        "odds": 2.29,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-02T01:00:00Z"
+    },
+    {
+        "id": "2642de3510808e034a5b7012883cc394",
+        "home": "Hershey Bears",
+        "away": "Charlotte Checkers",
+        "outcome": "Charlotte Checkers",
+        "odds": 2.38,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-03T00:00:00Z"
+    },
+    {
+        "id": "b0e5c780eac6e73974f5d023b9a7f17b",
+        "home": "Brighton and Hove Albion",
+        "away": "Nottingham Forest",
+        "outcome": "Nottingham Forest",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-01T14:00:00Z"
+    },
+    {
+        "id": "c9a6fecd9a75e1db00f4a2aa82e0b69e",
+        "home": "Fulham",
+        "away": "Tottenham Hotspur",
+        "outcome": "Tottenham Hotspur",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-01T14:00:00Z"
+    },
+    {
+        "id": "2c9fea6f93167b0899ba0610d1f7baf5",
+        "home": "Eintracht Frankfurt",
+        "away": "SC Freiburg",
+        "outcome": "SC Freiburg",
+        "odds": 3.6,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-03-01T16:30:00Z"
+    },
+    {
+        "id": "cffd15b39852f0ac374672ebca6f3442",
+        "home": "Hamburger SV",
+        "away": "RB Leipzig",
+        "outcome": "Hamburger SV",
+        "odds": 3.85,
+        "stake": 325.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-03-01T18:30:00Z"
+    },
+    {
+        "id": "1b4ac51d5175f966f00ce3763fd74217",
+        "home": "Sassuolo",
+        "away": "Atalanta BC",
+        "outcome": "Sassuolo",
+        "odds": 3.9,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-01T14:00:00Z"
+    },
+    {
+        "id": "5e01a088ad9df492f8ebce7c6c381bcc",
+        "home": "Torino",
+        "away": "Lazio",
+        "outcome": "Lazio",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-01T17:00:00Z"
+    },
+    {
+        "id": "6418e6d889c87bfb146ff959d151a5ed",
+        "home": "AS Roma",
+        "away": "Juventus",
+        "outcome": "Juventus",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-01T19:45:00Z"
+    },
+    {
+        "id": "0af2377098db74c6fed12ba38c0a5b07",
+        "home": "Pisa",
+        "away": "Bologna",
+        "outcome": "Pisa",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-02T17:30:00Z"
+    },
+    {
+        "id": "5f57fcb3b100f74da86f4e00f9747782",
+        "home": "Udinese",
+        "away": "Fiorentina",
+        "outcome": "Udinese",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-02T19:45:00Z"
+    },
+    {
+        "id": "c7ee80d393226bca42d44b515ab389d2",
+        "home": "Elche CF",
+        "away": "Espanyol",
+        "outcome": "Elche CF",
+        "odds": 2.54,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-01T13:00:00Z"
+    },
+    {
+        "id": "4572b3ecf6129e2d1258f19f9e582513",
+        "home": "Valencia",
+        "away": "CA Osasuna",
+        "outcome": "Valencia",
+        "odds": 2.54,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-01T15:15:00Z"
+    },
+    {
+        "id": "9f99b0651c79184ea471389aa02dcb2b",
+        "home": "Real Betis",
+        "away": "Sevilla",
+        "outcome": "Real Betis",
+        "odds": 1.91,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-01T17:30:00Z"
+    },
+    {
+        "id": "b0bd795f41f7e38066c384fc06c0d2c9",
+        "home": "Girona",
+        "away": "Celta Vigo",
+        "outcome": "Celta Vigo",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-01T20:00:00Z"
+    },
+    {
+        "id": "806dc5194c0f79a2f98b1ca7444608aa",
+        "home": "Nieciecza",
+        "away": "Radomiak Radom",
+        "outcome": "Radomiak Radom",
+        "odds": 2.5,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-01T11:15:00Z"
+    },
+    {
+        "id": "fc5c35e7f20b61154b7e70e734e95ca6",
+        "home": "Jagiellonia Bia\u0142ystok",
+        "away": "Legia Warszawa",
+        "outcome": "Jagiellonia Bia\u0142ystok",
+        "odds": 2.4,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-01T13:45:00Z"
+    },
+    {
+        "id": "acedc5548792b8419a835f3638bce3b9",
+        "home": "Lech Pozna\u0144",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Rak\u00f3w Cz\u0119stochowa",
+        "odds": 3.35,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-01T16:30:00Z"
+    },
+    {
+        "id": "3d5a202a6348afb39e2da90425ae3b4a",
+        "home": "Zag\u0142\u0119bie Lubin",
+        "away": "Wis\u0142a P\u0142ock",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 3.0,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-02T18:00:00Z"
+    },
+    {
+        "id": "a35a9181ba08069940280f3196cd9b9e",
+        "home": "Paris FC",
+        "away": "Nice",
+        "outcome": "Paris FC",
+        "odds": 2.56,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-01T14:00:00Z"
+    },
+    {
+        "id": "e97833cccfb2e4af02143db6117efaff",
+        "home": "Lorient",
+        "away": "Auxerre",
+        "outcome": "Auxerre",
+        "odds": 4.1,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-01T16:15:00Z"
+    },
+    {
+        "id": "fbcc6b169a918655ebaecbb2c5dc05b8",
+        "home": "Metz",
+        "away": "Brest",
+        "outcome": "Metz",
+        "odds": 3.6,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-01T16:15:00Z"
+    },
+    {
+        "id": "764459bdd187e964c6832c94d510c351",
+        "home": "Marseille",
+        "away": "Lyon",
+        "outcome": "Lyon",
+        "odds": 3.85,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-01T19:45:00Z"
+    },
+    {
+        "id": "a059263704c601a3be6ef30a6f52d993",
+        "home": "Casa Pia",
+        "away": "Moreirense FC",
+        "outcome": "Moreirense FC",
+        "odds": 3.14,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-03-01T18:00:00Z"
+    },
+    {
+        "id": "b35739acbe5ac35995dd6df900e38b06",
+        "home": "FC Zwolle",
+        "away": "Ajax",
+        "outcome": "FC Zwolle",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-03-01T11:15:00Z"
+    },
+    {
+        "id": "08b036a6f5ce586c455e147652161761",
+        "home": "FC Twente Enschede",
+        "away": "Feyenoord",
+        "outcome": "Feyenoord",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-03-01T13:30:00Z"
+    },
+    {
+        "id": "43a05a616e720c3a6645d65b10ca94ba",
+        "home": "FC Volendam",
+        "away": "Groningen",
+        "outcome": "FC Volendam",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-03-01T13:30:00Z"
+    },
+    {
+        "id": "8da9171ae991d54f2f21f591469d9fc3",
+        "home": "Genclerbirligi SK",
+        "away": "Kayserispor",
+        "outcome": "Kayserispor",
+        "odds": 3.58,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-01T13:00:00Z"
+    },
+    {
+        "id": "ff878272f8d6612c7143fc61bc9b0c66",
+        "home": "Charleroi",
+        "away": "Club Brugge",
+        "outcome": "Charleroi",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-03-01T17:30:00Z"
+    },
+    {
+        "id": "00e4a29b5a272a67acdfd672c8df5989",
+        "home": "Austria Wien",
+        "away": "LASK",
+        "outcome": "LASK",
+        "odds": 2.87,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-03-01T16:00:00Z"
+    },
+    {
+        "id": "d4ad4dcf650818f6b42fd26af97e9896",
+        "home": "FC Blau-Wei\u00df Linz",
+        "away": "WSG Tirol",
+        "outcome": "WSG Tirol",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-03-01T16:00:00Z"
+    },
+    {
+        "id": "21c902b5a10de77a74ebb5ff476d2461",
+        "home": "Grazer AK",
+        "away": "Ried",
+        "outcome": "Grazer AK",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-03-01T16:00:00Z"
+    },
+    {
+        "id": "6f91d445783fcd5f49aa05abac8f28bb",
+        "home": "Rheindorf Altach",
+        "away": "Rapid Wien",
+        "outcome": "Rapid Wien",
+        "odds": 2.76,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-03-01T16:00:00Z"
+    },
+    {
+        "id": "31f96d9190850f7ce1ea16fc878bedae",
+        "home": "Wolfsberger AC",
+        "away": "Sturm Graz",
+        "outcome": "Sturm Graz",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-03-01T16:00:00Z"
+    },
+    {
+        "id": "acc8d58ff442b89c63785606e0fae10c",
+        "home": "FC Fredericia",
+        "away": "Silkeborg IF",
+        "outcome": "Silkeborg IF",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-03-01T16:00:00Z"
+    },
+    {
+        "id": "2d5277fc7052fd998d2fc7ad8542480c",
+        "home": "Viborg FF",
+        "away": "FC Nordsjaelland",
+        "outcome": "FC Nordsjaelland",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-03-01T16:00:00Z"
+    },
+    {
+        "id": "7dfce06c1e54afd23a97449a19a9aa00",
+        "home": "SonderjyskE",
+        "away": "OB Odense BK",
+        "outcome": "OB Odense BK",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-03-01T16:00:00Z"
+    },
+    {
+        "id": "7e31dc0e74129f80c8fc9e082f012f0e",
+        "home": "Panathinaikos",
+        "away": "Aris Thessaloniki",
+        "outcome": "Panathinaikos",
+        "odds": 1.82,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-03-01T18:00:00Z"
+    },
+    {
+        "id": "73021ceac9f67f22a4e0ec8d2b5db7af",
+        "home": "Rangers",
+        "away": "Celtic",
+        "outcome": "Celtic",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-03-01T12:00:00Z"
+    },
+    {
+        "id": "f5c11ee6fb2a0cd068bfecc9a2128348",
+        "home": "Birmingham City",
+        "away": "Middlesbrough",
+        "outcome": "Birmingham City",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-02T20:00:00Z"
+    },
+    {
+        "id": "3b4a10f2367bc6c8fc5d7c1a3ce20378",
+        "home": "Austin FC",
+        "away": "D.C. United",
+        "outcome": "D.C. United",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-03-01T19:30:00Z"
+    },
+    {
+        "id": "4606abe4cf29afa00dd9635823d3ea75",
+        "home": "Philadelphia Union",
+        "away": "New York City FC",
+        "outcome": "New York City FC",
+        "odds": 3.85,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-03-01T21:30:00Z"
+    },
+    {
+        "id": "3d09f450098fe59810a021a2b99439d2",
+        "home": "Orlando City SC",
+        "away": "Inter Miami CF",
+        "outcome": "Orlando City SC",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-03-02T00:00:00Z"
     }
 ]
