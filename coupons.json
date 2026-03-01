@@ -2678,5 +2678,55 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-03-02T00:00:00Z"
+    },
+    {
+        "id": "5871191d486726152c88a35cfc42a864",
+        "home": "IPK",
+        "away": "Hermes",
+        "outcome": "Hermes",
+        "odds": 3.37,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-02T16:30:00Z"
+    },
+    {
+        "id": "790f587324efe34358af4cea30fffb53",
+        "home": "Ketter\u00e4",
+        "away": "RoKi",
+        "outcome": "RoKi",
+        "odds": 3.12,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-02T16:30:00Z"
+    },
+    {
+        "id": "8024ab116d236c7542ac71cd94658242",
+        "home": "Kiekko-Vantaa",
+        "away": "TUTO Hockey",
+        "outcome": "TUTO Hockey",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-02T16:30:00Z"
+    },
+    {
+        "id": "9fa66e584265a7c3e22e1c85df8ccb1d",
+        "home": "Westerlo",
+        "away": "Union Saint-Gilloise",
+        "outcome": "Union Saint-Gilloise",
+        "odds": 1.81,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-03-01T15:00:00Z"
+    },
+    {
+        "id": "dfbbd7f1dff4ab9627f44291a427bba8",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC Lugano",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-01T15:30:00Z"
     }
 ]
