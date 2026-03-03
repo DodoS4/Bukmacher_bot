@@ -2638,5 +2638,45 @@
         "stake": 250.0,
         "sport": "soccer_epl",
         "time": "2026-03-04T20:15:00Z"
+    },
+    {
+        "id": "d815a18119cfba2b2fa1e6c9b879b935",
+        "home": "Detroit Red Wings",
+        "away": "Vegas Golden Knights",
+        "outcome": "Detroit Red Wings",
+        "odds": 2.59,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-05T00:00:00Z"
+    },
+    {
+        "id": "fe8da53d431476b86f8df9ed2fd57dbf",
+        "home": "Anaheim Ducks",
+        "away": "New York Islanders",
+        "outcome": "New York Islanders",
+        "odds": 2.66,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-05T03:00:00Z"
+    },
+    {
+        "id": "f0d61ceb80d07351dd891706923a048a",
+        "home": "Vancouver Canucks",
+        "away": "Carolina Hurricanes",
+        "outcome": "Carolina Hurricanes",
+        "odds": 1.83,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-05T03:00:00Z"
+    },
+    {
+        "id": "87eea3f831a678dbff5989a5980de58f",
+        "home": "Seattle Kraken",
+        "away": "St Louis Blues",
+        "outcome": "Seattle Kraken",
+        "odds": 2.11,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-05T03:00:00Z"
     }
 ]
