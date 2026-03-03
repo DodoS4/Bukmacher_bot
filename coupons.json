@@ -2678,5 +2678,85 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-03-05T03:00:00Z"
+    },
+    {
+        "id": "bb1a227a232fc969d029c046f3ed4c1d",
+        "home": "New Jersey Devils",
+        "away": "Toronto Maple Leafs",
+        "outcome": "New Jersey Devils",
+        "odds": 2.51,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-05T00:00:00Z"
+    },
+    {
+        "id": "611edd12943a89a6bfb4e70fc3b70fc4",
+        "home": "Timr\u00e5 IK",
+        "away": "Bryn\u00e4s IF",
+        "outcome": "Timr\u00e5 IK",
+        "odds": 2.85,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-05T18:00:00Z"
+    },
+    {
+        "id": "49f81ea3c3b5fa69eba3ea997eae558d",
+        "home": "\u00d6rebro HK",
+        "away": "Djurg\u00e5rdens IF",
+        "outcome": "\u00d6rebro HK",
+        "odds": 2.18,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-05T18:00:00Z"
+    },
+    {
+        "id": "4b3778c6a86b6e068efd2763dcc3dad2",
+        "home": "Fr\u00f6lunda HC",
+        "away": "R\u00f6gle BK",
+        "outcome": "R\u00f6gle BK",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-05T18:00:00Z"
+    },
+    {
+        "id": "44a58695ace2b4fd3c55dbba2df8e538",
+        "home": "Malm\u00f6 Redhawks",
+        "away": "F\u00e4rjestad BK",
+        "outcome": "Malm\u00f6 Redhawks",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-05T18:00:00Z"
+    },
+    {
+        "id": "1925c49994b7955faf56f858f5dffaed",
+        "home": "HV71",
+        "away": "Link\u00f6ping HC",
+        "outcome": "HV71",
+        "odds": 2.32,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-05T18:00:00Z"
+    },
+    {
+        "id": "0d07e2e5d0e01e5fa908a6340036e181",
+        "home": "Leksands IF",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Leksands IF",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-05T18:00:00Z"
+    },
+    {
+        "id": "06449672dc8d7d30c9b539c443a870af",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "Skellefte\u00e5 AIK",
+        "outcome": "V\u00e4xj\u00f6 Lakers",
+        "odds": 2.85,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-05T18:00:00Z"
     }
 ]
