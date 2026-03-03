@@ -2180,36 +2180,6 @@
         "time": "2026-03-03T00:00:00Z"
     },
     {
-        "id": "5f57fcb3b100f74da86f4e00f9747782",
-        "home": "Udinese",
-        "away": "Fiorentina",
-        "outcome": "Udinese",
-        "odds": 3.3,
-        "stake": 250.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-03-02T19:45:00Z"
-    },
-    {
-        "id": "3d5a202a6348afb39e2da90425ae3b4a",
-        "home": "Zag\u0142\u0119bie Lubin",
-        "away": "Wis\u0142a P\u0142ock",
-        "outcome": "Wis\u0142a P\u0142ock",
-        "odds": 3.0,
-        "stake": 325.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-03-02T18:00:00Z"
-    },
-    {
-        "id": "f5c11ee6fb2a0cd068bfecc9a2128348",
-        "home": "Birmingham City",
-        "away": "Middlesbrough",
-        "outcome": "Birmingham City",
-        "odds": 2.6,
-        "stake": 250.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-03-02T20:00:00Z"
-    },
-    {
         "id": "5871191d486726152c88a35cfc42a864",
         "home": "IPK",
         "away": "Hermes",
@@ -2238,66 +2208,6 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-03-02T16:30:00Z"
-    },
-    {
-        "id": "50e8128e2d91a569d66b8c4f5477e396",
-        "home": "Nashville Predators",
-        "away": "Detroit Red Wings",
-        "outcome": "Detroit Red Wings",
-        "odds": 2.69,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-03-02T19:00:00Z"
-    },
-    {
-        "id": "77d89a9cf8ee286920d8c6e891dcf898",
-        "home": "New York Rangers",
-        "away": "Columbus Blue Jackets",
-        "outcome": "New York Rangers",
-        "odds": 2.76,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-03-03T00:00:00Z"
-    },
-    {
-        "id": "b0d535b361d5c09b10ff49165122784b",
-        "home": "Toronto Maple Leafs",
-        "away": "Philadelphia Flyers",
-        "outcome": "Philadelphia Flyers",
-        "odds": 2.94,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-03-03T00:30:00Z"
-    },
-    {
-        "id": "ab9ac355049868c8324b94b4a02bd994",
-        "home": "Seattle Kraken",
-        "away": "Carolina Hurricanes",
-        "outcome": "Carolina Hurricanes",
-        "odds": 2.13,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-03-03T03:00:00Z"
-    },
-    {
-        "id": "52d1d06f994dbc68b9132bf62064d29c",
-        "home": "Vancouver Canucks",
-        "away": "Dallas Stars",
-        "outcome": "Dallas Stars",
-        "odds": 1.94,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-03-03T03:00:00Z"
-    },
-    {
-        "id": "6d324d11a94e870ec02f2c8b52672a16",
-        "home": "Los Angeles Kings",
-        "away": "Colorado Avalanche",
-        "outcome": "Colorado Avalanche",
-        "odds": 2.05,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-03-03T03:30:00Z"
     },
     {
         "id": "ffe8c9d1467b0d5bacb2d4dad9af3fd5",
@@ -2638,5 +2548,95 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-03-04T19:30:00Z"
+    },
+    {
+        "id": "9cd1714b2e9aae82d7e21d648a8f0eae",
+        "home": "Hartford Wolf Pack",
+        "away": "Providence Bruins",
+        "outcome": "Hartford Wolf Pack",
+        "odds": 3.66,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-05T00:00:00Z"
+    },
+    {
+        "id": "1cbb159d31d2b9e88f3b618ce544e912",
+        "home": "Laval Rocket",
+        "away": "Syracuse Crunch",
+        "outcome": "Syracuse Crunch",
+        "odds": 2.43,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-05T00:00:00Z"
+    },
+    {
+        "id": "485d4d33336dd5ba2eedb96d6c5d6afa",
+        "home": "W-B/Scranton Penguins",
+        "away": "Springfield Thunderbirds",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 3.92,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-05T00:05:00Z"
+    },
+    {
+        "id": "acd0b5fdd6ef9357de62e93fa0aa2c08",
+        "home": "Henderson Silver Knights",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "Henderson Silver Knights",
+        "odds": 2.57,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-05T03:00:00Z"
+    },
+    {
+        "id": "32d3c4b76e0dad4c8471aaee5f492963",
+        "home": "Ontario Reign",
+        "away": "Tucson Roadrunners",
+        "outcome": "Tucson Roadrunners",
+        "odds": 3.22,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-05T03:00:00Z"
+    },
+    {
+        "id": "f4fd391c269d8b82c0ad616a0fc8ff18",
+        "home": "San Jose Barracuda",
+        "away": "San Diego Gulls",
+        "outcome": "San Diego Gulls",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-05T03:00:00Z"
+    },
+    {
+        "id": "79d4bbb887828c72df2d30bec3f65050",
+        "home": "Hermes",
+        "away": "IPK",
+        "outcome": "Hermes",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-04T16:30:00Z"
+    },
+    {
+        "id": "a7cc3b4d4d1be7357de185dc97772bc5",
+        "home": "TUTO Hockey",
+        "away": "Kiekko-Vantaa",
+        "outcome": "Kiekko-Vantaa",
+        "odds": 2.65,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-04T16:30:00Z"
+    },
+    {
+        "id": "42162a7ac543e7a9853e4d1459e4e5f2",
+        "home": "Newcastle United",
+        "away": "Manchester United",
+        "outcome": "Newcastle United",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-04T20:15:00Z"
     }
 ]
