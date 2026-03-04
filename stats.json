@@ -1,11 +1,11 @@
 {
     "bankroll": 10426.06,
     "zysk_total": 5426.06,
-    "zysk_24h": 490.0,
+    "zysk_24h": -110.0,
     "obrot": 163915.0,
     "yield": 3.31,
-    "last_sync": "04.03.2026 15:41",
-    "upcoming_val": 266,
+    "last_sync": "04.03.2026 19:38",
+    "upcoming_val": 275,
     "history_graph": [
         7630.31,
         8325.31,
