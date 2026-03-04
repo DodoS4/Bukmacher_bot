@@ -2648,5 +2648,15 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-03-05T19:30:00Z"
+    },
+    {
+        "id": "d02a21747a34d813a55a37082f5876a5",
+        "home": "Radomiak Radom",
+        "away": "Arka Gdynia",
+        "outcome": "Radomiak Radom",
+        "odds": 1.83,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-05T19:30:00Z"
     }
 ]
