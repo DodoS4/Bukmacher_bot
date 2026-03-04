@@ -2658,5 +2658,95 @@
         "stake": 250.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-03-05T19:30:00Z"
+    },
+    {
+        "id": "263bd2c6880e1a466ec715a48e271d17",
+        "home": "Pittsburgh Penguins",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.84,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-06T00:00:00Z"
+    },
+    {
+        "id": "54ef90561bb89558c4f43a7dd8d0e736",
+        "home": "Columbus Blue Jackets",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-06T00:00:00Z"
+    },
+    {
+        "id": "51d66e2f90e0586a8431c2cafe09675c",
+        "home": "New York Rangers",
+        "away": "Toronto Maple Leafs",
+        "outcome": "Toronto Maple Leafs",
+        "odds": 2.6,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-06T00:00:00Z"
+    },
+    {
+        "id": "aeb8a9998a36ec00c2a6d166761c8b19",
+        "home": "Philadelphia Flyers",
+        "away": "Utah Mammoth",
+        "outcome": "Philadelphia Flyers",
+        "odds": 2.52,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-06T00:00:00Z"
+    },
+    {
+        "id": "70a063119f871d868508fbfe39f19d7b",
+        "home": "Nashville Predators",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 2.51,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-06T01:00:00Z"
+    },
+    {
+        "id": "c3332d375178bc6234955c6bb23dc5f3",
+        "home": "Winnipeg Jets",
+        "away": "Tampa Bay Lightning",
+        "outcome": "Tampa Bay Lightning",
+        "odds": 2.11,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-06T01:00:00Z"
+    },
+    {
+        "id": "52524ba9961c5198d1a781bb0b6aa7b3",
+        "home": "Calgary Flames",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 2.23,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-06T02:00:00Z"
+    },
+    {
+        "id": "1a002c913578d2316e3cbd402e01e68a",
+        "home": "Los Angeles Kings",
+        "away": "New York Islanders",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.38,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-06T02:30:00Z"
+    },
+    {
+        "id": "2cd4c412e1c54c2c92904b0d629c45c3",
+        "home": "Ketter\u00e4",
+        "away": "RoKi",
+        "outcome": "RoKi",
+        "odds": 2.66,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-05T16:30:00Z"
     }
 ]
