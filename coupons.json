@@ -2858,5 +2858,55 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-03-06T20:00:00Z"
+    },
+    {
+        "id": "7c70b7951bf3f78c870434b85394936a",
+        "home": "Detroit Red Wings",
+        "away": "Florida Panthers",
+        "outcome": "Detroit Red Wings",
+        "odds": 2.33,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-07T00:00:00Z"
+    },
+    {
+        "id": "cd285777668b760d245789f75671847a",
+        "home": "Dallas Stars",
+        "away": "Colorado Avalanche",
+        "outcome": "Dallas Stars",
+        "odds": 2.71,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-07T01:00:00Z"
+    },
+    {
+        "id": "82b2850e20f26b973018047b3f743718",
+        "home": "Chicago Blackhawks",
+        "away": "Vancouver Canucks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 2.24,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-07T01:30:00Z"
+    },
+    {
+        "id": "ea2562aeabc044f5a61f3f0a40c67a7e",
+        "home": "Vegas Golden Knights",
+        "away": "Minnesota Wild",
+        "outcome": "Minnesota Wild",
+        "odds": 2.76,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-07T03:00:00Z"
+    },
+    {
+        "id": "6f72f7bbd7ccc23d99713918711e0d07",
+        "home": "Heracles Almelo",
+        "away": "FC Utrecht",
+        "outcome": "Heracles Almelo",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-03-06T19:00:00Z"
     }
 ]
