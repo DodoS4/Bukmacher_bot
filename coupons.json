@@ -3188,5 +3188,45 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-03-08T03:30:00Z"
+    },
+    {
+        "id": "7b756a0ce186380fb6ed9f45001bdf61",
+        "home": "Motor Lublin",
+        "away": "G\u00f3rnik Zabrze",
+        "outcome": "Motor Lublin",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-08T11:15:00Z"
+    },
+    {
+        "id": "01f84621a6ff14e7fefdaa2621586ab6",
+        "home": "Braga",
+        "away": "Sporting Lisbon",
+        "outcome": "Braga",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-03-07T18:00:00Z"
+    },
+    {
+        "id": "e8db152fc10601afdcb19d5607a6ccc3",
+        "home": "Gazi\u015fehir Gaziantep",
+        "away": "Fatih Karag\u00fcmr\u00fck",
+        "outcome": "Fatih Karag\u00fcmr\u00fck",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-08T10:30:00Z"
+    },
+    {
+        "id": "77fed9f910f509ad2689279f4b9ea1d5",
+        "home": "Philadelphia Union",
+        "away": "San Jose Earthquakes",
+        "outcome": "Philadelphia Union",
+        "odds": 1.81,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-03-08T00:30:00Z"
     }
 ]
