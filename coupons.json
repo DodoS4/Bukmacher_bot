@@ -3228,5 +3228,215 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-03-08T00:30:00Z"
+    },
+    {
+        "id": "97df2ad273fb56b34417ab6cb86d1ab3",
+        "home": "Boston Bruins",
+        "away": "Washington Capitals",
+        "outcome": "Washington Capitals",
+        "odds": 2.95,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-07T17:30:00Z"
+    },
+    {
+        "id": "7cbe2fba8e50bda9c4f6429c12a3c3ea",
+        "home": "New Jersey Devils",
+        "away": "New York Rangers",
+        "outcome": "New York Rangers",
+        "odds": 3.4,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-07T20:00:00Z"
+    },
+    {
+        "id": "75eec947c67c9b4bd4102a2f9d805366",
+        "home": "Buffalo Sabres",
+        "away": "Nashville Predators",
+        "outcome": "Nashville Predators",
+        "odds": 3.85,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-07T22:30:00Z"
+    },
+    {
+        "id": "792ad79c33a9ebcc586f992bc07fdae2",
+        "home": "KooKoo",
+        "away": "HIFK",
+        "outcome": "HIFK",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-07T15:00:00Z"
+    },
+    {
+        "id": "daaa39f82b1467158cbb0167ba9d574a",
+        "home": "TPS",
+        "away": "Ilves",
+        "outcome": "TPS",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-07T15:00:00Z"
+    },
+    {
+        "id": "87fd40d2fe6f7c8c653df158bb84b8cd",
+        "home": "Jukurit",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "Jukurit",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-07T15:00:00Z"
+    },
+    {
+        "id": "2a12e0f150b3590798a14adfb2b1e88e",
+        "home": "SaiPa",
+        "away": "Pelicans",
+        "outcome": "Pelicans",
+        "odds": 4.35,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-07T15:00:00Z"
+    },
+    {
+        "id": "f58c97b69edd608438d13138b83d23e8",
+        "home": "FC St. Pauli",
+        "away": "Eintracht Frankfurt",
+        "outcome": "FC St. Pauli",
+        "odds": 2.92,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-03-08T14:30:00Z"
+    },
+    {
+        "id": "3922ea145ffc303b83259918d2e78849",
+        "home": "Lecce",
+        "away": "Cremonese",
+        "outcome": "Cremonese",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-08T11:30:00Z"
+    },
+    {
+        "id": "77525a7bd3823bbeec20f250e0c5c21a",
+        "home": "Fiorentina",
+        "away": "Parma",
+        "outcome": "Fiorentina",
+        "odds": 1.8,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-08T14:00:00Z"
+    },
+    {
+        "id": "9559b7e8168956160d67fe9781fc0c86",
+        "home": "Getafe",
+        "away": "Real Betis",
+        "outcome": "Getafe",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-08T15:15:00Z"
+    },
+    {
+        "id": "50d356e76ccc49ce90175c79761d0148",
+        "home": "Radomiak Radom",
+        "away": "GKS Katowice",
+        "outcome": "GKS Katowice",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-08T13:45:00Z"
+    },
+    {
+        "id": "74aa3b6b0b7d342158d5527d50b26549",
+        "home": "Moreirense FC",
+        "away": "Nacional",
+        "outcome": "Nacional",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-03-07T15:30:00Z"
+    },
+    {
+        "id": "973ab40ff6d4cc4e9d4c713b98e26b80",
+        "home": "Groningen",
+        "away": "Ajax",
+        "outcome": "Ajax",
+        "odds": 2.54,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-03-07T15:30:00Z"
+    },
+    {
+        "id": "161192a2bd9753b938ed614af014f1f0",
+        "home": "Excelsior",
+        "away": "Heerenveen",
+        "outcome": "Excelsior",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-03-07T20:00:00Z"
+    },
+    {
+        "id": "a7ec5715401816b1059bd8b4093ecfa9",
+        "home": "Besiktas JK",
+        "away": "Galatasaray",
+        "outcome": "Galatasaray",
+        "odds": 2.68,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-07T17:00:00Z"
+    },
+    {
+        "id": "88d2965918d104799f0934a0aba8da62",
+        "home": "Torku Konyaspor",
+        "away": "Kasimpasa SK",
+        "outcome": "Kasimpasa SK",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-08T13:00:00Z"
+    },
+    {
+        "id": "55b37bd9c62e01e8578ececf27b342a8",
+        "home": "Gent",
+        "away": "KV Mechelen",
+        "outcome": "KV Mechelen",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-03-08T15:00:00Z"
+    },
+    {
+        "id": "3bad147c67e1d26359a2bc01bffb7dd0",
+        "home": "Volos FC",
+        "away": "OFI Crete",
+        "outcome": "OFI Crete",
+        "odds": 3.41,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-03-08T15:00:00Z"
+    },
+    {
+        "id": "23f8ca44037c6fb6ea0ea552449a2f88",
+        "home": "FC St Gallen",
+        "away": "FC Basel",
+        "outcome": "FC Basel",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-08T13:00:00Z"
+    },
+    {
+        "id": "5d3fb27343caf52c5f8c2d002f344176",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC Lausanne-Sport",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 3.16,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-08T15:30:00Z"
     }
 ]
