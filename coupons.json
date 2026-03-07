@@ -3638,5 +3638,15 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-03-08T23:00:00Z"
+    },
+    {
+        "id": "1886a43c62d66f7c644451c2cfd54907",
+        "home": "Genoa",
+        "away": "AS Roma",
+        "outcome": "AS Roma",
+        "odds": 1.97,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-08T17:00:00Z"
     }
 ]
