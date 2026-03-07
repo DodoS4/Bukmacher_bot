@@ -2620,16 +2620,6 @@
         "time": "2026-03-07T14:30:00Z"
     },
     {
-        "id": "162d12de72de680f7d37dc7dd04820e6",
-        "home": "CA Osasuna",
-        "away": "Mallorca",
-        "outcome": "CA Osasuna",
-        "odds": 1.82,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-03-07T13:00:00Z"
-    },
-    {
         "id": "2bd12aabed92d3dcafdb18c3d51d0d6c",
         "home": "Levante",
         "away": "Girona",
@@ -2648,16 +2638,6 @@
         "stake": 250.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-03-07T13:45:00Z"
-    },
-    {
-        "id": "7828780f33f8fc10713258c5f49f0662",
-        "home": "Basaksehir",
-        "away": "Goztepe",
-        "outcome": "Goztepe",
-        "odds": 4.3,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-03-07T13:00:00Z"
     },
     {
         "id": "a43a9c41003784a04b7081d5912e20c7",
@@ -2688,26 +2668,6 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-03-07T15:00:00Z"
-    },
-    {
-        "id": "759aa05e8f32c71272454cac71ac48d7",
-        "home": "Blackburn Rovers",
-        "away": "Portsmouth",
-        "outcome": "Portsmouth",
-        "odds": 3.0,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-03-07T12:30:00Z"
-    },
-    {
-        "id": "1d49e26d1300cc409aae2bc1a93e9ffa",
-        "home": "Hull City",
-        "away": "Millwall",
-        "outcome": "Hull City",
-        "odds": 3.35,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-03-07T12:30:00Z"
     },
     {
         "id": "76d82a37f015220c2a482182558b6d39",
@@ -3648,5 +3608,15 @@
         "stake": 250.0,
         "sport": "soccer_italy_serie_a",
         "time": "2026-03-08T17:00:00Z"
+    },
+    {
+        "id": "0e522d72d537d9fbb5680c4b926d8b58",
+        "home": "Atl\u00e9tico Madrid",
+        "away": "Real Sociedad",
+        "outcome": "Atl\u00e9tico Madrid",
+        "odds": 1.8,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-07T17:30:00Z"
     }
 ]

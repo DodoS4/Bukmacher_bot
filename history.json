@@ -8025,5 +8025,57 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "2:3"
+    },
+    {
+        "id": "162d12de72de680f7d37dc7dd04820e6",
+        "home": "CA Osasuna",
+        "away": "Mallorca",
+        "outcome": "CA Osasuna",
+        "odds": 1.82,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-07T13:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:2"
+    },
+    {
+        "id": "7828780f33f8fc10713258c5f49f0662",
+        "home": "Basaksehir",
+        "away": "Goztepe",
+        "outcome": "Goztepe",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-07T13:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "759aa05e8f32c71272454cac71ac48d7",
+        "home": "Blackburn Rovers",
+        "away": "Portsmouth",
+        "outcome": "Portsmouth",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-07T12:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "1d49e26d1300cc409aae2bc1a93e9ffa",
+        "home": "Hull City",
+        "away": "Millwall",
+        "outcome": "Hull City",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-07T12:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:3"
     }
 ]
