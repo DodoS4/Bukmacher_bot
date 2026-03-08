@@ -3278,5 +3278,25 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-03-09T13:00:00Z"
+    },
+    {
+        "id": "8edcfaf59b66616877ec637ca61e12e0",
+        "home": "Kayserispor",
+        "away": "Trabzonspor",
+        "outcome": "Kayserispor",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-09T17:00:00Z"
+    },
+    {
+        "id": "b0f96360173bd50439c8e1797db4beba",
+        "home": "BSC Young Boys",
+        "away": "FC Thun",
+        "outcome": "BSC Young Boys",
+        "odds": 2.52,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-08T15:30:00Z"
     }
 ]
