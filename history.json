@@ -8753,5 +8753,70 @@
         "profit": 200.0,
         "status": "WIN",
         "score": "3:2"
+    },
+    {
+        "id": "7b756a0ce186380fb6ed9f45001bdf61",
+        "home": "Motor Lublin",
+        "away": "G\u00f3rnik Zabrze",
+        "outcome": "Motor Lublin",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-08T11:15:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "0:0"
+    },
+    {
+        "id": "e8db152fc10601afdcb19d5607a6ccc3",
+        "home": "Gazi\u015fehir Gaziantep",
+        "away": "Fatih Karag\u00fcmr\u00fck",
+        "outcome": "Fatih Karag\u00fcmr\u00fck",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-08T10:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "3922ea145ffc303b83259918d2e78849",
+        "home": "Lecce",
+        "away": "Cremonese",
+        "outcome": "Cremonese",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-08T11:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "88d2965918d104799f0934a0aba8da62",
+        "home": "Torku Konyaspor",
+        "away": "Kasimpasa SK",
+        "outcome": "Kasimpasa SK",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-08T13:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "23f8ca44037c6fb6ea0ea552449a2f88",
+        "home": "FC St Gallen",
+        "away": "FC Basel",
+        "outcome": "FC Basel",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-08T13:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:0"
     }
 ]
