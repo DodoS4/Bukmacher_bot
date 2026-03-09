@@ -2770,16 +2770,6 @@
         "time": "2026-03-09T18:00:00Z"
     },
     {
-        "id": "cd7c39d95d57aea546b2e62cde6de6a5",
-        "home": "Panetolikos Agrinio",
-        "away": "AE Kifisia FC",
-        "outcome": "AE Kifisia FC",
-        "odds": 3.31,
-        "stake": 250.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-03-09T16:00:00Z"
-    },
-    {
         "id": "f55449bef7b85c9865e0ba92527cc382",
         "home": "IPK",
         "away": "Hermes",
@@ -2828,16 +2818,6 @@
         "stake": 125.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-03-09T20:15:00Z"
-    },
-    {
-        "id": "8edcfaf59b66616877ec637ca61e12e0",
-        "home": "Kayserispor",
-        "away": "Trabzonspor",
-        "outcome": "Kayserispor",
-        "odds": 3.8,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-03-09T17:00:00Z"
     },
     {
         "id": "20c64d50a3991fcb83f976f0df24baac",
@@ -3190,13 +3170,43 @@
         "time": "2026-03-11T02:00:00Z"
     },
     {
-        "id": "e660f67a5079ff1b4742d2dde51d47ef",
-        "home": "Alanyaspor",
-        "away": "Genclerbirligi SK",
-        "outcome": "Genclerbirligi SK",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-03-09T17:00:00Z"
+        "id": "273e9b5ffb2215622d9092b1d98073d1",
+        "home": "KalPa",
+        "away": "HIFK",
+        "outcome": "HIFK",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-11T16:30:00Z"
+    },
+    {
+        "id": "c4b99f6a125244147e1f70663cb7a0d6",
+        "home": "JYP",
+        "away": "Tappara",
+        "outcome": "JYP",
+        "odds": 3.85,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-11T16:30:00Z"
+    },
+    {
+        "id": "b441088d2d32553780c3ebd9b073bd4c",
+        "home": "Pelicans",
+        "away": "SaiPa",
+        "outcome": "Pelicans",
+        "odds": 3.45,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-11T16:30:00Z"
+    },
+    {
+        "id": "ffbe412ec43492b4807dfb9ea314ecb4",
+        "home": "Pyry",
+        "away": "KeuPa HT",
+        "outcome": "KeuPa HT",
+        "odds": 2.75,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-11T16:30:00Z"
     }
 ]

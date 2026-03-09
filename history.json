@@ -9364,5 +9364,44 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:1"
+    },
+    {
+        "id": "cd7c39d95d57aea546b2e62cde6de6a5",
+        "home": "Panetolikos Agrinio",
+        "away": "AE Kifisia FC",
+        "outcome": "AE Kifisia FC",
+        "odds": 3.31,
+        "stake": 250.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-03-09T16:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "8edcfaf59b66616877ec637ca61e12e0",
+        "home": "Kayserispor",
+        "away": "Trabzonspor",
+        "outcome": "Kayserispor",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-09T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:3"
+    },
+    {
+        "id": "e660f67a5079ff1b4742d2dde51d47ef",
+        "home": "Alanyaspor",
+        "away": "Genclerbirligi SK",
+        "outcome": "Genclerbirligi SK",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-09T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
     }
 ]
