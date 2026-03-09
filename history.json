@@ -9351,5 +9351,18 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "1:1"
+    },
+    {
+        "id": "4c0087bf860be9fe6aa18cebdd49d029",
+        "home": "Ey\u00fcpspor",
+        "away": "Kocaelispor",
+        "outcome": "Ey\u00fcpspor",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-09T13:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:1"
     }
 ]
