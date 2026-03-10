@@ -3288,5 +3288,65 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-03-11T23:30:00Z"
+    },
+    {
+        "id": "17701fde13b5ab79f2ef0de516bf1363",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "IF Troja-Ljungby",
+        "outcome": "IF Troja-Ljungby",
+        "odds": 3.62,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-03-12T18:00:00Z"
+    },
+    {
+        "id": "5e256c6ee31e77cef2c88df9556b9dcf",
+        "home": "Atl\u00e9tico Madrid",
+        "away": "Tottenham Hotspur",
+        "outcome": "Atl\u00e9tico Madrid",
+        "odds": 1.81,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-03-10T20:00:00Z"
+    },
+    {
+        "id": "1629a49809eb10b622b8e37b3142d751",
+        "home": "Bologna",
+        "away": "AS Roma",
+        "outcome": "Bologna",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-03-12T17:45:00Z"
+    },
+    {
+        "id": "9c61fdfbd09d9582569eb5acf6ed0c44",
+        "home": "Lille",
+        "away": "Aston Villa",
+        "outcome": "Aston Villa",
+        "odds": 2.58,
+        "stake": 250.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-03-12T17:45:00Z"
+    },
+    {
+        "id": "060b5c451f39669f8463f914964fa069",
+        "home": "Panathinaikos FC",
+        "away": "Real Betis",
+        "outcome": "Panathinaikos FC",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-03-12T17:45:00Z"
+    },
+    {
+        "id": "9b970604c40af45f4ebc218e44bf3ca2",
+        "home": "VfB Stuttgart",
+        "away": "Porto",
+        "outcome": "Porto",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-03-12T17:45:00Z"
     }
 ]
