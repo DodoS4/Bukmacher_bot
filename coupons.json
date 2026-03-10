@@ -3268,5 +3268,25 @@
         "stake": 250.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-03-11T20:00:00Z"
+    },
+    {
+        "id": "5e443a2ce14df26c2dbb2db8ca06379f",
+        "home": "Ottawa Senators",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Ottawa Senators",
+        "odds": 2.2,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-11T23:30:00Z"
+    },
+    {
+        "id": "ed179aba53c02071fe3d110de2ce57be",
+        "home": "Philadelphia Flyers",
+        "away": "Washington Capitals",
+        "outcome": "Washington Capitals",
+        "odds": 2.68,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-11T23:30:00Z"
     }
 ]
