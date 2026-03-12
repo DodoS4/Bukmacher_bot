@@ -10014,5 +10014,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:1"
+    },
+    {
+        "id": "1629a49809eb10b622b8e37b3142d751",
+        "home": "Bologna",
+        "away": "AS Roma",
+        "outcome": "Bologna",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-03-12T17:45:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
