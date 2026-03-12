@@ -3468,5 +3468,25 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-03-13T20:00:00Z"
+    },
+    {
+        "id": "f352ea34e61ac0419574f5072821b1da",
+        "home": "KeuPa HT",
+        "away": "Pyry",
+        "outcome": "Pyry",
+        "odds": 2.75,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-13T16:30:00Z"
+    },
+    {
+        "id": "3f6c8be08a4080005fc37d5a8d9227b8",
+        "home": "Kocaelispor",
+        "away": "Torku Konyaspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 3.71,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-14T10:30:00Z"
     }
 ]
