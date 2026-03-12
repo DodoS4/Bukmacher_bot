@@ -3488,5 +3488,125 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-03-14T10:30:00Z"
+    },
+    {
+        "id": "90b2b1e3281e09247576fe849a683e75",
+        "home": "New York Islanders",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.89,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-13T23:00:00Z"
+    },
+    {
+        "id": "5dbc5539eae23ae6f735c084b9f28cc8",
+        "home": "St Louis Blues",
+        "away": "Edmonton Oilers",
+        "outcome": "St Louis Blues",
+        "odds": 3.06,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-14T00:00:00Z"
+    },
+    {
+        "id": "ca4db4224460ef4519e848e142dfa485",
+        "home": "IPK",
+        "away": "Ketter\u00e4",
+        "outcome": "Ketter\u00e4",
+        "odds": 3.92,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-14T15:00:00Z"
+    },
+    {
+        "id": "07e3e6c1966c98bce260a6608d692f73",
+        "home": "Burnley",
+        "away": "Bournemouth",
+        "outcome": "Burnley",
+        "odds": 4.3,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-14T15:00:00Z"
+    },
+    {
+        "id": "9c44263754509bd50f8db5429ca3d264",
+        "home": "Sunderland",
+        "away": "Brighton and Hove Albion",
+        "outcome": "Brighton and Hove Albion",
+        "odds": 2.32,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-14T15:00:00Z"
+    },
+    {
+        "id": "d86fe8a3c8f1ad3640c6447f169f40f7",
+        "home": "Girona",
+        "away": "Athletic Bilbao",
+        "outcome": "Athletic Bilbao",
+        "odds": 2.74,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-14T13:00:00Z"
+    },
+    {
+        "id": "af09f5d680528df8f29ce565fb2e85fb",
+        "home": "Jagiellonia Bia\u0142ystok",
+        "away": "Piast Gliwice",
+        "outcome": "Jagiellonia Bia\u0142ystok",
+        "odds": 1.8,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-14T13:45:00Z"
+    },
+    {
+        "id": "405aa4eb36b4825c6b159c6f34c00954",
+        "home": "Charleroi",
+        "away": "Leuven",
+        "outcome": "Leuven",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-03-14T15:00:00Z"
+    },
+    {
+        "id": "4fb71f7d68f7c22de59882f9b447fb61",
+        "home": "Aberdeen",
+        "away": "Falkirk F.C.",
+        "outcome": "Aberdeen",
+        "odds": 3.1,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-03-14T15:00:00Z"
+    },
+    {
+        "id": "99b6e8b8cce7f1699ac053e7fcb5c448",
+        "home": "Oxford United",
+        "away": "Charlton Athletic",
+        "outcome": "Charlton Athletic",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-14T12:30:00Z"
+    },
+    {
+        "id": "65615a6d23890cd8fbf3d06a6bbeec15",
+        "home": "Birmingham City",
+        "away": "Sheffield United",
+        "outcome": "Sheffield United",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-14T15:00:00Z"
+    },
+    {
+        "id": "60da1aea89df2546056d6864b534e10e",
+        "home": "Leicester City",
+        "away": "Queens Park Rangers",
+        "outcome": "Queens Park Rangers",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-14T15:00:00Z"
     }
 ]
