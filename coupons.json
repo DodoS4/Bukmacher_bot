@@ -3000,16 +3000,6 @@
         "time": "2026-03-13T19:30:00Z"
     },
     {
-        "id": "87db28235a07ee10e2ea785156f4e862",
-        "home": "Nieciecza",
-        "away": "Motor Lublin",
-        "outcome": "Motor Lublin",
-        "odds": 2.88,
-        "stake": 250.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-03-13T17:00:00Z"
-    },
-    {
         "id": "f02297d07ef53694f7d7956acf2c854f",
         "home": "Radomiak Radom",
         "away": "Legia Warszawa",
@@ -3168,16 +3158,6 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-03-13T20:00:00Z"
-    },
-    {
-        "id": "3a38ff2a33e5d79873298363dcf50d5e",
-        "home": "Antalyaspor",
-        "away": "Gazi\u015fehir Gaziantep",
-        "outcome": "Gazi\u015fehir Gaziantep",
-        "odds": 3.08,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-03-13T17:00:00Z"
     },
     {
         "id": "7b7462699dc4ff5c8947c8f18b5dea17",
@@ -4048,5 +4028,155 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-03-14T23:30:00Z"
+    },
+    {
+        "id": "83f61cc1acaf017c0c9a03862c491ccc",
+        "home": "Calgary Wranglers",
+        "away": "Manitoba Moose",
+        "outcome": "Manitoba Moose",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-15T18:00:00Z"
+    },
+    {
+        "id": "2848770d3fa2e8b2d84827eb75535311",
+        "home": "SC Freiburg",
+        "away": "Union Berlin",
+        "outcome": "Union Berlin",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-03-15T16:30:00Z"
+    },
+    {
+        "id": "7a6c7a7a701d8afe374576614c3a26bd",
+        "home": "VfB Stuttgart",
+        "away": "RB Leipzig",
+        "outcome": "RB Leipzig",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-03-15T18:30:00Z"
+    },
+    {
+        "id": "1ac62103305808a97da5678e533b3630",
+        "home": "Como",
+        "away": "AS Roma",
+        "outcome": "AS Roma",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-15T17:00:00Z"
+    },
+    {
+        "id": "fbe88881ea46e08b70a42b8142554a7c",
+        "home": "Real Betis",
+        "away": "Celta Vigo",
+        "outcome": "Celta Vigo",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-15T17:30:00Z"
+    },
+    {
+        "id": "4ffa7d2c8ad6eac002d9cf8362b970f8",
+        "home": "G\u00f3rnik Zabrze",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Rak\u00f3w Cz\u0119stochowa",
+        "odds": 2.99,
+        "stake": 325.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-15T16:30:00Z"
+    },
+    {
+        "id": "6e096b35d3e36c5e04a2c39912e5aeec",
+        "home": "Le Havre",
+        "away": "Lyon",
+        "outcome": "Le Havre",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-15T16:15:00Z"
+    },
+    {
+        "id": "2779e83b28b7e7575bb2c63c43b92f34",
+        "home": "Metz",
+        "away": "Toulouse",
+        "outcome": "Metz",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-15T16:15:00Z"
+    },
+    {
+        "id": "e47751b5f062c94e0e1ed00c6f1553fb",
+        "home": "Go Ahead Eagles",
+        "away": "NAC Breda",
+        "outcome": "NAC Breda",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-03-15T15:45:00Z"
+    },
+    {
+        "id": "5696a564622cb3a6acaa3ad79ee8ee92",
+        "home": "Kasimpasa SK",
+        "away": "Ey\u00fcpspor",
+        "outcome": "Ey\u00fcpspor",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-15T13:00:00Z"
+    },
+    {
+        "id": "17746c88f2a1e526d872ee81c2b8cd93",
+        "home": "Samsunspor",
+        "away": "Kayserispor",
+        "outcome": "Kayserispor",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-15T17:00:00Z"
+    },
+    {
+        "id": "cf359c584cee1940184b949d30c46855",
+        "home": "KV Mechelen",
+        "away": "Anderlecht",
+        "outcome": "Anderlecht",
+        "odds": 2.22,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-03-15T17:30:00Z"
+    },
+    {
+        "id": "6e547a5102c409de3ab9212496eeca69",
+        "home": "Cercle Brugge KSV",
+        "away": "RAAL La Louvi\u00e8re",
+        "outcome": "RAAL La Louvi\u00e8re",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-03-15T18:15:00Z"
+    },
+    {
+        "id": "1c38c88f07ca1358c1d5d5006d413e1a",
+        "home": "Stoke City",
+        "away": "Watford",
+        "outcome": "Stoke City",
+        "odds": 2.84,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-14T15:00:00Z"
+    },
+    {
+        "id": "560a99496af7dc10df713e6c8f7f59e0",
+        "home": "New England Revolution",
+        "away": "FC Cincinnati",
+        "outcome": "New England Revolution",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-03-15T18:30:00Z"
     }
 ]

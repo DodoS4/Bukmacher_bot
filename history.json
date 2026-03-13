@@ -10352,5 +10352,31 @@
         "profit": -406.25,
         "status": "LOSS",
         "score": "3:2"
+    },
+    {
+        "id": "87db28235a07ee10e2ea785156f4e862",
+        "home": "Nieciecza",
+        "away": "Motor Lublin",
+        "outcome": "Motor Lublin",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-13T17:00:00Z",
+        "profit": 470.0,
+        "status": "WIN",
+        "score": "1:2"
+    },
+    {
+        "id": "3a38ff2a33e5d79873298363dcf50d5e",
+        "home": "Antalyaspor",
+        "away": "Gazi\u015fehir Gaziantep",
+        "outcome": "Gazi\u015fehir Gaziantep",
+        "odds": 3.08,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-13T17:00:00Z",
+        "profit": 260.0,
+        "status": "WIN",
+        "score": "1:4"
     }
 ]
