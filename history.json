@@ -10508,5 +10508,57 @@
         "profit": 1030.0,
         "status": "WIN",
         "score": "3:2"
+    },
+    {
+        "id": "3f6c8be08a4080005fc37d5a8d9227b8",
+        "home": "Kocaelispor",
+        "away": "Torku Konyaspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 3.71,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-14T10:30:00Z",
+        "profit": 338.75,
+        "status": "WIN",
+        "score": "1:2"
+    },
+    {
+        "id": "d86fe8a3c8f1ad3640c6447f169f40f7",
+        "home": "Girona",
+        "away": "Athletic Bilbao",
+        "outcome": "Athletic Bilbao",
+        "odds": 2.74,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-03-14T13:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "3:0"
+    },
+    {
+        "id": "99b6e8b8cce7f1699ac053e7fcb5c448",
+        "home": "Oxford United",
+        "away": "Charlton Athletic",
+        "outcome": "Charlton Athletic",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-14T12:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "73ba0767bf650794ef91ca9387f61b8b",
+        "home": "Coventry City",
+        "away": "Southampton",
+        "outcome": "Southampton",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-14T12:30:00Z",
+        "profit": 425.0,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]
