@@ -3768,5 +3768,35 @@
         "stake": 250.0,
         "sport": "soccer_efl_champ",
         "time": "2026-03-16T20:00:00Z"
+    },
+    {
+        "id": "4210d1bdce81a6c73f692336bb97d42a",
+        "home": "Detroit Red Wings",
+        "away": "Calgary Flames",
+        "outcome": "Detroit Red Wings",
+        "odds": 1.94,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-16T23:00:00Z"
+    },
+    {
+        "id": "095f4a82a3fef717e6d0e5e66f81fdd5",
+        "home": "Dallas Stars",
+        "away": "Utah Mammoth",
+        "outcome": "Utah Mammoth",
+        "odds": 3.46,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-17T00:00:00Z"
+    },
+    {
+        "id": "a29397a0f37ae4599e0dd86f4cc81dde",
+        "home": "Strasbourg",
+        "away": "Paris FC",
+        "outcome": "Strasbourg",
+        "odds": 1.83,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-15T14:00:00Z"
     }
 ]
