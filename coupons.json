@@ -3588,5 +3588,115 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-03-17T18:00:00Z"
+    },
+    {
+        "id": "31ff36b939589e06055491f1d8aec95a",
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Boston Bruins",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.11,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-17T23:00:00Z"
+    },
+    {
+        "id": "67ba228ae7a60bbab128fd6274fe262c",
+        "home": "Columbus Blue Jackets",
+        "away": "Carolina Hurricanes",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.86,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-17T23:00:00Z"
+    },
+    {
+        "id": "ac2572c449fcdbfd787a79d60b69e7ee",
+        "home": "Toronto Maple Leafs",
+        "away": "New York Islanders",
+        "outcome": "New York Islanders",
+        "odds": 2.45,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-17T23:00:00Z"
+    },
+    {
+        "id": "c0056bb3deb856d36e5c16024094563a",
+        "home": "Chicago Blackhawks",
+        "away": "Minnesota Wild",
+        "outcome": "Chicago Blackhawks",
+        "odds": 3.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-17T23:30:00Z"
+    },
+    {
+        "id": "95d3df5719f8cf3e75b7ac785e4833f8",
+        "home": "Winnipeg Jets",
+        "away": "Nashville Predators",
+        "outcome": "Winnipeg Jets",
+        "odds": 2.33,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-18T00:00:00Z"
+    },
+    {
+        "id": "4b661c344ab22cd5a70faff8982191a2",
+        "home": "Edmonton Oilers",
+        "away": "San Jose Sharks",
+        "outcome": "San Jose Sharks",
+        "odds": 3.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-18T01:00:00Z"
+    },
+    {
+        "id": "86347cbc349f3048f144432388c72927",
+        "home": "Vegas Golden Knights",
+        "away": "Buffalo Sabres",
+        "outcome": "Vegas Golden Knights",
+        "odds": 2.45,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-18T02:00:00Z"
+    },
+    {
+        "id": "99a0d9c87d9951439455d009358c21f6",
+        "home": "Vancouver Canucks",
+        "away": "Florida Panthers",
+        "outcome": "Vancouver Canucks",
+        "odds": 3.09,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-18T02:00:00Z"
+    },
+    {
+        "id": "b04ac08fd99757e46ef19fd418ef1127",
+        "home": "Seattle Kraken",
+        "away": "Tampa Bay Lightning",
+        "outcome": "Tampa Bay Lightning",
+        "odds": 2.01,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-18T02:00:00Z"
+    },
+    {
+        "id": "0f49ba1a10f11d295c1cad2a3a0a3f17",
+        "home": "Manitoba Moose",
+        "away": "Milwaukee Admirals",
+        "outcome": "Milwaukee Admirals",
+        "odds": 2.35,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-18T15:30:00Z"
+    },
+    {
+        "id": "2a5276c1c3157e6b3085ece0ee485dae",
+        "home": "Alanyaspor",
+        "away": "Kocaelispor",
+        "outcome": "Kocaelispor",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-18T13:00:00Z"
     }
 ]
