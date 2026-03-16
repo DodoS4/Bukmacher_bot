@@ -3698,5 +3698,45 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-03-18T13:00:00Z"
+    },
+    {
+        "id": "b34d4555a7bad3fb8d3de405a5607c52",
+        "home": "HV71",
+        "away": "Leksands IF",
+        "outcome": "Leksands IF",
+        "odds": 2.8,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-18T18:00:00Z"
+    },
+    {
+        "id": "5c13d9db1bfb65151bc6a1fc9b3da571",
+        "home": "San Jose Barracuda",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "San Jose Barracuda",
+        "odds": 2.38,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-18T17:30:00Z"
+    },
+    {
+        "id": "772179fc8616bca5e11115a937821ed7",
+        "home": "KeuPa HT",
+        "away": "Pyry",
+        "outcome": "KeuPa HT",
+        "odds": 2.2,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-03-18T16:30:00Z"
+    },
+    {
+        "id": "4340f06fd34c9022815f32e49b09469a",
+        "home": "Southampton",
+        "away": "Norwich City",
+        "outcome": "Norwich City",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-18T19:45:00Z"
     }
 ]
