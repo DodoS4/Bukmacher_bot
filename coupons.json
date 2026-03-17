@@ -3708,5 +3708,15 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-03-18T20:00:00Z"
+    },
+    {
+        "id": "8c7215f324c639b23c57680e41b443b5",
+        "home": "JYP",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-17T16:30:00Z"
     }
 ]
