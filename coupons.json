@@ -3470,16 +3470,6 @@
         "time": "2026-03-17T20:00:00Z"
     },
     {
-        "id": "39cc70bd653f0cebbbaac65736fa0206",
-        "home": "FC St Gallen",
-        "away": "FC Lugano",
-        "outcome": "FC Lugano",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-03-17T18:00:00Z"
-    },
-    {
         "id": "31ff36b939589e06055491f1d8aec95a",
         "home": "Montr\u00e9al Canadiens",
         "away": "Boston Bruins",
@@ -3788,5 +3778,25 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-03-19T13:00:00Z"
+    },
+    {
+        "id": "e18c9ad67a91c1d7f539cf7e7a71bde8",
+        "home": "Lyon",
+        "away": "Celta Vigo",
+        "outcome": "Celta Vigo",
+        "odds": 4.0,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-03-19T17:45:00Z"
+    },
+    {
+        "id": "04e7d8a83e6ac221484cdf8b99f50865",
+        "home": "FC Midtjylland",
+        "away": "Nottingham Forest",
+        "outcome": "FC Midtjylland",
+        "odds": 3.6,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-03-19T17:45:00Z"
     }
 ]

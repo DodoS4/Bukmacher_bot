@@ -11964,5 +11964,18 @@
         "profit": 1600.0,
         "status": "WIN",
         "score": "2:7"
+    },
+    {
+        "id": "39cc70bd653f0cebbbaac65736fa0206",
+        "home": "FC St Gallen",
+        "away": "FC Lugano",
+        "outcome": "FC Lugano",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-17T18:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
