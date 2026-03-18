@@ -12185,5 +12185,18 @@
         "profit": 505.0,
         "status": "WIN",
         "score": "2:6"
+    },
+    {
+        "id": "2a5276c1c3157e6b3085ece0ee485dae",
+        "home": "Alanyaspor",
+        "away": "Kocaelispor",
+        "outcome": "Kocaelispor",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-18T13:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "5:0"
     }
 ]
