@@ -3410,16 +3410,6 @@
         "time": "2026-03-18T15:30:00Z"
     },
     {
-        "id": "b34d4555a7bad3fb8d3de405a5607c52",
-        "home": "HV71",
-        "away": "Leksands IF",
-        "outcome": "Leksands IF",
-        "odds": 2.8,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-03-18T18:00:00Z"
-    },
-    {
         "id": "5c13d9db1bfb65151bc6a1fc9b3da571",
         "home": "San Jose Barracuda",
         "away": "Coachella Valley Firebirds",
@@ -3438,26 +3428,6 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-03-18T16:30:00Z"
-    },
-    {
-        "id": "ea0f51f8971ec4533e2031362f9a919e",
-        "home": "Modo Hockey",
-        "away": "AIK",
-        "outcome": "AIK",
-        "odds": 3.37,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-03-18T18:00:00Z"
-    },
-    {
-        "id": "a382b486cd90b0485967c5bb2c45c1d8",
-        "home": "BIK Karlskoga",
-        "away": "Nybro Vikings IF",
-        "outcome": "Nybro Vikings IF",
-        "odds": 4.4,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-03-18T18:00:00Z"
     },
     {
         "id": "d6591ceefec94f6210971764baca4b8e",
