@@ -3490,16 +3490,6 @@
         "time": "2026-03-17T16:30:00Z"
     },
     {
-        "id": "e18c9ad67a91c1d7f539cf7e7a71bde8",
-        "home": "Lyon",
-        "away": "Celta Vigo",
-        "outcome": "Celta Vigo",
-        "odds": 4.0,
-        "stake": 325.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-03-19T17:45:00Z"
-    },
-    {
         "id": "04e7d8a83e6ac221484cdf8b99f50865",
         "home": "FC Midtjylland",
         "away": "Nottingham Forest",
@@ -4148,5 +4138,135 @@
         "stake": 250.0,
         "sport": "soccer_efl_champ",
         "time": "2026-03-21T15:00:00Z"
+    },
+    {
+        "id": "9ab6548041e2fa14e8756b3306519327",
+        "home": "Bridgeport Islanders",
+        "away": "Hershey Bears",
+        "outcome": "Bridgeport Islanders",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-21T19:00:00Z"
+    },
+    {
+        "id": "77f7998bd10bc0b97d4e91156e2ea3a5",
+        "home": "Manitoba Moose",
+        "away": "Tucson Roadrunners",
+        "outcome": "Manitoba Moose",
+        "odds": 2.59,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-21T19:00:00Z"
+    },
+    {
+        "id": "70a4161c6b699d029c5e4a2ebdf61fbc",
+        "home": "Everton",
+        "away": "Chelsea",
+        "outcome": "Everton",
+        "odds": 3.6,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-21T17:30:00Z"
+    },
+    {
+        "id": "b250cb90dbf875b0fc1e612f2e30b970",
+        "home": "Lechia Gda\u0144sk",
+        "away": "Pogo\u0144 Szczecin",
+        "outcome": "Lechia Gda\u0144sk",
+        "odds": 2.26,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-21T16:30:00Z"
+    },
+    {
+        "id": "5e9cd598bfdce2c8fc9ddab9b4f2b1a2",
+        "home": "Toulouse",
+        "away": "Lorient",
+        "outcome": "Toulouse",
+        "odds": 2.05,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-21T16:00:00Z"
+    },
+    {
+        "id": "d6d8beada392ffa902307a4b2d11cd0f",
+        "home": "Auxerre",
+        "away": "Brest",
+        "outcome": "Brest",
+        "odds": 3.35,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-21T18:00:00Z"
+    },
+    {
+        "id": "6a9d37a6ea583ad45b1e2bfc53fa27b1",
+        "home": "CF Estrela",
+        "away": "Casa Pia",
+        "outcome": "Casa Pia",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-03-20T20:15:00Z"
+    },
+    {
+        "id": "9179a3c8114e71f9f8738fc39163f219",
+        "home": "FC Blau-Wei\u00df Linz",
+        "away": "Ried",
+        "outcome": "FC Blau-Wei\u00df Linz",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-03-21T16:00:00Z"
+    },
+    {
+        "id": "f5959c833b0c5d0beb32eb175623d583",
+        "home": "Wolfsberger AC",
+        "away": "Rheindorf Altach",
+        "outcome": "Wolfsberger AC",
+        "odds": 2.56,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-03-21T16:00:00Z"
+    },
+    {
+        "id": "3063f02f31cbaa33198f8f183584f608",
+        "home": "FC Zurich",
+        "away": "FC Thun",
+        "outcome": "FC Zurich",
+        "odds": 4.43,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-21T17:00:00Z"
+    },
+    {
+        "id": "621bc0b5e80671f0bb7f51e0ca8db245",
+        "home": "Servette",
+        "away": "Grasshopper Z\u00fcrich",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-21T17:00:00Z"
+    },
+    {
+        "id": "d744123def5c0e9df567b11c190880ef",
+        "home": "Swansea City",
+        "away": "Coventry City",
+        "outcome": "Coventry City",
+        "odds": 2.28,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T17:15:00Z"
+    },
+    {
+        "id": "60efc41f50585743888a8db4e85b5b2f",
+        "home": "Toronto FC",
+        "away": "Columbus Crew SC",
+        "outcome": "Toronto FC",
+        "odds": 2.7,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-03-21T17:00:00Z"
     }
 ]
