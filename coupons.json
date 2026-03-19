@@ -3490,16 +3490,6 @@
         "time": "2026-03-17T16:30:00Z"
     },
     {
-        "id": "31ab12664a7a1fb8f45df8b6d82a4ae0",
-        "home": "Kayserispor",
-        "away": "Fatih Karag\u00fcmr\u00fck",
-        "outcome": "Fatih Karag\u00fcmr\u00fck",
-        "odds": 4.03,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-03-19T13:00:00Z"
-    },
-    {
         "id": "e18c9ad67a91c1d7f539cf7e7a71bde8",
         "home": "Lyon",
         "away": "Celta Vigo",
@@ -3948,5 +3938,215 @@
         "stake": 250.0,
         "sport": "soccer_efl_champ",
         "time": "2026-03-20T20:00:00Z"
+    },
+    {
+        "id": "31cc31337a26721b24ec72ecd2a5cfbe",
+        "home": "Toronto Maple Leafs",
+        "away": "Carolina Hurricanes",
+        "outcome": "Carolina Hurricanes",
+        "odds": 1.92,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-20T23:10:00Z"
+    },
+    {
+        "id": "87e89790382d13be36a66890c0ce3d98",
+        "home": "Washington Capitals",
+        "away": "New Jersey Devils",
+        "outcome": "New Jersey Devils",
+        "odds": 2.96,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-20T23:10:00Z"
+    },
+    {
+        "id": "129c7b8c4051b81df1abd653dabc2685",
+        "home": "Chicago Blackhawks",
+        "away": "Colorado Avalanche",
+        "outcome": "Chicago Blackhawks",
+        "odds": 4.31,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-21T00:40:00Z"
+    },
+    {
+        "id": "70708eff2f2b7f3aba770ae938a52f2f",
+        "home": "Calgary Flames",
+        "away": "Florida Panthers",
+        "outcome": "Calgary Flames",
+        "odds": 2.72,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-21T01:10:00Z"
+    },
+    {
+        "id": "31814de96d0445b29a5dc34c5ac8adec",
+        "home": "Utah Mammoth",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-21T02:10:00Z"
+    },
+    {
+        "id": "6f6891624dbf3d13a1e41a24d2c7bf4c",
+        "home": "Brighton and Hove Albion",
+        "away": "Liverpool",
+        "outcome": "Liverpool",
+        "odds": 2.34,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-21T12:30:00Z"
+    },
+    {
+        "id": "5d7743970aa447210c0de6f4cf3ebf27",
+        "home": "1. FC K\u00f6ln",
+        "away": "Borussia Monchengladbach",
+        "outcome": "1. FC K\u00f6ln",
+        "odds": 2.4,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-03-21T14:30:00Z"
+    },
+    {
+        "id": "a2895efbb8e51812c34d8a6701dc308d",
+        "home": "VfL Wolfsburg",
+        "away": "Werder Bremen",
+        "outcome": "Werder Bremen",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-03-21T14:30:00Z"
+    },
+    {
+        "id": "0840c5a6565facfcc3a277183563b457",
+        "home": "Parma",
+        "away": "Cremonese",
+        "outcome": "Cremonese",
+        "odds": 4.42,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-21T14:00:00Z"
+    },
+    {
+        "id": "5e817525215d870f2c5b70074460056b",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "GKS Katowice",
+        "outcome": "GKS Katowice",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-21T13:45:00Z"
+    },
+    {
+        "id": "bc5dd13f1625ecd76c61360df35114b5",
+        "home": "Vejle Boldklub",
+        "away": "OB Odense BK",
+        "outcome": "Vejle Boldklub",
+        "odds": 3.32,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-03-20T18:00:00Z"
+    },
+    {
+        "id": "185c0ab2aa7333558881ae78ce258fed",
+        "home": "Falkirk F.C.",
+        "away": "St Mirren",
+        "outcome": "St Mirren",
+        "odds": 4.5,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-03-21T15:00:00Z"
+    },
+    {
+        "id": "16be9a1268e7a03f62a4f331dc44ce29",
+        "home": "Motherwell",
+        "away": "Hibernian",
+        "outcome": "Hibernian",
+        "odds": 4.3,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-03-21T15:00:00Z"
+    },
+    {
+        "id": "f297246ce85b2cd834392c902b1dc213",
+        "home": "Kilmarnock",
+        "away": "Livingston",
+        "outcome": "Livingston",
+        "odds": 4.2,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-03-21T15:00:00Z"
+    },
+    {
+        "id": "43eb9eef3da28fa5a25e23d13fdb4451",
+        "home": "Derby County",
+        "away": "Birmingham City",
+        "outcome": "Derby County",
+        "odds": 2.98,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T12:30:00Z"
+    },
+    {
+        "id": "2eeee243544cf24210e861aada827622",
+        "home": "Blackburn Rovers",
+        "away": "Middlesbrough",
+        "outcome": "Blackburn Rovers",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T12:30:00Z"
+    },
+    {
+        "id": "e31457930d5c95c9c14ba860d6e1aa7d",
+        "home": "Bristol City",
+        "away": "West Bromwich Albion",
+        "outcome": "West Bromwich Albion",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T15:00:00Z"
+    },
+    {
+        "id": "42f4aa0bb2d704d57044d4b885fa8dea",
+        "home": "Charlton Athletic",
+        "away": "Norwich City",
+        "outcome": "Charlton Athletic",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T15:00:00Z"
+    },
+    {
+        "id": "7e76cdfc3b09781b76e38c06b6401589",
+        "home": "Watford",
+        "away": "Leicester City",
+        "outcome": "Leicester City",
+        "odds": 3.8,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T15:00:00Z"
+    },
+    {
+        "id": "c8abd21cb76f279c1e14c08472bb84a6",
+        "home": "Queens Park Rangers",
+        "away": "Portsmouth",
+        "outcome": "Portsmouth",
+        "odds": 2.78,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T15:00:00Z"
+    },
+    {
+        "id": "de33e5d4de9e5cef9b7283fd4f57a0e9",
+        "home": "Sheffield United",
+        "away": "Wrexham AFC",
+        "outcome": "Wrexham AFC",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T15:00:00Z"
     }
 ]

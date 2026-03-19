@@ -12341,5 +12341,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:2"
+    },
+    {
+        "id": "31ab12664a7a1fb8f45df8b6d82a4ae0",
+        "home": "Kayserispor",
+        "away": "Fatih Karag\u00fcmr\u00fck",
+        "outcome": "Fatih Karag\u00fcmr\u00fck",
+        "odds": 4.03,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-03-19T13:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:0"
     }
 ]
