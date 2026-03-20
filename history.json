@@ -12601,5 +12601,31 @@
         "profit": 1010.0,
         "status": "WIN",
         "score": "3:4"
+    },
+    {
+        "id": "5625b50648b5e49fa2227d5861c6051d",
+        "home": "Piast Gliwice",
+        "away": "Radomiak Radom",
+        "outcome": "Radomiak Radom",
+        "odds": 3.35,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-03-20T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "a1e4f38c15f9eec3731b96923b93d736",
+        "home": "Cagliari",
+        "away": "Napoli",
+        "outcome": "Napoli",
+        "odds": 1.82,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-20T17:30:00Z",
+        "profit": 205.0,
+        "status": "WIN",
+        "score": "0:1"
     }
 ]
