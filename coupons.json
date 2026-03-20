@@ -4468,5 +4468,75 @@
         "stake": 250.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-03-22T11:15:00Z"
+    },
+    {
+        "id": "36b76f4eb384eb486755ff902a06db6e",
+        "home": "Nashville Predators",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 2.43,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-21T18:00:00Z"
+    },
+    {
+        "id": "1efa28912151d6adc43453fb2302a610",
+        "home": "Aston Villa",
+        "away": "West Ham United",
+        "outcome": "West Ham United",
+        "odds": 4.11,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-22T14:15:00Z"
+    },
+    {
+        "id": "81dd92df69b61ff2716351eea3bd457c",
+        "home": "Tottenham Hotspur",
+        "away": "Nottingham Forest",
+        "outcome": "Nottingham Forest",
+        "odds": 3.4,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-22T14:15:00Z"
+    },
+    {
+        "id": "6a9b287c5519d99149aea0aa07e97457",
+        "home": "FSV Mainz 05",
+        "away": "Eintracht Frankfurt",
+        "outcome": "FSV Mainz 05",
+        "odds": 2.24,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-03-22T14:30:00Z"
+    },
+    {
+        "id": "bb09769af11fbcbd90d7551bdf373852",
+        "home": "Bologna",
+        "away": "Lazio",
+        "outcome": "Lazio",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-03-22T14:00:00Z"
+    },
+    {
+        "id": "89aae2e9877ef0ac5ee8a2d58f2062dc",
+        "home": "Lyon",
+        "away": "AS Monaco",
+        "outcome": "Lyon",
+        "odds": 2.88,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-03-22T14:00:00Z"
+    },
+    {
+        "id": "b2b2ab17698937ce692f6bfa776e32e7",
+        "home": "BSC Young Boys",
+        "away": "FC Lugano",
+        "outcome": "FC Lugano",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-03-22T15:30:00Z"
     }
 ]
