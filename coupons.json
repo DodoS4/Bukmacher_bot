@@ -3640,16 +3640,6 @@
         "time": "2026-03-20T16:30:00Z"
     },
     {
-        "id": "6f6891624dbf3d13a1e41a24d2c7bf4c",
-        "home": "Brighton and Hove Albion",
-        "away": "Liverpool",
-        "outcome": "Liverpool",
-        "odds": 2.34,
-        "stake": 400.0,
-        "sport": "soccer_epl",
-        "time": "2026-03-21T12:30:00Z"
-    },
-    {
         "id": "5d7743970aa447210c0de6f4cf3ebf27",
         "home": "1. FC K\u00f6ln",
         "away": "Borussia Monchengladbach",
@@ -3718,26 +3708,6 @@
         "stake": 325.0,
         "sport": "soccer_spl",
         "time": "2026-03-21T15:00:00Z"
-    },
-    {
-        "id": "43eb9eef3da28fa5a25e23d13fdb4451",
-        "home": "Derby County",
-        "away": "Birmingham City",
-        "outcome": "Derby County",
-        "odds": 2.98,
-        "stake": 250.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-03-21T12:30:00Z"
-    },
-    {
-        "id": "2eeee243544cf24210e861aada827622",
-        "home": "Blackburn Rovers",
-        "away": "Middlesbrough",
-        "outcome": "Blackburn Rovers",
-        "odds": 4.5,
-        "stake": 250.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-03-21T12:30:00Z"
     },
     {
         "id": "e31457930d5c95c9c14ba860d6e1aa7d",
@@ -4718,5 +4688,95 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-03-22T23:00:00Z"
+    },
+    {
+        "id": "05a403a91465d9afe7c5f12297ee11cf",
+        "home": "New York Rangers",
+        "away": "Winnipeg Jets",
+        "outcome": "New York Rangers",
+        "odds": 2.48,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-22T16:00:00Z"
+    },
+    {
+        "id": "1b98d6b26082933d959e8eea653a68b4",
+        "home": "Washington Capitals",
+        "away": "Colorado Avalanche",
+        "outcome": "Washington Capitals",
+        "odds": 3.06,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-22T16:30:00Z"
+    },
+    {
+        "id": "81c8d3193090d0ec9bdfc9f664940d72",
+        "home": "Pittsburgh Penguins",
+        "away": "Carolina Hurricanes",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-22T19:00:00Z"
+    },
+    {
+        "id": "918492f7aa5fb87b18c401c5195128b4",
+        "home": "Chicago Blackhawks",
+        "away": "Nashville Predators",
+        "outcome": "Chicago Blackhawks",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-22T19:00:00Z"
+    },
+    {
+        "id": "74eae0a03cd351904500214958ea2029",
+        "home": "New York Islanders",
+        "away": "Columbus Blue Jackets",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-22T23:00:00Z"
+    },
+    {
+        "id": "a1b52a959624077587068140f1040844",
+        "home": "Dallas Stars",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 3.3,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-22T23:00:00Z"
+    },
+    {
+        "id": "1eadd9e3836566b4d3f953be47556052",
+        "home": "Anaheim Ducks",
+        "away": "Buffalo Sabres",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.53,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-23T00:00:00Z"
+    },
+    {
+        "id": "a825c6b75f8bf7501c915b59bec0ca12",
+        "home": "Calgary Flames",
+        "away": "Tampa Bay Lightning",
+        "outcome": "Calgary Flames",
+        "odds": 3.6,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-23T00:00:00Z"
+    },
+    {
+        "id": "88395d9fd249730549bdaf11350dbd67",
+        "home": "Utah Mammoth",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 3.19,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-23T01:00:00Z"
     }
 ]

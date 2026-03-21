@@ -12848,5 +12848,44 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "4:0"
+    },
+    {
+        "id": "6f6891624dbf3d13a1e41a24d2c7bf4c",
+        "home": "Brighton and Hove Albion",
+        "away": "Liverpool",
+        "outcome": "Liverpool",
+        "odds": 2.34,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-03-21T12:30:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "43eb9eef3da28fa5a25e23d13fdb4451",
+        "home": "Derby County",
+        "away": "Birmingham City",
+        "outcome": "Derby County",
+        "odds": 2.98,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T12:30:00Z",
+        "profit": 495.0,
+        "status": "WIN",
+        "score": "1:0"
+    },
+    {
+        "id": "2eeee243544cf24210e861aada827622",
+        "home": "Blackburn Rovers",
+        "away": "Middlesbrough",
+        "outcome": "Blackburn Rovers",
+        "odds": 4.5,
+        "stake": 250.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-03-21T12:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "0:0"
     }
 ]
