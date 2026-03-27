@@ -4808,5 +4808,35 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-03-29T02:30:00Z"
+    },
+    {
+        "id": "43655bdaff4460132579492de00e217d",
+        "home": "Calgary Wranglers",
+        "away": "Colorado Eagles",
+        "outcome": "Calgary Wranglers",
+        "odds": 3.01,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-29T19:00:00Z"
+    },
+    {
+        "id": "2db7240b3c8d93755fef878316e53ff3",
+        "home": "W-B/Scranton Penguins",
+        "away": "Lehigh Valley Phantoms",
+        "outcome": "Lehigh Valley Phantoms",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-29T19:05:00Z"
+    },
+    {
+        "id": "f3f62684a45ab2ca1dfb7f04f9063e02",
+        "home": "Providence Bruins",
+        "away": "Springfield Thunderbirds",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 3.8,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-03-29T19:05:00Z"
     }
 ]
