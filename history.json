@@ -13550,5 +13550,44 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:1"
+    },
+    {
+        "id": "c8944643107edfc1012baabcaa72614c",
+        "home": "Buffalo Sabres",
+        "away": "Detroit Red Wings",
+        "outcome": "Detroit Red Wings",
+        "odds": 3.25,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-27T23:10:00Z",
+        "profit": 1125.0,
+        "status": "WIN",
+        "score": "2:5"
+    },
+    {
+        "id": "d1b771dc57d6a0d3b0c0ec52d0b99dbf",
+        "home": "New York Rangers",
+        "away": "Chicago Blackhawks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 3.29,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-27T23:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "6:1"
+    },
+    {
+        "id": "79d74c54c60e9161c6da44a3e7b36dbd",
+        "home": "Kalmar HC",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "Kalmar HC",
+        "odds": 2.22,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-03-27T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "0:2"
     }
 ]
