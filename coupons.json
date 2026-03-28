@@ -4370,26 +4370,6 @@
         "time": "2026-03-22T19:00:00Z"
     },
     {
-        "id": "34e2753996651e684edb84f9a965f64b",
-        "home": "Bryn\u00e4s IF",
-        "away": "V\u00e4xj\u00f6 Lakers",
-        "outcome": "V\u00e4xj\u00f6 Lakers",
-        "odds": 3.54,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-03-28T14:15:00Z"
-    },
-    {
-        "id": "109e02f3984830bc40c38835ffab7676",
-        "home": "F\u00e4rjestad BK",
-        "away": "R\u00f6gle BK",
-        "outcome": "R\u00f6gle BK",
-        "odds": 3.4,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-03-28T14:15:00Z"
-    },
-    {
         "id": "f494cae9ed52127c48fbc68ce9f46185",
         "home": "Ilves",
         "away": "KalPa",
@@ -4818,5 +4798,75 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-03-29T20:00:00Z"
+    },
+    {
+        "id": "234e07ca5a6aa75da94b75dabce4eade",
+        "home": "New York Rangers",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 3.0,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-29T17:10:00Z"
+    },
+    {
+        "id": "709a97a11c79cdacda229a81aa0f7fdd",
+        "home": "Columbus Blue Jackets",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 2.9,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-29T21:10:00Z"
+    },
+    {
+        "id": "24108b60bfa8824523b3cfb70ea6fd53",
+        "home": "Carolina Hurricanes",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 3.55,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-29T21:10:00Z"
+    },
+    {
+        "id": "1790fa92fa3f53f9547a2114c06cfbed",
+        "home": "Tampa Bay Lightning",
+        "away": "Nashville Predators",
+        "outcome": "Nashville Predators",
+        "odds": 3.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-29T21:10:00Z"
+    },
+    {
+        "id": "4b1b7e72da2cb32b6056a2feee9187c4",
+        "home": "New Jersey Devils",
+        "away": "Chicago Blackhawks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 3.46,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-29T23:10:00Z"
+    },
+    {
+        "id": "b221479b627d3a8d9e9aff945d63cf46",
+        "home": "Philadelphia Flyers",
+        "away": "Dallas Stars",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.1,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-03-29T23:10:00Z"
+    },
+    {
+        "id": "237a4cbb107c2129053004acdea15cf0",
+        "home": "F\u00e4rjestad BK",
+        "away": "R\u00f6gle BK",
+        "outcome": "R\u00f6gle BK",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-30T17:00:00Z"
     }
 ]

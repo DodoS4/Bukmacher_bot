@@ -13615,5 +13615,31 @@
         "profit": -312.5,
         "status": "LOSS",
         "score": "2:4"
+    },
+    {
+        "id": "34e2753996651e684edb84f9a965f64b",
+        "home": "Bryn\u00e4s IF",
+        "away": "V\u00e4xj\u00f6 Lakers",
+        "outcome": "V\u00e4xj\u00f6 Lakers",
+        "odds": 3.54,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-28T14:15:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "109e02f3984830bc40c38835ffab7676",
+        "home": "F\u00e4rjestad BK",
+        "away": "R\u00f6gle BK",
+        "outcome": "R\u00f6gle BK",
+        "odds": 3.4,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-28T14:15:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "2:0"
     }
 ]
