@@ -13836,5 +13836,31 @@
         "profit": 1175.0,
         "status": "WIN",
         "score": "4:5"
+    },
+    {
+        "id": "c62ed13cb23ec466eae21e0238c33c76",
+        "home": "Lule\u00e5 HF",
+        "away": "Fr\u00f6lunda HC",
+        "outcome": "Fr\u00f6lunda HC",
+        "odds": 2.46,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-29T13:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "3:3"
+    },
+    {
+        "id": "ab037dd464bfe7b40248d47a33fdc985",
+        "home": "Malm\u00f6 Redhawks",
+        "away": "Skellefte\u00e5 AIK",
+        "outcome": "Malm\u00f6 Redhawks",
+        "odds": 3.8,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-29T13:00:00Z",
+        "profit": 875.0,
+        "status": "WIN",
+        "score": "2:1"
     }
 ]
