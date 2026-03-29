@@ -4778,5 +4778,25 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-03-31T15:30:00Z"
+    },
+    {
+        "id": "bbc935b365667f7a10a7464a74bc75f0",
+        "home": "Fr\u00f6lunda HC",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-31T17:00:00Z"
+    },
+    {
+        "id": "9091ccbec96d2a988c849d3eb25197d3",
+        "home": "KalPa",
+        "away": "Ilves",
+        "outcome": "KalPa",
+        "odds": 3.4,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-03-31T15:30:00Z"
     }
 ]
