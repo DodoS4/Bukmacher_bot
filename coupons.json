@@ -4630,26 +4630,6 @@
         "time": "2026-03-29T20:00:00Z"
     },
     {
-        "id": "237a4cbb107c2129053004acdea15cf0",
-        "home": "F\u00e4rjestad BK",
-        "away": "R\u00f6gle BK",
-        "outcome": "R\u00f6gle BK",
-        "odds": 3.6,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-03-30T17:00:00Z"
-    },
-    {
-        "id": "acfeb5ab4a2d23b4ca1336515535f3fa",
-        "home": "Bryn\u00e4s IF",
-        "away": "V\u00e4xj\u00f6 Lakers",
-        "outcome": "V\u00e4xj\u00f6 Lakers",
-        "odds": 3.8,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-03-30T17:00:00Z"
-    },
-    {
         "id": "99602fccba93ef1e0f58d455725db3f8",
         "home": "HPK",
         "away": "Tappara",
@@ -4868,5 +4848,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-01T14:30:00Z"
+    },
+    {
+        "id": "0000ddb0530f24b122653ea0173d6080",
+        "home": "BIK Karlskoga",
+        "away": "Modo Hockey",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.28,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-04-01T17:00:00Z"
     }
 ]
