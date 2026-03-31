@@ -14005,5 +14005,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "5:4"
+    },
+    {
+        "id": "bbc935b365667f7a10a7464a74bc75f0",
+        "home": "Fr\u00f6lunda HC",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-03-31T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:1"
     }
 ]
