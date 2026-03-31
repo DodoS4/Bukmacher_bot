@@ -4918,5 +4918,25 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-02T02:00:00Z"
+    },
+    {
+        "id": "96ceffc5fa63fb301b4128bb29041f01",
+        "home": "San Jose Sharks",
+        "away": "Anaheim Ducks",
+        "outcome": "San Jose Sharks",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-02T01:00:00Z"
+    },
+    {
+        "id": "643d656ddcc5756af5e6115f9f134a28",
+        "home": "Los Angeles Kings",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 3.2,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-02T01:00:00Z"
     }
 ]
