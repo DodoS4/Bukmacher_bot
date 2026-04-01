@@ -5058,5 +5058,45 @@
         "stake": 325.0,
         "sport": "soccer_efl_champ",
         "time": "2026-04-03T14:00:00Z"
+    },
+    {
+        "id": "e568b2842cc4c9c3d9f96b81fdbbbbc5",
+        "home": "Manitoba Moose",
+        "away": "Grand Rapids Griffins",
+        "outcome": "Manitoba Moose",
+        "odds": 3.2,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T19:00:00Z"
+    },
+    {
+        "id": "fe445edb21490dfc11853e85ec6048a4",
+        "home": "Royal Antwerp",
+        "away": "Genk",
+        "outcome": "Royal Antwerp",
+        "odds": 3.05,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-03T18:45:00Z"
+    },
+    {
+        "id": "f4a8d79b2a542639d05ea6bfebeb12a8",
+        "home": "Ried",
+        "away": "Rheindorf Altach",
+        "outcome": "Rheindorf Altach",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-03T17:30:00Z"
+    },
+    {
+        "id": "4fcb1a2f92eea196661615f51ec3d054",
+        "home": "Middlesbrough",
+        "away": "Millwall",
+        "outcome": "Middlesbrough",
+        "odds": 1.8,
+        "stake": 325.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-03T11:30:00Z"
     }
 ]
