@@ -5208,5 +5208,35 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-04T02:00:00Z"
+    },
+    {
+        "id": "ff2a06f76e4f4ea642c90d84c5b6912c",
+        "home": "GKS Katowice",
+        "away": "Wis\u0142a P\u0142ock",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 3.94,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-04T10:15:00Z"
+    },
+    {
+        "id": "7ff68b5b633841b6df8b0979d795e1b9",
+        "home": "Genclerbirligi SK",
+        "away": "Goztepe",
+        "outcome": "Genclerbirligi SK",
+        "odds": 3.18,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-04T11:30:00Z"
+    },
+    {
+        "id": "ea3fe2331befb0595eec90cddcc898bd",
+        "home": "Kasimpasa SK",
+        "away": "Kayserispor",
+        "outcome": "Kayserispor",
+        "odds": 3.41,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-04T11:30:00Z"
     }
 ]
