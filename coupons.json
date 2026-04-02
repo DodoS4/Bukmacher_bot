@@ -4710,36 +4710,6 @@
         "time": "2026-04-01T14:30:00Z"
     },
     {
-        "id": "0000ddb0530f24b122653ea0173d6080",
-        "home": "BIK Karlskoga",
-        "away": "Modo Hockey",
-        "outcome": "BIK Karlskoga",
-        "odds": 2.28,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-04-01T17:00:00Z"
-    },
-    {
-        "id": "e1d6ef59600406aff0b896381ae1d97c",
-        "home": "V\u00e4xj\u00f6 Lakers",
-        "away": "Bryn\u00e4s IF",
-        "outcome": "Bryn\u00e4s IF",
-        "odds": 2.73,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-04-01T17:00:00Z"
-    },
-    {
-        "id": "19111d3deb26ea74057d8ca66dde6835",
-        "home": "R\u00f6gle BK",
-        "away": "F\u00e4rjestad BK",
-        "outcome": "F\u00e4rjestad BK",
-        "odds": 2.8,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-04-01T17:00:00Z"
-    },
-    {
         "id": "983b3cd86a1f651dcbf384e8999449dc",
         "home": "Utica Comets",
         "away": "Providence Bruins",
@@ -4808,26 +4778,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-02T02:00:00Z"
-    },
-    {
-        "id": "96ceffc5fa63fb301b4128bb29041f01",
-        "home": "San Jose Sharks",
-        "away": "Anaheim Ducks",
-        "outcome": "San Jose Sharks",
-        "odds": 2.75,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-02T01:00:00Z"
-    },
-    {
-        "id": "643d656ddcc5756af5e6115f9f134a28",
-        "home": "Los Angeles Kings",
-        "away": "St Louis Blues",
-        "outcome": "St Louis Blues",
-        "odds": 3.2,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-02T01:00:00Z"
     },
     {
         "id": "a68979c1f505a849ba4480c7cb114471",
@@ -5098,5 +5048,165 @@
         "stake": 325.0,
         "sport": "soccer_efl_champ",
         "time": "2026-04-03T11:30:00Z"
+    },
+    {
+        "id": "652cbee5d78edda031b1fea06b3bca9c",
+        "home": "BIK Karlskoga",
+        "away": "Modo Hockey",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.3,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-04-03T16:00:00Z"
+    },
+    {
+        "id": "91961142c61ab755cf55234ac7f467de",
+        "home": "F\u00e4rjestad BK",
+        "away": "R\u00f6gle BK",
+        "outcome": "R\u00f6gle BK",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-03T13:00:00Z"
+    },
+    {
+        "id": "078d53230d85235fead7fbe356934b5f",
+        "home": "Bridgeport Islanders",
+        "away": "Hartford Wolf Pack",
+        "outcome": "Bridgeport Islanders",
+        "odds": 2.38,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T23:00:00Z"
+    },
+    {
+        "id": "c53037dc79e7ca73ec4cfde13db28515",
+        "home": "Laval Rocket",
+        "away": "Calgary Wranglers",
+        "outcome": "Calgary Wranglers",
+        "odds": 3.64,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T23:00:00Z"
+    },
+    {
+        "id": "5b6b6609e9b4ce54a69c1ae46952e712",
+        "home": "Toronto Marlies",
+        "away": "Charlotte Checkers",
+        "outcome": "Charlotte Checkers",
+        "odds": 2.38,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T23:00:00Z"
+    },
+    {
+        "id": "09f91192ed7af3cc4506eec0aeb471d9",
+        "home": "Cleveland Monsters",
+        "away": "Milwaukee Admirals",
+        "outcome": "Milwaukee Admirals",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T23:00:00Z"
+    },
+    {
+        "id": "78d543103e314bc745128db32cb470bb",
+        "home": "Syracuse Crunch",
+        "away": "Providence Bruins",
+        "outcome": "Providence Bruins",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T23:00:00Z"
+    },
+    {
+        "id": "be6f47aa8f63e215dbdcb4a09140b892",
+        "home": "Rochester Americans",
+        "away": "Belleville Senators",
+        "outcome": "Belleville Senators",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T23:05:00Z"
+    },
+    {
+        "id": "7c929bdb5e420242cfb14f17220555d6",
+        "home": "Springfield Thunderbirds",
+        "away": "Hershey Bears",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 2.63,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T23:05:00Z"
+    },
+    {
+        "id": "2687db72489d3f643179f51043dc3b9c",
+        "home": "W-B/Scranton Penguins",
+        "away": "Lehigh Valley Phantoms",
+        "outcome": "Lehigh Valley Phantoms",
+        "odds": 3.54,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-03T23:05:00Z"
+    },
+    {
+        "id": "e2a9ab85b60088bf6ca9ae9d83663a0d",
+        "home": "Texas Stars",
+        "away": "Chicago Wolves",
+        "outcome": "Chicago Wolves",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-04T00:00:00Z"
+    },
+    {
+        "id": "a3f246b761c922cb0cd625b67e3b1b8b",
+        "home": "Iowa Wild",
+        "away": "Rockford IceHogs",
+        "outcome": "Iowa Wild",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-04T00:00:00Z"
+    },
+    {
+        "id": "c8871b4d588908b514d3a0ffdf305325",
+        "home": "Abbotsford Canucks",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "Abbotsford Canucks",
+        "odds": 3.33,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-04T02:00:00Z"
+    },
+    {
+        "id": "abf9ef0cd5b77aea9df0cbd2a4cb7401",
+        "home": "San Diego Gulls",
+        "away": "Bakersfield Condors",
+        "outcome": "Bakersfield Condors",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-04T02:00:00Z"
+    },
+    {
+        "id": "401778708d2d95193a457d2ce15f5523",
+        "home": "San Jose Barracuda",
+        "away": "Colorado Eagles",
+        "outcome": "Colorado Eagles",
+        "odds": 2.25,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-04T02:00:00Z"
+    },
+    {
+        "id": "4cdfbf4b90e7b35caaf86b83403d2166",
+        "home": "Henderson Silver Knights",
+        "away": "Tucson Roadrunners",
+        "outcome": "Tucson Roadrunners",
+        "odds": 3.08,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-04T02:00:00Z"
     }
 ]

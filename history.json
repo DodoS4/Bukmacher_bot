@@ -14148,5 +14148,70 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "3:0"
+    },
+    {
+        "id": "0000ddb0530f24b122653ea0173d6080",
+        "home": "BIK Karlskoga",
+        "away": "Modo Hockey",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.28,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-04-01T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "1:2"
+    },
+    {
+        "id": "e1d6ef59600406aff0b896381ae1d97c",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "Bryn\u00e4s IF",
+        "outcome": "Bryn\u00e4s IF",
+        "odds": 2.73,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-01T17:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "19111d3deb26ea74057d8ca66dde6835",
+        "home": "R\u00f6gle BK",
+        "away": "F\u00e4rjestad BK",
+        "outcome": "F\u00e4rjestad BK",
+        "odds": 2.8,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-01T17:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "7:2"
+    },
+    {
+        "id": "96ceffc5fa63fb301b4128bb29041f01",
+        "home": "San Jose Sharks",
+        "away": "Anaheim Ducks",
+        "outcome": "San Jose Sharks",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-02T01:00:00Z",
+        "profit": 875.0,
+        "status": "WIN",
+        "score": "4:3"
+    },
+    {
+        "id": "643d656ddcc5756af5e6115f9f134a28",
+        "home": "Los Angeles Kings",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 3.2,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-02T01:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "2:1"
     }
 ]
