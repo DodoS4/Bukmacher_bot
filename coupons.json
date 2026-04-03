@@ -4790,86 +4790,6 @@
         "time": "2026-04-01T15:30:00Z"
     },
     {
-        "id": "12146583ccb635720f0bf36dc893b93f",
-        "home": "Birmingham City",
-        "away": "Blackburn Rovers",
-        "outcome": "Birmingham City",
-        "odds": 1.89,
-        "stake": 325.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-03T14:00:00Z"
-    },
-    {
-        "id": "8bf42a4da640edcd7dcfaaf6999aca06",
-        "home": "Charlton Athletic",
-        "away": "Bristol City",
-        "outcome": "Bristol City",
-        "odds": 2.98,
-        "stake": 325.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-03T14:00:00Z"
-    },
-    {
-        "id": "3945e46ac00ff4dfeab720a676e0f1ea",
-        "home": "Oxford United",
-        "away": "Hull City",
-        "outcome": "Hull City",
-        "odds": 2.94,
-        "stake": 325.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-03T14:00:00Z"
-    },
-    {
-        "id": "b44321122bd6c0a73104d140184eb4be",
-        "home": "Leicester City",
-        "away": "Preston North End",
-        "outcome": "Preston North End",
-        "odds": 4.3,
-        "stake": 325.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-03T14:00:00Z"
-    },
-    {
-        "id": "d9570f9e83fa516db367901f43f8c766",
-        "home": "Norwich City",
-        "away": "Portsmouth",
-        "outcome": "Portsmouth",
-        "odds": 4.0,
-        "stake": 325.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-03T14:00:00Z"
-    },
-    {
-        "id": "baf38dfdc574ca7fd09a7e4d6183ed3a",
-        "home": "Queens Park Rangers",
-        "away": "Watford",
-        "outcome": "Watford",
-        "odds": 2.68,
-        "stake": 325.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-03T14:00:00Z"
-    },
-    {
-        "id": "908d1caa2beff3cfe5898b3953f3809e",
-        "home": "Sheffield United",
-        "away": "Swansea City",
-        "outcome": "Swansea City",
-        "odds": 4.4,
-        "stake": 325.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-03T14:00:00Z"
-    },
-    {
-        "id": "a9ce1f7fa9753e04f2f65ac404e367ef",
-        "home": "West Bromwich Albion",
-        "away": "Wrexham AFC",
-        "outcome": "Wrexham AFC",
-        "odds": 3.6,
-        "stake": 325.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-03T14:00:00Z"
-    },
-    {
         "id": "e568b2842cc4c9c3d9f96b81fdbbbbc5",
         "home": "Manitoba Moose",
         "away": "Grand Rapids Griffins",
@@ -4888,26 +4808,6 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-04-03T18:45:00Z"
-    },
-    {
-        "id": "f4a8d79b2a542639d05ea6bfebeb12a8",
-        "home": "Ried",
-        "away": "Rheindorf Altach",
-        "outcome": "Rheindorf Altach",
-        "odds": 3.7,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-04-03T17:30:00Z"
-    },
-    {
-        "id": "652cbee5d78edda031b1fea06b3bca9c",
-        "home": "BIK Karlskoga",
-        "away": "Modo Hockey",
-        "outcome": "BIK Karlskoga",
-        "odds": 2.3,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-04-03T16:00:00Z"
     },
     {
         "id": "078d53230d85235fead7fbe356934b5f",
@@ -5808,5 +5708,55 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-04-05T14:00:00Z"
+    },
+    {
+        "id": "55d20d02f3fa36693f728220649acc59",
+        "home": "R\u00f6gle BK",
+        "away": "F\u00e4rjestad BK",
+        "outcome": "F\u00e4rjestad BK",
+        "odds": 3.2,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-05T13:00:00Z"
+    },
+    {
+        "id": "70882d892b579af091e4cfdcf4174b47",
+        "home": "Pisa",
+        "away": "Torino",
+        "outcome": "Pisa",
+        "odds": 3.3,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-04-05T16:00:00Z"
+    },
+    {
+        "id": "6711a91275c7b1630162aba2511e6559",
+        "home": "AS Monaco",
+        "away": "Marseille",
+        "outcome": "Marseille",
+        "odds": 3.3,
+        "stake": 325.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-04-05T18:45:00Z"
+    },
+    {
+        "id": "57a7f8cf6ece0dd5879fc01697152881",
+        "home": "Fenerbahce",
+        "away": "Besiktas JK",
+        "outcome": "Besiktas JK",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-05T17:00:00Z"
+    },
+    {
+        "id": "ff3555481edf709d0e7f3f3f8176f402",
+        "home": "Westerlo",
+        "away": "Charleroi",
+        "outcome": "Westerlo",
+        "odds": 2.64,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-05T16:30:00Z"
     }
 ]
