@@ -14395,5 +14395,31 @@
         "profit": 940.0,
         "status": "WIN",
         "score": "4:5"
+    },
+    {
+        "id": "4fcb1a2f92eea196661615f51ec3d054",
+        "home": "Middlesbrough",
+        "away": "Millwall",
+        "outcome": "Middlesbrough",
+        "odds": 1.8,
+        "stake": 325.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-03T11:30:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "1:2"
+    },
+    {
+        "id": "91961142c61ab755cf55234ac7f467de",
+        "home": "F\u00e4rjestad BK",
+        "away": "R\u00f6gle BK",
+        "outcome": "R\u00f6gle BK",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-03T13:00:00Z",
+        "profit": 470.0,
+        "status": "WIN",
+        "score": "2:3"
     }
 ]
