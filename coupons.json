@@ -5528,5 +5528,45 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-04-05T02:30:00Z"
+    },
+    {
+        "id": "a1861b3ae91cb01c77e88226d6f81c23",
+        "home": "Rio Ave FC",
+        "away": "Alverca",
+        "outcome": "Alverca",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-04-04T17:00:00Z"
+    },
+    {
+        "id": "b5329c091f52608a177bba5a101beb81",
+        "home": "SC Telstar",
+        "away": "Groningen",
+        "outcome": "SC Telstar",
+        "odds": 2.85,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-04-04T16:45:00Z"
+    },
+    {
+        "id": "b9d2bb3b901c6f2604a4c50d83b62912",
+        "home": "Samsunspor",
+        "away": "Torku Konyaspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-05T11:30:00Z"
+    },
+    {
+        "id": "081d0b3e5270b5762fecbf796c3d2723",
+        "home": "Grazer AK",
+        "away": "FC Blau-Wei\u00df Linz",
+        "outcome": "FC Blau-Wei\u00df Linz",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-04T15:00:00Z"
     }
 ]
