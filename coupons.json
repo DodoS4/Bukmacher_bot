@@ -4800,16 +4800,6 @@
         "time": "2026-04-03T19:00:00Z"
     },
     {
-        "id": "fe445edb21490dfc11853e85ec6048a4",
-        "home": "Royal Antwerp",
-        "away": "Genk",
-        "outcome": "Royal Antwerp",
-        "odds": 3.05,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-04-03T18:45:00Z"
-    },
-    {
         "id": "078d53230d85235fead7fbe356934b5f",
         "home": "Bridgeport Islanders",
         "away": "Hartford Wolf Pack",
@@ -4978,26 +4968,6 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-04-04T11:30:00Z"
-    },
-    {
-        "id": "1de936f832a2d7aed41e05852cacadcb",
-        "home": "New York Islanders",
-        "away": "Philadelphia Flyers",
-        "outcome": "Philadelphia Flyers",
-        "odds": 3.04,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-03T23:10:00Z"
-    },
-    {
-        "id": "d45f9e5f21f7e0880b1a5c17ccf1d1c7",
-        "home": "Anaheim Ducks",
-        "away": "St Louis Blues",
-        "outcome": "St Louis Blues",
-        "odds": 2.9,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-04T02:10:00Z"
     },
     {
         "id": "f8a6cd95ad50bc1feaf12cb33ac954a2",
@@ -5758,5 +5728,45 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-04-05T16:30:00Z"
+    },
+    {
+        "id": "3629ffeb3d5e7df007c47ad3837acfa9",
+        "home": "Modo Hockey",
+        "away": "BIK Karlskoga",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.85,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-04-05T16:00:00Z"
+    },
+    {
+        "id": "659a74c2ac20ae430c344310094fd966",
+        "home": "Nacional",
+        "away": "CF Estrela",
+        "outcome": "CF Estrela",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-04-04T14:30:00Z"
+    },
+    {
+        "id": "01a4ad1b7977d8551b69973404f2f1c6",
+        "home": "Rapid Wien",
+        "away": "Sturm Graz",
+        "outcome": "Rapid Wien",
+        "odds": 2.52,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-05T15:00:00Z"
+    },
+    {
+        "id": "9b0fd38487985f127a97ed75b29d4ed9",
+        "home": "New York City FC",
+        "away": "St. Louis City SC",
+        "outcome": "New York City FC",
+        "odds": 1.83,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-04-04T23:30:00Z"
     }
 ]
