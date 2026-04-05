@@ -5568,5 +5568,15 @@
         "stake": 250.0,
         "sport": "soccer_efl_champ",
         "time": "2026-04-06T19:00:00Z"
+    },
+    {
+        "id": "e75bb967a9becbff6eed6c30c73fe68c",
+        "home": "Lechia Gda\u0144sk",
+        "away": "Korona Kielce",
+        "outcome": "Korona Kielce",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-06T18:15:00Z"
     }
 ]
