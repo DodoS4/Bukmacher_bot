@@ -5030,46 +5030,6 @@
         "time": "2026-04-06T23:00:00Z"
     },
     {
-        "id": "08a04c6f864e734c2adb8d0c45562d5a",
-        "home": "Modo Hockey",
-        "away": "BIK Karlskoga",
-        "outcome": "BIK Karlskoga",
-        "odds": 2.9,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-04-07T17:00:00Z"
-    },
-    {
-        "id": "5fa8fc58a9665f60503f3e5f18cd80f5",
-        "home": "Skellefte\u00e5 AIK",
-        "away": "Lule\u00e5 HF",
-        "outcome": "Lule\u00e5 HF",
-        "odds": 4.1,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-04-07T17:00:00Z"
-    },
-    {
-        "id": "95a16597d403bb13fddde04905e90031",
-        "home": "Arka Gdynia",
-        "away": "Zag\u0142\u0119bie Lubin",
-        "outcome": "Zag\u0142\u0119bie Lubin",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-04-07T17:00:00Z"
-    },
-    {
-        "id": "79ed4e5f8b7492c7e8c3228edefaf4c5",
-        "home": "FC Nordsjaelland",
-        "away": "Brondby IF",
-        "outcome": "Brondby IF",
-        "odds": 3.19,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-04-07T17:00:00Z"
-    },
-    {
         "id": "0cb74586048962c7991f74557fe3c87e",
         "home": "Wrexham AFC",
         "away": "Southampton",
@@ -5398,5 +5358,45 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-04-08T13:00:00Z"
+    },
+    {
+        "id": "ca37b2ec5fbdfd693d066f49e57f7959",
+        "home": "\u00c7aykur Rizespor",
+        "away": "Samsunspor",
+        "outcome": "Samsunspor",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-09T17:00:00Z"
+    },
+    {
+        "id": "0702b712ee41c530dc5f1056776f47ba",
+        "home": "Bologna",
+        "away": "Aston Villa",
+        "outcome": "Bologna",
+        "odds": 3.25,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-04-09T19:00:00Z"
+    },
+    {
+        "id": "dc7b4170fd72717bbd1cce3194abbf52",
+        "home": "SC Freiburg",
+        "away": "Celta Vigo",
+        "outcome": "Celta Vigo",
+        "odds": 3.5,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-04-09T19:00:00Z"
+    },
+    {
+        "id": "a34ce4940b9580c2057ecd052e51d89b",
+        "home": "Porto",
+        "away": "Nottingham Forest",
+        "outcome": "Nottingham Forest",
+        "odds": 3.75,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-04-09T19:00:00Z"
     }
 ]

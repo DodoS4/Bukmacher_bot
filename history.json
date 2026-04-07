@@ -16150,5 +16150,57 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "3:2"
+    },
+    {
+        "id": "08a04c6f864e734c2adb8d0c45562d5a",
+        "home": "Modo Hockey",
+        "away": "BIK Karlskoga",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.9,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-04-07T17:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:0"
+    },
+    {
+        "id": "5fa8fc58a9665f60503f3e5f18cd80f5",
+        "home": "Skellefte\u00e5 AIK",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 4.1,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-07T17:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "3:3"
+    },
+    {
+        "id": "95a16597d403bb13fddde04905e90031",
+        "home": "Arka Gdynia",
+        "away": "Zag\u0142\u0119bie Lubin",
+        "outcome": "Zag\u0142\u0119bie Lubin",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-07T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "79ed4e5f8b7492c7e8c3228edefaf4c5",
+        "home": "FC Nordsjaelland",
+        "away": "Brondby IF",
+        "outcome": "Brondby IF",
+        "odds": 3.19,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-04-07T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
     }
 ]
