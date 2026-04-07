@@ -5348,5 +5348,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-09T01:30:00Z"
+    },
+    {
+        "id": "01b30ce7464e9d4553e010e2ad37f377",
+        "home": "Atromitos Athens",
+        "away": "AE Kifisia FC",
+        "outcome": "AE Kifisia FC",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-04-08T16:00:00Z"
     }
 ]
