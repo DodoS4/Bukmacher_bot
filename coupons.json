@@ -5030,26 +5030,6 @@
         "time": "2026-04-06T23:00:00Z"
     },
     {
-        "id": "0cb74586048962c7991f74557fe3c87e",
-        "home": "Wrexham AFC",
-        "away": "Southampton",
-        "outcome": "Wrexham AFC",
-        "odds": 2.7,
-        "stake": 250.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-07T19:00:00Z"
-    },
-    {
-        "id": "59fe57b2fc5fe8a6ab3f7699f388f7f0",
-        "home": "Real Madrid",
-        "away": "Bayern Munich",
-        "outcome": "Real Madrid",
-        "odds": 3.15,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-04-07T19:00:00Z"
-    },
-    {
         "id": "aa18a625c4324312b71b2a5a1a1c5fc5",
         "home": "San Jose Barracuda",
         "away": "San Diego Gulls",
@@ -5100,116 +5080,6 @@
         "time": "2026-04-07T15:30:00Z"
     },
     {
-        "id": "eede7f403d57255adaf06898839877f5",
-        "home": "Carolina Hurricanes",
-        "away": "Boston Bruins",
-        "outcome": "Boston Bruins",
-        "odds": 3.69,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-07T23:00:00Z"
-    },
-    {
-        "id": "39bc325ac739bd492dbbcaa90a2c5509",
-        "home": "Detroit Red Wings",
-        "away": "Columbus Blue Jackets",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.67,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-07T23:00:00Z"
-    },
-    {
-        "id": "3f60dcfe32d694bfae603a7492b52ba8",
-        "home": "Montr\u00e9al Canadiens",
-        "away": "Florida Panthers",
-        "outcome": "Montr\u00e9al Canadiens",
-        "odds": 1.87,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-07T23:00:00Z"
-    },
-    {
-        "id": "993d990862fb6ef19333051ac60532a8",
-        "home": "New Jersey Devils",
-        "away": "Philadelphia Flyers",
-        "outcome": "New Jersey Devils",
-        "odds": 2.51,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-07T23:00:00Z"
-    },
-    {
-        "id": "bde40f819599e65e652b610e8d432443",
-        "home": "Ottawa Senators",
-        "away": "Tampa Bay Lightning",
-        "outcome": "Ottawa Senators",
-        "odds": 2.54,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-07T23:00:00Z"
-    },
-    {
-        "id": "c8c5fb2bd5f0be83e4b00cec09880f04",
-        "home": "Dallas Stars",
-        "away": "Calgary Flames",
-        "outcome": "Dallas Stars",
-        "odds": 1.83,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-08T00:00:00Z"
-    },
-    {
-        "id": "2bd67f320d03b8425ffadedfc06b0f9d",
-        "home": "St Louis Blues",
-        "away": "Colorado Avalanche",
-        "outcome": "Colorado Avalanche",
-        "odds": 2.0,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-08T00:00:00Z"
-    },
-    {
-        "id": "407de8ffdfaaa208792ae0340562a239",
-        "home": "Minnesota Wild",
-        "away": "Seattle Kraken",
-        "outcome": "Minnesota Wild",
-        "odds": 1.87,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-08T00:00:00Z"
-    },
-    {
-        "id": "9d923fbab75545cbb36a00c74a2a9ca0",
-        "home": "Utah Mammoth",
-        "away": "Edmonton Oilers",
-        "outcome": "Utah Mammoth",
-        "odds": 2.35,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-08T01:30:00Z"
-    },
-    {
-        "id": "c05d043f37c433bbf2546bfdd8c345ae",
-        "home": "Anaheim Ducks",
-        "away": "Nashville Predators",
-        "outcome": "Nashville Predators",
-        "odds": 3.15,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-08T02:00:00Z"
-    },
-    {
-        "id": "c4713cf9e15a5728b9fa4f2f65a1cdcf",
-        "home": "Vancouver Canucks",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 1.83,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-08T02:00:00Z"
-    },
-    {
         "id": "ad3082b391347bdfe040ebb14b46fabb",
         "home": "Toronto Marlies",
         "away": "Utica Comets",
@@ -5228,16 +5098,6 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-04-08T14:00:00Z"
-    },
-    {
-        "id": "59588b6ac97dcdf15b4de0652d9aebca",
-        "home": "Sporting Lisbon",
-        "away": "Arsenal",
-        "outcome": "Arsenal",
-        "odds": 1.81,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-04-07T19:00:00Z"
     },
     {
         "id": "1a24dfe492a78909c353f40bbc4e78d7",
@@ -5398,5 +5258,45 @@
         "stake": 400.0,
         "sport": "soccer_uefa_europa_league",
         "time": "2026-04-09T19:00:00Z"
+    },
+    {
+        "id": "3d13dfc130ddd5a979655625e840ba6e",
+        "home": "BIK Karlskoga",
+        "away": "Modo Hockey",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.28,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-04-09T17:00:00Z"
+    },
+    {
+        "id": "d87dfef0ed3d4ff79de4abc234b6faa2",
+        "home": "Skellefte\u00e5 AIK",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 4.15,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-09T18:00:00Z"
+    },
+    {
+        "id": "baf477a5eb312a27c0c44dcc888bf39b",
+        "home": "Bridgeport Islanders",
+        "away": "W-B/Scranton Penguins",
+        "outcome": "Bridgeport Islanders",
+        "odds": 3.26,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-09T23:00:00Z"
+    },
+    {
+        "id": "c3e6bf3080964b3484b485ddfd467da5",
+        "home": "Goztepe",
+        "away": "Galatasaray",
+        "outcome": "Goztepe",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-08T17:00:00Z"
     }
 ]
