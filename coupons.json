@@ -5090,16 +5090,6 @@
         "time": "2026-04-08T14:45:00Z"
     },
     {
-        "id": "1a24dfe492a78909c353f40bbc4e78d7",
-        "home": "V\u00e4xj\u00f6 Lakers",
-        "away": "R\u00f6gle BK",
-        "outcome": "R\u00f6gle BK",
-        "odds": 2.62,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-04-08T17:00:00Z"
-    },
-    {
         "id": "d0d05dca3030a262db8b5773910de263",
         "home": "SaiPa",
         "away": "\u00c4ss\u00e4t",
@@ -5118,16 +5108,6 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-04-08T19:00:00Z"
-    },
-    {
-        "id": "d7fa148e8293c4ed1e68e6baaef9c21d",
-        "home": "SC Braga",
-        "away": "Real Betis",
-        "outcome": "SC Braga",
-        "odds": 2.64,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-04-08T16:45:00Z"
     },
     {
         "id": "13dccbf2362c8ce425fab79cc04328e0",
@@ -5158,16 +5138,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-09T01:30:00Z"
-    },
-    {
-        "id": "01b30ce7464e9d4553e010e2ad37f377",
-        "home": "Atromitos Athens",
-        "away": "AE Kifisia FC",
-        "outcome": "AE Kifisia FC",
-        "odds": 3.95,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-04-08T16:00:00Z"
     },
     {
         "id": "6fa535997519071d94f8b99009c37323",
@@ -5268,16 +5238,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-09T23:00:00Z"
-    },
-    {
-        "id": "c3e6bf3080964b3484b485ddfd467da5",
-        "home": "Goztepe",
-        "away": "Galatasaray",
-        "outcome": "Goztepe",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-04-08T17:00:00Z"
     },
     {
         "id": "fb766e54b0a14ca21d484c5e8ddc3591",
@@ -5398,5 +5358,65 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-04-09T23:00:00Z"
+    },
+    {
+        "id": "70acbfc016bd945470b87f3799a0650f",
+        "home": "Los Angeles Kings",
+        "away": "Vancouver Canucks",
+        "outcome": "Vancouver Canucks",
+        "odds": 4.37,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-10T02:30:00Z"
+    },
+    {
+        "id": "9f92b2dca6a6010ee0f984a4d4c60dba",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "R\u00f6gle BK",
+        "outcome": "V\u00e4xj\u00f6 Lakers",
+        "odds": 2.8,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-10T17:00:00Z"
+    },
+    {
+        "id": "10d3a3a8df4f15a0754da8195a47c41f",
+        "home": "West Ham United",
+        "away": "Wolverhampton Wanderers",
+        "outcome": "Wolverhampton Wanderers",
+        "odds": 4.5,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-04-10T19:00:00Z"
+    },
+    {
+        "id": "18fbb4cb379d56c455607f6c26c46aaf",
+        "home": "Paris FC",
+        "away": "AS Monaco",
+        "outcome": "Paris FC",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-04-10T17:00:00Z"
+    },
+    {
+        "id": "d190cb119dd2c0384838bd67af54ae45",
+        "home": "Charleroi",
+        "away": "Royal Antwerp",
+        "outcome": "Charleroi",
+        "odds": 1.91,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-10T18:45:00Z"
+    },
+    {
+        "id": "16d70ef987b28131139c90ba17642a82",
+        "home": "West Bromwich Albion",
+        "away": "Millwall",
+        "outcome": "West Bromwich Albion",
+        "odds": 2.42,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-10T19:00:00Z"
     }
 ]
