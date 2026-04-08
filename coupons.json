@@ -5090,16 +5090,6 @@
         "time": "2026-04-08T14:45:00Z"
     },
     {
-        "id": "3a92db92726d4a15ba507bd8d263eb83",
-        "home": "Panserraikos FC",
-        "away": "Asteras Tripolis",
-        "outcome": "Asteras Tripolis",
-        "odds": 2.56,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-04-08T14:00:00Z"
-    },
-    {
         "id": "1a24dfe492a78909c353f40bbc4e78d7",
         "home": "V\u00e4xj\u00f6 Lakers",
         "away": "R\u00f6gle BK",
@@ -5208,16 +5198,6 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-04-09T02:00:00Z"
-    },
-    {
-        "id": "8f01c4077fb925c121f23d92e554dcc0",
-        "home": "AEL",
-        "away": "Panetolikos Agrinio",
-        "outcome": "Panetolikos Agrinio",
-        "odds": 3.7,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-04-08T13:00:00Z"
     },
     {
         "id": "ca37b2ec5fbdfd693d066f49e57f7959",
@@ -5408,5 +5388,15 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-04-10T02:00:00Z"
+    },
+    {
+        "id": "75835360f31f3ff85dc9b062c3e8da53",
+        "home": "Ottawa Senators",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 4.25,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-09T23:00:00Z"
     }
 ]

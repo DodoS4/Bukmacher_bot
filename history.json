@@ -16384,5 +16384,31 @@
         "profit": 263.25,
         "status": "WIN",
         "score": "0:1"
+    },
+    {
+        "id": "3a92db92726d4a15ba507bd8d263eb83",
+        "home": "Panserraikos FC",
+        "away": "Asteras Tripolis",
+        "outcome": "Asteras Tripolis",
+        "odds": 2.56,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-04-08T14:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
+    },
+    {
+        "id": "8f01c4077fb925c121f23d92e554dcc0",
+        "home": "AEL",
+        "away": "Panetolikos Agrinio",
+        "outcome": "Panetolikos Agrinio",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-04-08T13:00:00Z",
+        "profit": 337.5,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]
