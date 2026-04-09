@@ -5538,5 +5538,175 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-04-11T11:30:00Z"
+    },
+    {
+        "id": "caf15226982e6e10e71bc227d74a7c4e",
+        "home": "KalPa",
+        "away": "Ilves",
+        "outcome": "KalPa",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "4a4abe6d3410da4cbb4886d1b43fd36b",
+        "home": "\u00c4ss\u00e4t",
+        "away": "SaiPa",
+        "outcome": "SaiPa",
+        "odds": 2.62,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "0b8adb16f16b2490e3fbd514a2d86190",
+        "home": "Brentford",
+        "away": "Everton",
+        "outcome": "Everton",
+        "odds": 3.7,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "2511313dfbfa1fe5714b0b8cd6ba0c1f",
+        "home": "1. FC Heidenheim",
+        "away": "Union Berlin",
+        "outcome": "Union Berlin",
+        "odds": 2.48,
+        "stake": 125.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-04-11T13:30:00Z"
+    },
+    {
+        "id": "85fa84288bb071355fa3c5e21e503053",
+        "home": "Cagliari",
+        "away": "Cremonese",
+        "outcome": "Cremonese",
+        "odds": 4.0,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-04-11T13:00:00Z"
+    },
+    {
+        "id": "f089e6581f7bdced30b8d57a5d1d5a42",
+        "home": "Torino",
+        "away": "Hellas Verona",
+        "outcome": "Torino",
+        "odds": 1.97,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-04-11T13:00:00Z"
+    },
+    {
+        "id": "016d8d76a7cc27f1bc8cc6775df92683",
+        "home": "Real Sociedad",
+        "away": "Alav\u00e9s",
+        "outcome": "Real Sociedad",
+        "odds": 1.8,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-04-11T12:00:00Z"
+    },
+    {
+        "id": "fb63c2d00e89a32791a12a8859455b11",
+        "home": "Elche CF",
+        "away": "Valencia",
+        "outcome": "Valencia",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-04-11T14:15:00Z"
+    },
+    {
+        "id": "3fd3c882f7d7b121ff30e022d1383709",
+        "home": "Cercle Brugge KSV",
+        "away": "RAAL La Louvi\u00e8re",
+        "outcome": "RAAL La Louvi\u00e8re",
+        "odds": 3.86,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "30a003491965c02231cbfe60e196ceed",
+        "home": "Standard Liege",
+        "away": "Westerlo",
+        "outcome": "Standard Liege",
+        "odds": 2.65,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-11T16:15:00Z"
+    },
+    {
+        "id": "edb942761c428d76449a7e2a0253c214",
+        "home": "Aberdeen",
+        "away": "Hibernian",
+        "outcome": "Aberdeen",
+        "odds": 3.52,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "3e545a2950e64a2315a5943fce9f1709",
+        "home": "Kilmarnock",
+        "away": "Dundee FC",
+        "outcome": "Dundee FC",
+        "odds": 3.45,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "6ab58f61f96cc256eea2f2ade8c728dc",
+        "home": "Hearts",
+        "away": "Motherwell",
+        "outcome": "Motherwell",
+        "odds": 3.97,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "0eb1114a10b9b82e9ef6dbbc7f6bfa99",
+        "home": "Stoke City",
+        "away": "Blackburn Rovers",
+        "outcome": "Stoke City",
+        "odds": 2.78,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "6581089e1ec4aec9d36c1c57254afe8d",
+        "home": "Charlton Athletic",
+        "away": "Preston North End",
+        "outcome": "Preston North End",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "757eeeb19f3cee15acbf67883aaea483",
+        "home": "Sheffield United",
+        "away": "Hull City",
+        "outcome": "Hull City",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-11T14:00:00Z"
+    },
+    {
+        "id": "672a7baab3d7dae4e942300f19c00b10",
+        "home": "Leicester City",
+        "away": "Swansea City",
+        "outcome": "Swansea City",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-11T14:00:00Z"
     }
 ]
