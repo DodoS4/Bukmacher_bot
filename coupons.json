@@ -5508,5 +5508,35 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-04-10T16:00:00Z"
+    },
+    {
+        "id": "44c82eb70cffa61cde86d5803a14cd1d",
+        "home": "RB Salzburg",
+        "away": "LASK",
+        "outcome": "LASK",
+        "odds": 4.15,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-10T17:30:00Z"
+    },
+    {
+        "id": "fb7e539b800b54649ed67e0a8330cf7d",
+        "home": "Queens Park Rangers",
+        "away": "Bristol City",
+        "outcome": "Bristol City",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-11T11:30:00Z"
+    },
+    {
+        "id": "3324674119a14d9b6bdf351653ee9322",
+        "home": "Norwich City",
+        "away": "Ipswich Town",
+        "outcome": "Ipswich Town",
+        "odds": 2.44,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-11T11:30:00Z"
     }
 ]
