@@ -5140,16 +5140,6 @@
         "time": "2026-04-09T23:00:00Z"
     },
     {
-        "id": "9f92b2dca6a6010ee0f984a4d4c60dba",
-        "home": "V\u00e4xj\u00f6 Lakers",
-        "away": "R\u00f6gle BK",
-        "outcome": "V\u00e4xj\u00f6 Lakers",
-        "odds": 2.8,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-04-10T17:00:00Z"
-    },
-    {
         "id": "10d3a3a8df4f15a0754da8195a47c41f",
         "home": "West Ham United",
         "away": "Wolverhampton Wanderers",
@@ -5158,16 +5148,6 @@
         "stake": 400.0,
         "sport": "soccer_epl",
         "time": "2026-04-10T19:00:00Z"
-    },
-    {
-        "id": "18fbb4cb379d56c455607f6c26c46aaf",
-        "home": "Paris FC",
-        "away": "AS Monaco",
-        "outcome": "Paris FC",
-        "odds": 3.95,
-        "stake": 250.0,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-04-10T17:00:00Z"
     },
     {
         "id": "d190cb119dd2c0384838bd67af54ae45",
@@ -5308,26 +5288,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-11T02:00:00Z"
-    },
-    {
-        "id": "0d54ff62957d6cac5a38beb857004575",
-        "home": "Wis\u0142a P\u0142ock",
-        "away": "Lechia Gda\u0144sk",
-        "outcome": "Wis\u0142a P\u0142ock",
-        "odds": 2.86,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-04-10T16:00:00Z"
-    },
-    {
-        "id": "44c82eb70cffa61cde86d5803a14cd1d",
-        "home": "RB Salzburg",
-        "away": "LASK",
-        "outcome": "LASK",
-        "odds": 4.15,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-04-10T17:30:00Z"
     },
     {
         "id": "fb7e539b800b54649ed67e0a8330cf7d",
@@ -5770,16 +5730,6 @@
         "time": "2026-04-11T15:00:00Z"
     },
     {
-        "id": "153e60943cf3853aefbf9973d26d181a",
-        "home": "AGF Aarhus",
-        "away": "FC Nordsjaelland",
-        "outcome": "FC Nordsjaelland",
-        "odds": 4.35,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-04-10T17:00:00Z"
-    },
-    {
         "id": "70f44df2b51353aecdf93169374a6511",
         "home": "FC Winterthur",
         "away": "Grasshopper Z\u00fcrich",
@@ -6198,5 +6148,105 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-04-12T14:30:00Z"
+    },
+    {
+        "id": "6977297c51c3692376cafa0fde2b3b87",
+        "home": "Manitoba Moose",
+        "away": "Texas Stars",
+        "outcome": "Manitoba Moose",
+        "odds": 2.69,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-12T19:00:00Z"
+    },
+    {
+        "id": "c187fbd4becdcc4dd23e14aa7416de89",
+        "home": "Bologna",
+        "away": "Lecce",
+        "outcome": "Bologna",
+        "odds": 1.9,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-04-12T16:00:00Z"
+    },
+    {
+        "id": "85b7fa24125db9f7f782cafe8cac4507",
+        "home": "Como",
+        "away": "Inter Milan",
+        "outcome": "Inter Milan",
+        "odds": 2.48,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-04-12T18:45:00Z"
+    },
+    {
+        "id": "a1e8d7ee23f8c72f75be14bb70723d99",
+        "home": "Athletic Bilbao",
+        "away": "Villarreal",
+        "outcome": "Athletic Bilbao",
+        "odds": 2.42,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-04-12T19:00:00Z"
+    },
+    {
+        "id": "26739e8e687fdfae846d259bcca5be6b",
+        "home": "Motor Lublin",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Rak\u00f3w Cz\u0119stochowa",
+        "odds": 2.42,
+        "stake": 250.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-12T12:45:00Z"
+    },
+    {
+        "id": "9e6c8934cdf2551c366d8554629d1ae3",
+        "home": "Alverca",
+        "away": "Casa Pia",
+        "outcome": "Casa Pia",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-04-12T14:30:00Z"
+    },
+    {
+        "id": "8ca443a12adc6a3004d7ca69583ff10f",
+        "home": "Anderlecht",
+        "away": "Gent",
+        "outcome": "Gent",
+        "odds": 3.9,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-12T16:30:00Z"
+    },
+    {
+        "id": "640c27d100070843f470c478ea4865b7",
+        "home": "Dender",
+        "away": "SV Zulte-Waregem",
+        "outcome": "Dender",
+        "odds": 3.15,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-12T17:15:00Z"
+    },
+    {
+        "id": "a6efd37a910216a6f19abd571e92b0bb",
+        "home": "Randers FC",
+        "away": "FC Copenhagen",
+        "outcome": "Randers FC",
+        "odds": 4.35,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-04-12T16:00:00Z"
+    },
+    {
+        "id": "f4e778ab1001426e13ba7cd053d7d236",
+        "home": "Falkirk F.C.",
+        "away": "Rangers",
+        "outcome": "Rangers",
+        "odds": 1.83,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-04-12T11:00:00Z"
     }
 ]

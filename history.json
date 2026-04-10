@@ -16761,5 +16761,70 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:1"
+    },
+    {
+        "id": "9f92b2dca6a6010ee0f984a4d4c60dba",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "R\u00f6gle BK",
+        "outcome": "V\u00e4xj\u00f6 Lakers",
+        "odds": 2.8,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-10T17:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "0:6"
+    },
+    {
+        "id": "18fbb4cb379d56c455607f6c26c46aaf",
+        "home": "Paris FC",
+        "away": "AS Monaco",
+        "outcome": "Paris FC",
+        "odds": 3.95,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-04-10T17:00:00Z",
+        "profit": 737.5,
+        "status": "WIN",
+        "score": "4:1"
+    },
+    {
+        "id": "0d54ff62957d6cac5a38beb857004575",
+        "home": "Wis\u0142a P\u0142ock",
+        "away": "Lechia Gda\u0144sk",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 2.86,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-10T16:00:00Z",
+        "profit": 232.5,
+        "status": "WIN",
+        "score": "1:0"
+    },
+    {
+        "id": "44c82eb70cffa61cde86d5803a14cd1d",
+        "home": "RB Salzburg",
+        "away": "LASK",
+        "outcome": "LASK",
+        "odds": 4.15,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-10T17:30:00Z",
+        "profit": 393.75,
+        "status": "WIN",
+        "score": "2:3"
+    },
+    {
+        "id": "153e60943cf3853aefbf9973d26d181a",
+        "home": "AGF Aarhus",
+        "away": "FC Nordsjaelland",
+        "outcome": "FC Nordsjaelland",
+        "odds": 4.35,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-04-10T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
