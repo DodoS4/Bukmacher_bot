@@ -16826,5 +16826,57 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:1"
+    },
+    {
+        "id": "10d3a3a8df4f15a0754da8195a47c41f",
+        "home": "West Ham United",
+        "away": "Wolverhampton Wanderers",
+        "outcome": "Wolverhampton Wanderers",
+        "odds": 4.5,
+        "stake": 400.0,
+        "sport": "soccer_epl",
+        "time": "2026-04-10T19:00:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "4:0"
+    },
+    {
+        "id": "d190cb119dd2c0384838bd67af54ae45",
+        "home": "Charleroi",
+        "away": "Royal Antwerp",
+        "outcome": "Charleroi",
+        "odds": 1.91,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-10T18:45:00Z",
+        "profit": 295.75,
+        "status": "WIN",
+        "score": "2:1"
+    },
+    {
+        "id": "16d70ef987b28131139c90ba17642a82",
+        "home": "West Bromwich Albion",
+        "away": "Millwall",
+        "outcome": "West Bromwich Albion",
+        "odds": 2.42,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-10T19:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
+    },
+    {
+        "id": "9847177fb0b30fca5007da172846c714",
+        "home": "Augsburg",
+        "away": "TSG Hoffenheim",
+        "outcome": "Augsburg",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-04-10T18:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:2"
     }
 ]

@@ -5140,36 +5140,6 @@
         "time": "2026-04-09T23:00:00Z"
     },
     {
-        "id": "10d3a3a8df4f15a0754da8195a47c41f",
-        "home": "West Ham United",
-        "away": "Wolverhampton Wanderers",
-        "outcome": "Wolverhampton Wanderers",
-        "odds": 4.5,
-        "stake": 400.0,
-        "sport": "soccer_epl",
-        "time": "2026-04-10T19:00:00Z"
-    },
-    {
-        "id": "d190cb119dd2c0384838bd67af54ae45",
-        "home": "Charleroi",
-        "away": "Royal Antwerp",
-        "outcome": "Charleroi",
-        "odds": 1.91,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-04-10T18:45:00Z"
-    },
-    {
-        "id": "16d70ef987b28131139c90ba17642a82",
-        "home": "West Bromwich Albion",
-        "away": "Millwall",
-        "outcome": "West Bromwich Albion",
-        "odds": 2.42,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-04-10T19:00:00Z"
-    },
-    {
         "id": "b6dcdd5ed30442934715927874e7a7dc",
         "home": "Laval Rocket",
         "away": "Belleville Senators",
@@ -6020,16 +5990,6 @@
         "time": "2026-04-12T15:30:00Z"
     },
     {
-        "id": "9847177fb0b30fca5007da172846c714",
-        "home": "Augsburg",
-        "away": "TSG Hoffenheim",
-        "outcome": "Augsburg",
-        "odds": 3.75,
-        "stake": 125.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-04-10T18:30:00Z"
-    },
-    {
         "id": "ed245ff0289860db9cd29c9b76b44926",
         "home": "CA Osasuna",
         "away": "Real Betis",
@@ -6248,5 +6208,65 @@
         "stake": 325.0,
         "sport": "soccer_spl",
         "time": "2026-04-12T11:00:00Z"
+    },
+    {
+        "id": "b15f5d2fbca1752f1cfab20658ca20e3",
+        "home": "R\u00f6gle BK",
+        "away": "V\u00e4xj\u00f6 Lakers",
+        "outcome": "V\u00e4xj\u00f6 Lakers",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-12T17:00:00Z"
+    },
+    {
+        "id": "88f0bc062bfa261265992aaae2f8abe6",
+        "home": "Chicago Wolves",
+        "away": "Rockford IceHogs",
+        "outcome": "Rockford IceHogs",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-12T20:00:00Z"
+    },
+    {
+        "id": "84ec495dce1aa18c669b26d2290512df",
+        "home": "Milwaukee Admirals",
+        "away": "Iowa Wild",
+        "outcome": "Iowa Wild",
+        "odds": 3.43,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-12T20:00:00Z"
+    },
+    {
+        "id": "3b2942019af8390368c366a2b9b17bed",
+        "home": "Syracuse Crunch",
+        "away": "Toronto Marlies",
+        "outcome": "Toronto Marlies",
+        "odds": 3.22,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-12T20:00:00Z"
+    },
+    {
+        "id": "8b384dcacffef222665a2de3dce9a3de",
+        "home": "Bridgeport Islanders",
+        "away": "Hartford Wolf Pack",
+        "outcome": "Hartford Wolf Pack",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-12T21:00:00Z"
+    },
+    {
+        "id": "cba51f15ad9acc1dd54d122e6824c7d1",
+        "home": "Wolfsberger AC",
+        "away": "Ried",
+        "outcome": "Wolfsberger AC",
+        "odds": 2.62,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-11T15:00:00Z"
     }
 ]
