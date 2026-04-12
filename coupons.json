@@ -5280,106 +5280,6 @@
         "time": "2026-04-11T14:00:00Z"
     },
     {
-        "id": "8e3d1f62508116713ac4347706dc5b15",
-        "home": "Atalanta BC",
-        "away": "Juventus",
-        "outcome": "Atalanta BC",
-        "odds": 3.25,
-        "stake": 325.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-04-11T18:45:00Z"
-    },
-    {
-        "id": "c81f5a4b65049a4e0a90fc94be704069",
-        "home": "Sevilla",
-        "away": "Atl\u00e9tico Madrid",
-        "outcome": "Sevilla",
-        "odds": 3.25,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-04-11T19:00:00Z"
-    },
-    {
-        "id": "d368e2ce6f6dbaa65dc063d3c7afcaf7",
-        "home": "Legia Warszawa",
-        "away": "G\u00f3rnik Zabrze",
-        "outcome": "G\u00f3rnik Zabrze",
-        "odds": 3.7,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-04-11T18:15:00Z"
-    },
-    {
-        "id": "ba5c50e476a042815e2346d144c079b5",
-        "home": "Sint Truiden",
-        "away": "Club Brugge",
-        "outcome": "Sint Truiden",
-        "odds": 3.73,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-04-11T18:45:00Z"
-    },
-    {
-        "id": "6fe674dd47a10fc8381ac48f344c7c9a",
-        "home": "Austin FC",
-        "away": "LA Galaxy",
-        "outcome": "LA Galaxy",
-        "odds": 3.35,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-11T18:30:00Z"
-    },
-    {
-        "id": "59b003f6e4cc8fce2f75d022b03c7068",
-        "home": "CF Montreal",
-        "away": "Philadelphia Union",
-        "outcome": "Philadelphia Union",
-        "odds": 2.8,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-11T18:30:00Z"
-    },
-    {
-        "id": "1202108d90d74b3dcae725f88457dd39",
-        "home": "Chicago Blackhawks",
-        "away": "St Louis Blues",
-        "outcome": "St Louis Blues",
-        "odds": 2.52,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T21:00:00Z"
-    },
-    {
-        "id": "f8cbbebc53cf688786fb747d110376c4",
-        "home": "Seattle Kraken",
-        "away": "Calgary Flames",
-        "outcome": "Seattle Kraken",
-        "odds": 2.37,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T23:00:00Z"
-    },
-    {
-        "id": "eebb39173865292b81fa96bc35dfb2da",
-        "home": "Toronto Maple Leafs",
-        "away": "Florida Panthers",
-        "outcome": "Toronto Maple Leafs",
-        "odds": 2.5,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T23:00:00Z"
-    },
-    {
-        "id": "0b2041c964c8c6d47aa6eb31e9095564",
-        "home": "San Jose Sharks",
-        "away": "Vancouver Canucks",
-        "outcome": "Vancouver Canucks",
-        "odds": 3.73,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-12T02:00:00Z"
-    },
-    {
         "id": "e38e0e2d7db0bfe82edb48706f779ed9",
         "home": "Charlotte Checkers",
         "away": "Hershey Bears",
@@ -5460,176 +5360,6 @@
         "time": "2026-04-11T23:05:00Z"
     },
     {
-        "id": "7946c2e01de303438901af6adeb86469",
-        "home": "Groningen",
-        "away": "Go Ahead Eagles",
-        "outcome": "Go Ahead Eagles",
-        "odds": 4.0,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-04-11T18:00:00Z"
-    },
-    {
-        "id": "5b1746166a843d8a6e5719ea81fed9ac",
-        "home": "Charlotte FC",
-        "away": "Nashville SC",
-        "outcome": "Nashville SC",
-        "odds": 3.55,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-11T23:30:00Z"
-    },
-    {
-        "id": "fd40d1fc7360cb47731721d8ba09e79c",
-        "home": "New England Revolution",
-        "away": "D.C. United",
-        "outcome": "D.C. United",
-        "odds": 4.15,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-11T23:30:00Z"
-    },
-    {
-        "id": "5f3dce956d951a22889b547c3c507fc2",
-        "home": "FC Dallas",
-        "away": "St. Louis City SC",
-        "outcome": "St. Louis City SC",
-        "odds": 3.5,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-12T00:30:00Z"
-    },
-    {
-        "id": "d82167b6a6c8be4a3c9f055791676215",
-        "home": "Sporting Kansas City",
-        "away": "San Jose Earthquakes",
-        "outcome": "Sporting Kansas City",
-        "odds": 4.1,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-12T00:30:00Z"
-    },
-    {
-        "id": "dea28129e0c08ccea84357cec50fc0e1",
-        "home": "Colorado Rapids",
-        "away": "Houston Dynamo",
-        "outcome": "Houston Dynamo",
-        "odds": 3.4,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-12T01:30:00Z"
-    },
-    {
-        "id": "e7120f91df32e5487c76b0b5fd416ca5",
-        "home": "San Diego FC",
-        "away": "Minnesota United FC",
-        "outcome": "Minnesota United FC",
-        "odds": 4.3,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-12T02:30:00Z"
-    },
-    {
-        "id": "705a57dffd10478fbab59b211c54ee19",
-        "home": "New York Islanders",
-        "away": "Ottawa Senators",
-        "outcome": "New York Islanders",
-        "odds": 2.52,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T17:00:00Z"
-    },
-    {
-        "id": "6b7f5c39f42d1d9e4091b0c5f011711e",
-        "home": "Pittsburgh Penguins",
-        "away": "Washington Capitals",
-        "outcome": "Washington Capitals",
-        "odds": 2.92,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T19:00:00Z"
-    },
-    {
-        "id": "c41c5268371cb927b4a4817e53ebe98c",
-        "home": "Los Angeles Kings",
-        "away": "Edmonton Oilers",
-        "outcome": "Los Angeles Kings",
-        "odds": 2.5,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T20:00:00Z"
-    },
-    {
-        "id": "7fe1fbea33dee61b8d438e780410bdb4",
-        "home": "Utah Mammoth",
-        "away": "Carolina Hurricanes",
-        "outcome": "Utah Mammoth",
-        "odds": 2.81,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T21:00:00Z"
-    },
-    {
-        "id": "5ef60096243b0d089602fdf1f288c8bb",
-        "home": "Dallas Stars",
-        "away": "New York Rangers",
-        "outcome": "New York Rangers",
-        "odds": 4.13,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T21:00:00Z"
-    },
-    {
-        "id": "a3ce07b80e1bdb4c4be7fead2bc1bb34",
-        "home": "Detroit Red Wings",
-        "away": "New Jersey Devils",
-        "outcome": "New Jersey Devils",
-        "odds": 3.1,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T21:00:00Z"
-    },
-    {
-        "id": "71e645a6f544e0eb4543265a1613ca61",
-        "home": "Nashville Predators",
-        "away": "Minnesota Wild",
-        "outcome": "Minnesota Wild",
-        "odds": 2.42,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T21:00:00Z"
-    },
-    {
-        "id": "bc41d925859e950fdee85ddc0d04f5f7",
-        "home": "Montr\u00e9al Canadiens",
-        "away": "Columbus Blue Jackets",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.95,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T23:00:00Z"
-    },
-    {
-        "id": "6916a35afd0031cd8bac65ce41826fb8",
-        "home": "Winnipeg Jets",
-        "away": "Philadelphia Flyers",
-        "outcome": "Philadelphia Flyers",
-        "odds": 3.0,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-11T23:00:00Z"
-    },
-    {
-        "id": "589e8e7f45909b6c4b71110f0aa61d3b",
-        "home": "Colorado Avalanche",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 3.35,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-04-12T00:00:00Z"
-    },
-    {
         "id": "af7a080341b8f2e80963d09cb7b58ebf",
         "home": "Genoa",
         "away": "Sassuolo",
@@ -5668,16 +5398,6 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-04-12T11:00:00Z"
-    },
-    {
-        "id": "868543e752bfe1af3887a45f9a004347",
-        "home": "Portland Timbers",
-        "away": "Los Angeles FC",
-        "outcome": "Los Angeles FC",
-        "odds": 1.8,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-04-11T20:45:00Z"
     },
     {
         "id": "542c7cb070f6d66aa7003cd825d5c199",
@@ -6128,5 +5848,75 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-04-13T17:00:00Z"
+    },
+    {
+        "id": "57a45c62798de57f8bab0844ab0b8fc7",
+        "home": "Lehigh Valley Phantoms",
+        "away": "Cleveland Monsters",
+        "outcome": "Cleveland Monsters",
+        "odds": 2.23,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-12T19:05:00Z"
+    },
+    {
+        "id": "53752f0d1bd9f5576a10285cfbbe208a",
+        "home": "Providence Bruins",
+        "away": "Springfield Thunderbirds",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-12T19:05:00Z"
+    },
+    {
+        "id": "85610b01e78ab42ebcbb7eb4140be0a6",
+        "home": "Tondela",
+        "away": "Gil Vicente",
+        "outcome": "Tondela",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-04-13T19:15:00Z"
+    },
+    {
+        "id": "70523b856aab885da1b61be0cacec838",
+        "home": "AZ Alkmaar",
+        "away": "Heerenveen",
+        "outcome": "Heerenveen",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-04-12T14:45:00Z"
+    },
+    {
+        "id": "076801711100af69efefd9ebb8f838a4",
+        "home": "SonderjyskE",
+        "away": "Viborg FF",
+        "outcome": "SonderjyskE",
+        "odds": 2.98,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-04-12T12:00:00Z"
+    },
+    {
+        "id": "b6de1607c4f32a4ebac59f904ff1835b",
+        "home": "Brondby IF",
+        "away": "FC Midtjylland",
+        "outcome": "Brondby IF",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-04-12T14:00:00Z"
+    },
+    {
+        "id": "a652c7d25a88532c4eb434db4b8eed22",
+        "home": "FC Luzern",
+        "away": "FC St Gallen",
+        "outcome": "FC St Gallen",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-04-12T14:30:00Z"
     }
 ]
