@@ -5678,5 +5678,105 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-04-15T02:00:00Z"
+    },
+    {
+        "id": "fe7dc6268aa33b2db407b7fc8225779d",
+        "home": "Boston Bruins",
+        "away": "New Jersey Devils",
+        "outcome": "New Jersey Devils",
+        "odds": 2.9,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-14T23:10:00Z"
+    },
+    {
+        "id": "c5183f20670c0165bbc80f9c43145e9c",
+        "home": "New York Islanders",
+        "away": "Carolina Hurricanes",
+        "outcome": "New York Islanders",
+        "odds": 2.65,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-14T23:10:00Z"
+    },
+    {
+        "id": "d1584d51876615dbdd70d6b5f29ea77d",
+        "home": "Columbus Blue Jackets",
+        "away": "Washington Capitals",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.41,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-14T23:10:00Z"
+    },
+    {
+        "id": "7fec03ec7dd616e297e93e176f87b761",
+        "home": "Philadelphia Flyers",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.45,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-14T23:10:00Z"
+    },
+    {
+        "id": "d98f95763dabfa28c6fbe9b9cbb5d5fb",
+        "home": "Minnesota Wild",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T00:10:00Z"
+    },
+    {
+        "id": "b051baa705c134e97ed62acc5754d71a",
+        "home": "Calgary Flames",
+        "away": "Colorado Avalanche",
+        "outcome": "Calgary Flames",
+        "odds": 3.33,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T01:10:00Z"
+    },
+    {
+        "id": "eddd0daf23e8cb700d1bf764bab4e4d6",
+        "home": "Utah Mammoth",
+        "away": "Winnipeg Jets",
+        "outcome": "Winnipeg Jets",
+        "odds": 3.17,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T01:10:00Z"
+    },
+    {
+        "id": "3e0abbe52fa5655dea933eae959c06da",
+        "home": "St Louis Blues",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 2.5,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T01:40:00Z"
+    },
+    {
+        "id": "7b0380f27550cb8fe448fe638e0f94e1",
+        "home": "Vancouver Canucks",
+        "away": "Los Angeles Kings",
+        "outcome": "Vancouver Canucks",
+        "odds": 3.6,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T02:10:00Z"
+    },
+    {
+        "id": "d706b99b5dbb02869a6e744a191537fd",
+        "home": "FC Fredericia",
+        "away": "Vejle Boldklub",
+        "outcome": "Vejle Boldklub",
+        "odds": 2.98,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-04-13T17:00:00Z"
     }
 ]
