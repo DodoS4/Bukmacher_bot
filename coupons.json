@@ -5420,26 +5420,6 @@
         "time": "2026-04-12T21:00:00Z"
     },
     {
-        "id": "f7c4716646639c116c4a171d7d2e8884",
-        "home": "BIK Karlskoga",
-        "away": "Modo Hockey",
-        "outcome": "Modo Hockey",
-        "odds": 2.85,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-04-13T13:00:00Z"
-    },
-    {
-        "id": "98e0b3981b8bacfce30813ff720c41ce",
-        "home": "Lule\u00e5 HF",
-        "away": "Skellefte\u00e5 AIK",
-        "outcome": "Skellefte\u00e5 AIK",
-        "odds": 2.43,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-04-13T17:00:00Z"
-    },
-    {
         "id": "e5ffdff6eb7f3487826cbd8d6b35a30c",
         "home": "SaiPa",
         "away": "\u00c4ss\u00e4t",
@@ -5468,26 +5448,6 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-04-13T19:00:00Z"
-    },
-    {
-        "id": "afbca71e625f9a85a971e0f0dc0158cd",
-        "home": "Piast Gliwice",
-        "away": "Pogo\u0144 Szczecin",
-        "outcome": "Piast Gliwice",
-        "odds": 2.55,
-        "stake": 250.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-04-13T17:00:00Z"
-    },
-    {
-        "id": "5a45a88be7950fd2d30d48e928a53077",
-        "home": "Ey\u00fcpspor",
-        "away": "Samsunspor",
-        "outcome": "Ey\u00fcpspor",
-        "odds": 4.4,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-04-13T17:00:00Z"
     },
     {
         "id": "57a45c62798de57f8bab0844ab0b8fc7",
@@ -5770,13 +5730,13 @@
         "time": "2026-04-15T02:10:00Z"
     },
     {
-        "id": "d706b99b5dbb02869a6e744a191537fd",
-        "home": "FC Fredericia",
-        "away": "Vejle Boldklub",
-        "outcome": "Vejle Boldklub",
-        "odds": 2.98,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-04-13T17:00:00Z"
+        "id": "acc3ed6eee88288d01ca9f2248870599",
+        "home": "Skellefte\u00e5 AIK",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-15T17:00:00Z"
     }
 ]
