@@ -18399,5 +18399,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "6:2"
+    },
+    {
+        "id": "aad3c3be1020b388593a5ab2e71a3331",
+        "home": "R\u00f6gle BK",
+        "away": "V\u00e4xj\u00f6 Lakers",
+        "outcome": "R\u00f6gle BK",
+        "odds": 1.85,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-14T17:00:00Z",
+        "profit": 265.62,
+        "status": "WIN",
+        "score": "4:1"
     }
 ]
