@@ -18568,5 +18568,31 @@
         "profit": 1300.0,
         "status": "WIN",
         "score": "4:3"
+    },
+    {
+        "id": "acc3ed6eee88288d01ca9f2248870599",
+        "home": "Skellefte\u00e5 AIK",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-15T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "86a5680b360723d5700743677bcef9df",
+        "home": "IF Bj\u00f6rkl\u00f6ven",
+        "away": "BIK Karlskoga",
+        "outcome": "BIK Karlskoga",
+        "odds": 4.15,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-04-15T17:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:2"
     }
 ]

@@ -5470,26 +5470,6 @@
         "time": "2026-04-15T02:00:00Z"
     },
     {
-        "id": "acc3ed6eee88288d01ca9f2248870599",
-        "home": "Skellefte\u00e5 AIK",
-        "away": "Lule\u00e5 HF",
-        "outcome": "Lule\u00e5 HF",
-        "odds": 4.1,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-04-15T17:00:00Z"
-    },
-    {
-        "id": "86a5680b360723d5700743677bcef9df",
-        "home": "IF Bj\u00f6rkl\u00f6ven",
-        "away": "BIK Karlskoga",
-        "outcome": "BIK Karlskoga",
-        "odds": 4.15,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-04-15T17:00:00Z"
-    },
-    {
         "id": "bbdc2dffa4b1a295c86ff7f931ee9ad9",
         "home": "Hartford Wolf Pack",
         "away": "Bridgeport Islanders",
@@ -5678,5 +5658,65 @@
         "stake": 325.0,
         "sport": "soccer_uefa_europa_league",
         "time": "2026-04-16T19:00:00Z"
+    },
+    {
+        "id": "2aa3249b78d693529c951547a82f134f",
+        "home": "Utah Mammoth",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 2.92,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-16T23:30:00Z"
+    },
+    {
+        "id": "112a39ac7f4a08fcb78fe38362f343ed",
+        "home": "Nashville Predators",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.71,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-17T00:00:00Z"
+    },
+    {
+        "id": "72aacc9aeb0595468a61d147df27e838",
+        "home": "Winnipeg Jets",
+        "away": "San Jose Sharks",
+        "outcome": "Winnipeg Jets",
+        "odds": 2.19,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-17T00:00:00Z"
+    },
+    {
+        "id": "88586e525b98a2c062f1f6d75e8d0fe1",
+        "home": "Calgary Flames",
+        "away": "Los Angeles Kings",
+        "outcome": "Calgary Flames",
+        "odds": 2.9,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-17T01:00:00Z"
+    },
+    {
+        "id": "be9eda34a4ddf026072d12f7db44ec28",
+        "home": "FC St. Pauli",
+        "away": "1. FC K\u00f6ln",
+        "outcome": "FC St. Pauli",
+        "odds": 2.84,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-04-17T18:30:00Z"
+    },
+    {
+        "id": "b68962085069c4f1a6138137137c83e6",
+        "home": "Blackburn Rovers",
+        "away": "Coventry City",
+        "outcome": "Blackburn Rovers",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-17T19:00:00Z"
     }
 ]
