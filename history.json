@@ -18594,5 +18594,83 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:2"
+    },
+    {
+        "id": "c36f011df8ff2ff994bb46373c5831ea",
+        "home": "Buffalo Sabres",
+        "away": "Dallas Stars",
+        "outcome": "Dallas Stars",
+        "odds": 2.56,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T23:10:00Z",
+        "profit": 780.0,
+        "status": "WIN",
+        "score": "3:4"
+    },
+    {
+        "id": "aab12987f6385f068a9b1c6feb785ecc",
+        "home": "Florida Panthers",
+        "away": "Detroit Red Wings",
+        "outcome": "Detroit Red Wings",
+        "odds": 2.5,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T23:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "8:1"
+    },
+    {
+        "id": "7db68d6db2127f93ee8278eca727ff32",
+        "home": "Tampa Bay Lightning",
+        "away": "New York Rangers",
+        "outcome": "Tampa Bay Lightning",
+        "odds": 1.92,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T23:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "2:4"
+    },
+    {
+        "id": "ecf6c5f973a42e5dcd559cd2ac2e0d3a",
+        "home": "Ottawa Senators",
+        "away": "Toronto Maple Leafs",
+        "outcome": "Toronto Maple Leafs",
+        "odds": 4.26,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-15T23:40:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "c6dc2eb7ca9bcce1e2735b4673fc88b1",
+        "home": "Chicago Blackhawks",
+        "away": "San Jose Sharks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 2.83,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-16T00:40:00Z",
+        "profit": 915.0,
+        "status": "WIN",
+        "score": "5:2"
+    },
+    {
+        "id": "95e2cb9751126776827294c1530f4823",
+        "home": "Vegas Golden Knights",
+        "away": "Seattle Kraken",
+        "outcome": "Seattle Kraken",
+        "odds": 3.96,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-16T02:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:1"
     }
 ]
