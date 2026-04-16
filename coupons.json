@@ -5818,5 +5818,35 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-04-17T17:00:00Z"
+    },
+    {
+        "id": "2c2061ffc9ee67808fd45273089d7795",
+        "home": "Brentford",
+        "away": "Fulham",
+        "outcome": "Fulham",
+        "odds": 3.5,
+        "stake": 325.0,
+        "sport": "soccer_epl",
+        "time": "2026-04-18T11:30:00Z"
+    },
+    {
+        "id": "7591fdd4d514f4a918710377569ea865",
+        "home": "Fatih Karag\u00fcmr\u00fck",
+        "away": "Ey\u00fcpspor",
+        "outcome": "Ey\u00fcpspor",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-18T11:30:00Z"
+    },
+    {
+        "id": "ac5274aa76452165617c427585fdfa79",
+        "home": "Derby County",
+        "away": "Oxford United",
+        "outcome": "Oxford United",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-18T11:30:00Z"
     }
 ]
