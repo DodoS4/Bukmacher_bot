@@ -5560,26 +5560,6 @@
         "time": "2026-04-16T15:30:00Z"
     },
     {
-        "id": "9aba61fb388b8365d89c934014015dc5",
-        "home": "V\u00e4xj\u00f6 Lakers",
-        "away": "R\u00f6gle BK",
-        "outcome": "V\u00e4xj\u00f6 Lakers",
-        "odds": 3.0,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-04-16T17:00:00Z"
-    },
-    {
-        "id": "c56c224a9f71ded70a010ef457f6816f",
-        "home": "Celta Vigo",
-        "away": "SC Freiburg",
-        "outcome": "SC Freiburg",
-        "odds": 4.2,
-        "stake": 325.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-04-16T16:45:00Z"
-    },
-    {
         "id": "7bd6146745b2765c8c6207daacff37db",
         "home": "Nottingham Forest",
         "away": "Porto",
@@ -6018,5 +5998,125 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-04-18T14:00:00Z"
+    },
+    {
+        "id": "76d3bd29c4c5d001c2404fb6d3010c36",
+        "home": "Carolina Hurricanes",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 3.4,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-18T19:00:47Z"
+    },
+    {
+        "id": "5e7f44119f2e640fdf04c245a764657f",
+        "home": "Tottenham Hotspur",
+        "away": "Brighton and Hove Albion",
+        "outcome": "Tottenham Hotspur",
+        "odds": 2.86,
+        "stake": 325.0,
+        "sport": "soccer_epl",
+        "time": "2026-04-18T16:30:00Z"
+    },
+    {
+        "id": "933e20e0892b28ca075a9ab5465d5c6d",
+        "home": "Chelsea",
+        "away": "Manchester United",
+        "outcome": "Manchester United",
+        "odds": 3.3,
+        "stake": 325.0,
+        "sport": "soccer_epl",
+        "time": "2026-04-18T19:00:00Z"
+    },
+    {
+        "id": "8e0a3736b06bce73da2581f75e2cf194",
+        "home": "Eintracht Frankfurt",
+        "away": "RB Leipzig",
+        "outcome": "Eintracht Frankfurt",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-04-18T16:30:00Z"
+    },
+    {
+        "id": "4206b10bde703ad297b5c642ea89e6e7",
+        "home": "AS Roma",
+        "away": "Atalanta BC",
+        "outcome": "AS Roma",
+        "odds": 2.54,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-04-18T18:45:00Z"
+    },
+    {
+        "id": "bdf177c6906d5e875462b90014483bc2",
+        "home": "Pogo\u0144 Szczecin",
+        "away": "Lech Pozna\u0144",
+        "outcome": "Pogo\u0144 Szczecin",
+        "odds": 3.08,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-18T18:15:00Z"
+    },
+    {
+        "id": "e76b1c707308d3a64f6d7e5591ec9414",
+        "home": "Angers",
+        "away": "Le Havre",
+        "outcome": "Angers",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-04-18T17:00:00Z"
+    },
+    {
+        "id": "bbf4c9232ab8abe994ee4031d36ab761",
+        "home": "Casa Pia",
+        "away": "Santa Clara",
+        "outcome": "Casa Pia",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-04-18T17:00:00Z"
+    },
+    {
+        "id": "d0bffdc5f71a2c4ff69cd438210b534b",
+        "home": "KV Mechelen",
+        "away": "Anderlecht",
+        "outcome": "Anderlecht",
+        "odds": 2.41,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-18T18:45:00Z"
+    },
+    {
+        "id": "de4e84d9341a071baa3457d072baab36",
+        "home": "AE Kifisia FC",
+        "away": "Asteras Tripolis",
+        "outcome": "Asteras Tripolis",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-04-18T13:00:00Z"
+    },
+    {
+        "id": "fc0c1bd7e31464c91263d11ae43cc848",
+        "home": "Toronto FC",
+        "away": "Austin FC",
+        "outcome": "Austin FC",
+        "odds": 4.1,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-04-18T17:00:00Z"
+    },
+    {
+        "id": "4bd0cf000b2f082f3613b40b850c42b1",
+        "home": "CF Montreal",
+        "away": "New York Red Bulls",
+        "outcome": "New York Red Bulls",
+        "odds": 2.73,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-04-18T18:30:00Z"
     }
 ]

@@ -18672,5 +18672,31 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:1"
+    },
+    {
+        "id": "9aba61fb388b8365d89c934014015dc5",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "R\u00f6gle BK",
+        "outcome": "V\u00e4xj\u00f6 Lakers",
+        "odds": 3.0,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-04-16T17:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "2:3"
+    },
+    {
+        "id": "c56c224a9f71ded70a010ef457f6816f",
+        "home": "Celta Vigo",
+        "away": "SC Freiburg",
+        "outcome": "SC Freiburg",
+        "odds": 4.2,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-04-16T16:45:00Z",
+        "profit": 1040.0,
+        "status": "WIN",
+        "score": "1:3"
     }
 ]
