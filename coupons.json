@@ -5700,36 +5700,6 @@
         "time": "2026-04-18T02:00:00Z"
     },
     {
-        "id": "afeaf87b7431ddae5a92d3a73a449991",
-        "home": "GKS Katowice",
-        "away": "Motor Lublin",
-        "outcome": "Motor Lublin",
-        "odds": 3.55,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-04-17T16:00:00Z"
-    },
-    {
-        "id": "c536a7bbf469098e8eb1770a6e814d30",
-        "home": "Antalyaspor",
-        "away": "Torku Konyaspor",
-        "outcome": "Antalyaspor",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-04-17T17:00:00Z"
-    },
-    {
-        "id": "f9ab548797f7a242f5f3bc8766e6d031",
-        "home": "Brondby IF",
-        "away": "SonderjyskE",
-        "outcome": "SonderjyskE",
-        "odds": 3.6,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-04-17T17:00:00Z"
-    },
-    {
         "id": "2c2061ffc9ee67808fd45273089d7795",
         "home": "Brentford",
         "away": "Fulham",
@@ -6170,16 +6140,6 @@
         "time": "2026-04-18T19:30:00Z"
     },
     {
-        "id": "187c578ce8d890dd5b9b3cbdcb2fa3e2",
-        "home": "Grazer AK",
-        "away": "Ried",
-        "outcome": "Ried",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-04-17T17:30:00Z"
-    },
-    {
         "id": "fabe6980f9e2675cce2e0968e667e13a",
         "home": "Colorado Rapids",
         "away": "Inter Miami CF",
@@ -6468,5 +6428,95 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-04-18T18:30:00Z"
+    },
+    {
+        "id": "56ea1b51afea8960ca60b6d48714a1a3",
+        "home": "Colorado Avalanche",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 4.3,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-04-19T19:10:00Z"
+    },
+    {
+        "id": "ce16ec59367ed5440a22fdd860119b90",
+        "home": "Cleveland Monsters",
+        "away": "Grand Rapids Griffins",
+        "outcome": "Grand Rapids Griffins",
+        "odds": 2.18,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-19T19:00:00Z"
+    },
+    {
+        "id": "e3a8401e76c453927a9f6f17dc472713",
+        "home": "Hershey Bears",
+        "away": "Rochester Americans",
+        "outcome": "Rochester Americans",
+        "odds": 2.39,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-04-19T19:00:00Z"
+    },
+    {
+        "id": "6eb4d0ea8406f8edf5046e34ba3671e7",
+        "home": "Borussia Monchengladbach",
+        "away": "FSV Mainz 05",
+        "outcome": "FSV Mainz 05",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-04-19T17:30:00Z"
+    },
+    {
+        "id": "b60ab9bb1fb38896bd19c87e779e9907",
+        "home": "Nacional",
+        "away": "Alverca",
+        "outcome": "Alverca",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-04-18T14:30:00Z"
+    },
+    {
+        "id": "a02b182687d11eb3750bb1de474f69a6",
+        "home": "Sporting Lisbon",
+        "away": "Benfica",
+        "outcome": "Benfica",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-04-19T17:00:00Z"
+    },
+    {
+        "id": "05555a58cbe4c04ac9136dfd419d2fd7",
+        "home": "Union Saint-Gilloise",
+        "away": "Club Brugge",
+        "outcome": "Club Brugge",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-19T16:30:00Z"
+    },
+    {
+        "id": "a84e4d79a0afde7a1843a3c99dafda7e",
+        "home": "RAAL La Louvi\u00e8re",
+        "away": "SV Zulte-Waregem",
+        "outcome": "SV Zulte-Waregem",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-19T17:15:00Z"
+    },
+    {
+        "id": "9cb51db4c427ca1a2670d918fdf68507",
+        "home": "Wolfsberger AC",
+        "away": "FC Blau-Wei\u00df Linz",
+        "outcome": "Wolfsberger AC",
+        "odds": 2.44,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-18T15:00:00Z"
     }
 ]

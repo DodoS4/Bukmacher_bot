@@ -18789,5 +18789,57 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "afeaf87b7431ddae5a92d3a73a449991",
+        "home": "GKS Katowice",
+        "away": "Motor Lublin",
+        "outcome": "Motor Lublin",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-17T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "c536a7bbf469098e8eb1770a6e814d30",
+        "home": "Antalyaspor",
+        "away": "Torku Konyaspor",
+        "outcome": "Antalyaspor",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-17T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:2"
+    },
+    {
+        "id": "f9ab548797f7a242f5f3bc8766e6d031",
+        "home": "Brondby IF",
+        "away": "SonderjyskE",
+        "outcome": "SonderjyskE",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-04-17T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "6:0"
+    },
+    {
+        "id": "187c578ce8d890dd5b9b3cbdcb2fa3e2",
+        "home": "Grazer AK",
+        "away": "Ried",
+        "outcome": "Ried",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-17T17:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
