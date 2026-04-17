@@ -6318,5 +6318,155 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-04-19T11:00:00Z"
+    },
+    {
+        "id": "3e7369c873aed1c62f4d76fd652d73c7",
+        "home": "Everton",
+        "away": "Liverpool",
+        "outcome": "Everton",
+        "odds": 3.4,
+        "stake": 325.0,
+        "sport": "soccer_epl",
+        "time": "2026-04-19T13:00:00Z"
+    },
+    {
+        "id": "67946ccfc03197bc48eb7b6c9786b713",
+        "home": "Manchester City",
+        "away": "Arsenal",
+        "outcome": "Manchester City",
+        "odds": 1.92,
+        "stake": 325.0,
+        "sport": "soccer_epl",
+        "time": "2026-04-19T15:30:00Z"
+    },
+    {
+        "id": "5d5accbae690aa72046d4f6ed18c0b66",
+        "home": "Pisa",
+        "away": "Genoa",
+        "outcome": "Genoa",
+        "odds": 2.5,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-04-19T16:00:00Z"
+    },
+    {
+        "id": "1dd49b068a477a22f805738f0d885498",
+        "home": "Nieciecza",
+        "away": "Wis\u0142a P\u0142ock",
+        "outcome": "Nieciecza",
+        "odds": 2.52,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-19T10:15:00Z"
+    },
+    {
+        "id": "0bb1f169a818e978fa7c65c6bd8e52a2",
+        "home": "Rak\u00f3w Cz\u0119stochowa",
+        "away": "Cracovia Krak\u00f3w",
+        "outcome": "Cracovia Krak\u00f3w",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-19T12:45:00Z"
+    },
+    {
+        "id": "b2eb0938b674b4e0784dcb158dc7a832",
+        "home": "Arka Gdynia",
+        "away": "Jagiellonia Bia\u0142ystok",
+        "outcome": "Arka Gdynia",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-04-19T15:30:00Z"
+    },
+    {
+        "id": "44f3850c674a5c86de98512df1f7b33f",
+        "home": "Nantes",
+        "away": "Brest",
+        "outcome": "Brest",
+        "odds": 3.22,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-04-19T15:15:00Z"
+    },
+    {
+        "id": "db35308a389381716f2841fb7a361daf",
+        "home": "Metz",
+        "away": "Paris FC",
+        "outcome": "Metz",
+        "odds": 3.7,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-04-19T15:15:00Z"
+    },
+    {
+        "id": "9e279d3e6e661791862286e452987aef",
+        "home": "Strasbourg",
+        "away": "Rennes",
+        "outcome": "Strasbourg",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-04-19T15:15:00Z"
+    },
+    {
+        "id": "a3466e90c5d2764ef3e3d01421286c5f",
+        "home": "Arouca",
+        "away": "CF Estrela",
+        "outcome": "CF Estrela",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-04-19T14:30:00Z"
+    },
+    {
+        "id": "fc96ec30f3e006928debbde4788cf094",
+        "home": "Dender",
+        "away": "Cercle Brugge KSV",
+        "outcome": "Dender",
+        "odds": 3.66,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-19T14:00:00Z"
+    },
+    {
+        "id": "b92ea230d0e618fafc6e67ae439fd202",
+        "home": "Austria Wien",
+        "away": "RB Salzburg",
+        "outcome": "Austria Wien",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-19T12:30:00Z"
+    },
+    {
+        "id": "c671bb03dd66d03163e5bf9f121a900e",
+        "home": "Hartberg",
+        "away": "Rapid Wien",
+        "outcome": "Hartberg",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-04-19T12:30:00Z"
+    },
+    {
+        "id": "5ab70500b14c32ec320daceeaae287a7",
+        "home": "Silkeborg IF",
+        "away": "FC Fredericia",
+        "outcome": "FC Fredericia",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-04-19T12:00:00Z"
+    },
+    {
+        "id": "7bfa00dc684c5f3e76f9a2e9ee91634a",
+        "home": "FC Thun",
+        "away": "FC Basel",
+        "outcome": "FC Basel",
+        "odds": 3.73,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-04-18T18:30:00Z"
     }
 ]
