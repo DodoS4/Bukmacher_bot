@@ -6278,5 +6278,45 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-04-19T01:30:00Z"
+    },
+    {
+        "id": "41396115d9202dcb93866dba2e9bc1a8",
+        "home": "Cremonese",
+        "away": "Torino",
+        "outcome": "Cremonese",
+        "odds": 3.15,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-04-19T10:30:00Z"
+    },
+    {
+        "id": "64b7b58cdeed5d433ad5dee6aef2e320",
+        "home": "Kasimpasa SK",
+        "away": "Alanyaspor",
+        "outcome": "Alanyaspor",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-04-19T11:30:00Z"
+    },
+    {
+        "id": "a94ec6a1b23c03661701b197dcd2d7ba",
+        "home": "Gent",
+        "away": "Sint Truiden",
+        "outcome": "Sint Truiden",
+        "odds": 2.65,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-04-19T11:30:00Z"
+    },
+    {
+        "id": "b6ea6f6b8701ec59fd1ba336cb086589",
+        "home": "Ipswich Town",
+        "away": "Middlesbrough",
+        "outcome": "Middlesbrough",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-19T11:00:00Z"
     }
 ]
