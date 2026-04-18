@@ -18841,5 +18841,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:1"
+    },
+    {
+        "id": "be9eda34a4ddf026072d12f7db44ec28",
+        "home": "FC St. Pauli",
+        "away": "1. FC K\u00f6ln",
+        "outcome": "FC St. Pauli",
+        "odds": 2.84,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-04-17T18:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "b68962085069c4f1a6138137137c83e6",
+        "home": "Blackburn Rovers",
+        "away": "Coventry City",
+        "outcome": "Blackburn Rovers",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-04-17T19:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
