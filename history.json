@@ -19062,5 +19062,44 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "3:2"
+    },
+    {
+        "id": "a861ab888e6c348241505b32f46527c4",
+        "home": "Korona Kielce",
+        "away": "Piast Gliwice",
+        "outcome": "Piast Gliwice",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-01T15:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "3bc21d93fc7783ab5ccc8dc9af236a01",
+        "home": "Gazi\u015fehir Gaziantep",
+        "away": "Besiktas JK",
+        "outcome": "Besiktas JK",
+        "odds": 2.12,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-01T17:00:00Z",
+        "profit": 140.0,
+        "status": "WIN",
+        "score": "0:2"
+    },
+    {
+        "id": "1e9dbb058dc5720f4bd34e336f98dc97",
+        "home": "Brondby IF",
+        "away": "FC Nordsjaelland",
+        "outcome": "FC Nordsjaelland",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-01T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]

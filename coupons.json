@@ -6690,16 +6690,6 @@
         "time": "2026-05-02T16:30:00Z"
     },
     {
-        "id": "a861ab888e6c348241505b32f46527c4",
-        "home": "Korona Kielce",
-        "away": "Piast Gliwice",
-        "outcome": "Piast Gliwice",
-        "odds": 3.45,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-05-01T15:30:00Z"
-    },
-    {
         "id": "702031b308db7a7974a8e7e4a5077a8d",
         "home": "Legia Warszawa",
         "away": "Widzew \u0141\u00f3d\u017a",
@@ -7040,16 +7030,6 @@
         "time": "2026-05-03T10:15:00Z"
     },
     {
-        "id": "3bc21d93fc7783ab5ccc8dc9af236a01",
-        "home": "Gazi\u015fehir Gaziantep",
-        "away": "Besiktas JK",
-        "outcome": "Besiktas JK",
-        "odds": 2.12,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-05-01T17:00:00Z"
-    },
-    {
         "id": "9ddfdac91469b04e3874bf533ec2f800",
         "home": "KV Mechelen",
         "away": "Gent",
@@ -7058,16 +7038,6 @@
         "stake": 250.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-05-03T11:30:00Z"
-    },
-    {
-        "id": "1e9dbb058dc5720f4bd34e336f98dc97",
-        "home": "Brondby IF",
-        "away": "FC Nordsjaelland",
-        "outcome": "FC Nordsjaelland",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-05-01T17:00:00Z"
     },
     {
         "id": "6e7bf6c593368e5c03b10aaf8837cd0f",
@@ -7228,5 +7198,145 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-05-03T14:30:00Z"
+    },
+    {
+        "id": "82a45989e8b145f27fbd7932180e1121",
+        "home": "Aston Villa",
+        "away": "Tottenham Hotspur",
+        "outcome": "Aston Villa",
+        "odds": 2.3,
+        "stake": 325.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-03T18:00:00Z"
+    },
+    {
+        "id": "4ad2ab499ea6b0d3e3c5c0a2e015466d",
+        "home": "SC Freiburg",
+        "away": "VfL Wolfsburg",
+        "outcome": "SC Freiburg",
+        "odds": 2.64,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-05-03T17:30:00Z"
+    },
+    {
+        "id": "2e977aa19b52f35a2f36273a8936a967",
+        "home": "Espanyol",
+        "away": "Real Madrid",
+        "outcome": "Real Madrid",
+        "odds": 1.82,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-03T19:00:00Z"
+    },
+    {
+        "id": "c564a20fa6a716e013956c8958a79ca9",
+        "home": "Rio Ave FC",
+        "away": "Gil Vicente",
+        "outcome": "Rio Ave FC",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-05-03T19:30:00Z"
+    },
+    {
+        "id": "e6ef453d54e329be6b6e852a23d5441a",
+        "home": "Ajax",
+        "away": "PSV Eindhoven",
+        "outcome": "Ajax",
+        "odds": 2.63,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-02T18:00:00Z"
+    },
+    {
+        "id": "8e4b1c0c4469613a90f21da934c79f5e",
+        "home": "Antalyaspor",
+        "away": "Alanyaspor",
+        "outcome": "Alanyaspor",
+        "odds": 2.5,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-03T17:00:00Z"
+    },
+    {
+        "id": "666ba5775c73081be351494b1c16545e",
+        "home": "Fatih Karag\u00fcmr\u00fck",
+        "away": "Genclerbirligi SK",
+        "outcome": "Fatih Karag\u00fcmr\u00fck",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-03T17:00:00Z"
+    },
+    {
+        "id": "e2f1705b11e86c6a89073a0f22a35b66",
+        "home": "Kasimpasa SK",
+        "away": "Kocaelispor",
+        "outcome": "Kocaelispor",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-03T17:00:00Z"
+    },
+    {
+        "id": "9f8728f712537a8bb1e085ef7f1394e8",
+        "home": "Dender",
+        "away": "RAAL La Louvi\u00e8re",
+        "outcome": "RAAL La Louvi\u00e8re",
+        "odds": 2.45,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-03T17:15:00Z"
+    },
+    {
+        "id": "3023bcbcc7db9643b3af66c47a2fb546",
+        "home": "PAOK Thessaloniki",
+        "away": "Olympiakos Piraeus",
+        "outcome": "Olympiakos Piraeus",
+        "odds": 2.5,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-03T16:00:00Z"
+    },
+    {
+        "id": "2743b3a6fa54b81bd425cac441047f19",
+        "home": "Panathinaikos",
+        "away": "AEK Athens",
+        "outcome": "Panathinaikos",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-03T18:00:00Z"
+    },
+    {
+        "id": "77c2f1235beea26e0a52b0a492455bc5",
+        "home": "FC Winterthur",
+        "away": "FC Zurich",
+        "outcome": "FC Zurich",
+        "odds": 2.42,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-02T16:00:00Z"
+    },
+    {
+        "id": "daaf40298613b95d81a3dc9e88ecbfd7",
+        "home": "Portsmouth",
+        "away": "Birmingham City",
+        "outcome": "Birmingham City",
+        "odds": 2.85,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-05-02T11:30:00Z"
+    },
+    {
+        "id": "30a25995c721f9c70c6dd39a8be9f374",
+        "home": "Wrexham AFC",
+        "away": "Middlesbrough",
+        "outcome": "Wrexham AFC",
+        "odds": 2.84,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-05-02T11:30:00Z"
     }
 ]
