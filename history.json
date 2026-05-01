@@ -19049,5 +19049,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:0"
+    },
+    {
+        "id": "6583a39af62883a34514601d9212cc63",
+        "home": "\u00c7aykur Rizespor",
+        "away": "Torku Konyaspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-01T14:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:2"
     }
 ]
