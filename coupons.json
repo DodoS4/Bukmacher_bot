@@ -7018,5 +7018,85 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-03T02:30:00Z"
+    },
+    {
+        "id": "4882aeb0406c4c0ae99ea4512e034967",
+        "home": "Eintracht Frankfurt",
+        "away": "Hamburger SV",
+        "outcome": "Eintracht Frankfurt",
+        "odds": 1.8,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-05-02T13:30:00Z"
+    },
+    {
+        "id": "bb624cb4bdfb721401d5a3d3017c921e",
+        "home": "Bologna",
+        "away": "Cagliari",
+        "outcome": "Bologna",
+        "odds": 1.91,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-03T10:30:00Z"
+    },
+    {
+        "id": "2f418314c85b618d37cc9fb8bc837d65",
+        "home": "FC Volendam",
+        "away": "Heerenveen",
+        "outcome": "FC Volendam",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-03T10:15:00Z"
+    },
+    {
+        "id": "3bc21d93fc7783ab5ccc8dc9af236a01",
+        "home": "Gazi\u015fehir Gaziantep",
+        "away": "Besiktas JK",
+        "outcome": "Besiktas JK",
+        "odds": 2.12,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-01T17:00:00Z"
+    },
+    {
+        "id": "9ddfdac91469b04e3874bf533ec2f800",
+        "home": "KV Mechelen",
+        "away": "Gent",
+        "outcome": "Gent",
+        "odds": 2.59,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-03T11:30:00Z"
+    },
+    {
+        "id": "1e9dbb058dc5720f4bd34e336f98dc97",
+        "home": "Brondby IF",
+        "away": "FC Nordsjaelland",
+        "outcome": "FC Nordsjaelland",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-01T17:00:00Z"
+    },
+    {
+        "id": "6e7bf6c593368e5c03b10aaf8837cd0f",
+        "home": "Hibernian",
+        "away": "Celtic",
+        "outcome": "Celtic",
+        "odds": 1.83,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-03T11:00:00Z"
+    },
+    {
+        "id": "7773591517e10a614a28c2c76be9ee7e",
+        "home": "Chicago Fire",
+        "away": "FC Cincinnati",
+        "outcome": "FC Cincinnati",
+        "odds": 4.5,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-03T00:30:00Z"
     }
 ]
