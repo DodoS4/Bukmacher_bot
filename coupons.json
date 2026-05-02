@@ -6530,66 +6530,6 @@
         "time": "2026-05-02T19:00:00Z"
     },
     {
-        "id": "0602d732b6ac41cc00e19dd37073c401",
-        "home": "Brentford",
-        "away": "West Ham United",
-        "outcome": "West Ham United",
-        "odds": 3.92,
-        "stake": 325.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-02T14:00:00Z"
-    },
-    {
-        "id": "4d99d206793841a85ad25c977bb6dcb2",
-        "home": "Newcastle United",
-        "away": "Brighton and Hove Albion",
-        "outcome": "Newcastle United",
-        "odds": 2.63,
-        "stake": 325.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-02T14:00:00Z"
-    },
-    {
-        "id": "685bc7e34533e57867d51a08db38f1ec",
-        "home": "Wolverhampton Wanderers",
-        "away": "Sunderland",
-        "outcome": "Wolverhampton Wanderers",
-        "odds": 3.55,
-        "stake": 325.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-02T14:00:00Z"
-    },
-    {
-        "id": "cd1de2ada1b712d0476fe341467e62c2",
-        "home": "Bayer Leverkusen",
-        "away": "RB Leipzig",
-        "outcome": "RB Leipzig",
-        "odds": 3.1,
-        "stake": 250.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-05-02T16:30:00Z"
-    },
-    {
-        "id": "16fa5da1e64cdb028c84396beecbb633",
-        "home": "Como",
-        "away": "Napoli",
-        "outcome": "Napoli",
-        "odds": 3.5,
-        "stake": 325.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-05-02T16:00:00Z"
-    },
-    {
-        "id": "3870be32c3d6e43c3db821236089af61",
-        "home": "Alav\u00e9s",
-        "away": "Athletic Bilbao",
-        "outcome": "Alav\u00e9s",
-        "odds": 2.9,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-05-02T16:30:00Z"
-    },
-    {
         "id": "a2a62dd4da9e98a3637b9836744bb8f6",
         "home": "Motor Lublin",
         "away": "Lech Pozna\u0144",
@@ -6598,46 +6538,6 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-05-02T18:15:00Z"
-    },
-    {
-        "id": "a52bb76846fd626ae32564f7be3550ec",
-        "home": "Arouca",
-        "away": "Santa Clara",
-        "outcome": "Santa Clara",
-        "odds": 2.82,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-05-02T14:30:00Z"
-    },
-    {
-        "id": "7702df55186f99ff06dd572038fd516c",
-        "home": "Moreirense FC",
-        "away": "CF Estrela",
-        "outcome": "CF Estrela",
-        "odds": 3.1,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-05-02T14:30:00Z"
-    },
-    {
-        "id": "c3d25bd70548d02ce5237de5d036b48a",
-        "home": "Westerlo",
-        "away": "Leuven",
-        "outcome": "Leuven",
-        "odds": 3.81,
-        "stake": 250.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-02T14:00:00Z"
-    },
-    {
-        "id": "a61e5cef6cfebf04fe0acb00dfd900b0",
-        "home": "Charleroi",
-        "away": "Genk",
-        "outcome": "Genk",
-        "odds": 2.49,
-        "stake": 250.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-02T16:15:00Z"
     },
     {
         "id": "b7115d4d5d3e417c90d4a579eec64216",
@@ -6650,46 +6550,6 @@
         "time": "2026-05-02T18:45:00Z"
     },
     {
-        "id": "ca54eea4fa544a1ae3c3241222464b90",
-        "home": "Ried",
-        "away": "FC Blau-Wei\u00df Linz",
-        "outcome": "FC Blau-Wei\u00df Linz",
-        "odds": 3.4,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-05-02T15:00:00Z"
-    },
-    {
-        "id": "e63db45a2090d875da184358e636bc65",
-        "home": "Panetolikos Agrinio",
-        "away": "AE Kifisia FC",
-        "outcome": "Panetolikos Agrinio",
-        "odds": 2.81,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-05-02T14:00:00Z"
-    },
-    {
-        "id": "af149bb353594377e764f587e2044bf8",
-        "home": "Panserraikos FC",
-        "away": "AEL",
-        "outcome": "Panserraikos FC",
-        "odds": 2.88,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-05-02T14:30:00Z"
-    },
-    {
-        "id": "d797043b2b64e131615db208f2464a33",
-        "home": "FC Lausanne-Sport",
-        "away": "FC Luzern",
-        "outcome": "FC Lausanne-Sport",
-        "odds": 2.46,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-05-02T16:00:00Z"
-    },
-    {
         "id": "d43e4b4ccc501c3c97b25d148ddcf051",
         "home": "FC Basel",
         "away": "FC Thun",
@@ -6698,46 +6558,6 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-05-02T18:30:00Z"
-    },
-    {
-        "id": "a003138e31a03a7419f1ae3922118f34",
-        "home": "Dundee FC",
-        "away": "St Mirren",
-        "outcome": "St Mirren",
-        "odds": 2.94,
-        "stake": 325.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-02T14:00:00Z"
-    },
-    {
-        "id": "48e42633abec3cf1b03b510e4e8709de",
-        "home": "Kilmarnock",
-        "away": "Dundee United",
-        "outcome": "Dundee United",
-        "odds": 3.1,
-        "stake": 325.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-02T14:00:00Z"
-    },
-    {
-        "id": "be35272a425a4b6f7bf37229706005dd",
-        "home": "Falkirk F.C.",
-        "away": "Motherwell",
-        "outcome": "Motherwell",
-        "odds": 2.6,
-        "stake": 325.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-02T14:00:00Z"
-    },
-    {
-        "id": "3d4d560132adeed9adcdd8e36ee6ec7b",
-        "home": "Toronto FC",
-        "away": "San Jose Earthquakes",
-        "outcome": "San Jose Earthquakes",
-        "odds": 2.2,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-05-02T17:00:00Z"
     },
     {
         "id": "c751b2c32f61a76235775c8e44a3d778",
@@ -6960,16 +6780,6 @@
         "time": "2026-05-03T14:00:00Z"
     },
     {
-        "id": "d43b6833e43f16dad18de9ee47be5210",
-        "home": "Grazer AK",
-        "away": "WSG Tirol",
-        "outcome": "WSG Tirol",
-        "odds": 3.35,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-05-02T15:00:00Z"
-    },
-    {
         "id": "415b1b55f225575752ec860664f69eb2",
         "home": "OB Odense BK",
         "away": "Silkeborg IF",
@@ -7120,16 +6930,6 @@
         "time": "2026-05-03T18:00:00Z"
     },
     {
-        "id": "77c2f1235beea26e0a52b0a492455bc5",
-        "home": "FC Winterthur",
-        "away": "FC Zurich",
-        "outcome": "FC Zurich",
-        "odds": 2.42,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-05-02T16:00:00Z"
-    },
-    {
         "id": "6ff22480704fc10dca4fb5f56513a4f4",
         "home": "Tampa Bay Lightning",
         "away": "Montr\u00e9al Canadiens",
@@ -7198,5 +6998,115 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-03T21:30:00Z"
+    },
+    {
+        "id": "fd80451746950f61b7786c6cbc454907",
+        "home": "KooKoo",
+        "away": "Tappara",
+        "outcome": "Tappara",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-05-04T15:30:00Z"
+    },
+    {
+        "id": "f89c91a6be76eca19fb7a47f67c3e5b6",
+        "home": "Cremonese",
+        "away": "Lazio",
+        "outcome": "Lazio",
+        "odds": 2.64,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-04T16:30:00Z"
+    },
+    {
+        "id": "6b26120d2a0ef752d7770e5a2a69ec4c",
+        "home": "Celta Vigo",
+        "away": "Elche CF",
+        "outcome": "Celta Vigo",
+        "odds": 1.86,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-03T12:00:00Z"
+    },
+    {
+        "id": "129bf1300cca29a85d0ebc69b0765602",
+        "home": "Sevilla",
+        "away": "Real Sociedad",
+        "outcome": "Real Sociedad",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-04T19:00:00Z"
+    },
+    {
+        "id": "4f1f9fc732d0d1ee15d861fa9624c431",
+        "home": "Zag\u0142\u0119bie Lubin",
+        "away": "Cracovia Krak\u00f3w",
+        "outcome": "Zag\u0142\u0119bie Lubin",
+        "odds": 2.9,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-03T12:45:00Z"
+    },
+    {
+        "id": "bfced38b94d2e8914a9b7da5a4e4f57c",
+        "home": "Paris FC",
+        "away": "Brest",
+        "outcome": "Brest",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-05-03T15:15:00Z"
+    },
+    {
+        "id": "e507965add1c08729038c73ebcd21715",
+        "home": "Strasbourg",
+        "away": "Toulouse",
+        "outcome": "Strasbourg",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-05-03T15:15:00Z"
+    },
+    {
+        "id": "4f49195b18bb1795c3a1a963e6dcae4d",
+        "home": "AZ Alkmaar",
+        "away": "FC Twente Enschede",
+        "outcome": "AZ Alkmaar",
+        "odds": 2.98,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-03T14:45:00Z"
+    },
+    {
+        "id": "fc37fa43d1ac91d4659360b81e8651f2",
+        "home": "Austria Wien",
+        "away": "Hartberg",
+        "outcome": "Hartberg",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-03T12:30:00Z"
+    },
+    {
+        "id": "72bc41a771634330e1c3fc8ecb5a3719",
+        "home": "LASK",
+        "away": "Rapid Wien",
+        "outcome": "Rapid Wien",
+        "odds": 3.63,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-04T18:30:00Z"
+    },
+    {
+        "id": "e2d319182e97039e828427b732e87942",
+        "home": "Hearts",
+        "away": "Rangers",
+        "outcome": "Rangers",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-04T16:30:00Z"
     }
 ]
