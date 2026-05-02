@@ -7348,5 +7348,15 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-03T21:30:00Z"
+    },
+    {
+        "id": "0a1838c08f42cd52737d352118246fef",
+        "home": "Villarreal",
+        "away": "Levante",
+        "outcome": "Villarreal",
+        "odds": 1.82,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-02T12:00:00Z"
     }
 ]
