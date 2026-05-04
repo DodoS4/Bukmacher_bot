@@ -6540,66 +6540,6 @@
         "time": "2026-05-03T00:00:00Z"
     },
     {
-        "id": "82a45989e8b145f27fbd7932180e1121",
-        "home": "Aston Villa",
-        "away": "Tottenham Hotspur",
-        "outcome": "Aston Villa",
-        "odds": 2.3,
-        "stake": 325.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-03T18:00:00Z"
-    },
-    {
-        "id": "2e977aa19b52f35a2f36273a8936a967",
-        "home": "Espanyol",
-        "away": "Real Madrid",
-        "outcome": "Real Madrid",
-        "odds": 1.82,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-05-03T19:00:00Z"
-    },
-    {
-        "id": "c564a20fa6a716e013956c8958a79ca9",
-        "home": "Rio Ave FC",
-        "away": "Gil Vicente",
-        "outcome": "Rio Ave FC",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-05-03T19:30:00Z"
-    },
-    {
-        "id": "2743b3a6fa54b81bd425cac441047f19",
-        "home": "Panathinaikos",
-        "away": "AEK Athens",
-        "outcome": "Panathinaikos",
-        "odds": 3.7,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-05-03T18:00:00Z"
-    },
-    {
-        "id": "6ff22480704fc10dca4fb5f56513a4f4",
-        "home": "Tampa Bay Lightning",
-        "away": "Montr\u00e9al Canadiens",
-        "outcome": "Montr\u00e9al Canadiens",
-        "odds": 3.24,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-03T22:10:00Z"
-    },
-    {
-        "id": "dd40fd7156c9a60a0ce8365206fc9310",
-        "home": "Colorado Avalanche",
-        "away": "Minnesota Wild",
-        "outcome": "Minnesota Wild",
-        "odds": 3.5,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-04T01:10:15Z"
-    },
-    {
         "id": "46919ecf08d916b8d502cb7d95f6a41a",
         "home": "Syracuse Crunch",
         "away": "Cleveland Monsters",
@@ -6628,16 +6568,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-05-03T23:05:00Z"
-    },
-    {
-        "id": "190afcb8a6d274f3beb479e50c6cd267",
-        "home": "Austin FC",
-        "away": "St. Louis City SC",
-        "outcome": "St. Louis City SC",
-        "odds": 2.85,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-05-03T21:30:00Z"
     },
     {
         "id": "fd80451746950f61b7786c6cbc454907",
@@ -6720,16 +6650,6 @@
         "time": "2026-05-05T02:00:00Z"
     },
     {
-        "id": "3b77b1c468a84a1f1c0dec18f5164d2e",
-        "home": "New York City FC",
-        "away": "D.C. United",
-        "outcome": "New York City FC",
-        "odds": 1.82,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-05-03T19:00:00Z"
-    },
-    {
         "id": "830bdf4fa5a02776edeca3e0f84c5211",
         "home": "Rheindorf Altach",
         "away": "Wolfsberger AC",
@@ -6738,5 +6658,65 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-05-04T16:30:00Z"
+    },
+    {
+        "id": "fbc314d1e8c60127f6b1a302f544af53",
+        "home": "Colorado Avalanche",
+        "away": "Minnesota Wild",
+        "outcome": "Minnesota Wild",
+        "odds": 3.7,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-06T00:10:08Z"
+    },
+    {
+        "id": "e99bf203da7b6b4b5ff8da9f184f8960",
+        "home": "Hershey Bears",
+        "away": "W-B/Scranton Penguins",
+        "outcome": "Hershey Bears",
+        "odds": 2.98,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-05T23:00:00Z"
+    },
+    {
+        "id": "64e99d2cb1f34295f2ef2db3798abf2f",
+        "home": "Toronto Marlies",
+        "away": "Laval Rocket",
+        "outcome": "Toronto Marlies",
+        "odds": 2.58,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-05T23:00:00Z"
+    },
+    {
+        "id": "36102c3310c53663dcbfebd8fa8efa69",
+        "home": "Springfield Thunderbirds",
+        "away": "Providence Bruins",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 3.51,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-05T23:05:00Z"
+    },
+    {
+        "id": "070636a9739bd365e0d7bde41439bdde",
+        "home": "Chicago Wolves",
+        "away": "Texas Stars",
+        "outcome": "Texas Stars",
+        "odds": 2.73,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-06T00:00:00Z"
+    },
+    {
+        "id": "b70e2b8394cfc95b345c09adb448d329",
+        "home": "Coachella Valley Firebirds",
+        "away": "Ontario Reign",
+        "outcome": "Coachella Valley Firebirds",
+        "odds": 2.79,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-06T02:00:00Z"
     }
 ]
