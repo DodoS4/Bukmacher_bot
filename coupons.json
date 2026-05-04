@@ -6718,5 +6718,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-05-06T02:00:00Z"
+    },
+    {
+        "id": "fcf1d94e6fd0c6a3bb1039d352d7d3e3",
+        "home": "Radomiak Radom",
+        "away": "Lechia Gda\u0144sk",
+        "outcome": "Radomiak Radom",
+        "odds": 2.52,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-04T17:00:00Z"
     }
 ]
