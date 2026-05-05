@@ -6708,5 +6708,25 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-05-07T01:05:00Z"
+    },
+    {
+        "id": "8976c2a22cb5e8b432e21c05a77716b0",
+        "home": "Aston Villa",
+        "away": "Nottingham Forest",
+        "outcome": "Aston Villa",
+        "odds": 1.82,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-05-07T19:00:00Z"
+    },
+    {
+        "id": "b40437025fbc33d9af626ff0b08a218a",
+        "home": "SC Freiburg",
+        "away": "SC Braga",
+        "outcome": "SC Freiburg",
+        "odds": 1.88,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-05-07T19:00:00Z"
     }
 ]
