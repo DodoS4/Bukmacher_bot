@@ -20388,5 +20388,57 @@
         "profit": 190.0,
         "status": "WIN",
         "score": "3:1"
+    },
+    {
+        "id": "129bf1300cca29a85d0ebc69b0765602",
+        "home": "Sevilla",
+        "away": "Real Sociedad",
+        "outcome": "Real Sociedad",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-04T19:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:0"
+    },
+    {
+        "id": "72bc41a771634330e1c3fc8ecb5a3719",
+        "home": "LASK",
+        "away": "Rapid Wien",
+        "outcome": "Rapid Wien",
+        "odds": 3.63,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-04T18:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "644f37a134497f23c6d3821ad599b48b",
+        "home": "Carolina Hurricanes",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 4.26,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-04T23:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "df8e2f4e8a0bfcff34d6bbd0619bc3dd",
+        "home": "Vegas Golden Knights",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 3.29,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-05T01:40:18Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:1"
     }
 ]

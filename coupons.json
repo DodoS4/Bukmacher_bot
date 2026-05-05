@@ -6580,46 +6580,6 @@
         "time": "2026-05-04T15:30:00Z"
     },
     {
-        "id": "129bf1300cca29a85d0ebc69b0765602",
-        "home": "Sevilla",
-        "away": "Real Sociedad",
-        "outcome": "Real Sociedad",
-        "odds": 3.0,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-05-04T19:00:00Z"
-    },
-    {
-        "id": "72bc41a771634330e1c3fc8ecb5a3719",
-        "home": "LASK",
-        "away": "Rapid Wien",
-        "outcome": "Rapid Wien",
-        "odds": 3.63,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-05-04T18:30:00Z"
-    },
-    {
-        "id": "644f37a134497f23c6d3821ad599b48b",
-        "home": "Carolina Hurricanes",
-        "away": "Philadelphia Flyers",
-        "outcome": "Philadelphia Flyers",
-        "odds": 4.26,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-04T23:10:00Z"
-    },
-    {
-        "id": "df8e2f4e8a0bfcff34d6bbd0619bc3dd",
-        "home": "Vegas Golden Knights",
-        "away": "Anaheim Ducks",
-        "outcome": "Anaheim Ducks",
-        "odds": 3.29,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-05T01:40:18Z"
-    },
-    {
         "id": "0256d993373983f39721b5a835c97007",
         "home": "Henderson Silver Knights",
         "away": "Colorado Eagles",
@@ -6708,5 +6668,45 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-05-06T19:00:00Z"
+    },
+    {
+        "id": "8458afd03d1b3e8305f8e6362cd8e3b7",
+        "home": "Buffalo Sabres",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.88,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-06T23:00:36Z"
+    },
+    {
+        "id": "2dbe31206cd9fdac37bb9ccdb2b04244",
+        "home": "Vegas Golden Knights",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 3.25,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-07T01:30:00Z"
+    },
+    {
+        "id": "5d1a94512ecee4a504e0859e8ac4d010",
+        "home": "Grand Rapids Griffins",
+        "away": "Manitoba Moose",
+        "outcome": "Manitoba Moose",
+        "odds": 4.17,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-06T23:00:00Z"
+    },
+    {
+        "id": "61322072dcbebff29f0c40bf92b74c53",
+        "home": "Colorado Eagles",
+        "away": "Henderson Silver Knights",
+        "outcome": "Henderson Silver Knights",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-07T01:05:00Z"
     }
 ]
