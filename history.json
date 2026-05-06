@@ -20440,5 +20440,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "3:1"
+    },
+    {
+        "id": "fbc314d1e8c60127f6b1a302f544af53",
+        "home": "Colorado Avalanche",
+        "away": "Minnesota Wild",
+        "outcome": "Minnesota Wild",
+        "odds": 3.7,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-06T00:10:08Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:2"
     }
 ]

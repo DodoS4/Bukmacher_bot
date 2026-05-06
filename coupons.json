@@ -6590,16 +6590,6 @@
         "time": "2026-05-05T02:00:00Z"
     },
     {
-        "id": "fbc314d1e8c60127f6b1a302f544af53",
-        "home": "Colorado Avalanche",
-        "away": "Minnesota Wild",
-        "outcome": "Minnesota Wild",
-        "odds": 3.7,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-06T00:10:08Z"
-    },
-    {
         "id": "e99bf203da7b6b4b5ff8da9f184f8960",
         "home": "Hershey Bears",
         "away": "W-B/Scranton Penguins",
@@ -6728,5 +6718,45 @@
         "stake": 400.0,
         "sport": "soccer_uefa_europa_league",
         "time": "2026-05-07T19:00:00Z"
+    },
+    {
+        "id": "6a8df0a421267729c2f1fdb7cefa1163",
+        "home": "Philadelphia Flyers",
+        "away": "Carolina Hurricanes",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.23,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-08T00:10:00Z"
+    },
+    {
+        "id": "cc2ca6e37f573f3de3924a997779c317",
+        "home": "Hershey Bears",
+        "away": "W-B/Scranton Penguins",
+        "outcome": "Hershey Bears",
+        "odds": 3.11,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-07T23:00:00Z"
+    },
+    {
+        "id": "3dde5bec44df4450d75671c37219bb40",
+        "home": "Springfield Thunderbirds",
+        "away": "Providence Bruins",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 3.44,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-07T23:05:00Z"
+    },
+    {
+        "id": "9921dc2609b5d8b0ab52dd0bafdf5382",
+        "home": "Coachella Valley Firebirds",
+        "away": "Ontario Reign",
+        "outcome": "Ontario Reign",
+        "odds": 2.18,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-08T02:00:00Z"
     }
 ]
