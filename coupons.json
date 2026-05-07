@@ -7018,5 +7018,65 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-05-09T11:30:00Z"
+    },
+    {
+        "id": "b681c8a9bf4b35e2fb5e13b4320ccd3b",
+        "home": "Laval Rocket",
+        "away": "Toronto Marlies",
+        "outcome": "Toronto Marlies",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-09T19:00:00Z"
+    },
+    {
+        "id": "c0a148d54d3440d00aaf34d49aee5c13",
+        "home": "Real Sociedad",
+        "away": "Real Betis",
+        "outcome": "Real Sociedad",
+        "odds": 2.64,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-09T19:00:00Z"
+    },
+    {
+        "id": "e99e025c2c003cc4139e1e3f0adf7127",
+        "home": "Basaksehir",
+        "away": "Samsunspor",
+        "outcome": "Samsunspor",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-09T17:00:00Z"
+    },
+    {
+        "id": "195abf3afb8c28d9015d012080f9e018",
+        "home": "Motherwell",
+        "away": "Hearts",
+        "outcome": "Motherwell",
+        "odds": 2.74,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-09T19:00:00Z"
+    },
+    {
+        "id": "fa0fdbcebc3d4677ad973b076bf6c231",
+        "home": "Hull City",
+        "away": "Millwall",
+        "outcome": "Millwall",
+        "odds": 2.58,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-05-08T19:00:00Z"
+    },
+    {
+        "id": "727a91cdfffb49a441bd78fccb8b00bc",
+        "home": "Toronto FC",
+        "away": "Inter Miami CF",
+        "outcome": "Toronto FC",
+        "odds": 3.55,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-09T17:00:00Z"
     }
 ]
