@@ -6828,5 +6828,195 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-05-09T12:00:00Z"
+    },
+    {
+        "id": "0568f4e3240e33cd97331e3e6b5ae536",
+        "home": "Fulham",
+        "away": "Bournemouth",
+        "outcome": "Fulham",
+        "odds": 2.88,
+        "stake": 325.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-09T14:00:00Z"
+    },
+    {
+        "id": "edb41dc3458757ffd26876af02c729fb",
+        "home": "Sunderland",
+        "away": "Manchester United",
+        "outcome": "Sunderland",
+        "odds": 4.3,
+        "stake": 325.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-09T14:00:00Z"
+    },
+    {
+        "id": "177bc992774226c574288b3a263c748d",
+        "home": "Augsburg",
+        "away": "Borussia Monchengladbach",
+        "outcome": "Borussia Monchengladbach",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-05-09T13:30:00Z"
+    },
+    {
+        "id": "4356a00ca97d85f0a97d7af6e1779b8b",
+        "home": "VfB Stuttgart",
+        "away": "Bayer Leverkusen",
+        "outcome": "Bayer Leverkusen",
+        "odds": 3.07,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-05-09T13:30:00Z"
+    },
+    {
+        "id": "5832566a554f0c48e3e76d0449ced594",
+        "home": "Cagliari",
+        "away": "Udinese",
+        "outcome": "Cagliari",
+        "odds": 2.64,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-09T13:00:00Z"
+    },
+    {
+        "id": "f26d569c9369ad75af5ef1b32c32bab4",
+        "home": "Lazio",
+        "away": "Inter Milan",
+        "outcome": "Inter Milan",
+        "odds": 1.88,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-09T16:00:00Z"
+    },
+    {
+        "id": "a356ebe70d301a70471471682900ee13",
+        "home": "Sevilla",
+        "away": "Espanyol",
+        "outcome": "Espanyol",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-09T14:15:00Z"
+    },
+    {
+        "id": "72be7f029f6e7bfdc7db6e0200c28bfd",
+        "home": "Atl\u00e9tico Madrid",
+        "away": "Celta Vigo",
+        "outcome": "Atl\u00e9tico Madrid",
+        "odds": 2.22,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-09T16:30:00Z"
+    },
+    {
+        "id": "eaf855c23021a6dd4868b8a8bb0cef79",
+        "home": "Rak\u00f3w Cz\u0119stochowa",
+        "away": "Korona Kielce",
+        "outcome": "Korona Kielce",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-08T16:00:00Z"
+    },
+    {
+        "id": "69e2642a05d5f5366b2a55b6660aa7ca",
+        "home": "Jagiellonia Bia\u0142ystok",
+        "away": "Pogo\u0144 Szczecin",
+        "outcome": "Pogo\u0144 Szczecin",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-09T15:30:00Z"
+    },
+    {
+        "id": "22160a181ce08556bec187afa418878b",
+        "home": "RAAL La Louvi\u00e8re",
+        "away": "Cercle Brugge KSV",
+        "outcome": "RAAL La Louvi\u00e8re",
+        "odds": 3.25,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-09T14:00:00Z"
+    },
+    {
+        "id": "291393120aedae51aee0d2c6c81fd5ab",
+        "home": "Grazer AK",
+        "away": "Rheindorf Altach",
+        "outcome": "Rheindorf Altach",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-09T15:00:00Z"
+    },
+    {
+        "id": "aa45e72bba8905e918931f59bab81821",
+        "home": "Atromitos Athens",
+        "away": "Panetolikos Agrinio",
+        "outcome": "Atromitos Athens",
+        "odds": 2.32,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-09T16:30:00Z"
+    },
+    {
+        "id": "43fcf45b61170490b4058d2c8c89d5cb",
+        "home": "FC Winterthur",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Winterthur",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-09T16:00:00Z"
+    },
+    {
+        "id": "1dae9eb330c42b9e09c5817a85ff6d06",
+        "home": "Aberdeen",
+        "away": "Dundee United",
+        "outcome": "Dundee United",
+        "odds": 3.2,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-09T14:00:00Z"
+    },
+    {
+        "id": "d15330856e54448d5395faad5f69c3ec",
+        "home": "Dundee FC",
+        "away": "Livingston",
+        "outcome": "Livingston",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-09T14:00:00Z"
+    },
+    {
+        "id": "6ff70494232503755c3821bbccd90ac1",
+        "home": "Falkirk F.C.",
+        "away": "Hibernian",
+        "outcome": "Hibernian",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-09T14:00:00Z"
+    },
+    {
+        "id": "327e76fe886a3aac53fa7b17ca0547b2",
+        "home": "St Mirren",
+        "away": "Kilmarnock",
+        "outcome": "Kilmarnock",
+        "odds": 3.72,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-09T14:00:00Z"
+    },
+    {
+        "id": "2c8306189c1b28be05203f7630e56966",
+        "home": "Middlesbrough",
+        "away": "Southampton",
+        "outcome": "Southampton",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-05-09T11:30:00Z"
     }
 ]
