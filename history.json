@@ -20453,5 +20453,44 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "5:2"
+    },
+    {
+        "id": "541c5e45c0f5393079508826d283ea6e",
+        "home": "Bayern Munich",
+        "away": "Paris Saint Germain",
+        "outcome": "Paris Saint Germain",
+        "odds": 4.21,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-05-06T19:00:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "8458afd03d1b3e8305f8e6362cd8e3b7",
+        "home": "Buffalo Sabres",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.88,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-06T23:00:36Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:2"
+    },
+    {
+        "id": "2dbe31206cd9fdac37bb9ccdb2b04244",
+        "home": "Vegas Golden Knights",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 3.25,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-07T01:30:00Z",
+        "profit": 1125.0,
+        "status": "WIN",
+        "score": "1:3"
     }
 ]

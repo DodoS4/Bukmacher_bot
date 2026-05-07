@@ -6650,36 +6650,6 @@
         "time": "2026-05-06T15:30:00Z"
     },
     {
-        "id": "541c5e45c0f5393079508826d283ea6e",
-        "home": "Bayern Munich",
-        "away": "Paris Saint Germain",
-        "outcome": "Paris Saint Germain",
-        "odds": 4.21,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-05-06T19:00:00Z"
-    },
-    {
-        "id": "8458afd03d1b3e8305f8e6362cd8e3b7",
-        "home": "Buffalo Sabres",
-        "away": "Montr\u00e9al Canadiens",
-        "outcome": "Montr\u00e9al Canadiens",
-        "odds": 2.88,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-06T23:00:36Z"
-    },
-    {
-        "id": "2dbe31206cd9fdac37bb9ccdb2b04244",
-        "home": "Vegas Golden Knights",
-        "away": "Anaheim Ducks",
-        "outcome": "Anaheim Ducks",
-        "odds": 3.25,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-07T01:30:00Z"
-    },
-    {
         "id": "5d1a94512ecee4a504e0859e8ac4d010",
         "home": "Grand Rapids Griffins",
         "away": "Manitoba Moose",
@@ -6798,5 +6768,45 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-05-08T18:45:00Z"
+    },
+    {
+        "id": "3caf2bb935e6671e34a4e56176d99797",
+        "home": "Buffalo Sabres",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.81,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-08T23:00:00Z"
+    },
+    {
+        "id": "2fa2791476f479767d443794d977469a",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.6,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-09T01:30:00Z"
+    },
+    {
+        "id": "0f6bec3f06b286f9daffd2f5db557ddb",
+        "home": "Grand Rapids Griffins",
+        "away": "Manitoba Moose",
+        "outcome": "Manitoba Moose",
+        "odds": 4.26,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-08T23:00:00Z"
+    },
+    {
+        "id": "9fccd9603a598a088ab24f3dd7968ffd",
+        "home": "Viborg FF",
+        "away": "SonderjyskE",
+        "outcome": "SonderjyskE",
+        "odds": 3.85,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-08T17:00:00Z"
     }
 ]
