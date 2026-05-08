@@ -20531,5 +20531,31 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "1:4"
+    },
+    {
+        "id": "9fccd9603a598a088ab24f3dd7968ffd",
+        "home": "Viborg FF",
+        "away": "SonderjyskE",
+        "outcome": "SonderjyskE",
+        "odds": 3.85,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-08T17:00:00Z",
+        "profit": 356.25,
+        "status": "WIN",
+        "score": "0:1"
+    },
+    {
+        "id": "eaf855c23021a6dd4868b8a8bb0cef79",
+        "home": "Rak\u00f3w Cz\u0119stochowa",
+        "away": "Korona Kielce",
+        "outcome": "Korona Kielce",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-08T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:0"
     }
 ]

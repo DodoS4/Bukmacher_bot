@@ -6770,16 +6770,6 @@
         "time": "2026-05-08T23:00:00Z"
     },
     {
-        "id": "9fccd9603a598a088ab24f3dd7968ffd",
-        "home": "Viborg FF",
-        "away": "SonderjyskE",
-        "outcome": "SonderjyskE",
-        "odds": 3.85,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-05-08T17:00:00Z"
-    },
-    {
         "id": "31c28f74ac0a0f65eeff8515ec593368",
         "home": "Liverpool",
         "away": "Chelsea",
@@ -6878,16 +6868,6 @@
         "stake": 250.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-05-09T16:30:00Z"
-    },
-    {
-        "id": "eaf855c23021a6dd4868b8a8bb0cef79",
-        "home": "Rak\u00f3w Cz\u0119stochowa",
-        "away": "Korona Kielce",
-        "outcome": "Korona Kielce",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-05-08T16:00:00Z"
     },
     {
         "id": "69e2642a05d5f5366b2a55b6660aa7ca",
@@ -7408,5 +7388,45 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-05-10T14:30:00Z"
+    },
+    {
+        "id": "84ca6bc5b27b3a9a9731892c9a4c938c",
+        "home": "FSV Mainz 05",
+        "away": "Union Berlin",
+        "outcome": "FSV Mainz 05",
+        "odds": 1.83,
+        "stake": 250.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-05-10T17:30:00Z"
+    },
+    {
+        "id": "b4c2627ac6d53c77fbcc0e98d96866e6",
+        "home": "AC Milan",
+        "away": "Atalanta BC",
+        "outcome": "Atalanta BC",
+        "odds": 3.85,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-10T18:45:00Z"
+    },
+    {
+        "id": "c599d8d62d6cd79a1c4c330c8d58f4ed",
+        "home": "Oviedo",
+        "away": "Getafe",
+        "outcome": "Getafe",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-10T16:30:00Z"
+    },
+    {
+        "id": "b1532b383066ed085e04d4099c16a99a",
+        "home": "Ried",
+        "away": "Wolfsberger AC",
+        "outcome": "Wolfsberger AC",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-09T15:00:00Z"
     }
 ]
