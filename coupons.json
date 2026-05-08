@@ -7198,5 +7198,85 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-10T02:30:00Z"
+    },
+    {
+        "id": "e64b4b6bcfb52aa0c6c1795f01c3f8ef",
+        "home": "Ontario Reign",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "Ontario Reign",
+        "odds": 2.29,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-10T01:00:00Z"
+    },
+    {
+        "id": "603c9ac841df33429339ad9b4035dfba",
+        "home": "Mallorca",
+        "away": "Villarreal",
+        "outcome": "Villarreal",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-10T12:00:00Z"
+    },
+    {
+        "id": "2b091093fcdae0243ad2be247f6b2662",
+        "home": "Widzew \u0141\u00f3d\u017a",
+        "away": "Lechia Gda\u0144sk",
+        "outcome": "Lechia Gda\u0144sk",
+        "odds": 3.82,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-09T12:45:00Z"
+    },
+    {
+        "id": "5aabfe9c656cac61641703273d729c63",
+        "home": "Piast Gliwice",
+        "away": "GKS Katowice",
+        "outcome": "GKS Katowice",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-10T10:15:00Z"
+    },
+    {
+        "id": "9c62982c422258d40187d9e2d44e3342",
+        "home": "Gent",
+        "away": "Anderlecht",
+        "outcome": "Gent",
+        "odds": 2.45,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-10T11:30:00Z"
+    },
+    {
+        "id": "76f9edc2d9cdd2f2e230847cf6014c6f",
+        "home": "FC Lugano",
+        "away": "FC St Gallen",
+        "outcome": "FC St Gallen",
+        "odds": 2.99,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-10T12:00:00Z"
+    },
+    {
+        "id": "6cc785e146a5dad2dcfaf63400c424ab",
+        "home": "Celtic",
+        "away": "Rangers",
+        "outcome": "Rangers",
+        "odds": 3.6,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-10T11:00:00Z"
+    },
+    {
+        "id": "d6eae76a881380f885722d8b7a6b0467",
+        "home": "Seattle Sounders FC",
+        "away": "San Diego FC",
+        "outcome": "Seattle Sounders FC",
+        "odds": 1.8,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-10T02:30:00Z"
     }
 ]
