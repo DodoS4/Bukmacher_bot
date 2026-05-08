@@ -20492,5 +20492,44 @@
         "profit": 1125.0,
         "status": "WIN",
         "score": "1:3"
+    },
+    {
+        "id": "8976c2a22cb5e8b432e21c05a77716b0",
+        "home": "Aston Villa",
+        "away": "Nottingham Forest",
+        "outcome": "Aston Villa",
+        "odds": 1.82,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-05-07T19:00:00Z",
+        "profit": 328.0,
+        "status": "WIN",
+        "score": "4:0"
+    },
+    {
+        "id": "b40437025fbc33d9af626ff0b08a218a",
+        "home": "SC Freiburg",
+        "away": "SC Braga",
+        "outcome": "SC Freiburg",
+        "odds": 1.88,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-05-07T19:00:00Z",
+        "profit": 352.0,
+        "status": "WIN",
+        "score": "3:1"
+    },
+    {
+        "id": "6a8df0a421267729c2f1fdb7cefa1163",
+        "home": "Philadelphia Flyers",
+        "away": "Carolina Hurricanes",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.23,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-08T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:4"
     }
 ]
