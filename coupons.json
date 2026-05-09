@@ -7438,5 +7438,25 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-10T20:30:00Z"
+    },
+    {
+        "id": "48d609a9720fe192853169eab0b05529",
+        "home": "NAC Breda",
+        "away": "Heerenveen",
+        "outcome": "NAC Breda",
+        "odds": 2.7,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-10T14:45:00Z"
+    },
+    {
+        "id": "d17199125ad16526c2d13db5a8314f26",
+        "home": "FC Nordsjaelland",
+        "away": "FC Midtjylland",
+        "outcome": "FC Nordsjaelland",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-10T12:00:00Z"
     }
 ]
