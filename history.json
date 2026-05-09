@@ -20557,5 +20557,83 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "1dc1f73ee86044140d5314edafdf5650",
+        "home": "Torino",
+        "away": "Sassuolo",
+        "outcome": "Torino",
+        "odds": 2.57,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-08T18:45:00Z",
+        "profit": 510.25,
+        "status": "WIN",
+        "score": "2:1"
+    },
+    {
+        "id": "adf6bc6c24054aefd6fb960c05547695",
+        "home": "Levante",
+        "away": "CA Osasuna",
+        "outcome": "CA Osasuna",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-08T19:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "939af4e6d43a93058604ec4e973ea47f",
+        "home": "Standard Liege",
+        "away": "Leuven",
+        "outcome": "Leuven",
+        "odds": 3.6,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-08T18:45:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "3caf2bb935e6671e34a4e56176d99797",
+        "home": "Buffalo Sabres",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.81,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-08T23:00:00Z",
+        "profit": 905.0,
+        "status": "WIN",
+        "score": "1:5"
+    },
+    {
+        "id": "2fa2791476f479767d443794d977469a",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.6,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-09T01:30:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "2:6"
+    },
+    {
+        "id": "fa0fdbcebc3d4677ad973b076bf6c231",
+        "home": "Hull City",
+        "away": "Millwall",
+        "outcome": "Millwall",
+        "odds": 2.58,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-05-08T19:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
     }
 ]

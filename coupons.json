@@ -6710,56 +6710,6 @@
         "time": "2026-05-08T15:30:00Z"
     },
     {
-        "id": "1dc1f73ee86044140d5314edafdf5650",
-        "home": "Torino",
-        "away": "Sassuolo",
-        "outcome": "Torino",
-        "odds": 2.57,
-        "stake": 325.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-05-08T18:45:00Z"
-    },
-    {
-        "id": "adf6bc6c24054aefd6fb960c05547695",
-        "home": "Levante",
-        "away": "CA Osasuna",
-        "outcome": "CA Osasuna",
-        "odds": 3.05,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-05-08T19:00:00Z"
-    },
-    {
-        "id": "939af4e6d43a93058604ec4e973ea47f",
-        "home": "Standard Liege",
-        "away": "Leuven",
-        "outcome": "Leuven",
-        "odds": 3.6,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-08T18:45:00Z"
-    },
-    {
-        "id": "3caf2bb935e6671e34a4e56176d99797",
-        "home": "Buffalo Sabres",
-        "away": "Montr\u00e9al Canadiens",
-        "outcome": "Montr\u00e9al Canadiens",
-        "odds": 2.81,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-08T23:00:00Z"
-    },
-    {
-        "id": "2fa2791476f479767d443794d977469a",
-        "home": "Anaheim Ducks",
-        "away": "Vegas Golden Knights",
-        "outcome": "Anaheim Ducks",
-        "odds": 2.6,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-09T01:30:00Z"
-    },
-    {
         "id": "0f6bec3f06b286f9daffd2f5db557ddb",
         "home": "Grand Rapids Griffins",
         "away": "Manitoba Moose",
@@ -7008,16 +6958,6 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-05-09T19:00:00Z"
-    },
-    {
-        "id": "fa0fdbcebc3d4677ad973b076bf6c231",
-        "home": "Hull City",
-        "away": "Millwall",
-        "outcome": "Millwall",
-        "odds": 2.58,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-05-08T19:00:00Z"
     },
     {
         "id": "727a91cdfffb49a441bd78fccb8b00bc",
@@ -7428,5 +7368,75 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-05-09T15:00:00Z"
+    },
+    {
+        "id": "7e034282e0ef033daa6d2f5e974f2933",
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.71,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-10T23:00:00Z"
+    },
+    {
+        "id": "928fcf1398f0f1814ca5aeebaae169b7",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.63,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-11T01:40:00Z"
+    },
+    {
+        "id": "0ac36d19f0e69c226a9b8167012e17ed",
+        "home": "Feyenoord",
+        "away": "AZ Alkmaar",
+        "outcome": "AZ Alkmaar",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-10T14:45:00Z"
+    },
+    {
+        "id": "3b74bef6c9b3531c2a9c5d2d500f4b62",
+        "home": "Fortuna Sittard",
+        "away": "FC Zwolle",
+        "outcome": "FC Zwolle",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-10T14:45:00Z"
+    },
+    {
+        "id": "92e79ce4ee379b72522271e3cd6e3c32",
+        "home": "Groningen",
+        "away": "NEC Nijmegen",
+        "outcome": "Groningen",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-10T14:45:00Z"
+    },
+    {
+        "id": "43c0204de240d518f2f7eb28de12bb6c",
+        "home": "AEL",
+        "away": "Asteras Tripolis",
+        "outcome": "AEL",
+        "odds": 2.69,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-09T14:00:00Z"
+    },
+    {
+        "id": "2f6f910c435f1bbdea7611dc6510478a",
+        "home": "New York City FC",
+        "away": "Columbus Crew SC",
+        "outcome": "Columbus Crew SC",
+        "odds": 2.86,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-10T20:30:00Z"
     }
 ]
