@@ -6750,86 +6750,6 @@
         "time": "2026-05-10T01:00:00Z"
     },
     {
-        "id": "603c9ac841df33429339ad9b4035dfba",
-        "home": "Mallorca",
-        "away": "Villarreal",
-        "outcome": "Villarreal",
-        "odds": 3.1,
-        "stake": 250.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-05-10T12:00:00Z"
-    },
-    {
-        "id": "5aabfe9c656cac61641703273d729c63",
-        "home": "Piast Gliwice",
-        "away": "GKS Katowice",
-        "outcome": "GKS Katowice",
-        "odds": 3.45,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-05-10T10:15:00Z"
-    },
-    {
-        "id": "9c62982c422258d40187d9e2d44e3342",
-        "home": "Gent",
-        "away": "Anderlecht",
-        "outcome": "Gent",
-        "odds": 2.45,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-10T11:30:00Z"
-    },
-    {
-        "id": "76f9edc2d9cdd2f2e230847cf6014c6f",
-        "home": "FC Lugano",
-        "away": "FC St Gallen",
-        "outcome": "FC St Gallen",
-        "odds": 2.99,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-05-10T12:00:00Z"
-    },
-    {
-        "id": "6cc785e146a5dad2dcfaf63400c424ab",
-        "home": "Celtic",
-        "away": "Rangers",
-        "outcome": "Rangers",
-        "odds": 3.6,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-10T11:00:00Z"
-    },
-    {
-        "id": "05192f677ae85b891f6a652b5cbe8917",
-        "home": "Crystal Palace",
-        "away": "Everton",
-        "outcome": "Crystal Palace",
-        "odds": 2.9,
-        "stake": 325.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-10T13:00:00Z"
-    },
-    {
-        "id": "b83b66eb2cc703413276e418724fd51f",
-        "home": "Nottingham Forest",
-        "away": "Newcastle United",
-        "outcome": "Newcastle United",
-        "odds": 2.68,
-        "stake": 325.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-10T13:00:00Z"
-    },
-    {
-        "id": "af41a6b73184665e22901448af9c2d49",
-        "home": "Hamburger SV",
-        "away": "SC Freiburg",
-        "outcome": "SC Freiburg",
-        "odds": 2.58,
-        "stake": 250.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-05-10T13:30:00Z"
-    },
-    {
         "id": "7cc6b1d552eef8615927b83203b169f7",
         "home": "1. FC K\u00f6ln",
         "away": "1. FC Heidenheim",
@@ -6838,26 +6758,6 @@
         "stake": 250.0,
         "sport": "soccer_germany_bundesliga",
         "time": "2026-05-10T15:30:00Z"
-    },
-    {
-        "id": "fde85f2b5e6ef56ee4f79e1f0da4bafa",
-        "home": "Fiorentina",
-        "away": "Genoa",
-        "outcome": "Genoa",
-        "odds": 3.85,
-        "stake": 325.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-05-10T13:00:00Z"
-    },
-    {
-        "id": "cf358ed0c9309b9c41ed18b50fe06500",
-        "home": "Wis\u0142a P\u0142ock",
-        "away": "Motor Lublin",
-        "outcome": "Wis\u0142a P\u0142ock",
-        "odds": 2.4,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-05-10T12:45:00Z"
     },
     {
         "id": "8c3b32cb41cea7fa547d342cf0560453",
@@ -7010,16 +6910,6 @@
         "time": "2026-05-10T14:45:00Z"
     },
     {
-        "id": "d17199125ad16526c2d13db5a8314f26",
-        "home": "FC Nordsjaelland",
-        "away": "FC Midtjylland",
-        "outcome": "FC Nordsjaelland",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-05-10T12:00:00Z"
-    },
-    {
         "id": "c67feb81e1c55e9d5567497c1b5fefa5",
         "home": "KooKoo",
         "away": "Tappara",
@@ -7100,16 +6990,6 @@
         "time": "2026-05-12T00:10:00Z"
     },
     {
-        "id": "f112074a27cf4c57a6bb6aa980218d17",
-        "home": "Cremonese",
-        "away": "Pisa",
-        "outcome": "Cremonese",
-        "odds": 1.89,
-        "stake": 325.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-05-10T13:00:00Z"
-    },
-    {
         "id": "0a9c817f199ef22357cca5ddffd748a2",
         "home": "Hartberg",
         "away": "Sturm Graz",
@@ -7128,16 +7008,6 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-05-10T15:00:00Z"
-    },
-    {
-        "id": "803769b6e743100e882b357ea84b358a",
-        "home": "Vejle Boldklub",
-        "away": "FC Fredericia",
-        "outcome": "Vejle Boldklub",
-        "odds": 3.35,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-05-10T12:00:00Z"
     },
     {
         "id": "14303aecb175a5b7f2ca54deaa8333fe",
