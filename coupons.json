@@ -7148,5 +7148,15 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-05-10T16:00:00Z"
+    },
+    {
+        "id": "7e774629221744a7ca06e77d502f48ce",
+        "home": "Santa Clara",
+        "away": "Nacional",
+        "outcome": "Nacional",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-05-11T19:15:00Z"
     }
 ]
