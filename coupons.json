@@ -6918,5 +6918,35 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-05-12T16:00:00Z"
+    },
+    {
+        "id": "a9bd3ee6ba62ed00b83d30f50df2778f",
+        "home": "Villarreal",
+        "away": "Sevilla",
+        "outcome": "Sevilla",
+        "odds": 3.96,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-13T17:00:00Z"
+    },
+    {
+        "id": "db66b2195e99bd1acde1c445580439b1",
+        "home": "Arka Gdynia",
+        "away": "G\u00f3rnik Zabrze",
+        "outcome": "Arka Gdynia",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-13T16:00:00Z"
+    },
+    {
+        "id": "9ad7790574b5922d9033dbc74ed84c92",
+        "home": "Volos FC",
+        "away": "Aris Thessaloniki",
+        "outcome": "Volos FC",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-13T14:00:00Z"
     }
 ]
