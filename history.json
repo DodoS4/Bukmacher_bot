@@ -21649,5 +21649,31 @@
         "profit": -325.0,
         "status": "LOSS",
         "score": "3:0"
+    },
+    {
+        "id": "739f8ce058f519697a3be18bb231dd1d",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Radomiak Radom",
+        "outcome": "Radomiak Radom",
+        "odds": 3.91,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-11T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
+    },
+    {
+        "id": "f12a856914943f99077311d5d533eca3",
+        "home": "Randers FC",
+        "away": "OB Odense BK",
+        "outcome": "OB Odense BK",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-11T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:2"
     }
 ]
