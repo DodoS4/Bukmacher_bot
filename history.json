@@ -21597,5 +21597,57 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:2"
+    },
+    {
+        "id": "b4c2627ac6d53c77fbcc0e98d96866e6",
+        "home": "AC Milan",
+        "away": "Atalanta BC",
+        "outcome": "Atalanta BC",
+        "odds": 3.85,
+        "stake": 325.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-10T18:45:00Z",
+        "profit": 926.25,
+        "status": "WIN",
+        "score": "2:3"
+    },
+    {
+        "id": "7e034282e0ef033daa6d2f5e974f2933",
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.71,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-10T23:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "6:2"
+    },
+    {
+        "id": "928fcf1398f0f1814ca5aeebaae169b7",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.63,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-11T01:40:00Z",
+        "profit": 815.0,
+        "status": "WIN",
+        "score": "4:3"
+    },
+    {
+        "id": "2f6f910c435f1bbdea7611dc6510478a",
+        "home": "New York City FC",
+        "away": "Columbus Crew SC",
+        "outcome": "Columbus Crew SC",
+        "odds": 2.86,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-10T20:30:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "3:0"
     }
 ]
