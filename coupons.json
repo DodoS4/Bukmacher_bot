@@ -7058,5 +7058,35 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-14T01:30:00Z"
+    },
+    {
+        "id": "e493fc7c594ec51488a3ed4e33e65795",
+        "home": "FC Thun",
+        "away": "BSC Young Boys",
+        "outcome": "BSC Young Boys",
+        "odds": 3.4,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-14T14:30:00Z"
+    },
+    {
+        "id": "264123f129f9743106fff86a477f39a0",
+        "home": "FC Basel",
+        "away": "FC St Gallen",
+        "outcome": "FC Basel",
+        "odds": 2.48,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-14T14:30:00Z"
+    },
+    {
+        "id": "ef7364a80b6fab3d36416495d7e30494",
+        "home": "FC Sion",
+        "away": "FC Lugano",
+        "outcome": "FC Lugano",
+        "odds": 3.33,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-14T14:30:00Z"
     }
 ]
