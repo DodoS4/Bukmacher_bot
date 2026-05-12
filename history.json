@@ -21753,5 +21753,57 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "2bca98a2dba9c09be48e77f48cc97daa",
+        "home": "Servette",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 3.82,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-12T18:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:0"
+    },
+    {
+        "id": "2bd2e669535cc44b7527eaeaa1c5863d",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC Winterthur",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 1.88,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-12T18:30:00Z",
+        "profit": 220.0,
+        "status": "WIN",
+        "score": "3:2"
+    },
+    {
+        "id": "137ebbf74fa47abf8518d55a19ded64d",
+        "home": "Panetolikos Agrinio",
+        "away": "AEL",
+        "outcome": "AEL",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-12T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "8f2c49def683bf55e527de4d7a1c3762",
+        "home": "AE Kifisia FC",
+        "away": "Atromitos Athens",
+        "outcome": "Atromitos Athens",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-12T16:00:00Z",
+        "profit": 300.0,
+        "status": "WIN",
+        "score": "0:3"
     }
 ]
