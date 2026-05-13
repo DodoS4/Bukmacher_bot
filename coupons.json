@@ -6760,46 +6760,6 @@
         "time": "2026-05-11T15:30:00Z"
     },
     {
-        "id": "33d5424a4bf050d911f9855baf0c7062",
-        "home": "Aberdeen",
-        "away": "St Mirren",
-        "outcome": "Aberdeen",
-        "odds": 2.26,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-12T18:45:00Z"
-    },
-    {
-        "id": "07ab75242c29ea9f40bad705209b6d0e",
-        "home": "Kilmarnock",
-        "away": "Dundee FC",
-        "outcome": "Dundee FC",
-        "odds": 4.0,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-12T18:45:00Z"
-    },
-    {
-        "id": "2beede5a8210abeeb2e13ba043e1c103",
-        "home": "Montr\u00e9al Canadiens",
-        "away": "Buffalo Sabres",
-        "outcome": "Buffalo Sabres",
-        "odds": 2.9,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-12T23:00:00Z"
-    },
-    {
-        "id": "7ae3c1e1386143c564a15ec014e904c1",
-        "home": "Vegas Golden Knights",
-        "away": "Anaheim Ducks",
-        "outcome": "Anaheim Ducks",
-        "odds": 3.1,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-13T01:30:00Z"
-    },
-    {
         "id": "ffc244a93b3d23578e39ddcbdf61390d",
         "home": "W-B/Scranton Penguins",
         "away": "Springfield Thunderbirds",
@@ -7068,5 +7028,55 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-05-13T18:30:00Z"
+    },
+    {
+        "id": "d1e8549872562f22fb38a2b2492bde62",
+        "home": "Buffalo Sabres",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.48,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-14T23:00:46Z"
+    },
+    {
+        "id": "96af8606a75e9016ae2c1419a98ced88",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.59,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-15T01:30:00Z"
+    },
+    {
+        "id": "639fd5ab807fbe66c3c178ed8f8d8acf",
+        "home": "Grand Rapids Griffins",
+        "away": "Chicago Wolves",
+        "outcome": "Chicago Wolves",
+        "odds": 3.85,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-14T23:00:00Z"
+    },
+    {
+        "id": "26f89076e8c9b3404654c205bfb2dabe",
+        "home": "Cleveland Monsters",
+        "away": "Toronto Marlies",
+        "outcome": "Toronto Marlies",
+        "odds": 2.65,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-14T23:00:00Z"
+    },
+    {
+        "id": "aa8876f914edd51dc68756743bdcabb1",
+        "home": "Valencia",
+        "away": "Rayo Vallecano",
+        "outcome": "Rayo Vallecano",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-14T17:00:00Z"
     }
 ]
