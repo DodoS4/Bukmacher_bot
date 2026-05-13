@@ -21857,5 +21857,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "3:2"
+    },
+    {
+        "id": "9ad7790574b5922d9033dbc74ed84c92",
+        "home": "Volos FC",
+        "away": "Aris Thessaloniki",
+        "outcome": "Volos FC",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-13T14:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:2"
     }
 ]
