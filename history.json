@@ -22156,5 +22156,31 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "2:2"
+    },
+    {
+        "id": "c100ee0b2df759d2a859557459320a9b",
+        "home": "Girona",
+        "away": "Real Sociedad",
+        "outcome": "Girona",
+        "odds": 2.23,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-14T18:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "aa8876f914edd51dc68756743bdcabb1",
+        "home": "Valencia",
+        "away": "Rayo Vallecano",
+        "outcome": "Rayo Vallecano",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-14T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
