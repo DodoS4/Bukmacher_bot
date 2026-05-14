@@ -22117,5 +22117,44 @@
         "profit": -325.0,
         "status": "LOSS",
         "score": "3:2"
+    },
+    {
+        "id": "e493fc7c594ec51488a3ed4e33e65795",
+        "home": "FC Thun",
+        "away": "BSC Young Boys",
+        "outcome": "BSC Young Boys",
+        "odds": 3.4,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-14T14:30:00Z",
+        "profit": 600.0,
+        "status": "WIN",
+        "score": "3:8"
+    },
+    {
+        "id": "264123f129f9743106fff86a477f39a0",
+        "home": "FC Basel",
+        "away": "FC St Gallen",
+        "outcome": "FC Basel",
+        "odds": 2.48,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-14T14:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:3"
+    },
+    {
+        "id": "ef7364a80b6fab3d36416495d7e30494",
+        "home": "FC Sion",
+        "away": "FC Lugano",
+        "outcome": "FC Lugano",
+        "odds": 3.33,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-14T14:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:2"
     }
 ]
