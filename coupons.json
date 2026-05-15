@@ -6790,26 +6790,6 @@
         "time": "2026-05-14T02:00:00Z"
     },
     {
-        "id": "d1e8549872562f22fb38a2b2492bde62",
-        "home": "Buffalo Sabres",
-        "away": "Montr\u00e9al Canadiens",
-        "outcome": "Buffalo Sabres",
-        "odds": 2.48,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-14T23:00:46Z"
-    },
-    {
-        "id": "96af8606a75e9016ae2c1419a98ced88",
-        "home": "Anaheim Ducks",
-        "away": "Vegas Golden Knights",
-        "outcome": "Anaheim Ducks",
-        "odds": 2.59,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-15T01:30:00Z"
-    },
-    {
         "id": "639fd5ab807fbe66c3c178ed8f8d8acf",
         "home": "Grand Rapids Griffins",
         "away": "Chicago Wolves",
@@ -7128,5 +7108,135 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-05-16T18:45:00Z"
+    },
+    {
+        "id": "77953407039c73ff87f5dec9a53472d6",
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 3.2,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-17T00:00:00Z"
+    },
+    {
+        "id": "5e0acb653e99a922faa79ba144be588c",
+        "home": "Nacional",
+        "away": "Vit\u00f3ria SC",
+        "outcome": "Vit\u00f3ria SC",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-05-16T17:00:00Z"
+    },
+    {
+        "id": "2a2ea5f83841d43ec4c7e82a6c4e48e3",
+        "home": "Fatih Karag\u00fcmr\u00fck",
+        "away": "Alanyaspor",
+        "outcome": "Alanyaspor",
+        "odds": 2.7,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-16T14:00:00Z"
+    },
+    {
+        "id": "f2d025aa026e63ee4460ffc28c3386e4",
+        "home": "CF Montreal",
+        "away": "Chicago Fire",
+        "outcome": "CF Montreal",
+        "odds": 2.94,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-16T20:30:00Z"
+    },
+    {
+        "id": "3a1b7d2c1c870eee8c397af6f33c1bc7",
+        "home": "Orlando City SC",
+        "away": "Atlanta United FC",
+        "outcome": "Atlanta United FC",
+        "odds": 3.37,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-16T23:30:00Z"
+    },
+    {
+        "id": "53d44ca2fdeaac77a4724d83e3ab7e4f",
+        "home": "Charlotte FC",
+        "away": "Toronto FC",
+        "outcome": "Charlotte FC",
+        "odds": 1.86,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-16T23:30:00Z"
+    },
+    {
+        "id": "3a5c4748785a3a4b4cd0346ba9fbdc64",
+        "home": "Philadelphia Union",
+        "away": "Columbus Crew SC",
+        "outcome": "Philadelphia Union",
+        "odds": 2.42,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-16T23:30:00Z"
+    },
+    {
+        "id": "11eb240b04caf4f5f5a986b479ab9790",
+        "home": "D.C. United",
+        "away": "St. Louis City SC",
+        "outcome": "St. Louis City SC",
+        "odds": 3.0,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-16T23:30:00Z"
+    },
+    {
+        "id": "a1ef147711fe2b30db7cfe543d136a87",
+        "home": "New England Revolution",
+        "away": "Minnesota United FC",
+        "outcome": "Minnesota United FC",
+        "odds": 3.35,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-16T23:30:00Z"
+    },
+    {
+        "id": "f3f2fb11cf6f277f9c1744fed80e8b4a",
+        "home": "New York Red Bulls",
+        "away": "New York City FC",
+        "outcome": "New York City FC",
+        "odds": 2.66,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-16T23:30:00Z"
+    },
+    {
+        "id": "d62aa02ce3ffd9629f8d5522c4faf4c7",
+        "home": "Houston Dynamo",
+        "away": "Vancouver Whitecaps FC",
+        "outcome": "Houston Dynamo",
+        "odds": 3.85,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-17T00:30:00Z"
+    },
+    {
+        "id": "17e83ed5078cc8a0a1c325b36dd5534c",
+        "home": "San Diego FC",
+        "away": "FC Cincinnati",
+        "outcome": "FC Cincinnati",
+        "odds": 3.65,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-17T01:30:00Z"
+    },
+    {
+        "id": "bb5947289bf2922e704bb938454b6705",
+        "home": "San Jose Earthquakes",
+        "away": "FC Dallas",
+        "outcome": "San Jose Earthquakes",
+        "odds": 1.9,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-17T02:30:00Z"
     }
 ]

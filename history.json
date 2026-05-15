@@ -22182,5 +22182,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:1"
+    },
+    {
+        "id": "d1e8549872562f22fb38a2b2492bde62",
+        "home": "Buffalo Sabres",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.48,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-14T23:00:46Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:6"
+    },
+    {
+        "id": "96af8606a75e9016ae2c1419a98ced88",
+        "home": "Anaheim Ducks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.59,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-15T01:30:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:5"
     }
 ]
