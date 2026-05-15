@@ -22208,5 +22208,31 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "1:5"
+    },
+    {
+        "id": "fa01a6cc3c2e3b036e29055cd583cda8",
+        "home": "\u00c7aykur Rizespor",
+        "away": "Besiktas JK",
+        "outcome": "\u00c7aykur Rizespor",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-15T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:2"
+    },
+    {
+        "id": "178dd312292fc52eea976ff661025b02",
+        "home": "Zag\u0142\u0119bie Lubin",
+        "away": "Pogo\u0144 Szczecin",
+        "outcome": "Pogo\u0144 Szczecin",
+        "odds": 2.74,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-15T16:00:00Z",
+        "profit": 217.5,
+        "status": "WIN",
+        "score": "0:1"
     }
 ]

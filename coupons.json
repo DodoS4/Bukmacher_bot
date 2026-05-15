@@ -6980,16 +6980,6 @@
         "time": "2026-05-16T17:00:00Z"
     },
     {
-        "id": "fa01a6cc3c2e3b036e29055cd583cda8",
-        "home": "\u00c7aykur Rizespor",
-        "away": "Besiktas JK",
-        "outcome": "\u00c7aykur Rizespor",
-        "odds": 3.7,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-05-15T17:00:00Z"
-    },
-    {
         "id": "aaeeb2d5da7e088bea2816b9f2c43368",
         "home": "Samsunspor",
         "away": "Goztepe",
@@ -7068,16 +7058,6 @@
         "stake": 250.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-05-16T16:00:00Z"
-    },
-    {
-        "id": "178dd312292fc52eea976ff661025b02",
-        "home": "Zag\u0142\u0119bie Lubin",
-        "away": "Pogo\u0144 Szczecin",
-        "outcome": "Pogo\u0144 Szczecin",
-        "odds": 2.74,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-05-15T16:00:00Z"
     },
     {
         "id": "aa2d760f836442097f88ac698cd2477a",
@@ -7468,5 +7448,85 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-05-17T13:00:00Z"
+    },
+    {
+        "id": "4f434a83068452f8e68d00e0b5942be6",
+        "home": "Cagliari",
+        "away": "Torino",
+        "outcome": "Torino",
+        "odds": 3.55,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-17T18:45:00Z"
+    },
+    {
+        "id": "104495fa7707ec52c9b83a5101a1e7d3",
+        "home": "Udinese",
+        "away": "Cremonese",
+        "outcome": "Cremonese",
+        "odds": 3.2,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-17T18:45:00Z"
+    },
+    {
+        "id": "d973660a3250249d31b2795c081364fb",
+        "home": "Sassuolo",
+        "away": "Lecce",
+        "outcome": "Lecce",
+        "odds": 2.84,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-17T18:45:00Z"
+    },
+    {
+        "id": "7831d6b48dc00cc816d976be80644a46",
+        "home": "Levante",
+        "away": "Mallorca",
+        "outcome": "Mallorca",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-17T17:00:00Z"
+    },
+    {
+        "id": "69eb5c33e3060d96623d05fffe8a1d66",
+        "home": "Lechia Gda\u0144sk",
+        "away": "Legia Warszawa",
+        "outcome": "Legia Warszawa",
+        "odds": 2.45,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-17T15:30:00Z"
+    },
+    {
+        "id": "757ff508fd11d85e401e740b4615d055",
+        "home": "Moreirense FC",
+        "away": "AVS Futebol SAD",
+        "outcome": "AVS Futebol SAD",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-05-16T14:30:00Z"
+    },
+    {
+        "id": "71d3c4eac4e156a6b54334a4ee5f8563",
+        "home": "Kasimpasa SK",
+        "away": "Galatasaray",
+        "outcome": "Galatasaray",
+        "odds": 2.26,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-05-17T17:00:00Z"
+    },
+    {
+        "id": "7fc35a902bc4ccf83e9032758bd7f95a",
+        "home": "Wolfsberger AC",
+        "away": "WSG Tirol",
+        "outcome": "WSG Tirol",
+        "odds": 3.87,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-16T15:00:00Z"
     }
 ]
