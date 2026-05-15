@@ -7238,5 +7238,55 @@
         "stake": 400.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-17T02:30:00Z"
+    },
+    {
+        "id": "10289e32fd0f15614463d2831a40fd05",
+        "home": "Genoa",
+        "away": "AC Milan",
+        "outcome": "AC Milan",
+        "odds": 1.82,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-17T10:00:00Z"
+    },
+    {
+        "id": "9fcc50e1a537b32905124fe523fa70d4",
+        "home": "GKS Katowice",
+        "away": "Jagiellonia Bia\u0142ystok",
+        "outcome": "GKS Katowice",
+        "odds": 2.7,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-17T12:45:00Z"
+    },
+    {
+        "id": "c90d3ad0824874832d1da745c0226090",
+        "home": "Sparta Rotterdam",
+        "away": "Excelsior",
+        "outcome": "Excelsior",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-17T12:30:00Z"
+    },
+    {
+        "id": "895250e8d64e447e0c256085bad70436",
+        "home": "Anderlecht",
+        "away": "KV Mechelen",
+        "outcome": "KV Mechelen",
+        "odds": 4.1,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-17T11:30:00Z"
+    },
+    {
+        "id": "99063e11df78ce45e9029ae47fba777e",
+        "home": "Sturm Graz",
+        "away": "Rapid Wien",
+        "outcome": "Sturm Graz",
+        "odds": 2.04,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-17T12:30:00Z"
     }
 ]
