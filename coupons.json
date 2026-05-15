@@ -7288,5 +7288,185 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-05-17T12:30:00Z"
+    },
+    {
+        "id": "80dfd4c3675149dca21da2943420629a",
+        "home": "Leeds United",
+        "away": "Brighton and Hove Albion",
+        "outcome": "Leeds United",
+        "odds": 3.45,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-17T14:00:00Z"
+    },
+    {
+        "id": "bd38142035040006cfb0ca9d6e3ab2be",
+        "home": "Everton",
+        "away": "Sunderland",
+        "outcome": "Everton",
+        "odds": 1.89,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-17T14:00:00Z"
+    },
+    {
+        "id": "e0c6894a7376e3bacabd8e4c522a733e",
+        "home": "Wolverhampton Wanderers",
+        "away": "Fulham",
+        "outcome": "Wolverhampton Wanderers",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-17T14:00:00Z"
+    },
+    {
+        "id": "f331171c7e14ee86e88f338343aa7f97",
+        "home": "Newcastle United",
+        "away": "West Ham United",
+        "outcome": "West Ham United",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-17T16:30:00Z"
+    },
+    {
+        "id": "6c39163f286a6a4fed3d733161eabb35",
+        "home": "Piast Gliwice",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Rak\u00f3w Cz\u0119stochowa",
+        "odds": 2.77,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-17T10:15:00Z"
+    },
+    {
+        "id": "b42fd15f2a74cea97da8c4d353671065",
+        "home": "PSV Eindhoven",
+        "away": "FC Twente Enschede",
+        "outcome": "FC Twente Enschede",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-17T12:30:00Z"
+    },
+    {
+        "id": "ac20652d5dc3c1f0bb69b7f42f9ba0e5",
+        "home": "Club Brugge",
+        "away": "Union Saint-Gilloise",
+        "outcome": "Union Saint-Gilloise",
+        "odds": 3.65,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-17T16:30:00Z"
+    },
+    {
+        "id": "e9b2f588814977b97757655dd78298b8",
+        "home": "SonderjyskE",
+        "away": "FC Nordsjaelland",
+        "outcome": "SonderjyskE",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-17T16:00:00Z"
+    },
+    {
+        "id": "7ad3cf1f671834845e7a695b3cffec5a",
+        "home": "Aris Thessaloniki",
+        "away": "Levadiakos",
+        "outcome": "Levadiakos",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-17T14:00:00Z"
+    },
+    {
+        "id": "e8bcbbd50f67cf63a7e945e0161444b4",
+        "home": "OFI Crete",
+        "away": "Volos FC",
+        "outcome": "Volos FC",
+        "odds": 3.85,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-17T14:00:00Z"
+    },
+    {
+        "id": "aeb816f5c0e6533f20bbf935745e813d",
+        "home": "AEK Athens",
+        "away": "Olympiakos Piraeus",
+        "outcome": "AEK Athens",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-17T16:30:00Z"
+    },
+    {
+        "id": "b28746c32571ba361ce7585a525fcc75",
+        "home": "Panathinaikos",
+        "away": "PAOK Thessaloniki",
+        "outcome": "Panathinaikos",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-17T16:30:00Z"
+    },
+    {
+        "id": "6bb3036eb8cab80cd71b5bdcc1e3d68b",
+        "home": "BSC Young Boys",
+        "away": "FC Sion",
+        "outcome": "FC Sion",
+        "odds": 2.48,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-17T14:30:00Z"
+    },
+    {
+        "id": "85ca09a934b6c2447fcc7646aa024985",
+        "home": "FC Lugano",
+        "away": "FC Basel",
+        "outcome": "FC Basel",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-17T14:30:00Z"
+    },
+    {
+        "id": "188fc1333442a37bcd913b86ab5b5701",
+        "home": "FC St Gallen",
+        "away": "FC Thun",
+        "outcome": "FC Thun",
+        "odds": 3.43,
+        "stake": 250.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-05-17T14:30:00Z"
+    },
+    {
+        "id": "d89db1899185e0496a2481d00be9e16c",
+        "home": "Dundee FC",
+        "away": "Aberdeen",
+        "outcome": "Aberdeen",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-17T13:00:00Z"
+    },
+    {
+        "id": "d2a0589bc29d002921eca5a43eff37e7",
+        "home": "St Mirren",
+        "away": "Dundee United",
+        "outcome": "St Mirren",
+        "odds": 2.32,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-17T13:00:00Z"
+    },
+    {
+        "id": "c5bc1050c929478bf484892edea42865",
+        "home": "Livingston",
+        "away": "Kilmarnock",
+        "outcome": "Kilmarnock",
+        "odds": 2.44,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-17T13:00:00Z"
     }
 ]
