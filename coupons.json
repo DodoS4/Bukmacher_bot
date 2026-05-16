@@ -7568,5 +7568,25 @@
         "stake": 400.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-18T00:00:00Z"
+    },
+    {
+        "id": "5cb98b36a0238cc56079ce5dea71a8ee",
+        "home": "CA Osasuna",
+        "away": "Espanyol",
+        "outcome": "Espanyol",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-17T17:00:00Z"
+    },
+    {
+        "id": "ab4ae8b21d5feef5f26d89cf05a3b591",
+        "home": "Rheindorf Altach",
+        "away": "Ried",
+        "outcome": "Ried",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-16T15:00:00Z"
     }
 ]
