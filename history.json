@@ -22234,5 +22234,44 @@
         "profit": 217.5,
         "status": "WIN",
         "score": "0:1"
+    },
+    {
+        "id": "1c5214151ed7571cdad54fd8cdad6113",
+        "home": "Aston Villa",
+        "away": "Liverpool",
+        "outcome": "Aston Villa",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-15T19:00:00Z",
+        "profit": 512.5,
+        "status": "WIN",
+        "score": "4:2"
+    },
+    {
+        "id": "5a4238317c36b5f8af4a6e6aafb30be6",
+        "home": "Korona Kielce",
+        "away": "Widzew \u0141\u00f3d\u017a",
+        "outcome": "Korona Kielce",
+        "odds": 2.6,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-15T18:30:00Z",
+        "profit": 200.0,
+        "status": "WIN",
+        "score": "1:0"
+    },
+    {
+        "id": "1f369147ce96dec5e88b062a7a32e121",
+        "home": "Leuven",
+        "away": "Royal Antwerp",
+        "outcome": "Leuven",
+        "odds": 2.84,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-15T18:45:00Z",
+        "profit": 598.0,
+        "status": "WIN",
+        "score": "3:0"
     }
 ]

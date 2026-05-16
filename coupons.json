@@ -6810,36 +6810,6 @@
         "time": "2026-05-14T23:00:00Z"
     },
     {
-        "id": "1c5214151ed7571cdad54fd8cdad6113",
-        "home": "Aston Villa",
-        "away": "Liverpool",
-        "outcome": "Aston Villa",
-        "odds": 3.05,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-15T19:00:00Z"
-    },
-    {
-        "id": "5a4238317c36b5f8af4a6e6aafb30be6",
-        "home": "Korona Kielce",
-        "away": "Widzew \u0141\u00f3d\u017a",
-        "outcome": "Korona Kielce",
-        "odds": 2.6,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-05-15T18:30:00Z"
-    },
-    {
-        "id": "1f369147ce96dec5e88b062a7a32e121",
-        "home": "Leuven",
-        "away": "Royal Antwerp",
-        "outcome": "Leuven",
-        "odds": 2.84,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-15T18:45:00Z"
-    },
-    {
         "id": "9c54b8d980022ec510cf11476562efd6",
         "home": "W-B/Scranton Penguins",
         "away": "Springfield Thunderbirds",
@@ -7528,5 +7498,75 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-05-16T15:00:00Z"
+    },
+    {
+        "id": "c8b50d6edc3309fb4736f11b6202e771",
+        "home": "Grand Rapids Griffins",
+        "away": "Chicago Wolves",
+        "outcome": "Chicago Wolves",
+        "odds": 3.64,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-16T23:00:00Z"
+    },
+    {
+        "id": "61987868a8d5a1731be8fcd44b553475",
+        "home": "Cleveland Monsters",
+        "away": "Toronto Marlies",
+        "outcome": "Toronto Marlies",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-16T23:00:00Z"
+    },
+    {
+        "id": "a62accc6f30f5857aeb87bf8a802f442",
+        "home": "Colorado Eagles",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "Coachella Valley Firebirds",
+        "odds": 3.09,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-18T00:05:00Z"
+    },
+    {
+        "id": "f66ffd7a0ef9b560de9e0547be831996",
+        "home": "Marseille",
+        "away": "Rennes",
+        "outcome": "Rennes",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-05-17T19:00:00Z"
+    },
+    {
+        "id": "f1e762534e1e5b5d3f79566a8ff928cd",
+        "home": "Heerenveen",
+        "away": "Ajax",
+        "outcome": "Heerenveen",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-17T12:30:00Z"
+    },
+    {
+        "id": "ef715d8c413b543fd7099cdcc13aca87",
+        "home": "AGF Aarhus",
+        "away": "Viborg FF",
+        "outcome": "Viborg FF",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-17T16:00:00Z"
+    },
+    {
+        "id": "0f3d08478343b47694ed7943695d2dec",
+        "home": "Nashville SC",
+        "away": "Los Angeles FC",
+        "outcome": "Los Angeles FC",
+        "odds": 3.6,
+        "stake": 400.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-18T00:00:00Z"
     }
 ]
