@@ -6830,66 +6830,6 @@
         "time": "2026-05-16T02:00:00Z"
     },
     {
-        "id": "9b2dd326aeb97434cd4b145a9a73cd4f",
-        "home": "Panserraikos FC",
-        "away": "Panetolikos Agrinio",
-        "outcome": "Panetolikos Agrinio",
-        "odds": 2.9,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-05-16T16:00:00Z"
-    },
-    {
-        "id": "10289e32fd0f15614463d2831a40fd05",
-        "home": "Genoa",
-        "away": "AC Milan",
-        "outcome": "AC Milan",
-        "odds": 1.82,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-05-17T10:00:00Z"
-    },
-    {
-        "id": "9fcc50e1a537b32905124fe523fa70d4",
-        "home": "GKS Katowice",
-        "away": "Jagiellonia Bia\u0142ystok",
-        "outcome": "GKS Katowice",
-        "odds": 2.7,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-05-17T12:45:00Z"
-    },
-    {
-        "id": "c90d3ad0824874832d1da745c0226090",
-        "home": "Sparta Rotterdam",
-        "away": "Excelsior",
-        "outcome": "Excelsior",
-        "odds": 3.3,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-05-17T12:30:00Z"
-    },
-    {
-        "id": "895250e8d64e447e0c256085bad70436",
-        "home": "Anderlecht",
-        "away": "KV Mechelen",
-        "outcome": "KV Mechelen",
-        "odds": 4.1,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-17T11:30:00Z"
-    },
-    {
-        "id": "99063e11df78ce45e9029ae47fba777e",
-        "home": "Sturm Graz",
-        "away": "Rapid Wien",
-        "outcome": "Sturm Graz",
-        "odds": 2.04,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-05-17T12:30:00Z"
-    },
-    {
         "id": "80dfd4c3675149dca21da2943420629a",
         "home": "Leeds United",
         "away": "Brighton and Hove Albion",
@@ -6910,16 +6850,6 @@
         "time": "2026-05-17T14:00:00Z"
     },
     {
-        "id": "e0c6894a7376e3bacabd8e4c522a733e",
-        "home": "Wolverhampton Wanderers",
-        "away": "Fulham",
-        "outcome": "Wolverhampton Wanderers",
-        "odds": 4.0,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-17T14:00:00Z"
-    },
-    {
         "id": "f331171c7e14ee86e88f338343aa7f97",
         "home": "Newcastle United",
         "away": "West Ham United",
@@ -6928,26 +6858,6 @@
         "stake": 250.0,
         "sport": "soccer_epl",
         "time": "2026-05-17T16:30:00Z"
-    },
-    {
-        "id": "6c39163f286a6a4fed3d733161eabb35",
-        "home": "Piast Gliwice",
-        "away": "Rak\u00f3w Cz\u0119stochowa",
-        "outcome": "Rak\u00f3w Cz\u0119stochowa",
-        "odds": 2.77,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-05-17T10:15:00Z"
-    },
-    {
-        "id": "b42fd15f2a74cea97da8c4d353671065",
-        "home": "PSV Eindhoven",
-        "away": "FC Twente Enschede",
-        "outcome": "FC Twente Enschede",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-05-17T12:30:00Z"
     },
     {
         "id": "ac20652d5dc3c1f0bb69b7f42f9ba0e5",
@@ -6968,26 +6878,6 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-05-17T16:00:00Z"
-    },
-    {
-        "id": "7ad3cf1f671834845e7a695b3cffec5a",
-        "home": "Aris Thessaloniki",
-        "away": "Levadiakos",
-        "outcome": "Levadiakos",
-        "odds": 4.0,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-05-17T14:00:00Z"
-    },
-    {
-        "id": "e8bcbbd50f67cf63a7e945e0161444b4",
-        "home": "OFI Crete",
-        "away": "Volos FC",
-        "outcome": "Volos FC",
-        "odds": 3.85,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-05-17T14:00:00Z"
     },
     {
         "id": "aeb816f5c0e6533f20bbf935745e813d",
@@ -7038,36 +6928,6 @@
         "stake": 250.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-05-17T14:30:00Z"
-    },
-    {
-        "id": "d89db1899185e0496a2481d00be9e16c",
-        "home": "Dundee FC",
-        "away": "Aberdeen",
-        "outcome": "Aberdeen",
-        "odds": 3.0,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-17T13:00:00Z"
-    },
-    {
-        "id": "d2a0589bc29d002921eca5a43eff37e7",
-        "home": "St Mirren",
-        "away": "Dundee United",
-        "outcome": "St Mirren",
-        "odds": 2.32,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-17T13:00:00Z"
-    },
-    {
-        "id": "c5bc1050c929478bf484892edea42865",
-        "home": "Livingston",
-        "away": "Kilmarnock",
-        "outcome": "Kilmarnock",
-        "odds": 2.44,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-05-17T13:00:00Z"
     },
     {
         "id": "4f434a83068452f8e68d00e0b5942be6",
@@ -7170,16 +7030,6 @@
         "time": "2026-05-17T19:00:00Z"
     },
     {
-        "id": "f1e762534e1e5b5d3f79566a8ff928cd",
-        "home": "Heerenveen",
-        "away": "Ajax",
-        "outcome": "Heerenveen",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-05-17T12:30:00Z"
-    },
-    {
         "id": "ef715d8c413b543fd7099cdcc13aca87",
         "home": "AGF Aarhus",
         "away": "Viborg FF",
@@ -7208,16 +7058,6 @@
         "stake": 125.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-05-17T17:00:00Z"
-    },
-    {
-        "id": "d6ea6ddc9491464435aaf686c6f5e5b6",
-        "home": "Austria Wien",
-        "away": "LASK",
-        "outcome": "Austria Wien",
-        "odds": 3.3,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-05-17T12:30:00Z"
     },
     {
         "id": "44c5cf6514d2d2d7e3f5cad00e8b8ee4",
@@ -7250,26 +7090,6 @@
         "time": "2026-05-17T19:00:00Z"
     },
     {
-        "id": "08bbf08f15b1773832a31dd19d3d749f",
-        "home": "FC Zwolle",
-        "away": "Feyenoord",
-        "outcome": "FC Zwolle",
-        "odds": 4.3,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-05-17T12:30:00Z"
-    },
-    {
-        "id": "7a4006e58bc249585500785328a602d8",
-        "home": "Kayserispor",
-        "away": "Torku Konyaspor",
-        "outcome": "Torku Konyaspor",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-05-17T14:00:00Z"
-    },
-    {
         "id": "61ae501ebc5dde65d2bbba2e22683b12",
         "home": "Lommel SK",
         "away": "Dender",
@@ -7278,16 +7098,6 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-05-17T14:00:00Z"
-    },
-    {
-        "id": "419c1f81101df815496b645beddfa461",
-        "home": "FC Fredericia",
-        "away": "Silkeborg IF",
-        "outcome": "Silkeborg IF",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-05-17T12:00:00Z"
     },
     {
         "id": "1212ab947fa2164c9da497e01ea4c4af",
@@ -7307,6 +7117,36 @@
         "odds": 3.55,
         "stake": 125.0,
         "sport": "soccer_spain_la_liga",
+        "time": "2026-05-17T17:00:00Z"
+    },
+    {
+        "id": "d604ebf5b6adf78d172be7e5c68636a3",
+        "home": "Atalanta BC",
+        "away": "Bologna",
+        "outcome": "Atalanta BC",
+        "odds": 1.8,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-17T16:00:00Z"
+    },
+    {
+        "id": "759a4cd330a0532d26296c10f4f437ea",
+        "home": "Oviedo",
+        "away": "Alav\u00e9s",
+        "outcome": "Oviedo",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-17T17:00:00Z"
+    },
+    {
+        "id": "9bfa756bb61f1a9857b8ae0d9294559d",
+        "home": "Trabzonspor",
+        "away": "Genclerbirligi SK",
+        "outcome": "Trabzonspor",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
         "time": "2026-05-17T17:00:00Z"
     }
 ]
