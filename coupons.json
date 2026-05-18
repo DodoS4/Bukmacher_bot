@@ -6928,5 +6928,15 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-05-19T16:30:00Z"
+    },
+    {
+        "id": "ba51bf165cb54deebcbb377f25c241c2",
+        "home": "Charleroi",
+        "away": "Leuven",
+        "outcome": "Charleroi",
+        "odds": 1.8,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-19T18:30:00Z"
     }
 ]
