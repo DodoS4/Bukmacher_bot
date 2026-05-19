@@ -23391,5 +23391,44 @@
         "profit": 825.0,
         "status": "WIN",
         "score": "2:3"
+    },
+    {
+        "id": "51ec3d5c2707905aed83785fe055ffb0",
+        "home": "Bournemouth",
+        "away": "Manchester City",
+        "outcome": "Manchester City",
+        "odds": 1.81,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-19T18:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "f2c60c8657b99870b4b9d1d611ef03c1",
+        "home": "Ried",
+        "away": "Wolfsberger AC",
+        "outcome": "Wolfsberger AC",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-05-19T16:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "ba51bf165cb54deebcbb377f25c241c2",
+        "home": "Charleroi",
+        "away": "Leuven",
+        "outcome": "Charleroi",
+        "odds": 1.8,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-19T18:30:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]

@@ -6860,16 +6860,6 @@
         "time": "2026-05-18T00:05:00Z"
     },
     {
-        "id": "51ec3d5c2707905aed83785fe055ffb0",
-        "home": "Bournemouth",
-        "away": "Manchester City",
-        "outcome": "Manchester City",
-        "odds": 1.81,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-19T18:30:00Z"
-    },
-    {
         "id": "f8183792f85edf341601f814e35773c8",
         "home": "Chelsea",
         "away": "Tottenham Hotspur",
@@ -6910,26 +6900,6 @@
         "time": "2026-05-20T00:00:00Z"
     },
     {
-        "id": "f2c60c8657b99870b4b9d1d611ef03c1",
-        "home": "Ried",
-        "away": "Wolfsberger AC",
-        "outcome": "Wolfsberger AC",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-05-19T16:30:00Z"
-    },
-    {
-        "id": "ba51bf165cb54deebcbb377f25c241c2",
-        "home": "Charleroi",
-        "away": "Leuven",
-        "outcome": "Charleroi",
-        "odds": 1.8,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-19T18:30:00Z"
-    },
-    {
         "id": "15f3905f9616dd694d6ad7ee037c73b6",
         "home": "Colorado Avalanche",
         "away": "Vegas Golden Knights",
@@ -6968,5 +6938,35 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-05-21T16:00:00Z"
+    },
+    {
+        "id": "61386001cb9d164557602f874c3959a1",
+        "home": "Anderlecht",
+        "away": "Sint Truiden",
+        "outcome": "Sint Truiden",
+        "odds": 3.11,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-21T18:30:00Z"
+    },
+    {
+        "id": "0bf74c1d7b1e476a2e66f3d32ea75200",
+        "home": "Gent",
+        "away": "Union Saint-Gilloise",
+        "outcome": "Union Saint-Gilloise",
+        "odds": 1.82,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-21T18:30:00Z"
+    },
+    {
+        "id": "ed39485792fb1072d4a7371a25503f10",
+        "home": "Partick Thistle",
+        "away": "St Mirren",
+        "outcome": "St Mirren",
+        "odds": 2.81,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-05-21T19:00:00Z"
     }
 ]
