@@ -23378,5 +23378,18 @@
         "profit": -325.0,
         "status": "LOSS",
         "score": "3:2"
+    },
+    {
+        "id": "45a3337bdc751e814fd37929a9d94834",
+        "home": "Buffalo Sabres",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.65,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-18T23:30:03Z",
+        "profit": 825.0,
+        "status": "WIN",
+        "score": "2:3"
     }
 ]

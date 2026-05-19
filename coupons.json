@@ -6860,16 +6860,6 @@
         "time": "2026-05-18T00:05:00Z"
     },
     {
-        "id": "45a3337bdc751e814fd37929a9d94834",
-        "home": "Buffalo Sabres",
-        "away": "Montr\u00e9al Canadiens",
-        "outcome": "Montr\u00e9al Canadiens",
-        "odds": 2.65,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-18T23:30:03Z"
-    },
-    {
         "id": "51ec3d5c2707905aed83785fe055ffb0",
         "home": "Bournemouth",
         "away": "Manchester City",
@@ -6938,5 +6928,35 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-05-19T18:30:00Z"
+    },
+    {
+        "id": "15f3905f9616dd694d6ad7ee037c73b6",
+        "home": "Colorado Avalanche",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 3.5,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-21T00:00:47Z"
+    },
+    {
+        "id": "1e5d142ceb66e462ce25f35e4827d9ec",
+        "home": "Toronto Marlies",
+        "away": "Cleveland Monsters",
+        "outcome": "Cleveland Monsters",
+        "odds": 2.58,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-20T23:00:00Z"
+    },
+    {
+        "id": "3ab3312548fe142825841d5d8ee2947a",
+        "home": "Colorado Eagles",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "Coachella Valley Firebirds",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-21T01:05:00Z"
     }
 ]
