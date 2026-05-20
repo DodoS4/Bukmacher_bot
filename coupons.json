@@ -6988,5 +6988,15 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-05-21T16:30:00Z"
+    },
+    {
+        "id": "141096a395c291279079508b63365cf1",
+        "home": "Panetolikos Agrinio",
+        "away": "Asteras Tripolis",
+        "outcome": "Asteras Tripolis",
+        "odds": 2.95,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-05-21T16:00:00Z"
     }
 ]
