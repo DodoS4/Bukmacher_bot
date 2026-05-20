@@ -23430,5 +23430,31 @@
         "profit": -325.0,
         "status": "LOSS",
         "score": "1:1"
+    },
+    {
+        "id": "f8183792f85edf341601f814e35773c8",
+        "home": "Chelsea",
+        "away": "Tottenham Hotspur",
+        "outcome": "Tottenham Hotspur",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-05-19T19:15:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "3b6e7666831d466f0efbadc60754526a",
+        "home": "Westerlo",
+        "away": "Standard Liege",
+        "outcome": "Standard Liege",
+        "odds": 3.67,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-19T18:30:00Z",
+        "profit": 867.75,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]

@@ -6860,26 +6860,6 @@
         "time": "2026-05-18T00:05:00Z"
     },
     {
-        "id": "f8183792f85edf341601f814e35773c8",
-        "home": "Chelsea",
-        "away": "Tottenham Hotspur",
-        "outcome": "Tottenham Hotspur",
-        "odds": 3.75,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-05-19T19:15:00Z"
-    },
-    {
-        "id": "3b6e7666831d466f0efbadc60754526a",
-        "home": "Westerlo",
-        "away": "Standard Liege",
-        "outcome": "Standard Liege",
-        "odds": 3.67,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-19T18:30:00Z"
-    },
-    {
         "id": "3cf458639615afcbb64394f1bcec1f31",
         "home": "Springfield Thunderbirds",
         "away": "W-B/Scranton Penguins",
@@ -6968,5 +6948,45 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-05-21T19:00:00Z"
+    },
+    {
+        "id": "d9aa6127776677dd67d86ba3b93d0353",
+        "home": "Carolina Hurricanes",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 3.77,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-22T00:00:36Z"
+    },
+    {
+        "id": "0d53f7207e58ab923dc08ea5afd793c1",
+        "home": "Springfield Thunderbirds",
+        "away": "W-B/Scranton Penguins",
+        "outcome": "Springfield Thunderbirds",
+        "odds": 3.86,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-21T23:05:00Z"
+    },
+    {
+        "id": "5cb22f3dcf0416245b034260d73c6470",
+        "home": "Chicago Wolves",
+        "away": "Grand Rapids Griffins",
+        "outcome": "Chicago Wolves",
+        "odds": 3.2,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-22T00:00:00Z"
+    },
+    {
+        "id": "fc13ee4d9cf5fc0bbc04566251a05107",
+        "home": "Brondby IF",
+        "away": "FC Copenhagen",
+        "outcome": "Brondby IF",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-05-21T16:30:00Z"
     }
 ]
