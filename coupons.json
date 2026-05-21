@@ -6880,16 +6880,6 @@
         "time": "2026-05-20T00:00:00Z"
     },
     {
-        "id": "15f3905f9616dd694d6ad7ee037c73b6",
-        "home": "Colorado Avalanche",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 3.5,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-05-21T00:00:47Z"
-    },
-    {
         "id": "1e5d142ceb66e462ce25f35e4827d9ec",
         "home": "Toronto Marlies",
         "away": "Cleveland Monsters",
@@ -7008,5 +6998,35 @@
         "stake": 400.0,
         "sport": "soccer_italy_serie_a",
         "time": "2026-05-22T18:45:00Z"
+    },
+    {
+        "id": "959b72accceca17f9912258671ba38bd",
+        "home": "Colorado Avalanche",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 3.45,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-23T00:00:00Z"
+    },
+    {
+        "id": "36e742f247ba914a9d5fed3135638c87",
+        "home": "Toronto Marlies",
+        "away": "Cleveland Monsters",
+        "outcome": "Cleveland Monsters",
+        "odds": 2.84,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-05-22T23:00:00Z"
+    },
+    {
+        "id": "12a5e8cfecddf1df2f9ec649884b8a0e",
+        "home": "FC Utrecht",
+        "away": "Heerenveen",
+        "outcome": "Heerenveen",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-05-21T19:00:00Z"
     }
 ]

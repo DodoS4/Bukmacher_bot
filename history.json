@@ -23456,5 +23456,18 @@
         "profit": 867.75,
         "status": "WIN",
         "score": "1:2"
+    },
+    {
+        "id": "15f3905f9616dd694d6ad7ee037c73b6",
+        "home": "Colorado Avalanche",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 3.5,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-21T00:00:47Z",
+        "profit": 1250.0,
+        "status": "WIN",
+        "score": "2:4"
     }
 ]
