@@ -7038,5 +7038,35 @@
         "stake": 125.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-05-21T16:45:00Z"
+    },
+    {
+        "id": "550afdf96afe61f12b00e443872f946a",
+        "home": "Bologna",
+        "away": "Inter Milan",
+        "outcome": "Bologna",
+        "odds": 3.21,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-05-23T16:00:00Z"
+    },
+    {
+        "id": "9124fb50aa1400306e26a5b5d91d2446",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Korona Kielce",
+        "outcome": "Korona Kielce",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-23T15:30:00Z"
+    },
+    {
+        "id": "b153cf780d4b986cdfe952eee66b6b2c",
+        "home": "Nieciecza",
+        "away": "Lechia Gda\u0144sk",
+        "outcome": "Nieciecza",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-05-23T15:30:00Z"
     }
 ]
