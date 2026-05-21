@@ -6900,31 +6900,11 @@
         "time": "2026-05-21T01:05:00Z"
     },
     {
-        "id": "6d98f18354a4875b3624206313a98cf6",
-        "home": "AE Kifisia FC",
-        "away": "AEL",
-        "outcome": "AEL",
-        "odds": 3.3,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-05-21T16:00:00Z"
-    },
-    {
         "id": "61386001cb9d164557602f874c3959a1",
         "home": "Anderlecht",
         "away": "Sint Truiden",
         "outcome": "Sint Truiden",
         "odds": 3.11,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-05-21T18:30:00Z"
-    },
-    {
-        "id": "0bf74c1d7b1e476a2e66f3d32ea75200",
-        "home": "Gent",
-        "away": "Union Saint-Gilloise",
-        "outcome": "Union Saint-Gilloise",
-        "odds": 1.82,
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-05-21T18:30:00Z"
@@ -6970,26 +6950,6 @@
         "time": "2026-05-22T00:00:00Z"
     },
     {
-        "id": "fc13ee4d9cf5fc0bbc04566251a05107",
-        "home": "Brondby IF",
-        "away": "FC Copenhagen",
-        "outcome": "Brondby IF",
-        "odds": 3.4,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-05-21T16:30:00Z"
-    },
-    {
-        "id": "141096a395c291279079508b63365cf1",
-        "home": "Panetolikos Agrinio",
-        "away": "Asteras Tripolis",
-        "outcome": "Asteras Tripolis",
-        "odds": 2.95,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-05-21T16:00:00Z"
-    },
-    {
         "id": "b45d5fcb12cdd03ca8612a72bfe89c1d",
         "home": "Fiorentina",
         "away": "Atalanta BC",
@@ -7030,16 +6990,6 @@
         "time": "2026-05-21T19:00:00Z"
     },
     {
-        "id": "2ffcb9d3bdbe0f43cdad1ec7af302c32",
-        "home": "Ajax",
-        "away": "Groningen",
-        "outcome": "Groningen",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-05-21T16:45:00Z"
-    },
-    {
         "id": "550afdf96afe61f12b00e443872f946a",
         "home": "Bologna",
         "away": "Inter Milan",
@@ -7068,5 +7018,55 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-05-23T15:30:00Z"
+    },
+    {
+        "id": "17b5b1f870b8e2d9db639cca47ad92b6",
+        "home": "Celta Vigo",
+        "away": "Sevilla",
+        "outcome": "Celta Vigo",
+        "odds": 1.91,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-05-23T19:00:00Z"
+    },
+    {
+        "id": "921d46ce0f5dd298286e08412f8a4add",
+        "home": "Standard Liege",
+        "away": "Charleroi",
+        "outcome": "Charleroi",
+        "odds": 3.65,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-23T18:45:00Z"
+    },
+    {
+        "id": "b9c9ff0f9ea50af3eada9ec90f552dbe",
+        "home": "Leuven",
+        "away": "Genk",
+        "outcome": "Leuven",
+        "odds": 3.71,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-23T18:45:00Z"
+    },
+    {
+        "id": "bed0e8da3f132b7225954648d5033ecb",
+        "home": "Royal Antwerp",
+        "away": "Westerlo",
+        "outcome": "Westerlo",
+        "odds": 3.75,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-05-23T18:45:00Z"
+    },
+    {
+        "id": "4350d4459af9f23dccb84318c8763c23",
+        "home": "Minnesota United FC",
+        "away": "Real Salt Lake",
+        "outcome": "Real Salt Lake",
+        "odds": 3.18,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-05-23T20:30:00Z"
     }
 ]
