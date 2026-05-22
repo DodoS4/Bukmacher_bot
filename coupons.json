@@ -7068,5 +7068,15 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-05-23T20:30:00Z"
+    },
+    {
+        "id": "1a0c681f6a7b1142cce9a2de55ada661",
+        "home": "Carolina Hurricanes",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 3.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-05-23T23:00:00Z"
     }
 ]
