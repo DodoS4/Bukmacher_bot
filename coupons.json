@@ -7108,5 +7108,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-06-03T00:00:00Z"
+    },
+    {
+        "id": "abbdc73ed5eb4c07ac843c0971000ffa",
+        "home": "Toronto Marlies",
+        "away": "W-B/Scranton Penguins",
+        "outcome": "Toronto Marlies",
+        "odds": 2.96,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-06-03T23:00:00Z"
     }
 ]
