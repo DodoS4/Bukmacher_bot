@@ -7118,5 +7118,25 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-06-05T00:15:00Z"
+    },
+    {
+        "id": "6bf5e59f57c20162ac49d143eb83435f",
+        "home": "Toronto Marlies",
+        "away": "W-B/Scranton Penguins",
+        "outcome": "Toronto Marlies",
+        "odds": 2.75,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-06-05T23:00:00Z"
+    },
+    {
+        "id": "0c7ca2fa07e89ae83268014f6c8dc73e",
+        "home": "Chicago Wolves",
+        "away": "Colorado Eagles",
+        "outcome": "Colorado Eagles",
+        "odds": 2.18,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-06-06T00:00:00Z"
     }
 ]
