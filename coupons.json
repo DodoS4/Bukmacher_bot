@@ -7110,16 +7110,6 @@
         "time": "2026-06-03T23:00:00Z"
     },
     {
-        "id": "b13d493fbfa40c8c29b896dbc6da1dff",
-        "home": "Carolina Hurricanes",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 3.15,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-06-05T00:15:00Z"
-    },
-    {
         "id": "6bf5e59f57c20162ac49d143eb83435f",
         "home": "Toronto Marlies",
         "away": "W-B/Scranton Penguins",
@@ -7138,5 +7128,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-06-06T00:00:00Z"
+    },
+    {
+        "id": "33c14afc1c11682959f3089d5f7fa4e3",
+        "home": "Vegas Golden Knights",
+        "away": "Carolina Hurricanes",
+        "outcome": "Carolina Hurricanes",
+        "odds": 2.55,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-06-07T00:10:00Z"
     }
 ]
