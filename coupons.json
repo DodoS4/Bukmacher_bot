@@ -7138,5 +7138,15 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-06-07T00:10:00Z"
+    },
+    {
+        "id": "a233bd891cd1925e454eedc96da6656f",
+        "home": "Colorado Eagles",
+        "away": "Chicago Wolves",
+        "outcome": "Chicago Wolves",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-06-08T00:05:00Z"
     }
 ]
