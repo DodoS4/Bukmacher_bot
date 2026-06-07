@@ -23560,5 +23560,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:3"
+    },
+    {
+        "id": "33c14afc1c11682959f3089d5f7fa4e3",
+        "home": "Vegas Golden Knights",
+        "away": "Carolina Hurricanes",
+        "outcome": "Carolina Hurricanes",
+        "odds": 2.55,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-06-07T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:4"
     }
 ]
