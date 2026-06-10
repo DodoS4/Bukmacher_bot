@@ -7150,16 +7150,6 @@
         "time": "2026-06-07T22:05:00Z"
     },
     {
-        "id": "b400caea65ac57f7ed21fc091b8aade3",
-        "home": "Vegas Golden Knights",
-        "away": "Carolina Hurricanes",
-        "outcome": "Carolina Hurricanes",
-        "odds": 2.53,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-06-10T00:20:00Z"
-    },
-    {
         "id": "7450304e9923f2e5bd67676e836d638d",
         "home": "Colorado Eagles",
         "away": "Chicago Wolves",
@@ -7168,5 +7158,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-06-09T01:05:00Z"
+    },
+    {
+        "id": "efe60f8bd0a530622e07b29dccf12ab8",
+        "home": "Carolina Hurricanes",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 3.1,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-06-12T00:00:00Z"
     }
 ]
