@@ -7160,16 +7160,6 @@
         "time": "2026-06-09T01:05:00Z"
     },
     {
-        "id": "efe60f8bd0a530622e07b29dccf12ab8",
-        "home": "Carolina Hurricanes",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 3.1,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-06-12T00:00:00Z"
-    },
-    {
         "id": "0228c198265b1fcd688b414fd9e87821",
         "home": "Chicago Wolves",
         "away": "Toronto Marlies",
