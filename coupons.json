@@ -7188,5 +7188,15 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-06-16T23:00:00Z"
+    },
+    {
+        "id": "42d4ab415bb5ffebafc333714b148856",
+        "home": "Toronto Marlies",
+        "away": "Chicago Wolves",
+        "outcome": "Toronto Marlies",
+        "odds": 2.35,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-06-18T23:00:00Z"
     }
 ]
