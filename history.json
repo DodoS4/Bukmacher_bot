@@ -23612,5 +23612,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "0:3"
+    },
+    {
+        "id": "5c16421f1e1447792ee21d773bf528ec",
+        "home": "CF Montreal",
+        "away": "Toronto FC",
+        "outcome": "Toronto FC",
+        "odds": 3.75,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-16T23:30:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "0:0"
     }
 ]

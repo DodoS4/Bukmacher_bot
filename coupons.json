@@ -7200,16 +7200,6 @@
         "time": "2026-06-18T23:00:00Z"
     },
     {
-        "id": "5c16421f1e1447792ee21d773bf528ec",
-        "home": "CF Montreal",
-        "away": "Toronto FC",
-        "outcome": "Toronto FC",
-        "odds": 3.75,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-07-16T23:30:00Z"
-    },
-    {
         "id": "1d13bd275c7b67b77bea8ff4d03850cc",
         "home": "Chicago Fire",
         "away": "Vancouver Whitecaps FC",
