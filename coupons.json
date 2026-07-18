@@ -7208,15 +7208,5 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-07-17T00:30:00Z"
-    },
-    {
-        "id": "f60d83e04e708b1928aae40b124a1f54",
-        "home": "LA Galaxy",
-        "away": "Los Angeles FC",
-        "outcome": "LA Galaxy",
-        "odds": 3.05,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-07-18T02:25:00Z"
     }
 ]
