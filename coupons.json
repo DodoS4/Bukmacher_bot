@@ -7208,5 +7208,125 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-07-17T00:30:00Z"
+    },
+    {
+        "id": "e5f7bbee08fb7c01da63faaee4f83b38",
+        "home": "Inter Miami CF",
+        "away": "Chicago Fire",
+        "outcome": "Chicago Fire",
+        "odds": 3.2,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-22T23:30:00Z"
+    },
+    {
+        "id": "91e73da1636862fccf59fbf2e745e7cf",
+        "home": "Columbus Crew SC",
+        "away": "New York City FC",
+        "outcome": "New York City FC",
+        "odds": 3.8,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-22T23:30:00Z"
+    },
+    {
+        "id": "144587319a3ab8cee3a02a28d815914e",
+        "home": "FC Cincinnati",
+        "away": "Vancouver Whitecaps FC",
+        "outcome": "FC Cincinnati",
+        "odds": 4.1,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-22T23:30:00Z"
+    },
+    {
+        "id": "f1915283c0febf8297dbb558666a4690",
+        "home": "New England Revolution",
+        "away": "Toronto FC",
+        "outcome": "Toronto FC",
+        "odds": 4.1,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-22T23:30:00Z"
+    },
+    {
+        "id": "b453ea14d7c033045b51018b59635d39",
+        "home": "Philadelphia Union",
+        "away": "New York Red Bulls",
+        "outcome": "New York Red Bulls",
+        "odds": 4.5,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-22T23:30:00Z"
+    },
+    {
+        "id": "67b300e5936d7a5b4743101895dca07d",
+        "home": "Charlotte FC",
+        "away": "Atlanta United FC",
+        "outcome": "Atlanta United FC",
+        "odds": 4.1,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-23T00:15:00Z"
+    },
+    {
+        "id": "9b6e52d74e3e078185ecfd02e8198653",
+        "home": "Houston Dynamo",
+        "away": "D.C. United",
+        "outcome": "Houston Dynamo",
+        "odds": 1.84,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-23T00:30:00Z"
+    },
+    {
+        "id": "9d65fa134ade9d1be96d983d26764ece",
+        "home": "Sporting Kansas City",
+        "away": "Minnesota United FC",
+        "outcome": "Sporting Kansas City",
+        "odds": 3.6,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-23T00:30:00Z"
+    },
+    {
+        "id": "fe8b159820312a859ce06a8c062fb6d4",
+        "home": "Austin FC",
+        "away": "Seattle Sounders FC",
+        "outcome": "Austin FC",
+        "odds": 3.6,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-23T01:30:00Z"
+    },
+    {
+        "id": "624a9c22aabb57ddf913177559b4c7b2",
+        "home": "Colorado Rapids",
+        "away": "San Diego FC",
+        "outcome": "San Diego FC",
+        "odds": 3.25,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-23T01:30:00Z"
+    },
+    {
+        "id": "d785780a494faac7a0e326e54a7d52d2",
+        "home": "Portland Timbers",
+        "away": "FC Dallas",
+        "outcome": "FC Dallas",
+        "odds": 2.88,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-23T02:30:00Z"
+    },
+    {
+        "id": "9e3e4c1bff938b8f5076f9aa9cf1dbcf",
+        "home": "LA Galaxy",
+        "away": "St. Louis City SC",
+        "outcome": "St. Louis City SC",
+        "odds": 3.75,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-23T02:30:00Z"
     }
 ]
