@@ -7328,5 +7328,25 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-07-23T02:30:00Z"
+    },
+    {
+        "id": "ca31bdd5793c2da6a331604146878c2e",
+        "home": "Viborg FF",
+        "away": "OB Odense BK",
+        "outcome": "OB Odense BK",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-07-24T17:00:00Z"
+    },
+    {
+        "id": "a86289ceba2168f9574ec8fccf0305b7",
+        "home": "Los Angeles FC",
+        "away": "Real Salt Lake",
+        "outcome": "Los Angeles FC",
+        "odds": 1.81,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-07-23T02:30:00Z"
     }
 ]
