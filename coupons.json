@@ -7218,5 +7218,15 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-07-24T17:00:00Z"
+    },
+    {
+        "id": "f14586f40f34754874e78212ad01e4df",
+        "home": "Radomiak Radom",
+        "away": "Wieczysta Krak\u00f3w",
+        "outcome": "Radomiak Radom",
+        "odds": 2.62,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-07-24T16:00:00Z"
     }
 ]
