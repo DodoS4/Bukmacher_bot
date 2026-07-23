@@ -7228,5 +7228,15 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-07-24T16:00:00Z"
+    },
+    {
+        "id": "86867dca7b9b803fe664681be0a00b01",
+        "home": "AGF Aarhus",
+        "away": "Brondby IF",
+        "outcome": "AGF Aarhus",
+        "odds": 2.44,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-07-25T16:00:00Z"
     }
 ]
