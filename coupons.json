@@ -7238,5 +7238,15 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-07-25T16:00:00Z"
+    },
+    {
+        "id": "5b93a87a89559b47c82d146bd93bbfed",
+        "home": "FC Luzern",
+        "away": "FC Thun",
+        "outcome": "FC Thun",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-07-25T18:30:00Z"
     }
 ]
