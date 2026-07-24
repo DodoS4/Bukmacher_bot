@@ -23807,5 +23807,31 @@
         "profit": 263.25,
         "status": "WIN",
         "score": "3:1"
+    },
+    {
+        "id": "ca31bdd5793c2da6a331604146878c2e",
+        "home": "Viborg FF",
+        "away": "OB Odense BK",
+        "outcome": "OB Odense BK",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-07-24T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:0"
+    },
+    {
+        "id": "f14586f40f34754874e78212ad01e4df",
+        "home": "Radomiak Radom",
+        "away": "Wieczysta Krak\u00f3w",
+        "outcome": "Radomiak Radom",
+        "odds": 2.62,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-07-24T16:00:00Z",
+        "profit": 202.5,
+        "status": "WIN",
+        "score": "2:1"
     }
 ]

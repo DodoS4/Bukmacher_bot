@@ -7210,26 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "ca31bdd5793c2da6a331604146878c2e",
-        "home": "Viborg FF",
-        "away": "OB Odense BK",
-        "outcome": "OB Odense BK",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-07-24T17:00:00Z"
-    },
-    {
-        "id": "f14586f40f34754874e78212ad01e4df",
-        "home": "Radomiak Radom",
-        "away": "Wieczysta Krak\u00f3w",
-        "outcome": "Radomiak Radom",
-        "odds": 2.62,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-07-24T16:00:00Z"
-    },
-    {
         "id": "86867dca7b9b803fe664681be0a00b01",
         "home": "AGF Aarhus",
         "away": "Brondby IF",
@@ -7408,5 +7388,15 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-07-26T16:00:00Z"
+    },
+    {
+        "id": "2fc44001bdc29ab13a5763f88eb89043",
+        "home": "BSC Young Boys",
+        "away": "FC Sion",
+        "outcome": "FC Sion",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-07-26T12:00:00Z"
     }
 ]
