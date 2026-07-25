@@ -7230,16 +7230,6 @@
         "time": "2026-07-25T18:30:00Z"
     },
     {
-        "id": "b9adf11268557ff688c88db3c7cf03d1",
-        "home": "Pogo\u0144 Szczecin",
-        "away": "Legia Warszawa",
-        "outcome": "Legia Warszawa",
-        "odds": 2.68,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-07-24T18:30:00Z"
-    },
-    {
         "id": "c47434b1db9669d529abf029a61ca8b6",
         "home": "Jagiellonia Bia\u0142ystok",
         "away": "Korona Kielce",
@@ -7398,5 +7388,15 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-07-26T12:00:00Z"
+    },
+    {
+        "id": "7c80d07c72b6905f359ab637b313b120",
+        "home": "FC Lausanne-Sport",
+        "away": "Grasshopper Z\u00fcrich",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-07-25T16:00:00Z"
     }
 ]

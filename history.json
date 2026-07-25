@@ -23833,5 +23833,18 @@
         "profit": 202.5,
         "status": "WIN",
         "score": "2:1"
+    },
+    {
+        "id": "b9adf11268557ff688c88db3c7cf03d1",
+        "home": "Pogo\u0144 Szczecin",
+        "away": "Legia Warszawa",
+        "outcome": "Legia Warszawa",
+        "odds": 2.68,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-07-24T18:30:00Z",
+        "profit": 210.0,
+        "status": "WIN",
+        "score": "0:1"
     }
 ]
