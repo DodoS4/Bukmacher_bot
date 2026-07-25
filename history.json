@@ -23859,5 +23859,44 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:0"
+    },
+    {
+        "id": "86867dca7b9b803fe664681be0a00b01",
+        "home": "AGF Aarhus",
+        "away": "Brondby IF",
+        "outcome": "AGF Aarhus",
+        "odds": 2.44,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-07-25T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "7c80d07c72b6905f359ab637b313b120",
+        "home": "FC Lausanne-Sport",
+        "away": "Grasshopper Z\u00fcrich",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-07-25T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "50a5b31709bc8c3754a5f138d759c15d",
+        "home": "G\u00f3rnik Zabrze",
+        "away": "\u015al\u0105sk Wroc\u0142aw",
+        "outcome": "\u015al\u0105sk Wroc\u0142aw",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-07-25T15:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
     }
 ]
