@@ -24080,5 +24080,18 @@
         "profit": 600.0,
         "status": "WIN",
         "score": "2:1"
+    },
+    {
+        "id": "2fc44001bdc29ab13a5763f88eb89043",
+        "home": "BSC Young Boys",
+        "away": "FC Sion",
+        "outcome": "FC Sion",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-07-26T12:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "4:2"
     }
 ]
