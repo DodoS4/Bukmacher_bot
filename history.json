@@ -24119,5 +24119,18 @@
         "profit": 162.5,
         "status": "WIN",
         "score": "2:1"
+    },
+    {
+        "id": "8f397399f10216bc9a1d9831a54550ad",
+        "home": "Zag\u0142\u0119bie Lubin",
+        "away": "Piast Gliwice",
+        "outcome": "Piast Gliwice",
+        "odds": 2.7,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-07-27T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:0"
     }
 ]
