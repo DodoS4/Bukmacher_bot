@@ -7218,5 +7218,55 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-07-31T16:00:00Z"
+    },
+    {
+        "id": "40e5dc3182669f8142c236181bcf327e",
+        "home": "Wieczysta Krak\u00f3w",
+        "away": "Lech Pozna\u0144",
+        "outcome": "Wieczysta Krak\u00f3w",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-01T15:30:00Z"
+    },
+    {
+        "id": "c057323c1bc9aa0d77b69ba52cfb79f1",
+        "home": "WSG Tirol",
+        "away": "Sturm Graz",
+        "outcome": "WSG Tirol",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-01T15:00:00Z"
+    },
+    {
+        "id": "f31f4b6fa7e6aba2783914a7caeb6a3a",
+        "home": "Lyngby",
+        "away": "AGF Aarhus",
+        "outcome": "AGF Aarhus",
+        "odds": 2.26,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-01T16:00:00Z"
+    },
+    {
+        "id": "b89a0e7a714b79d338ce276adfb9c9a3",
+        "home": "FC Basel",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-01T16:00:00Z"
+    },
+    {
+        "id": "fc03687b90721ca242d2c147796ec56e",
+        "home": "Falkirk F.C.",
+        "away": "St Mirren",
+        "outcome": "Falkirk F.C.",
+        "odds": 2.08,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-01T14:00:00Z"
     }
 ]
