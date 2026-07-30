@@ -7268,5 +7268,25 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-08-01T14:00:00Z"
+    },
+    {
+        "id": "7212326fe5966b805452fd7f8b0a12eb",
+        "home": "FC Thun",
+        "away": "BSC Young Boys",
+        "outcome": "FC Thun",
+        "odds": 2.74,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-01T18:30:00Z"
+    },
+    {
+        "id": "4eda99032c13fd0fffb60ece22b3e033",
+        "home": "Aberdeen",
+        "away": "Hearts",
+        "outcome": "Aberdeen",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-01T16:30:00Z"
     }
 ]
