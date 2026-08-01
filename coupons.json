@@ -7210,16 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "a88b84040af2c78f8520b91adbc19c79",
-        "home": "Wis\u0142a P\u0142ock",
-        "away": "Widzew \u0141\u00f3d\u017a",
-        "outcome": "Wis\u0142a P\u0142ock",
-        "odds": 3.54,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-07-31T16:00:00Z"
-    },
-    {
         "id": "40e5dc3182669f8142c236181bcf327e",
         "home": "Wieczysta Krak\u00f3w",
         "away": "Lech Pozna\u0144",
@@ -7398,5 +7388,25 @@
         "stake": 400.0,
         "sport": "soccer_usa_mls",
         "time": "2026-08-02T02:45:00Z"
+    },
+    {
+        "id": "13550bcc2513df984d5bc4e2486f8a5a",
+        "home": "St Johnstone",
+        "away": "Kilmarnock",
+        "outcome": "St Johnstone",
+        "odds": 2.36,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-02T13:00:00Z"
+    },
+    {
+        "id": "fc30bc2a17e440c68526c3b960cf75e5",
+        "home": "Hibernian",
+        "away": "Motherwell",
+        "outcome": "Hibernian",
+        "odds": 2.34,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-02T15:30:00Z"
     }
 ]

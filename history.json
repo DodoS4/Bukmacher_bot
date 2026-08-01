@@ -24132,5 +24132,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "a88b84040af2c78f8520b91adbc19c79",
+        "home": "Wis\u0142a P\u0142ock",
+        "away": "Widzew \u0141\u00f3d\u017a",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 3.54,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-07-31T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
     }
 ]
