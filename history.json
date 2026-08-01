@@ -24158,5 +24158,83 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "0:2"
+    },
+    {
+        "id": "40e5dc3182669f8142c236181bcf327e",
+        "home": "Wieczysta Krak\u00f3w",
+        "away": "Lech Pozna\u0144",
+        "outcome": "Wieczysta Krak\u00f3w",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-01T15:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:2"
+    },
+    {
+        "id": "c057323c1bc9aa0d77b69ba52cfb79f1",
+        "home": "WSG Tirol",
+        "away": "Sturm Graz",
+        "outcome": "WSG Tirol",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-01T15:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "f31f4b6fa7e6aba2783914a7caeb6a3a",
+        "home": "Lyngby",
+        "away": "AGF Aarhus",
+        "outcome": "AGF Aarhus",
+        "odds": 2.26,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-01T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:2"
+    },
+    {
+        "id": "b89a0e7a714b79d338ce276adfb9c9a3",
+        "home": "FC Basel",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-01T16:00:00Z",
+        "profit": 343.75,
+        "status": "WIN",
+        "score": "0:1"
+    },
+    {
+        "id": "4eda99032c13fd0fffb60ece22b3e033",
+        "home": "Aberdeen",
+        "away": "Hearts",
+        "outcome": "Aberdeen",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-01T16:30:00Z",
+        "profit": 575.0,
+        "status": "WIN",
+        "score": "2:1"
+    },
+    {
+        "id": "191b7f4013972da25d42c4f5130c3a9f",
+        "home": "FC Zurich",
+        "away": "Servette",
+        "outcome": "Servette",
+        "odds": 2.1,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-01T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
     }
 ]

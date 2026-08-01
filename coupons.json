@@ -7210,46 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "40e5dc3182669f8142c236181bcf327e",
-        "home": "Wieczysta Krak\u00f3w",
-        "away": "Lech Pozna\u0144",
-        "outcome": "Wieczysta Krak\u00f3w",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-01T15:30:00Z"
-    },
-    {
-        "id": "c057323c1bc9aa0d77b69ba52cfb79f1",
-        "home": "WSG Tirol",
-        "away": "Sturm Graz",
-        "outcome": "WSG Tirol",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-08-01T15:00:00Z"
-    },
-    {
-        "id": "f31f4b6fa7e6aba2783914a7caeb6a3a",
-        "home": "Lyngby",
-        "away": "AGF Aarhus",
-        "outcome": "AGF Aarhus",
-        "odds": 2.26,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-01T16:00:00Z"
-    },
-    {
-        "id": "b89a0e7a714b79d338ce276adfb9c9a3",
-        "home": "FC Basel",
-        "away": "FC Lausanne-Sport",
-        "outcome": "FC Lausanne-Sport",
-        "odds": 3.75,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-08-01T16:00:00Z"
-    },
-    {
         "id": "7212326fe5966b805452fd7f8b0a12eb",
         "home": "FC Thun",
         "away": "BSC Young Boys",
@@ -7258,16 +7218,6 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-08-01T18:30:00Z"
-    },
-    {
-        "id": "4eda99032c13fd0fffb60ece22b3e033",
-        "home": "Aberdeen",
-        "away": "Hearts",
-        "outcome": "Aberdeen",
-        "odds": 3.3,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-08-01T16:30:00Z"
     },
     {
         "id": "53cfe86a940626e2850c65c057989f9b",
@@ -7410,16 +7360,6 @@
         "time": "2026-08-02T18:15:00Z"
     },
     {
-        "id": "191b7f4013972da25d42c4f5130c3a9f",
-        "home": "FC Zurich",
-        "away": "Servette",
-        "outcome": "Servette",
-        "odds": 2.1,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-08-01T16:00:00Z"
-    },
-    {
         "id": "67896cfae491bc60c2119972384cfed0",
         "home": "Brondby IF",
         "away": "Viborg FF",
@@ -7428,5 +7368,25 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-08-02T14:00:00Z"
+    },
+    {
+        "id": "08194d1393da1028e7ed6a51a1447ae5",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Pogo\u0144 Szczecin",
+        "outcome": "Pogo\u0144 Szczecin",
+        "odds": 3.88,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-03T17:00:00Z"
+    },
+    {
+        "id": "9b5af91f857613afa306addaf1164aa7",
+        "home": "OB Odense BK",
+        "away": "SonderjyskE",
+        "outcome": "SonderjyskE",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-03T17:00:00Z"
     }
 ]
