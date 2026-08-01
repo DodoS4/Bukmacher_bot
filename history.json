@@ -24145,5 +24145,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:0"
+    },
+    {
+        "id": "fc03687b90721ca242d2c147796ec56e",
+        "home": "Falkirk F.C.",
+        "away": "St Mirren",
+        "outcome": "Falkirk F.C.",
+        "odds": 2.08,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-01T14:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "0:2"
     }
 ]

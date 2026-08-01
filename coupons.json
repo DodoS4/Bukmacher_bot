@@ -7250,16 +7250,6 @@
         "time": "2026-08-01T16:00:00Z"
     },
     {
-        "id": "fc03687b90721ca242d2c147796ec56e",
-        "home": "Falkirk F.C.",
-        "away": "St Mirren",
-        "outcome": "Falkirk F.C.",
-        "odds": 2.08,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-08-01T14:00:00Z"
-    },
-    {
         "id": "7212326fe5966b805452fd7f8b0a12eb",
         "home": "FC Thun",
         "away": "BSC Young Boys",
@@ -7428,5 +7418,15 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-08-01T16:00:00Z"
+    },
+    {
+        "id": "67896cfae491bc60c2119972384cfed0",
+        "home": "Brondby IF",
+        "away": "Viborg FF",
+        "outcome": "Viborg FF",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-02T14:00:00Z"
     }
 ]
