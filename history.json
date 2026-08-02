@@ -24392,5 +24392,31 @@
         "profit": -400.0,
         "status": "LOSS",
         "score": "2:1"
+    },
+    {
+        "id": "13550bcc2513df984d5bc4e2486f8a5a",
+        "home": "St Johnstone",
+        "away": "Kilmarnock",
+        "outcome": "St Johnstone",
+        "odds": 2.36,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-02T13:00:00Z",
+        "profit": 340.0,
+        "status": "WIN",
+        "score": "4:3"
+    },
+    {
+        "id": "67896cfae491bc60c2119972384cfed0",
+        "home": "Brondby IF",
+        "away": "Viborg FF",
+        "outcome": "Viborg FF",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-02T14:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:0"
     }
 ]
