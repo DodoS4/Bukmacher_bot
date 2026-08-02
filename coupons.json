@@ -7298,5 +7298,15 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-08-02T14:30:00Z"
+    },
+    {
+        "id": "df5e92241143132cd0bfa0211a7cd98a",
+        "home": "\u015al\u0105sk Wroc\u0142aw",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "\u015al\u0105sk Wroc\u0142aw",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-02T15:30:00Z"
     }
 ]
