@@ -24418,5 +24418,70 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:0"
+    },
+    {
+        "id": "fc30bc2a17e440c68526c3b960cf75e5",
+        "home": "Hibernian",
+        "away": "Motherwell",
+        "outcome": "Hibernian",
+        "odds": 2.34,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-02T15:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:2"
+    },
+    {
+        "id": "524023fb163d291b39d88056f6c2c1f3",
+        "home": "Austria Lustenau",
+        "away": "Ried",
+        "outcome": "Ried",
+        "odds": 2.7,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-02T15:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "d4e2d407a0fc75fb044f074d0cf70925",
+        "home": "Wolfsberger AC",
+        "away": "Austria Wien",
+        "outcome": "Wolfsberger AC",
+        "odds": 2.48,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-02T15:00:00Z",
+        "profit": 185.0,
+        "status": "WIN",
+        "score": "3:0"
+    },
+    {
+        "id": "da3fa5bb246be607cd763d81dd8311ee",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC Lugano",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-02T14:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:4"
+    },
+    {
+        "id": "df5e92241143132cd0bfa0211a7cd98a",
+        "home": "\u015al\u0105sk Wroc\u0142aw",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "\u015al\u0105sk Wroc\u0142aw",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-02T15:30:00Z",
+        "profit": 262.5,
+        "status": "WIN",
+        "score": "2:1"
     }
 ]
