@@ -7208,25 +7208,5 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-07-17T00:30:00Z"
-    },
-    {
-        "id": "08194d1393da1028e7ed6a51a1447ae5",
-        "home": "Cracovia Krak\u00f3w",
-        "away": "Pogo\u0144 Szczecin",
-        "outcome": "Pogo\u0144 Szczecin",
-        "odds": 3.88,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-03T17:00:00Z"
-    },
-    {
-        "id": "9b5af91f857613afa306addaf1164aa7",
-        "home": "OB Odense BK",
-        "away": "SonderjyskE",
-        "outcome": "SonderjyskE",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-03T17:00:00Z"
     }
 ]
