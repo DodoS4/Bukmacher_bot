@@ -7288,5 +7288,15 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-08-08T20:30:00Z"
+    },
+    {
+        "id": "75e8cad886f551dfae05b68a9de06e10",
+        "home": "CS Maritimo",
+        "away": "Casa Pia",
+        "outcome": "Casa Pia",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-08T14:30:00Z"
     }
 ]
