@@ -7298,5 +7298,25 @@
         "stake": 125.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-08-08T14:30:00Z"
+    },
+    {
+        "id": "8a1a1dc6ce9d0f10ee76be1e1e67dc76",
+        "home": "Korona Kielce",
+        "away": "Legia Warszawa",
+        "outcome": "Legia Warszawa",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-08T18:15:00Z"
+    },
+    {
+        "id": "9975a639726d04cf12c2eb6af525e84b",
+        "home": "Gent",
+        "away": "KV Mechelen",
+        "outcome": "KV Mechelen",
+        "odds": 3.8,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-09T11:30:00Z"
     }
 ]
