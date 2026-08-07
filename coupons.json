@@ -7210,16 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "f76af73d273ab4bc73d57587d5d6c7ff",
-        "home": "SonderjyskE",
-        "away": "Viborg FF",
-        "outcome": "SonderjyskE",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-07T17:00:00Z"
-    },
-    {
         "id": "c1c546ea86af00107212cbee534fb018",
         "home": "Pogo\u0144 Szczecin",
         "away": "Motor Lublin",
@@ -7388,5 +7378,25 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-08-09T14:00:00Z"
+    },
+    {
+        "id": "9e4982aee8921f2f7854b2fa9f69ac2a",
+        "home": "Gil Vicente",
+        "away": "Rio Ave FC",
+        "outcome": "Rio Ave FC",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-09T19:30:00Z"
+    },
+    {
+        "id": "71866abfdc93a2b5c476fec615cd1c69",
+        "home": "Austria Wien",
+        "away": "LASK",
+        "outcome": "Austria Wien",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-09T17:00:00Z"
     }
 ]

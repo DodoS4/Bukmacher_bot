@@ -24522,5 +24522,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:0"
+    },
+    {
+        "id": "f76af73d273ab4bc73d57587d5d6c7ff",
+        "home": "SonderjyskE",
+        "away": "Viborg FF",
+        "outcome": "SonderjyskE",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-07T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
     }
 ]
