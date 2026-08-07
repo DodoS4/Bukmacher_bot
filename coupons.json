@@ -7218,5 +7218,75 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-08-07T17:00:00Z"
+    },
+    {
+        "id": "c1c546ea86af00107212cbee534fb018",
+        "home": "Pogo\u0144 Szczecin",
+        "away": "Motor Lublin",
+        "outcome": "Motor Lublin",
+        "odds": 3.67,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-08T15:30:00Z"
+    },
+    {
+        "id": "c867110b5c1334683aff3758981fcb52",
+        "home": "Standard Liege",
+        "away": "Cercle Brugge KSV",
+        "outcome": "Standard Liege",
+        "odds": 2.44,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-08T16:15:00Z"
+    },
+    {
+        "id": "7ce183dba4be2cc122cba70a3b756122",
+        "home": "Westerlo",
+        "away": "Union Saint-Gilloise",
+        "outcome": "Westerlo",
+        "odds": 4.5,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-08T18:45:00Z"
+    },
+    {
+        "id": "750926d3a981cf743dd107b9dd27f235",
+        "home": "Rheindorf Altach",
+        "away": "WSG Tirol",
+        "outcome": "WSG Tirol",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-07T17:30:00Z"
+    },
+    {
+        "id": "8a48f193905335d39a4b66905c80550d",
+        "home": "Dundee FC",
+        "away": "Aberdeen",
+        "outcome": "Aberdeen",
+        "odds": 2.64,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-08T14:00:00Z"
+    },
+    {
+        "id": "0385d6e349a2a311cc5843975015873b",
+        "home": "St Mirren",
+        "away": "St Johnstone",
+        "outcome": "St Johnstone",
+        "odds": 3.25,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-08-08T14:00:00Z"
+    },
+    {
+        "id": "665b6a3861ae02435e47693dfecb6717",
+        "home": "New England Revolution",
+        "away": "Houston Dynamo",
+        "outcome": "Houston Dynamo",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-08T20:30:00Z"
     }
 ]
