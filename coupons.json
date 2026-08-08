@@ -7210,26 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "c1c546ea86af00107212cbee534fb018",
-        "home": "Pogo\u0144 Szczecin",
-        "away": "Motor Lublin",
-        "outcome": "Motor Lublin",
-        "odds": 3.67,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-08T15:30:00Z"
-    },
-    {
-        "id": "c867110b5c1334683aff3758981fcb52",
-        "home": "Standard Liege",
-        "away": "Cercle Brugge KSV",
-        "outcome": "Standard Liege",
-        "odds": 2.44,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-08T16:15:00Z"
-    },
-    {
         "id": "7ce183dba4be2cc122cba70a3b756122",
         "home": "Westerlo",
         "away": "Union Saint-Gilloise",
@@ -7240,26 +7220,6 @@
         "time": "2026-08-08T18:45:00Z"
     },
     {
-        "id": "8a48f193905335d39a4b66905c80550d",
-        "home": "Dundee FC",
-        "away": "Aberdeen",
-        "outcome": "Aberdeen",
-        "odds": 2.64,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-08-08T14:00:00Z"
-    },
-    {
-        "id": "0385d6e349a2a311cc5843975015873b",
-        "home": "St Mirren",
-        "away": "St Johnstone",
-        "outcome": "St Johnstone",
-        "odds": 3.25,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-08-08T14:00:00Z"
-    },
-    {
         "id": "665b6a3861ae02435e47693dfecb6717",
         "home": "New England Revolution",
         "away": "Houston Dynamo",
@@ -7268,16 +7228,6 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-08-08T20:30:00Z"
-    },
-    {
-        "id": "75e8cad886f551dfae05b68a9de06e10",
-        "home": "CS Maritimo",
-        "away": "Casa Pia",
-        "outcome": "Casa Pia",
-        "odds": 3.05,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-08-08T14:30:00Z"
     },
     {
         "id": "8a1a1dc6ce9d0f10ee76be1e1e67dc76",
@@ -7330,16 +7280,6 @@
         "time": "2026-08-09T14:00:00Z"
     },
     {
-        "id": "96eeececd0e89110835293c17ca72948",
-        "home": "Grazer AK",
-        "away": "Austria Lustenau",
-        "outcome": "Austria Lustenau",
-        "odds": 3.72,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-08-08T15:00:00Z"
-    },
-    {
         "id": "8c2b68167fc053df8b2114f97dda2f16",
         "home": "Wolfsberger AC",
         "away": "RB Salzburg",
@@ -7390,16 +7330,6 @@
         "time": "2026-08-09T18:15:00Z"
     },
     {
-        "id": "1bb1dc592ae4f1017aae3a36901b536b",
-        "home": "Vit\u00f3ria SC",
-        "away": "Arouca",
-        "outcome": "Arouca",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-08-08T17:00:00Z"
-    },
-    {
         "id": "d9d4377ddc0c935e119a60d69a82a73f",
         "home": "Royal Antwerp",
         "away": "SK Beveren",
@@ -7430,16 +7360,6 @@
         "time": "2026-08-09T14:00:00Z"
     },
     {
-        "id": "c77211f322b9972c2bd43bbc8b5b13be",
-        "home": "FC Lausanne-Sport",
-        "away": "BSC Young Boys",
-        "outcome": "FC Lausanne-Sport",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-08-08T16:00:00Z"
-    },
-    {
         "id": "2fef294b70aefb4ee114b4c3a44341e0",
         "home": "Heerenveen",
         "away": "FC Twente Enschede",
@@ -7448,5 +7368,25 @@
         "stake": 125.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-08-09T14:45:00Z"
+    },
+    {
+        "id": "13ad30c59ec1101352dfa35218427a28",
+        "home": "Silkeborg IF",
+        "away": "OB Odense BK",
+        "outcome": "Silkeborg IF",
+        "odds": 2.82,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-10T17:00:00Z"
+    },
+    {
+        "id": "fea240d8e6064b252712005a1eb003df",
+        "home": "FC Basel",
+        "away": "FC Thun",
+        "outcome": "FC Thun",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-09T14:30:00Z"
     }
 ]
