@@ -7448,5 +7448,15 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-08-08T16:00:00Z"
+    },
+    {
+        "id": "2fef294b70aefb4ee114b4c3a44341e0",
+        "home": "Heerenveen",
+        "away": "FC Twente Enschede",
+        "outcome": "Heerenveen",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-08-09T14:45:00Z"
     }
 ]
