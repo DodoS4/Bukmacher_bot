@@ -7240,16 +7240,6 @@
         "time": "2026-08-08T18:45:00Z"
     },
     {
-        "id": "750926d3a981cf743dd107b9dd27f235",
-        "home": "Rheindorf Altach",
-        "away": "WSG Tirol",
-        "outcome": "WSG Tirol",
-        "odds": 3.8,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-08-07T17:30:00Z"
-    },
-    {
         "id": "8a48f193905335d39a4b66905c80550d",
         "home": "Dundee FC",
         "away": "Aberdeen",
@@ -7308,16 +7298,6 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-08-09T11:30:00Z"
-    },
-    {
-        "id": "fe01f0849f3af49029c2faf03f09bc62",
-        "home": "Estoril",
-        "away": "Famalic\u00e3o",
-        "outcome": "Famalic\u00e3o",
-        "odds": 2.64,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-08-07T19:15:00Z"
     },
     {
         "id": "4bb3882580d6a46c4270f1c66296c00d",
@@ -7398,5 +7378,75 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-08-09T17:00:00Z"
+    },
+    {
+        "id": "0da969ba67d50e9f3094aead333feda3",
+        "home": "Radomiak Radom",
+        "away": "G\u00f3rnik Zabrze",
+        "outcome": "G\u00f3rnik Zabrze",
+        "odds": 2.54,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-08T12:45:00Z"
+    },
+    {
+        "id": "77498df61ba2ae1cb86f7f075f8dfb54",
+        "home": "Jagiellonia Bia\u0142ystok",
+        "away": "Widzew \u0141\u00f3d\u017a",
+        "outcome": "Widzew \u0141\u00f3d\u017a",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-09T18:15:00Z"
+    },
+    {
+        "id": "1bb1dc592ae4f1017aae3a36901b536b",
+        "home": "Vit\u00f3ria SC",
+        "away": "Arouca",
+        "outcome": "Arouca",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-08T17:00:00Z"
+    },
+    {
+        "id": "d9d4377ddc0c935e119a60d69a82a73f",
+        "home": "Royal Antwerp",
+        "away": "SK Beveren",
+        "outcome": "Royal Antwerp",
+        "odds": 1.8,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-09T17:15:00Z"
+    },
+    {
+        "id": "d2d40f7df3666841e67bb7cbf1d7f991",
+        "home": "Ried",
+        "away": "Rapid Wien",
+        "outcome": "Ried",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-09T15:00:00Z"
+    },
+    {
+        "id": "88a691bd4846347b2e874950c5d9a173",
+        "home": "Randers FC",
+        "away": "Lyngby",
+        "outcome": "Randers FC",
+        "odds": 2.28,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-09T14:00:00Z"
+    },
+    {
+        "id": "c77211f322b9972c2bd43bbc8b5b13be",
+        "home": "FC Lausanne-Sport",
+        "away": "BSC Young Boys",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-08T16:00:00Z"
     }
 ]

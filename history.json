@@ -24535,5 +24535,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:0"
+    },
+    {
+        "id": "750926d3a981cf743dd107b9dd27f235",
+        "home": "Rheindorf Altach",
+        "away": "WSG Tirol",
+        "outcome": "WSG Tirol",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-07T17:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "fe01f0849f3af49029c2faf03f09bc62",
+        "home": "Estoril",
+        "away": "Famalic\u00e3o",
+        "outcome": "Famalic\u00e3o",
+        "odds": 2.64,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-07T19:15:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
