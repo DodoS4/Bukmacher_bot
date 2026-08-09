@@ -24678,5 +24678,44 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:2"
+    },
+    {
+        "id": "7ce183dba4be2cc122cba70a3b756122",
+        "home": "Westerlo",
+        "away": "Union Saint-Gilloise",
+        "outcome": "Westerlo",
+        "odds": 4.5,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-08T18:45:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "1:5"
+    },
+    {
+        "id": "665b6a3861ae02435e47693dfecb6717",
+        "home": "New England Revolution",
+        "away": "Houston Dynamo",
+        "outcome": "Houston Dynamo",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-08T20:30:00Z",
+        "profit": 500.0,
+        "status": "WIN",
+        "score": "0:2"
+    },
+    {
+        "id": "8a1a1dc6ce9d0f10ee76be1e1e67dc76",
+        "home": "Korona Kielce",
+        "away": "Legia Warszawa",
+        "outcome": "Legia Warszawa",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-08T18:15:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
