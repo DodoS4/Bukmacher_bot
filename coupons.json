@@ -7210,26 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "9975a639726d04cf12c2eb6af525e84b",
-        "home": "Gent",
-        "away": "KV Mechelen",
-        "outcome": "KV Mechelen",
-        "odds": 3.8,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-09T11:30:00Z"
-    },
-    {
-        "id": "4bb3882580d6a46c4270f1c66296c00d",
-        "home": "Groningen",
-        "away": "FC Utrecht",
-        "outcome": "Groningen",
-        "odds": 2.48,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-08-09T12:30:00Z"
-    },
-    {
         "id": "71d869f64273f53c8190088817aab46a",
         "home": "Charleroi",
         "away": "Leuven",
