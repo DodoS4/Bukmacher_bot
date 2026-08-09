@@ -7358,5 +7358,15 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-08-09T14:30:00Z"
+    },
+    {
+        "id": "823cde29e8bfad6a621fd7fdcd816227",
+        "home": "FC St Gallen",
+        "away": "FC Luzern",
+        "outcome": "FC Luzern",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-09T14:30:00Z"
     }
 ]
