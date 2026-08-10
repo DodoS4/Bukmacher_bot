@@ -7210,36 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "9e4982aee8921f2f7854b2fa9f69ac2a",
-        "home": "Gil Vicente",
-        "away": "Rio Ave FC",
-        "outcome": "Rio Ave FC",
-        "odds": 4.4,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-08-09T19:30:00Z"
-    },
-    {
-        "id": "77498df61ba2ae1cb86f7f075f8dfb54",
-        "home": "Jagiellonia Bia\u0142ystok",
-        "away": "Widzew \u0141\u00f3d\u017a",
-        "outcome": "Widzew \u0141\u00f3d\u017a",
-        "odds": 3.05,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-09T18:15:00Z"
-    },
-    {
-        "id": "d9d4377ddc0c935e119a60d69a82a73f",
-        "home": "Royal Antwerp",
-        "away": "SK Beveren",
-        "outcome": "Royal Antwerp",
-        "odds": 1.8,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-09T17:15:00Z"
-    },
-    {
         "id": "13ad30c59ec1101352dfa35218427a28",
         "home": "Silkeborg IF",
         "away": "OB Odense BK",
