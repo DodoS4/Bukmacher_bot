@@ -7208,15 +7208,5 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-07-17T00:30:00Z"
-    },
-    {
-        "id": "13ad30c59ec1101352dfa35218427a28",
-        "home": "Silkeborg IF",
-        "away": "OB Odense BK",
-        "outcome": "Silkeborg IF",
-        "odds": 2.82,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-10T17:00:00Z"
     }
 ]

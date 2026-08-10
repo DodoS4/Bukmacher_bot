@@ -24912,5 +24912,18 @@
         "profit": 260.0,
         "status": "WIN",
         "score": "2:1"
+    },
+    {
+        "id": "13ad30c59ec1101352dfa35218427a28",
+        "home": "Silkeborg IF",
+        "away": "OB Odense BK",
+        "outcome": "Silkeborg IF",
+        "odds": 2.82,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-10T17:00:00Z",
+        "profit": 227.5,
+        "status": "WIN",
+        "score": "1:0"
     }
 ]
