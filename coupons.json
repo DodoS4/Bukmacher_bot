@@ -7208,5 +7208,25 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-07-17T00:30:00Z"
+    },
+    {
+        "id": "fecfc8ff33ca979a216830d1c2d8af60",
+        "home": "Cercle Brugge KSV",
+        "away": "Sint Truiden",
+        "outcome": "Cercle Brugge KSV",
+        "odds": 2.33,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-14T18:45:00Z"
+    },
+    {
+        "id": "1f29f10badb7a62d98ee20c8b4c39791",
+        "home": "Viborg FF",
+        "away": "AGF Aarhus",
+        "outcome": "AGF Aarhus",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-14T17:00:00Z"
     }
 ]
