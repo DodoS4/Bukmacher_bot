@@ -7248,5 +7248,45 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-08-15T15:00:00Z"
+    },
+    {
+        "id": "d1d57dea05f7717f803d0db88e2fbbc8",
+        "home": "Alverca",
+        "away": "CF Estrela",
+        "outcome": "CF Estrela",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-15T14:30:00Z"
+    },
+    {
+        "id": "fbecc48515be0a8a0260d073d0f7e40c",
+        "home": "KV Kortrijk",
+        "away": "Royal Antwerp",
+        "outcome": "Royal Antwerp",
+        "odds": 2.76,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-15T16:15:00Z"
+    },
+    {
+        "id": "3fe7127e2d77a2b83d8fe3a9037a56f2",
+        "home": "Bolton Wanderers",
+        "away": "Preston North End",
+        "outcome": "Preston North End",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-15T11:30:00Z"
+    },
+    {
+        "id": "779b9ecca0a96a9b638dcdc38bee85cd",
+        "home": "Stoke City",
+        "away": "Swansea City",
+        "outcome": "Swansea City",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-15T14:00:00Z"
     }
 ]
