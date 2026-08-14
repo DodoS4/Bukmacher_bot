@@ -7398,5 +7398,35 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-08-16T02:30:00Z"
+    },
+    {
+        "id": "ee24e0a4e57e00f6243aa50b0fe379f7",
+        "home": "Kasimpasa SK",
+        "away": "Trabzonspor",
+        "outcome": "Kasimpasa SK",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-15T16:00:00Z"
+    },
+    {
+        "id": "6ad55a85cb05238b359ebd58534a8f85",
+        "home": "Gazi\u015fehir Gaziantep",
+        "away": "Alanyaspor",
+        "outcome": "Alanyaspor",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-15T18:30:00Z"
+    },
+    {
+        "id": "94cc0a423e1e88d91ec810d3c65f8dd8",
+        "home": "SK Beveren",
+        "away": "Anderlecht",
+        "outcome": "SK Beveren",
+        "odds": 3.5,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-16T11:30:00Z"
     }
 ]
