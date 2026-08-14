@@ -7220,16 +7220,6 @@
         "time": "2026-08-14T18:45:00Z"
     },
     {
-        "id": "1f29f10badb7a62d98ee20c8b4c39791",
-        "home": "Viborg FF",
-        "away": "AGF Aarhus",
-        "outcome": "AGF Aarhus",
-        "odds": 3.65,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-14T17:00:00Z"
-    },
-    {
         "id": "a8e9a685875cb280889d4a17f2c88550",
         "home": "Zag\u0142\u0119bie Lubin",
         "away": "\u015al\u0105sk Wroc\u0142aw",
@@ -7478,5 +7468,65 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-08-16T15:00:00Z"
+    },
+    {
+        "id": "42a5599614c78c079a89e620b3e06739",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Rak\u00f3w Cz\u0119stochowa",
+        "odds": 2.72,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-16T15:30:00Z"
+    },
+    {
+        "id": "7929df954375baae70c9182d5069ecc7",
+        "home": "Arouca",
+        "away": "Moreirense FC",
+        "outcome": "Arouca",
+        "odds": 2.26,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-16T17:00:00Z"
+    },
+    {
+        "id": "475b8466285fa88e61b3140efd9e3e70",
+        "home": "KV Mechelen",
+        "away": "Standard Liege",
+        "outcome": "Standard Liege",
+        "odds": 2.75,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-16T16:30:00Z"
+    },
+    {
+        "id": "f65624c36cefaf719ea4fd75deffb790",
+        "home": "Lommel SK",
+        "away": "Charleroi",
+        "outcome": "Lommel SK",
+        "odds": 3.4,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-16T17:15:00Z"
+    },
+    {
+        "id": "c028d320a770bf1b99597c63a0a0fc55",
+        "home": "Portsmouth",
+        "away": "Queens Park Rangers",
+        "outcome": "Portsmouth",
+        "odds": 2.48,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-15T14:00:00Z"
+    },
+    {
+        "id": "0cb1b113469e83f07b4593116cfa9339",
+        "home": "Sheffield United",
+        "away": "Birmingham City",
+        "outcome": "Birmingham City",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-15T16:30:00Z"
     }
 ]

@@ -24925,5 +24925,18 @@
         "profit": 227.5,
         "status": "WIN",
         "score": "1:0"
+    },
+    {
+        "id": "1f29f10badb7a62d98ee20c8b4c39791",
+        "home": "Viborg FF",
+        "away": "AGF Aarhus",
+        "outcome": "AGF Aarhus",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-14T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
     }
 ]
