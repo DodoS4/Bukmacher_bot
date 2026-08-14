@@ -7288,5 +7288,115 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-08-15T14:00:00Z"
+    },
+    {
+        "id": "6ba35bfd1258e3e284f60968ef6d8cf3",
+        "home": "Widzew \u0141\u00f3d\u017a",
+        "away": "Korona Kielce",
+        "outcome": "Korona Kielce",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-15T18:15:00Z"
+    },
+    {
+        "id": "d2e7e245e43705d3059b84dec8d007fe",
+        "home": "Charlton Athletic",
+        "away": "Derby County",
+        "outcome": "Charlton Athletic",
+        "odds": 2.9,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-15T14:00:00Z"
+    },
+    {
+        "id": "570a465b84ec706d58cc57f558ebf29b",
+        "home": "Norwich City",
+        "away": "West Bromwich Albion",
+        "outcome": "West Bromwich Albion",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-15T14:00:00Z"
+    },
+    {
+        "id": "cf2d7beb03aa818fba73e06b15081005",
+        "home": "Atlanta United FC",
+        "away": "New York Red Bulls",
+        "outcome": "Atlanta United FC",
+        "odds": 2.0,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-15T23:30:00Z"
+    },
+    {
+        "id": "04b9b6a8ed4f72c2072b326d55310108",
+        "home": "CF Montreal",
+        "away": "D.C. United",
+        "outcome": "CF Montreal",
+        "odds": 2.32,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-15T23:30:00Z"
+    },
+    {
+        "id": "5c2f5b559ef265b51ae01949ff1d66b1",
+        "home": "Charlotte FC",
+        "away": "Columbus Crew SC",
+        "outcome": "Charlotte FC",
+        "odds": 2.36,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-15T23:30:00Z"
+    },
+    {
+        "id": "efa8affdba1ca1e015a891f2e0c0ff45",
+        "home": "Orlando City SC",
+        "away": "FC Cincinnati",
+        "outcome": "Orlando City SC",
+        "odds": 2.3,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-15T23:30:00Z"
+    },
+    {
+        "id": "7d87a0de5f3e7c3a075cd1c1e0863e4f",
+        "home": "Toronto FC",
+        "away": "New England Revolution",
+        "outcome": "Toronto FC",
+        "odds": 2.32,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-15T23:30:00Z"
+    },
+    {
+        "id": "58973bb6280506fad9ae370deb9de85a",
+        "home": "Nashville SC",
+        "away": "Inter Miami CF",
+        "outcome": "Inter Miami CF",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-16T00:30:00Z"
+    },
+    {
+        "id": "ffbec045e6bd26649f263200a7d3bbe0",
+        "home": "Real Salt Lake",
+        "away": "Minnesota United FC",
+        "outcome": "Real Salt Lake",
+        "odds": 1.81,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-16T01:30:00Z"
+    },
+    {
+        "id": "762af8fa5bf4befb1e6aee416452e3ad",
+        "home": "San Jose Earthquakes",
+        "away": "St. Louis City SC",
+        "outcome": "St. Louis City SC",
+        "odds": 3.37,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-16T02:30:00Z"
     }
 ]
