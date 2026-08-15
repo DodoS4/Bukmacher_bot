@@ -7588,5 +7588,15 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-08-17T02:30:00Z"
+    },
+    {
+        "id": "0518dd5358a1955d59561b30f702a651",
+        "home": "Bristol City",
+        "away": "Millwall",
+        "outcome": "Bristol City",
+        "odds": 2.74,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-15T14:00:00Z"
     }
 ]
