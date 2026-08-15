@@ -7210,16 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "a8e9a685875cb280889d4a17f2c88550",
-        "home": "Zag\u0142\u0119bie Lubin",
-        "away": "\u015al\u0105sk Wroc\u0142aw",
-        "outcome": "\u015al\u0105sk Wroc\u0142aw",
-        "odds": 3.82,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-15T12:45:00Z"
-    },
-    {
         "id": "1fe48ff20e733913397bc30a8f4be1f7",
         "home": "Austria Lustenau",
         "away": "Wolfsberger AC",
@@ -7248,16 +7238,6 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-08-15T16:15:00Z"
-    },
-    {
-        "id": "3fe7127e2d77a2b83d8fe3a9037a56f2",
-        "home": "Bolton Wanderers",
-        "away": "Preston North End",
-        "outcome": "Preston North End",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-15T11:30:00Z"
     },
     {
         "id": "779b9ecca0a96a9b638dcdc38bee85cd",
@@ -7598,5 +7578,15 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-08-15T14:00:00Z"
+    },
+    {
+        "id": "2e55b844634f3ab5b6cd0269a71856b6",
+        "home": "FC Utrecht",
+        "away": "AZ Alkmaar",
+        "outcome": "AZ Alkmaar",
+        "odds": 2.6,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-08-15T16:45:00Z"
     }
 ]
