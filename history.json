@@ -24938,5 +24938,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:1"
+    },
+    {
+        "id": "fecfc8ff33ca979a216830d1c2d8af60",
+        "home": "Cercle Brugge KSV",
+        "away": "Sint Truiden",
+        "outcome": "Cercle Brugge KSV",
+        "odds": 2.33,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-14T18:45:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "3:3"
     }
 ]

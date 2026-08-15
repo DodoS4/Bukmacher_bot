@@ -7210,16 +7210,6 @@
         "time": "2026-07-17T00:30:00Z"
     },
     {
-        "id": "fecfc8ff33ca979a216830d1c2d8af60",
-        "home": "Cercle Brugge KSV",
-        "away": "Sint Truiden",
-        "outcome": "Cercle Brugge KSV",
-        "odds": 2.33,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-14T18:45:00Z"
-    },
-    {
         "id": "a8e9a685875cb280889d4a17f2c88550",
         "home": "Zag\u0142\u0119bie Lubin",
         "away": "\u015al\u0105sk Wroc\u0142aw",
@@ -7528,5 +7518,75 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-08-15T16:30:00Z"
+    },
+    {
+        "id": "28c33e941922e40bec344f7c7bfa9c44",
+        "home": "Acad\u00e9mico de Viseu",
+        "away": "Santa Clara",
+        "outcome": "Acad\u00e9mico de Viseu",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-15T17:00:00Z"
+    },
+    {
+        "id": "8f62e3db1796311072d59bf0876613b8",
+        "home": "Torku Konyaspor",
+        "away": "\u00c7aykur Rizespor",
+        "outcome": "\u00c7aykur Rizespor",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-15T16:00:00Z"
+    },
+    {
+        "id": "ba3746776d0ee70ced3b67ac75a79bbb",
+        "home": "Lyngby",
+        "away": "FC Midtjylland",
+        "outcome": "Lyngby",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-16T14:00:00Z"
+    },
+    {
+        "id": "91d4e94bde30d52438d3cd07b52d0e9f",
+        "home": "Houston Dynamo",
+        "away": "LA Galaxy",
+        "outcome": "Houston Dynamo",
+        "odds": 1.8,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-16T00:30:00Z"
+    },
+    {
+        "id": "c3be3958beef3c35ea4a9dac6e028863",
+        "home": "New York City FC",
+        "away": "Philadelphia Union",
+        "outcome": "New York City FC",
+        "odds": 2.44,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-16T22:00:00Z"
+    },
+    {
+        "id": "0198abf59a592bb8855ebf7430656607",
+        "home": "Austin FC",
+        "away": "FC Dallas",
+        "outcome": "Austin FC",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-17T00:30:00Z"
+    },
+    {
+        "id": "235d6733ba040815d12859e40de81c1e",
+        "home": "Seattle Sounders FC",
+        "away": "Vancouver Whitecaps FC",
+        "outcome": "Seattle Sounders FC",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-17T02:30:00Z"
     }
 ]
