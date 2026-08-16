@@ -25289,5 +25289,57 @@
         "profit": 200.0,
         "status": "WIN",
         "score": "1:0"
+    },
+    {
+        "id": "94cc0a423e1e88d91ec810d3c65f8dd8",
+        "home": "SK Beveren",
+        "away": "Anderlecht",
+        "outcome": "SK Beveren",
+        "odds": 3.5,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-16T11:30:00Z",
+        "profit": 812.5,
+        "status": "WIN",
+        "score": "1:0"
+    },
+    {
+        "id": "e7058353789b7cf1130a7709f703f2b5",
+        "home": "ADO Den Haag",
+        "away": "Groningen",
+        "outcome": "Groningen",
+        "odds": 2.56,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-08-16T10:15:00Z",
+        "profit": 195.0,
+        "status": "WIN",
+        "score": "1:4"
+    },
+    {
+        "id": "0e01068c7b15cd9fdddf8ad5237d2170",
+        "home": "Watford",
+        "away": "Southampton",
+        "outcome": "Watford",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-16T12:30:00Z",
+        "profit": 337.5,
+        "status": "WIN",
+        "score": "2:1"
+    },
+    {
+        "id": "59ec5c1977de5d1b6eb825291f2dfaa0",
+        "home": "Motor Lublin",
+        "away": "GKS Katowice",
+        "outcome": "GKS Katowice",
+        "odds": 2.94,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-16T12:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:0"
     }
 ]
