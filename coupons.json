@@ -7220,56 +7220,6 @@
         "time": "2026-08-16T15:30:00Z"
     },
     {
-        "id": "af71115ee51c8a00c552c00e1013552d",
-        "home": "RAAL La Louvi\u00e8re",
-        "away": "Gent",
-        "outcome": "Gent",
-        "odds": 2.38,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-16T14:00:00Z"
-    },
-    {
-        "id": "fd2380fb0d0736468c7a58dfe8c1d6e2",
-        "home": "Burnley",
-        "away": "West Ham United",
-        "outcome": "Burnley",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-16T15:00:00Z"
-    },
-    {
-        "id": "42a5599614c78c079a89e620b3e06739",
-        "home": "Cracovia Krak\u00f3w",
-        "away": "Rak\u00f3w Cz\u0119stochowa",
-        "outcome": "Rak\u00f3w Cz\u0119stochowa",
-        "odds": 2.72,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-16T15:30:00Z"
-    },
-    {
-        "id": "7929df954375baae70c9182d5069ecc7",
-        "home": "Arouca",
-        "away": "Moreirense FC",
-        "outcome": "Arouca",
-        "odds": 2.26,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-08-16T17:00:00Z"
-    },
-    {
-        "id": "475b8466285fa88e61b3140efd9e3e70",
-        "home": "KV Mechelen",
-        "away": "Standard Liege",
-        "outcome": "Standard Liege",
-        "odds": 2.75,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-16T16:30:00Z"
-    },
-    {
         "id": "f65624c36cefaf719ea4fd75deffb790",
         "home": "Lommel SK",
         "away": "Charleroi",
@@ -7278,16 +7228,6 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-08-16T17:15:00Z"
-    },
-    {
-        "id": "ba3746776d0ee70ced3b67ac75a79bbb",
-        "home": "Lyngby",
-        "away": "FC Midtjylland",
-        "outcome": "Lyngby",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-16T14:00:00Z"
     },
     {
         "id": "c3be3958beef3c35ea4a9dac6e028863",
@@ -7330,16 +7270,6 @@
         "time": "2026-08-17T18:30:00Z"
     },
     {
-        "id": "f32c9c00fd77e4ec1abd5e34d67a6817",
-        "home": "Real Racing Club de Santander",
-        "away": "Villarreal",
-        "outcome": "Real Racing Club de Santander",
-        "odds": 3.8,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-08-16T15:00:00Z"
-    },
-    {
         "id": "668f6bfdf1a0fb65f8e1b55691fc63f0",
         "home": "Amed SK",
         "away": "Erzurum BB",
@@ -7348,16 +7278,6 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-08-16T18:30:00Z"
-    },
-    {
-        "id": "4071204c42c96090322a93ab1cd1c0cb",
-        "home": "Hartberg",
-        "away": "Austria Wien",
-        "outcome": "Austria Wien",
-        "odds": 2.62,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-08-16T15:00:00Z"
     },
     {
         "id": "bb0f8db2a6c8fd7984342d6ad2dcf569",
