@@ -7220,46 +7220,6 @@
         "time": "2026-08-16T15:30:00Z"
     },
     {
-        "id": "f65624c36cefaf719ea4fd75deffb790",
-        "home": "Lommel SK",
-        "away": "Charleroi",
-        "outcome": "Lommel SK",
-        "odds": 3.4,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-16T17:15:00Z"
-    },
-    {
-        "id": "c3be3958beef3c35ea4a9dac6e028863",
-        "home": "New York City FC",
-        "away": "Philadelphia Union",
-        "outcome": "New York City FC",
-        "odds": 2.44,
-        "stake": 250.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-08-16T22:00:00Z"
-    },
-    {
-        "id": "0198abf59a592bb8855ebf7430656607",
-        "home": "Austin FC",
-        "away": "FC Dallas",
-        "outcome": "Austin FC",
-        "odds": 3.05,
-        "stake": 250.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-08-17T00:30:00Z"
-    },
-    {
-        "id": "235d6733ba040815d12859e40de81c1e",
-        "home": "Seattle Sounders FC",
-        "away": "Vancouver Whitecaps FC",
-        "outcome": "Seattle Sounders FC",
-        "odds": 4.2,
-        "stake": 250.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-08-17T02:30:00Z"
-    },
-    {
         "id": "4b7e118e8b4da87694adfd9b8a75a1f9",
         "home": "Samsunspor",
         "away": "Goztepe",
@@ -7287,6 +7247,16 @@
         "odds": 2.6,
         "stake": 125.0,
         "sport": "soccer_efl_champ",
+        "time": "2026-08-17T19:00:00Z"
+    },
+    {
+        "id": "7b9f4d89d66c48e0c496aab1679e4ae4",
+        "home": "Deportivo La Coru\u00f1a",
+        "away": "Elche CF",
+        "outcome": "Elche CF",
+        "odds": 3.85,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
         "time": "2026-08-17T19:00:00Z"
     }
 ]

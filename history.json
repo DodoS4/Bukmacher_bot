@@ -25445,5 +25445,57 @@
         "profit": 202.5,
         "status": "WIN",
         "score": "0:2"
+    },
+    {
+        "id": "f65624c36cefaf719ea4fd75deffb790",
+        "home": "Lommel SK",
+        "away": "Charleroi",
+        "outcome": "Lommel SK",
+        "odds": 3.4,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-16T17:15:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "0:1"
+    },
+    {
+        "id": "c3be3958beef3c35ea4a9dac6e028863",
+        "home": "New York City FC",
+        "away": "Philadelphia Union",
+        "outcome": "New York City FC",
+        "odds": 2.44,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-16T22:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:3"
+    },
+    {
+        "id": "0198abf59a592bb8855ebf7430656607",
+        "home": "Austin FC",
+        "away": "FC Dallas",
+        "outcome": "Austin FC",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-17T00:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:2"
+    },
+    {
+        "id": "235d6733ba040815d12859e40de81c1e",
+        "home": "Seattle Sounders FC",
+        "away": "Vancouver Whitecaps FC",
+        "outcome": "Seattle Sounders FC",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-17T02:30:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "0:2"
     }
 ]
