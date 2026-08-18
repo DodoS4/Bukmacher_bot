@@ -7220,43 +7220,123 @@
         "time": "2026-08-16T15:30:00Z"
     },
     {
-        "id": "4b7e118e8b4da87694adfd9b8a75a1f9",
-        "home": "Samsunspor",
-        "away": "Goztepe",
-        "outcome": "Goztepe",
+        "id": "4db00a59112cd720836cc81f5f166891",
+        "home": "Toronto FC",
+        "away": "Charlotte FC",
+        "outcome": "Toronto FC",
+        "odds": 2.36,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-19T23:30:00Z"
+    },
+    {
+        "id": "5272777a4297a857ce64730e5acad9c0",
+        "home": "Orlando City SC",
+        "away": "Chicago Fire",
+        "outcome": "Orlando City SC",
+        "odds": 2.96,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-19T23:30:00Z"
+    },
+    {
+        "id": "8cffcdf66d60b1dcf8c8e09b3722d3b5",
+        "home": "D.C. United",
+        "away": "New England Revolution",
+        "outcome": "New England Revolution",
+        "odds": 3.4,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-19T23:30:00Z"
+    },
+    {
+        "id": "14b96e8187af15d1fb36a3dcdcc7a94e",
+        "home": "FC Cincinnati",
+        "away": "New York City FC",
+        "outcome": "New York City FC",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-19T23:30:00Z"
+    },
+    {
+        "id": "b0008918d077b2578c42dfc8e47054b4",
+        "home": "Philadelphia Union",
+        "away": "Inter Miami CF",
+        "outcome": "Philadelphia Union",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-19T23:30:00Z"
+    },
+    {
+        "id": "7223e207f74e072fe9946a77a80670c1",
+        "home": "New York Red Bulls",
+        "away": "Nashville SC",
+        "outcome": "New York Red Bulls",
+        "odds": 3.0,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-19T23:30:00Z"
+    },
+    {
+        "id": "4da3791663bf9bd12cbe9ac812822ed3",
+        "home": "Sporting Kansas City",
+        "away": "St. Louis City SC",
+        "outcome": "Sporting Kansas City",
         "odds": 3.6,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-08-17T18:30:00Z"
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-20T00:00:00Z"
     },
     {
-        "id": "668f6bfdf1a0fb65f8e1b55691fc63f0",
-        "home": "Amed SK",
-        "away": "Erzurum BB",
-        "outcome": "Erzurum BB",
-        "odds": 3.35,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-08-16T18:30:00Z"
+        "id": "95c0e0609765c4caf2818afb1750afaa",
+        "home": "Minnesota United FC",
+        "away": "Atlanta United FC",
+        "outcome": "Atlanta United FC",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-20T00:30:00Z"
     },
     {
-        "id": "bb0f8db2a6c8fd7984342d6ad2dcf569",
-        "home": "Cardiff City",
-        "away": "Wrexham AFC",
-        "outcome": "Cardiff City",
-        "odds": 2.6,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-17T19:00:00Z"
+        "id": "a17888b50cffbbfd73fea1a7265df61e",
+        "home": "Colorado Rapids",
+        "away": "Los Angeles FC",
+        "outcome": "Los Angeles FC",
+        "odds": 2.54,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-20T01:30:00Z"
     },
     {
-        "id": "7b9f4d89d66c48e0c496aab1679e4ae4",
-        "home": "Deportivo La Coru\u00f1a",
-        "away": "Elche CF",
-        "outcome": "Elche CF",
-        "odds": 3.85,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-08-17T19:00:00Z"
+        "id": "8c84a04394a475ece8d03e092ce43dbe",
+        "home": "Real Salt Lake",
+        "away": "FC Dallas",
+        "outcome": "FC Dallas",
+        "odds": 4.06,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-20T01:30:00Z"
+    },
+    {
+        "id": "e2a48a3415f53affd071b29ab64023f8",
+        "home": "LA Galaxy",
+        "away": "San Jose Earthquakes",
+        "outcome": "LA Galaxy",
+        "odds": 2.38,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-20T02:30:00Z"
+    },
+    {
+        "id": "b0a96001cc3056e18abd450a83d0a575",
+        "home": "Portland Timbers",
+        "away": "San Diego FC",
+        "outcome": "San Diego FC",
+        "odds": 3.2,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-20T02:30:00Z"
     }
 ]

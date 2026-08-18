@@ -25497,5 +25497,57 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "0:2"
+    },
+    {
+        "id": "4b7e118e8b4da87694adfd9b8a75a1f9",
+        "home": "Samsunspor",
+        "away": "Goztepe",
+        "outcome": "Goztepe",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-17T18:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:3"
+    },
+    {
+        "id": "668f6bfdf1a0fb65f8e1b55691fc63f0",
+        "home": "Amed SK",
+        "away": "Erzurum BB",
+        "outcome": "Erzurum BB",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-16T18:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:0"
+    },
+    {
+        "id": "bb0f8db2a6c8fd7984342d6ad2dcf569",
+        "home": "Cardiff City",
+        "away": "Wrexham AFC",
+        "outcome": "Cardiff City",
+        "odds": 2.6,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-17T19:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "7b9f4d89d66c48e0c496aab1679e4ae4",
+        "home": "Deportivo La Coru\u00f1a",
+        "away": "Elche CF",
+        "outcome": "Elche CF",
+        "odds": 3.85,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-08-17T19:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
