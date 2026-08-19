@@ -7338,5 +7338,25 @@
         "stake": 250.0,
         "sport": "soccer_usa_mls",
         "time": "2026-08-20T02:30:00Z"
+    },
+    {
+        "id": "1a74c0910d0889eee77b071464bdd425",
+        "home": "Columbus Crew SC",
+        "away": "CF Montreal",
+        "outcome": "Columbus Crew SC",
+        "odds": 1.8,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-19T23:30:00Z"
+    },
+    {
+        "id": "c2901f48a23b3546e3552f939ae9ef66",
+        "home": "Seattle Sounders FC",
+        "away": "Austin FC",
+        "outcome": "Seattle Sounders FC",
+        "odds": 1.84,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-20T01:30:00Z"
     }
 ]
