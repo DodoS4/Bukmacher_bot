@@ -7368,5 +7368,75 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "8b4b033209bb204516cbd1f523614f25",
+        "home": "Brentford",
+        "away": "Tottenham Hotspur",
+        "outcome": "Tottenham Hotspur",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-08-22T16:30:00Z"
+    },
+    {
+        "id": "7d4101254957e46d6037bd1d8f268a0e",
+        "home": "Parma",
+        "away": "Cagliari",
+        "outcome": "Cagliari",
+        "odds": 3.2,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-08-22T18:45:00Z"
+    },
+    {
+        "id": "c123d013c16bf22279a1fdf1248c4afb",
+        "home": "Genoa",
+        "away": "Napoli",
+        "outcome": "Napoli",
+        "odds": 1.92,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-08-22T18:45:00Z"
+    },
+    {
+        "id": "cc5275ca00a1e35d404a2ef5f3d68f61",
+        "home": "Estoril",
+        "away": "Rio Ave FC",
+        "outcome": "Rio Ave FC",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-22T17:00:00Z"
+    },
+    {
+        "id": "f8e1b22b436e9e3b802eec580350d1ba",
+        "home": "Royal Antwerp",
+        "away": "Genk",
+        "outcome": "Royal Antwerp",
+        "odds": 3.44,
+        "stake": 400.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-22T18:45:00Z"
+    },
+    {
+        "id": "119e408eeed6e034b8afea1228f8a056",
+        "home": "FC Luzern",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 3.52,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-22T16:00:00Z"
+    },
+    {
+        "id": "f8316d29a2732e917ec14300c790cc4a",
+        "home": "FC Zurich",
+        "away": "FC Basel",
+        "outcome": "FC Zurich",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-08-22T18:30:00Z"
     }
 ]
