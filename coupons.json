@@ -7248,5 +7248,125 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-08-21T17:30:00Z"
+    },
+    {
+        "id": "cd1f0173ec061d9b8a8b22ab8f2f8393",
+        "home": "Everton",
+        "away": "Crystal Palace",
+        "outcome": "Crystal Palace",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "01615d9573ef1e5aa8c09eb32a4a983b",
+        "home": "Ipswich Town",
+        "away": "Sunderland",
+        "outcome": "Sunderland",
+        "odds": 2.78,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "ee99154f8db029efcf567c5f7f7a0c0b",
+        "home": "Nottingham Forest",
+        "away": "Leeds United",
+        "outcome": "Nottingham Forest",
+        "odds": 2.4,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "cdb2ea2e51b274ee89256999d7d56418",
+        "home": "Piast Gliwice",
+        "away": "Legia Warszawa",
+        "outcome": "Piast Gliwice",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-22T15:30:00Z"
+    },
+    {
+        "id": "6cec1518f99a138cd924af02819efc32",
+        "home": "SV Zulte-Waregem",
+        "away": "SK Beveren",
+        "outcome": "SK Beveren",
+        "odds": 3.55,
+        "stake": 400.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "594fd5e4069045b86966b844d23cdb14",
+        "home": "Lincoln City",
+        "away": "Portsmouth",
+        "outcome": "Portsmouth",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-22T11:30:00Z"
+    },
+    {
+        "id": "cd3730b9f546d0b9068a01cf294b7ae9",
+        "home": "Millwall",
+        "away": "Norwich City",
+        "outcome": "Norwich City",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-22T11:30:00Z"
+    },
+    {
+        "id": "9dceb21cc88af7a630d4dfaa3f194a49",
+        "home": "Blackburn Rovers",
+        "away": "Middlesbrough",
+        "outcome": "Blackburn Rovers",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "8ea9758ad6c96f7b5c79a12acc3cec14",
+        "home": "Queens Park Rangers",
+        "away": "Bolton Wanderers",
+        "outcome": "Bolton Wanderers",
+        "odds": 4.12,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "b4c43a415b55e596ca83146d35e0b909",
+        "home": "Derby County",
+        "away": "Cardiff City",
+        "outcome": "Cardiff City",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "4134daf3370a8bb2039d0a203a7866ad",
+        "home": "Preston North End",
+        "away": "Wolverhampton Wanderers",
+        "outcome": "Preston North End",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-22T14:00:00Z"
+    },
+    {
+        "id": "160e8293208f9a7e09c8588d68a3c0b7",
+        "home": "Wrexham AFC",
+        "away": "Watford",
+        "outcome": "Watford",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-08-22T14:00:00Z"
     }
 ]
