@@ -7438,5 +7438,85 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-08-22T18:30:00Z"
+    },
+    {
+        "id": "e1ce411d4290f2045ff63237ae0e3f46",
+        "home": "CF Montreal",
+        "away": "LA Galaxy",
+        "outcome": "LA Galaxy",
+        "odds": 3.25,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-22T23:30:00Z"
+    },
+    {
+        "id": "37b2cdcb2f3ef5e0a3a6ae0828aa0621",
+        "home": "Charlotte FC",
+        "away": "D.C. United",
+        "outcome": "D.C. United",
+        "odds": 4.3,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-22T23:30:00Z"
+    },
+    {
+        "id": "1f2c9d94287ba78bd0373a75b6e7e376",
+        "home": "New York Red Bulls",
+        "away": "Chicago Fire",
+        "outcome": "Chicago Fire",
+        "odds": 2.42,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-22T23:30:00Z"
+    },
+    {
+        "id": "6d0c7da3ab5047d0a45912b40ba07c61",
+        "home": "Orlando City SC",
+        "away": "Real Salt Lake",
+        "outcome": "Real Salt Lake",
+        "odds": 3.7,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-22T23:30:00Z"
+    },
+    {
+        "id": "8db4ded3b88d8974f261c9e2c7eee67c",
+        "home": "Austin FC",
+        "away": "Philadelphia Union",
+        "outcome": "Austin FC",
+        "odds": 3.35,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-23T00:30:00Z"
+    },
+    {
+        "id": "3c3734c6427be87c586d064448d5ab0c",
+        "home": "St. Louis City SC",
+        "away": "Houston Dynamo",
+        "outcome": "Houston Dynamo",
+        "odds": 3.45,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-23T00:30:00Z"
+    },
+    {
+        "id": "3694aa4b60ed1371baf2e5281f9880c8",
+        "home": "San Diego FC",
+        "away": "Colorado Rapids",
+        "outcome": "Colorado Rapids",
+        "odds": 3.6,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-23T02:30:00Z"
+    },
+    {
+        "id": "93c38f71c66953eae0f63e44c88b9bb9",
+        "home": "San Jose Earthquakes",
+        "away": "Minnesota United FC",
+        "outcome": "Minnesota United FC",
+        "odds": 3.25,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-23T02:30:00Z"
     }
 ]
