@@ -7518,5 +7518,45 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-08-23T02:30:00Z"
+    },
+    {
+        "id": "ed57c6f67558fabe25c4634ca959ee01",
+        "home": "Udinese",
+        "away": "Como",
+        "outcome": "Como",
+        "odds": 1.88,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-08-22T16:30:00Z"
+    },
+    {
+        "id": "623ff84505dae8a0598eefd6a15b5e14",
+        "home": "Real Betis",
+        "away": "Real Sociedad",
+        "outcome": "Real Sociedad",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-08-21T19:00:00Z"
+    },
+    {
+        "id": "e2b33e2f28135088d12b464684414353",
+        "home": "Toulouse",
+        "away": "Lyon",
+        "outcome": "Lyon",
+        "odds": 2.64,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-08-22T18:45:00Z"
+    },
+    {
+        "id": "2cca300b46d9f8a86994894f3877657d",
+        "home": "CS Maritimo",
+        "away": "Acad\u00e9mico de Viseu",
+        "outcome": "Acad\u00e9mico de Viseu",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-22T14:30:00Z"
     }
 ]
