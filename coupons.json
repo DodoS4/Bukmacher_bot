@@ -7558,5 +7558,75 @@
         "stake": 125.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-08-22T14:30:00Z"
+    },
+    {
+        "id": "f5086c74d4a767e3ad7ea69bd4a66b76",
+        "home": "Brighton and Hove Albion",
+        "away": "Aston Villa",
+        "outcome": "Aston Villa",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-08-23T13:00:00Z"
+    },
+    {
+        "id": "ea0bacc4c23f813c6af97ec9b306a850",
+        "home": "Newcastle United",
+        "away": "Liverpool",
+        "outcome": "Newcastle United",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-08-23T15:30:00Z"
+    },
+    {
+        "id": "3a15de5fdc0e1cc4098c4581f1ddc0df",
+        "home": "GKS Katowice",
+        "away": "Wis\u0142a P\u0142ock",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-23T15:30:00Z"
+    },
+    {
+        "id": "532d57b14c0bd089c6d01af03ae6bdd6",
+        "home": "\u00c7orum FK",
+        "away": "Kasimpasa SK",
+        "outcome": "Kasimpasa SK",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-22T16:00:00Z"
+    },
+    {
+        "id": "0c8bc495393c8523a8b36f4c020e59a3",
+        "home": "\u00c7aykur Rizespor",
+        "away": "Samsunspor",
+        "outcome": "Samsunspor",
+        "odds": 3.68,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-22T16:00:00Z"
+    },
+    {
+        "id": "24945e530904411b13daa409f5b53a4a",
+        "home": "Lommel SK",
+        "away": "Westerlo",
+        "outcome": "Lommel SK",
+        "odds": 2.72,
+        "stake": 400.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-23T14:00:00Z"
+    },
+    {
+        "id": "f552d78bc22d86a009b612714c96649c",
+        "home": "AGF Aarhus",
+        "away": "OB Odense BK",
+        "outcome": "OB Odense BK",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-23T12:00:00Z"
     }
 ]
