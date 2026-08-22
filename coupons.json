@@ -7220,116 +7220,6 @@
         "time": "2026-08-16T15:30:00Z"
     },
     {
-        "id": "cd1f0173ec061d9b8a8b22ab8f2f8393",
-        "home": "Everton",
-        "away": "Crystal Palace",
-        "outcome": "Crystal Palace",
-        "odds": 3.55,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "01615d9573ef1e5aa8c09eb32a4a983b",
-        "home": "Ipswich Town",
-        "away": "Sunderland",
-        "outcome": "Sunderland",
-        "odds": 2.78,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "ee99154f8db029efcf567c5f7f7a0c0b",
-        "home": "Nottingham Forest",
-        "away": "Leeds United",
-        "outcome": "Nottingham Forest",
-        "odds": 2.4,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "cdb2ea2e51b274ee89256999d7d56418",
-        "home": "Piast Gliwice",
-        "away": "Legia Warszawa",
-        "outcome": "Piast Gliwice",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-22T15:30:00Z"
-    },
-    {
-        "id": "6cec1518f99a138cd924af02819efc32",
-        "home": "SV Zulte-Waregem",
-        "away": "SK Beveren",
-        "outcome": "SK Beveren",
-        "odds": 3.55,
-        "stake": 400.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "9dceb21cc88af7a630d4dfaa3f194a49",
-        "home": "Blackburn Rovers",
-        "away": "Middlesbrough",
-        "outcome": "Blackburn Rovers",
-        "odds": 3.75,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "8ea9758ad6c96f7b5c79a12acc3cec14",
-        "home": "Queens Park Rangers",
-        "away": "Bolton Wanderers",
-        "outcome": "Bolton Wanderers",
-        "odds": 4.12,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "b4c43a415b55e596ca83146d35e0b909",
-        "home": "Derby County",
-        "away": "Cardiff City",
-        "outcome": "Cardiff City",
-        "odds": 4.0,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "4134daf3370a8bb2039d0a203a7866ad",
-        "home": "Preston North End",
-        "away": "Wolverhampton Wanderers",
-        "outcome": "Preston North End",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "160e8293208f9a7e09c8588d68a3c0b7",
-        "home": "Wrexham AFC",
-        "away": "Watford",
-        "outcome": "Watford",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-22T14:00:00Z"
-    },
-    {
-        "id": "8b4b033209bb204516cbd1f523614f25",
-        "home": "Brentford",
-        "away": "Tottenham Hotspur",
-        "outcome": "Tottenham Hotspur",
-        "odds": 2.88,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-08-22T16:30:00Z"
-    },
-    {
         "id": "7d4101254957e46d6037bd1d8f268a0e",
         "home": "Parma",
         "away": "Cagliari",
@@ -7350,16 +7240,6 @@
         "time": "2026-08-22T18:45:00Z"
     },
     {
-        "id": "cc5275ca00a1e35d404a2ef5f3d68f61",
-        "home": "Estoril",
-        "away": "Rio Ave FC",
-        "outcome": "Rio Ave FC",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-08-22T17:00:00Z"
-    },
-    {
         "id": "f8e1b22b436e9e3b802eec580350d1ba",
         "home": "Royal Antwerp",
         "away": "Genk",
@@ -7368,16 +7248,6 @@
         "stake": 400.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-08-22T18:45:00Z"
-    },
-    {
-        "id": "119e408eeed6e034b8afea1228f8a056",
-        "home": "FC Luzern",
-        "away": "FC Lausanne-Sport",
-        "outcome": "FC Lausanne-Sport",
-        "odds": 3.52,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-08-22T16:00:00Z"
     },
     {
         "id": "f8316d29a2732e917ec14300c790cc4a",
@@ -7470,16 +7340,6 @@
         "time": "2026-08-23T02:30:00Z"
     },
     {
-        "id": "ed57c6f67558fabe25c4634ca959ee01",
-        "home": "Udinese",
-        "away": "Como",
-        "outcome": "Como",
-        "odds": 1.88,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-08-22T16:30:00Z"
-    },
-    {
         "id": "e2b33e2f28135088d12b464684414353",
         "home": "Toulouse",
         "away": "Lyon",
@@ -7488,16 +7348,6 @@
         "stake": 125.0,
         "sport": "soccer_france_ligue_one",
         "time": "2026-08-22T18:45:00Z"
-    },
-    {
-        "id": "2cca300b46d9f8a86994894f3877657d",
-        "home": "CS Maritimo",
-        "away": "Acad\u00e9mico de Viseu",
-        "outcome": "Acad\u00e9mico de Viseu",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-08-22T14:30:00Z"
     },
     {
         "id": "f5086c74d4a767e3ad7ea69bd4a66b76",
@@ -7528,26 +7378,6 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-08-23T15:30:00Z"
-    },
-    {
-        "id": "532d57b14c0bd089c6d01af03ae6bdd6",
-        "home": "\u00c7orum FK",
-        "away": "Kasimpasa SK",
-        "outcome": "Kasimpasa SK",
-        "odds": 3.3,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-08-22T16:00:00Z"
-    },
-    {
-        "id": "0c8bc495393c8523a8b36f4c020e59a3",
-        "home": "\u00c7aykur Rizespor",
-        "away": "Samsunspor",
-        "outcome": "Samsunspor",
-        "odds": 3.68,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-08-22T16:00:00Z"
     },
     {
         "id": "24945e530904411b13daa409f5b53a4a",
@@ -7610,16 +7440,6 @@
         "time": "2026-08-23T16:00:00Z"
     },
     {
-        "id": "b5144c27d60a6d6f1656cb5086465b96",
-        "home": "Rheindorf Altach",
-        "away": "Hartberg",
-        "outcome": "Hartberg",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-08-22T15:00:00Z"
-    },
-    {
         "id": "39a6d3d0dd1be9d318d424175f926f4d",
         "home": "AC Horsens",
         "away": "Lyngby",
@@ -7628,36 +7448,6 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-08-23T14:00:00Z"
-    },
-    {
-        "id": "df3ce9b5afc713a8bca59f773258ea2b",
-        "home": "Kalamata FC",
-        "away": "Aris Thessaloniki",
-        "outcome": "Aris Thessaloniki",
-        "odds": 2.46,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-08-22T17:00:00Z"
-    },
-    {
-        "id": "4b5ea5feace9ff9415a07fe92ad37ef5",
-        "home": "Dundee United",
-        "away": "Dundee FC",
-        "outcome": "Dundee FC",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_spl",
-        "time": "2026-08-22T16:45:00Z"
-    },
-    {
-        "id": "aab7c65a91e15b9d58b0d40bfdc755da",
-        "home": "Swansea City",
-        "away": "Sheffield United",
-        "outcome": "Swansea City",
-        "odds": 2.64,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-22T14:00:00Z"
     },
     {
         "id": "5c3310ddac30d3e22332be25958e7672",
@@ -7738,5 +7528,65 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-08-23T16:00:00Z"
+    },
+    {
+        "id": "4e4a813bf4218cc527e6f8ef2351170d",
+        "home": "Fulham",
+        "away": "Chelsea",
+        "outcome": "Fulham",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_epl",
+        "time": "2026-08-24T19:00:00Z"
+    },
+    {
+        "id": "c23c70e25e6253ea30f33add6c73d299",
+        "home": "Bologna",
+        "away": "Lazio",
+        "outcome": "Lazio",
+        "odds": 3.8,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-08-24T16:30:00Z"
+    },
+    {
+        "id": "f74f411258dfcb663805768c6225fd0e",
+        "home": "Trabzonspor",
+        "away": "Basaksehir",
+        "outcome": "Trabzonspor",
+        "odds": 2.28,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-23T16:00:00Z"
+    },
+    {
+        "id": "d8b5a9a24c52efb3ac04f4ed1bb7a0ea",
+        "home": "Kocaelispor",
+        "away": "Amed SK",
+        "outcome": "Amed SK",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-24T18:30:00Z"
+    },
+    {
+        "id": "468a2edf40bf3bc7fde6a8638d55bcdd",
+        "home": "OFI Crete",
+        "away": "Volos FC",
+        "outcome": "Volos FC",
+        "odds": 3.58,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-08-23T16:30:00Z"
+    },
+    {
+        "id": "0841e4946df93f8579b0881bd6d3cab8",
+        "home": "FC Cincinnati",
+        "away": "Seattle Sounders FC",
+        "outcome": "Seattle Sounders FC",
+        "odds": 4.5,
+        "stake": 325.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-08-22T23:30:00Z"
     }
 ]
