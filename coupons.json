@@ -7698,5 +7698,35 @@
         "stake": 325.0,
         "sport": "soccer_usa_mls",
         "time": "2026-08-23T20:30:00Z"
+    },
+    {
+        "id": "4290b7b558285b2ec3a5ed42feca310d",
+        "home": "Atl\u00e9tico Madrid",
+        "away": "Villarreal",
+        "outcome": "Villarreal",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-08-23T15:00:00Z"
+    },
+    {
+        "id": "dd38b144d1f20e8eee148914f68f482c",
+        "home": "Nice",
+        "away": "Lorient",
+        "outcome": "Lorient",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-08-22T18:45:00Z"
+    },
+    {
+        "id": "cd69dc990e387d5c96551c389e92a4db",
+        "home": "Santa Clara",
+        "away": "Famalic\u00e3o",
+        "outcome": "Santa Clara",
+        "odds": 2.78,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-08-23T17:00:00Z"
     }
 ]
