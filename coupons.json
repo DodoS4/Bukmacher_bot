@@ -7270,26 +7270,6 @@
         "time": "2026-08-22T14:00:00Z"
     },
     {
-        "id": "594fd5e4069045b86966b844d23cdb14",
-        "home": "Lincoln City",
-        "away": "Portsmouth",
-        "outcome": "Portsmouth",
-        "odds": 3.05,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-22T11:30:00Z"
-    },
-    {
-        "id": "cd3730b9f546d0b9068a01cf294b7ae9",
-        "home": "Millwall",
-        "away": "Norwich City",
-        "outcome": "Norwich City",
-        "odds": 3.4,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-08-22T11:30:00Z"
-    },
-    {
         "id": "9dceb21cc88af7a630d4dfaa3f194a49",
         "home": "Blackburn Rovers",
         "away": "Middlesbrough",
@@ -7630,16 +7610,6 @@
         "time": "2026-08-23T16:00:00Z"
     },
     {
-        "id": "0375f0161b7bfc8af7c53f3e5dea2664",
-        "home": "Korona Kielce",
-        "away": "Motor Lublin",
-        "outcome": "Motor Lublin",
-        "odds": 3.85,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-22T12:45:00Z"
-    },
-    {
         "id": "b5144c27d60a6d6f1656cb5086465b96",
         "home": "Rheindorf Altach",
         "away": "Hartberg",
@@ -7728,5 +7698,45 @@
         "stake": 125.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-08-23T17:00:00Z"
+    },
+    {
+        "id": "7b4d91bd9815834a7d30b1026a084eff",
+        "home": "\u015al\u0105sk Wroc\u0142aw",
+        "away": "Widzew \u0141\u00f3d\u017a",
+        "outcome": "\u015al\u0105sk Wroc\u0142aw",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-22T18:15:00Z"
+    },
+    {
+        "id": "02c74b995056d89363351775fe4b0d9d",
+        "home": "Radomiak Radom",
+        "away": "Zag\u0142\u0119bie Lubin",
+        "outcome": "Zag\u0142\u0119bie Lubin",
+        "odds": 3.03,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-23T12:45:00Z"
+    },
+    {
+        "id": "6b3b41cc7aa2f7ce5b45065e9cf2a78f",
+        "home": "Alanyaspor",
+        "away": "Besiktas JK",
+        "outcome": "Alanyaspor",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-08-23T18:30:00Z"
+    },
+    {
+        "id": "38d08fec77ec3acafbf58e51133820d6",
+        "home": "Viborg FF",
+        "away": "FC Copenhagen",
+        "outcome": "Viborg FF",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-23T16:00:00Z"
     }
 ]
