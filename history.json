@@ -25731,5 +25731,57 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "1:2"
+    },
+    {
+        "id": "330394bfb6cb2bfcd44dc1bc1cdfe326",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Wieczysta Krak\u00f3w",
+        "outcome": "Wieczysta Krak\u00f3w",
+        "odds": 3.57,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-21T18:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "51dbc28646a94448bb8c07e2143eb6b4",
+        "home": "Standard Liege",
+        "away": "RAAL La Louvi\u00e8re",
+        "outcome": "RAAL La Louvi\u00e8re",
+        "odds": 4.4,
+        "stake": 400.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-08-21T18:45:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "2:0"
+    },
+    {
+        "id": "50d6f9abc1ad5cb13d1853a8d300d670",
+        "home": "Ried",
+        "away": "Grazer AK",
+        "outcome": "Grazer AK",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-08-21T17:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:0"
+    },
+    {
+        "id": "623ff84505dae8a0598eefd6a15b5e14",
+        "home": "Real Betis",
+        "away": "Real Sociedad",
+        "outcome": "Real Sociedad",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-08-21T19:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:0"
     }
 ]
