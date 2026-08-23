@@ -7220,46 +7220,6 @@
         "time": "2026-08-16T15:30:00Z"
     },
     {
-        "id": "ea0bacc4c23f813c6af97ec9b306a850",
-        "home": "Newcastle United",
-        "away": "Liverpool",
-        "outcome": "Newcastle United",
-        "odds": 4.3,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-08-23T15:30:00Z"
-    },
-    {
-        "id": "3a15de5fdc0e1cc4098c4581f1ddc0df",
-        "home": "GKS Katowice",
-        "away": "Wis\u0142a P\u0142ock",
-        "outcome": "Wis\u0142a P\u0142ock",
-        "odds": 3.95,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-23T15:30:00Z"
-    },
-    {
-        "id": "24945e530904411b13daa409f5b53a4a",
-        "home": "Lommel SK",
-        "away": "Westerlo",
-        "outcome": "Lommel SK",
-        "odds": 2.72,
-        "stake": 400.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-08-23T14:00:00Z"
-    },
-    {
-        "id": "120c61563f0b7119d87522da76fcaa33",
-        "home": "Venezia",
-        "away": "Lecce",
-        "outcome": "Lecce",
-        "odds": 3.8,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-08-23T16:30:00Z"
-    },
-    {
         "id": "fbea45a1e53e07faac0027ac5d233587",
         "home": "Torino",
         "away": "AC Milan",
@@ -7280,26 +7240,6 @@
         "time": "2026-08-23T18:15:00Z"
     },
     {
-        "id": "2a7535a558efe98980b624846e8d7703",
-        "home": "Ey\u00fcpspor",
-        "away": "Gazi\u015fehir Gaziantep",
-        "outcome": "Ey\u00fcpspor",
-        "odds": 3.1,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-08-23T16:00:00Z"
-    },
-    {
-        "id": "39a6d3d0dd1be9d318d424175f926f4d",
-        "home": "AC Horsens",
-        "away": "Lyngby",
-        "outcome": "AC Horsens",
-        "odds": 3.0,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-23T14:00:00Z"
-    },
-    {
         "id": "5c3310ddac30d3e22332be25958e7672",
         "home": "New England Revolution",
         "away": "New York City FC",
@@ -7310,26 +7250,6 @@
         "time": "2026-08-23T20:30:00Z"
     },
     {
-        "id": "4290b7b558285b2ec3a5ed42feca310d",
-        "home": "Atl\u00e9tico Madrid",
-        "away": "Villarreal",
-        "outcome": "Villarreal",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-08-23T15:00:00Z"
-    },
-    {
-        "id": "cd69dc990e387d5c96551c389e92a4db",
-        "home": "Santa Clara",
-        "away": "Famalic\u00e3o",
-        "outcome": "Santa Clara",
-        "odds": 2.78,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-08-23T17:00:00Z"
-    },
-    {
         "id": "6b3b41cc7aa2f7ce5b45065e9cf2a78f",
         "home": "Alanyaspor",
         "away": "Besiktas JK",
@@ -7338,16 +7258,6 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-08-23T18:30:00Z"
-    },
-    {
-        "id": "38d08fec77ec3acafbf58e51133820d6",
-        "home": "Viborg FF",
-        "away": "FC Copenhagen",
-        "outcome": "Viborg FF",
-        "odds": 3.1,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-23T16:00:00Z"
     },
     {
         "id": "4e4a813bf4218cc527e6f8ef2351170d",
@@ -7370,16 +7280,6 @@
         "time": "2026-08-24T16:30:00Z"
     },
     {
-        "id": "f74f411258dfcb663805768c6225fd0e",
-        "home": "Trabzonspor",
-        "away": "Basaksehir",
-        "outcome": "Trabzonspor",
-        "odds": 2.28,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-08-23T16:00:00Z"
-    },
-    {
         "id": "d8b5a9a24c52efb3ac04f4ed1bb7a0ea",
         "home": "Kocaelispor",
         "away": "Amed SK",
@@ -7388,16 +7288,6 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-08-24T18:30:00Z"
-    },
-    {
-        "id": "468a2edf40bf3bc7fde6a8638d55bcdd",
-        "home": "OFI Crete",
-        "away": "Volos FC",
-        "outcome": "Volos FC",
-        "odds": 3.58,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-08-23T16:30:00Z"
     },
     {
         "id": "e051fbf30beef59f4596d8ff50caf55d",
