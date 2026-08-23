@@ -7448,5 +7448,15 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-08-23T18:30:00Z"
+    },
+    {
+        "id": "8ef1d272900aafd279fdb80f7d75e36e",
+        "home": "Getafe",
+        "away": "Real Racing Club de Santander",
+        "outcome": "Real Racing Club de Santander",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-08-23T17:30:00Z"
     }
 ]
