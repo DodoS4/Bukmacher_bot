@@ -7220,16 +7220,6 @@
         "time": "2026-08-16T15:30:00Z"
     },
     {
-        "id": "f5086c74d4a767e3ad7ea69bd4a66b76",
-        "home": "Brighton and Hove Albion",
-        "away": "Aston Villa",
-        "outcome": "Aston Villa",
-        "odds": 3.3,
-        "stake": 250.0,
-        "sport": "soccer_epl",
-        "time": "2026-08-23T13:00:00Z"
-    },
-    {
         "id": "ea0bacc4c23f813c6af97ec9b306a850",
         "home": "Newcastle United",
         "away": "Liverpool",
@@ -7258,16 +7248,6 @@
         "stake": 400.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-08-23T14:00:00Z"
-    },
-    {
-        "id": "f552d78bc22d86a009b612714c96649c",
-        "home": "AGF Aarhus",
-        "away": "OB Odense BK",
-        "outcome": "OB Odense BK",
-        "odds": 4.4,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-23T12:00:00Z"
     },
     {
         "id": "120c61563f0b7119d87522da76fcaa33",
@@ -7350,16 +7330,6 @@
         "time": "2026-08-23T17:00:00Z"
     },
     {
-        "id": "02c74b995056d89363351775fe4b0d9d",
-        "home": "Radomiak Radom",
-        "away": "Zag\u0142\u0119bie Lubin",
-        "outcome": "Zag\u0142\u0119bie Lubin",
-        "odds": 3.03,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-23T12:45:00Z"
-    },
-    {
         "id": "6b3b41cc7aa2f7ce5b45065e9cf2a78f",
         "home": "Alanyaspor",
         "away": "Besiktas JK",
@@ -7428,16 +7398,6 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-08-23T16:30:00Z"
-    },
-    {
-        "id": "1732c45e8db6c75b709075cbb0373c9f",
-        "home": "SonderjyskE",
-        "away": "FC Nordsjaelland",
-        "outcome": "SonderjyskE",
-        "odds": 4.4,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-08-23T10:00:00Z"
     },
     {
         "id": "e051fbf30beef59f4596d8ff50caf55d",

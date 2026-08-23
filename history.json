@@ -26303,5 +26303,57 @@
         "profit": -325.0,
         "status": "LOSS",
         "score": "1:1"
+    },
+    {
+        "id": "f5086c74d4a767e3ad7ea69bd4a66b76",
+        "home": "Brighton and Hove Albion",
+        "away": "Aston Villa",
+        "outcome": "Aston Villa",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "soccer_epl",
+        "time": "2026-08-23T13:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "4:0"
+    },
+    {
+        "id": "f552d78bc22d86a009b612714c96649c",
+        "home": "AGF Aarhus",
+        "away": "OB Odense BK",
+        "outcome": "OB Odense BK",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-23T12:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:2"
+    },
+    {
+        "id": "02c74b995056d89363351775fe4b0d9d",
+        "home": "Radomiak Radom",
+        "away": "Zag\u0142\u0119bie Lubin",
+        "outcome": "Zag\u0142\u0119bie Lubin",
+        "odds": 3.03,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-08-23T12:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
+    },
+    {
+        "id": "1732c45e8db6c75b709075cbb0373c9f",
+        "home": "SonderjyskE",
+        "away": "FC Nordsjaelland",
+        "outcome": "SonderjyskE",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-08-23T10:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:3"
     }
 ]
