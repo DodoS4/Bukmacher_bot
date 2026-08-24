@@ -7220,46 +7220,6 @@
         "time": "2026-08-16T15:30:00Z"
     },
     {
-        "id": "fbea45a1e53e07faac0027ac5d233587",
-        "home": "Torino",
-        "away": "AC Milan",
-        "outcome": "AC Milan",
-        "odds": 1.88,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-08-23T18:45:00Z"
-    },
-    {
-        "id": "b1803f4997955b3cc6e9cf7a2263c766",
-        "home": "Pogo\u0144 Szczecin",
-        "away": "Wis\u0142a Krak\u00f3w",
-        "outcome": "Wis\u0142a Krak\u00f3w",
-        "odds": 3.07,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-08-23T18:15:00Z"
-    },
-    {
-        "id": "5c3310ddac30d3e22332be25958e7672",
-        "home": "New England Revolution",
-        "away": "New York City FC",
-        "outcome": "New York City FC",
-        "odds": 3.05,
-        "stake": 325.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-08-23T20:30:00Z"
-    },
-    {
-        "id": "6b3b41cc7aa2f7ce5b45065e9cf2a78f",
-        "home": "Alanyaspor",
-        "away": "Besiktas JK",
-        "outcome": "Alanyaspor",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-08-23T18:30:00Z"
-    },
-    {
         "id": "4e4a813bf4218cc527e6f8ef2351170d",
         "home": "Fulham",
         "away": "Chelsea",
@@ -7288,25 +7248,5 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-08-24T18:30:00Z"
-    },
-    {
-        "id": "e051fbf30beef59f4596d8ff50caf55d",
-        "home": "Panetolikos Agrinio",
-        "away": "Asteras Tripolis",
-        "outcome": "Panetolikos Agrinio",
-        "odds": 2.9,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-08-23T18:30:00Z"
-    },
-    {
-        "id": "8ef1d272900aafd279fdb80f7d75e36e",
-        "home": "Getafe",
-        "away": "Real Racing Club de Santander",
-        "outcome": "Real Racing Club de Santander",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-08-23T17:30:00Z"
     }
 ]
