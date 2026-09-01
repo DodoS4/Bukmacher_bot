@@ -7248,5 +7248,175 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-08-24T18:30:00Z"
+    },
+    {
+        "id": "e16f8b24ce536d60a60cbaae79d1a737",
+        "home": "Jukurit",
+        "away": "HPK",
+        "outcome": "Jukurit",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-01T15:30:00Z"
+    },
+    {
+        "id": "0a64bab6d27ab343c452322e47a71353",
+        "home": "Lukko",
+        "away": "Ilves",
+        "outcome": "Ilves",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-01T15:30:00Z"
+    },
+    {
+        "id": "b03e8190f2e27fd4d2e0a03d62e346bc",
+        "home": "Sport",
+        "away": "Jokerit",
+        "outcome": "Jokerit",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-01T15:30:00Z"
+    },
+    {
+        "id": "19ebd4b1d9bd68a4729b170ec6d3ad43",
+        "home": "Kiekko-Espoo",
+        "away": "KalPa",
+        "outcome": "KalPa",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-01T15:30:00Z"
+    },
+    {
+        "id": "87c2fdf040b34f44b3d7b15cb965387b",
+        "home": "TPS",
+        "away": "KooKoo",
+        "outcome": "KooKoo",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-01T15:30:00Z"
+    },
+    {
+        "id": "21f10fe6ef031e07b3b70735aeef0ede",
+        "home": "K\u00e4rp\u00e4t",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-01T15:30:00Z"
+    },
+    {
+        "id": "7fc8a46681bf85911f006a1f70fea4a2",
+        "home": "SaiPa",
+        "away": "Tappara",
+        "outcome": "SaiPa",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-01T15:30:00Z"
+    },
+    {
+        "id": "ede5391bf04bf2b40c1acf2d62121e53",
+        "home": "Sint Truiden",
+        "away": "Union Saint-Gilloise",
+        "outcome": "Union Saint-Gilloise",
+        "odds": 2.1,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-02T18:30:00Z"
+    },
+    {
+        "id": "19f9d682e7e27589834568525c0abd07",
+        "home": "Austria Wien",
+        "away": "WSG Tirol",
+        "outcome": "WSG Tirol",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-09-02T16:30:00Z"
+    },
+    {
+        "id": "7f7b0be6dfb2c623171b231f03f4f2cc",
+        "home": "FC Thun",
+        "away": "FC Lausanne-Sport",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 3.63,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-02T18:30:00Z"
+    },
+    {
+        "id": "4d2249a1d36b49256434470160e07da3",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC St Gallen",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-02T18:30:00Z"
+    },
+    {
+        "id": "4c2c4cb4faeb6095ca8a87c82e64f238",
+        "home": "Dundee FC",
+        "away": "St Johnstone",
+        "outcome": "Dundee FC",
+        "odds": 2.68,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-02T18:45:00Z"
+    },
+    {
+        "id": "6ba5cfe18494b060128b11b7b0b4234a",
+        "home": "Motherwell",
+        "away": "Dundee United",
+        "outcome": "Motherwell",
+        "odds": 2.02,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-02T18:45:00Z"
+    },
+    {
+        "id": "f0ba04d0c3232bfec66f7d51ead7babe",
+        "home": "Kilmarnock",
+        "away": "St Mirren",
+        "outcome": "St Mirren",
+        "odds": 2.58,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-02T18:45:00Z"
+    },
+    {
+        "id": "4a0c89e22ab60bce04f19e7f735d2ef3",
+        "home": "Portsmouth",
+        "away": "Derby County",
+        "outcome": "Derby County",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-01T18:45:00Z"
+    },
+    {
+        "id": "82524943aba0400444a7ee43466f113e",
+        "home": "Queens Park Rangers",
+        "away": "Cardiff City",
+        "outcome": "Cardiff City",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-02T18:45:00Z"
+    },
+    {
+        "id": "66f688fe97eb94eaedd3b6d8a3851f77",
+        "home": "Millwall",
+        "away": "Wrexham AFC",
+        "outcome": "Wrexham AFC",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-02T18:45:00Z"
     }
 ]
