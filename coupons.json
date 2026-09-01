@@ -7390,16 +7390,6 @@
         "time": "2026-09-02T18:45:00Z"
     },
     {
-        "id": "4a0c89e22ab60bce04f19e7f735d2ef3",
-        "home": "Portsmouth",
-        "away": "Derby County",
-        "outcome": "Derby County",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-01T18:45:00Z"
-    },
-    {
         "id": "82524943aba0400444a7ee43466f113e",
         "home": "Queens Park Rangers",
         "away": "Cardiff City",
@@ -7438,5 +7428,35 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-09-02T18:30:00Z"
+    },
+    {
+        "id": "5a4aaa142d12a350f302f2fb62fef0b3",
+        "home": "Real Sociedad",
+        "away": "Celta Vigo",
+        "outcome": "Celta Vigo",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-09-03T19:00:00Z"
+    },
+    {
+        "id": "6ebd4679b6f7274a69cb13f4acc485a8",
+        "home": "FC Lugano",
+        "away": "Servette",
+        "outcome": "Servette",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-03T18:30:00Z"
+    },
+    {
+        "id": "f0f0bb59e178055dfbb6d3f35815dfa9",
+        "home": "Hibernian",
+        "away": "Hearts",
+        "outcome": "Hibernian",
+        "odds": 2.58,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-03T18:45:00Z"
     }
 ]

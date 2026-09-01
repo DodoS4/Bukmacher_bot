@@ -26576,5 +26576,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:0"
+    },
+    {
+        "id": "4a0c89e22ab60bce04f19e7f735d2ef3",
+        "home": "Portsmouth",
+        "away": "Derby County",
+        "outcome": "Derby County",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-01T18:45:00Z",
+        "profit": 400.0,
+        "status": "WIN",
+        "score": "0:2"
     }
 ]
