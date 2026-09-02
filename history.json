@@ -26589,5 +26589,18 @@
         "profit": 400.0,
         "status": "WIN",
         "score": "0:2"
+    },
+    {
+        "id": "19f9d682e7e27589834568525c0abd07",
+        "home": "Austria Wien",
+        "away": "WSG Tirol",
+        "outcome": "WSG Tirol",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-09-02T16:30:00Z",
+        "profit": 387.5,
+        "status": "WIN",
+        "score": "0:1"
     }
 ]
