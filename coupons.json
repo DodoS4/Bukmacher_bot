@@ -7458,5 +7458,15 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-09-03T18:45:00Z"
+    },
+    {
+        "id": "6c968fe4325c9b7e75078abfc572560d",
+        "home": "Burnley",
+        "away": "Middlesbrough",
+        "outcome": "Burnley",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-02T19:00:00Z"
     }
 ]
