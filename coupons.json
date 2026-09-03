@@ -7320,36 +7320,6 @@
         "time": "2026-09-01T15:30:00Z"
     },
     {
-        "id": "5a4aaa142d12a350f302f2fb62fef0b3",
-        "home": "Real Sociedad",
-        "away": "Celta Vigo",
-        "outcome": "Celta Vigo",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-09-03T19:00:00Z"
-    },
-    {
-        "id": "6ebd4679b6f7274a69cb13f4acc485a8",
-        "home": "FC Lugano",
-        "away": "Servette",
-        "outcome": "Servette",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-09-03T18:30:00Z"
-    },
-    {
-        "id": "f0f0bb59e178055dfbb6d3f35815dfa9",
-        "home": "Hibernian",
-        "away": "Hearts",
-        "outcome": "Hibernian",
-        "odds": 2.58,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-09-03T18:45:00Z"
-    },
-    {
         "id": "7606e796f22113a04f4ba8d500b29cee",
         "home": "Pelicans",
         "away": "Sport",
@@ -7388,26 +7358,6 @@
         "stake": 125.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-09-04T18:00:00Z"
-    },
-    {
-        "id": "c6e298b1470c195916dc5583dc6287b2",
-        "home": "FC Copenhagen",
-        "away": "FC Nordsjaelland",
-        "outcome": "FC Nordsjaelland",
-        "odds": 3.3,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-09-03T18:00:00Z"
-    },
-    {
-        "id": "9c0a8cc0fa786e8c09ead28d7b7071ac",
-        "home": "Lech Pozna\u0144",
-        "away": "Jagiellonia Bia\u0142ystok",
-        "outcome": "Jagiellonia Bia\u0142ystok",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-09-03T18:30:00Z"
     },
     {
         "id": "686358c484cc44fe8e617674c335d531",
@@ -7530,16 +7480,6 @@
         "time": "2026-09-05T12:45:00Z"
     },
     {
-        "id": "9a31fb300796d3e97b63f1db49badedc",
-        "home": "Toulouse",
-        "away": "Lille",
-        "outcome": "Toulouse",
-        "odds": 4.35,
-        "stake": 125.0,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-09-03T18:45:00Z"
-    },
-    {
         "id": "a4f50322a5d4a85c77627bb7fff9b2be",
         "home": "Charleroi",
         "away": "Union Saint-Gilloise",
@@ -7558,16 +7498,6 @@
         "stake": 400.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-09-05T16:15:00Z"
-    },
-    {
-        "id": "d8411659b0813eb121f814f1b22a1f3a",
-        "home": "FC Basel",
-        "away": "FC Sion",
-        "outcome": "FC Sion",
-        "odds": 2.84,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-09-03T18:30:00Z"
     },
     {
         "id": "ce1a5544e044941ef7c5df1fcec0e9d1",
@@ -7608,5 +7538,55 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-09-05T14:00:00Z"
+    },
+    {
+        "id": "cf4132fe69a1fb7d83fe0b38ae612076",
+        "home": "Fiorentina",
+        "away": "Torino",
+        "outcome": "Fiorentina",
+        "odds": 1.99,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-05T13:00:00Z"
+    },
+    {
+        "id": "3de61914f86f782de680a7e5937b8a79",
+        "home": "Motor Lublin",
+        "away": "Legia Warszawa",
+        "outcome": "Motor Lublin",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-05T18:15:00Z"
+    },
+    {
+        "id": "218f607c9be8999168189d12e4438b83",
+        "home": "Standard Liege",
+        "away": "Royal Antwerp",
+        "outcome": "Royal Antwerp",
+        "odds": 3.3,
+        "stake": 400.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-05T18:45:00Z"
+    },
+    {
+        "id": "78b1f058c20118c1b1388d6bd3f8dbf5",
+        "home": "Viborg FF",
+        "away": "Lyngby",
+        "outcome": "Lyngby",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-09-04T17:00:00Z"
+    },
+    {
+        "id": "f3331ac1a5d78924c34001ca0867d450",
+        "home": "Swansea City",
+        "away": "Wrexham AFC",
+        "outcome": "Wrexham AFC",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-05T19:00:00Z"
     }
 ]
