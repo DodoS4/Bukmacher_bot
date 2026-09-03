@@ -26745,5 +26745,18 @@
         "profit": 357.5,
         "status": "WIN",
         "score": "0:3"
+    },
+    {
+        "id": "5ed3dbd0824241449fcaf358295555c9",
+        "home": "Rak\u00f3w Cz\u0119stochowa",
+        "away": "G\u00f3rnik Zabrze",
+        "outcome": "G\u00f3rnik Zabrze",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-03T16:00:00Z",
+        "profit": 300.0,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]
