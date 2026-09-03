@@ -26732,5 +26732,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:1"
+    },
+    {
+        "id": "ede5391bf04bf2b40c1acf2d62121e53",
+        "home": "Sint Truiden",
+        "away": "Union Saint-Gilloise",
+        "outcome": "Union Saint-Gilloise",
+        "odds": 2.1,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-02T18:30:00Z",
+        "profit": 357.5,
+        "status": "WIN",
+        "score": "0:3"
     }
 ]
