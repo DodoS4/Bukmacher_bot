@@ -7588,5 +7588,105 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-09-05T19:00:00Z"
+    },
+    {
+        "id": "01faea24e3a903932026766de916ed45",
+        "home": "Ajax",
+        "away": "PSV Eindhoven",
+        "outcome": "Ajax",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-09-05T18:00:00Z"
+    },
+    {
+        "id": "595f11f4ec72956b25bb008c7d9ab1aa",
+        "home": "Erzurum BB",
+        "away": "Torku Konyaspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-05T14:00:00Z"
+    },
+    {
+        "id": "2afb041e6eb2b2ab9c477c777a09c49e",
+        "home": "Fenerbahce",
+        "away": "Besiktas JK",
+        "outcome": "Fenerbahce",
+        "odds": 1.92,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-05T17:00:00Z"
+    },
+    {
+        "id": "ef1e29bcb985bc6c82d880739cd5d168",
+        "home": "Cercle Brugge KSV",
+        "away": "Gent",
+        "outcome": "Cercle Brugge KSV",
+        "odds": 2.95,
+        "stake": 400.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-06T11:30:00Z"
+    },
+    {
+        "id": "1a5169c2a73ae1d133cc61b70355fe97",
+        "home": "Millwall",
+        "away": "Bolton Wanderers",
+        "outcome": "Bolton Wanderers",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-05T14:00:00Z"
+    },
+    {
+        "id": "c94c876e6c11d7f95c01612bfa4e70c6",
+        "home": "Orlando City SC",
+        "away": "San Diego FC",
+        "outcome": "San Diego FC",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-05T23:30:00Z"
+    },
+    {
+        "id": "82dd9475d4b2b9b7f3a396a7be2547f3",
+        "home": "Seattle Sounders FC",
+        "away": "New York Red Bulls",
+        "outcome": "New York Red Bulls",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-06T00:30:00Z"
+    },
+    {
+        "id": "0ed5e9f3a90677d12a8bfb38e67764ee",
+        "home": "LA Galaxy",
+        "away": "New England Revolution",
+        "outcome": "New England Revolution",
+        "odds": 2.96,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-06T01:30:00Z"
+    },
+    {
+        "id": "8289ab720fb9bbc036bf0cdf52516ce2",
+        "home": "Real Salt Lake",
+        "away": "Los Angeles FC",
+        "outcome": "Los Angeles FC",
+        "odds": 2.7,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-06T01:30:00Z"
+    },
+    {
+        "id": "5866122c8f843a48da441b82a2a5f8e1",
+        "home": "Portland Timbers",
+        "away": "Minnesota United FC",
+        "outcome": "Minnesota United FC",
+        "odds": 3.64,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-06T02:30:00Z"
     }
 ]
