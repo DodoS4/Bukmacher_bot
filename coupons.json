@@ -7380,66 +7380,6 @@
         "time": "2026-09-05T14:00:00Z"
     },
     {
-        "id": "e10ca5320e5b6bdd188ebcbe4f743fc7",
-        "home": "KV Mechelen",
-        "away": "Westerlo",
-        "outcome": "Westerlo",
-        "odds": 3.3,
-        "stake": 400.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-09-05T16:15:00Z"
-    },
-    {
-        "id": "3de61914f86f782de680a7e5937b8a79",
-        "home": "Motor Lublin",
-        "away": "Legia Warszawa",
-        "outcome": "Motor Lublin",
-        "odds": 3.9,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-09-05T18:15:00Z"
-    },
-    {
-        "id": "218f607c9be8999168189d12e4438b83",
-        "home": "Standard Liege",
-        "away": "Royal Antwerp",
-        "outcome": "Royal Antwerp",
-        "odds": 3.3,
-        "stake": 400.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-09-05T18:45:00Z"
-    },
-    {
-        "id": "f3331ac1a5d78924c34001ca0867d450",
-        "home": "Swansea City",
-        "away": "Wrexham AFC",
-        "outcome": "Wrexham AFC",
-        "odds": 3.55,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-05T19:00:00Z"
-    },
-    {
-        "id": "01faea24e3a903932026766de916ed45",
-        "home": "Ajax",
-        "away": "PSV Eindhoven",
-        "outcome": "Ajax",
-        "odds": 2.8,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-09-05T18:00:00Z"
-    },
-    {
-        "id": "2afb041e6eb2b2ab9c477c777a09c49e",
-        "home": "Fenerbahce",
-        "away": "Besiktas JK",
-        "outcome": "Fenerbahce",
-        "odds": 1.92,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-09-05T17:00:00Z"
-    },
-    {
         "id": "ef1e29bcb985bc6c82d880739cd5d168",
         "home": "Cercle Brugge KSV",
         "away": "Gent",
@@ -7548,16 +7488,6 @@
         "stake": 400.0,
         "sport": "soccer_italy_serie_a",
         "time": "2026-09-06T16:00:00Z"
-    },
-    {
-        "id": "88c8073d902ca413208dbe5e2b7c89f1",
-        "home": "Willem II",
-        "away": "Excelsior",
-        "outcome": "Willem II",
-        "odds": 3.1,
-        "stake": 125.0,
-        "sport": "soccer_netherlands_eredivisie",
-        "time": "2026-09-05T19:00:00Z"
     },
     {
         "id": "4ddfdc79d355bf681101866b450eee60",
@@ -7690,16 +7620,6 @@
         "time": "2026-09-06T18:30:00Z"
     },
     {
-        "id": "21fd24ad6732df00774304a046d84fe9",
-        "home": "Hull City",
-        "away": "Aston Villa",
-        "outcome": "Hull City",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_epl",
-        "time": "2026-09-05T16:30:00Z"
-    },
-    {
         "id": "6c86fc624f91552d591d8f368f6d965e",
         "home": "Marseille",
         "away": "Paris FC",
@@ -7778,5 +7698,55 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-09-07T15:00:00Z"
+    },
+    {
+        "id": "bcba4bd1f336226972bd9c4b59d0d77e",
+        "home": "Udinese",
+        "away": "Lazio",
+        "outcome": "Lazio",
+        "odds": 2.76,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-07T18:45:00Z"
+    },
+    {
+        "id": "69f3635103ee8ed4547e19949a6ce08a",
+        "home": "Pogo\u0144 Szczecin",
+        "away": "Wis\u0142a P\u0142ock",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 4.25,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-07T18:30:00Z"
+    },
+    {
+        "id": "d76d1cde75744af33fca9ca4272be7fb",
+        "home": "Estoril",
+        "away": "Arouca",
+        "outcome": "Arouca",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-07T19:15:00Z"
+    },
+    {
+        "id": "fc4aa19aff79092d0ac992f2bef43250",
+        "home": "Charlotte FC",
+        "away": "Houston Dynamo",
+        "outcome": "Houston Dynamo",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-05T23:30:00Z"
+    },
+    {
+        "id": "f5db8bb9519e7aadef08603be700267b",
+        "home": "Austin FC",
+        "away": "San Jose Earthquakes",
+        "outcome": "San Jose Earthquakes",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-06T00:30:00Z"
     }
 ]
