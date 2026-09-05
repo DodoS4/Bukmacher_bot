@@ -7890,13 +7890,43 @@
         "time": "2026-09-05T14:00:00Z"
     },
     {
-        "id": "6b5aa4cdc3e4394a2ba8b106d48947d5",
-        "home": "New York City FC",
-        "away": "Nashville SC",
-        "outcome": "New York City FC",
-        "odds": 3.25,
+        "id": "21fd24ad6732df00774304a046d84fe9",
+        "home": "Hull City",
+        "away": "Aston Villa",
+        "outcome": "Hull City",
+        "odds": 4.5,
         "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-04T23:30:00Z"
+        "sport": "soccer_epl",
+        "time": "2026-09-05T16:30:00Z"
+    },
+    {
+        "id": "6c86fc624f91552d591d8f368f6d965e",
+        "home": "Marseille",
+        "away": "Paris FC",
+        "outcome": "Paris FC",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-06T18:45:00Z"
+    },
+    {
+        "id": "715576a8f2fc3ba456905030d9fe92fb",
+        "home": "SonderjyskE",
+        "away": "AC Horsens",
+        "outcome": "SonderjyskE",
+        "odds": 2.34,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-09-06T12:00:00Z"
+    },
+    {
+        "id": "53d733d07c3b951144d31397488d78b5",
+        "home": "Stoke City",
+        "away": "Charlton Athletic",
+        "outcome": "Charlton Athletic",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-05T11:30:00Z"
     }
 ]

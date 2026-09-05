@@ -26901,5 +26901,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "3:0"
+    },
+    {
+        "id": "6b5aa4cdc3e4394a2ba8b106d48947d5",
+        "home": "New York City FC",
+        "away": "Nashville SC",
+        "outcome": "New York City FC",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-04T23:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
     }
 ]
