@@ -7380,36 +7380,6 @@
         "time": "2026-09-05T14:00:00Z"
     },
     {
-        "id": "60776ba6c26557c9c5e6a34ae72e2ec8",
-        "home": "Bologna",
-        "away": "Sassuolo",
-        "outcome": "Sassuolo",
-        "odds": 4.1,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-09-06T16:00:00Z"
-    },
-    {
-        "id": "e291623b288b8aadc02ff3ce2471a96f",
-        "home": "Kocaelispor",
-        "away": "Samsunspor",
-        "outcome": "Samsunspor",
-        "odds": 3.27,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-09-06T17:00:00Z"
-    },
-    {
-        "id": "a3f1a7ceb850ea9cf28f110a476c446c",
-        "home": "Anderlecht",
-        "away": "Genk",
-        "outcome": "Anderlecht",
-        "odds": 2.46,
-        "stake": 400.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-09-06T16:30:00Z"
-    },
-    {
         "id": "68486543abebc7bd4d9379328d3b5377",
         "home": "SK Beveren",
         "away": "Leuven",
@@ -7440,36 +7410,6 @@
         "time": "2026-09-05T14:00:00Z"
     },
     {
-        "id": "9837f5ef9e30ed8b1729c4cf606137ec",
-        "home": "Juventus",
-        "away": "AC Milan",
-        "outcome": "AC Milan",
-        "odds": 3.95,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-09-06T18:45:00Z"
-    },
-    {
-        "id": "8fb9056024333fa3d748bec88d3879b7",
-        "home": "Panathinaikos",
-        "away": "PAOK Thessaloniki",
-        "outcome": "PAOK Thessaloniki",
-        "odds": 3.6,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-09-06T18:30:00Z"
-    },
-    {
-        "id": "6c86fc624f91552d591d8f368f6d965e",
-        "home": "Marseille",
-        "away": "Paris FC",
-        "outcome": "Paris FC",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-09-06T18:45:00Z"
-    },
-    {
         "id": "8f751e96142db860ba66bbea713baf50",
         "home": "Cagliari",
         "away": "Lecce",
@@ -7498,16 +7438,6 @@
         "stake": 125.0,
         "sport": "soccer_turkey_super_league",
         "time": "2026-09-07T17:00:00Z"
-    },
-    {
-        "id": "21d2c5e6cfa45c6b67730ffc178a567d",
-        "home": "Atromitos Athens",
-        "away": "Kalamata FC",
-        "outcome": "Kalamata FC",
-        "odds": 4.4,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-09-06T16:00:00Z"
     },
     {
         "id": "35ba6878d169af1efaa4df64d588952f",
@@ -7560,26 +7490,6 @@
         "time": "2026-09-06T19:30:00Z"
     },
     {
-        "id": "e0c7a250bd1279aae9ae143d18c807f3",
-        "home": "OFI Crete",
-        "away": "AE Kifisia FC",
-        "outcome": "AE Kifisia FC",
-        "odds": 3.95,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-09-06T16:30:00Z"
-    },
-    {
-        "id": "6c578cb9b6a8da9d783224dd86533af4",
-        "home": "Levadiakos",
-        "away": "Panetolikos Agrinio",
-        "outcome": "Levadiakos",
-        "odds": 1.96,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-09-06T17:00:00Z"
-    },
-    {
         "id": "51a4b132ebcf4552a8baaba368705d45",
         "home": "HPK",
         "away": "Ilves",
@@ -7608,5 +7518,55 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-09-08T16:45:00Z"
+    },
+    {
+        "id": "eac66ea3b6e1c69796f1efe3f2ec4287",
+        "home": "Wrexham AFC",
+        "away": "Burnley",
+        "outcome": "Burnley",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-08T18:45:00Z"
+    },
+    {
+        "id": "568765af99afabf739e3964c9800d951",
+        "home": "Southampton",
+        "away": "Swansea City",
+        "outcome": "Swansea City",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-08T18:45:00Z"
+    },
+    {
+        "id": "33aa4b8a301a13b229e96901d831fd38",
+        "home": "Borussia Dortmund",
+        "away": "Villarreal",
+        "outcome": "Villarreal",
+        "odds": 4.4,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-08T19:00:00Z"
+    },
+    {
+        "id": "e47709952f60b21cbd0a358299071e5c",
+        "home": "Lille",
+        "away": "Real Betis",
+        "outcome": "Lille",
+        "odds": 2.34,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-08T19:00:00Z"
+    },
+    {
+        "id": "bfeab0a3d8931c7cdff0056c041ff97c",
+        "home": "Porto",
+        "away": "Manchester City",
+        "outcome": "Manchester City",
+        "odds": 1.8,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-08T19:00:00Z"
     }
 ]
