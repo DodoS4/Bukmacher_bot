@@ -7400,46 +7400,6 @@
         "time": "2026-09-05T14:00:00Z"
     },
     {
-        "id": "8f751e96142db860ba66bbea713baf50",
-        "home": "Cagliari",
-        "away": "Lecce",
-        "outcome": "Lecce",
-        "odds": 4.5,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-09-07T16:30:00Z"
-    },
-    {
-        "id": "1ae7a0ce80c36c6edd1e38ba64eb1ecd",
-        "home": "Wieczysta Krak\u00f3w",
-        "away": "Zag\u0142\u0119bie Lubin",
-        "outcome": "Zag\u0142\u0119bie Lubin",
-        "odds": 3.75,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-09-07T16:00:00Z"
-    },
-    {
-        "id": "6807abb6fc18668139589cb7bc95db14",
-        "home": "Goztepe",
-        "away": "Gazi\u015fehir Gaziantep",
-        "outcome": "Gazi\u015fehir Gaziantep",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-09-07T17:00:00Z"
-    },
-    {
-        "id": "35ba6878d169af1efaa4df64d588952f",
-        "home": "Asteras Tripolis",
-        "away": "Iraklis FC",
-        "outcome": "Iraklis FC",
-        "odds": 3.8,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-09-07T15:00:00Z"
-    },
-    {
         "id": "bcba4bd1f336226972bd9c4b59d0d77e",
         "home": "Udinese",
         "away": "Lazio",
@@ -7478,16 +7438,6 @@
         "stake": 250.0,
         "sport": "icehockey_liiga",
         "time": "2026-09-08T15:30:00Z"
-    },
-    {
-        "id": "043ba66d6c8c85de1e8abbe123a8a59a",
-        "home": "FC Midtjylland",
-        "away": "FC Nordsjaelland",
-        "outcome": "FC Nordsjaelland",
-        "odds": 3.65,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-09-07T17:00:00Z"
     },
     {
         "id": "8f1221dd6bc88a3ebbfe573332840741",
@@ -7558,5 +7508,95 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-09-08T16:45:00Z"
+    },
+    {
+        "id": "0b3698e4081bc879fc57f9c6117d9798",
+        "home": "Jukurit",
+        "away": "HIFK",
+        "outcome": "Jukurit",
+        "odds": 3.3,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-09T15:30:00Z"
+    },
+    {
+        "id": "b17a2b21cf1fe63afd02600d548e4687",
+        "home": "Lukko",
+        "away": "JYP",
+        "outcome": "JYP",
+        "odds": 2.83,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-09T15:30:00Z"
+    },
+    {
+        "id": "21b0adae8c0b8784fbf48b99d27b96eb",
+        "home": "\u00c4ss\u00e4t",
+        "away": "Jokerit",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 2.43,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-09T15:30:00Z"
+    },
+    {
+        "id": "f2759737d1b2d69f8908d9e27b0a4e77",
+        "home": "Pelicans",
+        "away": "KalPa",
+        "outcome": "KalPa",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-09T15:30:00Z"
+    },
+    {
+        "id": "054b8a5692ca520a5b7f4d59c842e779",
+        "home": "Kiekko-Espoo",
+        "away": "KooKoo",
+        "outcome": "KooKoo",
+        "odds": 3.35,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-09T15:30:00Z"
+    },
+    {
+        "id": "eb6cea58ba81ea67905427eb80b458be",
+        "home": "Sport",
+        "away": "TPS",
+        "outcome": "Sport",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-09T15:30:00Z"
+    },
+    {
+        "id": "723482c3ef87a1386a487917c38ba4e9",
+        "home": "Derby County",
+        "away": "West Bromwich Albion",
+        "outcome": "Derby County",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-09T18:45:00Z"
+    },
+    {
+        "id": "2dafca45a2129bbe3fd6d562d4c74eea",
+        "home": "Charlton Athletic",
+        "away": "Queens Park Rangers",
+        "outcome": "Queens Park Rangers",
+        "odds": 2.43,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-09T19:00:00Z"
+    },
+    {
+        "id": "0be8f24bfc0697e8d789fafc699ece49",
+        "home": "Sporting Lisbon",
+        "away": "Galatasaray",
+        "outcome": "Galatasaray",
+        "odds": 4.4,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-09T19:00:00Z"
     }
 ]
