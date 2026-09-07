@@ -7380,16 +7380,6 @@
         "time": "2026-09-05T14:00:00Z"
     },
     {
-        "id": "68486543abebc7bd4d9379328d3b5377",
-        "home": "SK Beveren",
-        "away": "Leuven",
-        "outcome": "Leuven",
-        "odds": 2.9,
-        "stake": 400.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-09-06T17:15:00Z"
-    },
-    {
         "id": "75e66309f5eb066e66e65cead9ae6d00",
         "home": "TPS",
         "away": "HIFK",
@@ -7480,16 +7470,6 @@
         "time": "2026-09-07T19:15:00Z"
     },
     {
-        "id": "b8fa9ceb61617e5f79e751a05b0cdfb1",
-        "home": "Gil Vicente",
-        "away": "Acad\u00e9mico de Viseu",
-        "outcome": "Acad\u00e9mico de Viseu",
-        "odds": 3.7,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-09-06T19:30:00Z"
-    },
-    {
         "id": "51a4b132ebcf4552a8baaba368705d45",
         "home": "HPK",
         "away": "Ilves",
@@ -7568,5 +7548,15 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-09-08T19:00:00Z"
+    },
+    {
+        "id": "9c28ce0ac169f83e873ae8caa7f9a597",
+        "home": "AEK Athens",
+        "away": "LASK",
+        "outcome": "AEK Athens",
+        "odds": 1.86,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-08T16:45:00Z"
     }
 ]

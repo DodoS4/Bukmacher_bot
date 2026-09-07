@@ -27694,5 +27694,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:2"
+    },
+    {
+        "id": "68486543abebc7bd4d9379328d3b5377",
+        "home": "SK Beveren",
+        "away": "Leuven",
+        "outcome": "Leuven",
+        "odds": 2.9,
+        "stake": 400.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-06T17:15:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "3:0"
+    },
+    {
+        "id": "b8fa9ceb61617e5f79e751a05b0cdfb1",
+        "home": "Gil Vicente",
+        "away": "Acad\u00e9mico de Viseu",
+        "outcome": "Acad\u00e9mico de Viseu",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-06T19:30:00Z",
+        "profit": 337.5,
+        "status": "WIN",
+        "score": "0:1"
     }
 ]
