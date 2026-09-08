@@ -7608,5 +7608,35 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-10T02:30:00Z"
+    },
+    {
+        "id": "d65ccbfeec69f409fc971d5d7e297e32",
+        "home": "Blackburn Rovers",
+        "away": "Sheffield United",
+        "outcome": "Blackburn Rovers",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-08T18:45:00Z"
+    },
+    {
+        "id": "548baa1054bef3f3c9f830d99280eefe",
+        "home": "Fenerbahce",
+        "away": "AS Roma",
+        "outcome": "Fenerbahce",
+        "odds": 3.5,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-10T16:45:00Z"
+    },
+    {
+        "id": "3915fb1555852ddb7990dccadde3ca4e",
+        "home": "Atlanta United FC",
+        "away": "Orlando City SC",
+        "outcome": "Orlando City SC",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-09T23:30:00Z"
     }
 ]
