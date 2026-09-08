@@ -7410,76 +7410,6 @@
         "time": "2026-09-08T15:30:00Z"
     },
     {
-        "id": "8f1221dd6bc88a3ebbfe573332840741",
-        "home": "Club Brugge",
-        "away": "Aston Villa",
-        "outcome": "Club Brugge",
-        "odds": 2.76,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-08T16:45:00Z"
-    },
-    {
-        "id": "eac66ea3b6e1c69796f1efe3f2ec4287",
-        "home": "Wrexham AFC",
-        "away": "Burnley",
-        "outcome": "Burnley",
-        "odds": 3.8,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-08T18:45:00Z"
-    },
-    {
-        "id": "568765af99afabf739e3964c9800d951",
-        "home": "Southampton",
-        "away": "Swansea City",
-        "outcome": "Swansea City",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-08T18:45:00Z"
-    },
-    {
-        "id": "33aa4b8a301a13b229e96901d831fd38",
-        "home": "Borussia Dortmund",
-        "away": "Villarreal",
-        "outcome": "Villarreal",
-        "odds": 4.4,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-08T19:00:00Z"
-    },
-    {
-        "id": "e47709952f60b21cbd0a358299071e5c",
-        "home": "Lille",
-        "away": "Real Betis",
-        "outcome": "Lille",
-        "odds": 2.34,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-08T19:00:00Z"
-    },
-    {
-        "id": "bfeab0a3d8931c7cdff0056c041ff97c",
-        "home": "Porto",
-        "away": "Manchester City",
-        "outcome": "Manchester City",
-        "odds": 1.8,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-08T19:00:00Z"
-    },
-    {
-        "id": "9c28ce0ac169f83e873ae8caa7f9a597",
-        "home": "AEK Athens",
-        "away": "LASK",
-        "outcome": "AEK Athens",
-        "odds": 1.86,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-08T16:45:00Z"
-    },
-    {
         "id": "0b3698e4081bc879fc57f9c6117d9798",
         "home": "Jukurit",
         "away": "HIFK",
@@ -7570,16 +7500,6 @@
         "time": "2026-09-09T19:00:00Z"
     },
     {
-        "id": "de63c48a96161be965b0c2a4f2b708f1",
-        "home": "Cardiff City",
-        "away": "Stoke City",
-        "outcome": "Stoke City",
-        "odds": 3.65,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-08T18:45:00Z"
-    },
-    {
         "id": "6daf0ab35f4264a29570598c296207bd",
         "home": "Norwich City",
         "away": "Birmingham City",
@@ -7610,16 +7530,6 @@
         "time": "2026-09-10T02:30:00Z"
     },
     {
-        "id": "d65ccbfeec69f409fc971d5d7e297e32",
-        "home": "Blackburn Rovers",
-        "away": "Sheffield United",
-        "outcome": "Blackburn Rovers",
-        "odds": 3.15,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-08T18:45:00Z"
-    },
-    {
         "id": "548baa1054bef3f3c9f830d99280eefe",
         "home": "Fenerbahce",
         "away": "AS Roma",
@@ -7638,5 +7548,35 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-09T23:30:00Z"
+    },
+    {
+        "id": "c50014f4b3e58a12a2c79dcde72548e6",
+        "home": "Como",
+        "away": "RB Leipzig",
+        "outcome": "RB Leipzig",
+        "odds": 4.2,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-10T19:00:00Z"
+    },
+    {
+        "id": "6fab77b7f43d32938669027a713d7454",
+        "home": "Slavia Praha",
+        "away": "RC Lens",
+        "outcome": "Slavia Praha",
+        "odds": 2.66,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-10T19:00:00Z"
+    },
+    {
+        "id": "88c9bd545a870f5e3a1eab5a56f78d69",
+        "home": "Chicago Fire",
+        "away": "Inter Miami CF",
+        "outcome": "Inter Miami CF",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-10T00:30:00Z"
     }
 ]
