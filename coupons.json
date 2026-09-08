@@ -7400,36 +7400,6 @@
         "time": "2026-09-05T14:00:00Z"
     },
     {
-        "id": "bcba4bd1f336226972bd9c4b59d0d77e",
-        "home": "Udinese",
-        "away": "Lazio",
-        "outcome": "Lazio",
-        "odds": 2.76,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-09-07T18:45:00Z"
-    },
-    {
-        "id": "69f3635103ee8ed4547e19949a6ce08a",
-        "home": "Pogo\u0144 Szczecin",
-        "away": "Wis\u0142a P\u0142ock",
-        "outcome": "Wis\u0142a P\u0142ock",
-        "odds": 4.25,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-09-07T18:30:00Z"
-    },
-    {
-        "id": "d76d1cde75744af33fca9ca4272be7fb",
-        "home": "Estoril",
-        "away": "Arouca",
-        "outcome": "Arouca",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-09-07T19:15:00Z"
-    },
-    {
         "id": "51a4b132ebcf4552a8baaba368705d45",
         "home": "HPK",
         "away": "Ilves",
@@ -7598,5 +7568,45 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-09-09T19:00:00Z"
+    },
+    {
+        "id": "de63c48a96161be965b0c2a4f2b708f1",
+        "home": "Cardiff City",
+        "away": "Stoke City",
+        "outcome": "Stoke City",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-08T18:45:00Z"
+    },
+    {
+        "id": "6daf0ab35f4264a29570598c296207bd",
+        "home": "Norwich City",
+        "away": "Birmingham City",
+        "outcome": "Birmingham City",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-09T18:45:00Z"
+    },
+    {
+        "id": "502c9554f5b72a203c6982145b97c225",
+        "home": "Minnesota United FC",
+        "away": "FC Dallas",
+        "outcome": "FC Dallas",
+        "odds": 3.64,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-10T00:30:00Z"
+    },
+    {
+        "id": "b5b339e8928c0c530d56af3023a7f109",
+        "home": "San Diego FC",
+        "away": "San Jose Earthquakes",
+        "outcome": "San Jose Earthquakes",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-10T02:30:00Z"
     }
 ]
