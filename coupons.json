@@ -7598,5 +7598,15 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-10T02:30:00Z"
+    },
+    {
+        "id": "73ede35a59dd1695a4bc42ae771de3bf",
+        "home": "Rak\u00f3w Cz\u0119stochowa",
+        "away": "Motor Lublin",
+        "outcome": "Motor Lublin",
+        "odds": 4.35,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-11T16:00:00Z"
     }
 ]
