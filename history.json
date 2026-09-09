@@ -27941,5 +27941,57 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:2"
+    },
+    {
+        "id": "723482c3ef87a1386a487917c38ba4e9",
+        "home": "Derby County",
+        "away": "West Bromwich Albion",
+        "outcome": "Derby County",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-09T18:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:1"
+    },
+    {
+        "id": "2dafca45a2129bbe3fd6d562d4c74eea",
+        "home": "Charlton Athletic",
+        "away": "Queens Park Rangers",
+        "outcome": "Queens Park Rangers",
+        "odds": 2.43,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-09T19:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
+    },
+    {
+        "id": "0be8f24bfc0697e8d789fafc699ece49",
+        "home": "Sporting Lisbon",
+        "away": "Galatasaray",
+        "outcome": "Galatasaray",
+        "odds": 4.4,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-09T19:00:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "6daf0ab35f4264a29570598c296207bd",
+        "home": "Norwich City",
+        "away": "Birmingham City",
+        "outcome": "Birmingham City",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-09T18:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
     }
 ]

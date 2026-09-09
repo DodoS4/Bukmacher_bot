@@ -7470,46 +7470,6 @@
         "time": "2026-09-09T15:30:00Z"
     },
     {
-        "id": "723482c3ef87a1386a487917c38ba4e9",
-        "home": "Derby County",
-        "away": "West Bromwich Albion",
-        "outcome": "Derby County",
-        "odds": 3.1,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-09T18:45:00Z"
-    },
-    {
-        "id": "2dafca45a2129bbe3fd6d562d4c74eea",
-        "home": "Charlton Athletic",
-        "away": "Queens Park Rangers",
-        "outcome": "Queens Park Rangers",
-        "odds": 2.43,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-09T19:00:00Z"
-    },
-    {
-        "id": "0be8f24bfc0697e8d789fafc699ece49",
-        "home": "Sporting Lisbon",
-        "away": "Galatasaray",
-        "outcome": "Galatasaray",
-        "odds": 4.4,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-09T19:00:00Z"
-    },
-    {
-        "id": "6daf0ab35f4264a29570598c296207bd",
-        "home": "Norwich City",
-        "away": "Birmingham City",
-        "outcome": "Birmingham City",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-09-09T18:45:00Z"
-    },
-    {
         "id": "502c9554f5b72a203c6982145b97c225",
         "home": "Minnesota United FC",
         "away": "FC Dallas",
@@ -7608,5 +7568,95 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-09-11T16:00:00Z"
+    },
+    {
+        "id": "0f7c71ee847cc17877a0704f86b11f9e",
+        "home": "Hermes",
+        "away": "KeuPa HT",
+        "outcome": "KeuPa HT",
+        "odds": 2.65,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-11T15:30:00Z"
+    },
+    {
+        "id": "84f95b7bfef10615207a66d46a864ba0",
+        "home": "Ketter\u00e4",
+        "away": "Kiekko-Vantaa",
+        "outcome": "Kiekko-Vantaa",
+        "odds": 2.47,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-11T15:30:00Z"
+    },
+    {
+        "id": "115c6679a72c5a360640b6baaa16e78c",
+        "home": "Union Berlin",
+        "away": "FC Schalke 04",
+        "outcome": "FC Schalke 04",
+        "odds": 3.15,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-11T18:30:00Z"
+    },
+    {
+        "id": "a9656d25ca6b06be9e477a098333bd70",
+        "home": "Venezia",
+        "away": "Fiorentina",
+        "outcome": "Venezia",
+        "odds": 3.2,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-11T18:45:00Z"
+    },
+    {
+        "id": "e82a64cd757bc039de6c0dd5ceb2ed23",
+        "home": "Wis\u0142a Krak\u00f3w",
+        "away": "Jagiellonia Bia\u0142ystok",
+        "outcome": "Jagiellonia Bia\u0142ystok",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-11T18:30:00Z"
+    },
+    {
+        "id": "a7e7bf9a8226e86eab6e5c1cb0780a0f",
+        "home": "Rennes",
+        "away": "Marseille",
+        "outcome": "Rennes",
+        "odds": 2.22,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-11T18:45:00Z"
+    },
+    {
+        "id": "9bdbc1febe71719d75d7c6ac3e60a111",
+        "home": "KV Mechelen",
+        "away": "Anderlecht",
+        "outcome": "KV Mechelen",
+        "odds": 4.3,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-11T18:45:00Z"
+    },
+    {
+        "id": "7d685a22147e99f3a4f307c04abdee05",
+        "home": "Toronto FC",
+        "away": "Nashville SC",
+        "outcome": "Toronto FC",
+        "odds": 3.78,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-09T23:30:00Z"
+    },
+    {
+        "id": "cfee88f28eccb2eb9ce2045968ec24ca",
+        "home": "New York City FC",
+        "away": "New England Revolution",
+        "outcome": "New England Revolution",
+        "odds": 2.9,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-10T00:00:00Z"
     }
 ]
