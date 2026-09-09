@@ -7578,5 +7578,25 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-10T00:30:00Z"
+    },
+    {
+        "id": "bae26c959975f410a33900d7157112a2",
+        "home": "Austin FC",
+        "away": "Colorado Rapids",
+        "outcome": "Colorado Rapids",
+        "odds": 2.92,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-10T00:30:00Z"
+    },
+    {
+        "id": "dea707116857bb8d11ac9c222169a00d",
+        "home": "Portland Timbers",
+        "away": "St. Louis City SC",
+        "outcome": "St. Louis City SC",
+        "odds": 2.9,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-10T02:30:00Z"
     }
 ]
