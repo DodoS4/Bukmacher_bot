@@ -28097,5 +28097,31 @@
         "profit": 237.5,
         "status": "WIN",
         "score": "1:2"
+    },
+    {
+        "id": "548baa1054bef3f3c9f830d99280eefe",
+        "home": "Fenerbahce",
+        "away": "AS Roma",
+        "outcome": "Fenerbahce",
+        "odds": 3.5,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-10T16:45:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "6fab77b7f43d32938669027a713d7454",
+        "home": "Slavia Praha",
+        "away": "RC Lens",
+        "outcome": "Slavia Praha",
+        "odds": 2.66,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-10T19:00:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "2:3"
     }
 ]

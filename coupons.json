@@ -7470,31 +7470,11 @@
         "time": "2026-09-09T15:30:00Z"
     },
     {
-        "id": "548baa1054bef3f3c9f830d99280eefe",
-        "home": "Fenerbahce",
-        "away": "AS Roma",
-        "outcome": "Fenerbahce",
-        "odds": 3.5,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-10T16:45:00Z"
-    },
-    {
         "id": "c50014f4b3e58a12a2c79dcde72548e6",
         "home": "Como",
         "away": "RB Leipzig",
         "outcome": "RB Leipzig",
         "odds": 4.2,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-10T19:00:00Z"
-    },
-    {
-        "id": "6fab77b7f43d32938669027a713d7454",
-        "home": "Slavia Praha",
-        "away": "RC Lens",
-        "outcome": "Slavia Praha",
-        "odds": 2.66,
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-09-10T19:00:00Z"
@@ -7805,6 +7785,76 @@
         "away": "Stoke City",
         "outcome": "Stoke City",
         "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "8ba070d5337fc9b99fc69f3c9cf0b66a",
+        "home": "Le Havre",
+        "away": "Angers",
+        "outcome": "Angers",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-12T18:45:00Z"
+    },
+    {
+        "id": "230c25d5109625074f28d7216f25c518",
+        "home": "Auxerre",
+        "away": "Nice",
+        "outcome": "Auxerre",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-12T18:45:00Z"
+    },
+    {
+        "id": "2a284d621fe10e2a722fd9b6d17814a2",
+        "home": "Lorient",
+        "away": "Toulouse",
+        "outcome": "Toulouse",
+        "odds": 2.88,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-12T18:45:00Z"
+    },
+    {
+        "id": "52b93969a8589ad815e27897d09f747c",
+        "home": "Paris FC",
+        "away": "Lyon",
+        "outcome": "Lyon",
+        "odds": 2.68,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-12T18:45:00Z"
+    },
+    {
+        "id": "8bb1bca7ce2e58c880305856a04bb7e4",
+        "home": "Acad\u00e9mico de Viseu",
+        "away": "Vit\u00f3ria SC",
+        "outcome": "Acad\u00e9mico de Viseu",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-12T19:30:00Z"
+    },
+    {
+        "id": "61bcd746a2f16110386c207182688a94",
+        "home": "Leuven",
+        "away": "Cercle Brugge KSV",
+        "outcome": "Leuven",
+        "odds": 2.8,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-12T18:45:00Z"
+    },
+    {
+        "id": "c5e3d0f01b559176cae23df6eedb490c",
+        "home": "Preston North End",
+        "away": "Lincoln City",
+        "outcome": "Preston North End",
+        "odds": 2.44,
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-09-12T14:00:00Z"
