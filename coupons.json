@@ -7598,5 +7598,215 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-09-12T11:30:00Z"
+    },
+    {
+        "id": "9a97025518b0e8814df3477f3fa41f77",
+        "home": "JoKP",
+        "away": "IPK",
+        "outcome": "JoKP",
+        "odds": 2.01,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-11T15:30:00Z"
+    },
+    {
+        "id": "d100e37e678e0d71bad541a430530078",
+        "home": "TUTO Hockey",
+        "away": "Pyry",
+        "outcome": "Pyry",
+        "odds": 4.4,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-11T15:30:00Z"
+    },
+    {
+        "id": "98133182ffe74da0bd09dd9483a05dbb",
+        "home": "Augsburg",
+        "away": "Bayer Leverkusen",
+        "outcome": "Augsburg",
+        "odds": 4.5,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-12T13:30:00Z"
+    },
+    {
+        "id": "467fe6e71bc34a255dfb47e13b8fa34e",
+        "home": "FSV Mainz 05",
+        "away": "Eintracht Frankfurt",
+        "outcome": "Eintracht Frankfurt",
+        "odds": 3.65,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-12T13:30:00Z"
+    },
+    {
+        "id": "6d6a930505b05067ef8f6bc14a48bcc8",
+        "home": "TSG Hoffenheim",
+        "away": "VfB Stuttgart",
+        "outcome": "VfB Stuttgart",
+        "odds": 2.88,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-12T13:30:00Z"
+    },
+    {
+        "id": "18baacacc5a12ecb59e6088aa2d95337",
+        "home": "1. FC K\u00f6ln",
+        "away": "Werder Bremen",
+        "outcome": "Werder Bremen",
+        "odds": 3.55,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-12T16:30:00Z"
+    },
+    {
+        "id": "3dba40cdf22e962c0f6f6c940ef01850",
+        "home": "Genoa",
+        "away": "Frosinone",
+        "outcome": "Genoa",
+        "odds": 2.26,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-12T13:00:00Z"
+    },
+    {
+        "id": "b412817739a87e18bf391bf6ccff6560",
+        "home": "Lazio",
+        "away": "AC Milan",
+        "outcome": "Lazio",
+        "odds": 3.5,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-12T16:00:00Z"
+    },
+    {
+        "id": "f8bbf7144d65713cf1bfc5b1940d310c",
+        "home": "Strasbourg",
+        "away": "AS Monaco",
+        "outcome": "AS Monaco",
+        "odds": 2.23,
+        "stake": 250.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-12T15:15:00Z"
+    },
+    {
+        "id": "262dd70bd54774e83c322ca73e589d46",
+        "home": "Go Ahead Eagles",
+        "away": "Groningen",
+        "outcome": "Groningen",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-09-12T16:45:00Z"
+    },
+    {
+        "id": "1f12d9d10c57d7efa407601d8b137e44",
+        "home": "Ey\u00fcpspor",
+        "away": "\u00c7aykur Rizespor",
+        "outcome": "Ey\u00fcpspor",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "04b108714186649cde0f27fef91c5a4a",
+        "home": "Samsunspor",
+        "away": "\u00c7orum FK",
+        "outcome": "Samsunspor",
+        "odds": 2.3,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "1f60a78e4f1117517b8fafbd169431ce",
+        "home": "Torku Konyaspor",
+        "away": "Trabzonspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-12T17:00:00Z"
+    },
+    {
+        "id": "a5dbc120b7b0ce30e704d9562cb6d3e2",
+        "home": "SK Beveren",
+        "away": "Sint Truiden",
+        "outcome": "SK Beveren",
+        "odds": 3.2,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "cdf642fab4083f73adbf0151d65b1069",
+        "home": "Westerlo",
+        "away": "Standard Liege",
+        "outcome": "Westerlo",
+        "odds": 2.52,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-12T16:15:00Z"
+    },
+    {
+        "id": "990a5337d17e785d5900932df55031c4",
+        "home": "FC St Gallen",
+        "away": "FC Sion",
+        "outcome": "FC Sion",
+        "odds": 3.26,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-12T16:00:00Z"
+    },
+    {
+        "id": "7d0898a3bbbda4a17714f7f858864fd1",
+        "home": "Blackburn Rovers",
+        "away": "Millwall",
+        "outcome": "Blackburn Rovers",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "09271ecb5e5aeb1245c1611254f741bf",
+        "home": "Swansea City",
+        "away": "Burnley",
+        "outcome": "Burnley",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "47ff26574f91f0a98af6b3ed0089c8fb",
+        "home": "Charlton Athletic",
+        "away": "Portsmouth",
+        "outcome": "Portsmouth",
+        "odds": 2.85,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "42e05dd76773b7115a611f5889df4fec",
+        "home": "Middlesbrough",
+        "away": "Norwich City",
+        "outcome": "Norwich City",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "df4674e265ece6abc5bab0fe0dddf9e0",
+        "home": "Watford",
+        "away": "Stoke City",
+        "outcome": "Stoke City",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T14:00:00Z"
     }
 ]
