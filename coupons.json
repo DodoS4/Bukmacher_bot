@@ -7470,26 +7470,6 @@
         "time": "2026-09-09T15:30:00Z"
     },
     {
-        "id": "502c9554f5b72a203c6982145b97c225",
-        "home": "Minnesota United FC",
-        "away": "FC Dallas",
-        "outcome": "FC Dallas",
-        "odds": 3.64,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-10T00:30:00Z"
-    },
-    {
-        "id": "b5b339e8928c0c530d56af3023a7f109",
-        "home": "San Diego FC",
-        "away": "San Jose Earthquakes",
-        "outcome": "San Jose Earthquakes",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-10T02:30:00Z"
-    },
-    {
         "id": "548baa1054bef3f3c9f830d99280eefe",
         "home": "Fenerbahce",
         "away": "AS Roma",
@@ -7498,16 +7478,6 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-09-10T16:45:00Z"
-    },
-    {
-        "id": "3915fb1555852ddb7990dccadde3ca4e",
-        "home": "Atlanta United FC",
-        "away": "Orlando City SC",
-        "outcome": "Orlando City SC",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-09T23:30:00Z"
     },
     {
         "id": "c50014f4b3e58a12a2c79dcde72548e6",
@@ -7528,36 +7498,6 @@
         "stake": 325.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-09-10T19:00:00Z"
-    },
-    {
-        "id": "88c9bd545a870f5e3a1eab5a56f78d69",
-        "home": "Chicago Fire",
-        "away": "Inter Miami CF",
-        "outcome": "Inter Miami CF",
-        "odds": 3.05,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-10T00:30:00Z"
-    },
-    {
-        "id": "bae26c959975f410a33900d7157112a2",
-        "home": "Austin FC",
-        "away": "Colorado Rapids",
-        "outcome": "Colorado Rapids",
-        "odds": 2.92,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-10T00:30:00Z"
-    },
-    {
-        "id": "dea707116857bb8d11ac9c222169a00d",
-        "home": "Portland Timbers",
-        "away": "St. Louis City SC",
-        "outcome": "St. Louis City SC",
-        "odds": 2.9,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-10T02:30:00Z"
     },
     {
         "id": "73ede35a59dd1695a4bc42ae771de3bf",
@@ -7640,23 +7580,23 @@
         "time": "2026-09-11T18:45:00Z"
     },
     {
-        "id": "7d685a22147e99f3a4f307c04abdee05",
-        "home": "Toronto FC",
-        "away": "Nashville SC",
-        "outcome": "Toronto FC",
-        "odds": 3.78,
+        "id": "79bc2eff76fa09664659765d5b1ded1a",
+        "home": "Sevilla",
+        "away": "Valencia",
+        "outcome": "Valencia",
+        "odds": 4.2,
         "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-09T23:30:00Z"
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-09-11T19:00:00Z"
     },
     {
-        "id": "cfee88f28eccb2eb9ce2045968ec24ca",
-        "home": "New York City FC",
-        "away": "New England Revolution",
-        "outcome": "New England Revolution",
-        "odds": 2.9,
+        "id": "ae873cf4f1e3cefa5745f213a002e049",
+        "home": "West Bromwich Albion",
+        "away": "Queens Park Rangers",
+        "outcome": "Queens Park Rangers",
+        "odds": 3.75,
         "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-10T00:00:00Z"
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T11:30:00Z"
     }
 ]
