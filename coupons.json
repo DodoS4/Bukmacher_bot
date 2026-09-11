@@ -7490,46 +7490,6 @@
         "time": "2026-09-11T15:30:00Z"
     },
     {
-        "id": "115c6679a72c5a360640b6baaa16e78c",
-        "home": "Union Berlin",
-        "away": "FC Schalke 04",
-        "outcome": "FC Schalke 04",
-        "odds": 3.15,
-        "stake": 400.0,
-        "sport": "soccer_germany_bundesliga",
-        "time": "2026-09-11T18:30:00Z"
-    },
-    {
-        "id": "a9656d25ca6b06be9e477a098333bd70",
-        "home": "Venezia",
-        "away": "Fiorentina",
-        "outcome": "Venezia",
-        "odds": 3.2,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-09-11T18:45:00Z"
-    },
-    {
-        "id": "e82a64cd757bc039de6c0dd5ceb2ed23",
-        "home": "Wis\u0142a Krak\u00f3w",
-        "away": "Jagiellonia Bia\u0142ystok",
-        "outcome": "Jagiellonia Bia\u0142ystok",
-        "odds": 3.1,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-09-11T18:30:00Z"
-    },
-    {
-        "id": "a7e7bf9a8226e86eab6e5c1cb0780a0f",
-        "home": "Rennes",
-        "away": "Marseille",
-        "outcome": "Rennes",
-        "odds": 2.22,
-        "stake": 250.0,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-09-11T18:45:00Z"
-    },
-    {
         "id": "9bdbc1febe71719d75d7c6ac3e60a111",
         "home": "KV Mechelen",
         "away": "Anderlecht",
@@ -7538,16 +7498,6 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-09-11T18:45:00Z"
-    },
-    {
-        "id": "79bc2eff76fa09664659765d5b1ded1a",
-        "home": "Sevilla",
-        "away": "Valencia",
-        "outcome": "Valencia",
-        "odds": 4.2,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-09-11T19:00:00Z"
     },
     {
         "id": "ae873cf4f1e3cefa5745f213a002e049",
@@ -8088,5 +8038,65 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-09-13T11:00:00Z"
+    },
+    {
+        "id": "fa4cc8bb551afbf960c621450fd3bf35",
+        "home": "RoKi",
+        "away": "Hermes",
+        "outcome": "Hermes",
+        "odds": 3.37,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "eb037c460fa6655dbd7a882c2dea9311",
+        "home": "IPK",
+        "away": "Ketter\u00e4",
+        "outcome": "Ketter\u00e4",
+        "odds": 3.29,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "e796c4359a61afb0334f64f91a031793",
+        "home": "KeuPa HT",
+        "away": "JoKP",
+        "outcome": "KeuPa HT",
+        "odds": 2.63,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "128105a2cfb3c5efb6297355d52f14d2",
+        "home": "Kiekko-Vantaa",
+        "away": "TUTO Hockey",
+        "outcome": "TUTO Hockey",
+        "odds": 3.37,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "b4f97aed306f84bbf0c5eff925105b6f",
+        "home": "Inter Miami CF",
+        "away": "Nashville SC",
+        "outcome": "Nashville SC",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-12T23:30:00Z"
+    },
+    {
+        "id": "e413e29fb369b4abf4737ca0e7b997b2",
+        "home": "Chicago Fire",
+        "away": "New England Revolution",
+        "outcome": "New England Revolution",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-13T21:30:00Z"
     }
 ]
