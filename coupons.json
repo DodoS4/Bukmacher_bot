@@ -7470,16 +7470,6 @@
         "time": "2026-09-09T15:30:00Z"
     },
     {
-        "id": "c50014f4b3e58a12a2c79dcde72548e6",
-        "home": "Como",
-        "away": "RB Leipzig",
-        "outcome": "RB Leipzig",
-        "odds": 4.2,
-        "stake": 325.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-09-10T19:00:00Z"
-    },
-    {
         "id": "73ede35a59dd1695a4bc42ae771de3bf",
         "home": "Rak\u00f3w Cz\u0119stochowa",
         "away": "Motor Lublin",
@@ -7858,5 +7848,85 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-09-12T14:00:00Z"
+    },
+    {
+        "id": "361a0ad126abc0eca923c483a51aad53",
+        "home": "Nacional",
+        "away": "Alverca",
+        "outcome": "Nacional",
+        "odds": 2.74,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-12T14:30:00Z"
+    },
+    {
+        "id": "7f01f4921e07fefc575437db7769fdb0",
+        "home": "Alanyaspor",
+        "away": "Goztepe",
+        "outcome": "Goztepe",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-12T17:00:00Z"
+    },
+    {
+        "id": "f2683402fd0f816b1e1e23b99f16a641",
+        "home": "Iraklis FC",
+        "away": "Atromitos Athens",
+        "outcome": "Atromitos Athens",
+        "odds": 2.76,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-09-12T18:00:00Z"
+    },
+    {
+        "id": "fd022dfa3dea6be8c2eddc623641cc50",
+        "home": "FC Zurich",
+        "away": "FC Vaduz",
+        "outcome": "FC Vaduz",
+        "odds": 2.75,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-13T12:00:00Z"
+    },
+    {
+        "id": "6e331bf9937ddca8e79c21c7865bee15",
+        "home": "Derby County",
+        "away": "Birmingham City",
+        "outcome": "Derby County",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T11:30:00Z"
+    },
+    {
+        "id": "6fdbebcf276d1174b8363de15ef5a7c5",
+        "home": "FC Cincinnati",
+        "away": "Charlotte FC",
+        "outcome": "Charlotte FC",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-12T23:30:00Z"
+    },
+    {
+        "id": "a4f7db3f0809d56a0c53f4239da72d28",
+        "home": "Orlando City SC",
+        "away": "Toronto FC",
+        "outcome": "Toronto FC",
+        "odds": 3.85,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-12T23:30:00Z"
+    },
+    {
+        "id": "b6552cffd9a07f996ea8a8e7cca1d786",
+        "home": "St. Louis City SC",
+        "away": "Minnesota United FC",
+        "outcome": "Minnesota United FC",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-13T00:30:00Z"
     }
 ]

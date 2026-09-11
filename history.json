@@ -28123,5 +28123,18 @@
         "profit": -325.0,
         "status": "LOSS",
         "score": "2:3"
+    },
+    {
+        "id": "c50014f4b3e58a12a2c79dcde72548e6",
+        "home": "Como",
+        "away": "RB Leipzig",
+        "outcome": "RB Leipzig",
+        "odds": 4.2,
+        "stake": 325.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-09-10T19:00:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "4:1"
     }
 ]
