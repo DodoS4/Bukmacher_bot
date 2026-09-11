@@ -7470,16 +7470,6 @@
         "time": "2026-09-09T15:30:00Z"
     },
     {
-        "id": "73ede35a59dd1695a4bc42ae771de3bf",
-        "home": "Rak\u00f3w Cz\u0119stochowa",
-        "away": "Motor Lublin",
-        "outcome": "Motor Lublin",
-        "odds": 4.35,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-09-11T16:00:00Z"
-    },
-    {
         "id": "0f7c71ee847cc17877a0704f86b11f9e",
         "home": "Hermes",
         "away": "KeuPa HT",
@@ -7928,5 +7918,175 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-13T00:30:00Z"
+    },
+    {
+        "id": "e66df35062d3cc1c59258406374c2e76",
+        "home": "Lecce",
+        "away": "Monza",
+        "outcome": "Lecce",
+        "odds": 2.84,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-13T13:00:00Z"
+    },
+    {
+        "id": "27eaaab4498bb2984321e5f81f0ff9fd",
+        "home": "Napoli",
+        "away": "Bologna",
+        "outcome": "Napoli",
+        "odds": 1.89,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-13T16:00:00Z"
+    },
+    {
+        "id": "89cdcd8d126718d4f9afb26358a27493",
+        "home": "G\u00f3rnik Zabrze",
+        "away": "Lech Pozna\u0144",
+        "outcome": "G\u00f3rnik Zabrze",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-12T15:30:00Z"
+    },
+    {
+        "id": "7490b827c94fe83e4c8ca978e6542a83",
+        "home": "Legia Warszawa",
+        "away": "Widzew \u0141\u00f3d\u017a",
+        "outcome": "Widzew \u0141\u00f3d\u017a",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-13T15:30:00Z"
+    },
+    {
+        "id": "5296d2dda8f6bec79cd76642abd2d21a",
+        "home": "Arouca",
+        "away": "Santa Clara",
+        "outcome": "Santa Clara",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-13T17:00:00Z"
+    },
+    {
+        "id": "ec727f669b44c3dbc026ff8ea70a4665",
+        "home": "Genclerbirligi SK",
+        "away": "Kasimpasa SK",
+        "outcome": "Kasimpasa SK",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-13T14:00:00Z"
+    },
+    {
+        "id": "e3341f9ceae2da288107983fb9d966cc",
+        "home": "Genk",
+        "away": "Gent",
+        "outcome": "Gent",
+        "odds": 3.93,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-13T14:00:00Z"
+    },
+    {
+        "id": "f377395dc86053d38d5910f30c1c0266",
+        "home": "SV Zulte-Waregem",
+        "away": "Charleroi",
+        "outcome": "SV Zulte-Waregem",
+        "odds": 2.7,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-13T16:30:00Z"
+    },
+    {
+        "id": "a0f0ea1229f42a2db9eba6df304ca31c",
+        "home": "RAAL La Louvi\u00e8re",
+        "away": "KV Kortrijk",
+        "outcome": "RAAL La Louvi\u00e8re",
+        "odds": 2.46,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-13T17:15:00Z"
+    },
+    {
+        "id": "4bd6977aaae954d398ebbd4a629cd2be",
+        "home": "Rheindorf Altach",
+        "away": "Grazer AK",
+        "outcome": "Grazer AK",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-09-12T15:00:00Z"
+    },
+    {
+        "id": "a1e6cc1c40ac3a0c8b84c081414627a6",
+        "home": "Austria Wien",
+        "away": "Austria Lustenau",
+        "outcome": "Austria Lustenau",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-09-13T12:30:00Z"
+    },
+    {
+        "id": "dfe749aee9b859e94e18ff9eaf582b12",
+        "home": "WSG Tirol",
+        "away": "Hartberg",
+        "outcome": "Hartberg",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-09-13T12:30:00Z"
+    },
+    {
+        "id": "6691f128d267c2f09e9a5fa9b5c460a5",
+        "home": "Sturm Graz",
+        "away": "LASK",
+        "outcome": "Sturm Graz",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-09-13T15:00:00Z"
+    },
+    {
+        "id": "067a6174ca5e96c9d87ea14b43607e3a",
+        "home": "Kalamata FC",
+        "away": "Volos FC",
+        "outcome": "Kalamata FC",
+        "odds": 2.6,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-09-13T15:00:00Z"
+    },
+    {
+        "id": "1f9deb66de19ae06b74e4a56ec32a81b",
+        "home": "FC Lausanne-Sport",
+        "away": "Servette",
+        "outcome": "FC Lausanne-Sport",
+        "odds": 3.43,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-13T14:30:00Z"
+    },
+    {
+        "id": "5e97dee9c098c04279092ee541a7c3ec",
+        "home": "Bolton Wanderers",
+        "away": "Cardiff City",
+        "outcome": "Bolton Wanderers",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-12T11:30:00Z"
+    },
+    {
+        "id": "daaf99f01cb6c822ef263918b831912c",
+        "home": "Sheffield United",
+        "away": "Wolverhampton Wanderers",
+        "outcome": "Sheffield United",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-13T11:00:00Z"
     }
 ]
