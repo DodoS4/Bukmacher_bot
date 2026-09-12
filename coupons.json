@@ -7490,16 +7490,6 @@
         "time": "2026-09-11T15:30:00Z"
     },
     {
-        "id": "9bdbc1febe71719d75d7c6ac3e60a111",
-        "home": "KV Mechelen",
-        "away": "Anderlecht",
-        "outcome": "KV Mechelen",
-        "odds": 4.3,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-09-11T18:45:00Z"
-    },
-    {
         "id": "ae873cf4f1e3cefa5745f213a002e049",
         "home": "West Bromwich Albion",
         "away": "Queens Park Rangers",
@@ -8098,5 +8088,35 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-13T21:30:00Z"
+    },
+    {
+        "id": "c97a93b915115f2b4659fb88262b71f8",
+        "home": "Coventry City",
+        "away": "Brighton and Hove Albion",
+        "outcome": "Coventry City",
+        "odds": 4.35,
+        "stake": 125.0,
+        "sport": "soccer_epl",
+        "time": "2026-09-13T13:00:00Z"
+    },
+    {
+        "id": "23740737a6e78608d775769401e78a2c",
+        "home": "Silkeborg IF",
+        "away": "Viborg FF",
+        "outcome": "Silkeborg IF",
+        "odds": 3.78,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-09-13T12:00:00Z"
+    },
+    {
+        "id": "18317b086039b8e3fa596c91010cf7da",
+        "home": "Real Salt Lake",
+        "away": "New York City FC",
+        "outcome": "New York City FC",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-13T01:30:00Z"
     }
 ]

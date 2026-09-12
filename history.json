@@ -28214,5 +28214,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:0"
+    },
+    {
+        "id": "9bdbc1febe71719d75d7c6ac3e60a111",
+        "home": "KV Mechelen",
+        "away": "Anderlecht",
+        "outcome": "KV Mechelen",
+        "odds": 4.3,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-11T18:45:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "0:1"
     }
 ]
