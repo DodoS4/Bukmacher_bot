@@ -7510,16 +7510,6 @@
         "time": "2026-09-11T15:30:00Z"
     },
     {
-        "id": "8bb1bca7ce2e58c880305856a04bb7e4",
-        "home": "Acad\u00e9mico de Viseu",
-        "away": "Vit\u00f3ria SC",
-        "outcome": "Acad\u00e9mico de Viseu",
-        "odds": 3.9,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-09-12T19:30:00Z"
-    },
-    {
         "id": "fd022dfa3dea6be8c2eddc623641cc50",
         "home": "FC Zurich",
         "away": "FC Vaduz",
@@ -7528,36 +7518,6 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-09-13T12:00:00Z"
-    },
-    {
-        "id": "6fdbebcf276d1174b8363de15ef5a7c5",
-        "home": "FC Cincinnati",
-        "away": "Charlotte FC",
-        "outcome": "Charlotte FC",
-        "odds": 3.35,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-12T23:30:00Z"
-    },
-    {
-        "id": "a4f7db3f0809d56a0c53f4239da72d28",
-        "home": "Orlando City SC",
-        "away": "Toronto FC",
-        "outcome": "Toronto FC",
-        "odds": 3.85,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-12T23:30:00Z"
-    },
-    {
-        "id": "b6552cffd9a07f996ea8a8e7cca1d786",
-        "home": "St. Louis City SC",
-        "away": "Minnesota United FC",
-        "outcome": "Minnesota United FC",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-13T00:30:00Z"
     },
     {
         "id": "e66df35062d3cc1c59258406374c2e76",
@@ -7740,16 +7700,6 @@
         "time": "2026-09-12T14:00:00Z"
     },
     {
-        "id": "b4f97aed306f84bbf0c5eff925105b6f",
-        "home": "Inter Miami CF",
-        "away": "Nashville SC",
-        "outcome": "Nashville SC",
-        "odds": 3.55,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-12T23:30:00Z"
-    },
-    {
         "id": "e413e29fb369b4abf4737ca0e7b997b2",
         "home": "Chicago Fire",
         "away": "New England Revolution",
@@ -7778,16 +7728,6 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-09-13T12:00:00Z"
-    },
-    {
-        "id": "18317b086039b8e3fa596c91010cf7da",
-        "home": "Real Salt Lake",
-        "away": "New York City FC",
-        "outcome": "New York City FC",
-        "odds": 3.9,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-13T01:30:00Z"
     },
     {
         "id": "db652064e7ee03cef85584139473582b",
@@ -7830,13 +7770,33 @@
         "time": "2026-09-14T19:15:00Z"
     },
     {
-        "id": "4853b0f49e3c8efac7d4ebba015d53de",
-        "home": "FC Dallas",
-        "away": "Portland Timbers",
-        "outcome": "Portland Timbers",
-        "odds": 4.2,
+        "id": "82123a3515f5a4b557ab908def6b1584",
+        "home": "Pogo\u0144 Szczecin",
+        "away": "Wieczysta Krak\u00f3w",
+        "outcome": "Wieczysta Krak\u00f3w",
+        "odds": 3.25,
         "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-13T00:30:00Z"
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-13T12:45:00Z"
+    },
+    {
+        "id": "1898724f150d16329c47b523d35ee534",
+        "home": "Rio Ave FC",
+        "away": "CF Estrela",
+        "outcome": "Rio Ave FC",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-14T17:45:00Z"
+    },
+    {
+        "id": "a1ae0933dfc41c23ee39b343b175e27f",
+        "home": "Amed SK",
+        "away": "Basaksehir",
+        "outcome": "Basaksehir",
+        "odds": 2.9,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-13T17:00:00Z"
     }
 ]
