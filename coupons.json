@@ -7510,36 +7510,6 @@
         "time": "2026-09-11T15:30:00Z"
     },
     {
-        "id": "27eaaab4498bb2984321e5f81f0ff9fd",
-        "home": "Napoli",
-        "away": "Bologna",
-        "outcome": "Napoli",
-        "odds": 1.89,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-09-13T16:00:00Z"
-    },
-    {
-        "id": "5296d2dda8f6bec79cd76642abd2d21a",
-        "home": "Arouca",
-        "away": "Santa Clara",
-        "outcome": "Santa Clara",
-        "odds": 3.05,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-09-13T17:00:00Z"
-    },
-    {
-        "id": "f377395dc86053d38d5910f30c1c0266",
-        "home": "SV Zulte-Waregem",
-        "away": "Charleroi",
-        "outcome": "SV Zulte-Waregem",
-        "odds": 2.7,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-09-13T16:30:00Z"
-    },
-    {
         "id": "a0f0ea1229f42a2db9eba6df304ca31c",
         "home": "RAAL La Louvi\u00e8re",
         "away": "KV Kortrijk",
@@ -7610,16 +7580,6 @@
         "time": "2026-09-14T17:00:00Z"
     },
     {
-        "id": "443f113839ed860e32887c200609302c",
-        "home": "AE Kifisia FC",
-        "away": "Levadiakos",
-        "outcome": "Levadiakos",
-        "odds": 3.29,
-        "stake": 125.0,
-        "sport": "soccer_greece_super_league",
-        "time": "2026-09-13T18:00:00Z"
-    },
-    {
         "id": "2d95f953f3621286c703edce21afcefc",
         "home": "Moreirense FC",
         "away": "CS Maritimo",
@@ -7638,16 +7598,6 @@
         "stake": 125.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-09-14T17:45:00Z"
-    },
-    {
-        "id": "a1ae0933dfc41c23ee39b343b175e27f",
-        "home": "Amed SK",
-        "away": "Basaksehir",
-        "outcome": "Basaksehir",
-        "odds": 2.9,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-09-13T17:00:00Z"
     },
     {
         "id": "08bf380406c09dfc9badccb90bcba98a",
@@ -7698,5 +7648,35 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-09-15T17:00:00Z"
+    },
+    {
+        "id": "f9e4045f82d767c33411e82034234a6f",
+        "home": "Motherwell",
+        "away": "Aberdeen",
+        "outcome": "Aberdeen",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-15T18:45:00Z"
+    },
+    {
+        "id": "3ad93d0606475683bc36b9ceb1c7ee1b",
+        "home": "Falkirk F.C.",
+        "away": "Hearts",
+        "outcome": "Falkirk F.C.",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-15T18:45:00Z"
+    },
+    {
+        "id": "21d88940bcffa4f27418eaa338d9ed53",
+        "home": "Bristol City",
+        "away": "Lincoln City",
+        "outcome": "Lincoln City",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-15T18:45:00Z"
     }
 ]

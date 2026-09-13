@@ -28955,5 +28955,70 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "27eaaab4498bb2984321e5f81f0ff9fd",
+        "home": "Napoli",
+        "away": "Bologna",
+        "outcome": "Napoli",
+        "odds": 1.89,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-13T16:00:00Z",
+        "profit": 356.0,
+        "status": "WIN",
+        "score": "1:0"
+    },
+    {
+        "id": "5296d2dda8f6bec79cd76642abd2d21a",
+        "home": "Arouca",
+        "away": "Santa Clara",
+        "outcome": "Santa Clara",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-13T17:00:00Z",
+        "profit": 256.25,
+        "status": "WIN",
+        "score": "1:2"
+    },
+    {
+        "id": "f377395dc86053d38d5910f30c1c0266",
+        "home": "SV Zulte-Waregem",
+        "away": "Charleroi",
+        "outcome": "SV Zulte-Waregem",
+        "odds": 2.7,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-13T16:30:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "0:1"
+    },
+    {
+        "id": "443f113839ed860e32887c200609302c",
+        "home": "AE Kifisia FC",
+        "away": "Levadiakos",
+        "outcome": "Levadiakos",
+        "odds": 3.29,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-09-13T18:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:0"
+    },
+    {
+        "id": "a1ae0933dfc41c23ee39b343b175e27f",
+        "home": "Amed SK",
+        "away": "Basaksehir",
+        "outcome": "Basaksehir",
+        "odds": 2.9,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-13T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "5:0"
     }
 ]
