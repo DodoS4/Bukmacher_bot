@@ -29046,5 +29046,31 @@
         "profit": 375.0,
         "status": "WIN",
         "score": "1:2"
+    },
+    {
+        "id": "220db58ae88b61f7d6d6938f4cee25d4",
+        "home": "FC Midtjylland",
+        "away": "Brondby IF",
+        "outcome": "Brondby IF",
+        "odds": 4.26,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-09-14T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "4:1"
+    },
+    {
+        "id": "e6ad3640a0f1cff91ef32bad6c6dceb7",
+        "home": "Radomiak Radom",
+        "away": "Piast Gliwice",
+        "outcome": "Piast Gliwice",
+        "odds": 2.96,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-14T17:00:00Z",
+        "profit": 245.0,
+        "status": "WIN",
+        "score": "0:2"
     }
 ]

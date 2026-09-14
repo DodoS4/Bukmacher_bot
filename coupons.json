@@ -7550,16 +7550,6 @@
         "time": "2026-09-12T14:00:00Z"
     },
     {
-        "id": "220db58ae88b61f7d6d6938f4cee25d4",
-        "home": "FC Midtjylland",
-        "away": "Brondby IF",
-        "outcome": "Brondby IF",
-        "odds": 4.26,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-09-14T17:00:00Z"
-    },
-    {
         "id": "2d95f953f3621286c703edce21afcefc",
         "home": "Moreirense FC",
         "away": "CS Maritimo",
@@ -7660,13 +7650,93 @@
         "time": "2026-09-15T18:45:00Z"
     },
     {
-        "id": "e6ad3640a0f1cff91ef32bad6c6dceb7",
-        "home": "Radomiak Radom",
-        "away": "Piast Gliwice",
-        "outcome": "Piast Gliwice",
-        "odds": 2.96,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-09-14T17:00:00Z"
+        "id": "72464e0a7fee25216e155b802a0009c7",
+        "home": "K\u00e4rp\u00e4t",
+        "away": "Ilves",
+        "outcome": "Ilves",
+        "odds": 2.65,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-16T15:30:00Z"
+    },
+    {
+        "id": "965c116416b887fc665ac8fbc28d8936",
+        "home": "KooKoo",
+        "away": "JYP",
+        "outcome": "JYP",
+        "odds": 2.41,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-16T15:30:00Z"
+    },
+    {
+        "id": "37c7c720f88696fceb3eaa3ec4e8782c",
+        "home": "Kiekko-Vantaa",
+        "away": "JoKP",
+        "outcome": "JoKP",
+        "odds": 3.17,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-16T15:30:00Z"
+    },
+    {
+        "id": "a28cba5be71e67c3e19e746a45881513",
+        "home": "Pyry",
+        "away": "KeuPa HT",
+        "outcome": "KeuPa HT",
+        "odds": 2.45,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-16T15:30:00Z"
+    },
+    {
+        "id": "c21ee4073fe7ac5ce8b48e4e7fc6ed7d",
+        "home": "Omonoia FC",
+        "away": "Celta Vigo",
+        "outcome": "Omonoia FC",
+        "odds": 4.35,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-16T16:45:00Z"
+    },
+    {
+        "id": "923b87c9f2ccf67f9db1897dd6d71415",
+        "home": "AC Milan",
+        "away": "Benfica",
+        "outcome": "AC Milan",
+        "odds": 2.24,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-16T19:00:00Z"
+    },
+    {
+        "id": "8f18ef52c5a9a2b5ae772b84d2ad01df",
+        "home": "Anderlecht",
+        "away": "Lyon",
+        "outcome": "Lyon",
+        "odds": 2.12,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-16T19:00:00Z"
+    },
+    {
+        "id": "97f4580bed3df39e6cd18db7a855da13",
+        "home": "Hapoel Be'er Sheva",
+        "away": "Dinamo Zagreb",
+        "outcome": "Hapoel Be'er Sheva",
+        "odds": 3.75,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-16T19:00:00Z"
+    },
+    {
+        "id": "1a6630094a3b2861b62fe018b03f27e1",
+        "home": "SK Sturm Graz",
+        "away": "Rennes",
+        "outcome": "SK Sturm Graz",
+        "odds": 3.95,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-16T19:00:00Z"
     }
 ]
