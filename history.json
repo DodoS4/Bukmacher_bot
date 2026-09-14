@@ -29020,5 +29020,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "5:0"
+    },
+    {
+        "id": "a0f0ea1229f42a2db9eba6df304ca31c",
+        "home": "RAAL La Louvi\u00e8re",
+        "away": "KV Kortrijk",
+        "outcome": "RAAL La Louvi\u00e8re",
+        "odds": 2.46,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-13T17:15:00Z",
+        "profit": 474.5,
+        "status": "WIN",
+        "score": "3:0"
+    },
+    {
+        "id": "e413e29fb369b4abf4737ca0e7b997b2",
+        "home": "Chicago Fire",
+        "away": "New England Revolution",
+        "outcome": "New England Revolution",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-13T21:30:00Z",
+        "profit": 375.0,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]
