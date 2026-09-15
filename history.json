@@ -29111,5 +29111,70 @@
         "profit": 406.25,
         "status": "WIN",
         "score": "2:3"
+    },
+    {
+        "id": "b861dbc10a9e616f86d848648367b0ea",
+        "home": "Grasshopper Z\u00fcrich",
+        "away": "FC Sion",
+        "outcome": "Grasshopper Z\u00fcrich",
+        "odds": 4.27,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-15T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:5"
+    },
+    {
+        "id": "f9e4045f82d767c33411e82034234a6f",
+        "home": "Motherwell",
+        "away": "Aberdeen",
+        "outcome": "Aberdeen",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-15T18:45:00Z",
+        "profit": 800.0,
+        "status": "WIN",
+        "score": "0:4"
+    },
+    {
+        "id": "3ad93d0606475683bc36b9ceb1c7ee1b",
+        "home": "Falkirk F.C.",
+        "away": "Hearts",
+        "outcome": "Falkirk F.C.",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-15T18:45:00Z",
+        "profit": 662.5,
+        "status": "WIN",
+        "score": "2:1"
+    },
+    {
+        "id": "21d88940bcffa4f27418eaa338d9ed53",
+        "home": "Bristol City",
+        "away": "Lincoln City",
+        "outcome": "Lincoln City",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-15T18:45:00Z",
+        "profit": 368.75,
+        "status": "WIN",
+        "score": "0:1"
+    },
+    {
+        "id": "8248a1e74da9975f2832ba5be6682443",
+        "home": "Korona Kielce",
+        "away": "G\u00f3rnik Zabrze",
+        "outcome": "Korona Kielce",
+        "odds": 2.86,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-15T18:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:2"
     }
 ]
