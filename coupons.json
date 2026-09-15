@@ -7720,16 +7720,6 @@
         "time": "2026-09-16T19:00:00Z"
     },
     {
-        "id": "d99324a4b84c48f48d0923bf33aff657",
-        "home": "Rak\u00f3w Cz\u0119stochowa",
-        "away": "Zag\u0142\u0119bie Lubin",
-        "outcome": "Zag\u0142\u0119bie Lubin",
-        "odds": 4.25,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-09-15T16:00:00Z"
-    },
-    {
         "id": "8248a1e74da9975f2832ba5be6682443",
         "home": "Korona Kielce",
         "away": "G\u00f3rnik Zabrze",
@@ -7738,5 +7728,35 @@
         "stake": 125.0,
         "sport": "soccer_poland_ekstraklasa",
         "time": "2026-09-15T18:30:00Z"
+    },
+    {
+        "id": "74d8bf50d64f3448362116c257267117",
+        "home": "Lukko",
+        "away": "Sport",
+        "outcome": "Sport",
+        "odds": 4.27,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-17T15:30:00Z"
+    },
+    {
+        "id": "53f3f2fc5027c4bf99a6e8ac569c4225",
+        "home": "TPS",
+        "away": "Tappara",
+        "outcome": "TPS",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-17T15:30:00Z"
+    },
+    {
+        "id": "7293d131a4072c4123dde03fb3e50b3e",
+        "home": "PFC Levski Sofia",
+        "away": "Salzburg",
+        "outcome": "PFC Levski Sofia",
+        "odds": 3.2,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-17T16:45:00Z"
     }
 ]
