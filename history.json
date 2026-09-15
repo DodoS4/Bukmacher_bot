@@ -29072,5 +29072,31 @@
         "profit": 245.0,
         "status": "WIN",
         "score": "0:2"
+    },
+    {
+        "id": "2d95f953f3621286c703edce21afcefc",
+        "home": "Moreirense FC",
+        "away": "CS Maritimo",
+        "outcome": "CS Maritimo",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-14T19:15:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "1898724f150d16329c47b523d35ee534",
+        "home": "Rio Ave FC",
+        "away": "CF Estrela",
+        "outcome": "Rio Ave FC",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-14T17:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:3"
     }
 ]

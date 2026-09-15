@@ -7550,26 +7550,6 @@
         "time": "2026-09-12T14:00:00Z"
     },
     {
-        "id": "2d95f953f3621286c703edce21afcefc",
-        "home": "Moreirense FC",
-        "away": "CS Maritimo",
-        "outcome": "CS Maritimo",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-09-14T19:15:00Z"
-    },
-    {
-        "id": "1898724f150d16329c47b523d35ee534",
-        "home": "Rio Ave FC",
-        "away": "CF Estrela",
-        "outcome": "Rio Ave FC",
-        "odds": 3.0,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-09-14T17:45:00Z"
-    },
-    {
         "id": "08bf380406c09dfc9badccb90bcba98a",
         "home": "KalPa",
         "away": "HPK",
@@ -7738,5 +7718,25 @@
         "stake": 400.0,
         "sport": "soccer_uefa_europa_league",
         "time": "2026-09-16T19:00:00Z"
+    },
+    {
+        "id": "d99324a4b84c48f48d0923bf33aff657",
+        "home": "Rak\u00f3w Cz\u0119stochowa",
+        "away": "Zag\u0142\u0119bie Lubin",
+        "outcome": "Zag\u0142\u0119bie Lubin",
+        "odds": 4.25,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-15T16:00:00Z"
+    },
+    {
+        "id": "8248a1e74da9975f2832ba5be6682443",
+        "home": "Korona Kielce",
+        "away": "G\u00f3rnik Zabrze",
+        "outcome": "Korona Kielce",
+        "odds": 2.86,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-15T18:30:00Z"
     }
 ]
