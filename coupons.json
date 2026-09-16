@@ -7630,46 +7630,6 @@
         "time": "2026-09-16T15:30:00Z"
     },
     {
-        "id": "923b87c9f2ccf67f9db1897dd6d71415",
-        "home": "AC Milan",
-        "away": "Benfica",
-        "outcome": "AC Milan",
-        "odds": 2.24,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-16T19:00:00Z"
-    },
-    {
-        "id": "8f18ef52c5a9a2b5ae772b84d2ad01df",
-        "home": "Anderlecht",
-        "away": "Lyon",
-        "outcome": "Lyon",
-        "odds": 2.12,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-16T19:00:00Z"
-    },
-    {
-        "id": "97f4580bed3df39e6cd18db7a855da13",
-        "home": "Hapoel Be'er Sheva",
-        "away": "Dinamo Zagreb",
-        "outcome": "Hapoel Be'er Sheva",
-        "odds": 3.75,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-16T19:00:00Z"
-    },
-    {
-        "id": "1a6630094a3b2861b62fe018b03f27e1",
-        "home": "SK Sturm Graz",
-        "away": "Rennes",
-        "outcome": "SK Sturm Graz",
-        "odds": 3.95,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-16T19:00:00Z"
-    },
-    {
         "id": "74d8bf50d64f3448362116c257267117",
         "home": "Lukko",
         "away": "Sport",
@@ -7728,16 +7688,6 @@
         "stake": 400.0,
         "sport": "soccer_uefa_europa_league",
         "time": "2026-09-17T19:00:00Z"
-    },
-    {
-        "id": "ce740bef8c4711a9118d37770ea84645",
-        "home": "FC Lugano",
-        "away": "FC St Gallen",
-        "outcome": "FC St Gallen",
-        "odds": 3.4,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-09-16T17:00:00Z"
     },
     {
         "id": "72b83b12135b1fcb72f4c154804a5e3f",
@@ -7878,5 +7828,45 @@
         "stake": 125.0,
         "sport": "soccer_denmark_superliga",
         "time": "2026-09-18T17:00:00Z"
+    },
+    {
+        "id": "8bc1f4d74cf888c97c0216fd26c4ece7",
+        "home": "Monza",
+        "away": "Sassuolo",
+        "outcome": "Monza",
+        "odds": 3.2,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-18T18:45:00Z"
+    },
+    {
+        "id": "f6d8ec3ecfba4947770ddd7d391c8c73",
+        "home": "AS Monaco",
+        "away": "RC Lens",
+        "outcome": "RC Lens",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-18T18:45:00Z"
+    },
+    {
+        "id": "43931d85c4a164e23cf732223b634737",
+        "home": "Gent",
+        "away": "Standard Liege",
+        "outcome": "Standard Liege",
+        "odds": 4.4,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-18T18:45:00Z"
+    },
+    {
+        "id": "22907aefea43f3b3fc0e1718e8214a62",
+        "home": "Bristol City",
+        "away": "Watford",
+        "outcome": "Watford",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-18T19:00:00Z"
     }
 ]
