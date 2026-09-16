@@ -29176,5 +29176,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:2"
+    },
+    {
+        "id": "c21ee4073fe7ac5ce8b48e4e7fc6ed7d",
+        "home": "Omonoia FC",
+        "away": "Celta Vigo",
+        "outcome": "Omonoia FC",
+        "odds": 4.35,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-16T16:45:00Z",
+        "profit": 1340.0,
+        "status": "WIN",
+        "score": "1:0"
     }
 ]

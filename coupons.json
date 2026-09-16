@@ -7630,16 +7630,6 @@
         "time": "2026-09-16T15:30:00Z"
     },
     {
-        "id": "c21ee4073fe7ac5ce8b48e4e7fc6ed7d",
-        "home": "Omonoia FC",
-        "away": "Celta Vigo",
-        "outcome": "Omonoia FC",
-        "odds": 4.35,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-16T16:45:00Z"
-    },
-    {
         "id": "923b87c9f2ccf67f9db1897dd6d71415",
         "home": "AC Milan",
         "away": "Benfica",
@@ -7758,5 +7748,135 @@
         "stake": 400.0,
         "sport": "soccer_uefa_europa_league",
         "time": "2026-09-17T19:00:00Z"
+    },
+    {
+        "id": "7ea8bb1abf7e0ea52fe174f21a442a3a",
+        "home": "AIK",
+        "away": "Modo Hockey",
+        "outcome": "Modo Hockey",
+        "odds": 3.0,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-18T17:00:00Z"
+    },
+    {
+        "id": "a7084522aec1f70ed4f6f25030686176",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "Almtuna IS",
+        "outcome": "Almtuna IS",
+        "odds": 3.4,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-18T17:00:00Z"
+    },
+    {
+        "id": "3fb5f36278262a9afc2012443c812edf",
+        "home": "BIK Karlskoga",
+        "away": "Kalmar HC",
+        "outcome": "Kalmar HC",
+        "odds": 3.25,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-18T17:00:00Z"
+    },
+    {
+        "id": "76ffa5b328f2319004c995c60d392a8f",
+        "home": "Leksands IF",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "S\u00f6dert\u00e4lje SK",
+        "odds": 2.9,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-18T17:00:00Z"
+    },
+    {
+        "id": "549e910a7ca70774d1a6044b9eebc793",
+        "home": "\u00d6stersunds IK",
+        "away": "Mora IK",
+        "outcome": "Mora IK",
+        "odds": 2.5,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-18T17:00:00Z"
+    },
+    {
+        "id": "5112ac53dd2b9eaa1d55a8855acd58ad",
+        "home": "Nybro Vikings IF",
+        "away": "Vimmerby HC",
+        "outcome": "Vimmerby HC",
+        "odds": 4.1,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-18T17:00:00Z"
+    },
+    {
+        "id": "da0a406aa4b22d6d5a21f58715e0a777",
+        "home": "IK Oskarshamn",
+        "away": "Visby/Roma HK",
+        "outcome": "Visby/Roma HK",
+        "odds": 3.96,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-18T18:00:00Z"
+    },
+    {
+        "id": "e06535f076f734164ebd26e854c1449a",
+        "home": "Jukurit",
+        "away": "Pelicans",
+        "outcome": "Jukurit",
+        "odds": 3.2,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-18T15:30:00Z"
+    },
+    {
+        "id": "c8b2f727ef80bccf766d0900ef616484",
+        "home": "Ketter\u00e4",
+        "away": "IPK",
+        "outcome": "Ketter\u00e4",
+        "odds": 2.59,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-18T15:30:00Z"
+    },
+    {
+        "id": "0f64b29c695b47f6498a5cf2b4ec36d0",
+        "home": "RoKi",
+        "away": "TUTO Hockey",
+        "outcome": "TUTO Hockey",
+        "odds": 2.65,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-18T15:30:00Z"
+    },
+    {
+        "id": "56c5e4d30fc27dedb3ae48a80b81346d",
+        "home": "M\u00e1laga",
+        "away": "Villarreal",
+        "outcome": "M\u00e1laga",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-09-17T19:30:00Z"
+    },
+    {
+        "id": "1f9ad8e781b60b865e22d2ee5b1934b5",
+        "home": "Kasimpasa SK",
+        "away": "Torku Konyaspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-18T17:00:00Z"
+    },
+    {
+        "id": "fe81509b06871720e84a9251652ad344",
+        "home": "Lyngby",
+        "away": "Silkeborg IF",
+        "outcome": "Silkeborg IF",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-09-18T17:00:00Z"
     }
 ]
