@@ -7738,5 +7738,25 @@
         "stake": 400.0,
         "sport": "soccer_uefa_europa_league",
         "time": "2026-09-17T19:00:00Z"
+    },
+    {
+        "id": "ce740bef8c4711a9118d37770ea84645",
+        "home": "FC Lugano",
+        "away": "FC St Gallen",
+        "outcome": "FC St Gallen",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-16T17:00:00Z"
+    },
+    {
+        "id": "72b83b12135b1fcb72f4c154804a5e3f",
+        "home": "Besiktas JK",
+        "away": "Marseille",
+        "outcome": "Besiktas JK",
+        "odds": 1.88,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-17T19:00:00Z"
     }
 ]
