@@ -7650,16 +7650,6 @@
         "time": "2026-09-17T15:30:00Z"
     },
     {
-        "id": "7293d131a4072c4123dde03fb3e50b3e",
-        "home": "PFC Levski Sofia",
-        "away": "Salzburg",
-        "outcome": "PFC Levski Sofia",
-        "odds": 3.2,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-17T16:45:00Z"
-    },
-    {
         "id": "d138f98e79ee999d0e1c19e6a70c8ce1",
         "home": "Jokerit",
         "away": "JYP",
@@ -7908,5 +7898,385 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-18T23:30:00Z"
+    },
+    {
+        "id": "ee6bb5092ba48c6dd054c3a0228a1222",
+        "home": "Skellefte\u00e5 AIK",
+        "away": "Bryn\u00e4s IF",
+        "outcome": "Bryn\u00e4s IF",
+        "odds": 3.5,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-19T13:15:00Z"
+    },
+    {
+        "id": "860b828324cf221fafa4705fdcffc9c0",
+        "home": "Fr\u00f6lunda HC",
+        "away": "V\u00e4xj\u00f6 Lakers",
+        "outcome": "V\u00e4xj\u00f6 Lakers",
+        "odds": 3.58,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-19T13:15:00Z"
+    },
+    {
+        "id": "5de629c34e83f15ffa0260779f0e5e91",
+        "home": "HV71",
+        "away": "Malm\u00f6 Redhawks",
+        "outcome": "Malm\u00f6 Redhawks",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-19T13:15:00Z"
+    },
+    {
+        "id": "9e5718afca3360d38a7f9f0ff2f46a89",
+        "home": "Link\u00f6ping HC",
+        "away": "Timr\u00e5 IK",
+        "outcome": "Timr\u00e5 IK",
+        "odds": 3.2,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-19T13:15:00Z"
+    },
+    {
+        "id": "75cf60acafd9586f18b6f5a7943db6ea",
+        "home": "Djurg\u00e5rdens IF",
+        "away": "IF Bj\u00f6rkl\u00f6ven",
+        "outcome": "IF Bj\u00f6rkl\u00f6ven",
+        "odds": 3.44,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-19T16:00:00Z"
+    },
+    {
+        "id": "7202dcd74391a6254ea382adb583bf25",
+        "home": "F\u00e4rjestad BK",
+        "away": "\u00d6rebro HK",
+        "outcome": "\u00d6rebro HK",
+        "odds": 3.35,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-19T16:00:00Z"
+    },
+    {
+        "id": "038f52dbd1fb3518b1f81d1ea07bf214",
+        "home": "Lule\u00e5 HF",
+        "away": "R\u00f6gle BK",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 2.38,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-19T16:00:00Z"
+    },
+    {
+        "id": "a9f23209729b2e579c962ed11552d1f9",
+        "home": "HIFK",
+        "away": "Lukko",
+        "outcome": "HIFK",
+        "odds": 2.3,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-19T12:00:00Z"
+    },
+    {
+        "id": "39be1cbd2f45891120117158cbf1723b",
+        "home": "\u00c4ss\u00e4t",
+        "away": "Kiekko-Espoo",
+        "outcome": "Kiekko-Espoo",
+        "odds": 2.83,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "f0726a5b69d0a17637976e903047f95b",
+        "home": "SaiPa",
+        "away": "KooKoo",
+        "outcome": "KooKoo",
+        "odds": 3.45,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "d02ff636f652d5b5bb65f6b24330c4fe",
+        "home": "Tottenham Hotspur",
+        "away": "Aston Villa",
+        "outcome": "Aston Villa",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_epl",
+        "time": "2026-09-19T11:30:00Z"
+    },
+    {
+        "id": "446a7bee22ecf469e0b162fb28ebdc0f",
+        "home": "Hamburger SV",
+        "away": "1. FC K\u00f6ln",
+        "outcome": "Hamburger SV",
+        "odds": 2.86,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-19T13:30:00Z"
+    },
+    {
+        "id": "6040ea7490bde14e3c257f8db37045e2",
+        "home": "Werder Bremen",
+        "away": "Augsburg",
+        "outcome": "Augsburg",
+        "odds": 2.92,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-19T13:30:00Z"
+    },
+    {
+        "id": "4c1106958327b544267f1040c84b4acb",
+        "home": "Borussia Monchengladbach",
+        "away": "FSV Mainz 05",
+        "outcome": "FSV Mainz 05",
+        "odds": 2.38,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-19T13:30:00Z"
+    },
+    {
+        "id": "1c490e2c6acab28c33d0021b15d3c93a",
+        "home": "Eintracht Frankfurt",
+        "away": "SC Freiburg",
+        "outcome": "Eintracht Frankfurt",
+        "odds": 2.5,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-19T13:30:00Z"
+    },
+    {
+        "id": "c10576ed56099cd6e81827896f9aca4f",
+        "home": "VfB Stuttgart",
+        "away": "Borussia Dortmund",
+        "outcome": "Borussia Dortmund",
+        "odds": 2.95,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-19T16:30:00Z"
+    },
+    {
+        "id": "c7b8233ea02650f1055ae086b169b7a1",
+        "home": "Bologna",
+        "away": "Torino",
+        "outcome": "Torino",
+        "odds": 4.2,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-19T13:00:00Z"
+    },
+    {
+        "id": "c11148f7ed032d5e99313ee1942fd4c2",
+        "home": "Udinese",
+        "away": "Cagliari",
+        "outcome": "Cagliari",
+        "odds": 3.6,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-19T13:00:00Z"
+    },
+    {
+        "id": "b455cbf28072fc1f1a46796b1b652f69",
+        "home": "AS Roma",
+        "away": "Inter Milan",
+        "outcome": "Inter Milan",
+        "odds": 2.68,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-19T16:00:00Z"
+    },
+    {
+        "id": "6fb54fd5b3da95e4f4bbef62b7022bd7",
+        "home": "Venezia",
+        "away": "Lazio",
+        "outcome": "Venezia",
+        "odds": 4.0,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-19T18:45:00Z"
+    },
+    {
+        "id": "e6b36629bb3480a570ea0db2f47888dd",
+        "home": "Celta Vigo",
+        "away": "Real Racing Club de Santander",
+        "outcome": "Real Racing Club de Santander",
+        "odds": 4.35,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-09-19T16:30:00Z"
+    },
+    {
+        "id": "d466b9fa31b87af2f7187ae8b557f007",
+        "home": "Gil Vicente",
+        "away": "CS Maritimo",
+        "outcome": "CS Maritimo",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-19T14:30:00Z"
+    },
+    {
+        "id": "800c8ed0df8c82f1f022eeb29bb69424",
+        "home": "Alverca",
+        "away": "Rio Ave FC",
+        "outcome": "Rio Ave FC",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-19T17:00:00Z"
+    },
+    {
+        "id": "a0842ab0e0e33f7806da8d2fd058d993",
+        "home": "ADO Den Haag",
+        "away": "SC Cambuur",
+        "outcome": "SC Cambuur",
+        "odds": 4.25,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-09-19T14:30:00Z"
+    },
+    {
+        "id": "d42c29fa6bef210ff023e6655225c558",
+        "home": "Sparta Rotterdam",
+        "away": "Heerenveen",
+        "outcome": "Sparta Rotterdam",
+        "odds": 2.72,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-09-19T16:45:00Z"
+    },
+    {
+        "id": "789fa5a9bccda15fccf4f6a88faaa09b",
+        "home": "Kocaelispor",
+        "away": "Gazi\u015fehir Gaziantep",
+        "outcome": "Gazi\u015fehir Gaziantep",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "95747a9a846abb0f5805fc02eebbef94",
+        "home": "Trabzonspor",
+        "away": "Galatasaray",
+        "outcome": "Trabzonspor",
+        "odds": 3.23,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-19T17:00:00Z"
+    },
+    {
+        "id": "dc10027b037288b4e5fc65a88248d272",
+        "home": "Leuven",
+        "away": "RAAL La Louvi\u00e8re",
+        "outcome": "RAAL La Louvi\u00e8re",
+        "odds": 3.77,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "0a7e7850791cfcc10bb8cc53b6e6cd39",
+        "home": "Charleroi",
+        "away": "Cercle Brugge KSV",
+        "outcome": "Cercle Brugge KSV",
+        "odds": 4.2,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-19T16:15:00Z"
+    },
+    {
+        "id": "c3dc7c96928db735db0864dbf9d8e94f",
+        "home": "Lommel SK",
+        "away": "KV Mechelen",
+        "outcome": "Lommel SK",
+        "odds": 2.72,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-19T18:45:00Z"
+    },
+    {
+        "id": "f460e45773a152dcf55366e91d347c69",
+        "home": "OB Odense BK",
+        "away": "FC Midtjylland",
+        "outcome": "OB Odense BK",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-09-19T16:00:00Z"
+    },
+    {
+        "id": "2ef6c318049b674ae672ced0f9ae99f8",
+        "home": "Dundee FC",
+        "away": "Motherwell",
+        "outcome": "Dundee FC",
+        "odds": 3.15,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "27d03c813da35f21b2748f8c0e44a05a",
+        "home": "St Mirren",
+        "away": "Dundee United",
+        "outcome": "St Mirren",
+        "odds": 2.4,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "d2f83d4e00a1b09b9bbad0f55483573c",
+        "home": "St Johnstone",
+        "away": "Falkirk F.C.",
+        "outcome": "Falkirk F.C.",
+        "odds": 3.7,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "3eb181720f5eb289efa94a42d7fccb52",
+        "home": "Birmingham City",
+        "away": "Middlesbrough",
+        "outcome": "Middlesbrough",
+        "odds": 2.46,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "5a85e792cbedf0fcc4ec13d49ac03892",
+        "home": "Portsmouth",
+        "away": "Blackburn Rovers",
+        "outcome": "Blackburn Rovers",
+        "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "4efd38d86cf243da2011f908b17de8c2",
+        "home": "Lincoln City",
+        "away": "Swansea City",
+        "outcome": "Swansea City",
+        "odds": 2.62,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "01678a3de0b0537624fbc64304d90710",
+        "home": "Lillestrom",
+        "away": "Torreense",
+        "outcome": "Lillestrom",
+        "odds": 1.83,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-17T19:00:00Z"
     }
 ]

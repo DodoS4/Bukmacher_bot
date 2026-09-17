@@ -29254,5 +29254,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "4:1"
+    },
+    {
+        "id": "7293d131a4072c4123dde03fb3e50b3e",
+        "home": "PFC Levski Sofia",
+        "away": "Salzburg",
+        "outcome": "PFC Levski Sofia",
+        "odds": 3.2,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-09-17T16:45:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "0:1"
     }
 ]
