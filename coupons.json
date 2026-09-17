@@ -7868,5 +7868,45 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-09-18T19:00:00Z"
+    },
+    {
+        "id": "a1ce348aeed771df1b713367e2a6be32",
+        "home": "KalPa",
+        "away": "Ilves",
+        "outcome": "Ilves",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-18T15:30:00Z"
+    },
+    {
+        "id": "3f55c15c31fa4b4809fcdcad70826447",
+        "home": "Millwall",
+        "away": "West Ham United",
+        "outcome": "Millwall",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-19T11:30:00Z"
+    },
+    {
+        "id": "d2255db9d78880de55406d02c4c94243",
+        "home": "Stoke City",
+        "away": "Sheffield United",
+        "outcome": "Sheffield United",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-19T11:30:00Z"
+    },
+    {
+        "id": "66849986905421eca414d1a6f10841e7",
+        "home": "New York City FC",
+        "away": "New York Red Bulls",
+        "outcome": "New York Red Bulls",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-18T23:30:00Z"
     }
 ]
