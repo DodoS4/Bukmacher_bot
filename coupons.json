@@ -7660,36 +7660,6 @@
         "time": "2026-09-17T15:30:00Z"
     },
     {
-        "id": "802837ee46675cf2e15f0492a56d269a",
-        "home": "Real Sociedad",
-        "away": "Bournemouth",
-        "outcome": "Real Sociedad",
-        "odds": 3.0,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-17T19:00:00Z"
-    },
-    {
-        "id": "9fdd372c461b22bca9a6306427583499",
-        "home": "Viktoria Plze\u0148",
-        "away": "Union Saint-Gilloise",
-        "outcome": "Viktoria Plze\u0148",
-        "odds": 2.86,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-17T19:00:00Z"
-    },
-    {
-        "id": "72b83b12135b1fcb72f4c154804a5e3f",
-        "home": "Besiktas JK",
-        "away": "Marseille",
-        "outcome": "Besiktas JK",
-        "odds": 1.88,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-17T19:00:00Z"
-    },
-    {
         "id": "7ea8bb1abf7e0ea52fe174f21a442a3a",
         "home": "AIK",
         "away": "Modo Hockey",
@@ -7788,16 +7758,6 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-09-18T15:30:00Z"
-    },
-    {
-        "id": "56c5e4d30fc27dedb3ae48a80b81346d",
-        "home": "M\u00e1laga",
-        "away": "Villarreal",
-        "outcome": "M\u00e1laga",
-        "odds": 4.0,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-09-17T19:30:00Z"
     },
     {
         "id": "1f9ad8e781b60b865e22d2ee5b1934b5",
@@ -8270,13 +8230,43 @@
         "time": "2026-09-19T14:00:00Z"
     },
     {
-        "id": "01678a3de0b0537624fbc64304d90710",
-        "home": "Lillestrom",
-        "away": "Torreense",
-        "outcome": "Lillestrom",
+        "id": "9fa8d1462fb618f201c394e8222ef58c",
+        "home": "HPK",
+        "away": "TPS",
+        "outcome": "TPS",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "7346ca3231d392779522b854e89b5c2e",
+        "home": "Willem II",
+        "away": "Fortuna Sittard",
+        "outcome": "Fortuna Sittard",
+        "odds": 2.75,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-09-19T19:00:00Z"
+    },
+    {
+        "id": "06f1b29d8ced5d3925174923bb1a5d6c",
+        "home": "BSC Young Boys",
+        "away": "Servette",
+        "outcome": "Servette",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_switzerland_superleague",
+        "time": "2026-09-19T16:00:00Z"
+    },
+    {
+        "id": "28d42dc16e1a1f32878d09b9ccfb2a28",
+        "home": "Hibernian",
+        "away": "Aberdeen",
+        "outcome": "Hibernian",
         "odds": 1.83,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-09-17T19:00:00Z"
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-19T14:00:00Z"
     }
 ]
