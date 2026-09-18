@@ -8268,5 +8268,125 @@
         "stake": 325.0,
         "sport": "soccer_spl",
         "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "595bcd8e080e04f9d0087adb5550fa7c",
+        "home": "Pelicans",
+        "away": "JYP",
+        "outcome": "Pelicans",
+        "odds": 2.84,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "dbc7a0ecb3a1d34322609db087b7f063",
+        "home": "Jokerit",
+        "away": "Tappara",
+        "outcome": "Jokerit",
+        "odds": 3.5,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "b173134788499a11705978e5a0633e22",
+        "home": "JoKP",
+        "away": "Pyry",
+        "outcome": "Pyry",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-18T15:30:00Z"
+    },
+    {
+        "id": "65acc2445541a5ed803ef0ce1a270097",
+        "home": "Fiorentina",
+        "away": "Napoli",
+        "outcome": "Napoli",
+        "odds": 2.36,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-09-20T10:30:00Z"
+    },
+    {
+        "id": "5e6a4471c8285c4286cc08b4ae1ba564",
+        "home": "\u00c7orum FK",
+        "away": "Alanyaspor",
+        "outcome": "Alanyaspor",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "5fa0fa8e56772a3248e73c86a0807b81",
+        "home": "Celtic",
+        "away": "Rangers",
+        "outcome": "Celtic",
+        "odds": 2.34,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-09-20T11:00:00Z"
+    },
+    {
+        "id": "0c830736955911d3043cff8e1ae17440",
+        "home": "Cardiff City",
+        "away": "Charlton Athletic",
+        "outcome": "Charlton Athletic",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-19T11:30:00Z"
+    },
+    {
+        "id": "2ec9e801429347b8f0bdbe520a21faa6",
+        "home": "D.C. United",
+        "away": "Charlotte FC",
+        "outcome": "Charlotte FC",
+        "odds": 2.65,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-19T23:30:00Z"
+    },
+    {
+        "id": "74f2c90f26f88520d7c3610a8ec36372",
+        "home": "San Jose Earthquakes",
+        "away": "Los Angeles FC",
+        "outcome": "San Jose Earthquakes",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-19T23:30:00Z"
+    },
+    {
+        "id": "dbcbe0c2555f53316269e6805faa0e86",
+        "home": "New England Revolution",
+        "away": "Orlando City SC",
+        "outcome": "Orlando City SC",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-19T23:30:00Z"
+    },
+    {
+        "id": "d757cc8c01dcef703f457b967342f4ec",
+        "home": "Nashville SC",
+        "away": "Chicago Fire",
+        "outcome": "Chicago Fire",
+        "odds": 4.22,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-20T01:30:00Z"
+    },
+    {
+        "id": "85c56411229fc55e9851f60563f64af0",
+        "home": "Colorado Rapids",
+        "away": "Seattle Sounders FC",
+        "outcome": "Seattle Sounders FC",
+        "odds": 3.95,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-20T01:30:00Z"
     }
 ]
