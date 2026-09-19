@@ -29488,5 +29488,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:0"
+    },
+    {
+        "id": "43931d85c4a164e23cf732223b634737",
+        "home": "Gent",
+        "away": "Standard Liege",
+        "outcome": "Standard Liege",
+        "odds": 4.4,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-18T18:45:00Z",
+        "profit": -325.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "66849986905421eca414d1a6f10841e7",
+        "home": "New York City FC",
+        "away": "New York Red Bulls",
+        "outcome": "New York Red Bulls",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-18T23:30:00Z",
+        "profit": 412.5,
+        "status": "WIN",
+        "score": "0:1"
     }
 ]

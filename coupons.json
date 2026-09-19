@@ -7690,16 +7690,6 @@
         "time": "2026-09-18T15:30:00Z"
     },
     {
-        "id": "43931d85c4a164e23cf732223b634737",
-        "home": "Gent",
-        "away": "Standard Liege",
-        "outcome": "Standard Liege",
-        "odds": 4.4,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-09-18T18:45:00Z"
-    },
-    {
         "id": "a1ce348aeed771df1b713367e2a6be32",
         "home": "KalPa",
         "away": "Ilves",
@@ -7728,16 +7718,6 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-09-19T11:30:00Z"
-    },
-    {
-        "id": "66849986905421eca414d1a6f10841e7",
-        "home": "New York City FC",
-        "away": "New York Red Bulls",
-        "outcome": "New York Red Bulls",
-        "odds": 4.3,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-18T23:30:00Z"
     },
     {
         "id": "ee6bb5092ba48c6dd054c3a0228a1222",
@@ -8508,5 +8488,135 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-20T00:30:00Z"
+    },
+    {
+        "id": "2ac989e6ee5fbb583ba1289b57c21920",
+        "home": "Vimmerby HC",
+        "away": "IK Oskarshamn",
+        "outcome": "Vimmerby HC",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-20T14:30:00Z"
+    },
+    {
+        "id": "4068e7a8c7821a00a6a5bcae0c9b936c",
+        "home": "\u00d6stersunds IK",
+        "away": "Nybro Vikings IF",
+        "outcome": "Nybro Vikings IF",
+        "odds": 2.55,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-20T14:30:00Z"
+    },
+    {
+        "id": "5ca401155a6ee723c3ffc12a861415e3",
+        "home": "Pyry",
+        "away": "Kiekko-Vantaa",
+        "outcome": "Pyry",
+        "odds": 3.8,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "ded5c2293009b93b7d8ee3c890b6617e",
+        "home": "Deportivo La Coru\u00f1a",
+        "away": "Real Betis",
+        "outcome": "Deportivo La Coru\u00f1a",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-09-20T16:30:00Z"
+    },
+    {
+        "id": "128629c41bc6d9372b1e299f0394d14c",
+        "home": "Korona Kielce",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Rak\u00f3w Cz\u0119stochowa",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-09-19T12:45:00Z"
+    },
+    {
+        "id": "d75761ac1879910b55bf4670bacc5f42",
+        "home": "Angers",
+        "away": "Troyes",
+        "outcome": "Troyes",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-09-19T18:45:00Z"
+    },
+    {
+        "id": "5c7ef7a053385d1ba3098a7cf79beaf4",
+        "home": "Anderlecht",
+        "away": "SV Zulte-Waregem",
+        "outcome": "Anderlecht",
+        "odds": 1.81,
+        "stake": 325.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-09-19T18:45:00Z"
+    },
+    {
+        "id": "5e43ec1f4aa84838a495697265106d64",
+        "home": "Austria Lustenau",
+        "away": "Rheindorf Altach",
+        "outcome": "Austria Lustenau",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-09-19T15:00:00Z"
+    },
+    {
+        "id": "ecdc5b26924bae1e3ef27b2e2a528806",
+        "home": "Brondby IF",
+        "away": "FC Copenhagen",
+        "outcome": "Brondby IF",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_denmark_superliga",
+        "time": "2026-09-20T12:00:00Z"
+    },
+    {
+        "id": "1f7740094009a6a38af078b4f2f43284",
+        "home": "Atromitos Athens",
+        "away": "AE Kifisia FC",
+        "outcome": "AE Kifisia FC",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-09-19T16:00:00Z"
+    },
+    {
+        "id": "850a055c3173cdcc11ff64baf676ef0d",
+        "home": "OFI Crete",
+        "away": "Asteras Tripolis",
+        "outcome": "Asteras Tripolis",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-09-20T16:00:00Z"
+    },
+    {
+        "id": "550e1217201e4b0bc35373c62b43f899",
+        "home": "Burnley",
+        "away": "Derby County",
+        "outcome": "Derby County",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-09-19T14:00:00Z"
+    },
+    {
+        "id": "ed1a54bdb3f1cdbfb3bbec4e59550d76",
+        "home": "Portland Timbers",
+        "away": "Atlanta United FC",
+        "outcome": "Portland Timbers",
+        "odds": 2.11,
+        "stake": 250.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-20T02:30:00Z"
     }
 ]
