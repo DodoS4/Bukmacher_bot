@@ -7700,76 +7700,6 @@
         "time": "2026-09-18T15:30:00Z"
     },
     {
-        "id": "ee6bb5092ba48c6dd054c3a0228a1222",
-        "home": "Skellefte\u00e5 AIK",
-        "away": "Bryn\u00e4s IF",
-        "outcome": "Bryn\u00e4s IF",
-        "odds": 3.5,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-19T13:15:00Z"
-    },
-    {
-        "id": "860b828324cf221fafa4705fdcffc9c0",
-        "home": "Fr\u00f6lunda HC",
-        "away": "V\u00e4xj\u00f6 Lakers",
-        "outcome": "V\u00e4xj\u00f6 Lakers",
-        "odds": 3.58,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-19T13:15:00Z"
-    },
-    {
-        "id": "5de629c34e83f15ffa0260779f0e5e91",
-        "home": "HV71",
-        "away": "Malm\u00f6 Redhawks",
-        "outcome": "Malm\u00f6 Redhawks",
-        "odds": 2.6,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-19T13:15:00Z"
-    },
-    {
-        "id": "9e5718afca3360d38a7f9f0ff2f46a89",
-        "home": "Link\u00f6ping HC",
-        "away": "Timr\u00e5 IK",
-        "outcome": "Timr\u00e5 IK",
-        "odds": 3.2,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-19T13:15:00Z"
-    },
-    {
-        "id": "75cf60acafd9586f18b6f5a7943db6ea",
-        "home": "Djurg\u00e5rdens IF",
-        "away": "IF Bj\u00f6rkl\u00f6ven",
-        "outcome": "IF Bj\u00f6rkl\u00f6ven",
-        "odds": 3.44,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-19T16:00:00Z"
-    },
-    {
-        "id": "7202dcd74391a6254ea382adb583bf25",
-        "home": "F\u00e4rjestad BK",
-        "away": "\u00d6rebro HK",
-        "outcome": "\u00d6rebro HK",
-        "odds": 3.35,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-19T16:00:00Z"
-    },
-    {
-        "id": "038f52dbd1fb3518b1f81d1ea07bf214",
-        "home": "Lule\u00e5 HF",
-        "away": "R\u00f6gle BK",
-        "outcome": "Lule\u00e5 HF",
-        "odds": 2.38,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-19T16:00:00Z"
-    },
-    {
         "id": "a9f23209729b2e579c962ed11552d1f9",
         "home": "HIFK",
         "away": "Lukko",
@@ -7858,56 +7788,6 @@
         "stake": 325.0,
         "sport": "soccer_spl",
         "time": "2026-09-20T11:00:00Z"
-    },
-    {
-        "id": "2ec9e801429347b8f0bdbe520a21faa6",
-        "home": "D.C. United",
-        "away": "Charlotte FC",
-        "outcome": "Charlotte FC",
-        "odds": 2.65,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-19T23:30:00Z"
-    },
-    {
-        "id": "74f2c90f26f88520d7c3610a8ec36372",
-        "home": "San Jose Earthquakes",
-        "away": "Los Angeles FC",
-        "outcome": "San Jose Earthquakes",
-        "odds": 3.15,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-19T23:30:00Z"
-    },
-    {
-        "id": "dbcbe0c2555f53316269e6805faa0e86",
-        "home": "New England Revolution",
-        "away": "Orlando City SC",
-        "outcome": "Orlando City SC",
-        "odds": 3.95,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-19T23:30:00Z"
-    },
-    {
-        "id": "d757cc8c01dcef703f457b967342f4ec",
-        "home": "Nashville SC",
-        "away": "Chicago Fire",
-        "outcome": "Chicago Fire",
-        "odds": 4.22,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-20T01:30:00Z"
-    },
-    {
-        "id": "85c56411229fc55e9851f60563f64af0",
-        "home": "Colorado Rapids",
-        "away": "Seattle Sounders FC",
-        "outcome": "Seattle Sounders FC",
-        "odds": 3.95,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-20T01:30:00Z"
     },
     {
         "id": "a4b92030b5b48bceea0474e4d8066355",
@@ -8030,26 +7910,6 @@
         "time": "2026-09-20T14:30:00Z"
     },
     {
-        "id": "d810c53626ad2f0d86d1b2118eb5b61b",
-        "home": "CF Montreal",
-        "away": "Columbus Crew SC",
-        "outcome": "CF Montreal",
-        "odds": 2.63,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-19T23:30:00Z"
-    },
-    {
-        "id": "b7bb42ce7e2153ea16064134a6bb096b",
-        "home": "Real Salt Lake",
-        "away": "Vancouver Whitecaps FC",
-        "outcome": "Real Salt Lake",
-        "odds": 4.0,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-20T01:30:00Z"
-    },
-    {
         "id": "9b87c8ec37c7595e7e2ffb36010155b5",
         "home": "Hermes",
         "away": "TUTO Hockey",
@@ -8088,16 +7948,6 @@
         "stake": 125.0,
         "sport": "soccer_portugal_primeira_liga",
         "time": "2026-09-20T19:30:00Z"
-    },
-    {
-        "id": "ce3924ffffa9cb10446e573f653a2835",
-        "home": "Houston Dynamo",
-        "away": "FC Cincinnati",
-        "outcome": "FC Cincinnati",
-        "odds": 3.85,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-20T00:30:00Z"
     },
     {
         "id": "2ac989e6ee5fbb583ba1289b57c21920",
@@ -8140,16 +7990,6 @@
         "time": "2026-09-20T16:30:00Z"
     },
     {
-        "id": "5c7ef7a053385d1ba3098a7cf79beaf4",
-        "home": "Anderlecht",
-        "away": "SV Zulte-Waregem",
-        "outcome": "Anderlecht",
-        "odds": 1.81,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-09-19T18:45:00Z"
-    },
-    {
         "id": "ecdc5b26924bae1e3ef27b2e2a528806",
         "home": "Brondby IF",
         "away": "FC Copenhagen",
@@ -8168,16 +8008,6 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-09-20T16:00:00Z"
-    },
-    {
-        "id": "ed1a54bdb3f1cdbfb3bbec4e59550d76",
-        "home": "Portland Timbers",
-        "away": "Atlanta United FC",
-        "outcome": "Portland Timbers",
-        "odds": 2.11,
-        "stake": 250.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-20T02:30:00Z"
     },
     {
         "id": "a5ec84d66366bf16991afcbd0b78c0ed",
@@ -8208,5 +8038,25 @@
         "stake": 125.0,
         "sport": "soccer_france_ligue_one",
         "time": "2026-09-20T15:15:00Z"
+    },
+    {
+        "id": "9f5cd3de78cf482a77b4571fe363d04c",
+        "home": "SC Paderborn",
+        "away": "TSG Hoffenheim",
+        "outcome": "SC Paderborn",
+        "odds": 4.5,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-09-20T17:30:00Z"
+    },
+    {
+        "id": "20e63a6495ac8fd1ff6a87e768529dbf",
+        "home": "Erzurum BB",
+        "away": "Samsunspor",
+        "outcome": "Samsunspor",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-09-20T14:00:00Z"
     }
 ]
