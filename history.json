@@ -30645,5 +30645,18 @@
         "profit": 232.5,
         "status": "WIN",
         "score": "3:1"
+    },
+    {
+        "id": "a5ec84d66366bf16991afcbd0b78c0ed",
+        "home": "AIK",
+        "away": "Kalmar HC",
+        "outcome": "Kalmar HC",
+        "odds": 3.5,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-21T17:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:0"
     }
 ]

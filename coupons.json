@@ -7810,16 +7810,6 @@
         "time": "2026-09-19T14:00:00Z"
     },
     {
-        "id": "a5ec84d66366bf16991afcbd0b78c0ed",
-        "home": "AIK",
-        "away": "Kalmar HC",
-        "outcome": "Kalmar HC",
-        "odds": 3.5,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-09-21T17:00:00Z"
-    },
-    {
         "id": "14d4a633c6879e26a9fdb031231c853c",
         "home": "Link\u00f6ping HC",
         "away": "Bryn\u00e4s IF",
@@ -7898,5 +7888,95 @@
         "stake": 250.0,
         "sport": "icehockey_liiga",
         "time": "2026-09-22T15:30:00Z"
+    },
+    {
+        "id": "6e0ca84c3220c57de2a707ef7e27af2c",
+        "home": "\u00d6stersunds IK",
+        "away": "Almtuna IS",
+        "outcome": "Almtuna IS",
+        "odds": 2.9,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z"
+    },
+    {
+        "id": "c9e26210d1d5ea2a0ff4e791d1106012",
+        "home": "Nybro Vikings IF",
+        "away": "BIK Karlskoga",
+        "outcome": "Nybro Vikings IF",
+        "odds": 2.85,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z"
+    },
+    {
+        "id": "3afeeb8f2cdbf1395557514c9b013ec8",
+        "home": "Leksands IF",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 4.25,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z"
+    },
+    {
+        "id": "117b43a6c1c182a9ab16cf751c01f4a3",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 3.55,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z"
+    },
+    {
+        "id": "7c4b4aa031f39880a7e13c994be4a905",
+        "home": "HIFK",
+        "away": "K\u00e4rp\u00e4t",
+        "outcome": "HIFK",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-23T15:30:00Z"
+    },
+    {
+        "id": "0a2373205e6871da8909aee2bb7802b4",
+        "home": "KooKoo",
+        "away": "KalPa",
+        "outcome": "KooKoo",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-23T15:30:00Z"
+    },
+    {
+        "id": "690ecb1cd9be2e35dceae5699f9f62e0",
+        "home": "Sport",
+        "away": "Kiekko-Espoo",
+        "outcome": "Sport",
+        "odds": 3.15,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-23T15:30:00Z"
+    },
+    {
+        "id": "2a20932b71a9995dfddd4baf649ddf37",
+        "home": "SaiPa",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 3.7,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-23T15:30:00Z"
+    },
+    {
+        "id": "2aed57637d33ed756259f71103e903eb",
+        "home": "IPK",
+        "away": "Hermes",
+        "outcome": "Hermes",
+        "odds": 4.3,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-23T15:30:00Z"
     }
 ]
