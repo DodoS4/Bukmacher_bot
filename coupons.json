@@ -7800,16 +7800,6 @@
         "time": "2026-09-19T14:00:00Z"
     },
     {
-        "id": "908d70dec433245627941151e5ab8ecc",
-        "home": "FC Porto",
-        "away": "Benfica",
-        "outcome": "FC Porto",
-        "odds": 2.86,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-09-20T19:30:00Z"
-    },
-    {
         "id": "5ca401155a6ee723c3ffc12a861415e3",
         "home": "Pyry",
         "away": "Kiekko-Vantaa",

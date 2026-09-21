@@ -30632,5 +30632,18 @@
         "profit": 227.5,
         "status": "WIN",
         "score": "2:3"
+    },
+    {
+        "id": "908d70dec433245627941151e5ab8ecc",
+        "home": "FC Porto",
+        "away": "Benfica",
+        "outcome": "FC Porto",
+        "odds": 2.86,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-09-20T19:30:00Z",
+        "profit": 232.5,
+        "status": "WIN",
+        "score": "3:1"
     }
 ]
