@@ -30658,5 +30658,70 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "3:0"
+    },
+    {
+        "id": "14d4a633c6879e26a9fdb031231c853c",
+        "home": "Link\u00f6ping HC",
+        "away": "Bryn\u00e4s IF",
+        "outcome": "Link\u00f6ping HC",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-22T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:9"
+    },
+    {
+        "id": "31842f2aa34e903f1af480351f7e2459",
+        "home": "R\u00f6gle BK",
+        "away": "Djurg\u00e5rdens IF",
+        "outcome": "Djurg\u00e5rdens IF",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-22T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "60b6f7bed3f8d427080d9b27f7de47d0",
+        "home": "Fr\u00f6lunda HC",
+        "away": "F\u00e4rjestad BK",
+        "outcome": "F\u00e4rjestad BK",
+        "odds": 2.86,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-22T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "2a430e35752238594ba6ecf0ea02943a",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "Malm\u00f6 Redhawks",
+        "outcome": "Malm\u00f6 Redhawks",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-22T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "4:3"
+    },
+    {
+        "id": "cacebe6040696e1e98003cbe4ba3458a",
+        "home": "Timr\u00e5 IK",
+        "away": "\u00d6rebro HK",
+        "outcome": "Timr\u00e5 IK",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-22T17:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:5"
     }
 ]
