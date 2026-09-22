@@ -7978,5 +7978,35 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-09-23T15:30:00Z"
+    },
+    {
+        "id": "1037149f9703b68f2f549188e419d85a",
+        "home": "Vimmerby HC",
+        "away": "AIK",
+        "outcome": "Vimmerby HC",
+        "odds": 3.65,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z"
+    },
+    {
+        "id": "421c2311dabe0dd22c25907dd372697c",
+        "home": "Visby/Roma HK",
+        "away": "Kalmar HC",
+        "outcome": "Visby/Roma HK",
+        "odds": 4.0,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z"
+    },
+    {
+        "id": "721002a07455851d44ee87a608fbd3e3",
+        "home": "Seattle Sounders FC",
+        "away": "Real Salt Lake",
+        "outcome": "Real Salt Lake",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-24T01:30:00Z"
     }
 ]
