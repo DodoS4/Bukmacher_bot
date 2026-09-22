@@ -8008,5 +8008,15 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-24T01:30:00Z"
+    },
+    {
+        "id": "fcfacf85e97bafdf2452123afaf33d87",
+        "home": "HV71",
+        "away": "Skellefte\u00e5 AIK",
+        "outcome": "HV71",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-24T17:00:00Z"
     }
 ]
