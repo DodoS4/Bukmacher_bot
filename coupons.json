@@ -8018,5 +8018,55 @@
         "stake": 250.0,
         "sport": "icehockey_liiga",
         "time": "2026-09-24T15:30:00Z"
+    },
+    {
+        "id": "7342da456c1dae17070054154ba3122d",
+        "home": "HIFK",
+        "away": "JYP",
+        "outcome": "HIFK",
+        "odds": 2.94,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-25T15:30:00Z"
+    },
+    {
+        "id": "1d5c864afd39c47d4ac0f37537320478",
+        "home": "Jokerit",
+        "away": "TPS",
+        "outcome": "TPS",
+        "odds": 2.45,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-25T16:30:00Z"
+    },
+    {
+        "id": "66cd79de67e30d6a7ba1df5696acbe5a",
+        "home": "IPK",
+        "away": "Kiekko-Vantaa",
+        "outcome": "Kiekko-Vantaa",
+        "odds": 3.42,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-25T15:30:00Z"
+    },
+    {
+        "id": "eea8f9e3b455d2995f537d0a2bd68fc4",
+        "home": "Ketter\u00e4",
+        "away": "JoKP",
+        "outcome": "JoKP",
+        "odds": 2.44,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-25T15:30:00Z"
+    },
+    {
+        "id": "a6e0f66d0fce3ed3dae28def7019f8e3",
+        "home": "TUTO Hockey",
+        "away": "KeuPa HT",
+        "outcome": "KeuPa HT",
+        "odds": 3.88,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-25T15:30:00Z"
     }
 ]
