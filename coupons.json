@@ -7840,46 +7840,6 @@
         "time": "2026-09-22T15:30:00Z"
     },
     {
-        "id": "6e0ca84c3220c57de2a707ef7e27af2c",
-        "home": "\u00d6stersunds IK",
-        "away": "Almtuna IS",
-        "outcome": "Almtuna IS",
-        "odds": 2.9,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-09-23T17:00:00Z"
-    },
-    {
-        "id": "c9e26210d1d5ea2a0ff4e791d1106012",
-        "home": "Nybro Vikings IF",
-        "away": "BIK Karlskoga",
-        "outcome": "Nybro Vikings IF",
-        "odds": 2.85,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-09-23T17:00:00Z"
-    },
-    {
-        "id": "3afeeb8f2cdbf1395557514c9b013ec8",
-        "home": "Leksands IF",
-        "away": "IK Oskarshamn",
-        "outcome": "IK Oskarshamn",
-        "odds": 4.25,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-09-23T17:00:00Z"
-    },
-    {
-        "id": "117b43a6c1c182a9ab16cf751c01f4a3",
-        "home": "V\u00e4ster\u00e5s IK",
-        "away": "S\u00f6dert\u00e4lje SK",
-        "outcome": "V\u00e4ster\u00e5s IK",
-        "odds": 3.55,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-09-23T17:00:00Z"
-    },
-    {
         "id": "7c4b4aa031f39880a7e13c994be4a905",
         "home": "HIFK",
         "away": "K\u00e4rp\u00e4t",
@@ -7928,26 +7888,6 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-09-23T15:30:00Z"
-    },
-    {
-        "id": "1037149f9703b68f2f549188e419d85a",
-        "home": "Vimmerby HC",
-        "away": "AIK",
-        "outcome": "Vimmerby HC",
-        "odds": 3.65,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-09-23T17:00:00Z"
-    },
-    {
-        "id": "421c2311dabe0dd22c25907dd372697c",
-        "home": "Visby/Roma HK",
-        "away": "Kalmar HC",
-        "outcome": "Visby/Roma HK",
-        "odds": 4.0,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-09-23T17:00:00Z"
     },
     {
         "id": "721002a07455851d44ee87a608fbd3e3",
@@ -8067,6 +8007,66 @@
         "odds": 3.88,
         "stake": 250.0,
         "sport": "icehockey_mestis",
+        "time": "2026-09-25T15:30:00Z"
+    },
+    {
+        "id": "bd6a14e6a56f77f14000c6c28ddae9b8",
+        "home": "S\u00f6dert\u00e4lje SK",
+        "away": "AIK",
+        "outcome": "AIK",
+        "odds": 2.95,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-25T16:00:00Z"
+    },
+    {
+        "id": "8c3b3eb5e8cf0db4fa30c922528ce2bf",
+        "home": "Almtuna IS",
+        "away": "BIK Karlskoga",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.0,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-25T17:00:00Z"
+    },
+    {
+        "id": "a2845f7824d3416f6b3b8090c2f72955",
+        "home": "IK Oskarshamn",
+        "away": "\u00d6stersunds IK",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 3.6,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-25T17:00:00Z"
+    },
+    {
+        "id": "216fafc5de887195f9dd1a51c3cee1ab",
+        "home": "Vimmerby HC",
+        "away": "Visby/Roma HK",
+        "outcome": "Visby/Roma HK",
+        "odds": 3.5,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-25T17:00:00Z"
+    },
+    {
+        "id": "d947775e6fb3615fdba677b33115900b",
+        "home": "Jukurit",
+        "away": "Kiekko-Espoo",
+        "outcome": "Jukurit",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-25T15:30:00Z"
+    },
+    {
+        "id": "a4455a236c4b18f4c1c30c1f48bb6a54",
+        "home": "\u00c4ss\u00e4t",
+        "away": "SaiPa",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
         "time": "2026-09-25T15:30:00Z"
     }
 ]

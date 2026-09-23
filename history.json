@@ -30723,5 +30723,83 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "1:5"
+    },
+    {
+        "id": "6e0ca84c3220c57de2a707ef7e27af2c",
+        "home": "\u00d6stersunds IK",
+        "away": "Almtuna IS",
+        "outcome": "Almtuna IS",
+        "odds": 2.9,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z",
+        "profit": 771.88,
+        "status": "WIN",
+        "score": "2:3"
+    },
+    {
+        "id": "c9e26210d1d5ea2a0ff4e791d1106012",
+        "home": "Nybro Vikings IF",
+        "away": "BIK Karlskoga",
+        "outcome": "Nybro Vikings IF",
+        "odds": 2.85,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "0:1"
+    },
+    {
+        "id": "3afeeb8f2cdbf1395557514c9b013ec8",
+        "home": "Leksands IF",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 4.25,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "5:3"
+    },
+    {
+        "id": "117b43a6c1c182a9ab16cf751c01f4a3",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 3.55,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "0:4"
+    },
+    {
+        "id": "1037149f9703b68f2f549188e419d85a",
+        "home": "Vimmerby HC",
+        "away": "AIK",
+        "outcome": "Vimmerby HC",
+        "odds": 3.65,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "2:4"
+    },
+    {
+        "id": "421c2311dabe0dd22c25907dd372697c",
+        "home": "Visby/Roma HK",
+        "away": "Kalmar HC",
+        "outcome": "Visby/Roma HK",
+        "odds": 4.0,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-23T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "2:6"
     }
 ]
