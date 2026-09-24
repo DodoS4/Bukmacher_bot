@@ -30801,5 +30801,18 @@
         "profit": -406.25,
         "status": "LOSS",
         "score": "2:6"
+    },
+    {
+        "id": "721002a07455851d44ee87a608fbd3e3",
+        "home": "Seattle Sounders FC",
+        "away": "Real Salt Lake",
+        "outcome": "Real Salt Lake",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-24T01:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:0"
     }
 ]
