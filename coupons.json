@@ -8078,5 +8078,15 @@
         "stake": 312.5,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-09-25T18:30:00Z"
+    },
+    {
+        "id": "1629e8b4a2cdab6e32b877d25522aab6",
+        "home": "Sport",
+        "away": "K\u00e4rp\u00e4t",
+        "outcome": "Sport",
+        "odds": 3.2,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-26T14:00:00Z"
     }
 ]
