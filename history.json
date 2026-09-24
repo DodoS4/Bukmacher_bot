@@ -30814,5 +30814,70 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "fcfacf85e97bafdf2452123afaf33d87",
+        "home": "HV71",
+        "away": "Skellefte\u00e5 AIK",
+        "outcome": "HV71",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-24T17:00:00Z",
+        "profit": 800.0,
+        "status": "WIN",
+        "score": "4:3"
+    },
+    {
+        "id": "078f740a44e28afa607d92ff939073a0",
+        "home": "Djurg\u00e5rdens IF",
+        "away": "V\u00e4xj\u00f6 Lakers",
+        "outcome": "Djurg\u00e5rdens IF",
+        "odds": 2.6,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-24T17:00:00Z",
+        "profit": 200.0,
+        "status": "WIN",
+        "score": "4:3"
+    },
+    {
+        "id": "e3c926f25c34c8d2fae040effca2ab16",
+        "home": "Lule\u00e5 HF",
+        "away": "Fr\u00f6lunda HC",
+        "outcome": "Fr\u00f6lunda HC",
+        "odds": 2.7,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-24T17:00:00Z",
+        "profit": 212.5,
+        "status": "WIN",
+        "score": "3:7"
+    },
+    {
+        "id": "b00882a205e90b8c8e1aaae007620a55",
+        "home": "F\u00e4rjestad BK",
+        "away": "R\u00f6gle BK",
+        "outcome": "R\u00f6gle BK",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-24T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "26ce83885e44b1ceadbebafc083c7037",
+        "home": "\u00d6rebro HK",
+        "away": "IF Bj\u00f6rkl\u00f6ven",
+        "outcome": "IF Bj\u00f6rkl\u00f6ven",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-09-24T17:00:00Z",
+        "profit": 331.25,
+        "status": "WIN",
+        "score": "3:4"
     }
 ]
