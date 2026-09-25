@@ -8128,5 +8128,65 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-09-25T15:30:00Z"
+    },
+    {
+        "id": "eb4c8f1a02df986b70b502a0458dee30",
+        "home": "Pelicans",
+        "away": "HIFK",
+        "outcome": "HIFK",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-26T14:00:00Z"
+    },
+    {
+        "id": "d9584a31ee6a9048d261bbb477f2acf4",
+        "home": "HPK",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-26T14:00:00Z"
+    },
+    {
+        "id": "ae8148c9537cf44f84064d1adfbabfa5",
+        "home": "KooKoo",
+        "away": "Jukurit",
+        "outcome": "Jukurit",
+        "odds": 3.4,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-26T14:00:00Z"
+    },
+    {
+        "id": "8977fdf6882a32095d57a9a9540ac8ad",
+        "home": "Tappara",
+        "away": "SaiPa",
+        "outcome": "SaiPa",
+        "odds": 4.25,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-26T14:00:00Z"
+    },
+    {
+        "id": "4d04abffc8665be46e8665d2cbaa7400",
+        "home": "Ilves",
+        "away": "TPS",
+        "outcome": "TPS",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-27T12:00:00Z"
+    },
+    {
+        "id": "003eff33b6407de9fa90cb8eb8272628",
+        "home": "Seattle Sounders FC",
+        "away": "Minnesota United FC",
+        "outcome": "Minnesota United FC",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-27T00:30:00Z"
     }
 ]
