@@ -30879,5 +30879,18 @@
         "profit": 331.25,
         "status": "WIN",
         "score": "3:4"
+    },
+    {
+        "id": "bd6a14e6a56f77f14000c6c28ddae9b8",
+        "home": "S\u00f6dert\u00e4lje SK",
+        "away": "AIK",
+        "outcome": "AIK",
+        "odds": 2.95,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-25T16:00:00Z",
+        "profit": 609.38,
+        "status": "WIN",
+        "score": "4:5"
     }
 ]

@@ -7950,16 +7950,6 @@
         "time": "2026-09-25T15:30:00Z"
     },
     {
-        "id": "bd6a14e6a56f77f14000c6c28ddae9b8",
-        "home": "S\u00f6dert\u00e4lje SK",
-        "away": "AIK",
-        "outcome": "AIK",
-        "odds": 2.95,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-09-25T16:00:00Z"
-    },
-    {
         "id": "8c3b3eb5e8cf0db4fa30c922528ce2bf",
         "home": "Almtuna IS",
         "away": "BIK Karlskoga",
@@ -8188,5 +8178,85 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-27T00:30:00Z"
+    },
+    {
+        "id": "03adddb5d5ed007810b6928088c7bd32",
+        "home": "Kiekko-Espoo",
+        "away": "Jokerit",
+        "outcome": "Jokerit",
+        "odds": 2.75,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-09-26T14:00:00Z"
+    },
+    {
+        "id": "9da42d9cdd359cd73088f566e33e4ecb",
+        "home": "TUTO Hockey",
+        "away": "Ketter\u00e4",
+        "outcome": "Ketter\u00e4",
+        "odds": 3.46,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-26T14:00:00Z"
+    },
+    {
+        "id": "1ccda172d3cf4b820e8d550a0523cf40",
+        "home": "KeuPa HT",
+        "away": "RoKi",
+        "outcome": "KeuPa HT",
+        "odds": 2.65,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-09-26T14:00:00Z"
+    },
+    {
+        "id": "fc27ddecdbf725e6878b23d2fbac96d9",
+        "home": "Atlanta United FC",
+        "away": "New York City FC",
+        "outcome": "New York City FC",
+        "odds": 3.15,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-26T23:30:00Z"
+    },
+    {
+        "id": "249e21ae92c7049220cee334c4fd6868",
+        "home": "CF Montreal",
+        "away": "FC Cincinnati",
+        "outcome": "CF Montreal",
+        "odds": 2.78,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-26T23:30:00Z"
+    },
+    {
+        "id": "2a754d105ccf495bfaaef9a83c6d59fc",
+        "home": "Charlotte FC",
+        "away": "Chicago Fire",
+        "outcome": "Chicago Fire",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-26T23:30:00Z"
+    },
+    {
+        "id": "100d634ff8a0f99befe1dd72ab97c506",
+        "home": "New York Red Bulls",
+        "away": "St. Louis City SC",
+        "outcome": "New York Red Bulls",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-26T23:30:00Z"
+    },
+    {
+        "id": "749a4f184bc096e5924d732f368203e5",
+        "home": "San Jose Earthquakes",
+        "away": "Portland Timbers",
+        "outcome": "Portland Timbers",
+        "odds": 3.5,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-27T02:30:00Z"
     }
 ]
