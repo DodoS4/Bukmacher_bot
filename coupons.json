@@ -7980,36 +7980,6 @@
         "time": "2026-09-26T14:00:00Z"
     },
     {
-        "id": "4d1ceb05634204ab2141df05dd47cf46",
-        "home": "Timr\u00e5 IK",
-        "away": "Djurg\u00e5rdens IF",
-        "outcome": "Timr\u00e5 IK",
-        "odds": 2.35,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-26T16:00:00Z"
-    },
-    {
-        "id": "723cc0e510e122d2bfd951fe77dae882",
-        "home": "Malm\u00f6 Redhawks",
-        "away": "Fr\u00f6lunda HC",
-        "outcome": "Malm\u00f6 Redhawks",
-        "odds": 2.88,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-26T16:00:00Z"
-    },
-    {
-        "id": "7e1d712fc7b99b6d2d8d7c2dc85768aa",
-        "home": "V\u00e4xj\u00f6 Lakers",
-        "away": "HV71",
-        "outcome": "HV71",
-        "odds": 3.75,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-26T16:00:00Z"
-    },
-    {
         "id": "58844b060f0b2c3625619732fad4b0df",
         "home": "KalPa",
         "away": "Lukko",
@@ -8218,5 +8188,25 @@
         "stake": 406.25,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-09-28T17:00:00Z"
+    },
+    {
+        "id": "1939426b2ba9d98c1142822d3187a776",
+        "home": "FC Dallas",
+        "away": "Los Angeles FC",
+        "outcome": "Los Angeles FC",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-27T00:30:00Z"
+    },
+    {
+        "id": "be348231972e17a0d75d59153aa75225",
+        "home": "Real Salt Lake",
+        "away": "New England Revolution",
+        "outcome": "New England Revolution",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-09-27T01:30:00Z"
     }
 ]
