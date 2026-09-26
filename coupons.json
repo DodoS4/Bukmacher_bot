@@ -7980,36 +7980,6 @@
         "time": "2026-09-26T14:00:00Z"
     },
     {
-        "id": "0d4eafb7924d6fa317ef9ea576bfa989",
-        "home": "Bryn\u00e4s IF",
-        "away": "Lule\u00e5 HF",
-        "outcome": "Lule\u00e5 HF",
-        "odds": 3.08,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-26T13:15:00Z"
-    },
-    {
-        "id": "5fbb4290fe184b10430af816b494ad7c",
-        "home": "IF Bj\u00f6rkl\u00f6ven",
-        "away": "F\u00e4rjestad BK",
-        "outcome": "IF Bj\u00f6rkl\u00f6ven",
-        "odds": 3.45,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-26T13:15:00Z"
-    },
-    {
-        "id": "d8aa10852c6e627f31c2094384dbac0f",
-        "home": "R\u00f6gle BK",
-        "away": "Link\u00f6ping HC",
-        "outcome": "Link\u00f6ping HC",
-        "odds": 4.25,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-26T13:15:00Z"
-    },
-    {
         "id": "4d1ceb05634204ab2141df05dd47cf46",
         "home": "Timr\u00e5 IK",
         "away": "Djurg\u00e5rdens IF",
@@ -8035,16 +8005,6 @@
         "away": "HV71",
         "outcome": "HV71",
         "odds": 3.75,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-09-26T16:00:00Z"
-    },
-    {
-        "id": "0580ea3b2ffb0e6f53f5c4a089f31925",
-        "home": "\u00d6rebro HK",
-        "away": "Skellefte\u00e5 AIK",
-        "outcome": "\u00d6rebro HK",
-        "odds": 3.6,
         "stake": 250.0,
         "sport": "icehockey_sweden_hockey_league",
         "time": "2026-09-26T16:00:00Z"
@@ -8238,5 +8198,25 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-09-26T14:00:00Z"
+    },
+    {
+        "id": "93d38606ab46e007d4139d3434347df6",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "Kalmar HC",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 3.85,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-28T17:00:00Z"
+    },
+    {
+        "id": "188ff93479f91eb3bdff9ad88d1aafe9",
+        "home": "Nybro Vikings IF",
+        "away": "Modo Hockey",
+        "outcome": "Nybro Vikings IF",
+        "odds": 3.4,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-28T17:00:00Z"
     }
 ]
