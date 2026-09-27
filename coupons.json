@@ -8050,16 +8050,6 @@
         "time": "2026-09-27T12:00:00Z"
     },
     {
-        "id": "003eff33b6407de9fa90cb8eb8272628",
-        "home": "Seattle Sounders FC",
-        "away": "Minnesota United FC",
-        "outcome": "Minnesota United FC",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-27T00:30:00Z"
-    },
-    {
         "id": "03adddb5d5ed007810b6928088c7bd32",
         "home": "Kiekko-Espoo",
         "away": "Jokerit",
@@ -8090,36 +8080,6 @@
         "time": "2026-09-26T14:00:00Z"
     },
     {
-        "id": "fc27ddecdbf725e6878b23d2fbac96d9",
-        "home": "Atlanta United FC",
-        "away": "New York City FC",
-        "outcome": "New York City FC",
-        "odds": 3.15,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-26T23:30:00Z"
-    },
-    {
-        "id": "249e21ae92c7049220cee334c4fd6868",
-        "home": "CF Montreal",
-        "away": "FC Cincinnati",
-        "outcome": "CF Montreal",
-        "odds": 2.78,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-26T23:30:00Z"
-    },
-    {
-        "id": "2a754d105ccf495bfaaef9a83c6d59fc",
-        "home": "Charlotte FC",
-        "away": "Chicago Fire",
-        "outcome": "Chicago Fire",
-        "odds": 3.2,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-26T23:30:00Z"
-    },
-    {
         "id": "100d634ff8a0f99befe1dd72ab97c506",
         "home": "New York Red Bulls",
         "away": "St. Louis City SC",
@@ -8128,16 +8088,6 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-09-26T23:30:00Z"
-    },
-    {
-        "id": "749a4f184bc096e5924d732f368203e5",
-        "home": "San Jose Earthquakes",
-        "away": "Portland Timbers",
-        "outcome": "Portland Timbers",
-        "odds": 3.5,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-27T02:30:00Z"
     },
     {
         "id": "e50ea325bfcd6f6086a5eaef970564a4",
@@ -8190,23 +8140,13 @@
         "time": "2026-09-28T17:00:00Z"
     },
     {
-        "id": "1939426b2ba9d98c1142822d3187a776",
-        "home": "FC Dallas",
-        "away": "Los Angeles FC",
-        "outcome": "Los Angeles FC",
-        "odds": 3.3,
+        "id": "b3136965b6a29690033e3b2989bc8ad7",
+        "home": "Columbus Crew SC",
+        "away": "Inter Miami CF",
+        "outcome": "Inter Miami CF",
+        "odds": 2.42,
         "stake": 125.0,
         "sport": "soccer_usa_mls",
-        "time": "2026-09-27T00:30:00Z"
-    },
-    {
-        "id": "be348231972e17a0d75d59153aa75225",
-        "home": "Real Salt Lake",
-        "away": "New England Revolution",
-        "outcome": "New England Revolution",
-        "odds": 3.25,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-09-27T01:30:00Z"
+        "time": "2026-09-27T23:00:00Z"
     }
 ]
