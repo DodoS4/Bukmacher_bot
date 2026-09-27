@@ -8168,5 +8168,15 @@
         "stake": 250.0,
         "sport": "icehockey_liiga",
         "time": "2026-09-29T15:30:00Z"
+    },
+    {
+        "id": "9de33ce1013f2a3375dbded2c9fbc7d6",
+        "home": "Carolina Hurricanes",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 2.77,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-09-29T21:00:47Z"
     }
 ]
