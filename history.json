@@ -31139,5 +31139,18 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "3:0"
+    },
+    {
+        "id": "e50ea325bfcd6f6086a5eaef970564a4",
+        "home": "Visby/Roma HK",
+        "away": "\u00d6stersunds IK",
+        "outcome": "Visby/Roma HK",
+        "odds": 2.57,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-09-27T12:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "3:4"
     }
 ]
