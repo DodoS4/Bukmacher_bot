@@ -8178,5 +8178,25 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-09-29T21:00:47Z"
+    },
+    {
+        "id": "485b295347cb22f002e014cb87813ed7",
+        "home": "Toronto Maple Leafs",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.55,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-09-29T23:10:00Z"
+    },
+    {
+        "id": "ac3cb11040dbdb0d2ccfa53e7d6b6cda",
+        "home": "Boston Bruins",
+        "away": "New York Rangers",
+        "outcome": "New York Rangers",
+        "odds": 2.63,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-09-30T00:10:00Z"
     }
 ]
