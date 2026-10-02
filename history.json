@@ -31425,5 +31425,70 @@
         "profit": 1075.0,
         "status": "WIN",
         "score": "4:3"
+    },
+    {
+        "id": "f83a4ffc333ab3af252a768c6b41c7a9",
+        "home": "Nybro Vikings IF",
+        "away": "AIK",
+        "outcome": "Nybro Vikings IF",
+        "odds": 3.75,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-02T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "3:5"
+    },
+    {
+        "id": "3e26f9ca4ba9b8b65e75320e59ac03ba",
+        "home": "Vimmerby HC",
+        "away": "Almtuna IS",
+        "outcome": "Almtuna IS",
+        "odds": 2.6,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-02T17:00:00Z",
+        "profit": 650.0,
+        "status": "WIN",
+        "score": "4:7"
+    },
+    {
+        "id": "bc34cf71eb34e9feba7b284673e0689a",
+        "home": "BIK Karlskoga",
+        "away": "Leksands IF",
+        "outcome": "BIK Karlskoga",
+        "odds": 2.85,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-02T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "4:5"
+    },
+    {
+        "id": "064a17a26f3b166b08c02957297033cc",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 2.3,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-02T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "5:1"
+    },
+    {
+        "id": "ab3f181861c985ee52b81e780bc07e29",
+        "home": "S\u00f6dert\u00e4lje SK",
+        "away": "\u00d6stersunds IK",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 4.5,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-02T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "5:3"
     }
 ]

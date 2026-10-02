@@ -8160,56 +8160,6 @@
         "time": "2026-10-03T01:10:00Z"
     },
     {
-        "id": "f83a4ffc333ab3af252a768c6b41c7a9",
-        "home": "Nybro Vikings IF",
-        "away": "AIK",
-        "outcome": "Nybro Vikings IF",
-        "odds": 3.75,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-02T17:00:00Z"
-    },
-    {
-        "id": "3e26f9ca4ba9b8b65e75320e59ac03ba",
-        "home": "Vimmerby HC",
-        "away": "Almtuna IS",
-        "outcome": "Almtuna IS",
-        "odds": 2.6,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-02T17:00:00Z"
-    },
-    {
-        "id": "bc34cf71eb34e9feba7b284673e0689a",
-        "home": "BIK Karlskoga",
-        "away": "Leksands IF",
-        "outcome": "BIK Karlskoga",
-        "odds": 2.85,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-02T17:00:00Z"
-    },
-    {
-        "id": "064a17a26f3b166b08c02957297033cc",
-        "home": "V\u00e4ster\u00e5s IK",
-        "away": "IK Oskarshamn",
-        "outcome": "IK Oskarshamn",
-        "odds": 2.3,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-02T17:00:00Z"
-    },
-    {
-        "id": "ab3f181861c985ee52b81e780bc07e29",
-        "home": "S\u00f6dert\u00e4lje SK",
-        "away": "\u00d6stersunds IK",
-        "outcome": "\u00d6stersunds IK",
-        "odds": 4.5,
-        "stake": 406.25,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-02T17:00:00Z"
-    },
-    {
         "id": "024e1d43cdfdd59b159afd88e039e7b5",
         "home": "HPK",
         "away": "JYP",
@@ -8498,5 +8448,145 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-10-03T02:00:00Z"
+    },
+    {
+        "id": "5a731787bc9ea054ba101e14b0f3d9ca",
+        "home": "Philadelphia Flyers",
+        "away": "Carolina Hurricanes",
+        "outcome": "Philadelphia Flyers",
+        "odds": 2.88,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-03T23:10:00Z"
+    },
+    {
+        "id": "06352e1d8432528164139f83bb76c0d0",
+        "home": "Columbus Blue Jackets",
+        "away": "Utah Mammoth",
+        "outcome": "Columbus Blue Jackets",
+        "odds": 2.65,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-03T23:10:00Z"
+    },
+    {
+        "id": "d8e6871b9b420af1492a655c1058244c",
+        "home": "Edmonton Oilers",
+        "away": "Seattle Kraken",
+        "outcome": "Seattle Kraken",
+        "odds": 3.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-03T23:10:00Z"
+    },
+    {
+        "id": "25e8169a0a6e2a41ef0aef55d87b3639",
+        "home": "Toronto Maple Leafs",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-03T23:10:00Z"
+    },
+    {
+        "id": "17a149453fbdb9bad7efa57f7481a07f",
+        "home": "Nashville Predators",
+        "away": "Dallas Stars",
+        "outcome": "Dallas Stars",
+        "odds": 2.3,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-04T00:10:00Z"
+    },
+    {
+        "id": "45d984ff127ce23fde997b0182b6336b",
+        "home": "Vancouver Canucks",
+        "away": "Calgary Flames",
+        "outcome": "Vancouver Canucks",
+        "odds": 2.5,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-04T02:10:00Z"
+    },
+    {
+        "id": "fddf3e59117ce7c2597cb67a363a2e06",
+        "home": "San Jose Sharks",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-04T02:10:00Z"
+    },
+    {
+        "id": "4b71f6ea03971266bf03f5c776466622",
+        "home": "HPK",
+        "away": "K\u00e4rp\u00e4t",
+        "outcome": "K\u00e4rp\u00e4t",
+        "odds": 2.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-03T14:00:00Z"
+    },
+    {
+        "id": "6c6587394550ced48497e5bf92ddd6a0",
+        "home": "Ilves",
+        "away": "Kiekko-Espoo",
+        "outcome": "Kiekko-Espoo",
+        "odds": 4.1,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-03T14:00:00Z"
+    },
+    {
+        "id": "2d2ac2ce3301766dcd227ae2f3e631b3",
+        "home": "TPS",
+        "away": "JYP",
+        "outcome": "JYP",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-03T14:00:00Z"
+    },
+    {
+        "id": "c08ba5d4508660b3bac46c7235390db3",
+        "home": "SaiPa",
+        "away": "Jokerit",
+        "outcome": "Jokerit",
+        "odds": 3.55,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-03T14:00:00Z"
+    },
+    {
+        "id": "95f9bb1e885924ebed94466e620b4c72",
+        "home": "Jukurit",
+        "away": "KalPa",
+        "outcome": "KalPa",
+        "odds": 2.4,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-03T14:00:00Z"
+    },
+    {
+        "id": "c54ccf210981329c84a27545af387bb8",
+        "home": "Hermes",
+        "away": "Kiekko-Vantaa",
+        "outcome": "Hermes",
+        "odds": 2.53,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-03T14:00:00Z"
+    },
+    {
+        "id": "1fc4aeb6d981c505748c316b2cd61343",
+        "home": "RoKi",
+        "away": "JoKP",
+        "outcome": "JoKP",
+        "odds": 2.67,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-03T14:00:00Z"
     }
 ]
