@@ -31490,5 +31490,70 @@
         "profit": -406.25,
         "status": "LOSS",
         "score": "5:3"
+    },
+    {
+        "id": "5b5466f836933f5fb3ed4b9f267cce75",
+        "home": "Detroit Red Wings",
+        "away": "New York Rangers",
+        "outcome": "New York Rangers",
+        "odds": 2.79,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-02T22:40:00Z",
+        "profit": 895.0,
+        "status": "WIN",
+        "score": "0:2"
+    },
+    {
+        "id": "f5a9759e52a784d5fdcc1f3a2fcfc5a2",
+        "home": "Winnipeg Jets",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 2.51,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-03T00:10:00Z",
+        "profit": 755.0,
+        "status": "WIN",
+        "score": "3:4"
+    },
+    {
+        "id": "797f03124f9bb08624b199c28f621c61",
+        "home": "Dallas Stars",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 3.88,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-03T01:10:00Z",
+        "profit": 1440.0,
+        "status": "WIN",
+        "score": "0:4"
+    },
+    {
+        "id": "dfc3a73fc50d3d1c4b58150c834e2e7d",
+        "home": "Carolina Hurricanes",
+        "away": "Washington Capitals",
+        "outcome": "Washington Capitals",
+        "odds": 2.99,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-02T23:00:00Z",
+        "profit": 995.0,
+        "status": "WIN",
+        "score": "2:5"
+    },
+    {
+        "id": "bae72d1f63e132b366d199db2807c4df",
+        "home": "Vegas Golden Knights",
+        "away": "Anaheim Ducks",
+        "outcome": "Vegas Golden Knights",
+        "odds": 2.02,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-03T02:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:4"
     }
 ]
