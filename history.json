@@ -31555,5 +31555,83 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "3:4"
+    },
+    {
+        "id": "a782200f9a154d4bfbc8680410d715a3",
+        "home": "\u00d6rebro HK",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 2.62,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-03T16:00:00Z",
+        "profit": 202.5,
+        "status": "WIN",
+        "score": "1:4"
+    },
+    {
+        "id": "5472114edf97678d0833ecc709de766c",
+        "home": "Malm\u00f6 Redhawks",
+        "away": "Bryn\u00e4s IF",
+        "outcome": "Malm\u00f6 Redhawks",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-03T13:15:00Z",
+        "profit": 281.25,
+        "status": "WIN",
+        "score": "1:0"
+    },
+    {
+        "id": "5efaf34124bb3f90bcd11422c1d442b4",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "R\u00f6gle BK",
+        "outcome": "R\u00f6gle BK",
+        "odds": 2.65,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-03T13:15:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "c8580772f5bb835fb5ec98d2d25f6c4a",
+        "home": "Timr\u00e5 IK",
+        "away": "Skellefte\u00e5 AIK",
+        "outcome": "Timr\u00e5 IK",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-03T13:15:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:4"
+    },
+    {
+        "id": "81fb65a3ef85aa8659694cc81798f07f",
+        "home": "Link\u00f6ping HC",
+        "away": "IF Bj\u00f6rkl\u00f6ven",
+        "outcome": "IF Bj\u00f6rkl\u00f6ven",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-03T16:00:00Z",
+        "profit": 275.0,
+        "status": "WIN",
+        "score": "2:3"
+    },
+    {
+        "id": "d7195b3f7e78cbf6f81dbcaa89159c6e",
+        "home": "Leksands IF",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 4.5,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-03T16:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "4:3"
     }
 ]
