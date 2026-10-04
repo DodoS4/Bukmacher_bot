@@ -8230,56 +8230,6 @@
         "time": "2026-10-02T15:30:00Z"
     },
     {
-        "id": "8d556511643d0c038bff0b7cf4f2b64f",
-        "home": "Buffalo Sabres",
-        "away": "Chicago Blackhawks",
-        "outcome": "Chicago Blackhawks",
-        "odds": 3.81,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-03T23:10:00Z"
-    },
-    {
-        "id": "53b58ae0f99c8172ebee3bd82e7c83a7",
-        "home": "Pittsburgh Penguins",
-        "away": "Montr\u00e9al Canadiens",
-        "outcome": "Montr\u00e9al Canadiens",
-        "odds": 2.51,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-03T23:10:00Z"
-    },
-    {
-        "id": "25079431893a620763e5a454d7991922",
-        "home": "Tampa Bay Lightning",
-        "away": "Washington Capitals",
-        "outcome": "Tampa Bay Lightning",
-        "odds": 2.3,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-03T23:10:00Z"
-    },
-    {
-        "id": "3e2c8a883cae029144e27e4fca5ae9e8",
-        "home": "New York Islanders",
-        "away": "New Jersey Devils",
-        "outcome": "New Jersey Devils",
-        "odds": 2.6,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-03T23:40:00Z"
-    },
-    {
-        "id": "3a9af73961ea2f2322255a6fca4d421e",
-        "home": "Minnesota Wild",
-        "away": "Boston Bruins",
-        "outcome": "Boston Bruins",
-        "odds": 3.5,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-04T00:10:00Z"
-    },
-    {
         "id": "5879780c562df65a49dfeb85219399b3",
         "home": "Cleveland Monsters",
         "away": "Grand Rapids Griffins",
@@ -8348,76 +8298,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-10-03T02:00:00Z"
-    },
-    {
-        "id": "5a731787bc9ea054ba101e14b0f3d9ca",
-        "home": "Philadelphia Flyers",
-        "away": "Carolina Hurricanes",
-        "outcome": "Philadelphia Flyers",
-        "odds": 2.88,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-03T23:10:00Z"
-    },
-    {
-        "id": "06352e1d8432528164139f83bb76c0d0",
-        "home": "Columbus Blue Jackets",
-        "away": "Utah Mammoth",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.65,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-03T23:10:00Z"
-    },
-    {
-        "id": "d8e6871b9b420af1492a655c1058244c",
-        "home": "Edmonton Oilers",
-        "away": "Seattle Kraken",
-        "outcome": "Seattle Kraken",
-        "odds": 3.8,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-03T23:10:00Z"
-    },
-    {
-        "id": "25e8169a0a6e2a41ef0aef55d87b3639",
-        "home": "Toronto Maple Leafs",
-        "away": "Ottawa Senators",
-        "outcome": "Ottawa Senators",
-        "odds": 2.75,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-03T23:10:00Z"
-    },
-    {
-        "id": "17a149453fbdb9bad7efa57f7481a07f",
-        "home": "Nashville Predators",
-        "away": "Dallas Stars",
-        "outcome": "Dallas Stars",
-        "odds": 2.3,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-04T00:10:00Z"
-    },
-    {
-        "id": "45d984ff127ce23fde997b0182b6336b",
-        "home": "Vancouver Canucks",
-        "away": "Calgary Flames",
-        "outcome": "Vancouver Canucks",
-        "odds": 2.5,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-04T02:10:00Z"
-    },
-    {
-        "id": "fddf3e59117ce7c2597cb67a363a2e06",
-        "home": "San Jose Sharks",
-        "away": "Los Angeles Kings",
-        "outcome": "Los Angeles Kings",
-        "odds": 2.8,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-04T02:10:00Z"
     },
     {
         "id": "4b71f6ea03971266bf03f5c776466622",
@@ -8638,5 +8518,45 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-10-03T20:00:00Z"
+    },
+    {
+        "id": "34ed1c0b1beb25cea3051d6d22f6a33b",
+        "home": "Belleville Senators",
+        "away": "Rochester Americans",
+        "outcome": "Belleville Senators",
+        "odds": 2.48,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-04T19:00:00Z"
+    },
+    {
+        "id": "02f1609bb9badb2762d13002a9a9d858",
+        "home": "Cleveland Monsters",
+        "away": "Grand Rapids Griffins",
+        "outcome": "Cleveland Monsters",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-04T19:00:00Z"
+    },
+    {
+        "id": "94c65c8dc61fbcfa7c7438656359fa3d",
+        "home": "Providence Bruins",
+        "away": "Springfield Thunderbirds",
+        "outcome": "Providence Bruins",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-04T19:05:00Z"
+    },
+    {
+        "id": "d9824fde9e7f0737f03b679c1af4bfbe",
+        "home": "W-B/Scranton Penguins",
+        "away": "Hartford Wolf Pack",
+        "outcome": "Hartford Wolf Pack",
+        "odds": 2.05,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-04T21:05:00Z"
     }
 ]
