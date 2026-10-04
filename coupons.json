@@ -8480,16 +8480,6 @@
         "time": "2026-10-03T14:00:00Z"
     },
     {
-        "id": "d10f933c7fb656c7cfd1c98df4a650f8",
-        "home": "Detroit Red Wings",
-        "away": "Winnipeg Jets",
-        "outcome": "Winnipeg Jets",
-        "odds": 2.64,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-04T17:10:00Z"
-    },
-    {
         "id": "5393b504ffa70a2603259b2df414007f",
         "home": "New York Rangers",
         "away": "Utah Mammoth",
