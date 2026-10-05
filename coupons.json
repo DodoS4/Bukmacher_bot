@@ -8370,26 +8370,6 @@
         "time": "2026-10-03T14:00:00Z"
     },
     {
-        "id": "6cac1fc86136075a23655625562fd8dc",
-        "home": "Anaheim Ducks",
-        "away": "Florida Panthers",
-        "outcome": "Florida Panthers",
-        "odds": 2.38,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-05T00:10:00Z"
-    },
-    {
-        "id": "d90c875a1c75ed65db6e3dc2f4a1afcc",
-        "home": "Seattle Kraken",
-        "away": "Calgary Flames",
-        "outcome": "Calgary Flames",
-        "odds": 2.85,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-05T00:10:00Z"
-    },
-    {
         "id": "1aaf70251fccfae77ddf25898cef3555",
         "home": "Manitoba Moose",
         "away": "Chicago Wolves",
@@ -8480,26 +8460,6 @@
         "time": "2026-10-03T14:00:00Z"
     },
     {
-        "id": "5393b504ffa70a2603259b2df414007f",
-        "home": "New York Rangers",
-        "away": "Utah Mammoth",
-        "outcome": "Utah Mammoth",
-        "odds": 2.81,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-04T22:10:00Z"
-    },
-    {
-        "id": "8f3354586afd82f29d465e8634c3d905",
-        "home": "Vancouver Canucks",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 1.82,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-05T01:10:00Z"
-    },
-    {
         "id": "9b768408926ec65f1b1f2bc2bd86bc5a",
         "home": "Toronto Marlies",
         "away": "Hamilton Hammers",
@@ -8588,5 +8548,65 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-10-06T00:10:00Z"
+    },
+    {
+        "id": "3b7b6520b0bc91f44cf9c9575d7e29f7",
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Carolina Hurricanes",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.57,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-06T23:10:00Z"
+    },
+    {
+        "id": "e77f5de1229c03c1338f5cf3eb6797ba",
+        "home": "Chicago Blackhawks",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 2.52,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-07T00:10:00Z"
+    },
+    {
+        "id": "3a95439904d3d0af12970bb0c8e66a3a",
+        "home": "Los Angeles Kings",
+        "away": "Florida Panthers",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.69,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-07T02:40:00Z"
+    },
+    {
+        "id": "c36c66bb8f688bbff488f76376d2cda1",
+        "home": "Jukurit",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "Jukurit",
+        "odds": 2.85,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-07T09:00:00Z"
+    },
+    {
+        "id": "f38c0a50de149633feaa423957596b39",
+        "home": "Sport",
+        "away": "Ilves",
+        "outcome": "Sport",
+        "odds": 4.0,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-07T15:30:00Z"
+    },
+    {
+        "id": "d733667a27399eeda53287a51f107d31",
+        "home": "K\u00e4rp\u00e4t",
+        "away": "Kiekko-Espoo",
+        "outcome": "Kiekko-Espoo",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-07T15:30:00Z"
     }
 ]

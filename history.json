@@ -31802,5 +31802,57 @@
         "profit": 820.0,
         "status": "WIN",
         "score": "2:3"
+    },
+    {
+        "id": "6cac1fc86136075a23655625562fd8dc",
+        "home": "Anaheim Ducks",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 2.38,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-05T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "d90c875a1c75ed65db6e3dc2f4a1afcc",
+        "home": "Seattle Kraken",
+        "away": "Calgary Flames",
+        "outcome": "Calgary Flames",
+        "odds": 2.85,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-05T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "6:1"
+    },
+    {
+        "id": "5393b504ffa70a2603259b2df414007f",
+        "home": "New York Rangers",
+        "away": "Utah Mammoth",
+        "outcome": "Utah Mammoth",
+        "odds": 2.81,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-04T22:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:2"
+    },
+    {
+        "id": "8f3354586afd82f29d465e8634c3d905",
+        "home": "Vancouver Canucks",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 1.82,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-05T01:10:00Z",
+        "profit": 410.0,
+        "status": "WIN",
+        "score": "2:3"
     }
 ]
