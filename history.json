@@ -31854,5 +31854,57 @@
         "profit": 410.0,
         "status": "WIN",
         "score": "2:3"
+    },
+    {
+        "id": "d400aaff4870fbb91e584f1c8a8f05bf",
+        "home": "Tampa Bay Lightning",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.39,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-05T23:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:1"
+    },
+    {
+        "id": "65b60049b3c77a94c346f74d8b897e4b",
+        "home": "Boston Bruins",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 2.63,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-05T23:40:00Z",
+        "profit": 815.0,
+        "status": "WIN",
+        "score": "1:4"
+    },
+    {
+        "id": "3da179dc46d7f7a5f06637fcd97ce367",
+        "home": "Pittsburgh Penguins",
+        "away": "Winnipeg Jets",
+        "outcome": "Winnipeg Jets",
+        "odds": 3.27,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-05T23:40:00Z",
+        "profit": 1135.0,
+        "status": "WIN",
+        "score": "2:3"
+    },
+    {
+        "id": "db6ecbc6d2657c39084510cf3e94f510",
+        "home": "Dallas Stars",
+        "away": "San Jose Sharks",
+        "outcome": "San Jose Sharks",
+        "odds": 3.29,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-06T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:0"
     }
 ]
