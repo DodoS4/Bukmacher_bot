@@ -8510,36 +8510,6 @@
         "time": "2026-10-04T21:05:00Z"
     },
     {
-        "id": "3b7b6520b0bc91f44cf9c9575d7e29f7",
-        "home": "Montr\u00e9al Canadiens",
-        "away": "Carolina Hurricanes",
-        "outcome": "Montr\u00e9al Canadiens",
-        "odds": 2.57,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-06T23:10:00Z"
-    },
-    {
-        "id": "e77f5de1229c03c1338f5cf3eb6797ba",
-        "home": "Chicago Blackhawks",
-        "away": "St Louis Blues",
-        "outcome": "St Louis Blues",
-        "odds": 2.52,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-07T00:10:00Z"
-    },
-    {
-        "id": "3a95439904d3d0af12970bb0c8e66a3a",
-        "home": "Los Angeles Kings",
-        "away": "Florida Panthers",
-        "outcome": "Los Angeles Kings",
-        "odds": 2.69,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-07T02:40:00Z"
-    },
-    {
         "id": "c36c66bb8f688bbff488f76376d2cda1",
         "home": "Jukurit",
         "away": "\u00c4ss\u00e4t",
@@ -8568,66 +8538,6 @@
         "stake": 250.0,
         "sport": "icehockey_liiga",
         "time": "2026-10-07T15:30:00Z"
-    },
-    {
-        "id": "057cbe42c7df314de9ef60d00db04222",
-        "home": "Buffalo Sabres",
-        "away": "Minnesota Wild",
-        "outcome": "Minnesota Wild",
-        "odds": 2.55,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-06T23:10:00Z"
-    },
-    {
-        "id": "2c216d3aae0eeb236312763bf1ca61db",
-        "home": "Detroit Red Wings",
-        "away": "Ottawa Senators",
-        "outcome": "Detroit Red Wings",
-        "odds": 2.65,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-06T23:10:00Z"
-    },
-    {
-        "id": "b9036900ce6fd27ce3095db6c5481f29",
-        "home": "Toronto Maple Leafs",
-        "away": "Nashville Predators",
-        "outcome": "Nashville Predators",
-        "odds": 3.1,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-06T23:10:00Z"
-    },
-    {
-        "id": "21ac7b574ba4b532a5962a3f55feabeb",
-        "home": "New Jersey Devils",
-        "away": "Utah Mammoth",
-        "outcome": "Utah Mammoth",
-        "odds": 2.85,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-06T23:10:00Z"
-    },
-    {
-        "id": "ab12d4dc632ea010114de1409ca7a64b",
-        "home": "New York Rangers",
-        "away": "New York Islanders",
-        "outcome": "New York Islanders",
-        "odds": 3.1,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-06T23:40:00Z"
-    },
-    {
-        "id": "10b0f8b34314309a388225ab503d8172",
-        "home": "Seattle Kraken",
-        "away": "Vegas Golden Knights",
-        "outcome": "Seattle Kraken",
-        "odds": 3.45,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-07T01:10:00Z"
     },
     {
         "id": "8112572f236320d4d4c99b6eb0989b94",
@@ -8688,16 +8598,6 @@
         "stake": 312.5,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-10-07T17:00:00Z"
-    },
-    {
-        "id": "0d9ff865c4599c72a746da08260279b3",
-        "home": "Chicago Fire",
-        "away": "Vancouver Whitecaps FC",
-        "outcome": "Chicago Fire",
-        "odds": 3.05,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-10-07T00:30:00Z"
     },
     {
         "id": "c8c270e79cd56ca57baa21a49a0d1d9d",
@@ -8808,5 +8708,35 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-10-08T15:30:00Z"
+    },
+    {
+        "id": "9f6db651fe2d7363616cc72625c4972d",
+        "home": "Ottawa Senators",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 2.78,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-08T23:10:00Z"
+    },
+    {
+        "id": "01d78cd04d7c4fb958e1d02bace05ec4",
+        "home": "St Louis Blues",
+        "away": "San Jose Sharks",
+        "outcome": "St Louis Blues",
+        "odds": 2.56,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-09T00:10:00Z"
+    },
+    {
+        "id": "cddd7e5bffcf736206bcc1f89cb67a29",
+        "home": "Pyry",
+        "away": "IPK",
+        "outcome": "Pyry",
+        "odds": 4.35,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-07T15:30:00Z"
     }
 ]
