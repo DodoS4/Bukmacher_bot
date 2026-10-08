@@ -8540,36 +8540,6 @@
         "time": "2026-10-07T15:30:00Z"
     },
     {
-        "id": "8112572f236320d4d4c99b6eb0989b94",
-        "home": "Washington Capitals",
-        "away": "Pittsburgh Penguins",
-        "outcome": "Pittsburgh Penguins",
-        "odds": 3.33,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-07T23:40:00Z"
-    },
-    {
-        "id": "c8c270e79cd56ca57baa21a49a0d1d9d",
-        "home": "Winnipeg Jets",
-        "away": "Colorado Avalanche",
-        "outcome": "Winnipeg Jets",
-        "odds": 3.6,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-07T23:30:00Z"
-    },
-    {
-        "id": "db23cd7cb712b5c14c297aa6eece3627",
-        "home": "Anaheim Ducks",
-        "away": "Edmonton Oilers",
-        "outcome": "Edmonton Oilers",
-        "odds": 2.33,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-08T02:00:00Z"
-    },
-    {
         "id": "826316af885b1963489499321350413a",
         "home": "Djurg\u00e5rdens IF",
         "away": "\u00d6rebro HK",
@@ -8858,5 +8828,205 @@
         "stake": 250.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-10-09T18:45:00Z"
+    },
+    {
+        "id": "7706a17b17fe975ff39018ea35e26385",
+        "home": "AIK",
+        "away": "BIK Karlskoga",
+        "outcome": "BIK Karlskoga",
+        "odds": 4.26,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-09T17:00:00Z"
+    },
+    {
+        "id": "3f3fdb664074b73a8227da4acf6a5b4f",
+        "home": "Mora IK",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 2.55,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-09T17:00:00Z"
+    },
+    {
+        "id": "11d8efc94c88f22fb332ed7232a5c149",
+        "home": "\u00d6stersunds IK",
+        "away": "Modo Hockey",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 3.85,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-09T17:00:00Z"
+    },
+    {
+        "id": "26fd770564383b8476cb7bf32323dafe",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "Nybro Vikings IF",
+        "outcome": "Nybro Vikings IF",
+        "odds": 3.0,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-09T17:00:00Z"
+    },
+    {
+        "id": "befe048e6d8e7acb4604aaaaa03e6026",
+        "home": "Kiekko-Espoo",
+        "away": "JYP",
+        "outcome": "Kiekko-Espoo",
+        "odds": 2.29,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-09T14:30:00Z"
+    },
+    {
+        "id": "002eae2f143b79d4a182502d15dbfa60",
+        "home": "Grand Rapids Griffins",
+        "away": "Manitoba Moose",
+        "outcome": "Manitoba Moose",
+        "odds": 2.23,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-09T23:00:00Z"
+    },
+    {
+        "id": "418f8c26d46eaabd829f2e265673b855",
+        "home": "FSV Mainz 05",
+        "away": "Bayer Leverkusen",
+        "outcome": "FSV Mainz 05",
+        "odds": 3.15,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-10-10T13:30:00Z"
+    },
+    {
+        "id": "2fd48be0a24ed906187067d4170bf010",
+        "home": "Union Berlin",
+        "away": "Elversberg",
+        "outcome": "Elversberg",
+        "odds": 2.98,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-10-10T13:30:00Z"
+    },
+    {
+        "id": "2f8e871a0f7f66ae22938028645e1066",
+        "home": "Genoa",
+        "away": "Fiorentina",
+        "outcome": "Genoa",
+        "odds": 3.4,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-10T13:00:00Z"
+    },
+    {
+        "id": "eb0464be0036229a6b1dafaf2a9e29de",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Zag\u0142\u0119bie Lubin",
+        "outcome": "Zag\u0142\u0119bie Lubin",
+        "odds": 4.17,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-10T12:45:00Z"
+    },
+    {
+        "id": "847cbfc1b74322a3421142e62b54890f",
+        "home": "Genclerbirligi SK",
+        "away": "Amed SK",
+        "outcome": "Amed SK",
+        "odds": 2.67,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-10T10:30:00Z"
+    },
+    {
+        "id": "a48862ce2dcf34624cac3d2ff2309d9a",
+        "home": "Alanyaspor",
+        "away": "Erzurum BB",
+        "outcome": "Erzurum BB",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-10T13:00:00Z"
+    },
+    {
+        "id": "4992263ea494afbbe5fb0015e833a4fb",
+        "home": "Samsunspor",
+        "away": "Trabzonspor",
+        "outcome": "Samsunspor",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-10T13:00:00Z"
+    },
+    {
+        "id": "8247c76fda17e722cbfca878c81bad67",
+        "home": "Cercle Brugge KSV",
+        "away": "Anderlecht",
+        "outcome": "Cercle Brugge KSV",
+        "odds": 3.9,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-10-10T14:00:00Z"
+    },
+    {
+        "id": "2ea2ad084a23df9b8efc76bc9e5d7811",
+        "home": "Falkirk F.C.",
+        "away": "Dundee FC",
+        "outcome": "Dundee FC",
+        "odds": 3.61,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-10-10T14:00:00Z"
+    },
+    {
+        "id": "6e6ba2e883c5bda81a3f3c073e347e93",
+        "home": "Dundee United",
+        "away": "Hibernian",
+        "outcome": "Dundee United",
+        "odds": 2.82,
+        "stake": 250.0,
+        "sport": "soccer_spl",
+        "time": "2026-10-10T14:00:00Z"
+    },
+    {
+        "id": "3e8a2baae4566a7c7fcc390dc089e9b8",
+        "home": "West Bromwich Albion",
+        "away": "Birmingham City",
+        "outcome": "West Bromwich Albion",
+        "odds": 2.52,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-10T11:30:00Z"
+    },
+    {
+        "id": "34156ace068fbe5b24944791e752b43d",
+        "home": "Swansea City",
+        "away": "Norwich City",
+        "outcome": "Norwich City",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-10T11:30:00Z"
+    },
+    {
+        "id": "23b8467e4efdab4833d7e38ccfc06353",
+        "home": "Bolton Wanderers",
+        "away": "Stoke City",
+        "outcome": "Stoke City",
+        "odds": 2.7,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-10T14:00:00Z"
+    },
+    {
+        "id": "1f9e31de12bb3b92a0deaaf9ee57af3d",
+        "home": "Preston North End",
+        "away": "Millwall",
+        "outcome": "Preston North End",
+        "odds": 3.05,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-10T14:00:00Z"
     }
 ]

@@ -32101,5 +32101,44 @@
         "profit": 593.75,
         "status": "WIN",
         "score": "0:1"
+    },
+    {
+        "id": "8112572f236320d4d4c99b6eb0989b94",
+        "home": "Washington Capitals",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 3.33,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-07T23:40:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:3"
+    },
+    {
+        "id": "c8c270e79cd56ca57baa21a49a0d1d9d",
+        "home": "Winnipeg Jets",
+        "away": "Colorado Avalanche",
+        "outcome": "Winnipeg Jets",
+        "odds": 3.6,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-07T23:30:00Z",
+        "profit": 1300.0,
+        "status": "WIN",
+        "score": "3:2"
+    },
+    {
+        "id": "db23cd7cb712b5c14c297aa6eece3627",
+        "home": "Anaheim Ducks",
+        "away": "Edmonton Oilers",
+        "outcome": "Edmonton Oilers",
+        "odds": 2.33,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-08T02:00:00Z",
+        "profit": 665.0,
+        "status": "WIN",
+        "score": "2:5"
     }
 ]
