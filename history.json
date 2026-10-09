@@ -32335,5 +32335,83 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:3"
+    },
+    {
+        "id": "7706a17b17fe975ff39018ea35e26385",
+        "home": "AIK",
+        "away": "BIK Karlskoga",
+        "outcome": "BIK Karlskoga",
+        "odds": 4.26,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-09T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "7:2"
+    },
+    {
+        "id": "3f3fdb664074b73a8227da4acf6a5b4f",
+        "home": "Mora IK",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 2.55,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-09T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "6:2"
+    },
+    {
+        "id": "11d8efc94c88f22fb332ed7232a5c149",
+        "home": "\u00d6stersunds IK",
+        "away": "Modo Hockey",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 3.85,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-09T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "0:1"
+    },
+    {
+        "id": "f5264edfec1328ce555a05d3ffacc98d",
+        "home": "Wieczysta Krak\u00f3w",
+        "away": "Wis\u0142a P\u0142ock",
+        "outcome": "Wis\u0142a P\u0142ock",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-09T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:0"
+    },
+    {
+        "id": "2b93d6e4156668a349e6b1cc3a3932cf",
+        "home": "Kalmar HC",
+        "away": "Almtuna IS",
+        "outcome": "Almtuna IS",
+        "odds": 4.4,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-09T17:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "3:0"
+    },
+    {
+        "id": "0956c06cd173899e11422bece0fbf94f",
+        "home": "Moreirense FC",
+        "away": "Gil Vicente",
+        "outcome": "Moreirense FC",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-10-09T17:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:1"
     }
 ]
