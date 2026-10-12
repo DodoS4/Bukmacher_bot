@@ -33609,5 +33609,83 @@
         "profit": 215.0,
         "status": "WIN",
         "score": "2:1"
+    },
+    {
+        "id": "a722f352064a3189ceac0099404a133e",
+        "home": "Olympiakos Piraeus",
+        "away": "Panathinaikos",
+        "outcome": "Olympiakos Piraeus",
+        "odds": 2.38,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-10-11T18:00:00Z",
+        "profit": 172.5,
+        "status": "WIN",
+        "score": "1:0"
+    },
+    {
+        "id": "cb7067ac191abf32ad49dad45e46f639",
+        "home": "Troyes",
+        "away": "Marseille",
+        "outcome": "Troyes",
+        "odds": 4.04,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-10-11T18:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:2"
+    },
+    {
+        "id": "12a90ee4a941f857d0fc417663fb00c1",
+        "home": "Washington Capitals",
+        "away": "Seattle Kraken",
+        "outcome": "Seattle Kraken",
+        "odds": 4.1,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-11T21:10:00Z",
+        "profit": 1550.0,
+        "status": "WIN",
+        "score": "3:5"
+    },
+    {
+        "id": "a49ddd8a44071e340299ae7f22b4f359",
+        "home": "Philadelphia Flyers",
+        "away": "Carolina Hurricanes",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.3,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-11T23:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:4"
+    },
+    {
+        "id": "2895c7f754ca54c37bc6df99efcc95f6",
+        "home": "Legia Warszawa",
+        "away": "Wis\u0142a Krak\u00f3w",
+        "outcome": "Wis\u0142a Krak\u00f3w",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-11T18:15:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:0"
+    },
+    {
+        "id": "2aa9808e7e84598f45ccf338a9b8912a",
+        "home": "Arouca",
+        "away": "CF Estrela",
+        "outcome": "CF Estrela",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-10-11T19:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:0"
     }
 ]
