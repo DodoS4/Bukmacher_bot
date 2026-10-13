@@ -33687,5 +33687,70 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:0"
+    },
+    {
+        "id": "f4a28510bb0c835280a2aca709c19d50",
+        "home": "Torino",
+        "away": "Udinese",
+        "outcome": "Udinese",
+        "odds": 3.45,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-12T18:45:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "f167a8aeedb8e037867be5a0ca7c40b4",
+        "home": "Radomiak Radom",
+        "away": "Motor Lublin",
+        "outcome": "Motor Lublin",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-12T16:00:00Z",
+        "profit": 250.0,
+        "status": "WIN",
+        "score": "2:3"
+    },
+    {
+        "id": "235c82b1c0433f04968008f8c269a32d",
+        "home": "Ey\u00fcpspor",
+        "away": "Goztepe",
+        "outcome": "Ey\u00fcpspor",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-12T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:4"
+    },
+    {
+        "id": "e85cb8fcbbddd2332b24db4bfe564345",
+        "home": "Buffalo Sabres",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 2.52,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-12T17:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:3"
+    },
+    {
+        "id": "789c3dd95a7fcef675ce5a40b07371a2",
+        "home": "Famalic\u00e3o",
+        "away": "Alverca",
+        "outcome": "Famalic\u00e3o",
+        "odds": 2.02,
+        "stake": 125.0,
+        "sport": "soccer_portugal_primeira_liga",
+        "time": "2026-10-12T19:15:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:4"
     }
 ]
