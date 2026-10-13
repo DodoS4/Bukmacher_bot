@@ -9010,26 +9010,6 @@
         "time": "2026-10-11T21:00:00Z"
     },
     {
-        "id": "bddca6412454c40a2860b4e2e3e85968",
-        "home": "New Jersey Devils",
-        "away": "Ottawa Senators",
-        "outcome": "Ottawa Senators",
-        "odds": 2.82,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-12T23:10:00Z"
-    },
-    {
-        "id": "fcf3af0dc532d226597dc5a8a2d55f78",
-        "home": "Minnesota Wild",
-        "away": "Vegas Golden Knights",
-        "outcome": "Minnesota Wild",
-        "odds": 2.55,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-13T00:10:00Z"
-    },
-    {
         "id": "59aa75d21f765e6ec2c671f4d8e76a27",
         "home": "Bristol City",
         "away": "Blackburn Rovers",
@@ -9468,5 +9448,65 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-10-15T00:30:00Z"
+    },
+    {
+        "id": "d9a454b3b4508bdaa4c61914ea505f6b",
+        "home": "Henderson Silver Knights",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "Coachella Valley Firebirds",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-15T02:00:00Z"
+    },
+    {
+        "id": "c39294fde4d6eb019c02c44b8ad32f1d",
+        "home": "San Diego Gulls",
+        "away": "Ontario Reign",
+        "outcome": "San Diego Gulls",
+        "odds": 2.37,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-15T02:00:00Z"
+    },
+    {
+        "id": "6e99ceb52a57b3410b81067110589458",
+        "home": "Portsmouth",
+        "away": "Sheffield United",
+        "outcome": "Sheffield United",
+        "odds": 3.45,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-14T18:45:00Z"
+    },
+    {
+        "id": "cc998a2e7878480be780fc3782f58d0e",
+        "home": "FC Cincinnati",
+        "away": "New England Revolution",
+        "outcome": "New England Revolution",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-14T23:30:00Z"
+    },
+    {
+        "id": "459f43c4903354a424f70a7c61376082",
+        "home": "Real Salt Lake",
+        "away": "San Jose Earthquakes",
+        "outcome": "San Jose Earthquakes",
+        "odds": 3.85,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-15T01:30:00Z"
+    },
+    {
+        "id": "d93f3e0181a16f67a3a2ed3294a71cda",
+        "home": "LA Galaxy",
+        "away": "Portland Timbers",
+        "outcome": "Portland Timbers",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-15T02:30:00Z"
     }
 ]

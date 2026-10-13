@@ -33752,5 +33752,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:4"
+    },
+    {
+        "id": "bddca6412454c40a2860b4e2e3e85968",
+        "home": "New Jersey Devils",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 2.82,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-12T23:10:00Z",
+        "profit": 910.0,
+        "status": "WIN",
+        "score": "1:4"
+    },
+    {
+        "id": "fcf3af0dc532d226597dc5a8a2d55f78",
+        "home": "Minnesota Wild",
+        "away": "Vegas Golden Knights",
+        "outcome": "Minnesota Wild",
+        "odds": 2.55,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-13T00:10:00Z",
+        "profit": 775.0,
+        "status": "WIN",
+        "score": "4:2"
     }
 ]
