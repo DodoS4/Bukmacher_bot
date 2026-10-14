@@ -34103,5 +34103,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:3"
+    },
+    {
+        "id": "6eab63cf0c477a76019273c2a53eed3c",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "Modo Hockey",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 3.55,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-14T17:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "2:6"
+    },
+    {
+        "id": "5d6f9accd6f79ae4216dfd29ccc342b2",
+        "home": "Feyenoord",
+        "away": "Como",
+        "outcome": "Feyenoord",
+        "odds": 3.75,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-10-14T16:45:00Z",
+        "profit": 687.5,
+        "status": "WIN",
+        "score": "3:2"
     }
 ]
