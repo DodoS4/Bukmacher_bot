@@ -9160,46 +9160,6 @@
         "time": "2026-10-15T15:30:00Z"
     },
     {
-        "id": "431fc65e67cd737bceb5827118d3f7eb",
-        "home": "Salzburg",
-        "away": "AC Milan",
-        "outcome": "Salzburg",
-        "odds": 4.36,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-10-15T16:45:00Z"
-    },
-    {
-        "id": "25ce4d73c9b993d26f00c1df2d0b820c",
-        "home": "Lyon",
-        "away": "Crystal Palace",
-        "outcome": "Lyon",
-        "odds": 2.3,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-10-15T16:45:00Z"
-    },
-    {
-        "id": "d3113d05007ddfba3077a7fafbef05c4",
-        "home": "NK Celje",
-        "away": "Omonoia FC",
-        "outcome": "NK Celje",
-        "odds": 2.62,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-10-15T16:45:00Z"
-    },
-    {
-        "id": "3809b92a425c41c325bafc8d8d598512",
-        "home": "Union Saint-Gilloise",
-        "away": "Real Sociedad",
-        "outcome": "Union Saint-Gilloise",
-        "odds": 2.55,
-        "stake": 400.0,
-        "sport": "soccer_uefa_europa_league",
-        "time": "2026-10-15T16:45:00Z"
-    },
-    {
         "id": "3ee605005bdc62da54d42a0ec3e1a930",
         "home": "Dinamo Zagreb",
         "away": "Anderlecht",
@@ -9558,5 +9518,235 @@
         "stake": 125.0,
         "sport": "soccer_efl_champ",
         "time": "2026-10-17T11:30:00Z"
+    },
+    {
+        "id": "343be4cf732ddd9fd0a058953456d811",
+        "home": "Colorado Avalanche",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 4.1,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T01:10:00Z"
+    },
+    {
+        "id": "7c44228f4c2e89133b34a3c70bfb30c5",
+        "home": "Anaheim Ducks",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 2.49,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T02:10:00Z"
+    },
+    {
+        "id": "74ec56b515c5f6e90c6c0b49c3bab14c",
+        "home": "Milwaukee Admirals",
+        "away": "Colorado Eagles",
+        "outcome": "Colorado Eagles",
+        "odds": 2.38,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-17T00:00:00Z"
+    },
+    {
+        "id": "6b31af863484f9ab4ae8920203898fd3",
+        "home": "KeuPa HT",
+        "away": "Hermes",
+        "outcome": "KeuPa HT",
+        "odds": 2.74,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-16T15:30:00Z"
+    },
+    {
+        "id": "d1bbbdcd3d430e70091b518369b559cf",
+        "home": "Newcastle United",
+        "away": "Aston Villa",
+        "outcome": "Newcastle United",
+        "odds": 2.42,
+        "stake": 125.0,
+        "sport": "soccer_epl",
+        "time": "2026-10-17T16:30:00Z"
+    },
+    {
+        "id": "0bf757f3bd903496ce2fa27bd0481869",
+        "home": "Elversberg",
+        "away": "Augsburg",
+        "outcome": "Elversberg",
+        "odds": 2.58,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-10-17T13:30:00Z"
+    },
+    {
+        "id": "606d65d57a9a6d8f9b53faee1ad10009",
+        "home": "FC Schalke 04",
+        "away": "FSV Mainz 05",
+        "outcome": "FC Schalke 04",
+        "odds": 3.2,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-10-17T13:30:00Z"
+    },
+    {
+        "id": "221916b8b36706ec52aa655a64e5f1d2",
+        "home": "Hamburger SV",
+        "away": "VfB Stuttgart",
+        "outcome": "Hamburger SV",
+        "odds": 4.24,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-10-17T13:30:00Z"
+    },
+    {
+        "id": "9a422e1aad1053828eaf629a58d901de",
+        "home": "Werder Bremen",
+        "away": "SC Paderborn",
+        "outcome": "SC Paderborn",
+        "odds": 4.4,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-10-17T13:30:00Z"
+    },
+    {
+        "id": "602e3c90d7bf5599216c4c61d02deef7",
+        "home": "GKS Katowice",
+        "away": "Pogo\u0144 Szczecin",
+        "outcome": "Pogo\u0144 Szczecin",
+        "odds": 3.54,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-17T15:30:00Z"
+    },
+    {
+        "id": "ad25a350c89b64715e15c59cde5653d3",
+        "home": "Lille",
+        "away": "Brest",
+        "outcome": "Brest",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-10-17T18:45:00Z"
+    },
+    {
+        "id": "b077aa049133c0358bcd643bfee48da3",
+        "home": "Troyes",
+        "away": "RC Lens",
+        "outcome": "Troyes",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-10-17T18:45:00Z"
+    },
+    {
+        "id": "b26ed2d4f1915037d1b42c40e3b7fd59",
+        "home": "\u00c7orum FK",
+        "away": "\u00c7aykur Rizespor",
+        "outcome": "\u00c7aykur Rizespor",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-16T17:00:00Z"
+    },
+    {
+        "id": "e3889fbbda2e6b3c7ce98332b4a45e62",
+        "home": "Amed SK",
+        "away": "Torku Konyaspor",
+        "outcome": "Torku Konyaspor",
+        "odds": 4.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-17T13:00:00Z"
+    },
+    {
+        "id": "9c3c0027959b21569b246406f420e313",
+        "home": "Aberdeen",
+        "away": "St Mirren",
+        "outcome": "St Mirren",
+        "odds": 4.4,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "322133c3b5e5d5b1620347c652b84407",
+        "home": "St Johnstone",
+        "away": "Dundee United",
+        "outcome": "St Johnstone",
+        "odds": 2.72,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "ba3641a9fe64e254f0642b262e00a93c",
+        "home": "Kilmarnock",
+        "away": "Motherwell",
+        "outcome": "Motherwell",
+        "odds": 2.16,
+        "stake": 325.0,
+        "sport": "soccer_spl",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "35d7df16a960d08a7d38e7f4f706677d",
+        "home": "Birmingham City",
+        "away": "Queens Park Rangers",
+        "outcome": "Queens Park Rangers",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "37d564daa14e4724b53830d610cf5868",
+        "home": "West Bromwich Albion",
+        "away": "Blackburn Rovers",
+        "outcome": "Blackburn Rovers",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "530a906583ad9f1e013f382e2fe19c5e",
+        "home": "Bristol City",
+        "away": "Sheffield United",
+        "outcome": "Sheffield United",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "24970eb98cc5999cf3187abfc3a74a27",
+        "home": "Derby County",
+        "away": "Stoke City",
+        "outcome": "Derby County",
+        "odds": 2.94,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "7a8f8a079740c8d4b39c995cdd304e0c",
+        "home": "Norwich City",
+        "away": "Portsmouth",
+        "outcome": "Norwich City",
+        "odds": 1.88,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "b6bf48e65d78b5615da5f3ab904fa5d4",
+        "home": "Swansea City",
+        "away": "West Ham United",
+        "outcome": "Swansea City",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-17T14:00:00Z"
     }
 ]

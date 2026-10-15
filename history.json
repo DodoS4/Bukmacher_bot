@@ -34428,5 +34428,57 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "3:3"
+    },
+    {
+        "id": "431fc65e67cd737bceb5827118d3f7eb",
+        "home": "Salzburg",
+        "away": "AC Milan",
+        "outcome": "Salzburg",
+        "odds": 4.36,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-10-15T16:45:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "0:4"
+    },
+    {
+        "id": "25ce4d73c9b993d26f00c1df2d0b820c",
+        "home": "Lyon",
+        "away": "Crystal Palace",
+        "outcome": "Lyon",
+        "odds": 2.3,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-10-15T16:45:00Z",
+        "profit": 520.0,
+        "status": "WIN",
+        "score": "3:2"
+    },
+    {
+        "id": "d3113d05007ddfba3077a7fafbef05c4",
+        "home": "NK Celje",
+        "away": "Omonoia FC",
+        "outcome": "NK Celje",
+        "odds": 2.62,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-10-15T16:45:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "0:3"
+    },
+    {
+        "id": "3809b92a425c41c325bafc8d8d598512",
+        "home": "Union Saint-Gilloise",
+        "away": "Real Sociedad",
+        "outcome": "Union Saint-Gilloise",
+        "odds": 2.55,
+        "stake": 400.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-10-15T16:45:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
