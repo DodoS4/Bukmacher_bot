@@ -9730,16 +9730,6 @@
         "time": "2026-10-18T10:30:00Z"
     },
     {
-        "id": "bd1d717f949f57694664f9ba11139851",
-        "home": "Wieczysta Krak\u00f3w",
-        "away": "Rak\u00f3w Cz\u0119stochowa",
-        "outcome": "Rak\u00f3w Cz\u0119stochowa",
-        "odds": 3.55,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-10-16T16:00:00Z"
-    },
-    {
         "id": "b49603ee93804104320ab188e9079383",
         "home": "Widzew \u0141\u00f3d\u017a",
         "away": "Wis\u0142a Krak\u00f3w",
@@ -9815,6 +9805,256 @@
         "away": "Nashville SC",
         "outcome": "San Jose Earthquakes",
         "odds": 3.75,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-18T02:30:00Z"
+    },
+    {
+        "id": "841c71c033cf05ad1313e3d5ecd2d9ab",
+        "home": "Washington Capitals",
+        "away": "New Jersey Devils",
+        "outcome": "New Jersey Devils",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T17:10:00Z"
+    },
+    {
+        "id": "c9ba2e7837386a5948a9c2233c36314c",
+        "home": "Winnipeg Jets",
+        "away": "Carolina Hurricanes",
+        "outcome": "Winnipeg Jets",
+        "odds": 3.35,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T19:40:00Z"
+    },
+    {
+        "id": "397fc11daab60801858ad82037395ae3",
+        "home": "Florida Panthers",
+        "away": "Seattle Kraken",
+        "outcome": "Seattle Kraken",
+        "odds": 3.65,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T22:10:00Z"
+    },
+    {
+        "id": "984292d22f1502fb5ec22d5619c3d12c",
+        "home": "Montr\u00e9al Canadiens",
+        "away": "Buffalo Sabres",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 2.25,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T23:10:00Z"
+    },
+    {
+        "id": "e39eef5e74111ce110e9036298b318df",
+        "home": "Chicago Blackhawks",
+        "away": "Dallas Stars",
+        "outcome": "Chicago Blackhawks",
+        "odds": 3.85,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T23:10:00Z"
+    },
+    {
+        "id": "8c3a146ab31ea5b382be8f36a0637798",
+        "home": "Columbus Blue Jackets",
+        "away": "New York Rangers",
+        "outcome": "New York Rangers",
+        "odds": 2.88,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T23:10:00Z"
+    },
+    {
+        "id": "826b87745ff513a2f7ba27643fc47bce",
+        "home": "Detroit Red Wings",
+        "away": "San Jose Sharks",
+        "outcome": "San Jose Sharks",
+        "odds": 2.89,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T23:10:00Z"
+    },
+    {
+        "id": "72d1180c19caf72334666cf7ccf93c48",
+        "home": "Toronto Maple Leafs",
+        "away": "New York Islanders",
+        "outcome": "New York Islanders",
+        "odds": 2.95,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T23:10:00Z"
+    },
+    {
+        "id": "95168b13c92e52aca0ad08f18b66ccd4",
+        "home": "Philadelphia Flyers",
+        "away": "Ottawa Senators",
+        "outcome": "Ottawa Senators",
+        "odds": 2.28,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T23:10:00Z"
+    },
+    {
+        "id": "0fc72a0b9fd45e4ea478959e642a54f4",
+        "home": "Nashville Predators",
+        "away": "St Louis Blues",
+        "outcome": "St Louis Blues",
+        "odds": 2.55,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-18T00:10:00Z"
+    },
+    {
+        "id": "ad530128f8a287b794e713643ee46757",
+        "home": "Los Angeles Kings",
+        "away": "Boston Bruins",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.25,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-18T01:10:00Z"
+    },
+    {
+        "id": "b5419971529fadc0610c47b095627156",
+        "home": "Utah Mammoth",
+        "away": "Edmonton Oilers",
+        "outcome": "Edmonton Oilers",
+        "odds": 2.92,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-18T02:10:00Z"
+    },
+    {
+        "id": "b8769f5cc81325b0693ee4b3e3f41407",
+        "home": "Vegas Golden Knights",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 3.95,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-18T02:10:00Z"
+    },
+    {
+        "id": "ebbe0146e188e7cd8a219ece613c268c",
+        "home": "KalPa",
+        "away": "Pelicans",
+        "outcome": "KalPa",
+        "odds": 2.51,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "e78a73591b0ad402acd6bb41e12da665",
+        "home": "JoKP",
+        "away": "TUTO Hockey",
+        "outcome": "TUTO Hockey",
+        "odds": 2.42,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "074e46c90de13981eb1b143088e0cf4a",
+        "home": "Kiekko-Vantaa",
+        "away": "Ketter\u00e4",
+        "outcome": "Ketter\u00e4",
+        "odds": 2.82,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "fd9b8c185737a15615aa0c9daaa3dfbf",
+        "home": "Borussia Monchengladbach",
+        "away": "TSG Hoffenheim",
+        "outcome": "TSG Hoffenheim",
+        "odds": 2.16,
+        "stake": 400.0,
+        "sport": "soccer_germany_bundesliga",
+        "time": "2026-10-18T15:30:00Z"
+    },
+    {
+        "id": "3ea32a0aa44a5f0ef7fd088155430087",
+        "home": "Fiorentina",
+        "away": "Como",
+        "outcome": "Fiorentina",
+        "odds": 3.7,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-18T13:00:00Z"
+    },
+    {
+        "id": "f9403dd597edbfaa73abdc974e55344c",
+        "home": "AC Milan",
+        "away": "Atalanta BC",
+        "outcome": "AC Milan",
+        "odds": 1.88,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-18T16:00:00Z"
+    },
+    {
+        "id": "1f566f17c50fe5162724ec2863d2207b",
+        "home": "CA Osasuna",
+        "away": "Real Racing Club de Santander",
+        "outcome": "Real Racing Club de Santander",
+        "odds": 3.9,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-10-18T12:00:00Z"
+    },
+    {
+        "id": "1c871e0acb43e1baa366e05f9e8271c4",
+        "home": "Groningen",
+        "away": "Ajax",
+        "outcome": "Groningen",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-10-18T14:45:00Z"
+    },
+    {
+        "id": "4d607fa517783b7c7d748db4c6b60244",
+        "home": "Kocaelispor",
+        "away": "Goztepe",
+        "outcome": "Kocaelispor",
+        "odds": 3.1,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-18T13:00:00Z"
+    },
+    {
+        "id": "6cc3f969a1c52b8eed30bb47996d5a51",
+        "home": "Sturm Graz",
+        "away": "Grazer AK",
+        "outcome": "Grazer AK",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-10-18T15:00:00Z"
+    },
+    {
+        "id": "69850cdb220cee0af6df12dde633245d",
+        "home": "Kalamata FC",
+        "away": "OFI Crete",
+        "outcome": "Kalamata FC",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-10-18T13:00:00Z"
+    },
+    {
+        "id": "4f73f9a292842d2143b6012a5278ef4c",
+        "home": "Portland Timbers",
+        "away": "Colorado Rapids",
+        "outcome": "Colorado Rapids",
+        "odds": 3.3,
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-10-18T02:30:00Z"

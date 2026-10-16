@@ -34766,5 +34766,18 @@
         "profit": 940.0,
         "status": "WIN",
         "score": "2:4"
+    },
+    {
+        "id": "bd1d717f949f57694664f9ba11139851",
+        "home": "Wieczysta Krak\u00f3w",
+        "away": "Rak\u00f3w Cz\u0119stochowa",
+        "outcome": "Rak\u00f3w Cz\u0119stochowa",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-16T16:00:00Z",
+        "profit": 318.75,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]
