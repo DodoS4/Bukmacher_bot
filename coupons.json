@@ -9240,56 +9240,6 @@
         "time": "2026-10-16T15:30:00Z"
     },
     {
-        "id": "d1bbbdcd3d430e70091b518369b559cf",
-        "home": "Newcastle United",
-        "away": "Aston Villa",
-        "outcome": "Newcastle United",
-        "odds": 2.42,
-        "stake": 125.0,
-        "sport": "soccer_epl",
-        "time": "2026-10-17T16:30:00Z"
-    },
-    {
-        "id": "ad25a350c89b64715e15c59cde5653d3",
-        "home": "Lille",
-        "away": "Brest",
-        "outcome": "Brest",
-        "odds": 4.5,
-        "stake": 125.0,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-10-17T18:45:00Z"
-    },
-    {
-        "id": "b077aa049133c0358bcd643bfee48da3",
-        "home": "Troyes",
-        "away": "RC Lens",
-        "outcome": "Troyes",
-        "odds": 4.3,
-        "stake": 125.0,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-10-17T18:45:00Z"
-    },
-    {
-        "id": "24efcd43a7919c7e1f9f5dc9222ac1c7",
-        "home": "Bryn\u00e4s IF",
-        "away": "V\u00e4xj\u00f6 Lakers",
-        "outcome": "V\u00e4xj\u00f6 Lakers",
-        "odds": 3.46,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-10-17T16:00:00Z"
-    },
-    {
-        "id": "b6c240feabcfe3e86753b4b4a850fe49",
-        "home": "Timr\u00e5 IK",
-        "away": "IF Bj\u00f6rkl\u00f6ven",
-        "outcome": "IF Bj\u00f6rkl\u00f6ven",
-        "odds": 3.6,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_hockey_league",
-        "time": "2026-10-17T16:00:00Z"
-    },
-    {
         "id": "c3ff17a0cc786c590743c13e2a9c44dc",
         "home": "SaiPa",
         "away": "HIFK",
@@ -9298,16 +9248,6 @@
         "stake": 250.0,
         "sport": "icehockey_liiga",
         "time": "2026-10-17T14:00:00Z"
-    },
-    {
-        "id": "f00cd1ea41fa39149729d14ebc07aa6c",
-        "home": "Valencia",
-        "away": "Athletic Bilbao",
-        "outcome": "Valencia",
-        "odds": 3.65,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-10-17T19:00:00Z"
     },
     {
         "id": "6d09159511da77074640f6d4a9683b12",
@@ -9458,16 +9398,6 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-10-18T02:30:00Z"
-    },
-    {
-        "id": "841c71c033cf05ad1313e3d5ecd2d9ab",
-        "home": "Washington Capitals",
-        "away": "New Jersey Devils",
-        "outcome": "New Jersey Devils",
-        "odds": 2.75,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-17T17:10:00Z"
     },
     {
         "id": "c9ba2e7837386a5948a9c2233c36314c",
@@ -9710,16 +9640,6 @@
         "time": "2026-10-18T02:30:00Z"
     },
     {
-        "id": "2085ec0be66df2d4700bfd328bfc5a2e",
-        "home": "IK Oskarshamn",
-        "away": "Kalmar HC",
-        "outcome": "Kalmar HC",
-        "odds": 2.58,
-        "stake": 250.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-17T16:00:00Z"
-    },
-    {
         "id": "0c5c7483a9d28e6bad7a132fd042b56d",
         "home": "Lukko",
         "away": "Kiekko-Espoo",
@@ -9890,16 +9810,6 @@
         "time": "2026-10-18T02:10:00Z"
     },
     {
-        "id": "d11f4366fae43ed184480400fd3e04d8",
-        "home": "Cracovia Krak\u00f3w",
-        "away": "Legia Warszawa",
-        "outcome": "Legia Warszawa",
-        "odds": 2.56,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-10-17T18:15:00Z"
-    },
-    {
         "id": "8826048df2dbdd57804f2d8605925af5",
         "home": "New York Red Bulls",
         "away": "Toronto FC",
@@ -9938,5 +9848,25 @@
         "stake": 400.0,
         "sport": "soccer_italy_serie_a",
         "time": "2026-10-19T16:30:00Z"
+    },
+    {
+        "id": "07014d9adc65ca39710bd9f0c7c0d3f0",
+        "home": "Parma",
+        "away": "Torino",
+        "outcome": "Parma",
+        "odds": 3.6,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-19T18:45:00Z"
+    },
+    {
+        "id": "d637845b9760bb02b55bbbaa32b5c21e",
+        "home": "Le Havre",
+        "away": "Auxerre",
+        "outcome": "Auxerre",
+        "odds": 3.35,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-10-18T15:15:00Z"
     }
 ]
