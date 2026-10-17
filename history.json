@@ -34909,5 +34909,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:0"
+    },
+    {
+        "id": "343be4cf732ddd9fd0a058953456d811",
+        "home": "Colorado Avalanche",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 4.1,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T01:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:2"
+    },
+    {
+        "id": "7c44228f4c2e89133b34a3c70bfb30c5",
+        "home": "Anaheim Ducks",
+        "away": "Boston Bruins",
+        "outcome": "Boston Bruins",
+        "odds": 2.49,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-17T02:10:00Z",
+        "profit": 745.0,
+        "status": "WIN",
+        "score": "2:4"
     }
 ]

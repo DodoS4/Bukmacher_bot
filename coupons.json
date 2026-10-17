@@ -9230,26 +9230,6 @@
         "time": "2026-10-17T11:30:00Z"
     },
     {
-        "id": "343be4cf732ddd9fd0a058953456d811",
-        "home": "Colorado Avalanche",
-        "away": "Pittsburgh Penguins",
-        "outcome": "Pittsburgh Penguins",
-        "odds": 4.1,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-17T01:10:00Z"
-    },
-    {
-        "id": "7c44228f4c2e89133b34a3c70bfb30c5",
-        "home": "Anaheim Ducks",
-        "away": "Boston Bruins",
-        "outcome": "Boston Bruins",
-        "odds": 2.49,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-17T02:10:00Z"
-    },
-    {
         "id": "74ec56b515c5f6e90c6c0b49c3bab14c",
         "home": "Milwaukee Admirals",
         "away": "Colorado Eagles",
@@ -10068,5 +10048,95 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-10-18T00:30:00Z"
+    },
+    {
+        "id": "4f00b3ecc7fef42732770800c64b8b63",
+        "home": "Ilves",
+        "away": "Jokerit",
+        "outcome": "Jokerit",
+        "odds": 4.2,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-17T14:00:00Z"
+    },
+    {
+        "id": "103e8ef6df5120e70e8e23da9f94d3ab",
+        "home": "Belleville Senators",
+        "away": "Toronto Marlies",
+        "outcome": "Toronto Marlies",
+        "odds": 2.37,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-17T20:00:00Z"
+    },
+    {
+        "id": "ea7012d7b0d84f9bd905d47b4ff116da",
+        "home": "Syracuse Crunch",
+        "away": "Rochester Americans",
+        "outcome": "Syracuse Crunch",
+        "odds": 2.2,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-17T21:00:00Z"
+    },
+    {
+        "id": "b9b60ce85cb2968503453e6cb2efcccf",
+        "home": "Utica Comets",
+        "away": "Laval Rocket",
+        "outcome": "Laval Rocket",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-17T22:00:00Z"
+    },
+    {
+        "id": "db313325c452ee736b35ea404735c534",
+        "home": "Chicago Wolves",
+        "away": "Iowa Wild",
+        "outcome": "Chicago Wolves",
+        "odds": 2.4,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-18T00:00:00Z"
+    },
+    {
+        "id": "109e02b7ea002a869fe58e6f5eacbb44",
+        "home": "Rockford IceHogs",
+        "away": "Grand Rapids Griffins",
+        "outcome": "Grand Rapids Griffins",
+        "odds": 2.42,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-18T00:00:00Z"
+    },
+    {
+        "id": "11b9e6c9e6af35f715d3519cbb3171f0",
+        "home": "Bakersfield Condors",
+        "away": "Calgary Wranglers",
+        "outcome": "Calgary Wranglers",
+        "odds": 2.47,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-18T02:10:00Z"
+    },
+    {
+        "id": "d11f4366fae43ed184480400fd3e04d8",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Legia Warszawa",
+        "outcome": "Legia Warszawa",
+        "odds": 2.56,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-17T18:15:00Z"
+    },
+    {
+        "id": "8826048df2dbdd57804f2d8605925af5",
+        "home": "New York Red Bulls",
+        "away": "Toronto FC",
+        "outcome": "Toronto FC",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-17T23:30:00Z"
     }
 ]
