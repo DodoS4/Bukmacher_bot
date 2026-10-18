@@ -9350,16 +9350,6 @@
         "time": "2026-10-17T14:00:00Z"
     },
     {
-        "id": "f9403dd597edbfaa73abdc974e55344c",
-        "home": "AC Milan",
-        "away": "Atalanta BC",
-        "outcome": "AC Milan",
-        "odds": 1.88,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-10-18T16:00:00Z"
-    },
-    {
         "id": "0c5c7483a9d28e6bad7a132fd042b56d",
         "home": "Lukko",
         "away": "Kiekko-Espoo",
@@ -9690,13 +9680,43 @@
         "time": "2026-10-20T15:30:00Z"
     },
     {
-        "id": "471f891b1f6516a864ad94c8eb649f5e",
-        "home": "Lyon",
-        "away": "Nice",
-        "outcome": "Nice",
+        "id": "0b9c3b5a4633b00b5ddb24d55bd4e3c5",
+        "home": "Fr\u00f6lunda HC",
+        "away": "Djurg\u00e5rdens IF",
+        "outcome": "Djurg\u00e5rdens IF",
         "odds": 4.5,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-20T17:00:00Z"
+    },
+    {
+        "id": "4a88bc4de574d43ef34677fd8d78722f",
+        "home": "Getafe",
+        "away": "Rayo Vallecano",
+        "outcome": "Getafe",
+        "odds": 3.2,
         "stake": 125.0,
-        "sport": "soccer_france_ligue_one",
-        "time": "2026-10-18T18:45:00Z"
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-10-19T19:00:00Z"
+    },
+    {
+        "id": "56989e10c299aba1a0fce210bb214775",
+        "home": "VfB Stuttgart",
+        "away": "Atl\u00e9tico Madrid",
+        "outcome": "VfB Stuttgart",
+        "odds": 3.5,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-10-20T19:00:00Z"
+    },
+    {
+        "id": "46b790335fa98338b7e1ed0b614078fb",
+        "home": "Paris Saint Germain",
+        "away": "Barcelona",
+        "outcome": "Paris Saint Germain",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-10-20T19:00:00Z"
     }
 ]

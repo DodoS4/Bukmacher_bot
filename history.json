@@ -35832,5 +35832,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "4:0"
+    },
+    {
+        "id": "f9403dd597edbfaa73abdc974e55344c",
+        "home": "AC Milan",
+        "away": "Atalanta BC",
+        "outcome": "AC Milan",
+        "odds": 1.88,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-18T16:00:00Z",
+        "profit": 352.0,
+        "status": "WIN",
+        "score": "3:2"
+    },
+    {
+        "id": "471f891b1f6516a864ad94c8eb649f5e",
+        "home": "Lyon",
+        "away": "Nice",
+        "outcome": "Nice",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-10-18T18:45:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
     }
 ]
