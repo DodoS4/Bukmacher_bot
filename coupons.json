@@ -9500,26 +9500,6 @@
         "time": "2026-10-18T02:10:00Z"
     },
     {
-        "id": "3af4496cf626dc3538fb93001aa2fba0",
-        "home": "Minnesota Wild",
-        "away": "Columbus Blue Jackets",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 3.49,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-18T22:10:00Z"
-    },
-    {
-        "id": "0922c474e6588f94af491684dbae6cdb",
-        "home": "Calgary Flames",
-        "away": "Carolina Hurricanes",
-        "outcome": "Calgary Flames",
-        "odds": 3.65,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-19T00:10:00Z"
-    },
-    {
         "id": "ce94aca384a20f6af459366da6e1dd21",
         "home": "Monza",
         "away": "Cagliari",
@@ -9718,5 +9698,15 @@
         "stake": 250.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-10-20T19:00:00Z"
+    },
+    {
+        "id": "dc772024496b96a04fff0ec663516457",
+        "home": "Wis\u0142a P\u0142ock",
+        "away": "Radomiak Radom",
+        "outcome": "Radomiak Radom",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-19T17:00:00Z"
     }
 ]
