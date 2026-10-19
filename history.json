@@ -35884,5 +35884,44 @@
         "profit": 1325.0,
         "status": "WIN",
         "score": "3:2"
+    },
+    {
+        "id": "ce94aca384a20f6af459366da6e1dd21",
+        "home": "Monza",
+        "away": "Cagliari",
+        "outcome": "Monza",
+        "odds": 2.56,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-19T16:30:00Z",
+        "profit": 624.0,
+        "status": "WIN",
+        "score": "4:0"
+    },
+    {
+        "id": "112b2db1da65ca0968d2c126edd6887e",
+        "home": "Trabzonspor",
+        "away": "Besiktas JK",
+        "outcome": "Besiktas JK",
+        "odds": 2.6,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-19T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:0"
+    },
+    {
+        "id": "dc772024496b96a04fff0ec663516457",
+        "home": "Wis\u0142a P\u0142ock",
+        "away": "Radomiak Radom",
+        "outcome": "Radomiak Radom",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-19T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:0"
     }
 ]
