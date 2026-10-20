@@ -36001,5 +36001,70 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:1"
+    },
+    {
+        "id": "1cb9608fad6bf2d2b828dfe9e51c601c",
+        "home": "HV71",
+        "away": "Link\u00f6ping HC",
+        "outcome": "Link\u00f6ping HC",
+        "odds": 3.12,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-20T17:00:00Z",
+        "profit": 1060.0,
+        "status": "WIN",
+        "score": "2:3"
+    },
+    {
+        "id": "0b9c3b5a4633b00b5ddb24d55bd4e3c5",
+        "home": "Fr\u00f6lunda HC",
+        "away": "Djurg\u00e5rdens IF",
+        "outcome": "Djurg\u00e5rdens IF",
+        "odds": 4.5,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-20T17:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "6:2"
+    },
+    {
+        "id": "56989e10c299aba1a0fce210bb214775",
+        "home": "VfB Stuttgart",
+        "away": "Atl\u00e9tico Madrid",
+        "outcome": "VfB Stuttgart",
+        "odds": 3.5,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-10-20T19:00:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "1:1"
+    },
+    {
+        "id": "46b790335fa98338b7e1ed0b614078fb",
+        "home": "Paris Saint Germain",
+        "away": "Barcelona",
+        "outcome": "Paris Saint Germain",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-10-20T19:00:00Z",
+        "profit": 375.0,
+        "status": "WIN",
+        "score": "4:2"
+    },
+    {
+        "id": "49dba87d5ac664efdf2a64c72db31702",
+        "home": "Napoli",
+        "away": "Bod\u00f8/Glimt",
+        "outcome": "Napoli",
+        "odds": 1.82,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-10-20T19:00:00Z",
+        "profit": 205.0,
+        "status": "WIN",
+        "score": "4:3"
     }
 ]
