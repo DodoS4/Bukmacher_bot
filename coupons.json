@@ -9898,5 +9898,135 @@
         "stake": 250.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-10-20T19:00:00Z"
+    },
+    {
+        "id": "0b4bab4d663e04a571655ec7477eb10a",
+        "home": "Buffalo Sabres",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.65,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-21T23:40:00Z"
+    },
+    {
+        "id": "5736c2282f978bfdf849f4b10876080e",
+        "home": "Ottawa Senators",
+        "away": "Florida Panthers",
+        "outcome": "Florida Panthers",
+        "odds": 2.6,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-21T23:40:00Z"
+    },
+    {
+        "id": "be1e55cefab62aef8efa39d7c0bb119b",
+        "home": "\u00d6rebro HK",
+        "away": "Bryn\u00e4s IF",
+        "outcome": "\u00d6rebro HK",
+        "odds": 2.88,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-22T17:00:00Z"
+    },
+    {
+        "id": "f16656691e0e72674390bb58bbdc70d4",
+        "home": "Skellefte\u00e5 AIK",
+        "away": "Djurg\u00e5rdens IF",
+        "outcome": "Djurg\u00e5rdens IF",
+        "odds": 4.2,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-22T17:00:00Z"
+    },
+    {
+        "id": "fafb7faab9791dda53c5fb1a4c95e13b",
+        "home": "R\u00f6gle BK",
+        "away": "Fr\u00f6lunda HC",
+        "outcome": "Fr\u00f6lunda HC",
+        "odds": 2.45,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-22T17:00:00Z"
+    },
+    {
+        "id": "18bb183a6e0ee4535bfefec3d91038a7",
+        "home": "Timr\u00e5 IK",
+        "away": "F\u00e4rjestad BK",
+        "outcome": "Timr\u00e5 IK",
+        "odds": 3.8,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-22T17:00:00Z"
+    },
+    {
+        "id": "48c318ea084c1d6a07af8c8ed6cfa9a2",
+        "home": "IF Bj\u00f6rkl\u00f6ven",
+        "away": "Malm\u00f6 Redhawks",
+        "outcome": "IF Bj\u00f6rkl\u00f6ven",
+        "odds": 3.05,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-22T17:00:00Z"
+    },
+    {
+        "id": "3bbf0d96eab9b5ca0db1b75a185b1aab",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 3.15,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-22T17:00:00Z"
+    },
+    {
+        "id": "7a9a072adb7cf97dedbc1bd4f7abec63",
+        "home": "Kiekko-Espoo",
+        "away": "KooKoo",
+        "outcome": "KooKoo",
+        "odds": 3.71,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-21T15:30:00Z"
+    },
+    {
+        "id": "5351fba927e3d526d589134f2f3de430",
+        "home": "Tappara",
+        "away": "\u00c4ss\u00e4t",
+        "outcome": "\u00c4ss\u00e4t",
+        "odds": 3.42,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-21T15:30:00Z"
+    },
+    {
+        "id": "58d48cbe4597a842e5b1c0f61135641d",
+        "home": "JYP",
+        "away": "HPK",
+        "outcome": "HPK",
+        "odds": 3.73,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-22T15:30:00Z"
+    },
+    {
+        "id": "c5acd48db76ee64ac3f7c2e1fd9cfb8b",
+        "home": "JoKP",
+        "away": "Pyry",
+        "outcome": "Pyry",
+        "odds": 3.62,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-22T15:30:00Z"
+    },
+    {
+        "id": "fcbdc440ac1bfd04e900e145e84ffaca",
+        "home": "SK Sturm Graz",
+        "away": "Marseille",
+        "outcome": "SK Sturm Graz",
+        "odds": 3.8,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-10-22T16:45:00Z"
     }
 ]
