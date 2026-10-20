@@ -35923,5 +35923,83 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:0"
+    },
+    {
+        "id": "07014d9adc65ca39710bd9f0c7c0d3f0",
+        "home": "Parma",
+        "away": "Torino",
+        "outcome": "Parma",
+        "odds": 3.6,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-19T18:45:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "0:3"
+    },
+    {
+        "id": "ea54f93ba7f80a041cb134ca262d7bc0",
+        "home": "New York Rangers",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.84,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-19T23:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:2"
+    },
+    {
+        "id": "c8d71abe9d49ca6ea219b84923b9a48c",
+        "home": "Philadelphia Flyers",
+        "away": "Colorado Avalanche",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.83,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-19T23:00:00Z",
+        "profit": 1415.0,
+        "status": "WIN",
+        "score": "3:2"
+    },
+    {
+        "id": "7ac756ef7eb5d5b1042e68d86d561147",
+        "home": "Toronto Maple Leafs",
+        "away": "San Jose Sharks",
+        "outcome": "San Jose Sharks",
+        "odds": 2.9,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-19T23:30:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "0e2b3099b25e9827dc4a6abd7fabfa51",
+        "home": "Utah Mammoth",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 3.34,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-20T01:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:4"
+    },
+    {
+        "id": "4a88bc4de574d43ef34677fd8d78722f",
+        "home": "Getafe",
+        "away": "Rayo Vallecano",
+        "outcome": "Getafe",
+        "odds": 3.2,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-10-19T19:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "1:1"
     }
 ]
