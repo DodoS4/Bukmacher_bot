@@ -36196,5 +36196,31 @@
         "profit": 845.0,
         "status": "WIN",
         "score": "2:6"
+    },
+    {
+        "id": "8af9379136075f45b290208b35a706c8",
+        "home": "Como",
+        "away": "Manchester United",
+        "outcome": "Manchester United",
+        "odds": 3.1,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-10-21T16:45:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "4:1"
+    },
+    {
+        "id": "015d619d774655965e17ba67a025634e",
+        "home": "Lille",
+        "away": "Galatasaray",
+        "outcome": "Galatasaray",
+        "odds": 3.35,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-10-21T16:45:00Z",
+        "profit": 587.5,
+        "status": "WIN",
+        "score": "2:4"
     }
 ]
