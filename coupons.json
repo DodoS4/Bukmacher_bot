@@ -9580,76 +9580,6 @@
         "time": "2026-10-20T15:30:00Z"
     },
     {
-        "id": "7d5ac89e56f1901c7b7042aaf48d75b9",
-        "home": "\u00d6stersunds IK",
-        "away": "AIK",
-        "outcome": "\u00d6stersunds IK",
-        "odds": 4.1,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-21T17:00:00Z"
-    },
-    {
-        "id": "5a371d233e801dba5004f5afc5c7c7ab",
-        "home": "Mora IK",
-        "away": "Almtuna IS",
-        "outcome": "Mora IK",
-        "odds": 2.22,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-21T17:00:00Z"
-    },
-    {
-        "id": "2b4d039880511c32979510020509e371",
-        "home": "S\u00f6dert\u00e4lje SK",
-        "away": "BIK Karlskoga",
-        "outcome": "BIK Karlskoga",
-        "odds": 4.02,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-21T17:00:00Z"
-    },
-    {
-        "id": "0af22cc73b8f2d681e0bacd8c05b3028",
-        "home": "Modo Hockey",
-        "away": "IK Oskarshamn",
-        "outcome": "IK Oskarshamn",
-        "odds": 3.7,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-21T17:00:00Z"
-    },
-    {
-        "id": "f150457f43817a25679dc6193ef1e194",
-        "home": "Leksands IF",
-        "away": "Kalmar HC",
-        "outcome": "Kalmar HC",
-        "odds": 4.25,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-21T17:00:00Z"
-    },
-    {
-        "id": "64e7b1c13eb8851b0d166ffbecf30b68",
-        "home": "Nybro Vikings IF",
-        "away": "Visby/Roma HK",
-        "outcome": "Visby/Roma HK",
-        "odds": 4.33,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-21T17:00:00Z"
-    },
-    {
-        "id": "81ef70750f246ccb2b4c9bc5c77003e7",
-        "home": "Vimmerby HC",
-        "away": "V\u00e4ster\u00e5s IK",
-        "outcome": "V\u00e4ster\u00e5s IK",
-        "odds": 2.62,
-        "stake": 125.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-21T17:00:00Z"
-    },
-    {
         "id": "7b424d942475758f12afa5d1efe1a809",
         "home": "Hermes",
         "away": "KeuPa HT",
@@ -9668,36 +9598,6 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-10-21T15:30:00Z"
-    },
-    {
-        "id": "a362cccad837f1ffae61ff43a3536688",
-        "home": "Levante",
-        "away": "Athletic Bilbao",
-        "outcome": "Levante",
-        "odds": 3.81,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-10-21T18:00:00Z"
-    },
-    {
-        "id": "2ebbccdeea2dab59717d5c3d802c3fed",
-        "home": "Bayern Munich",
-        "away": "Arsenal",
-        "outcome": "Arsenal",
-        "odds": 3.55,
-        "stake": 250.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-10-21T19:00:00Z"
-    },
-    {
-        "id": "d306a78e402e5f505e8644fdf3f75dcd",
-        "home": "Club Brugge",
-        "away": "RC Lens",
-        "outcome": "RC Lens",
-        "odds": 3.45,
-        "stake": 250.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-10-21T19:00:00Z"
     },
     {
         "id": "8c09b592fd6e851ce128d91c418107fd",
@@ -9728,26 +9628,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-10-21T23:00:00Z"
-    },
-    {
-        "id": "0b4bab4d663e04a571655ec7477eb10a",
-        "home": "Buffalo Sabres",
-        "away": "Philadelphia Flyers",
-        "outcome": "Philadelphia Flyers",
-        "odds": 3.65,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-21T23:40:00Z"
-    },
-    {
-        "id": "5736c2282f978bfdf849f4b10876080e",
-        "home": "Ottawa Senators",
-        "away": "Florida Panthers",
-        "outcome": "Florida Panthers",
-        "odds": 2.6,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-21T23:40:00Z"
     },
     {
         "id": "be1e55cefab62aef8efa39d7c0bb119b",
@@ -10198,5 +10078,135 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-10-23T18:45:00Z"
+    },
+    {
+        "id": "ef05769d34d8ba60ea12fde04cf8421d",
+        "home": "Modo Hockey",
+        "away": "AIK",
+        "outcome": "Modo Hockey",
+        "odds": 2.6,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-23T16:00:00Z"
+    },
+    {
+        "id": "f91a4c4f371bcc7df570bdf3b8c41499",
+        "home": "Almtuna IS",
+        "away": "Vimmerby HC",
+        "outcome": "Vimmerby HC",
+        "odds": 3.55,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-23T17:00:00Z"
+    },
+    {
+        "id": "49c062c4f490b4bb53b6c577084847ce",
+        "home": "IK Oskarshamn",
+        "away": "Mora IK",
+        "outcome": "Mora IK",
+        "odds": 3.2,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-23T17:00:00Z"
+    },
+    {
+        "id": "4c60ff94fed48267ed47fc1d956bd8ed",
+        "home": "Nybro Vikings IF",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "Nybro Vikings IF",
+        "odds": 3.75,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-23T17:00:00Z"
+    },
+    {
+        "id": "137230eaa6fe36768df18f6ed6ce1f16",
+        "home": "\u00d6stersunds IK",
+        "away": "V\u00e4ster\u00e5s IK",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 3.2,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-23T17:00:00Z"
+    },
+    {
+        "id": "ca3bd7bca4bbdf5045c8a39ad67ae663",
+        "home": "Kalmar HC",
+        "away": "Leksands IF",
+        "outcome": "Leksands IF",
+        "odds": 2.23,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-10-23T18:30:00Z"
+    },
+    {
+        "id": "6cba29e40f656699732646220e988517",
+        "home": "Laval Rocket",
+        "away": "Hamilton Hammers",
+        "outcome": "Hamilton Hammers",
+        "odds": 2.75,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-23T23:00:00Z"
+    },
+    {
+        "id": "967cc4954ad8e9fc85b5461fa2d92139",
+        "home": "Syracuse Crunch",
+        "away": "Rochester Americans",
+        "outcome": "Rochester Americans",
+        "odds": 2.48,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-23T23:00:00Z"
+    },
+    {
+        "id": "5daceb3c7190266de0964ae8d1f35405",
+        "home": "Iowa Wild",
+        "away": "Manitoba Moose",
+        "outcome": "Manitoba Moose",
+        "odds": 2.65,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-24T00:00:00Z"
+    },
+    {
+        "id": "1020c46e7a2a3c7d8288dbf1166db263",
+        "home": "Widzew \u0141\u00f3d\u017a",
+        "away": "G\u00f3rnik Zabrze",
+        "outcome": "Widzew \u0141\u00f3d\u017a",
+        "odds": 2.98,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-23T18:30:00Z"
+    },
+    {
+        "id": "a8a501f2068eea24436462c97d0af333",
+        "home": "Rheindorf Altach",
+        "away": "Austria Wien",
+        "outcome": "Rheindorf Altach",
+        "odds": 2.3,
+        "stake": 125.0,
+        "sport": "soccer_austria_bundesliga",
+        "time": "2026-10-23T17:30:00Z"
+    },
+    {
+        "id": "6ba5c9e49aac3f34425f72bc0177dcde",
+        "home": "Charlton Athletic",
+        "away": "Norwich City",
+        "outcome": "Charlton Athletic",
+        "odds": 3.4,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-24T11:30:00Z"
+    },
+    {
+        "id": "c4d125854e94f7bef22d7d93a5473a5e",
+        "home": "Portsmouth",
+        "away": "Millwall",
+        "outcome": "Portsmouth",
+        "odds": 2.6,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-10-24T11:30:00Z"
     }
 ]
