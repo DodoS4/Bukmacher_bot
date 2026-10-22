@@ -36378,5 +36378,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "5:1"
+    },
+    {
+        "id": "fcbdc440ac1bfd04e900e145e84ffaca",
+        "home": "SK Sturm Graz",
+        "away": "Marseille",
+        "outcome": "SK Sturm Graz",
+        "odds": 3.8,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-10-22T16:45:00Z",
+        "profit": 910.0,
+        "status": "WIN",
+        "score": "1:0"
     }
 ]
