@@ -9780,36 +9780,6 @@
         "time": "2026-10-23T15:30:00Z"
     },
     {
-        "id": "d0202960708a442401d7fc7bd74a0183",
-        "home": "Ipswich Town",
-        "away": "Nottingham Forest",
-        "outcome": "Ipswich Town",
-        "odds": 3.4,
-        "stake": 125.0,
-        "sport": "soccer_epl",
-        "time": "2026-10-23T19:00:00Z"
-    },
-    {
-        "id": "124c70f8f3248a845bdb983a54e74720",
-        "home": "Torino",
-        "away": "Monza",
-        "outcome": "Monza",
-        "odds": 3.65,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-10-23T18:45:00Z"
-    },
-    {
-        "id": "81bfedfcca305af30f0f7cb7a739c878",
-        "home": "Alanyaspor",
-        "away": "Kocaelispor",
-        "outcome": "Kocaelispor",
-        "odds": 4.35,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-10-23T17:00:00Z"
-    },
-    {
         "id": "fb7fa74f609137bf1a233b57cd6d0c9f",
         "home": "KV Kortrijk",
         "away": "KV Mechelen",
@@ -9818,66 +9788,6 @@
         "stake": 325.0,
         "sport": "soccer_belgium_first_div",
         "time": "2026-10-23T18:45:00Z"
-    },
-    {
-        "id": "ef05769d34d8ba60ea12fde04cf8421d",
-        "home": "Modo Hockey",
-        "away": "AIK",
-        "outcome": "Modo Hockey",
-        "odds": 2.6,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-23T16:00:00Z"
-    },
-    {
-        "id": "f91a4c4f371bcc7df570bdf3b8c41499",
-        "home": "Almtuna IS",
-        "away": "Vimmerby HC",
-        "outcome": "Vimmerby HC",
-        "odds": 3.55,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-23T17:00:00Z"
-    },
-    {
-        "id": "49c062c4f490b4bb53b6c577084847ce",
-        "home": "IK Oskarshamn",
-        "away": "Mora IK",
-        "outcome": "Mora IK",
-        "odds": 3.2,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-23T17:00:00Z"
-    },
-    {
-        "id": "4c60ff94fed48267ed47fc1d956bd8ed",
-        "home": "Nybro Vikings IF",
-        "away": "S\u00f6dert\u00e4lje SK",
-        "outcome": "Nybro Vikings IF",
-        "odds": 3.75,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-23T17:00:00Z"
-    },
-    {
-        "id": "137230eaa6fe36768df18f6ed6ce1f16",
-        "home": "\u00d6stersunds IK",
-        "away": "V\u00e4ster\u00e5s IK",
-        "outcome": "V\u00e4ster\u00e5s IK",
-        "odds": 3.2,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-23T17:00:00Z"
-    },
-    {
-        "id": "ca3bd7bca4bbdf5045c8a39ad67ae663",
-        "home": "Kalmar HC",
-        "away": "Leksands IF",
-        "outcome": "Leksands IF",
-        "odds": 2.23,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-10-23T18:30:00Z"
     },
     {
         "id": "6cba29e40f656699732646220e988517",
@@ -9908,26 +9818,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-10-24T00:00:00Z"
-    },
-    {
-        "id": "1020c46e7a2a3c7d8288dbf1166db263",
-        "home": "Widzew \u0141\u00f3d\u017a",
-        "away": "G\u00f3rnik Zabrze",
-        "outcome": "Widzew \u0141\u00f3d\u017a",
-        "odds": 2.98,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-10-23T18:30:00Z"
-    },
-    {
-        "id": "a8a501f2068eea24436462c97d0af333",
-        "home": "Rheindorf Altach",
-        "away": "Austria Wien",
-        "outcome": "Rheindorf Altach",
-        "odds": 2.3,
-        "stake": 125.0,
-        "sport": "soccer_austria_bundesliga",
-        "time": "2026-10-23T17:30:00Z"
     },
     {
         "id": "6ba5c9e49aac3f34425f72bc0177dcde",
@@ -10808,5 +10698,75 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-10-25T00:30:00Z"
+    },
+    {
+        "id": "396855d2ff7f9fdb651e476d4abc2bad",
+        "home": "HPK",
+        "away": "HIFK",
+        "outcome": "HPK",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-10-24T14:00:00Z"
+    },
+    {
+        "id": "0382a9faef0bb8df1bcc436536cffb05",
+        "home": "Chelsea",
+        "away": "Tottenham Hotspur",
+        "outcome": "Tottenham Hotspur",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_epl",
+        "time": "2026-10-24T16:30:00Z"
+    },
+    {
+        "id": "72089d103a5fe6a922c35e17efba6ffc",
+        "home": "Barcelona",
+        "away": "Real Madrid",
+        "outcome": "Real Madrid",
+        "odds": 4.32,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-10-25T20:00:00Z"
+    },
+    {
+        "id": "8eab078a37a63df32ffa443302a2a7ba",
+        "home": "Auxerre",
+        "away": "Le Mans FC",
+        "outcome": "Le Mans FC",
+        "odds": 3.65,
+        "stake": 125.0,
+        "sport": "soccer_france_ligue_one",
+        "time": "2026-10-25T16:15:00Z"
+    },
+    {
+        "id": "37b2e2ce6ac958b456f8b82543199993",
+        "home": "ADO Den Haag",
+        "away": "Heerenveen",
+        "outcome": "ADO Den Haag",
+        "odds": 3.54,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-10-24T19:00:00Z"
+    },
+    {
+        "id": "f168373343a58c07d02f40538d04b404",
+        "home": "Fortuna Sittard",
+        "away": "Excelsior",
+        "outcome": "Excelsior",
+        "odds": 3.0,
+        "stake": 125.0,
+        "sport": "soccer_netherlands_eredivisie",
+        "time": "2026-10-25T11:15:00Z"
+    },
+    {
+        "id": "000c8712b61f7ecec007f08d3ecad35b",
+        "home": "Goztepe",
+        "away": "\u00c7orum FK",
+        "outcome": "\u00c7orum FK",
+        "odds": 3.25,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-25T16:00:00Z"
     }
 ]
