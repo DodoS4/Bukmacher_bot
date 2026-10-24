@@ -36859,5 +36859,31 @@
         "profit": 162.5,
         "status": "WIN",
         "score": "2:1"
+    },
+    {
+        "id": "db9d82d62d8f222bfd835100662c6ac6",
+        "home": "Chicago Blackhawks",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Chicago Blackhawks",
+        "odds": 2.89,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-24T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:4"
+    },
+    {
+        "id": "b7e4d8193096703065db318c2813168f",
+        "home": "Colorado Avalanche",
+        "away": "Tampa Bay Lightning",
+        "outcome": "Tampa Bay Lightning",
+        "odds": 2.71,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-24T01:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "6:3"
     }
 ]
