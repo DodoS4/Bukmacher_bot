@@ -38120,5 +38120,18 @@
         "profit": 344.0,
         "status": "WIN",
         "score": "0:2"
+    },
+    {
+        "id": "e1c9aa56abe5e911eb57403d78376270",
+        "home": "\u00c7aykur Rizespor",
+        "away": "Trabzonspor",
+        "outcome": "\u00c7aykur Rizespor",
+        "odds": 3.8,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-26T16:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:4"
     }
 ]
