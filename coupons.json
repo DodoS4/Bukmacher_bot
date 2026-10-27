@@ -10100,16 +10100,6 @@
         "time": "2026-10-27T16:30:00Z"
     },
     {
-        "id": "c7445242bf16a8f37afef7863af45a78",
-        "home": "Sassuolo",
-        "away": "Lazio",
-        "outcome": "Lazio",
-        "odds": 2.38,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-10-27T17:30:00Z"
-    },
-    {
         "id": "7d989a0a7bae47eb957731e97c5bd9c1",
         "home": "Torino",
         "away": "Como",
@@ -10508,5 +10498,125 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-10-29T02:30:00Z"
+    },
+    {
+        "id": "46dec80debcc79de4c248a0edd4f8d74",
+        "home": "Washington Capitals",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 4.2,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-28T23:40:00Z"
+    },
+    {
+        "id": "1358a7c35b103e3242da6a96468d61f9",
+        "home": "Edmonton Oilers",
+        "away": "Calgary Flames",
+        "outcome": "Calgary Flames",
+        "odds": 3.85,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-29T00:40:00Z"
+    },
+    {
+        "id": "dad41ac378a6c36e1be03122f7f34470",
+        "home": "Colorado Avalanche",
+        "away": "New Jersey Devils",
+        "outcome": "New Jersey Devils",
+        "odds": 3.5,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-29T01:10:00Z"
+    },
+    {
+        "id": "f7510932dec00855b611e3685080819c",
+        "home": "Seattle Kraken",
+        "away": "Toronto Maple Leafs",
+        "outcome": "Toronto Maple Leafs",
+        "odds": 2.46,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-29T02:10:00Z"
+    },
+    {
+        "id": "cf668ad4aa6c9537cfcb90b1facdf7b9",
+        "home": "Bryn\u00e4s IF",
+        "away": "F\u00e4rjestad BK",
+        "outcome": "Bryn\u00e4s IF",
+        "odds": 3.0,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-29T18:00:00Z"
+    },
+    {
+        "id": "393595b741cbf326ecd8d550905f0511",
+        "home": "\u00d6rebro HK",
+        "away": "Fr\u00f6lunda HC",
+        "outcome": "\u00d6rebro HK",
+        "odds": 3.04,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-29T18:00:00Z"
+    },
+    {
+        "id": "b709ac4f409086ba1951fe93e309d41f",
+        "home": "R\u00f6gle BK",
+        "away": "Malm\u00f6 Redhawks",
+        "outcome": "Malm\u00f6 Redhawks",
+        "odds": 3.62,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-29T18:00:00Z"
+    },
+    {
+        "id": "eab9f145ffcd6617cb3e954a5712bc51",
+        "home": "Timr\u00e5 IK",
+        "away": "V\u00e4xj\u00f6 Lakers",
+        "outcome": "Timr\u00e5 IK",
+        "odds": 2.45,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-29T18:00:00Z"
+    },
+    {
+        "id": "1cc9d2cb94917d9cea293531fab9b80b",
+        "home": "Djurg\u00e5rdens IF",
+        "away": "HV71",
+        "outcome": "HV71",
+        "odds": 2.8,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-10-29T18:30:00Z"
+    },
+    {
+        "id": "eb7707d11376c12b000e80b9062c0188",
+        "home": "Ketter\u00e4",
+        "away": "Pyry",
+        "outcome": "Pyry",
+        "odds": 3.78,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-29T16:30:00Z"
+    },
+    {
+        "id": "66ae20ab66b3ce4ee24d86e73fed8c12",
+        "home": "TUTO Hockey",
+        "away": "Kiekko-Vantaa",
+        "outcome": "Kiekko-Vantaa",
+        "odds": 3.5,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-10-29T16:30:00Z"
+    },
+    {
+        "id": "da159a6b84dbb548b4d7b94c722caac5",
+        "home": "Fiorentina",
+        "away": "Atalanta BC",
+        "outcome": "Atalanta BC",
+        "odds": 3.35,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-29T19:45:00Z"
     }
 ]

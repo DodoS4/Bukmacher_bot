@@ -38185,5 +38185,18 @@
         "profit": 1325.0,
         "status": "WIN",
         "score": "3:4"
+    },
+    {
+        "id": "c7445242bf16a8f37afef7863af45a78",
+        "home": "Sassuolo",
+        "away": "Lazio",
+        "outcome": "Lazio",
+        "odds": 2.38,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-27T17:30:00Z",
+        "profit": 552.0,
+        "status": "WIN",
+        "score": "2:6"
     }
 ]
