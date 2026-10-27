@@ -38133,5 +38133,57 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "3:4"
+    },
+    {
+        "id": "a05d15a5f230d25da72b18dc92084f8f",
+        "home": "Galatasaray",
+        "away": "Fenerbahce",
+        "outcome": "Galatasaray",
+        "odds": 2.28,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-10-26T18:30:00Z",
+        "profit": 160.0,
+        "status": "WIN",
+        "score": "2:1"
+    },
+    {
+        "id": "daa5166685c4ca1a4f033d8bff91a6ba",
+        "home": "New York Rangers",
+        "away": "Los Angeles Kings",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.9,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-26T23:10:00Z",
+        "profit": 950.0,
+        "status": "WIN",
+        "score": "3:6"
+    },
+    {
+        "id": "20277c97a62bde35c5494acdb5912a68",
+        "home": "Calgary Flames",
+        "away": "Toronto Maple Leafs",
+        "outcome": "Calgary Flames",
+        "odds": 3.2,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-27T00:40:00Z",
+        "profit": 1100.0,
+        "status": "WIN",
+        "score": "5:2"
+    },
+    {
+        "id": "5b70654c977b6cc9a110ad8c04c57cac",
+        "home": "Edmonton Oilers",
+        "away": "Detroit Red Wings",
+        "outcome": "Detroit Red Wings",
+        "odds": 3.65,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-10-27T01:40:00Z",
+        "profit": 1325.0,
+        "status": "WIN",
+        "score": "3:4"
     }
 ]

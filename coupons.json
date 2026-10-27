@@ -10060,16 +10060,6 @@
         "time": "2026-10-25T00:00:00Z"
     },
     {
-        "id": "a05d15a5f230d25da72b18dc92084f8f",
-        "home": "Galatasaray",
-        "away": "Fenerbahce",
-        "outcome": "Galatasaray",
-        "odds": 2.28,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-10-26T18:30:00Z"
-    },
-    {
         "id": "1ab8100e319f199bc9f8b5809fd64960",
         "home": "Lehigh Valley Phantoms",
         "away": "Belleville Senators",
@@ -10078,36 +10068,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-10-25T19:05:00Z"
-    },
-    {
-        "id": "daa5166685c4ca1a4f033d8bff91a6ba",
-        "home": "New York Rangers",
-        "away": "Los Angeles Kings",
-        "outcome": "Los Angeles Kings",
-        "odds": 2.9,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-26T23:10:00Z"
-    },
-    {
-        "id": "20277c97a62bde35c5494acdb5912a68",
-        "home": "Calgary Flames",
-        "away": "Toronto Maple Leafs",
-        "outcome": "Calgary Flames",
-        "odds": 3.2,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-27T00:40:00Z"
-    },
-    {
-        "id": "5b70654c977b6cc9a110ad8c04c57cac",
-        "home": "Edmonton Oilers",
-        "away": "Detroit Red Wings",
-        "outcome": "Detroit Red Wings",
-        "odds": 3.65,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-10-27T01:40:00Z"
     },
     {
         "id": "d20b266541d64ff0d12b78ddc8d7b0fa",
@@ -10458,5 +10418,95 @@
         "stake": 250.0,
         "sport": "soccer_spl",
         "time": "2026-10-28T20:00:00Z"
+    },
+    {
+        "id": "2a64e64bde802cfb838f4e9177a572ae",
+        "home": "Rochester Americans",
+        "away": "Hershey Bears",
+        "outcome": "Hershey Bears",
+        "odds": 2.57,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-28T23:05:00Z"
+    },
+    {
+        "id": "1f9e8d25b6358ff6ba8d5007aed7cbc6",
+        "home": "San Jose Barracuda",
+        "away": "Abbotsford Canucks",
+        "outcome": "Abbotsford Canucks",
+        "odds": 2.45,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-29T02:00:00Z"
+    },
+    {
+        "id": "ea6167a308b1fdf374a18b6fdc827a8e",
+        "home": "Coachella Valley Firebirds",
+        "away": "Tucson Roadrunners",
+        "outcome": "Tucson Roadrunners",
+        "odds": 2.64,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-29T02:00:00Z"
+    },
+    {
+        "id": "42d91d1151d5eba82a2e9b4c93930086",
+        "home": "Henderson Silver Knights",
+        "away": "Ontario Reign",
+        "outcome": "Ontario Reign",
+        "odds": 2.31,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-10-29T02:00:00Z"
+    },
+    {
+        "id": "cd715f0ae437d4348d5b603fe260d8d2",
+        "home": "New York City FC",
+        "away": "Atlanta United FC",
+        "outcome": "Atlanta United FC",
+        "odds": 4.5,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-28T23:30:00Z"
+    },
+    {
+        "id": "2b0bc4a27e4c8ba094bb47544dcf8471",
+        "home": "New England Revolution",
+        "away": "New York Red Bulls",
+        "outcome": "New York Red Bulls",
+        "odds": 3.56,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-28T23:30:00Z"
+    },
+    {
+        "id": "b7c3d4a130a023950652a1b4af4d9a19",
+        "home": "FC Dallas",
+        "away": "Columbus Crew SC",
+        "outcome": "Columbus Crew SC",
+        "odds": 3.6,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-29T00:30:00Z"
+    },
+    {
+        "id": "88e2736c1e17fafa10888dfcf932f44d",
+        "home": "Nashville SC",
+        "away": "Philadelphia Union",
+        "outcome": "Philadelphia Union",
+        "odds": 4.0,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-29T00:30:00Z"
+    },
+    {
+        "id": "372bffc1619cc28902ab4f209af093c2",
+        "home": "Seattle Sounders FC",
+        "away": "Houston Dynamo",
+        "outcome": "Houston Dynamo",
+        "odds": 4.3,
+        "stake": 125.0,
+        "sport": "soccer_usa_mls",
+        "time": "2026-10-29T02:30:00Z"
     }
 ]
