@@ -38380,5 +38380,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "0:2"
+    },
+    {
+        "id": "482c18a8081afdfa310324fa8f37e95a",
+        "home": "Parma",
+        "away": "Udinese",
+        "outcome": "Udinese",
+        "odds": 2.68,
+        "stake": 400.0,
+        "sport": "soccer_italy_serie_a",
+        "time": "2026-10-28T17:30:00Z",
+        "profit": -400.0,
+        "status": "LOSS",
+        "score": "0:0"
     }
 ]
