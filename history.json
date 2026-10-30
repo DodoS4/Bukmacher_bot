@@ -38913,5 +38913,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "3:2"
+    },
+    {
+        "id": "c8cf2ed1973923e6b97dba3de7e202d3",
+        "home": "Cracovia Krak\u00f3w",
+        "away": "Motor Lublin",
+        "outcome": "Motor Lublin",
+        "odds": 3.3,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-10-30T17:00:00Z",
+        "profit": 287.5,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]
