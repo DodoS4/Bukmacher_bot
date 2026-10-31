@@ -10520,16 +10520,6 @@
         "time": "2026-10-31T20:00:00Z"
     },
     {
-        "id": "9fb8dd0ab3ee4bfa1fa3245fec81db1a",
-        "home": "KV Mechelen",
-        "away": "Genk",
-        "outcome": "KV Mechelen",
-        "odds": 3.85,
-        "stake": 325.0,
-        "sport": "soccer_belgium_first_div",
-        "time": "2026-10-31T15:00:00Z"
-    },
-    {
         "id": "3f020232d23f779c977a0f5f9c5f80fa",
         "home": "Rheindorf Altach",
         "away": "Ried",
@@ -10538,66 +10528,6 @@
         "stake": 125.0,
         "sport": "soccer_austria_bundesliga",
         "time": "2026-10-31T16:00:00Z"
-    },
-    {
-        "id": "741ea192fb16f3556f99e235af079541",
-        "home": "FC St Gallen",
-        "away": "Servette",
-        "outcome": "Servette",
-        "odds": 4.03,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-10-31T17:00:00Z"
-    },
-    {
-        "id": "063e03c7307188a25a524331aa05f98a",
-        "home": "Grasshopper Z\u00fcrich",
-        "away": "FC Vaduz",
-        "outcome": "FC Vaduz",
-        "odds": 2.6,
-        "stake": 125.0,
-        "sport": "soccer_switzerland_superleague",
-        "time": "2026-10-31T17:00:00Z"
-    },
-    {
-        "id": "2626c07eae859f2bb05066923d619e31",
-        "home": "Kilmarnock",
-        "away": "St Johnstone",
-        "outcome": "St Johnstone",
-        "odds": 3.05,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-10-31T15:00:00Z"
-    },
-    {
-        "id": "0a5fbad634ee46619955b5245f996cf7",
-        "home": "Motherwell",
-        "away": "St Mirren",
-        "outcome": "Motherwell",
-        "odds": 1.85,
-        "stake": 250.0,
-        "sport": "soccer_spl",
-        "time": "2026-10-31T15:00:00Z"
-    },
-    {
-        "id": "36f913b9a56f5a16fa4b8456678022f3",
-        "home": "Bolton Wanderers",
-        "away": "Bristol City",
-        "outcome": "Bolton Wanderers",
-        "odds": 3.05,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-10-31T15:00:00Z"
-    },
-    {
-        "id": "bfd0294b9c79d8d885b0e6fc1dd47c5f",
-        "home": "Burnley",
-        "away": "Portsmouth",
-        "outcome": "Portsmouth",
-        "odds": 3.8,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-10-31T15:00:00Z"
     },
     {
         "id": "4a7f23af0e71f2d528510b2be9dfa80a",
@@ -10710,16 +10640,6 @@
         "time": "2026-11-01T01:00:00Z"
     },
     {
-        "id": "853df01a49c2a57a62c1ac2d356b395b",
-        "home": "Moreirense FC",
-        "away": "CF Estrela",
-        "outcome": "Moreirense FC",
-        "odds": 3.0,
-        "stake": 125.0,
-        "sport": "soccer_portugal_primeira_liga",
-        "time": "2026-10-31T15:30:00Z"
-    },
-    {
         "id": "016bdfefaa570d0fcaeffc5a1cb3625f",
         "home": "FC Zwolle",
         "away": "ADO Den Haag",
@@ -10728,16 +10648,6 @@
         "stake": 125.0,
         "sport": "soccer_netherlands_eredivisie",
         "time": "2026-11-01T11:15:00Z"
-    },
-    {
-        "id": "7d597f0fe7ec1c85b6e7f9f2ce731746",
-        "home": "Kocaelispor",
-        "away": "\u00c7aykur Rizespor",
-        "outcome": "\u00c7aykur Rizespor",
-        "odds": 2.82,
-        "stake": 125.0,
-        "sport": "soccer_turkey_super_league",
-        "time": "2026-10-31T13:00:00Z"
     },
     {
         "id": "f4e049de3ce6858d46dd45ab5cfa0e8c",
@@ -10768,16 +10678,6 @@
         "stake": 125.0,
         "sport": "soccer_switzerland_superleague",
         "time": "2026-10-31T19:30:00Z"
-    },
-    {
-        "id": "b34cc5873de889d2b6d48ed69ff2d74a",
-        "home": "Southampton",
-        "away": "Queens Park Rangers",
-        "outcome": "Queens Park Rangers",
-        "odds": 4.35,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-10-31T15:00:00Z"
     },
     {
         "id": "2796eacc32eabe705d1bfc436673b36e",
@@ -11070,16 +10970,6 @@
         "time": "2026-11-01T19:45:00Z"
     },
     {
-        "id": "77383723574e3d39c7aba22eec6c4ce3",
-        "home": "Rayo Vallecano",
-        "away": "Celta Vigo",
-        "outcome": "Rayo Vallecano",
-        "odds": 2.6,
-        "stake": 125.0,
-        "sport": "soccer_spain_la_liga",
-        "time": "2026-10-31T15:15:00Z"
-    },
-    {
         "id": "5262991e389930615bec34b642428c93",
         "home": "Elche CF",
         "away": "Valencia",
@@ -11178,16 +11068,6 @@
         "stake": 125.0,
         "sport": "soccer_greece_super_league",
         "time": "2026-11-01T17:30:00Z"
-    },
-    {
-        "id": "1765ba3479499dda4fa86f4598e8b18a",
-        "home": "Lincoln City",
-        "away": "Birmingham City",
-        "outcome": "Lincoln City",
-        "odds": 3.65,
-        "stake": 125.0,
-        "sport": "soccer_efl_champ",
-        "time": "2026-10-31T12:30:00Z"
     },
     {
         "id": "dc6c4e0af5321389341d438e81a47d91",
@@ -11338,16 +11218,6 @@
         "stake": 125.0,
         "sport": "soccer_spain_la_liga",
         "time": "2026-11-01T20:00:00Z"
-    },
-    {
-        "id": "aaf80503a4d464deaca15c7d6bc9dcd7",
-        "home": "Wieczysta Krak\u00f3w",
-        "away": "Jagiellonia Bia\u0142ystok",
-        "outcome": "Jagiellonia Bia\u0142ystok",
-        "odds": 2.88,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-10-31T13:45:00Z"
     },
     {
         "id": "3b648c07b3eb3429ada3616b1f53f889",
