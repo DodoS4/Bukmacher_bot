@@ -40330,5 +40330,57 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "3:1"
+    },
+    {
+        "id": "01847028adef1eda81745cd36f240fc5",
+        "home": "Boston Bruins",
+        "away": "Vegas Golden Knights",
+        "outcome": "Vegas Golden Knights",
+        "odds": 2.51,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-03T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "d5983dfd10f862eb0e497aa9a9e412f3",
+        "home": "Florida Panthers",
+        "away": "Detroit Red Wings",
+        "outcome": "Detroit Red Wings",
+        "odds": 3.6,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-03T00:10:00Z",
+        "profit": 1300.0,
+        "status": "WIN",
+        "score": "3:5"
+    },
+    {
+        "id": "6c7ab45fd7ba80a0baccb7861cbe0fbe",
+        "home": "Chicago Blackhawks",
+        "away": "Colorado Avalanche",
+        "outcome": "Chicago Blackhawks",
+        "odds": 4.4,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-03T01:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "2:5"
+    },
+    {
+        "id": "8f768a5bd143ea549d68e5c1885023e6",
+        "home": "San Jose Sharks",
+        "away": "Calgary Flames",
+        "outcome": "Calgary Flames",
+        "odds": 2.9,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-03T02:10:00Z",
+        "profit": 950.0,
+        "status": "WIN",
+        "score": "1:2"
     }
 ]

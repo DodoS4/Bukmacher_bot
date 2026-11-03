@@ -10680,46 +10680,6 @@
         "time": "2026-11-01T21:00:00Z"
     },
     {
-        "id": "01847028adef1eda81745cd36f240fc5",
-        "home": "Boston Bruins",
-        "away": "Vegas Golden Knights",
-        "outcome": "Vegas Golden Knights",
-        "odds": 2.51,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-03T00:10:00Z"
-    },
-    {
-        "id": "d5983dfd10f862eb0e497aa9a9e412f3",
-        "home": "Florida Panthers",
-        "away": "Detroit Red Wings",
-        "outcome": "Detroit Red Wings",
-        "odds": 3.6,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-03T00:10:00Z"
-    },
-    {
-        "id": "6c7ab45fd7ba80a0baccb7861cbe0fbe",
-        "home": "Chicago Blackhawks",
-        "away": "Colorado Avalanche",
-        "outcome": "Chicago Blackhawks",
-        "odds": 4.4,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-03T01:10:00Z"
-    },
-    {
-        "id": "8f768a5bd143ea549d68e5c1885023e6",
-        "home": "San Jose Sharks",
-        "away": "Calgary Flames",
-        "outcome": "Calgary Flames",
-        "odds": 2.9,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-03T02:10:00Z"
-    },
-    {
         "id": "9b8076d3ffa027df6f6cb3189de46706",
         "home": "Galatasaray",
         "away": "VfB Stuttgart",
@@ -11118,5 +11078,25 @@
         "stake": 250.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-11-04T20:00:00Z"
+    },
+    {
+        "id": "6acb5a38373a8e41c5ba32ebf4b915ab",
+        "home": "Coachella Valley Firebirds",
+        "away": "Colorado Eagles",
+        "outcome": "Coachella Valley Firebirds",
+        "odds": 2.17,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-05T03:00:00Z"
+    },
+    {
+        "id": "879428bd2dac180a3eb198e809b38d24",
+        "home": "Ontario Reign",
+        "away": "San Jose Barracuda",
+        "outcome": "Ontario Reign",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-05T03:00:00Z"
     }
 ]
