@@ -40382,5 +40382,31 @@
         "profit": 950.0,
         "status": "WIN",
         "score": "1:2"
+    },
+    {
+        "id": "9b8076d3ffa027df6f6cb3189de46706",
+        "home": "Galatasaray",
+        "away": "VfB Stuttgart",
+        "outcome": "VfB Stuttgart",
+        "odds": 3.05,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-11-03T17:45:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "2:0"
+    },
+    {
+        "id": "55e0f74a61f7d72defa7ea0c83532ea5",
+        "home": "Shakhtar Donetsk",
+        "away": "Sporting Lisbon",
+        "outcome": "Shakhtar Donetsk",
+        "odds": 3.9,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-11-03T17:45:00Z",
+        "profit": -250.0,
+        "status": "LOSS",
+        "score": "0:1"
     }
 ]

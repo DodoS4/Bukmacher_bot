@@ -10680,26 +10680,6 @@
         "time": "2026-11-01T21:00:00Z"
     },
     {
-        "id": "9b8076d3ffa027df6f6cb3189de46706",
-        "home": "Galatasaray",
-        "away": "VfB Stuttgart",
-        "outcome": "VfB Stuttgart",
-        "odds": 3.05,
-        "stake": 250.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-11-03T17:45:00Z"
-    },
-    {
-        "id": "55e0f74a61f7d72defa7ea0c83532ea5",
-        "home": "Shakhtar Donetsk",
-        "away": "Sporting Lisbon",
-        "outcome": "Shakhtar Donetsk",
-        "odds": 3.9,
-        "stake": 250.0,
-        "sport": "soccer_uefa_champs_league",
-        "time": "2026-11-03T17:45:00Z"
-    },
-    {
         "id": "13ced29ffb36afa9ac1436ef60bda139",
         "home": "Columbus Blue Jackets",
         "away": "Colorado Avalanche",
@@ -11098,5 +11078,155 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-11-05T03:00:00Z"
+    },
+    {
+        "id": "1a1782b9fde64acd952ea9fd3aff7d83",
+        "home": "Buffalo Sabres",
+        "away": "Ottawa Senators",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.28,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-05T00:40:00Z"
+    },
+    {
+        "id": "bc22bdc8d7cca6b3695672a8ebf84456",
+        "home": "Florida Panthers",
+        "away": "Chicago Blackhawks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 4.3,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-05T00:40:00Z"
+    },
+    {
+        "id": "7cc07a9c5a886203f238a3fe0b83dfd1",
+        "home": "Seattle Kraken",
+        "away": "Calgary Flames",
+        "outcome": "Calgary Flames",
+        "odds": 2.98,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-05T03:10:00Z"
+    },
+    {
+        "id": "a3c2f39dce2dbf9e8cb78acce24cd379",
+        "home": "Los Angeles Kings",
+        "away": "San Jose Sharks",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.16,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-05T03:10:00Z"
+    },
+    {
+        "id": "9604c5b1c465435911e038db95ab2a7b",
+        "home": "Anderlecht",
+        "away": "Salzburg",
+        "outcome": "Anderlecht",
+        "odds": 2.02,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T17:45:00Z"
+    },
+    {
+        "id": "2347e0e7725940f6a14d5a80601390a5",
+        "home": "Crystal Palace",
+        "away": "TSG Hoffenheim",
+        "outcome": "TSG Hoffenheim",
+        "odds": 3.8,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T17:45:00Z"
+    },
+    {
+        "id": "3493023efb0aadbdffe37e74e528177c",
+        "home": "PFC Levski Sofia",
+        "away": "Jagiellonia Bia\u0142ystok",
+        "outcome": "Jagiellonia Bia\u0142ystok",
+        "odds": 3.85,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T17:45:00Z"
+    },
+    {
+        "id": "c50815d0a3cbc7dfe6b9f3a737ce4836",
+        "home": "Lillestrom",
+        "away": "Viktoria Plze\u0148",
+        "outcome": "Lillestrom",
+        "odds": 3.25,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T17:45:00Z"
+    },
+    {
+        "id": "d6ef4964addd663baed90f8f19fda1d3",
+        "home": "Real Sociedad",
+        "away": "Lyon",
+        "outcome": "Lyon",
+        "odds": 4.3,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T17:45:00Z"
+    },
+    {
+        "id": "02228f9f6863e25c9538d6062932e155",
+        "home": "NEC Nijmegen",
+        "away": "Omonoia FC",
+        "outcome": "Omonoia FC",
+        "odds": 4.3,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T17:45:00Z"
+    },
+    {
+        "id": "c91f4c9744f6ca502b7986a564e858df",
+        "home": "AZ Alkmaar",
+        "away": "Juventus",
+        "outcome": "AZ Alkmaar",
+        "odds": 3.85,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T20:00:00Z"
+    },
+    {
+        "id": "5ecf6578ba030a1e99abaa3200319e37",
+        "home": "Celtic",
+        "away": "Besiktas JK",
+        "outcome": "Celtic",
+        "odds": 3.25,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T20:00:00Z"
+    },
+    {
+        "id": "b828d43ba5fa1c8cdd2e34aabea9d0ce",
+        "home": "Celta Vigo",
+        "away": "Union Saint-Gilloise",
+        "outcome": "Celta Vigo",
+        "odds": 2.34,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T20:00:00Z"
+    },
+    {
+        "id": "402e102fa845ed84ab7e59b3b17f8c29",
+        "home": "Torreense",
+        "away": "FC Ararat-Armenia",
+        "outcome": "Torreense",
+        "odds": 1.81,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T20:00:00Z"
+    },
+    {
+        "id": "2af127e906ae56f3543d283b85f7b54e",
+        "home": "Hapoel Be'er Sheva",
+        "away": "OFI Crete",
+        "outcome": "OFI Crete",
+        "odds": 3.6,
+        "stake": 325.0,
+        "sport": "soccer_uefa_europa_league",
+        "time": "2026-11-05T20:00:00Z"
     }
 ]
