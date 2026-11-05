@@ -40837,5 +40837,57 @@
         "profit": -250.0,
         "status": "LOSS",
         "score": "4:1"
+    },
+    {
+        "id": "1a1782b9fde64acd952ea9fd3aff7d83",
+        "home": "Buffalo Sabres",
+        "away": "Ottawa Senators",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.28,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-05T00:40:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:2"
+    },
+    {
+        "id": "bc22bdc8d7cca6b3695672a8ebf84456",
+        "home": "Florida Panthers",
+        "away": "Chicago Blackhawks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 4.3,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-05T00:40:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:3"
+    },
+    {
+        "id": "7cc07a9c5a886203f238a3fe0b83dfd1",
+        "home": "Seattle Kraken",
+        "away": "Calgary Flames",
+        "outcome": "Calgary Flames",
+        "odds": 2.98,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-05T03:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "a3c2f39dce2dbf9e8cb78acce24cd379",
+        "home": "Los Angeles Kings",
+        "away": "San Jose Sharks",
+        "outcome": "Los Angeles Kings",
+        "odds": 2.16,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-05T03:10:00Z",
+        "profit": 580.0,
+        "status": "WIN",
+        "score": "7:2"
     }
 ]
