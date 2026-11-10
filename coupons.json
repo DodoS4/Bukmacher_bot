@@ -11218,5 +11218,95 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-11-11T02:40:00Z"
+    },
+    {
+        "id": "67931a5e7058c926e8da980de317f82c",
+        "home": "Leksands IF",
+        "away": "AIK",
+        "outcome": "Leksands IF",
+        "odds": 2.03,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z"
+    },
+    {
+        "id": "053602e39fd787d4a5319d0c73d6bbce",
+        "home": "Almtuna IS",
+        "away": "Nybro Vikings IF",
+        "outcome": "Nybro Vikings IF",
+        "odds": 3.15,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z"
+    },
+    {
+        "id": "d3ecd02326d2561a34385f7712d33ec6",
+        "home": "Mora IK",
+        "away": "BIK Karlskoga",
+        "outcome": "BIK Karlskoga",
+        "odds": 3.25,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z"
+    },
+    {
+        "id": "783d22b228ba85488ab2812ff11c3d3c",
+        "home": "S\u00f6dert\u00e4lje SK",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 3.15,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z"
+    },
+    {
+        "id": "18180c2d50911c7500df290c50c67b84",
+        "home": "Modo Hockey",
+        "away": "V\u00e4ster\u00e5s IK",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 4.3,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z"
+    },
+    {
+        "id": "dd2f1299f94c2dc1db48240eda1944f2",
+        "home": "Lukko",
+        "away": "KalPa",
+        "outcome": "KalPa",
+        "odds": 3.65,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-11T16:30:00Z"
+    },
+    {
+        "id": "5c2105381a9fdf83bd4cd17c632b9cdd",
+        "home": "Grand Rapids Griffins",
+        "away": "Rockford IceHogs",
+        "outcome": "Rockford IceHogs",
+        "odds": 3.42,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-11T16:00:00Z"
+    },
+    {
+        "id": "faea69d355b4dad0e03674449abe4eed",
+        "home": "Hershey Bears",
+        "away": "Hamilton Hammers",
+        "outcome": "Hershey Bears",
+        "odds": 1.87,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-12T00:00:00Z"
+    },
+    {
+        "id": "dc6953eeae7e8432c98173c0b58882c6",
+        "home": "Syracuse Crunch",
+        "away": "Laval Rocket",
+        "outcome": "Laval Rocket",
+        "odds": 2.26,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-12T00:00:00Z"
     }
 ]
