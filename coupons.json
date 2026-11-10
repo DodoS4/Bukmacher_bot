@@ -11080,16 +11080,6 @@
         "time": "2026-11-11T03:10:00Z"
     },
     {
-        "id": "024a11f3d043f09a395eb2f9d9bb3ac5",
-        "home": "\u00d6stersunds IK",
-        "away": "Vimmerby HC",
-        "outcome": "Vimmerby HC",
-        "odds": 3.65,
-        "stake": 312.5,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-11-10T18:00:00Z"
-    },
-    {
         "id": "05d0946db4001325f2963785ac602d43",
         "home": "HIFK",
         "away": "Jokerit",
@@ -11298,5 +11288,155 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-11-12T03:00:00Z"
+    },
+    {
+        "id": "79041ec71c97248859299c4b6211cc17",
+        "home": "Buffalo Sabres",
+        "away": "Tampa Bay Lightning",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T00:10:00Z"
+    },
+    {
+        "id": "d6fb69c3f844f53b1bb2619066cd7947",
+        "home": "Calgary Flames",
+        "away": "New York Rangers",
+        "outcome": "Calgary Flames",
+        "odds": 2.96,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T00:40:00Z"
+    },
+    {
+        "id": "78267bbb84304764c453515236c3ccce",
+        "home": "Edmonton Oilers",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T02:10:00Z"
+    },
+    {
+        "id": "81ee484309522975fbb4df2f859fa136",
+        "home": "Vegas Golden Knights",
+        "away": "Utah Mammoth",
+        "outcome": "Utah Mammoth",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T02:40:00Z"
+    },
+    {
+        "id": "43a0ad5ba8bff6cdca19964348b53eff",
+        "home": "Anaheim Ducks",
+        "away": "Nashville Predators",
+        "outcome": "Nashville Predators",
+        "odds": 2.95,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T03:10:00Z"
+    },
+    {
+        "id": "e75aa3d5c3b4939e080de0739fc8196a",
+        "home": "San Jose Sharks",
+        "away": "Pittsburgh Penguins",
+        "outcome": "San Jose Sharks",
+        "odds": 2.92,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T03:10:00Z"
+    },
+    {
+        "id": "5a2820b80e20b69258bd5eb25c18eb78",
+        "home": "Seattle Kraken",
+        "away": "Carolina Hurricanes",
+        "outcome": "Seattle Kraken",
+        "odds": 4.5,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T17:00:00Z"
+    },
+    {
+        "id": "f82b7dcad419fe720baba18c32582be7",
+        "home": "Bryn\u00e4s IF",
+        "away": "Skellefte\u00e5 AIK",
+        "outcome": "Skellefte\u00e5 AIK",
+        "odds": 2.28,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-12T18:00:00Z"
+    },
+    {
+        "id": "d7f83717a6e045b133fe167837c06979",
+        "home": "Fr\u00f6lunda HC",
+        "away": "Malm\u00f6 Redhawks",
+        "outcome": "Malm\u00f6 Redhawks",
+        "odds": 3.75,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-12T18:00:00Z"
+    },
+    {
+        "id": "02c8aaf344554dfdd084ddf206847fd3",
+        "home": "HV71",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 2.55,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-12T18:00:00Z"
+    },
+    {
+        "id": "332afab286e40dc5fbeadf727fb36811",
+        "home": "IF Bj\u00f6rkl\u00f6ven",
+        "away": "\u00d6rebro HK",
+        "outcome": "IF Bj\u00f6rkl\u00f6ven",
+        "odds": 3.06,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-12T18:00:00Z"
+    },
+    {
+        "id": "80be16149f52208b1b1e16236e1dbbde",
+        "home": "Link\u00f6ping HC",
+        "away": "R\u00f6gle BK",
+        "outcome": "Link\u00f6ping HC",
+        "odds": 3.2,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-12T18:00:00Z"
+    },
+    {
+        "id": "df1adb122c49323e8240e2ac0c43acb4",
+        "home": "V\u00e4xj\u00f6 Lakers",
+        "away": "Timr\u00e5 IK",
+        "outcome": "Timr\u00e5 IK",
+        "odds": 3.45,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-12T18:00:00Z"
+    },
+    {
+        "id": "5091dd9df92fe5a5df1e934627e55e7b",
+        "home": "TUTO Hockey",
+        "away": "JoKP",
+        "outcome": "JoKP",
+        "odds": 3.33,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-11-12T16:30:00Z"
+    },
+    {
+        "id": "db921a0193bec8e40a7195d0a0d80f52",
+        "home": "RoKi",
+        "away": "Ketter\u00e4",
+        "outcome": "Ketter\u00e4",
+        "odds": 3.48,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-11-12T16:30:00Z"
     }
 ]

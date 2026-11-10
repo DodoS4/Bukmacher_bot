@@ -42566,5 +42566,18 @@
         "profit": 900.0,
         "status": "WIN",
         "score": "3:2"
+    },
+    {
+        "id": "024a11f3d043f09a395eb2f9d9bb3ac5",
+        "home": "\u00d6stersunds IK",
+        "away": "Vimmerby HC",
+        "outcome": "Vimmerby HC",
+        "odds": 3.65,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-10T18:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "3:0"
     }
 ]
