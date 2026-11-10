@@ -11000,36 +11000,6 @@
         "time": "2026-11-09T16:30:00Z"
     },
     {
-        "id": "c0de79c9c801e5fc0d1bb3873b10a164",
-        "home": "Edmonton Oilers",
-        "away": "New York Rangers",
-        "outcome": "New York Rangers",
-        "odds": 3.05,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-10T01:00:00Z"
-    },
-    {
-        "id": "d6c28acaab1a3d7db58968f5f33fbf3a",
-        "home": "Vancouver Canucks",
-        "away": "Philadelphia Flyers",
-        "outcome": "Vancouver Canucks",
-        "odds": 2.75,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-10T02:30:00Z"
-    },
-    {
-        "id": "4b345990c8a04ff88ce31d233a406011",
-        "home": "San Jose Sharks",
-        "away": "New York Islanders",
-        "outcome": "San Jose Sharks",
-        "odds": 2.8,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-10T03:00:00Z"
-    },
-    {
         "id": "5e9d9a8f36cf7fb6d45f5b804d52c6a5",
         "home": "Springfield Thunderbirds",
         "away": "Hartford Wolf Pack",
@@ -11308,5 +11278,25 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-11-12T00:00:00Z"
+    },
+    {
+        "id": "261f31d56d5b673464c7738c6f74ea0b",
+        "home": "Utica Comets",
+        "away": "Belleville Senators",
+        "outcome": "Belleville Senators",
+        "odds": 2.66,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-11T23:00:00Z"
+    },
+    {
+        "id": "50a36c36eb4470027515a78cf288e518",
+        "home": "San Diego Gulls",
+        "away": "San Jose Barracuda",
+        "outcome": "San Diego Gulls",
+        "odds": 2.44,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-12T03:00:00Z"
     }
 ]

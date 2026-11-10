@@ -42527,5 +42527,44 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "1:2"
+    },
+    {
+        "id": "c0de79c9c801e5fc0d1bb3873b10a164",
+        "home": "Edmonton Oilers",
+        "away": "New York Rangers",
+        "outcome": "New York Rangers",
+        "odds": 3.05,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-10T01:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "d6c28acaab1a3d7db58968f5f33fbf3a",
+        "home": "Vancouver Canucks",
+        "away": "Philadelphia Flyers",
+        "outcome": "Vancouver Canucks",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-10T02:30:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:3"
+    },
+    {
+        "id": "4b345990c8a04ff88ce31d233a406011",
+        "home": "San Jose Sharks",
+        "away": "New York Islanders",
+        "outcome": "San Jose Sharks",
+        "odds": 2.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-10T03:00:00Z",
+        "profit": 900.0,
+        "status": "WIN",
+        "score": "3:2"
     }
 ]
