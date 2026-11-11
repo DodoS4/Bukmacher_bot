@@ -42670,5 +42670,70 @@
         "profit": 975.0,
         "status": "WIN",
         "score": "0:3"
+    },
+    {
+        "id": "67931a5e7058c926e8da980de317f82c",
+        "home": "Leksands IF",
+        "away": "AIK",
+        "outcome": "Leksands IF",
+        "odds": 2.03,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z",
+        "profit": -312.5,
+        "status": "LOSS",
+        "score": "4:5"
+    },
+    {
+        "id": "053602e39fd787d4a5319d0c73d6bbce",
+        "home": "Almtuna IS",
+        "away": "Nybro Vikings IF",
+        "outcome": "Nybro Vikings IF",
+        "odds": 3.15,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z",
+        "profit": 671.88,
+        "status": "WIN",
+        "score": "0:5"
+    },
+    {
+        "id": "d3ecd02326d2561a34385f7712d33ec6",
+        "home": "Mora IK",
+        "away": "BIK Karlskoga",
+        "outcome": "BIK Karlskoga",
+        "odds": 3.25,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z",
+        "profit": 703.12,
+        "status": "WIN",
+        "score": "1:4"
+    },
+    {
+        "id": "783d22b228ba85488ab2812ff11c3d3c",
+        "home": "S\u00f6dert\u00e4lje SK",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 3.15,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z",
+        "profit": 671.88,
+        "status": "WIN",
+        "score": "2:3"
+    },
+    {
+        "id": "18180c2d50911c7500df290c50c67b84",
+        "home": "Modo Hockey",
+        "away": "V\u00e4ster\u00e5s IK",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 4.3,
+        "stake": 312.5,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-11T18:00:00Z",
+        "profit": 1031.25,
+        "status": "WIN",
+        "score": "2:4"
     }
 ]
