@@ -42735,5 +42735,83 @@
         "profit": 1031.25,
         "status": "WIN",
         "score": "2:4"
+    },
+    {
+        "id": "79041ec71c97248859299c4b6211cc17",
+        "home": "Buffalo Sabres",
+        "away": "Tampa Bay Lightning",
+        "outcome": "Buffalo Sabres",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:8"
+    },
+    {
+        "id": "d6fb69c3f844f53b1bb2619066cd7947",
+        "home": "Calgary Flames",
+        "away": "New York Rangers",
+        "outcome": "Calgary Flames",
+        "odds": 2.96,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T00:40:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:3"
+    },
+    {
+        "id": "78267bbb84304764c453515236c3ccce",
+        "home": "Edmonton Oilers",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T02:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "81ee484309522975fbb4df2f859fa136",
+        "home": "Vegas Golden Knights",
+        "away": "Utah Mammoth",
+        "outcome": "Utah Mammoth",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T02:40:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "5:3"
+    },
+    {
+        "id": "43a0ad5ba8bff6cdca19964348b53eff",
+        "home": "Anaheim Ducks",
+        "away": "Nashville Predators",
+        "outcome": "Nashville Predators",
+        "odds": 2.95,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T03:10:00Z",
+        "profit": 975.0,
+        "status": "WIN",
+        "score": "2:4"
+    },
+    {
+        "id": "e75aa3d5c3b4939e080de0739fc8196a",
+        "home": "San Jose Sharks",
+        "away": "Pittsburgh Penguins",
+        "outcome": "San Jose Sharks",
+        "odds": 2.92,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-12T03:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "2:3"
     }
 ]
