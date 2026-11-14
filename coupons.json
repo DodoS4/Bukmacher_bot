@@ -11370,26 +11370,6 @@
         "time": "2026-11-14T03:10:00Z"
     },
     {
-        "id": "069bea369487ef0cd3017c9ceea68817",
-        "home": "Vancouver Canucks",
-        "away": "New York Rangers",
-        "outcome": "Vancouver Canucks",
-        "odds": 3.95,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-14T02:10:00Z"
-    },
-    {
-        "id": "21cd36d8c877a851efe2016178ff0bd1",
-        "home": "Vegas Golden Knights",
-        "away": "Nashville Predators",
-        "outcome": "Nashville Predators",
-        "odds": 3.55,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-14T03:10:00Z"
-    },
-    {
         "id": "b367f0ee83f367c49ecc8e5e96f7216c",
         "home": "R\u00f6gle BK",
         "away": "Fr\u00f6lunda HC",
@@ -11858,5 +11838,65 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-11-14T15:00:00Z"
+    },
+    {
+        "id": "af82ec876e810752d6385fdccae4995e",
+        "home": "Hershey Bears",
+        "away": "Charlotte Checkers",
+        "outcome": "Charlotte Checkers",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-15T20:00:00Z"
+    },
+    {
+        "id": "fc9dd682f09982fe555cd21a4dfb2cbc",
+        "home": "Providence Bruins",
+        "away": "Toronto Marlies",
+        "outcome": "Toronto Marlies",
+        "odds": 2.48,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-15T20:05:00Z"
+    },
+    {
+        "id": "689b7af30f015a0ed20b6ebc7e16b44e",
+        "home": "Chicago Wolves",
+        "away": "Manitoba Moose",
+        "outcome": "Manitoba Moose",
+        "odds": 2.43,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-15T21:00:00Z"
+    },
+    {
+        "id": "17ea5d8347719233cf789d73a2855ff0",
+        "home": "Coachella Valley Firebirds",
+        "away": "Abbotsford Canucks",
+        "outcome": "Abbotsford Canucks",
+        "odds": 2.33,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-15T23:00:00Z"
+    },
+    {
+        "id": "bbec500180746759348a25d398abe1a9",
+        "home": "W-B/Scranton Penguins",
+        "away": "Lehigh Valley Phantoms",
+        "outcome": "Lehigh Valley Phantoms",
+        "odds": 2.69,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-15T23:05:00Z"
+    },
+    {
+        "id": "8a87be5d1aed4770a1389c485bf0a34e",
+        "home": "Ontario Reign",
+        "away": "Colorado Eagles",
+        "outcome": "Ontario Reign",
+        "odds": 2.45,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-16T01:00:00Z"
     }
 ]

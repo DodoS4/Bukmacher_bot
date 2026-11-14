@@ -43086,5 +43086,31 @@
         "profit": -406.25,
         "status": "LOSS",
         "score": "4:3"
+    },
+    {
+        "id": "069bea369487ef0cd3017c9ceea68817",
+        "home": "Vancouver Canucks",
+        "away": "New York Rangers",
+        "outcome": "Vancouver Canucks",
+        "odds": 3.95,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-14T02:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:5"
+    },
+    {
+        "id": "21cd36d8c877a851efe2016178ff0bd1",
+        "home": "Vegas Golden Knights",
+        "away": "Nashville Predators",
+        "outcome": "Nashville Predators",
+        "odds": 3.55,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-14T03:10:00Z",
+        "profit": 1275.0,
+        "status": "WIN",
+        "score": "2:3"
     }
 ]
