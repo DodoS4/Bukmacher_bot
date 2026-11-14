@@ -43034,5 +43034,57 @@
         "profit": 860.0,
         "status": "WIN",
         "score": "2:5"
+    },
+    {
+        "id": "81ebc855d0d12e0183caff1ebf797a83",
+        "home": "BIK Karlskoga",
+        "away": "AIK",
+        "outcome": "BIK Karlskoga",
+        "odds": 3.5,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-13T18:00:00Z",
+        "profit": 1015.62,
+        "status": "WIN",
+        "score": "3:2"
+    },
+    {
+        "id": "427a92419de7901abe72d8894ae7b03f",
+        "home": "Nybro Vikings IF",
+        "away": "Kalmar HC",
+        "outcome": "Nybro Vikings IF",
+        "odds": 4.0,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-13T18:00:00Z",
+        "profit": 1218.75,
+        "status": "WIN",
+        "score": "4:3"
+    },
+    {
+        "id": "f4f5d1d40ef58faafd1f18025212898a",
+        "home": "V\u00e4ster\u00e5s IK",
+        "away": "Leksands IF",
+        "outcome": "V\u00e4ster\u00e5s IK",
+        "odds": 3.84,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-13T18:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "0:1"
+    },
+    {
+        "id": "c343f3aea96642b71a85b6ce67c1fbd5",
+        "home": "Modo Hockey",
+        "away": "\u00d6stersunds IK",
+        "outcome": "\u00d6stersunds IK",
+        "odds": 3.45,
+        "stake": 406.25,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-13T18:00:00Z",
+        "profit": -406.25,
+        "status": "LOSS",
+        "score": "4:3"
     }
 ]
