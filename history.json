@@ -43385,5 +43385,44 @@
         "profit": 1275.0,
         "status": "WIN",
         "score": "2:3"
+    },
+    {
+        "id": "c82fd96393fe937568ea40e9f1f6a9e2",
+        "home": "AIK",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 3.9,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-15T13:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:1"
+    },
+    {
+        "id": "5c71cb7f738a99118a64e8f4a9bf747e",
+        "home": "Kalmar HC",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "S\u00f6dert\u00e4lje SK",
+        "odds": 3.33,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-15T15:30:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "9:1"
+    },
+    {
+        "id": "279e927614033ecbfb724100395eb82d",
+        "home": "Mora IK",
+        "away": "V\u00e4ster\u00e5s IK",
+        "outcome": "Mora IK",
+        "odds": 2.32,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-15T15:30:00Z",
+        "profit": 660.0,
+        "status": "WIN",
+        "score": "4:2"
     }
 ]

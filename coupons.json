@@ -11500,36 +11500,6 @@
         "time": "2026-11-15T02:00:00Z"
     },
     {
-        "id": "c82fd96393fe937568ea40e9f1f6a9e2",
-        "home": "AIK",
-        "away": "IK Oskarshamn",
-        "outcome": "IK Oskarshamn",
-        "odds": 3.9,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-11-15T13:00:00Z"
-    },
-    {
-        "id": "5c71cb7f738a99118a64e8f4a9bf747e",
-        "home": "Kalmar HC",
-        "away": "S\u00f6dert\u00e4lje SK",
-        "outcome": "S\u00f6dert\u00e4lje SK",
-        "odds": 3.33,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-11-15T15:30:00Z"
-    },
-    {
-        "id": "279e927614033ecbfb724100395eb82d",
-        "home": "Mora IK",
-        "away": "V\u00e4ster\u00e5s IK",
-        "outcome": "Mora IK",
-        "odds": 2.32,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-11-15T15:30:00Z"
-    },
-    {
         "id": "2c00d391c11d2ed0c033bf6e03f4f337",
         "home": "Sport",
         "away": "HPK",
@@ -11728,5 +11698,25 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-11-16T02:10:00Z"
+    },
+    {
+        "id": "2ef747b5f529d07b71843f1b5240eb38",
+        "home": "New York Rangers",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "New York Rangers",
+        "odds": 2.56,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-17T00:30:00Z"
+    },
+    {
+        "id": "5f91a97782804f182c066e49e2b891a1",
+        "home": "Pyry",
+        "away": "IPK",
+        "outcome": "Pyry",
+        "odds": 3.34,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-11-17T16:30:00Z"
     }
 ]
