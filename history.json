@@ -43424,5 +43424,57 @@
         "profit": 660.0,
         "status": "WIN",
         "score": "4:2"
+    },
+    {
+        "id": "d2834086e817eeb75c1ea2cd312f62c5",
+        "home": "Philadelphia Flyers",
+        "away": "Edmonton Oilers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.35,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-16T00:40:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "2:5"
+    },
+    {
+        "id": "539a387d9fd0da9af213bf8002fdb0d4",
+        "home": "Anaheim Ducks",
+        "away": "Calgary Flames",
+        "outcome": "Calgary Flames",
+        "odds": 3.15,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-16T01:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "6:1"
+    },
+    {
+        "id": "edbb603c4a7ed77b892f7bba6dcef824",
+        "home": "Dallas Stars",
+        "away": "Florida Panthers",
+        "outcome": "Dallas Stars",
+        "odds": 2.33,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-16T01:10:00Z",
+        "profit": 665.0,
+        "status": "WIN",
+        "score": "2:1"
+    },
+    {
+        "id": "e52a5926735bcff42d3d0ce052a21938",
+        "home": "San Jose Sharks",
+        "away": "Nashville Predators",
+        "outcome": "Nashville Predators",
+        "odds": 2.11,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-16T02:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:2"
     }
 ]

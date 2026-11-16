@@ -11660,46 +11660,6 @@
         "time": "2026-11-16T01:00:00Z"
     },
     {
-        "id": "d2834086e817eeb75c1ea2cd312f62c5",
-        "home": "Philadelphia Flyers",
-        "away": "Edmonton Oilers",
-        "outcome": "Philadelphia Flyers",
-        "odds": 3.35,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-16T00:40:00Z"
-    },
-    {
-        "id": "539a387d9fd0da9af213bf8002fdb0d4",
-        "home": "Anaheim Ducks",
-        "away": "Calgary Flames",
-        "outcome": "Calgary Flames",
-        "odds": 3.15,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-16T01:10:00Z"
-    },
-    {
-        "id": "edbb603c4a7ed77b892f7bba6dcef824",
-        "home": "Dallas Stars",
-        "away": "Florida Panthers",
-        "outcome": "Dallas Stars",
-        "odds": 2.33,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-16T01:10:00Z"
-    },
-    {
-        "id": "e52a5926735bcff42d3d0ce052a21938",
-        "home": "San Jose Sharks",
-        "away": "Nashville Predators",
-        "outcome": "Nashville Predators",
-        "odds": 2.11,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-16T02:10:00Z"
-    },
-    {
         "id": "2ef747b5f529d07b71843f1b5240eb38",
         "home": "New York Rangers",
         "away": "Montr\u00e9al Canadiens",
@@ -11718,5 +11678,105 @@
         "stake": 250.0,
         "sport": "icehockey_mestis",
         "time": "2026-11-17T16:30:00Z"
+    },
+    {
+        "id": "26e5860ebc34066bd5761077e2874ca0",
+        "home": "Kiekko-Espoo",
+        "away": "Ilves",
+        "outcome": "Kiekko-Espoo",
+        "odds": 2.7,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-18T16:30:00Z"
+    },
+    {
+        "id": "bf46277cefa310941b884a2b333f14b0",
+        "home": "Jukurit",
+        "away": "Jokerit",
+        "outcome": "Jokerit",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-18T16:30:00Z"
+    },
+    {
+        "id": "03cf8cdaa2510f7e2e2f88f8fff27098",
+        "home": "KalPa",
+        "away": "Lukko",
+        "outcome": "KalPa",
+        "odds": 2.87,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-18T16:30:00Z"
+    },
+    {
+        "id": "38caae6b7587c15720966bfa06a7bd64",
+        "home": "TPS",
+        "away": "K\u00e4rp\u00e4t",
+        "outcome": "K\u00e4rp\u00e4t",
+        "odds": 3.21,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-18T16:30:00Z"
+    },
+    {
+        "id": "cdba5c5c7c593471c3adc4d64238fc6d",
+        "home": "\u00c4ss\u00e4t",
+        "away": "Pelicans",
+        "outcome": "Pelicans",
+        "odds": 3.7,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-18T16:30:00Z"
+    },
+    {
+        "id": "585ae650823c1247c243ddf166285dae",
+        "home": "Hartford Wolf Pack",
+        "away": "Charlotte Checkers",
+        "outcome": "Charlotte Checkers",
+        "odds": 2.42,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-17T16:00:00Z"
+    },
+    {
+        "id": "c545e399e08a1d1039dc11d28bb4f4f9",
+        "home": "Bakersfield Condors",
+        "away": "Colorado Eagles",
+        "outcome": "Colorado Eagles",
+        "odds": 2.4,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-17T18:30:00Z"
+    },
+    {
+        "id": "e27860034c51ff293456cc4d38c003fd",
+        "home": "Cleveland Monsters",
+        "away": "Hamilton Hammers",
+        "outcome": "Hamilton Hammers",
+        "odds": 2.67,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-18T00:00:00Z"
+    },
+    {
+        "id": "3e71af50931b7551a71ccf1b9e4e1a6b",
+        "home": "Calgary Wranglers",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "Coachella Valley Firebirds",
+        "odds": 2.63,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-18T01:00:00Z"
+    },
+    {
+        "id": "820e60f5c9b5cde0cc7d054327f2d922",
+        "home": "Rockford IceHogs",
+        "away": "Chicago Wolves",
+        "outcome": "Rockford IceHogs",
+        "odds": 2.47,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-18T01:00:00Z"
     }
 ]
