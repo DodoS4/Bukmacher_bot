@@ -11660,16 +11660,6 @@
         "time": "2026-11-16T01:00:00Z"
     },
     {
-        "id": "2ef747b5f529d07b71843f1b5240eb38",
-        "home": "New York Rangers",
-        "away": "Montr\u00e9al Canadiens",
-        "outcome": "New York Rangers",
-        "odds": 2.56,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-17T00:30:00Z"
-    },
-    {
         "id": "5f91a97782804f182c066e49e2b891a1",
         "home": "Pyry",
         "away": "IPK",
@@ -11918,5 +11908,125 @@
         "stake": 500.0,
         "sport": "icehockey_sweden_allsvenskan",
         "time": "2026-11-18T18:00:00Z"
+    },
+    {
+        "id": "38779d99fd6274c9008c5cc03fa504ef",
+        "home": "Detroit Red Wings",
+        "away": "Boston Bruins",
+        "outcome": "Detroit Red Wings",
+        "odds": 2.45,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-19T00:40:00Z"
+    },
+    {
+        "id": "a3e6d9189d7bb72b7c8ada9993fe63f2",
+        "home": "New Jersey Devils",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 3.2,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-19T00:40:00Z"
+    },
+    {
+        "id": "af8d9e2567d44dcbb4a548272d876b6b",
+        "home": "Utah Mammoth",
+        "away": "Colorado Avalanche",
+        "outcome": "Utah Mammoth",
+        "odds": 2.53,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-19T03:10:00Z"
+    },
+    {
+        "id": "759e5442fc66a3116a5aa7af4da3306e",
+        "home": "Almtuna IS",
+        "away": "\u00d6stersunds IK",
+        "outcome": "Almtuna IS",
+        "odds": 2.7,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-18T18:00:00Z"
+    },
+    {
+        "id": "c6c6d6c67c440fa8af5b3c5ec0e1241e",
+        "home": "Belleville Senators",
+        "away": "Laval Rocket",
+        "outcome": "Belleville Senators",
+        "odds": 2.95,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-18T15:30:00Z"
+    },
+    {
+        "id": "6f36b18053b722dd66503814e05d0cce",
+        "home": "W-B/Scranton Penguins",
+        "away": "Milwaukee Admirals",
+        "outcome": "W-B/Scranton Penguins",
+        "odds": 2.51,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-18T23:35:00Z"
+    },
+    {
+        "id": "8f614610dc979cd0988ba498b8565254",
+        "home": "Grand Rapids Griffins",
+        "away": "Manitoba Moose",
+        "outcome": "Grand Rapids Griffins",
+        "odds": 2.28,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-19T00:00:00Z"
+    },
+    {
+        "id": "6b6a5576c3e7a75b3752c16dd6c1a9cd",
+        "home": "Syracuse Crunch",
+        "away": "Rochester Americans",
+        "outcome": "Syracuse Crunch",
+        "odds": 2.42,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-19T00:00:00Z"
+    },
+    {
+        "id": "91cb473ac323fde94bfbd9d2763556e5",
+        "home": "Ontario Reign",
+        "away": "Abbotsford Canucks",
+        "outcome": "Ontario Reign",
+        "odds": 2.5,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-19T03:00:00Z"
+    },
+    {
+        "id": "d64da4c74586002a34460c0b979d76ad",
+        "home": "San Diego Gulls",
+        "away": "Bakersfield Condors",
+        "outcome": "Bakersfield Condors",
+        "odds": 2.74,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-19T03:00:00Z"
+    },
+    {
+        "id": "e391f854e75c3f5c9951db102eb55f15",
+        "home": "Henderson Silver Knights",
+        "away": "San Jose Barracuda",
+        "outcome": "San Jose Barracuda",
+        "odds": 2.68,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-19T03:00:00Z"
+    },
+    {
+        "id": "7628a2e77f6d6085a913f5dd37089ea7",
+        "home": "Ketter\u00e4",
+        "away": "KeuPa HT",
+        "outcome": "KeuPa HT",
+        "odds": 2.6,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-11-19T16:30:00Z"
     }
 ]

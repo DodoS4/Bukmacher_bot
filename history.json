@@ -43476,5 +43476,18 @@
         "profit": -500.0,
         "status": "LOSS",
         "score": "4:2"
+    },
+    {
+        "id": "2ef747b5f529d07b71843f1b5240eb38",
+        "home": "New York Rangers",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "New York Rangers",
+        "odds": 2.56,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-17T00:30:00Z",
+        "profit": 780.0,
+        "status": "WIN",
+        "score": "3:1"
     }
 ]
