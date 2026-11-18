@@ -11770,116 +11770,6 @@
         "time": "2026-11-18T01:00:00Z"
     },
     {
-        "id": "5cfe0dc8ffa69bdd676d878da0ae62fb",
-        "home": "Boston Bruins",
-        "away": "Los Angeles Kings",
-        "outcome": "Los Angeles Kings",
-        "odds": 3.05,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T00:10:00Z"
-    },
-    {
-        "id": "c5e76339fef03145801250ff2216947b",
-        "home": "Philadelphia Flyers",
-        "away": "Buffalo Sabres",
-        "outcome": "Philadelphia Flyers",
-        "odds": 2.73,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T00:10:00Z"
-    },
-    {
-        "id": "03ad7eb1b11b6d15943b734624469fdf",
-        "home": "New York Islanders",
-        "away": "Columbus Blue Jackets",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 2.92,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T00:10:00Z"
-    },
-    {
-        "id": "335e0828d32c0c78646ed876d6ca4555",
-        "home": "Florida Panthers",
-        "away": "Edmonton Oilers",
-        "outcome": "Edmonton Oilers",
-        "odds": 2.69,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T00:10:00Z"
-    },
-    {
-        "id": "49403a7a83c32958f485162e0c8ec655",
-        "home": "Winnipeg Jets",
-        "away": "Ottawa Senators",
-        "outcome": "Winnipeg Jets",
-        "odds": 2.8,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T00:10:00Z"
-    },
-    {
-        "id": "8261a14ac1f636f0b382af43b97ef915",
-        "home": "Chicago Blackhawks",
-        "away": "Toronto Maple Leafs",
-        "outcome": "Chicago Blackhawks",
-        "odds": 3.15,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T00:40:00Z"
-    },
-    {
-        "id": "55e751e73fd29094d71338bc74c10e34",
-        "home": "Tampa Bay Lightning",
-        "away": "Washington Capitals",
-        "outcome": "Washington Capitals",
-        "odds": 3.2,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T00:40:00Z"
-    },
-    {
-        "id": "87e99dffdbf06748171533ee8ba96f75",
-        "home": "St Louis Blues",
-        "away": "Anaheim Ducks",
-        "outcome": "Anaheim Ducks",
-        "odds": 3.0,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T01:10:00Z"
-    },
-    {
-        "id": "6ae369b96d70482d384c0894ff450c5c",
-        "home": "Minnesota Wild",
-        "away": "Nashville Predators",
-        "outcome": "Nashville Predators",
-        "odds": 3.8,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T01:10:00Z"
-    },
-    {
-        "id": "6238e006f875cb22d570c5eda2dfe820",
-        "home": "San Jose Sharks",
-        "away": "Calgary Flames",
-        "outcome": "Calgary Flames",
-        "odds": 2.8,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T03:10:00Z"
-    },
-    {
-        "id": "3d788aa0737d2ab5b2bf92f8e40ea63f",
-        "home": "Vegas Golden Knights",
-        "away": "Dallas Stars",
-        "outcome": "Dallas Stars",
-        "odds": 2.89,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-18T03:10:00Z"
-    },
-    {
         "id": "21cbc07c418339551ccc12931493efff",
         "home": "BIK Karlskoga",
         "away": "IK Oskarshamn",
@@ -12108,5 +11998,95 @@
         "stake": 125.0,
         "sport": "soccer_usa_mls",
         "time": "2026-11-20T00:30:00Z"
+    },
+    {
+        "id": "6e1de7988dd0c9689abb85f6b8399336",
+        "home": "Washington Capitals",
+        "away": "Buffalo Sabres",
+        "outcome": "Washington Capitals",
+        "odds": 2.31,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T00:10:00Z"
+    },
+    {
+        "id": "3449054d3b59c2c7fc8cf914dbd45ea6",
+        "home": "Carolina Hurricanes",
+        "away": "Montr\u00e9al Canadiens",
+        "outcome": "Montr\u00e9al Canadiens",
+        "odds": 4.11,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T00:10:00Z"
+    },
+    {
+        "id": "7bca03cc186cb70bd12d060ededa8842",
+        "home": "Toronto Maple Leafs",
+        "away": "Los Angeles Kings",
+        "outcome": "Toronto Maple Leafs",
+        "odds": 2.39,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T00:10:00Z"
+    },
+    {
+        "id": "6675090a33dca8b7f340ea6375fb84e9",
+        "home": "Winnipeg Jets",
+        "away": "New York Islanders",
+        "outcome": "Winnipeg Jets",
+        "odds": 2.44,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T00:10:00Z"
+    },
+    {
+        "id": "84d6f3a55d9aac25cd001f3d94aab44b",
+        "home": "Ottawa Senators",
+        "away": "Philadelphia Flyers",
+        "outcome": "Philadelphia Flyers",
+        "odds": 3.4,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T00:10:00Z"
+    },
+    {
+        "id": "8cd65f19317595a31a8e98aee88027a5",
+        "home": "Pittsburgh Penguins",
+        "away": "St Louis Blues",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 2.53,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T00:10:00Z"
+    },
+    {
+        "id": "147b0b6f883cce916d06b7aaa9b9594c",
+        "home": "Tampa Bay Lightning",
+        "away": "Edmonton Oilers",
+        "outcome": "Edmonton Oilers",
+        "odds": 2.78,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T00:40:00Z"
+    },
+    {
+        "id": "3e6894e350f62db024db622aedba4507",
+        "home": "Calgary Flames",
+        "away": "Minnesota Wild",
+        "outcome": "Calgary Flames",
+        "odds": 3.69,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T01:00:00Z"
+    },
+    {
+        "id": "8689e63a36a8d62c4eba2fc402bb4f0c",
+        "home": "Colorado Avalanche",
+        "away": "Anaheim Ducks",
+        "outcome": "Anaheim Ducks",
+        "odds": 2.93,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T02:10:00Z"
     }
 ]
