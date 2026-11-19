@@ -11770,36 +11770,6 @@
         "time": "2026-11-18T01:00:00Z"
     },
     {
-        "id": "21cbc07c418339551ccc12931493efff",
-        "home": "BIK Karlskoga",
-        "away": "IK Oskarshamn",
-        "outcome": "IK Oskarshamn",
-        "odds": 2.8,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-11-18T18:00:00Z"
-    },
-    {
-        "id": "21e0e899e55512d111fd8dd4da46ec6f",
-        "home": "Modo Hockey",
-        "away": "Kalmar HC",
-        "outcome": "Modo Hockey",
-        "odds": 2.25,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-11-18T18:00:00Z"
-    },
-    {
-        "id": "93d66cd7b36013e0c288fc6f6785f143",
-        "home": "Vimmerby HC",
-        "away": "S\u00f6dert\u00e4lje SK",
-        "outcome": "Vimmerby HC",
-        "odds": 2.95,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-11-18T18:00:00Z"
-    },
-    {
         "id": "38779d99fd6274c9008c5cc03fa504ef",
         "home": "Detroit Red Wings",
         "away": "Boston Bruins",
@@ -11828,16 +11798,6 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-11-19T03:10:00Z"
-    },
-    {
-        "id": "759e5442fc66a3116a5aa7af4da3306e",
-        "home": "Almtuna IS",
-        "away": "\u00d6stersunds IK",
-        "outcome": "Almtuna IS",
-        "odds": 2.7,
-        "stake": 500.0,
-        "sport": "icehockey_sweden_allsvenskan",
-        "time": "2026-11-18T18:00:00Z"
     },
     {
         "id": "c6c6d6c67c440fa8af5b3c5ec0e1241e",
@@ -12088,5 +12048,95 @@
         "stake": 500.0,
         "sport": "icehockey_nhl",
         "time": "2026-11-20T02:10:00Z"
+    },
+    {
+        "id": "7f30902099116c9c5824e85201be7d60",
+        "home": "Chicago Blackhawks",
+        "away": "Columbus Blue Jackets",
+        "outcome": "Chicago Blackhawks",
+        "odds": 3.17,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T01:10:00Z"
+    },
+    {
+        "id": "64955eccc864e1b34e23754d71319db4",
+        "home": "Seattle Kraken",
+        "away": "Vancouver Canucks",
+        "outcome": "Vancouver Canucks",
+        "odds": 3.4,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T02:50:00Z"
+    },
+    {
+        "id": "6c4d4bc698a434e4b1d5492b9bff28cb",
+        "home": "Vegas Golden Knights",
+        "away": "Dallas Stars",
+        "outcome": "Dallas Stars",
+        "odds": 2.7,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-20T03:10:00Z"
+    },
+    {
+        "id": "019b1e1bf49fb99e1f33da3cec173483",
+        "home": "KooKoo",
+        "away": "K\u00e4rp\u00e4t",
+        "outcome": "KooKoo",
+        "odds": 2.75,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-20T16:00:00Z"
+    },
+    {
+        "id": "02eef179fe638f6b58a989aeea9f88bb",
+        "home": "JYP",
+        "away": "HIFK",
+        "outcome": "HIFK",
+        "odds": 3.23,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-20T16:30:00Z"
+    },
+    {
+        "id": "d56d4d54ecf467bcd3346c7ef6e084ca",
+        "home": "Pelicans",
+        "away": "Lukko",
+        "outcome": "Pelicans",
+        "odds": 2.9,
+        "stake": 250.0,
+        "sport": "icehockey_liiga",
+        "time": "2026-11-20T16:30:00Z"
+    },
+    {
+        "id": "971cf57f77cbb9e44a16b735d022153b",
+        "home": "JoKP",
+        "away": "TUTO Hockey",
+        "outcome": "TUTO Hockey",
+        "odds": 2.61,
+        "stake": 250.0,
+        "sport": "icehockey_mestis",
+        "time": "2026-11-20T16:30:00Z"
+    },
+    {
+        "id": "e84172da118dd122bb743952cb683bca",
+        "home": "Pogo\u0144 Szczecin",
+        "away": "\u015al\u0105sk Wroc\u0142aw",
+        "outcome": "\u015al\u0105sk Wroc\u0142aw",
+        "odds": 4.4,
+        "stake": 125.0,
+        "sport": "soccer_poland_ekstraklasa",
+        "time": "2026-11-20T19:30:00Z"
+    },
+    {
+        "id": "f33c91844ee2ddb59ea367b52e27380b",
+        "home": "Cercle Brugge KSV",
+        "away": "Westerlo",
+        "outcome": "Westerlo",
+        "odds": 3.35,
+        "stake": 250.0,
+        "sport": "soccer_belgium_first_div",
+        "time": "2026-11-20T19:45:00Z"
     }
 ]

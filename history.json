@@ -43632,5 +43632,57 @@
         "profit": 945.0,
         "status": "WIN",
         "score": "3:4"
+    },
+    {
+        "id": "21cbc07c418339551ccc12931493efff",
+        "home": "BIK Karlskoga",
+        "away": "IK Oskarshamn",
+        "outcome": "IK Oskarshamn",
+        "odds": 2.8,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-18T18:00:00Z",
+        "profit": 900.0,
+        "status": "WIN",
+        "score": "1:2"
+    },
+    {
+        "id": "21e0e899e55512d111fd8dd4da46ec6f",
+        "home": "Modo Hockey",
+        "away": "Kalmar HC",
+        "outcome": "Modo Hockey",
+        "odds": 2.25,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-18T18:00:00Z",
+        "profit": 625.0,
+        "status": "WIN",
+        "score": "2:1"
+    },
+    {
+        "id": "93d66cd7b36013e0c288fc6f6785f143",
+        "home": "Vimmerby HC",
+        "away": "S\u00f6dert\u00e4lje SK",
+        "outcome": "Vimmerby HC",
+        "odds": 2.95,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-18T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:4"
+    },
+    {
+        "id": "759e5442fc66a3116a5aa7af4da3306e",
+        "home": "Almtuna IS",
+        "away": "\u00d6stersunds IK",
+        "outcome": "Almtuna IS",
+        "odds": 2.7,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_allsvenskan",
+        "time": "2026-11-18T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:3"
     }
 ]
