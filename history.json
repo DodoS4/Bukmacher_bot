@@ -43723,5 +43723,83 @@
         "profit": 765.0,
         "status": "WIN",
         "score": "4:1"
+    },
+    {
+        "id": "522aa9c3609ea2b0ac56a2886be6d6f7",
+        "home": "Bryn\u00e4s IF",
+        "away": "Lule\u00e5 HF",
+        "outcome": "Lule\u00e5 HF",
+        "odds": 3.9,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-19T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "4:2"
+    },
+    {
+        "id": "368db7ca6d0ec60e271ddf2e560742b1",
+        "home": "Djurg\u00e5rdens IF",
+        "away": "Skellefte\u00e5 AIK",
+        "outcome": "Djurg\u00e5rdens IF",
+        "odds": 3.85,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-19T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:4"
+    },
+    {
+        "id": "ea916188553f7a263cb4b4452f276f44",
+        "home": "F\u00e4rjestad BK",
+        "away": "Fr\u00f6lunda HC",
+        "outcome": "Fr\u00f6lunda HC",
+        "odds": 3.75,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-19T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:2"
+    },
+    {
+        "id": "366acae453f5ea4f36919f6214e3d9a4",
+        "home": "Link\u00f6ping HC",
+        "away": "HV71",
+        "outcome": "HV71",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-19T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "b7c900779791dd5e24eca0afdf352a84",
+        "home": "Malm\u00f6 Redhawks",
+        "away": "R\u00f6gle BK",
+        "outcome": "Malm\u00f6 Redhawks",
+        "odds": 2.35,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-19T18:00:00Z",
+        "profit": 675.0,
+        "status": "WIN",
+        "score": "3:2"
+    },
+    {
+        "id": "c5f6f6a523837125733fd2032725b567",
+        "home": "Timr\u00e5 IK",
+        "away": "\u00d6rebro HK",
+        "outcome": "\u00d6rebro HK",
+        "odds": 2.75,
+        "stake": 500.0,
+        "sport": "icehockey_sweden_hockey_league",
+        "time": "2026-11-19T18:00:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "8:2"
     }
 ]
