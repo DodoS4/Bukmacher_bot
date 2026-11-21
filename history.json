@@ -44100,5 +44100,57 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "2:0"
+    },
+    {
+        "id": "9881e56a732493272e688663b26cd37f",
+        "home": "Alav\u00e9s",
+        "away": "Deportivo La Coru\u00f1a",
+        "outcome": "Deportivo La Coru\u00f1a",
+        "odds": 3.7,
+        "stake": 125.0,
+        "sport": "soccer_spain_la_liga",
+        "time": "2026-11-21T13:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "3:1"
+    },
+    {
+        "id": "bc405017f004bace7b944216134e1660",
+        "home": "Genclerbirligi SK",
+        "away": "Gazi\u015fehir Gaziantep",
+        "outcome": "Genclerbirligi SK",
+        "odds": 2.43,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-11-21T10:30:00Z",
+        "profit": 178.75,
+        "status": "WIN",
+        "score": "1:0"
+    },
+    {
+        "id": "bed1f20084169c36d30d63f283640f79",
+        "home": "Norwich City",
+        "away": "Cardiff City",
+        "outcome": "Cardiff City",
+        "odds": 4.2,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-11-21T12:30:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "2:1"
+    },
+    {
+        "id": "063b1a482ff7c013b5c0e8e8af9a42ea",
+        "home": "Millwall",
+        "away": "Queens Park Rangers",
+        "outcome": "Queens Park Rangers",
+        "odds": 2.8,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-11-21T12:30:00Z",
+        "profit": 225.0,
+        "status": "WIN",
+        "score": "0:1"
     }
 ]
