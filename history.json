@@ -45023,5 +45023,83 @@
         "profit": 437.5,
         "status": "WIN",
         "score": "1:0"
+    },
+    {
+        "id": "0fb066b5cf1107b140d0aea5e6b2e682",
+        "home": "Asteras Tripolis",
+        "away": "Aris Thessaloniki",
+        "outcome": "Asteras Tripolis",
+        "odds": 3.73,
+        "stake": 125.0,
+        "sport": "soccer_greece_super_league",
+        "time": "2026-11-23T15:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "0:1"
+    },
+    {
+        "id": "5a749c9d02c984e711e097f31a446542",
+        "home": "Tampa Bay Lightning",
+        "away": "Buffalo Sabres",
+        "outcome": "Buffalo Sabres",
+        "odds": 3.9,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-22T22:10:00Z",
+        "profit": 1450.0,
+        "status": "WIN",
+        "score": "2:6"
+    },
+    {
+        "id": "d58a81d96dc96c937a865548f3a1a7c5",
+        "home": "Dallas Stars",
+        "away": "Pittsburgh Penguins",
+        "outcome": "Pittsburgh Penguins",
+        "odds": 4.2,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-23T00:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "1:0"
+    },
+    {
+        "id": "7472170e7ddebcf27cc4e03a8b32edcc",
+        "home": "St Louis Blues",
+        "away": "Edmonton Oilers",
+        "outcome": "St Louis Blues",
+        "odds": 2.8,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-23T00:10:00Z",
+        "profit": 900.0,
+        "status": "WIN",
+        "score": "5:4"
+    },
+    {
+        "id": "3a8553e25e16a66e676afc349395fec6",
+        "home": "Vancouver Canucks",
+        "away": "Chicago Blackhawks",
+        "outcome": "Chicago Blackhawks",
+        "odds": 2.63,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-23T01:10:00Z",
+        "profit": 815.0,
+        "status": "WIN",
+        "score": "3:6"
+    },
+    {
+        "id": "c1958a1dcd4f8228f4d09148fd6ea216",
+        "home": "Basaksehir",
+        "away": "\u00c7orum FK",
+        "outcome": "\u00c7orum FK",
+        "odds": 4.15,
+        "stake": 125.0,
+        "sport": "soccer_turkey_super_league",
+        "time": "2026-11-23T17:00:00Z",
+        "profit": -125.0,
+        "status": "LOSS",
+        "score": "4:2"
     }
 ]
