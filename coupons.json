@@ -12270,86 +12270,6 @@
         "time": "2026-11-23T01:10:00Z"
     },
     {
-        "id": "99776445d5a5f4ed008f9a6d6a1495b7",
-        "home": "Monza",
-        "away": "Fiorentina",
-        "outcome": "Monza",
-        "odds": 3.92,
-        "stake": 400.0,
-        "sport": "soccer_italy_serie_a",
-        "time": "2026-11-23T19:45:00Z"
-    },
-    {
-        "id": "aa77e2a08a1a003b0bbb62a5f8e8ae42",
-        "home": "Brentford",
-        "away": "Everton",
-        "outcome": "Everton",
-        "odds": 3.3,
-        "stake": 125.0,
-        "sport": "soccer_epl",
-        "time": "2026-11-23T20:00:00Z"
-    },
-    {
-        "id": "2d37be0044ea6b01ba17464efd59a99e",
-        "home": "St. Louis City SC",
-        "away": "Los Angeles FC",
-        "outcome": "St. Louis City SC",
-        "odds": 2.5,
-        "stake": 125.0,
-        "sport": "soccer_usa_mls",
-        "time": "2026-11-24T01:00:00Z"
-    },
-    {
-        "id": "e9429c68a48753de9779d88e6cf393ad",
-        "home": "New Jersey Devils",
-        "away": "Columbus Blue Jackets",
-        "outcome": "Columbus Blue Jackets",
-        "odds": 3.75,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-24T00:10:00Z"
-    },
-    {
-        "id": "d127e1e72a1b9087aca692f3b5812532",
-        "home": "Ottawa Senators",
-        "away": "Calgary Flames",
-        "outcome": "Calgary Flames",
-        "odds": 3.9,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-24T00:40:00Z"
-    },
-    {
-        "id": "806787e1b3ac73d09e3ae05f6d595865",
-        "home": "Montr\u00e9al Canadiens",
-        "away": "Los Angeles Kings",
-        "outcome": "Los Angeles Kings",
-        "odds": 3.06,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-24T00:40:00Z"
-    },
-    {
-        "id": "2d095386ab1321c89df24896d98495ee",
-        "home": "New York Islanders",
-        "away": "Toronto Maple Leafs",
-        "outcome": "Toronto Maple Leafs",
-        "odds": 3.15,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-24T00:40:00Z"
-    },
-    {
-        "id": "e2efcb24b2d9689232946057b7e43d23",
-        "home": "Winnipeg Jets",
-        "away": "Utah Mammoth",
-        "outcome": "Winnipeg Jets",
-        "odds": 2.6,
-        "stake": 500.0,
-        "sport": "icehockey_nhl",
-        "time": "2026-11-24T00:40:00Z"
-    },
-    {
         "id": "5074be0d13d60cc7fd82b06c4d8ddd31",
         "home": "Seattle Kraken",
         "away": "Anaheim Ducks",
@@ -12418,26 +12338,6 @@
         "stake": 250.0,
         "sport": "icehockey_ahl",
         "time": "2026-11-24T15:30:00Z"
-    },
-    {
-        "id": "73d2a041ea30b098a5826806dc784eb4",
-        "home": "Wieczysta Krak\u00f3w",
-        "away": "Motor Lublin",
-        "outcome": "Motor Lublin",
-        "odds": 2.8,
-        "stake": 125.0,
-        "sport": "soccer_poland_ekstraklasa",
-        "time": "2026-11-23T18:00:00Z"
-    },
-    {
-        "id": "7f6119974c72b322830f02300a6ea872",
-        "home": "Brondby IF",
-        "away": "FC Midtjylland",
-        "outcome": "Brondby IF",
-        "odds": 2.64,
-        "stake": 125.0,
-        "sport": "soccer_denmark_superliga",
-        "time": "2026-11-23T18:00:00Z"
     },
     {
         "id": "92c74d2f4a4275568feff8072ed15e73",
@@ -12668,5 +12568,115 @@
         "stake": 250.0,
         "sport": "soccer_uefa_champs_league",
         "time": "2026-11-25T17:45:00Z"
+    },
+    {
+        "id": "28df5655239f161e1b0173992812a8a5",
+        "home": "Utica Comets",
+        "away": "Hartford Wolf Pack",
+        "outcome": "Utica Comets",
+        "odds": 2.24,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-26T00:00:00Z"
+    },
+    {
+        "id": "d2e4962fbde3fe14b9d2c0990042905e",
+        "home": "Hershey Bears",
+        "away": "W-B/Scranton Penguins",
+        "outcome": "Hershey Bears",
+        "odds": 2.26,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-26T00:00:00Z"
+    },
+    {
+        "id": "c319f100272bdc39d872feb742359923",
+        "home": "Lehigh Valley Phantoms",
+        "away": "Providence Bruins",
+        "outcome": "Providence Bruins",
+        "odds": 2.0,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-26T00:05:00Z"
+    },
+    {
+        "id": "f49f26742d3edc40bb8a2fc2d06809d4",
+        "home": "Rockford IceHogs",
+        "away": "Milwaukee Admirals",
+        "outcome": "Rockford IceHogs",
+        "odds": 2.57,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-26T01:00:00Z"
+    },
+    {
+        "id": "7a7517fa76f3146123102b75095a98f7",
+        "home": "Henderson Silver Knights",
+        "away": "Abbotsford Canucks",
+        "outcome": "Henderson Silver Knights",
+        "odds": 2.16,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-26T03:00:00Z"
+    },
+    {
+        "id": "a64abb730bd3c498b8181e020c4d41b8",
+        "home": "San Jose Barracuda",
+        "away": "Coachella Valley Firebirds",
+        "outcome": "San Jose Barracuda",
+        "odds": 2.42,
+        "stake": 250.0,
+        "sport": "icehockey_ahl",
+        "time": "2026-11-26T03:00:00Z"
+    },
+    {
+        "id": "61d1126751ba67227ac2819624e98342",
+        "home": "Burnley",
+        "away": "Birmingham City",
+        "outcome": "Burnley",
+        "odds": 2.82,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-11-25T19:45:00Z"
+    },
+    {
+        "id": "9dfe9df3ad88c453e3572872bf500488",
+        "home": "Bolton Wanderers",
+        "away": "West Bromwich Albion",
+        "outcome": "Bolton Wanderers",
+        "odds": 3.85,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-11-25T19:45:00Z"
+    },
+    {
+        "id": "77dfddf6dea97d5ecb5e2463b29fe67e",
+        "home": "Stoke City",
+        "away": "Millwall",
+        "outcome": "Millwall",
+        "odds": 3.55,
+        "stake": 125.0,
+        "sport": "soccer_efl_champ",
+        "time": "2026-11-25T20:00:00Z"
+    },
+    {
+        "id": "49c66d76bc4085e63a181179cc47ef4d",
+        "home": "Shakhtar Donetsk",
+        "away": "Fenerbahce",
+        "outcome": "Fenerbahce",
+        "odds": 2.72,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-11-25T20:00:00Z"
+    },
+    {
+        "id": "01a61442fe04f8751b62eb251f234079",
+        "home": "Sporting Lisbon",
+        "away": "Manchester United",
+        "outcome": "Manchester United",
+        "odds": 2.8,
+        "stake": 250.0,
+        "sport": "soccer_uefa_champs_league",
+        "time": "2026-11-25T20:00:00Z"
     }
 ]
