@@ -45231,5 +45231,31 @@
         "profit": -125.0,
         "status": "LOSS",
         "score": "0:2"
+    },
+    {
+        "id": "5074be0d13d60cc7fd82b06c4d8ddd31",
+        "home": "Seattle Kraken",
+        "away": "Anaheim Ducks",
+        "outcome": "Seattle Kraken",
+        "odds": 2.49,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-24T02:50:00Z",
+        "profit": 745.0,
+        "status": "WIN",
+        "score": "3:2"
+    },
+    {
+        "id": "43376208ec2111794696249fe50f5e84",
+        "home": "San Jose Sharks",
+        "away": "Minnesota Wild",
+        "outcome": "San Jose Sharks",
+        "odds": 3.85,
+        "stake": 500.0,
+        "sport": "icehockey_nhl",
+        "time": "2026-11-24T03:10:00Z",
+        "profit": -500.0,
+        "status": "LOSS",
+        "score": "2:5"
     }
 ]
